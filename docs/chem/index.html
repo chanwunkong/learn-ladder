@@ -300,6 +300,16 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 .rung.to { border-color: var(--arrow); background: color-mix(in srgb, var(--arrow) 10%, var(--bg)); }
 .nmpk { stroke: var(--acid); stroke-width: 2; } .nmon { stroke: var(--arrow); stroke-width: 2.6; }
 .hsgrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; max-width: 560px; }
+/* 名詞 */
+#article { position: relative; }
+.tlink { background: none; border: 0; padding: 0; font: inherit; color: inherit; border-bottom: 1.5px dotted var(--accent); cursor: help; }
+.tlink:hover { color: var(--accent); }
+.tchips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 4px 0 6px; }
+.tchips .lbl { margin: 0 4px 0 0; }
+.tchip { font-size: 12.5px; padding: 2px 10px; border-radius: 99px; border: 1px dashed var(--accent); background: none; color: var(--accent); cursor: pointer; }
+.tchip:hover { background: var(--soft); }
+#tpop { position: absolute; z-index: 25; width: min(320px, 100%); background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,.12); padding: 10px 14px; font-size: 14px; }
+#tpop p { margin: 4px 0 8px; }
 /* 練習題 */
 .q { border-top: 1px solid var(--line); padding: 14px 0; }
 .qt { font-weight: 500; margin: 0 0 8px; }
@@ -639,7 +649,7 @@ CH.push({
     { h: '親核醯基取代：先加成、再脫去', w: 'nacyl', body: `
 <p>醯氯、酸酐、酯、醯胺都是<b>羧酸衍生物</b>：羰基碳上接著一個電負度大的原子（Cl、O、N）。它們的共同反應：</p>
 <ol><li>親核基加成到羰基碳，形成<b>四面體中間物</b>（和醛酮相同）；</li><li>C=O 重新形成，把較好的離去基擠出去。</li></ol>
-<p>醛酮停在第 1 步，是因為 H⁻ 和 R⁻ 不會離開；羧酸衍生物則有 Cl⁻、RCOO⁻、RO⁻ 等可以離開，所以會走完第 2 步。</p>` },
+<p>醛酮停在第 1 步，是因為 H⁻ 和 R⁻ 不會離開；羧酸衍生物則有 Cl⁻、RCOO⁻、RO⁻ 等可以離開，所以會走完第 2 步。這類「先加成、再脫去」的反應稱為<b>親核醯基取代</b>。</p>` },
     { h: '反應性順序與轉換', w: 'acylrank', body: `
 <p class="eq">醯氯 &gt; 酸酐 &gt; 酯 ≈ 羧酸 &gt; 醯胺 &gt; 羧酸根</p>
 <p>兩個原因指向同一個方向：</p>
@@ -681,7 +691,7 @@ CH.push({
 <p>醚（R–O–R）沒有 O–H，分子之間不能形成氫鍵，沸點低、化性穩定，常當作溶劑（乙醚、THF）。</p>` },
     { h: '醇的取代與脫去：先讓 OH 變好離去基', w: 'alcconv', body: `
 <p>OH⁻ 是強鹼、很差的離去基（有機酸鹼一章）。要讓醇進行取代或脫去，第一步永遠是<b>把 OH 改造成好離去基</b>：</p>
-<ul><li><b>加酸</b>：質子化成 –OH₂⁺，以中性水離開。適合 HX 取代與酸催化脫水。三級醇經碳陽離子（SN1／E1），要注意重排。</li>
+<ul><li><b>加酸</b>：質子化成 –OH₂⁺，以中性水離開。適合 HX 取代與酸催化脫水。三級醇與濃 HCl 室溫就能反應，用來區分醇級數的<b>盧卡斯試驗</b>就是利用這一點。三級醇經碳陽離子（SN1／E1），要注意重排。</li>
 <li><b>PBr₃、SOCl₂</b>：把 O 接到 P 或 S 上變成好離去基，再讓 X⁻ 做 SN2。不經碳陽離子，不重排，適合一級、二級醇。</li>
 <li><b>TsCl</b>：變成磺酸酯（–OTs），之後可以接任何親核基。這一步 C–O 鍵沒斷，構型保留。</li></ul>
 <p>醇的酸催化<b>脫水</b>是 E1（三級、二級），得到查依采夫烯；溫度較低、醇過量時，則可能兩分子醇脫水生成醚。</p>` },
@@ -856,7 +866,7 @@ CH.push({
     { h: '光譜告訴我們：能量是一格一格的', w: 'hspec', body: `
 <p>把氫氣通電，發出的光經過稜鏡不是連續的彩虹，而是幾條特定顏色的<b>線</b>。這代表電子只能待在某些特定能量（能階），從高能階掉到低能階時，放出的光子能量剛好等於能階差：</p>
 <p class="eq">Eₙ = −13.6 eV ÷ n²　　ΔE = hν = hc ÷ λ</p>
-<p>能量越大，波長越短。氫原子掉到 n = 2 的幾條線落在可見光（656 nm 紅線、486 nm 藍綠線…），掉到 n = 1 的在紫外光。n → ∞ 時能量為 0，代表電子脫離原子（游離）。</p>` },
+<p>能量越大，波長越短。氫原子掉到 n = 2 的幾條線（巴耳末系）落在可見光（656 nm 紅線、486 nm 藍綠線…），掉到 n = 1 的在紫外光。n → ∞ 時能量為 0，代表電子脫離原子（游離）。</p>` },
     { h: '量子數與軌域', w: 'qn', body: `
 <p>電子的狀態用四個量子數描述：</p>
 <table class="tbl"><thead><tr><th>量子數</th><th>可能值</th><th>決定什麼</th></tr></thead><tbody>
@@ -999,7 +1009,7 @@ CH.push({
   sections: [
     { h: '羰基碳是親電子中心：親核加成', w: 'nucadd', body: `
 <p>O 的電負度大，C=O 的電子偏向 O，碳帶部分正電。加上羰基碳是平面的，上下兩面都敞開，親核基很容易靠近。</p>
-<p>親核加成的兩步：</p>
+<p>常見的親核基有 H⁻（來自 NaBH₄）、R⁻（來自格任亞試劑 RMgBr）、CN⁻。親核加成的兩步：</p>
 <ol><li>親核基攻擊羰基碳，π 電子推到 O 上，生成四面體的烷氧離子（sp² → sp³）；</li><li>O 接上 H⁺，得到醇。</li></ol>
 <p>和鹵烷不同：醛、酮的羰基碳上沒有好的離去基（H⁻ 和 R⁻ 是極強的鹼，不會離開），所以反應停在<b>加成</b>，不會變成取代。這一點在下一章的羧酸衍生物（有離去基）會完全不同。</p>
 <p>平面的羰基被親核基從上或下進攻，機會相等；如果產物生成新的掌性中心，會得到外消旋混合物。</p>` },
@@ -1053,7 +1063,7 @@ CH.push({
 <p class="eq">E°電池 = E°陰極 − E°陽極　　ΔG° = −nFE°　　E° = (0.0592/n) log K（25 °C）</p>
 <p>E° &gt; 0、ΔG° &lt; 0、K &gt; 1 三件事是同一件事的三種說法。</p>` },
     { h: '能斯特方程：濃度改變電壓', w: 'nernst', body: `
-<p>非標準狀態（濃度不是 1 M）時的電壓：</p>
+<p>非標準狀態（濃度不是 1 M）時的電壓由<b>能斯特方程式</b>計算：</p>
 <p class="eq">E = E° − (0.0592 ÷ n) log Q　（25 °C）</p>
 <p>這就是 ΔG = ΔG° + RT ln Q 除以 −nF。電池放電時 Q 變大、電壓下降，直到 E = 0、Q = K 時「沒電」。</p>
 <p>同一種電極、只有濃度不同也能形成電池（<b>濃差電池</b>）。神經細胞的膜電位就是這個原理：細胞內外 K⁺、Na⁺ 濃度不同，產生約 −70 mV 的電位。</p>` },
@@ -1244,7 +1254,7 @@ CH.push({
 <ul><li>係數要變成次方，濃度也要乘上係數：CaF₂ 的 [F⁻] = 2s，Ksp = s(2s)² = 4s³。</li>
 <li><b>只有同類型（1:1 比 1:1）的鹽，才能直接用 Ksp 大小比較溶解度</b>。</li></ul>` },
     { h: '同離子效應', w: 'commonion', body: `
-<p>溶液裡如果已經有其中一種離子（同離子），難溶鹽的溶解度會大幅下降。這是勒沙特列原理：多出來的離子把平衡推回固體那一側。</p>
+<p>溶液裡如果已經有其中一種離子（同離子），難溶鹽的溶解度會大幅下降，稱為<b>同離子效應</b>。這是勒沙特列原理：多出來的離子把平衡推回固體那一側。</p>
 <p>計算時，若外加離子濃度 c 遠大於溶解度 s，可以近似 [同離子] ≈ c，直接得到 s ≈ Ksp ÷ c（1:1 型）。</p>
 <p>醫學上的例子：鋇餐（BaSO₄）攝影時，Ba²⁺ 有毒，但 BaSO₄ 的 Ksp 很小，而且腸胃中有硫酸根，溶解的 Ba²⁺ 極少。</p>` },
     { h: '會不會沉澱：Q 與 Ksp', w: 'precip', body: `
@@ -1335,7 +1345,7 @@ CH.push({
 <tr><td>共價網狀晶體</td><td>共價鍵</td><td>熔點極高、極硬</td><td>鑽石、石英（SiO₂）</td></tr>
 <tr><td>金屬晶體</td><td>金屬鍵（電子海）</td><td>導電導熱、延展性</td><td>Cu、Fe</td></tr></tbody></table>
 <p>離子晶體的<b>晶格能</b>隨離子電荷乘積變大、離子半徑變小而增大，所以 MgO（+2/−2）的熔點遠高於 NaCl（+1/−1）。</p>
-<p>金屬常見三種立方堆積，計算每個晶胞的原子數時要記得：角落原子被 8 個晶胞共用，面心原子被 2 個共用。</p>` },
+<p>金屬常見三種立方堆積，每個原子周圍緊鄰的原子數稱為<b>配位數</b>（面心立方為 12）。計算每個晶胞的原子數時要記得：角落原子被 8 個晶胞共用，面心原子被 2 個共用。</p>` },
     { h: '核化學：放射性衰變', w: 'decay', body: `
 <p>不穩定的原子核會自發放出粒子或能量，變成另一種原子核。寫核反應式時，<b>質量數與原子序兩邊都要守恆</b>：</p>
 <table class="tbl"><thead><tr><th>衰變</th><th>放出</th><th>質量數</th><th>原子序</th><th>例子</th></tr></thead><tbody>
@@ -1344,7 +1354,7 @@ CH.push({
 <tr><td>β⁺ 衰變</td><td>正子（質子 → 中子）</td><td>不變</td><td>−1</td><td>¹⁸F → ¹⁸O（PET 造影）</td></tr>
 <tr><td>電子捕獲</td><td>吸收內層電子</td><td>不變</td><td>−1</td><td>¹²⁵I → ¹²⁵Te</td></tr>
 <tr><td>γ 射線</td><td>高能光子</td><td>不變</td><td>不變</td><td>⁹⁹ᵐTc → ⁹⁹Tc</td></tr></tbody></table>
-<p>中子太多的原子核傾向 β⁻ 衰變，質子太多的傾向 β⁺ 或電子捕獲，很重的原子核傾向 α 衰變。穿透力 α &lt; β &lt; γ，但 α 粒子一旦進入體內傷害最大。</p>
+<p>中子太多的原子核傾向 β⁻ 衰變，質子太多的傾向 β⁺ 或電子捕獲，很重的原子核傾向 α 衰變。每經過一個<b>半衰期</b>，剩下的原子核減半，和起始量無關（一級反應）。穿透力 α &lt; β &lt; γ，但 α 粒子一旦進入體內傷害最大。</p>
 <p>原子核的質量比組成它的質子、中子加起來小，差額（質量虧損）依 E = mc² 轉成<b>結合能</b>；核分裂與核融合都是朝每個核子結合能更大（鐵附近）的方向進行。</p>` },
   ],
   quiz: [
@@ -1587,7 +1597,7 @@ CH.push({
 <p>預測 ΔS 的正負，看「自由度」有沒有增加：</p>
 <ul><li>固體 → 液體 → 氣體：ΔS &gt; 0；</li><li>氣體分子數增加：ΔS &gt; 0（例如 CaCO₃(s) → CaO(s) + CO₂(g)）；</li><li>溶解、混合、升溫：通常 ΔS &gt; 0；</li><li>一個分子拆成兩個（例如脫去反應）：ΔS &gt; 0。</li></ul>` },
     { h: '自由能：ΔG = ΔH − TΔS', w: 'gibbs', body: `
-<p>在定溫定壓下，判斷反應能不能自發只看一個量：</p>
+<p>在定溫定壓下，判斷反應能不能自發只看一個量，<b>自由能</b>的變化：</p>
 <p class="eq">ΔG = ΔH − TΔS　　ΔG &lt; 0 自發；ΔG &gt; 0 不自發（逆反應自發）；ΔG = 0 平衡</p>
 <table class="tbl"><thead><tr><th>ΔH</th><th>ΔS</th><th>結果</th></tr></thead><tbody>
 <tr><td>−</td><td>+</td><td>任何溫度都自發</td></tr><tr><td>+</td><td>−</td><td>任何溫度都不自發</td></tr>
@@ -1663,6 +1673,202 @@ CH.push({
       why: '對小分子而言，氫鍵最強（約 10–40 kJ/mol）。但大分子的分散力總和可以很大，所以要看分子大小。' },
   ],
 });
+
+/* ---------- 後中化學：各章名詞 ----------
+   TERMS[章節 id] = [[名詞, 一句話解釋, 在圖上看的設定（可省略）]]
+   名詞第一次出現在內文時會變成可點的連結；章首也列出本章所有名詞。show 的格式和練習題相同：{ w: 互動圖, set: 狀態 }。 */
+const TERMS = {
+  'atom': [
+    ['能階', '電子只能具有的幾個特定能量；氫原子 Eₙ = −13.6 eV ÷ n²。', { w: 'hspec', set: { ni: 3, nf: 2 } }],
+    ['巴耳末系', '氫原子電子掉回 n = 2 放出的光，落在可見光區（656、486、434、410 nm）。', { w: 'hspec', set: { ni: 4, nf: 2 } }],
+    ['主量子數', '符號 n，決定殼層、能量與軌域大小。', { w: 'qn', set: { n: 3, l: 0, m: 0 } }],
+    ['角量子數', '符號 ℓ（0 到 n−1），決定軌域形狀：s、p、d、f。', { w: 'qn', set: { n: 3, l: 2, m: 0 } }],
+    ['包立不相容原理', '同一個軌域最多放兩個電子，而且自旋相反。', { w: 'econf', set: { Z: 8 } }],
+    ['洪德定則', '同一副層的軌域，電子先各占一格、自旋平行，再成對。', { w: 'econf', set: { Z: 7 } }],
+    ['有效核電荷', '最外層電子實際感受到的原子核吸引力，約等於質子數減內層電子的遮蔽。', { w: 'trend', set: { p: 'r' } }],
+    ['游離能', '從氣態原子移走一個電子所需的能量；同週期向右增加、同族向下減少。', { w: 'trend', set: { p: 'ie' } }],
+  ],
+  'vsepr': [
+    ['電負度', '原子在鍵中吸引共用電子的能力，F 最大（3.98）。', { w: 'bondtype', set: { a: 'H', b: 'F' } }],
+    ['極性共價鍵', '兩原子電負度不同，共用電子偏向一方，形成 δ+ 與 δ− 兩端。', { w: 'bondtype', set: { a: 'H', b: 'Cl' } }],
+    ['VSEPR', '價殼層電子對互斥：中心原子周圍的電子區域互相排斥、盡量遠離，決定分子形狀。', { w: 'vsepr', set: { d: 4, lp: 0 } }],
+    ['孤對電子', '不參與成鍵的電子對；佔的空間比鍵結電子大，會壓縮鍵角。', { w: 'vsepr', set: { d: 4, lp: 2 } }],
+    ['極性分子', '鍵偶極的向量和不為零的分子；形狀對稱時互相抵消，成為非極性分子。', { w: 'dipole', set: { m: 'h2o' } }],
+    ['分散力', '所有分子都有的暫時偶極吸引力；分子越大越強。', { w: 'imf' }],
+    ['氫鍵', '接在 N、O、F 上的 H 與另一分子的 N、O、F 孤對電子之間的強吸引力。', { w: 'imf' }],
+  ],
+  'stoich': [
+    ['限量試劑', '先用完的反應物，決定產物最多能生成多少；判斷時要先除以係數。', { w: 'limiting', set: { rx: 'nh3', a: 3, b: 6 } }],
+    ['重量莫耳濃度', '溶質莫耳數 ÷ 溶劑公斤數（m），不隨溫度改變。'],
+    ['依數性質', '只和溶質粒子數有關的性質：蒸氣壓下降、沸點上升、凝固點下降、滲透壓。', { w: 'colli', set: { s: 'nacl', m: 0.5 } }],
+    ['凡特何夫因子', '每個溶質在溶液中解離出的粒子數 i：葡萄糖 1、NaCl 2、CaCl₂ 3。', { w: 'colli', set: { s: 'cacl2', m: 0.5 } }],
+    ['滲透壓', '阻止水穿過半透膜流向濃溶液所需的壓力，π = iMRT。', { w: 'colli', set: { s: 'nacl', m: 0.15 } }],
+    ['拉午耳定律', '溶液中溶劑的蒸氣壓 = 溶劑莫耳分率 × 純溶劑蒸氣壓。'],
+  ],
+  'gas': [
+    ['波以耳', '定量氣體在定溫下 P 與 V 成反比：P₁V₁ = P₂V₂。', { w: 'pvt', set: { law: 'boyle' } }],
+    ['查理', '定量氣體在定壓下 V 與絕對溫度成正比。', { w: 'pvt', set: { law: 'charles' } }],
+    ['分壓', '混合氣體中某一成分單獨佔滿整個容器時的壓力；總壓是各分壓的和。'],
+    ['格雷姆定律', '氣體擴散或逸散速率與分子量的平方根成反比。', { w: 'maxwell', set: { a: 'He', b: 'O2' } }],
+    ['凡得瓦方程式', '修正分子間吸引力（a）與分子體積（b）的真實氣體方程式。'],
+  ],
+  'thermo': [
+    ['狀態函數', '只和起點、終點有關，與途徑無關的量，例如 H、S、G。', { w: 'hess', set: { ex: 'co', mode: 'direct' } }],
+    ['赫斯定律', '反應分成幾步進行，ΔH 相加等於一步完成的 ΔH。', { w: 'hess', set: { ex: 'co', mode: 'steps' } }],
+    ['生成焓', '由元素在標準狀態生成 1 莫耳化合物的焓變化；元素本身為 0。', { w: 'hess', set: { ex: 'ch4', mode: 'steps' } }],
+    ['熵', '能量與粒子能分散的方式有多少；S = k ln W。', { w: 'entropy', set: { N: 20 } }],
+    ['自由能', 'ΔG = ΔH − TΔS；定溫定壓下 ΔG < 0 的反應自發。', { w: 'gibbs', set: { p: 'ice', T: 298 } }],
+    ['轉折溫度', 'ΔH 與 ΔS 同號時，ΔG 由正變負的溫度 T = ΔH ÷ ΔS。', { w: 'gibbs', set: { p: 'caco3', T: 1110 } }],
+  ],
+  'kinetics': [
+    ['速率式', 'rate = k[A]ᵐ[B]ⁿ；級數 m、n 由實驗決定，不一定等於係數。', { w: 'ratelaw', set: { rx: 'sn2' } }],
+    ['初速率法', '每次只改變一種反應物濃度，看初速率變幾倍來決定級數。', { w: 'ratelaw', set: { rx: 'no', rows: [[0.1, 0.1], [0.2, 0.1], [0.1, 0.2]] } }],
+    ['半生期', '濃度降到一半所需的時間；一級反應為 0.693 ÷ k，與濃度無關。', { w: 'order', set: { n: 1 } }],
+    ['活化能', '反應物要變成產物必須越過的能量障礙 Ea。', { w: 'arrh', set: { T: 298, Ea: 50, cat: false } }],
+    ['阿瑞尼斯方程式', 'k = A e^(−Ea/RT)，描述速率常數隨溫度與活化能的變化。', { w: 'arrh', set: { T: 308, Ea: 50 } }],
+    ['催化劑', '提供活化能較低的路徑，加快正逆反應，但不改變平衡常數。', { w: 'arrh', set: { cat: true } }],
+    ['速率決定步驟', '多步驟反應中最慢的一步，在能量圖上是最高的過渡狀態。', { w: 'rds', set: { h1: 0.9, h2: 0.65 } }],
+    ['中間物', '兩個過渡狀態之間的能量低谷，壽命短但真實存在。', { w: 'rds', set: { h1: 0.85, h2: 0.7 } }],
+  ],
+  'equilibrium': [
+    ['化學平衡', '正反應與逆反應速率相等，濃度不再改變的狀態；反應並沒有停止。', { w: 'eqdyn', set: { t: 10 } }],
+    ['平衡常數', '平衡時產物濃度（係數次方）乘積 ÷ 反應物濃度乘積；只隨溫度改變。', { w: 'eqdyn', set: { kf: 0.9, kr: 0.3, t: 10 } }],
+    ['反應商', '把目前的濃度代入 K 的式子得到的 Q；Q < K 向右、Q > K 向左。', { w: 'qk', set: { a: 0.1, b: 0.05 } }],
+    ['ICE 表', '起始（I）、變化（C）、平衡（E）三列，用來計算平衡濃度。', { w: 'qk', set: { a: 0.2, b: 0 } }],
+    ['勒沙特列原理', '平衡受干擾時，系統往部分抵銷干擾的方向移動。', { w: 'lechat', set: { act: 'comp' } }],
+  ],
+  'acid-base': [
+    ['當量點', '加入的鹼的莫耳數剛好等於原本酸的莫耳數；弱酸滴定時 pH 大於 7。', { w: 'titration', set: { acid: 'weak', v: 25 } }],
+    ['緩衝溶液', '同時含大量弱酸與其共軛鹼的溶液，加少量強酸強鹼 pH 幾乎不變。', { w: 'buffer', set: { add: 'H' } }],
+    ['緩衝容量', '緩衝溶液能吸收多少強酸或強鹼而不被打穿，和濃度成正比。', { w: 'buffer', set: { add: 'H' } }],
+    ['半當量點', '滴定到一半，[HA] = [A⁻]，此時 pH = pKa。', { w: 'titration', set: { acid: 'weak', v: 12.5 } }],
+    ['Henderson–Hasselbalch', 'pH = pKa + log([A⁻] ÷ [HA])；pH 由比例決定。', { w: 'species', set: { pKa: 4.74, pH: 5.74 } }],
+    ['變色範圍', '指示劑兩種顏色都明顯的 pH 區間，約為 pKa(HIn) ± 1。', { w: 'indicator', set: { ind: 'pp', v: 25 } }],
+  ],
+  'ksp': [
+    ['溶度積', 'Ksp：難溶鹽飽和溶液中離子濃度（係數次方）的乘積。', { w: 'ksp', set: { salt: 'AgCl' } }],
+    ['同離子效應', '溶液中已有其中一種離子時，難溶鹽的溶解度下降。', { w: 'commonion', set: { c: 0.01 } }],
+    ['離子積', '目前離子濃度代入 Ksp 式子的值 Q；Q > Ksp 就會沉澱。', { w: 'precip', set: { ca: 2e-4, cb: 2e-4 } }],
+    ['選擇性沉澱', '慢慢加入沉澱劑，讓 Ksp 較小的鹽先沉澱，藉此分離離子。'],
+    ['螯合劑', '用多個位置同時抓住金屬離子的配位基，例如 EDTA。'],
+  ],
+  'electro': [
+    ['陽極', '發生氧化的電極；賈法尼電池中電子由此流出。', { w: 'galv', set: { a: 3, c: 8 } }],
+    ['陰極', '發生還原的電極；賈法尼電池中電子由此流入。', { w: 'galv', set: { a: 3, c: 8 } }],
+    ['標準還原電位', '半反應寫成還原式時，相對於標準氫電極的電位 E°；越大越容易被還原。', { w: 'galv', set: { a: 7, c: 9 } }],
+    ['鹽橋', '連接兩個半電池、讓離子移動以維持電中性的通道。', { w: 'galv', set: { a: 3, c: 8 } }],
+    ['能斯特方程式', 'E = E° − (0.0592/n) log Q；描述濃度對電壓的影響。', { w: 'nernst', set: { zn: 1, cu: 1 } }],
+    ['法拉第定律', '電解產生的物質量與通過的電量成正比；電子莫耳數 = It ÷ F。', { w: 'faraday', set: { m: 'Cu', I: 2, t: 30 } }],
+  ],
+  'phase': [
+    ['三相點', '固、液、氣三相共存的唯一溫度與壓力。', { w: 'phase', set: { s: 'water', C: 0.01, P: 0.006 } }],
+    ['臨界點', '超過此溫度與壓力，液體與氣體不再有界線（超臨界流體）。', { w: 'phase', set: { s: 'co2', C: 40, P: 100 } }],
+    ['晶格能', '把離子晶體拆成氣態離子所需的能量；電荷越大、半徑越小越大。'],
+    ['配位數', '晶體中一個原子周圍緊鄰的原子數；面心立方為 12。', { w: 'cell', set: { c: 'fcc' } }],
+    ['半衰期', '放射性原子核數目減半所需的時間，和起始量無關。', { w: 'decay', set: { i: 'c14', n: 1 } }],
+    ['α 衰變', '放出 ⁴₂He，質量數減 4、原子序減 2。'],
+    ['β⁻ 衰變', '中子轉成質子並放出電子，原子序加 1、質量數不變。'],
+  ],
+  'bonding': [
+    ['形式電荷', '價電子數 − 非鍵電子數 − 鍵數；顯示電荷落在哪個原子上。', { w: 'fc', set: { e: 'O', b: 3, lp: 1 } }],
+    ['八隅', '第二週期元素（C、N、O）周圍最多 8 個電子。', { w: 'fc', set: { e: 'C', b: 4, lp: 0 } }],
+    ['混成', '原子的 s 與 p 軌域混合成能量相同的新軌域：sp³、sp²、sp。', { w: 'hyb', set: { h: 'sp2' } }],
+    ['π 鍵', '兩個平行 p 軌域側面重疊形成的鍵，電子在鍵軸上下，比 σ 鍵弱。', { w: 'hyb', set: { h: 'sp2' } }],
+    ['共振結構', '只差在電子位置的幾個路易斯結構；真正的分子是它們的共振混成。', { w: 'reson', set: { ex: 'acetate', step: 0 } }],
+    ['共振混成', '各共振結構的加權平均，電荷與 π 電子分散在多個原子上。', { w: 'reson', set: { ex: 'acetate', step: 2 } }],
+  ],
+  'org-acid': [
+    ['共軛鹼', '酸失去 H⁺ 後留下的物種；共軛鹼越穩定，酸越強。', { w: 'ario', set: { t: 'row' } }],
+    ['誘導', '電負度大的原子經 σ 鍵把電子拉向自己，影響鄰近電荷的穩定度。', { w: 'ario', set: { t: 'ind' } }],
+    ['s 性質', '混成軌域中 s 軌域所佔的比例；越高電子越靠近原子核。', { w: 'ario', set: { t: 'orb' } }],
+    ['pKaH', '鹼的共軛酸的 pKa；越大，鹼越強。', { w: 'basic', set: { i: 2 } }],
+  ],
+  'stereo': [
+    ['掌性分子', '和自己的鏡像無法重疊的分子。', { w: 'chiral', set: { set: 'butanol', rot: true } }],
+    ['掌性中心', '連著四個不同基團的 sp³ 碳。', { w: 'chiral', set: { set: 'butanol' } }],
+    ['鏡像異構物', '互為鏡像、無法重疊的一對立體異構物，所有掌性中心的構型都相反。', { w: 'fischer', set: { mol: 'tart', sides: ['right', 'left'] } }],
+    ['非鏡像異構物', '不是鏡像關係的立體異構物，只有部分掌性中心相反，物理性質不同。', { w: 'fischer', set: { mol: 'brcl', sides: ['right', 'right'] } }],
+    ['內消旋', '有掌性中心但分子內有鏡面，和自己的鏡像相同，沒有光學活性。', { w: 'fischer', set: { mol: 'tart', sides: ['right', 'right'] } }],
+    ['外消旋', '一對鏡像異構物的等量混合物，旋光互相抵消。'],
+    ['費雪投影式', '碳鏈直放，橫線朝向讀者、直線遠離讀者的立體表示法。', { w: 'fischer', set: { mol: 'tart' } }],
+    ['紐曼投影式', '沿著 C–C 鍵看過去，前碳畫成中心點、後碳畫成圓的表示法。', { w: 'butane', set: { ang: 60 } }],
+    ['直立鍵', '環己烷椅式中和環軸平行、上下交替的位置。', { w: 'chair', set: { sub: 'me', axial: true } }],
+    ['平伏鍵', '環己烷椅式中沿環外圍向外伸的位置；大取代基偏好這裡。', { w: 'chair', set: { sub: 'me', axial: false } }],
+  ],
+  'sn-e': [
+    ['親核基', '帶負電或有孤對電子、會去攻擊缺電子碳的物種（Nu:）。', { w: 'sn2', set: { sub: 'methyl', step: 0 } }],
+    ['離去基', '帶著鍵上一對電子離開的基團；共軛酸越強越好離開。', { w: 'leaving', set: { x: 'I' } }],
+    ['構型反轉', 'SN2 從背面進攻，三個基團像雨傘一樣翻到另一側。', { w: 'sn2', set: { sub: 'secondary', step: 2 } }],
+    ['碳陽離子', '只有三個鍵、帶正電的平面 sp² 碳；三級最穩定。', { w: 'sn1', set: { step: 1 } }],
+    ['超共軛', '相鄰 C–H 鍵電子分攤碳陽離子正電荷的效應。', { w: 'sn1', set: { step: 1 } }],
+    ['反式共平面', 'E2 時 β-H 與離去基在 C–C 鍵兩側、同一平面（二面角 180°）。', { w: 'newman', set: { ang: 180 } }],
+    ['查依采夫', '脫去反應通常生成雙鍵上取代基較多、較穩定的烯。', { w: 'zaitsev', set: { base: 'eto' } }],
+    ['霍夫曼', '大體積鹼只能拿外側的 H，得到取代較少的烯。', { w: 'zaitsev', set: { base: 'tbuo' } }],
+  ],
+  'alkene': [
+    ['親電子試劑', '缺電子、帶正電或部分正電的物種，會被富含電子的 π 鍵吸引。', { w: 'hbr', set: { path: 'M', step: 0 } }],
+    ['馬可尼可夫規則', 'H 加到原本 H 較多的碳上；根本原因是生成較穩定的碳陽離子。', { w: 'hbr', set: { path: 'M', step: 1 } }],
+    ['1,2-氫移位', '鄰碳上的 H 帶著兩個電子移過來，讓碳陽離子變得更穩定。', { w: 'shift', set: { step: 0 } }],
+    ['溴鎓離子', '溴與雙鍵兩個碳形成的三元環正離子，使 Br₂ 加成成為反式。', { w: 'brom', set: { step: 1 } }],
+    ['反式加成', '兩個新基團加在雙鍵的相反兩側。', { w: 'brom', set: { step: 2 } }],
+    ['硼氫化', 'BH₃ 加成後氧化成醇，OH 接在取代較少的碳（反馬可尼可夫）。', { w: 'addn', set: { i: 5 } }],
+    ['烯醇', 'OH 接在雙鍵碳上的結構，會互變異構成較穩定的醛或酮。'],
+  ],
+  'aromatic': [
+    ['芳香性', '環狀、平面、完全共軛、π 電子 4n + 2 個的特殊穩定性。', { w: 'huckel', set: { r: 'benzene' } }],
+    ['休克耳規則', 'π 電子數為 4n + 2（2、6、10…）時具有芳香性。', { w: 'huckel', set: { r: 'cp' } }],
+    ['反芳香性', '環狀、平面、完全共軛但 π 電子為 4n，比一般更不穩定。', { w: 'huckel', set: { r: 'cbd' } }],
+    ['σ 錯合物', '親電子芳香取代中，親電子試劑接上後生成的帶正電中間物。', { w: 'eas', set: { step: 1 } }],
+    ['鄰對位', '取代基讓新基團主要進入相鄰（鄰位）與相對（對位）位置。', { w: 'directing', set: { g: 'CH3' } }],
+    ['間位', '取代基讓新基團主要進入隔一個碳的位置。', { w: 'directing', set: { g: 'NO2' } }],
+  ],
+  'alcohol': [
+    ['烷氧離子', '醇失去 H⁺ 後的 RO⁻，是強鹼也是好的親核基。'],
+    ['盧卡斯試驗', '用濃 HCl/ZnCl₂ 區分一、二、三級醇：三級最快混濁。', { w: 'alcconv', set: { i: 0 } }],
+    ['威廉森醚合成', '烷氧離子對甲基或一級鹵烷進行 SN2 製備醚。'],
+    ['環氧化物', '三元環醚，環張力大，容易被親核基打開。', { w: 'epox', set: { c: 'base' } }],
+  ],
+  'carbonyl': [
+    ['親核加成', '親核基加到羰基碳上，生成四面體烷氧離子，再質子化成醇。', { w: 'nucadd', set: { nu: 'h', step: 1 } }],
+    ['格任亞試劑', 'RMgX；碳帶負電，加到羰基上形成新的 C–C 鍵。', { w: 'nucadd', set: { nu: 'me', step: 0 } }],
+    ['半縮醛', '醛酮加上一分子醇的產物，同一個碳上有 OH 與 OR。', { w: 'carbtable', set: { i: 4 } }],
+    ['縮醛', '醛酮加上兩分子醇（失去水）的產物，可用來保護羰基。', { w: 'carbtable', set: { i: 4 } }],
+    ['亞胺', '醛酮與一級胺加成後脫水形成的 C=N 化合物。', { w: 'carbtable', set: { i: 5 } }],
+    ['烯醇離子', '拿走羰基 α-H 後的陰離子，負電荷共振到 O 上。', { w: 'alphaH', set: { i: 2 } }],
+    ['醛醇', '烯醇離子攻擊另一分子醛酮形成的 β-羥基羰基化合物。'],
+  ],
+  'acyl': [
+    ['四面體中間物', '親核基加到羰基後生成的 sp³ 中間物。', { w: 'nacyl', set: { x: 'cl', step: 1 } }],
+    ['親核醯基取代', '加成到羰基後，再把離去基擠出的反應，結果是取代。', { w: 'nacyl', set: { x: 'cl', step: 2 } }],
+    ['費雪酯化', '羧酸與醇在酸催化下形成酯的可逆反應。', { w: 'ester', set: { r: 1 } }],
+    ['皂化', '酯在鹼中水解，生成羧酸根與醇；不可逆。', { w: 'nacyl', set: { x: 'es', step: 2 } }],
+    ['克來森縮合', '酯的烯醇離子攻擊另一個酯，生成 β-酮酯。'],
+  ],
+  'amine': [
+    ['四級銨鹽', 'N 上接四個碳、帶正電的離子，沒有孤對電子。', { w: 'aminetable', set: { i: 6 } }],
+    ['兩性離子', '同一分子同時帶正、負電荷，例如生理 pH 下的胺基酸。'],
+    ['加布瑞爾合成', '用鄰苯二甲醯亞胺鉀與鹵烷製備純一級胺的方法。', { w: 'aminetable', set: { i: 1 } }],
+    ['還原胺化', '醛酮與胺形成亞胺後再還原成胺。', { w: 'aminetable', set: { i: 2 } }],
+    ['重氮鹽', 'ArN₂⁺；N₂ 是極好的離去基，可被 Cl、Br、CN、OH 等取代。', { w: 'aminetable', set: { i: 7 } }],
+  ],
+  'spectro': [
+    ['波數', '紅外光譜的橫軸單位 cm⁻¹；鍵越強、原子越輕，吸收波數越高。', { w: 'ir', set: { c: 'butanone' } }],
+    ['指紋區', '紅外光譜 1500 cm⁻¹ 以下，用來比對整個分子的區域。'],
+    ['化學位移', 'NMR 訊號的位置 δ；周圍電子被拉走（去遮蔽）時往左移。', { w: 'nmr', set: { m: 'benz', i: 0 } }],
+    ['積分', 'NMR 峰面積，正比於該訊號的氫數目。', { w: 'nmr', set: { m: 'ea', i: 1 } }],
+    ['分裂', '鄰近碳上有 n 個等價 H 時，訊號分成 n + 1 根峰。', { w: 'nmr', set: { m: 'ipcl', i: 0 } }],
+    ['氮規則', '分子量為奇數的化合物含有奇數個氮原子。', { w: 'ms', set: { c: 'pyr' } }],
+    ['不飽和度', '(2C + 2 + N − H − X) ÷ 2；每個環或雙鍵算 1。'],
+  ],
+  'biomol': [
+    ['變旋異構物', '醣環化時 C1 新生成的掌性中心造成的 α、β 兩種異構物。', { w: 'sugar', set: { ab: 'a' } }],
+    ['醣苷鍵', '半縮醛的 OH 與另一個醇形成的縮醛鍵，連接醣分子。'],
+    ['還原醣', '有游離半縮醛、能打開成醛的醣，能還原本氏液。'],
+    ['等電點', '胺基酸淨電荷為零的 pH（pI）。', { w: 'aa', set: { a: 'gly', pH: 5.97 } }],
+    ['胜肽鍵', '胺基酸之間的醯胺鍵，因共振而平面、不能旋轉。'],
+    ['逆合成', '從目標分子往回推，找出可以製備它的前驅物與反應。', { w: 'synth', set: { i: 0 } }],
+  ],
+};
 
 /* ---------- 後中化學：互動圖 ----------
    W.名稱(el) 在 el 裡畫出互動圖，回傳 { set(狀態) } 給練習題的「在圖上看」使用。 */
@@ -3805,7 +4011,7 @@ const INST = {};   // 目前頁面上各互動圖的實例（練習題「在圖�
 function renderChapter(id) {
   const c = chOf(id), i = CH.indexOf(c), prev = CH[i - 1], next = CH[i + 1];
   $('#article').innerHTML = `<p class="eyebrow">${UNITS.find(p => p.items.some(x => x[0] === c.unit)).part} · ${unitName(c.unit)}</p><h1>${c.title}</h1><p class="lede">${c.lede}</p>
-<nav class="secnav" aria-label="本章小節">${c.sections.map((s, k) => `<a href="#${id}/${k + 1}">${k + 1}. ${s.h}</a>`).join('')}<a href="#${id}/quiz">確認理解</a></nav>
+<nav class="secnav" aria-label="本章小節">${c.sections.map((s, k) => `<a href="#${id}/${k + 1}">${k + 1}. ${s.h}</a>`).join('')}<a href="#${id}/quiz">確認理解</a></nav>${(TERMS[id] || []).length ? `<div class="tchips" aria-label="本章名詞"><span class="lbl">本章名詞</span>${TERMS[id].map((t, k) => `<button type="button" class="tchip" data-t="${k}">${t[0]}</button>`).join('')}</div>` : ''}
 ${c.sections.map((s, k) => `<section class="sec" id="sec-${k + 1}"><h2><span class="sn">${k + 1}</span>${s.h}</h2><div class="prose">${s.body}</div>${[].concat(s.w || []).map(w => `<div class="widget" data-w="${w}"></div>`).join('')}</section>`).join('')}
 <section class="sec" id="sec-quiz"><h2><span class="sn">✓</span>確認理解</h2><p class="mut small">答錯了沒關係：按「在圖上看」回到對應的圖，找出哪裡想錯。</p>${c.quiz.map((q, k) => `<div class="q" data-q="${k}"><p class="qt">${k + 1}. ${q.q}</p><div class="opts">${order(q, k).map(j => `<button class="opt" type="button" data-o="${j}">${q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('')}</section>
 <div class="foot"><button class="btn ${state.done[id] ? 'done' : ''}" type="button" id="doneBtn">${state.done[id] ? '已完成 ✓' : '標記為完成'}</button><nav class="pn">${prev ? `<a href="#${prev.id}"><small>上一章</small>${prev.title}</a>` : '<span></span>'}${next ? `<a href="#${next.id}" class="nx"><small>下一章</small>${next.title}</a>` : ''}</nav></div>`;
@@ -3820,13 +4026,42 @@ ${c.sections.map((s, k) => `<section class="sec" id="sec-${k + 1}"><h2><span cla
       if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}${demo}`; right.add(qe.dataset.q);
         if (right.size === c.quiz.length && !state.done[id]) { setDone(id, true); markBtn(); } }
       else { b.disabled = true; why.className = 'why no'; why.innerHTML = `<b>再想想。</b>${demo ? '按下面的按鈕回到圖上看看。' : ''}${demo}`; }
-      const sb = $('[data-show]', why); if (sb) sb.onclick = () => { const it = INST[q.show.w]; if (q.show.set) it.inst.set(q.show.set); it.el.scrollIntoView({ behavior: 'smooth', block: 'center' }); it.el.classList.add('flash'); setTimeout(() => it.el.classList.remove('flash'), 1200); };
+      const sb = $('[data-show]', why); if (sb) sb.onclick = () => showOnChart(q.show);
     }; });
   });
+  bindTerms(id);
   const markBtn = () => { const d = !!state.done[id]; $('#doneBtn').textContent = d ? '已完成 ✓' : '標記為完成'; $('#doneBtn').classList.toggle('done', d); };
   $('#doneBtn').onclick = () => { setDone(id, !state.done[id]); markBtn(); };
 }
 // 選項順序：依題號固定打散，避免正解永遠在第一個（不用亂數，重新整理後順序不變）
+// 名詞：內文第一次出現時變成連結，點了跳出解釋框；有對應互動圖時可以「在圖上看」
+function showOnChart(show) {
+  const it = INST[show.w]; if (!it) return;
+  if (show.set) it.inst.set(show.set);
+  it.el.scrollIntoView({ behavior: 'smooth', block: 'center' }); it.el.classList.add('flash'); setTimeout(() => it.el.classList.remove('flash'), 1200);
+}
+function bindTerms(id) {
+  const T = TERMS[id] || [], art = $('#article');
+  T.forEach(([term], k) => {   // 每個名詞只連結內文中第一次出現的位置（略過公式框與表格標題）
+    const w = document.createTreeWalker(art, NodeFilter.SHOW_TEXT, { acceptNode: n => (n.parentElement.closest('.prose') && !n.parentElement.closest('.eq, th, .tlink, button') && n.nodeValue.includes(term) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT) });
+    const n = w.nextNode(); if (!n) return;
+    const i = n.nodeValue.indexOf(term), after = n.splitText(i); after.nodeValue = after.nodeValue.slice(term.length);
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'tlink'; b.dataset.t = k; b.textContent = term; n.parentNode.insertBefore(b, after);
+  });
+  const pop = document.createElement('div'); pop.id = 'tpop'; pop.hidden = true; pop.setAttribute('role', 'dialog'); art.appendChild(pop);
+  const open = (btn, k) => {
+    const [term, def, show] = T[k], ab = art.getBoundingClientRect(), r = btn.getBoundingClientRect();
+    pop.innerHTML = `<b>${term}</b><p>${def}</p>${show && INST[show.w] ? '<button type="button" class="btn sm pri" data-go>在圖上看 →</button>' : ''}`;
+    pop.hidden = false; pop.style.top = `${r.bottom - ab.top + 6}px`; pop.style.left = `${Math.max(0, Math.min(r.left - ab.left, ab.width - pop.offsetWidth))}px`;
+    const g = $('[data-go]', pop); if (g) g.onclick = () => { pop.hidden = true; showOnChart(show); };
+  };
+  $$('.tlink, .tchip', art).forEach(b => { b.onclick = e => { e.stopPropagation(); open(b, +b.dataset.t); }; });
+  if (!window.__tpopBound) {   // 點外面或按 Esc 關閉（只綁一次）
+    window.__tpopBound = true;
+    document.addEventListener('click', e => { const p = $('#tpop'); if (p && !p.hidden && !p.contains(e.target)) p.hidden = true; });
+    document.addEventListener('keydown', e => { const p = $('#tpop'); if (p && e.key === 'Escape') p.hidden = true; });
+  }
+}
 function order(q, k) { const n = q.o.length, s = (k * 7 + q.q.length) % n; return Array.from({ length: n }, (_, i) => (i + s) % n); }
 
 let shown = null;

@@ -14,7 +14,7 @@ CH.push({
 <p>預測 ΔS 的正負，看「自由度」有沒有增加：</p>
 <ul><li>固體 → 液體 → 氣體：ΔS &gt; 0；</li><li>氣體分子數增加：ΔS &gt; 0（例如 CaCO₃(s) → CaO(s) + CO₂(g)）；</li><li>溶解、混合、升溫：通常 ΔS &gt; 0；</li><li>一個分子拆成兩個（例如脫去反應）：ΔS &gt; 0。</li></ul>` },
     { h: '自由能：ΔG = ΔH − TΔS', w: 'gibbs', body: `
-<p>在定溫定壓下，判斷反應能不能自發只看一個量：</p>
+<p>在定溫定壓下，判斷反應能不能自發只看一個量，<b>自由能</b>的變化：</p>
 <p class="eq">ΔG = ΔH − TΔS　　ΔG &lt; 0 自發；ΔG &gt; 0 不自發（逆反應自發）；ΔG = 0 平衡</p>
 <table class="tbl"><thead><tr><th>ΔH</th><th>ΔS</th><th>結果</th></tr></thead><tbody>
 <tr><td>−</td><td>+</td><td>任何溫度都自發</td></tr><tr><td>+</td><td>−</td><td>任何溫度都不自發</td></tr>

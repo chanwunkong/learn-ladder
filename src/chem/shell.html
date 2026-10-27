@@ -219,6 +219,16 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 .rung.to { border-color: var(--arrow); background: color-mix(in srgb, var(--arrow) 10%, var(--bg)); }
 .nmpk { stroke: var(--acid); stroke-width: 2; } .nmon { stroke: var(--arrow); stroke-width: 2.6; }
 .hsgrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; max-width: 560px; }
+/* 名詞 */
+#article { position: relative; }
+.tlink { background: none; border: 0; padding: 0; font: inherit; color: inherit; border-bottom: 1.5px dotted var(--accent); cursor: help; }
+.tlink:hover { color: var(--accent); }
+.tchips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 4px 0 6px; }
+.tchips .lbl { margin: 0 4px 0 0; }
+.tchip { font-size: 12.5px; padding: 2px 10px; border-radius: 99px; border: 1px dashed var(--accent); background: none; color: var(--accent); cursor: pointer; }
+.tchip:hover { background: var(--soft); }
+#tpop { position: absolute; z-index: 25; width: min(320px, 100%); background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,.12); padding: 10px 14px; font-size: 14px; }
+#tpop p { margin: 4px 0 8px; }
 /* 練習題 */
 .q { border-top: 1px solid var(--line); padding: 14px 0; }
 .qt { font-weight: 500; margin: 0 0 8px; }

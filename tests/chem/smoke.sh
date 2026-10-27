@@ -33,6 +33,10 @@ window.__errs = []; addEventListener('error', e => __errs.push(e.message)); cons
     for (const b of [...w.querySelectorAll('button.btn')]) { if (!b.closest('.mech-ctl')) b.click(); }
     if (/\bNaN\b|\bundefined\b|\bInfinity\b/.test(w.textContent)) __errs.push(`${w.dataset.w}: 文字中出現 NaN/undefined`);
   }
+  // 名詞：每個名詞都要能打開解釋框；有「在圖上看」就按一次；記下內文沒有連結到的名詞
+  rep.terms = document.querySelectorAll('.tchip').length; rep.linked = new Set([...document.querySelectorAll('.tlink')].map(b => b.dataset.t)).size;
+  rep.unlinked = [...document.querySelectorAll('.tchip')].filter(c => !document.querySelector(`.tlink[data-t="${c.dataset.t}"]`)).map(c => c.textContent);
+  for (const c of document.querySelectorAll('.tchip')) { c.click(); const p = document.getElementById('tpop'); if (!p || p.hidden || !p.textContent.trim()) __errs.push('名詞解釋框沒有打開：' + c.textContent); const g = p && p.querySelector('[data-go]'); if (g) { g.click(); rep.shows++; } }
   for (const q of document.querySelectorAll('.q')) {
     rep.quiz++;
     for (const o of [...q.querySelectorAll('.opt')]) { if (!o.disabled) o.click(); const s = q.querySelector('[data-show]'); if (s) { s.click(); rep.shows++; } }
