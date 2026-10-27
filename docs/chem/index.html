@@ -310,6 +310,8 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 .tchip:hover { background: var(--soft); }
 #tpop { position: absolute; z-index: 25; width: min(320px, 100%); background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,.12); padding: 10px 14px; font-size: 14px; }
 #tpop p { margin: 4px 0 8px; }
+.pbadge { display: inline-block; margin: 4px 0 0; padding: 2px 12px; border-radius: 99px; font-size: 13px; background: var(--sunk); color: var(--muted); }
+.pbadge.on { background: var(--accent); color: var(--accent-ink); font-weight: 700; }
 /* 練習題 */
 .q { border-top: 1px solid var(--line); padding: 14px 0; }
 .qt { font-weight: 500; margin: 0 0 8px; }
@@ -1296,7 +1298,7 @@ CH.push({
 <p>酸鹼反應 HA + B⁻ ⇌ A⁻ + HB，兩邊各有一個酸（HA 和 HB）。平衡永遠偏向<b>較弱的酸</b>（pKa 較大）那一側：</p>
 <p class="eq">K = 10<sup>(pKa of HB − pKa of HA)</sup></p>
 <p>pKa 每差 1，平衡常數差 10 倍。所以只要查兩個 pKa，就知道一個鹼能不能拿走某個 H⁺。這就是為什麼：</p>
-<ul><li>NaOH（共軛酸 H₂O，15.7）拿不走乙炔的 H（25），但 NaNH₂（共軛酸 NH₃，38）可以。</li>
+<ul><li>NaOH（共軛酸 H₂O，15.7）拿不走乙炔的 H（25），但 NaNH₂（共軛酸 NH₃，約 35）可以。</li>
 <li>碳酸氫鈉（共軛酸 H₂CO₃，6.35）能溶解羧酸（約 4–5），但不能溶解酚（10）：實驗室用這個差別把兩者分開。</li></ul>` },
     { h: '什麼讓酸變強：看共軛鹼', w: 'ario', body: `
 <p>酸性強弱取決於<b>共軛鹼有多穩定</b>：拿走 H⁺ 後留下的負電荷越穩定，酸就越強。判斷負電荷穩定度依序看四個因素（重要性大致由高到低）：</p>
@@ -1313,18 +1315,18 @@ CH.push({
   quiz: [
     { q: 'CH₃COOH（pKa 4.76）+ OH⁻ ⇌ CH₃COO⁻ + H₂O（pKa 15.7），平衡偏向哪一側？', o: ['右側，K 約 10¹¹', '左側', '兩側相當', '無法判斷'], a: 0,
       why: '平衡偏向較弱的酸 H₂O（pKa 15.7）那一側，K = 10^(15.7 − 4.76) ≈ 10¹¹。', show: { w: 'pkaeq', set: { a: 2, b: 6 } } },
-    { q: '要把乙炔 HC≡CH（pKa 25）的 H 拿走，下列哪個鹼可以？', o: ['NaNH₂（NH₃ 的 pKa 38）', 'NaOH（H₂O 的 pKa 15.7）', 'NaHCO₃（H₂CO₃ 的 pKa 6.35）', 'CH₃COONa（醋酸 pKa 4.76）'], a: 0,
-      why: '鹼的共軛酸 pKa 必須大於 25，平衡才偏向產物。只有 NH₃（38）符合。', show: { w: 'pkaeq', set: { a: 8, b: 9 } } },
+    { q: '要把乙炔 HC≡CH（pKa 25）的 H 拿走，下列哪個鹼可以？', o: ['NaNH₂（NH₃ 的 pKa 約 35）', 'NaOH（H₂O 的 pKa 15.7）', 'NaHCO₃（H₂CO₃ 的 pKa 6.35）', 'CH₃COONa（醋酸 pKa 4.76）'], a: 0,
+      why: '鹼的共軛酸 pKa 必須大於 25，平衡才偏向產物。只有 NH₃（約 35）符合。', show: { w: 'pkaeq', set: { a: 8, b: 9 } } },
     { q: '下列酸性由強到弱排列何者正確？', o: ['HI > HBr > HCl > HF', 'HF > HCl > HBr > HI', 'HCl > HF > HBr > HI', 'HF > HI > HBr > HCl'], a: 0,
       why: '同一族由上到下原子變大，負電荷分散在較大體積、H–X 鍵變弱，酸性增強。大小的影響勝過電負度。', show: { w: 'ario', set: { t: 'col' } } },
     { q: '為什麼醋酸（pKa 4.76）比乙醇（pKa 16）酸性強得多？', o: ['醋酸根的負電荷可以共振分散到兩個 O 上', '醋酸的分子量較大', '乙醇有氫鍵', '醋酸的 O–H 鍵比較長'], a: 0,
       why: '乙氧離子的負電荷集中在一個 O；醋酸根的負電荷平均分在兩個 O 上，更穩定。', show: { w: 'ario', set: { t: 'res' } } },
     { q: '下列羧酸何者酸性最強？', o: ['Cl₃CCOOH', 'Cl₂CHCOOH', 'ClCH₂COOH', 'CH₃COOH'], a: 0,
-      why: 'Cl 以誘導效應拉電子、分攤負電荷，Cl 越多酸性越強（pKa 0.65）。', show: { w: 'ario', set: { t: 'ind' } } },
+      why: 'Cl 以誘導效應拉電子、分攤負電荷，Cl 越多酸性越強（三氯乙酸 pKa 約 0.7）。', show: { w: 'ario', set: { t: 'ind' } } },
     { q: '下列化合物何者鹼性最弱？', o: ['乙醯胺 CH₃CONH₂', '甲胺 CH₃NH₂', '氨 NH₃', '苯胺 C₆H₅NH₂'], a: 0,
       why: '醯胺 N 的孤對電子和 C=O 強烈共振，幾乎沒有鹼性（pKaH 約 −0.5）。苯胺的孤對電子和苯環共振，鹼性也弱（4.6），但仍比醯胺強得多。', show: { w: 'basic', set: { i: 5 } } },
     { q: '下列何者是最好的離去基？', o: ['I⁻', 'F⁻', 'OH⁻', 'NH₂⁻'], a: 0,
-      why: '好的離去基是弱鹼：共軛酸越強越好。HI 的 pKa 約 −10，I⁻ 最穩定；NH₂⁻ 的共軛酸 NH₃ pKa 38，是極差的離去基。' },
+      why: '好的離去基是弱鹼：共軛酸越強越好。HI 的 pKa 約 −10，I⁻ 最穩定；NH₂⁻ 的共軛酸 NH₃ pKa 約 35，是極差的離去基。' },
   ],
 });
 
@@ -1432,7 +1434,7 @@ CH.push({
       { q: 'E2 反應中，被拿走的 β-H 和離去基需要什麼相對位置？', o: ['反式共平面（二面角 180°）', '順式共平面（二面角 0°）', '二面角 60°（偏位）', '沒有限制'], a: 0,
         why: 'C–H 鍵的電子要推進 C–X 的反鍵結軌域，兩者必須平行對齊；反式共平面時對齊得最好，也避開了擁擠的重疊構形。', show: { w: 'newman', set: { ang: 180 } } },
       { q: '2-溴-2-甲基丁烷和第三丁氧化鉀（t-BuOK）反應，主要產物是？', o: ['2-甲基-1-丁烯', '2-甲基-2-丁烯', '2-甲基-2-丁醇', '第三丁基 2-甲基-2-丁基醚'], a: 0,
-        why: 't-BuO⁻ 體積很大，搆不到 CH₂ 上的 H，只能拿外側 CH₃ 上的 H，生成取代較少的霍夫曼產物 2-甲基-1-丁烯（約 72%）。', show: { w: 'zaitsev', set: { base: 'tbuo' } } },
+        why: 't-BuO⁻ 體積很大，搆不到 CH₂ 上的 H，只能拿外側 CH₃ 上的 H，生成取代較少的霍夫曼產物 2-甲基-1-丁烯。', show: { w: 'zaitsev', set: { base: 'tbuo' } } },
       { q: '2-溴丙烷和乙氧化鈉（NaOEt）在乙醇中反應，主要走哪一條路？', o: ['E2', 'SN2', 'SN1', 'E1'], a: 0,
         why: '二級基質加上強鹼（同時也是強親核基），背面有點擠，鹼拿 β-H 比較容易，所以 E2 為主、SN2 為次。', show: { w: 'decide', set: { sub: 'secondary', reag: 'base', solv: 'protic', heat: false } } },
       { q: '為什麼醇要在酸性條件下才能進行取代反應？', o: ['質子化後離去的是 H₂O，而不是很差的離去基 OH⁻', '酸會讓親核基變強', '酸能把醇氧化成醛', '酸讓碳變成負電荷'], a: 0,
@@ -2077,7 +2079,7 @@ const GRP = { H: 0.3, 'CH₃': 0.52, 'C₂H₅': 0.6 };
 const SUBS = {
   methyl: { n: '甲基', s: ['H', 'H', 'H'], r: '溴甲烷', p: '甲醇', rate: 30 },
   primary: { n: '一級', s: ['H', 'H', 'CH₃'], r: '溴乙烷', p: '乙醇', rate: 1 },
-  secondary: { n: '二級', s: ['H', 'CH₃', 'C₂H₅'], r: '(R)-2-溴丁烷', p: '(S)-2-丁醇', rate: 0.02 },
+  secondary: { n: '二級', s: ['H', 'CH₃', 'C₂H₅'], r: '(R)-2-溴丁烷', p: '(S)-2-丁醇', rate: 0.025 },
   tertiary: { n: '三級', s: ['CH₃', 'CH₃', 'CH₃'], r: '2-溴-2-甲基丙烷', p: '', rate: 0 },
 };
 const SLOT = { R: [[-0.38, 1.0], [-1.0, -0.42], [-0.12, -1.05]], T: [[0, 1.1], [-0.6, -0.62], [0.55, -0.82]], P: [[0.38, 1.0], [1.0, -0.42], [0.12, -1.05]] };
@@ -2104,7 +2106,7 @@ W.sn2 = el => {
   };
   function rates() {
     const mx = Math.log10(30) + 2.5;
-    $('#s2r', el).innerHTML = `<p class="lbl">SN2 相對速率（以溴乙烷 = 1，常見教科書數據）</p><div class="bars">${Object.entries(SUBS).map(([k, v]) => `<div class="${k === sub ? 'on' : ''}"><span>${v.n}</span><i class="ba" style="width:${v.rate ? 100 * (Math.log10(v.rate) + 2.5) / mx : 1}%"></i><b class="mono">${v.rate || '≈ 0'}</b></div>`).join('')}</div><p class="small mut">長條為對數長度：每多一個基團擋住背面，速率就掉好幾十倍。</p>`;
+    $('#s2r', el).innerHTML = `<p class="lbl">SN2 相對速率（以乙基 = 1；常見教學數據，數值隨親核基與溶劑而異，數量級才是重點）</p><div class="bars">${Object.entries(SUBS).map(([k, v]) => `<div class="${k === sub ? 'on' : ''}"><span>${v.n}</span><i class="ba" style="width:${v.rate ? 100 * (Math.log10(v.rate) + 2.5) / mx : 1}%"></i><b class="mono">${v.rate || '≈ 0'}</b></div>`).join('')}</div><p class="small mut">長條為對數長度：每多一個基團擋住背面，速率就掉好幾十倍。</p>`;
   }
   pl = mechPlayer($('#s2p', el), { frames, energy: [[0, 0.3], [0.5, 0.9], [1, 0.12]], elabels: [[0, '反應物'], [0.5, '過渡狀態'], [1, '產物']], w: 520, h: 250, label: 'SN2 反應機構' });
   bindSeg(el, 's2s', v => { sub = v; pressSeg(el, 's2s', v); pl.reset(); rates(); });
@@ -2184,7 +2186,7 @@ W.newman = el => {
 /* ===== 10. 查依采夫 vs 霍夫曼 ===== */
 W.zaitsev = el => {
   let base = 'eto';
-  const B = { eto: { n: '乙氧基 EtO⁻（體積小）', z: 70, h: 30 }, tbuo: { n: '第三丁氧基 t-BuO⁻（體積大）', z: 28, h: 72 } };
+  const B = { eto: { n: '乙氧基 EtO⁻（體積小）', z: '主產物', h: '次產物' }, tbuo: { n: '第三丁氧基 t-BuO⁻（體積大）', z: '次產物', h: '主產物' } };
   el.innerHTML = `${seg('zb', Object.entries(B).map(([k, v]) => [k, v.n]), base)}<div class="zgrid"><div id="zs"></div><div id="zp"></div></div><p class="note" id="zn"></p>`;
   function draw() {
     const big = base === 'tbuo';
@@ -2193,10 +2195,10 @@ W.zaitsev = el => {
       bonds: [['C2', 'C1', 's'], ['C2', 'Me', 's'], ['C2', 'Br', 's'], ['C2', 'C3', 's'], ['C3', 'C4', 's']] };
     $('#zs', el).innerHTML = MOL.svg(sc, { w: 300, h: 210, s: 52, cx: 140, cy: 110, label: '2-溴-2-甲基丁烷' }) + `<p class="small mut">2-溴-2-甲基丁烷。β-H 有兩種：CH₂ 上 2 個（內側），兩個 CH₃ 上共 6 個（外側）。</p>`;
     const d = B[base];
-    $('#zp', el).innerHTML = `<div class="prod"><p class="pf">(CH₃)₂C=CH–CH₃</p><p class="small">2-甲基-2-丁烯　三取代烯（較穩定）<br>拿走內側 CH₂ 的 H：<b>查依采夫產物</b></p><div class="bars"><div><span>${d.z}%</span><i class="ba" style="width:${d.z}%"></i></div></div></div>
-<div class="prod"><p class="pf">CH₂=C(CH₃)–CH₂CH₃</p><p class="small">2-甲基-1-丁烯　二取代烯<br>拿走外側 CH₃ 的 H：<b>霍夫曼產物</b></p><div class="bars"><div><span>${d.h}%</span><i class="bha" style="width:${d.h}%"></i></div></div></div>`;
-    $('#zn', el).innerHTML = big ? '體積很大的 t-BuO⁻ 擠不進三級碳旁邊的 CH₂，只能拿外側、比較好接近的 CH₃ 上的 H，所以取代較少的烯反而是主產物（約 72%）。'
-      : '小的 EtO⁻ 兩種 H 都拿得到。形成取代較多的雙鍵，過渡狀態已經有部分雙鍵的穩定性，所以較穩定的三取代烯是主產物（約 70%）。';
+    $('#zp', el).innerHTML = `<div class="prod"><p class="pf">(CH₃)₂C=CH–CH₃</p><p class="small">2-甲基-2-丁烯　三取代烯（較穩定）<br>拿走內側 CH₂ 的 H：<b>查依采夫產物</b></p><p class="pbadge ${d.z === '主產物' ? 'on' : ''}">${d.z}</p></div>
+<div class="prod"><p class="pf">CH₂=C(CH₃)–CH₂CH₃</p><p class="small">2-甲基-1-丁烯　二取代烯<br>拿走外側 CH₃ 的 H：<b>霍夫曼產物</b></p><p class="pbadge ${d.h === '主產物' ? 'on' : ''}">${d.h}</p></div>`;
+    $('#zn', el).innerHTML = big ? '體積很大的 t-BuO⁻ 擠不進三級碳旁邊的 CH₂，只能拿外側、比較好接近的 CH₃ 上的 H，所以取代較少的烯反而是主產物。'
+      : '小的 EtO⁻ 兩種 H 都拿得到。形成取代較多的雙鍵，過渡狀態已經有部分雙鍵的穩定性，所以較穩定的三取代烯是主產物。';
     pressSeg(el, 'zb', base);
   }
   bindSeg(el, 'zb', v => { base = v; draw(); });
@@ -2296,7 +2298,7 @@ W.nacyl = el => {
 
 /* ===== 2. 反應性階梯：只能往下走 ===== */
 W.acylrank = el => {
-  const L = [['醯氯 RCOCl', 'Cl⁻', 'HCl', -7, '幾乎沒有共振給電子（Cl 的 3p 軌域和 C 的 2p 重疊差）'], ['酸酐 (RCO)₂O', 'RCOO⁻', 'RCOOH', 4.8, 'O 的孤對電子分給兩個羰基'], ['酯 RCOOR′', "R′O⁻", "R′OH", 16, 'O 的孤對電子共振給羰基'], ['醯胺 RCONH₂', 'NH₂⁻', 'NH₃', 38, 'N 的孤對電子強烈共振給羰基（醯胺最穩定）'], ['羧酸根 RCOO⁻', 'O²⁻', 'OH⁻', '—', '帶負電，親核基幾乎無法進攻']];
+  const L = [['醯氯 RCOCl', 'Cl⁻', 'HCl', -7, '幾乎沒有共振給電子（Cl 的 3p 軌域和 C 的 2p 重疊差）'], ['酸酐 (RCO)₂O', 'RCOO⁻', 'RCOOH', 4.8, 'O 的孤對電子分給兩個羰基'], ['酯 RCOOR′', "R′O⁻", "R′OH", 16, 'O 的孤對電子共振給羰基'], ['醯胺 RCONH₂', 'NH₂⁻', 'NH₃', 35, 'N 的孤對電子強烈共振給羰基（醯胺最穩定）'], ['羧酸根 RCOO⁻', 'O²⁻', 'OH⁻', '—', '帶負電，親核基幾乎無法進攻']];
   let a = 0, b = 2;
   el.innerHTML = `<div class="ladder2" id="arL"></div><div class="w-row"><label class="sel">從 <select id="arA">${L.map((x, i) => `<option value="${i}">${x[0]}</option>`).join('')}</select></label><label class="sel">變成 <select id="arB">${L.map((x, i) => `<option value="${i}">${x[0]}</option>`).join('')}</select></label></div><p class="note" id="arN"></p>`;
   function draw() {
@@ -2607,7 +2609,7 @@ W.directing = el => {
     NO2: { n: '–NO₂', d: [7, 91, 2], k: '強鈍化，間位', why: '硝基強烈拉電子（N 帶正電）。鄰、對位進攻會讓兩個正電荷相鄰；只剩間位可行，而且整體反應很慢。' },
   };
   let cur = 'CH3';
-  el.innerHTML = `${seg('drS', Object.entries(S).map(([k, v]) => [k, v.n]), cur)}<div class="bars pk" id="drB"></div><p class="small mut">取代苯硝化時，硝基進入鄰位、間位、對位的比例（McMurry 數據）</p><p class="note" id="drN"></p>`;
+  el.innerHTML = `${seg('drS', Object.entries(S).map(([k, v]) => [k, v.n]), cur)}<div class="bars pk" id="drB"></div><p class="small mut">取代苯硝化時，硝基進入鄰位、間位、對位的比例（OpenStax《Organic Chemistry》表 16.1，以 McMurry 為底本）</p><p class="note" id="drN"></p>`;
   function draw() {
     const s = S[cur];
     $('#drB', el).innerHTML = [['鄰位（ortho）', 0], ['間位（meta）', 1], ['對位（para）', 2]].map(([t, i]) => `<div><span>${t}</span><i class="${i === 1 ? 'bha' : 'ba'}" style="width:${Math.max(1, s.d[i])}%"></i><b class="mono">${s.d[i]}%</b></div>`).join('');
@@ -3404,9 +3406,10 @@ W.reson = el => {
 };
 
 /* ===== 4. 用 pKa 預測酸鹼反應方向 ===== */
+// pKa 主要採 OpenStax《Organic Chemistry》（McMurry）的數值；不同教科書略有差異（例如 NH₃ 為 35–38、CH₄ 為 50–60）
 const PKA = [
   ['HCl', 'Cl⁻', -7], ['H₃O⁺', 'H₂O', -1.7], ['CH₃COOH', 'CH₃COO⁻', 4.76], ['H₂CO₃', 'HCO₃⁻', 6.35], ['NH₄⁺', 'NH₃', 9.25], ['C₆H₅OH（酚）', 'C₆H₅O⁻', 10.0],
-  ['H₂O', 'OH⁻', 15.7], ['CH₃CH₂OH', 'CH₃CH₂O⁻', 16], ['HC≡CH', 'HC≡C⁻', 25], ['NH₃', 'NH₂⁻', 38], ['CH₃CH₃', 'CH₃CH₂⁻', 50],
+  ['H₂O', 'OH⁻', 15.7], ['CH₃CH₂OH', 'CH₃CH₂O⁻', 16], ['HC≡CH', 'HC≡C⁻', 25], ['NH₃', 'NH₂⁻', 35], ['CH₃CH₃', 'CH₃CH₂⁻', 50],
 ];
 W.pkaeq = el => {
   let ia = 8, ib = 6;
@@ -3430,10 +3433,10 @@ W.pkaeq = el => {
 /* ===== 5. 什麼讓酸變強：看共軛鹼的負電荷穩不穩 ===== */
 W.ario = el => {
   const T = {
-    row: { n: '原子：同一週期', items: [['CH₄', 50], ['NH₃', 38], ['H₂O', 15.7], ['HF', 3.2]], why: '同一週期由左到右，電負度 C < N < O < F。負電荷落在電負度越大的原子上越穩定，所以 HF 最酸。' },
+    row: { n: '原子：同一週期', items: [['CH₄', 60], ['NH₃', 35], ['H₂O', 15.7], ['HF', 3.2]], why: '同一週期由左到右，電負度 C < N < O < F。負電荷落在電負度越大的原子上越穩定，所以 HF 最酸。' },
     col: { n: '原子：同一族', items: [['HF', 3.2], ['HCl', -7], ['HBr', -9], ['HI', -10]], why: '同一族由上到下，原子越大，負電荷分散在越大的體積，越穩定；而且 H–X 鍵越長越弱。<b>大小比電負度重要</b>，所以 HI 最酸，雖然 I 的電負度最小。' },
     res: { n: '共振', items: [['CH₃CH₂OH', 16], ['C₆H₅OH（酚）', 10.0], ['CH₃COOH', 4.76]], why: '乙氧離子的負電荷集中在一個 O 上；酚氧離子的負電荷可以分散到苯環上；醋酸根的負電荷平均分在兩個電負度大的 O 上（見上一章的共振）。<b>電荷越分散越穩定</b>。' },
-    ind: { n: '誘導：拉電子基數目', items: [['CH₃COOH', 4.76], ['ClCH₂COOH', 2.86], ['Cl₂CHCOOH', 1.29], ['Cl₃CCOOH', 0.65]], why: 'Cl 電負度大，透過 σ 鍵把電子往自己拉，幫忙分攤羧酸根的負電荷。Cl 越多，效果越強，酸性越強。' },
+    ind: { n: '誘導：拉電子基數目', items: [['CH₃COOH', 4.76], ['ClCH₂COOH', 2.9], ['Cl₂CHCOOH', 1.3], ['Cl₃CCOOH', 0.7]], why: 'Cl 電負度大，透過 σ 鍵把電子往自己拉，幫忙分攤羧酸根的負電荷。Cl 越多，效果越強，酸性越強。' },
     dist: { n: '誘導：距離', items: [['丁酸', 4.82], ['4-氯丁酸', 4.52], ['3-氯丁酸', 4.05], ['2-氯丁酸', 2.86]], why: '誘導效應隨距離快速減弱：Cl 越靠近 COOH，酸性越強；隔三個碳以後幾乎沒影響。' },
     orb: { n: '混成軌域', items: [['CH₃CH₃（sp³）', 50], ['CH₂=CH₂（sp²）', 44], ['HC≡CH（sp）', 25]], why: '負電荷所在軌域的 s 性質越高（sp 50%、sp² 33%、sp³ 25%），電子越靠近原子核、越穩定。所以末端炔的 H 可以被 NaNH₂ 拿走，烯和烷不行。' },
   };

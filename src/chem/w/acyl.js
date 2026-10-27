@@ -24,7 +24,7 @@ W.nacyl = el => {
 
 /* ===== 2. 反應性階梯：只能往下走 ===== */
 W.acylrank = el => {
-  const L = [['醯氯 RCOCl', 'Cl⁻', 'HCl', -7, '幾乎沒有共振給電子（Cl 的 3p 軌域和 C 的 2p 重疊差）'], ['酸酐 (RCO)₂O', 'RCOO⁻', 'RCOOH', 4.8, 'O 的孤對電子分給兩個羰基'], ['酯 RCOOR′', "R′O⁻", "R′OH", 16, 'O 的孤對電子共振給羰基'], ['醯胺 RCONH₂', 'NH₂⁻', 'NH₃', 38, 'N 的孤對電子強烈共振給羰基（醯胺最穩定）'], ['羧酸根 RCOO⁻', 'O²⁻', 'OH⁻', '—', '帶負電，親核基幾乎無法進攻']];
+  const L = [['醯氯 RCOCl', 'Cl⁻', 'HCl', -7, '幾乎沒有共振給電子（Cl 的 3p 軌域和 C 的 2p 重疊差）'], ['酸酐 (RCO)₂O', 'RCOO⁻', 'RCOOH', 4.8, 'O 的孤對電子分給兩個羰基'], ['酯 RCOOR′', "R′O⁻", "R′OH", 16, 'O 的孤對電子共振給羰基'], ['醯胺 RCONH₂', 'NH₂⁻', 'NH₃', 35, 'N 的孤對電子強烈共振給羰基（醯胺最穩定）'], ['羧酸根 RCOO⁻', 'O²⁻', 'OH⁻', '—', '帶負電，親核基幾乎無法進攻']];
   let a = 0, b = 2;
   el.innerHTML = `<div class="ladder2" id="arL"></div><div class="w-row"><label class="sel">從 <select id="arA">${L.map((x, i) => `<option value="${i}">${x[0]}</option>`).join('')}</select></label><label class="sel">變成 <select id="arB">${L.map((x, i) => `<option value="${i}">${x[0]}</option>`).join('')}</select></label></div><p class="note" id="arN"></p>`;
   function draw() {

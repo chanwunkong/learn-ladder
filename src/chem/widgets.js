@@ -205,7 +205,7 @@ const GRP = { H: 0.3, 'CH₃': 0.52, 'C₂H₅': 0.6 };
 const SUBS = {
   methyl: { n: '甲基', s: ['H', 'H', 'H'], r: '溴甲烷', p: '甲醇', rate: 30 },
   primary: { n: '一級', s: ['H', 'H', 'CH₃'], r: '溴乙烷', p: '乙醇', rate: 1 },
-  secondary: { n: '二級', s: ['H', 'CH₃', 'C₂H₅'], r: '(R)-2-溴丁烷', p: '(S)-2-丁醇', rate: 0.02 },
+  secondary: { n: '二級', s: ['H', 'CH₃', 'C₂H₅'], r: '(R)-2-溴丁烷', p: '(S)-2-丁醇', rate: 0.025 },
   tertiary: { n: '三級', s: ['CH₃', 'CH₃', 'CH₃'], r: '2-溴-2-甲基丙烷', p: '', rate: 0 },
 };
 const SLOT = { R: [[-0.38, 1.0], [-1.0, -0.42], [-0.12, -1.05]], T: [[0, 1.1], [-0.6, -0.62], [0.55, -0.82]], P: [[0.38, 1.0], [1.0, -0.42], [0.12, -1.05]] };
@@ -232,7 +232,7 @@ W.sn2 = el => {
   };
   function rates() {
     const mx = Math.log10(30) + 2.5;
-    $('#s2r', el).innerHTML = `<p class="lbl">SN2 相對速率（以溴乙烷 = 1，常見教科書數據）</p><div class="bars">${Object.entries(SUBS).map(([k, v]) => `<div class="${k === sub ? 'on' : ''}"><span>${v.n}</span><i class="ba" style="width:${v.rate ? 100 * (Math.log10(v.rate) + 2.5) / mx : 1}%"></i><b class="mono">${v.rate || '≈ 0'}</b></div>`).join('')}</div><p class="small mut">長條為對數長度：每多一個基團擋住背面，速率就掉好幾十倍。</p>`;
+    $('#s2r', el).innerHTML = `<p class="lbl">SN2 相對速率（以乙基 = 1；常見教學數據，數值隨親核基與溶劑而異，數量級才是重點）</p><div class="bars">${Object.entries(SUBS).map(([k, v]) => `<div class="${k === sub ? 'on' : ''}"><span>${v.n}</span><i class="ba" style="width:${v.rate ? 100 * (Math.log10(v.rate) + 2.5) / mx : 1}%"></i><b class="mono">${v.rate || '≈ 0'}</b></div>`).join('')}</div><p class="small mut">長條為對數長度：每多一個基團擋住背面，速率就掉好幾十倍。</p>`;
   }
   pl = mechPlayer($('#s2p', el), { frames, energy: [[0, 0.3], [0.5, 0.9], [1, 0.12]], elabels: [[0, '反應物'], [0.5, '過渡狀態'], [1, '產物']], w: 520, h: 250, label: 'SN2 反應機構' });
   bindSeg(el, 's2s', v => { sub = v; pressSeg(el, 's2s', v); pl.reset(); rates(); });
@@ -312,7 +312,7 @@ W.newman = el => {
 /* ===== 10. 查依采夫 vs 霍夫曼 ===== */
 W.zaitsev = el => {
   let base = 'eto';
-  const B = { eto: { n: '乙氧基 EtO⁻（體積小）', z: 70, h: 30 }, tbuo: { n: '第三丁氧基 t-BuO⁻（體積大）', z: 28, h: 72 } };
+  const B = { eto: { n: '乙氧基 EtO⁻（體積小）', z: '主產物', h: '次產物' }, tbuo: { n: '第三丁氧基 t-BuO⁻（體積大）', z: '次產物', h: '主產物' } };
   el.innerHTML = `${seg('zb', Object.entries(B).map(([k, v]) => [k, v.n]), base)}<div class="zgrid"><div id="zs"></div><div id="zp"></div></div><p class="note" id="zn"></p>`;
   function draw() {
     const big = base === 'tbuo';
@@ -321,10 +321,10 @@ W.zaitsev = el => {
       bonds: [['C2', 'C1', 's'], ['C2', 'Me', 's'], ['C2', 'Br', 's'], ['C2', 'C3', 's'], ['C3', 'C4', 's']] };
     $('#zs', el).innerHTML = MOL.svg(sc, { w: 300, h: 210, s: 52, cx: 140, cy: 110, label: '2-溴-2-甲基丁烷' }) + `<p class="small mut">2-溴-2-甲基丁烷。β-H 有兩種：CH₂ 上 2 個（內側），兩個 CH₃ 上共 6 個（外側）。</p>`;
     const d = B[base];
-    $('#zp', el).innerHTML = `<div class="prod"><p class="pf">(CH₃)₂C=CH–CH₃</p><p class="small">2-甲基-2-丁烯　三取代烯（較穩定）<br>拿走內側 CH₂ 的 H：<b>查依采夫產物</b></p><div class="bars"><div><span>${d.z}%</span><i class="ba" style="width:${d.z}%"></i></div></div></div>
-<div class="prod"><p class="pf">CH₂=C(CH₃)–CH₂CH₃</p><p class="small">2-甲基-1-丁烯　二取代烯<br>拿走外側 CH₃ 的 H：<b>霍夫曼產物</b></p><div class="bars"><div><span>${d.h}%</span><i class="bha" style="width:${d.h}%"></i></div></div></div>`;
-    $('#zn', el).innerHTML = big ? '體積很大的 t-BuO⁻ 擠不進三級碳旁邊的 CH₂，只能拿外側、比較好接近的 CH₃ 上的 H，所以取代較少的烯反而是主產物（約 72%）。'
-      : '小的 EtO⁻ 兩種 H 都拿得到。形成取代較多的雙鍵，過渡狀態已經有部分雙鍵的穩定性，所以較穩定的三取代烯是主產物（約 70%）。';
+    $('#zp', el).innerHTML = `<div class="prod"><p class="pf">(CH₃)₂C=CH–CH₃</p><p class="small">2-甲基-2-丁烯　三取代烯（較穩定）<br>拿走內側 CH₂ 的 H：<b>查依采夫產物</b></p><p class="pbadge ${d.z === '主產物' ? 'on' : ''}">${d.z}</p></div>
+<div class="prod"><p class="pf">CH₂=C(CH₃)–CH₂CH₃</p><p class="small">2-甲基-1-丁烯　二取代烯<br>拿走外側 CH₃ 的 H：<b>霍夫曼產物</b></p><p class="pbadge ${d.h === '主產物' ? 'on' : ''}">${d.h}</p></div>`;
+    $('#zn', el).innerHTML = big ? '體積很大的 t-BuO⁻ 擠不進三級碳旁邊的 CH₂，只能拿外側、比較好接近的 CH₃ 上的 H，所以取代較少的烯反而是主產物。'
+      : '小的 EtO⁻ 兩種 H 都拿得到。形成取代較多的雙鍵，過渡狀態已經有部分雙鍵的穩定性，所以較穩定的三取代烯是主產物。';
     pressSeg(el, 'zb', base);
   }
   bindSeg(el, 'zb', v => { base = v; draw(); });

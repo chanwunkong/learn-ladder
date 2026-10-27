@@ -78,7 +78,7 @@ W.directing = el => {
     NO2: { n: '–NO₂', d: [7, 91, 2], k: '強鈍化，間位', why: '硝基強烈拉電子（N 帶正電）。鄰、對位進攻會讓兩個正電荷相鄰；只剩間位可行，而且整體反應很慢。' },
   };
   let cur = 'CH3';
-  el.innerHTML = `${seg('drS', Object.entries(S).map(([k, v]) => [k, v.n]), cur)}<div class="bars pk" id="drB"></div><p class="small mut">取代苯硝化時，硝基進入鄰位、間位、對位的比例（McMurry 數據）</p><p class="note" id="drN"></p>`;
+  el.innerHTML = `${seg('drS', Object.entries(S).map(([k, v]) => [k, v.n]), cur)}<div class="bars pk" id="drB"></div><p class="small mut">取代苯硝化時，硝基進入鄰位、間位、對位的比例（OpenStax《Organic Chemistry》表 16.1，以 McMurry 為底本）</p><p class="note" id="drN"></p>`;
   function draw() {
     const s = S[cur];
     $('#drB', el).innerHTML = [['鄰位（ortho）', 0], ['間位（meta）', 1], ['對位（para）', 2]].map(([t, i]) => `<div><span>${t}</span><i class="${i === 1 ? 'bha' : 'ba'}" style="width:${Math.max(1, s.d[i])}%"></i><b class="mono">${s.d[i]}%</b></div>`).join('');
