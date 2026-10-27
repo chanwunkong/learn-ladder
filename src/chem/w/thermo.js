@@ -4,7 +4,7 @@
 W.hess = el => {
   const EX = {
     co: { n: '碳燃燒：直接 vs 經過 CO', lv: [['C(s) + O₂(g)', 0], ['CO(g) + ½O₂(g)', -110.5], ['CO₂(g)', -393.5]], steps: [[0, 1, 'C + ½O₂ → CO'], [1, 2, 'CO + ½O₂ → CO₂']], direct: [0, 2, 'C + O₂ → CO₂'] },
-    ch4: { n: '甲烷燃燒：用生成焓', lv: [['CH₄(g) + 2O₂(g)', -74.8], ['C(s) + 2H₂(g) + 2O₂(g)（元素）', 0], ['CO₂(g) + 2H₂O(l)', -965.1]], steps: [[0, 1, '拆成元素：−ΔH°f(CH₄) = +74.8'], [1, 2, '組成產物：ΔH°f(CO₂) + 2ΔH°f(H₂O) = −393.5 + 2(−285.8)']], direct: [0, 2, 'CH₄ + 2O₂ → CO₂ + 2H₂O'] },
+    ch4: { n: '甲烷燃燒：用生成焓', lv: [['CH₄(g) + 2O₂(g)', -74.8], ['C(s) + 2H₂(g) + 2O₂(g)（元素）', 0], ['CO₂(g) + 2H₂O(l)', -965.1]], steps: [[0, 1, '拆成元素'], [1, 2, '組成產物']], direct: [0, 2, 'CH₄ + 2O₂ → CO₂ + 2H₂O'] },
   };
   let cur = 'co', mode = 'steps';
   el.innerHTML = `${seg('heS', Object.entries(EX).map(([k, v]) => [k, v.n]), cur)}${seg('heM', [['steps', '分步走'], ['direct', '直接走']], mode)}<div id="heD"></div><p class="note" id="heN"></p>`;

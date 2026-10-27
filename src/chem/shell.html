@@ -218,6 +218,7 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 .rung.from { border-color: var(--acid); background: color-mix(in srgb, var(--acid) 10%, var(--bg)); }
 .rung.to { border-color: var(--arrow); background: color-mix(in srgb, var(--arrow) 10%, var(--bg)); }
 .nmpk { stroke: var(--acid); stroke-width: 2; } .nmon { stroke: var(--arrow); stroke-width: 2.6; }
+.hsgrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; max-width: 560px; }
 /* 練習題 */
 .q { border-top: 1px solid var(--line); padding: 14px 0; }
 .qt { font-weight: 500; margin: 0 0 8px; }
@@ -244,6 +245,9 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
   .tgrid .beaker { max-width: 240px; margin: 0 auto; width: 100%; }
   .prog .bar { width: 50px; }
   .brand small { display: none; }
+  .rng { flex-basis: 100%; min-width: 0; }
+  .rng input { min-width: 0; }
+  .rng output { min-width: 52px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>

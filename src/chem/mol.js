@@ -92,8 +92,8 @@ function energySVG(pts, at, o = {}) {
   const f = mk(pts), alt = o.alt ? `<path class="catc" d="${path(Array.from({ length: 121 }, (_, i) => [X(i / 120), Y(mk(o.alt)(i / 120))]))}"/>` : '';
   const line = Array.from({ length: 121 }, (_, i) => [X(i / 120), Y(f(i / 120))]);
   const cur = at == null ? '' : `<circle class="edot" cx="${X(at)}" cy="${Y(f(at))}" r="6"/>`;
-  const labs = (o.labels || []).map(([x, t, dy]) => `<text class="elab" x="${X(x) + (x < 0.1 ? 6 : 0)}" y="${Y(f(x)) - (dy || 10)}" text-anchor="${x < 0.1 ? 'start' : x > 0.9 ? 'end' : 'middle'}">${t}</text>`).join('');
-  return `<svg class="en" viewBox="0 0 ${w} ${h}" role="img" aria-label="反應能量圖"><line class="ax" x1="${L}" y1="${T}" x2="${L}" y2="${h - B}"/><line class="ax" x1="${L}" y1="${h - B}" x2="${w - R}" y2="${h - B}"/><text class="lab" transform="translate(12 ${(T + h - B) / 2}) rotate(-90)" text-anchor="middle">能量</text><text class="lab" x="${(L + w) / 2}" y="${h - 5}" text-anchor="middle">反應進行 →</text><path class="ecurve" d="${path(line)}"/>${alt}${labs}${cur}</svg>`;
+  const labs = (o.labels || []).map(([x, t, dy]) => `<text class="elab" x="${X(x) + (x < 0.1 ? 6 : 0)}" y="${Math.max(12, Y(f(x)) - (dy || 10))}" text-anchor="${x < 0.1 ? 'start' : x > 0.9 ? 'end' : 'middle'}">${t}</text>`).join('');
+  return `<svg class="en" viewBox="0 0 ${w} ${h}" role="img" aria-label="反應能量圖"><line class="ax" x1="${L}" y1="${T}" x2="${L}" y2="${h - B}"/><line class="ax" x1="${L}" y1="${h - B}" x2="${w - R}" y2="${h - B}"/><text class="lab" transform="translate(15 ${(T + h - B) / 2}) rotate(-90)" text-anchor="middle">能量</text><text class="lab" x="${(L + w) / 2}" y="${h - 5}" text-anchor="middle">反應進行 →</text><path class="ecurve" d="${path(line)}"/>${alt}${labs}${cur}</svg>`;
 }
 
 /* 機構播放器：frames = [{ sc, cap, at }]；在 el 中畫出分子、說明、能量圖與控制鈕。回傳 { go(i), reset() } */

@@ -18,7 +18,7 @@ W.titration = (el, opt = {}) => {
   const curve = strong => { const xs = []; for (let v = 0; v <= 50.001; v += (Math.abs(v - 25) < 1.2 ? 0.02 : 0.25)) xs.push(v); return xs.map(v => [v, titr({ Va, Ca0, Cb, Vb: v, strong, pKa: ACID[strong ? 'strong' : 'weak'].pKa }).pH]); };
   const CUR = { weak: curve(false), strong: curve(true) };
   function beaker(r) {
-    const W0 = 230, H0 = 270, x0 = 40, x1 = 190, yb = 250, top = 70, lv = yb - (r.V / 80) * (yb - top) - 4;
+    const W0 = 250, H0 = 270, x0 = 30, x1 = 180, yb = 250, top = 70, lv = yb - (r.V / 80) * (yb - top) - 4;
     const strong = st.acid === 'strong', icons = [];
     const push = (n, cls, t) => { for (let i = 0; i < Math.round(n / 0.1); i++) icons.push([cls, t]); };
     if (strong) push(r.nH, 'ih', 'H⁺'); else push(r.nHA, 'iha', 'HA');
@@ -283,7 +283,7 @@ W.e2 = el => {
       { sc: F0, at: 0, cap: '強鹼 EtO⁻ 對準 <b>β-碳上的 H</b>（紅色）。注意這個 H 和 Br 分別在 C–C 鍵的上下兩側、同一平面：<b>反式共平面</b>。三個彎箭頭同時發生。' },
       { sc: F1, at: 1, cap: '一步完成：鹼拿走 H 變成 EtOH、C–H 的電子對變成 C=C 的 π 鍵、Br⁻ 帶著電子對離開。產物是丙烯。' }];
   };
-  const pl = mechPlayer($('#e2p', el), { frames, energy: [[0, 0.3], [0.5, 0.88], [1, 0.12]], elabels: [[0.5, '過渡狀態']], w: 520, h: 260, label: 'E2 反應機構' });
+  const pl = mechPlayer($('#e2p', el), { frames, energy: [[0, 0.3], [0.5, 0.88], [1, 0.12]], elabels: [[0.5, '過渡狀態']], w: 520, h: 280, cy: 150, label: 'E2 反應機構' });
   return { set(s) { pl.go(s.step || 0, false); } };
 };
 
@@ -317,7 +317,7 @@ W.zaitsev = el => {
   function draw() {
     const big = base === 'tbuo';
     const sc = { atoms: { C2: { x: 0, y: 0, t: 'C' }, C1: { x: -1.0, y: 0.55, t: 'CH₃', hl: big ? 1 : 0, halo: big ? 0.55 : 0 }, Me: { x: -1.0, y: -0.6, t: 'CH₃', hl: big ? 1 : 0, halo: big ? 0.55 : 0 }, Br: { x: 0, y: -1.1, t: 'Br' }, C3: { x: 1.0, y: 0.55, t: 'CH₂', hl: big ? 0 : 1, halo: big ? 0 : 0.55 }, C4: { x: 2.05, y: 0, t: 'CH₃' },
-      Bs: { x: big ? -2.35 : 1.55, y: big ? 1.55 : 1.75, t: big ? 't-BuO⁻' : 'EtO⁻', halo: big ? 0.85 : 0.45 } },
+      Bs: { x: big ? -1.95 : 1.55, y: big ? 1.6 : 1.75, t: big ? 't-BuO⁻' : 'EtO⁻', halo: big ? 0.85 : 0.45 } },
       bonds: [['C2', 'C1', 's'], ['C2', 'Me', 's'], ['C2', 'Br', 's'], ['C2', 'C3', 's'], ['C3', 'C4', 's']] };
     $('#zs', el).innerHTML = MOL.svg(sc, { w: 300, h: 210, s: 52, cx: 140, cy: 110, label: '2-溴-2-甲基丁烷' }) + `<p class="small mut">2-溴-2-甲基丁烷。β-H 有兩種：CH₂ 上 2 個（內側），兩個 CH₃ 上共 6 個（外側）。</p>`;
     const d = B[base];

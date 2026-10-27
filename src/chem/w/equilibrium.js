@@ -79,7 +79,7 @@ W.lechat = el => {
     $('#lck', el).innerHTML = card('a', '[N₂O₄]', fx(a, 4)) + card('b', '[NO₂]', fx(b, 4)) + card('q', 'Q', sci(Q)) + card('k', `K（${fx(st.T - 273.15, 0)} °C）`, sci(K));
     $('#lcgo', el).disabled = eq;
     const pts = hist, mx = Math.max(...pts.flatMap(p => [p.N, p.B])) * 1.1;
-    $('#lch', el).innerHTML = chart({ x: [0, Math.max(4, pts.length - 1)], y: [0, mx], xt: [], yt: [0, +(mx / 2).toFixed(3), +mx.toFixed(3)], xlab: '事件順序（每次干擾 → 回到平衡）', ylab: '濃度（M）', h: 200, label: '濃度變化歷程' }, (X, Y) =>
+    $('#lch', el).innerHTML = chart({ x: [0, Math.max(4, pts.length - 1)], y: [0, mx], xt: [], yt: [0, +(mx / 2).toFixed(2), +mx.toFixed(2)], xlab: '事件順序（每次干擾 → 回到平衡）', ylab: '濃度（M）', h: 200, label: '濃度變化歷程' }, (X, Y) =>
       `<path class="sha" d="${path(pts.map((p, i) => [X(i), Y(p.N)]))}"/><path class="sa" d="${path(pts.map((p, i) => [X(i), Y(p.B)]))}"/>${pts.map((p, i) => `<circle class="dot3" cx="${X(i)}" cy="${Y(p.N)}" r="3"/><circle class="dot2" cx="${X(i)}" cy="${Y(p.B)}" r="3"/>`).join('')}<text class="tk lha" x="${X(0) + 4}" y="${Y(pts[0].N) - 6}">N₂O₄</text><text class="tk la" x="${X(0) + 4}" y="${Y(pts[0].B) + 14}">NO₂</text>`);
     $('#lcn', el).innerHTML = st.msg || '系統在平衡。選一種干擾，先看 Q 和 K 的關係，再按「讓系統回到平衡」。';
   }

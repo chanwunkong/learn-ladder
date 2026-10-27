@@ -34,9 +34,9 @@ W.sugar = el => {
     const P = { O: [1.1, 0.35], C1: [1.1, -0.45], C2: [0.35, -0.95], C3: [-0.55, -0.95], C4: [-1.2, -0.45], C5: [-0.6, 0.35] };
     const up = { C1: ab === 'b', C2: false, C3: true, C4: false, C5: true }, sub = { C1: 'OH', C2: 'OH', C3: 'OH', C4: 'OH', C5: 'CH₂OH' };
     const atoms = { O: { x: P.O[0], y: P.O[1], t: 'O' } }, bonds = [];
-    ['C1', 'C2', 'C3', 'C4', 'C5'].forEach(c => { atoms[c] = { x: P[c][0], y: P[c][1], t: '' }; const u = up[c], k = c + 's'; atoms[k] = { x: P[c][0], y: P[c][1] + (u ? 0.85 : -0.85), t: sub[c], hl: c === 'C1' ? 1 : 0 }; bonds.push([c, k, 's']); });
+    ['C1', 'C2', 'C3', 'C4', 'C5'].forEach(c => { atoms[c] = { x: P[c][0], y: P[c][1], t: '' }; const u = up[c], k = c + 's'; atoms[k] = { x: P[c][0] + (c === 'C1' ? 0.6 : 0), y: P[c][1] + (u ? 0.75 : -0.75), t: sub[c], hl: c === 'C1' ? 1 : 0 }; bonds.push([c, k, 's']); });
     [['O', 'C1'], ['C1', 'C2'], ['C2', 'C3'], ['C3', 'C4'], ['C4', 'C5'], ['C5', 'O']].forEach(([a, b]) => bonds.push([a, b, 's']));
-    $('#sgM', el).innerHTML = MOL.svg({ atoms, bonds, notes: [{ x: 1.55, y: -0.5, t: 'C1' }] }, { w: 300, h: 240, s: 66, label: '葡萄糖哈沃斯投影' });
+    $('#sgM', el).innerHTML = MOL.svg({ atoms, bonds, notes: [{ x: 1.55, y: -0.5, t: 'C1' }] }, { w: 320, h: 270, s: 62, label: '葡萄糖哈沃斯投影' });
     $('#sgN', el).innerHTML = `葡萄糖的 C5–OH 攻擊 C1 的醛基，形成六元環的<b>半縮醛</b>（醛酮一章）。C1 變成新的掌性中心，稱為<b>變旋碳</b>：OH 朝下為 α、朝上（和 CH₂OH 同側）為 β。${ab === 'b' ? 'β 型在椅式構形中所有大基團都在平伏鍵，最穩定，所以佔 64%。' : 'α 型 C1 的 OH 在直立鍵，比 β 型稍不穩定，佔 36%。'} 兩者經由開鏈形式互相轉換，使旋光度隨時間改變（<b>變旋現象</b>）。澱粉是 α-1,4 鍵結、纖維素是 β-1,4 鍵結，一個字母的差別決定人體能不能消化。`;
     pressSeg(el, 'sgS', ab);
   }
