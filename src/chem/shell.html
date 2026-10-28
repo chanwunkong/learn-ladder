@@ -31,6 +31,27 @@ body { margin: 0; }
 .lede { font-size: 17px; color: var(--muted); }
 .cta { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 8px; }
 .cta .btn { text-decoration: none; }
+.isos { display: flex; flex-wrap: wrap; gap: 6px 14px; justify-content: center; }
+.isos figure { margin: 0; width: 190px; text-align: center; }
+.isos figcaption { font-size: 13px; color: var(--muted); }
+.iso .cb { stroke: var(--ink); stroke-width: 2; }
+.iso .cb.bk { stroke-dasharray: 4 3; stroke: var(--muted); }
+.iso .oct { fill: none; stroke: var(--line); stroke-width: 1.2; }
+.iso .enarc { fill: none; stroke: var(--good); stroke-width: 3; }
+.iso .mc { fill: var(--ink); }
+.iso .mt { fill: var(--bg); font-size: 12px; font-weight: 700; }
+.iso .lg circle { stroke: var(--surface); stroke-width: 1.5; }
+.iso .lg text { font-size: 12px; font-weight: 700; fill: #fff; }
+.iso .lg-A circle { fill: #6B7570; } .iso .lg-B circle { fill: #B5326C; } .iso .lg-C circle { fill: #2F3B99; } .iso .lg-N circle { fill: #23704A; }
+.en .ele { font-size: 16px; fill: var(--accent); font-weight: 700; letter-spacing: -2px; }
+.en .conn { stroke: var(--line); stroke-dasharray: 3 3; }
+.en .dlt { stroke: var(--eosin); stroke-width: 1.6; }
+.spec { position: relative; margin: 6px 0 22px; }
+.spec-bar { height: 22px; border-radius: 6px; background: linear-gradient(90deg, #7a2fb5, #3d3bd6 18%, #1f8fd6 30%, #1fb07a 42%, #8cc63a 52%, #f0d43a 60%, #f39a2e 70%, #e0412e 82%, #a3202a); }
+.spec i { position: absolute; top: -5px; width: 3px; height: 32px; background: var(--ink); border-radius: 2px; transform: translateX(-1.5px); transition: left .25s; }
+.spec span { position: absolute; top: 26px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.spec-l { left: 0; } .spec-r { right: 0; }
+.swatch { display: inline-block; width: 16px; height: 16px; border-radius: 4px; margin-right: 6px; vertical-align: -2px; border: 1px solid var(--line); }
 .tree-note { font-size: 14.5px; margin: 0 0 10px; }
 .trees { display: grid; gap: 22px; }
 .tree h3 { font-size: 15px; margin: 6px 0 8px; }

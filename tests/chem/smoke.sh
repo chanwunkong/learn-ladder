@@ -52,6 +52,6 @@ for c in home $CHAPTERS; do
   "$CHROME" --headless=new --disable-gpu --user-data-dir="$TMP/prof-$c" --window-size=1100,900 --virtual-time-budget=120000 --dump-dom "file://$TMP/p.html#$c" 2>/dev/null > "$TMP/out-$c" &
   pid=$!; ( sleep 240; kill -9 $pid ) >/dev/null 2>&1 & w=$!; disown $w; wait $pid 2>/dev/null; kill $w 2>/dev/null
   r=$(python3 -c "import re,sys,html;s=open(sys.argv[1]).read();m=re.search(r'<pre id=\"__out\">(.*?)</pre>',s,re.S);print(html.unescape(m.group(1)) if m else 'NO OUTPUT')" "$TMP/out-$c")
-  if echo "$r" | grep -q '"errs":\[\]' && echo "$r" | grep -q '"failed":0' && echo "$r" | grep -q '"layout":\[\]'; then echo "ok   $c  $r"; else echo "FAIL $c  $r"; fail=1; fi
+  if echo "$r" | grep -q '"errs":\[\]' && echo "$r" | grep -q '"failed":0' && echo "$r" | grep -q '"layout":\[\]' && { [ "$c" = home ] || ! echo "$r" | grep -q '"quiz":0,'; }; then echo "ok   $c  $r"; else echo "FAIL $c  $r"; fail=1; fi
 done
 rm -rf "$TMP"; exit $fail
