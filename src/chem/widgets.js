@@ -294,7 +294,8 @@ W.newman = el => {
   function draw() {
     const cx = 150, cy = 130, R = 52, L = 98, P = (a, r) => [cx + Math.cos(a * Math.PI / 180) * r, cy - Math.sin(a * Math.PI / 180) * r];
     const front = [[90, 'H', 'hl'], [210, 'H', ''], [330, 'H', '']], back = [[90 - ang, 'Br', 'br'], [210 - ang, 'CH₃', ''], [330 - ang, 'H', '']];
-    const bl = ([a, t, c]) => { const [x1, y1] = P(a, R), [x2, y2] = P(a, L); const [tx, ty] = P(a, L + 16); return `<line class="nb" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/><text class="at ${c}" x="${tx}" y="${ty + 5}" text-anchor="middle">${t}</text>`; };
+    const vis = a => { const r = ((a - 90) % 120 + 180) % 120 - 60; return Math.abs(r) < 16 ? a - r + (r < 0 ? -16 : 16) : a; };  // 重疊式時後方基團稍微錯開，畫面才看得到
+    const bl = ([a0, t, c]) => { const a = vis(a0), [x1, y1] = P(a, R), [x2, y2] = P(a, L); const [tx, ty] = P(a, L + 16); return `<line class="nb" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/><text class="at ${c}" x="${tx}" y="${ty + 5}" text-anchor="middle">${t}</text>`; };
     const fl = ([a, t, c]) => { const [x2, y2] = P(a, L - 10); const [tx, ty] = P(a, L + 6); return `<line class="nb" x1="${cx}" y1="${cy}" x2="${x2}" y2="${y2}"/><text class="at ${c}" x="${tx}" y="${ty + 5}" text-anchor="middle">${t}</text>`; };
     $('#nws', el).innerHTML = `<svg viewBox="0 0 300 260" class="mol" role="img" aria-label="紐曼投影式">${back.map(bl).join('')}<circle class="nc" cx="${cx}" cy="${cy}" r="${R}"/>${front.map(fl).join('')}<circle cx="${cx}" cy="${cy}" r="3" class="lp"/></svg>`;
     const d = ((ang % 360) + 360) % 360, anti = Math.abs(d - 180) <= 10, syn = d <= 10 || d >= 350;

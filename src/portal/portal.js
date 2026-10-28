@@ -13,7 +13,7 @@ const COURSES = [
   { id: 'biostat', pre: 'biostat-ladder', doc: 'biostatLadder', total: 67, color: '#2F3B99', glyph: 'μ · p · HR',
     title: ['生統階梯', 'Biostat Ladder'], desc: ['從國中數學到可投稿論文的生物統計。', 'Biostatistics from middle-school math to a publishable paper.'],
     items: [['互動圖解每個統計概念', 'Every concept as an interactive chart'], ['一份模擬試驗資料貫穿全課程', 'One simulated trial used throughout'], ['不寫程式的分析實驗室', 'A no-code analysis lab']] },
-  { id: 'chem', pre: 'chem-ladder', doc: 'chemLadder', total: 24, color: '#17705F', glyph: 'H⁺ ⇌ A⁻',
+  { id: 'chem', pre: 'chem-ladder', doc: 'chemLadder', total: 25, color: '#17705F', glyph: 'H⁺ ⇌ A⁻',
     title: ['後中化學', 'Post-bacc Chemistry'], desc: ['學士後中醫入學考的普通化學與有機化學，從原理學起。', 'General and organic chemistry for Taiwan’s post-baccalaureate TCM entrance exam.'],
     items: [['滴定、平衡、反應機構都能動手操作', 'Hands-on titrations, equilibria and mechanisms'], ['看懂電子怎麼流，不用死背反應', 'Understand electron flow instead of memorizing reactions'], ['普化原理直接串到有機反應', 'General chemistry linked straight to organic reactions']] },
 ];

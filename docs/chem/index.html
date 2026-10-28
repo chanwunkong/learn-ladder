@@ -133,6 +133,10 @@ body { margin: 0; }
 .spec span { position: absolute; top: 26px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
 .spec-l { left: 0; } .spec-r { right: 0; }
 .swatch { display: inline-block; width: 16px; height: 16px; border-radius: 4px; margin-right: 6px; vertical-align: -2px; border: 1px solid var(--line); }
+.mrow { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 6px; }
+.mrow figure { margin: 0; width: 190px; text-align: center; }
+.mrow figcaption { font-size: 13px; color: var(--muted); }
+.marr { font-size: 22px; color: var(--muted); }
 .tree-note { font-size: 14.5px; margin: 0 0 10px; }
 .trees { display: grid; gap: 22px; }
 .tree h3 { font-size: 15px; margin: 6px 0 8px; }
@@ -854,6 +858,99 @@ CH.push({
       why: '氫化時兩個 H 從金屬表面同一側加上去。Br₂ 與 Br₂/H₂O 經過溴鎓離子，是反式加成；HBr 經過平面碳陽離子，沒有立體選擇。', show: { w: 'addn', set: { i: 4 } } },
     { q: '1-丙炔在 H₂SO₄、HgSO₄ 催化下加水，主產物是？', o: ['丙酮', '丙醛', '1-丙醇', '丙烯醇'], a: 0,
       why: '依馬可尼可夫規則，OH 加到中間的碳，生成烯醇；烯醇再互變成較穩定的酮，所以得到丙酮（甲基酮）。' },
+  ],
+});
+
+/* ---------- 後中化學：α-碳化學與羰基縮合 ---------- */
+CH.push({
+  id: 'alpha', unit: 'o9b', title: 'α-碳與羰基縮合：烯醇離子造出 C–C 鍵',
+  lede: '醛酮和羧酸衍生物都有兩副面孔：羰基碳是親電子基，旁邊的 α 碳拿掉 H⁺ 後卻變成親核基。讓一個分子的 α 碳去攻擊另一個分子的羰基碳，就能接出新的 C–C 鍵。這一章把醛醇、克來森、麥可、丙二酸酯合成都看成同一件事：烯醇離子進攻親電子基。',
+  sections: [
+    { h: '酮–烯醇互變異構', body: `
+<p>醛和酮會和自己的<b>烯醇</b>（C=C–OH）互相轉換：α-H 移到羰基 O 上，C=O 變成 C=C。這種只差一個 H 位置、快速互換的異構物稱為<b>互變異構</b>，它不是共振：原子真的移動了，兩者是不同的化合物。</p>
+<p class="eq">CH₃–CO–CH₃（酮式） ⇌ CH₂=C(OH)–CH₃（烯醇式）</p>
+<ul><li>一般的醛酮幾乎全部是酮式（C=O 比 C=C 強），丙酮的烯醇含量不到百萬分之一。</li>
+<li>1,3-二羰基化合物（如 2,4-戊二酮）的烯醇可以和另一個羰基共軛，並形成分子內氫鍵，純液體中超過七成是烯醇式。</li>
+<li>酸或鹼都能催化互變：酸先讓羰基 O 質子化、再拿走 α-H；鹼先拿走 α-H 形成烯醇離子、再讓 O 質子化。</li></ul>
+<p>兩個常考的推論：</p>
+<ul><li><b>α 位的掌性中心會消旋</b>：烯醇的 α 碳是平面 sp²，H 回來時從上下兩面機會相等。所以 (R)-3-甲基-2-戊酮在酸或鹼中放久了會變成外消旋混合物。</li>
+<li><b>H/D 交換</b>：在 D₂O 和鹼中，<b>所有 α-H</b> 都會換成 D，其他 H 不變。2-甲基環己酮的 α-H 有 C2 上 1 個加 C6 上 2 個，共換入 3 個 D。</li></ul>` },
+    { h: '烯醇離子：選鹼決定在哪一側反應', w: 'enolsel', body: `
+<p>α-H 的酸性來自共軛鹼的共振：負電荷可以分到 O 上。羰基越多，酸性越強：</p>
+<table class="tbl"><thead><tr><th>化合物</th><th>α-H 的 pKa</th></tr></thead><tbody>
+<tr><td>酯（乙酸乙酯）</td><td>約 25</td></tr><tr><td>酮（丙酮）</td><td>約 19</td></tr><tr><td>醛（乙醛）</td><td>約 17</td></tr>
+<tr><td>丙二酸二乙酯（兩個酯基之間）</td><td>約 13</td></tr><tr><td>乙醯乙酸乙酯（酮與酯之間）</td><td>約 11</td></tr><tr><td>2,4-戊二酮（兩個酮基之間）</td><td>約 9</td></tr></tbody></table>
+<p>用哪一種鹼，要比較 pKa（和有機酸鹼一章相同）：</p>
+<ul><li><b>NaOH、NaOEt</b>（共軛酸 pKa 約 16）：對一般酮只生成少量烯醇離子，但已經足夠進行醛醇反應；對 1,3-二羰基化合物則幾乎完全去質子。</li>
+<li><b>LDA</b>（二異丙基胺鋰，共軛酸 pKa 約 36）：強而龐大、親核性很差，能把酮、酯<b>完全且不可逆地</b>變成烯醇離子，再加鹵烷做烷基化。</li></ul>
+<p>不對稱的酮有兩側 α-H，生成哪一種烯醇離子由條件決定：</p>
+<ul><li><b>動力學控制</b>（LDA、−78 °C、不可逆）：拿走較不擁擠、H 較多那一側的 H，生成雙鍵取代較少的<b>動力學烯醇離子</b>。</li>
+<li><b>熱力學控制</b>（較弱的鹼、室溫、可逆）：兩種烯醇離子達平衡，以雙鍵取代較多、較穩定的<b>熱力學烯醇離子</b>為主。</li></ul>
+<p>若分子中有一個 CH 夾在兩個羰基之間，它的 H 比其他 α-H 酸得多，一當量的鹼就只會拿它：2-乙醯環己酮加 LDA（1 當量）和 CH₃I，甲基接在兩個羰基中間的碳上。</p>` },
+    { h: 'α-鹵化與碘仿反應', w: 'iodoform', body: `
+<p>烯醇或烯醇離子也會攻擊 Br₂、Cl₂、I₂，把 α-H 換成鹵素：</p>
+<ul><li><b>酸催化</b>：經由烯醇，速率決定步驟是形成烯醇，和鹵素濃度無關。接上一個鹵素後，鹵素的拉電子效應使羰基 O 較難質子化，所以<b>停在單取代</b>。</li>
+<li><b>鹼性</b>：經由烯醇離子。接上鹵素後，剩下的 α-H 因為鹵素拉電子而<b>更酸</b>，反應越來越快，同一個碳上的 H 會全部被取代。</li></ul>
+<p>甲基酮在鹼性中和 I₂ 反應時，CH₃ 變成 CI₃，接著 OH⁻ 攻擊羰基、把 CI₃⁻ 擠出去，生成羧酸根和黃色的<b>碘仿</b>（CHI₃）沉澱，這就是<b>碘仿反應</b>，可用來檢驗 CH₃CO– 結構。I₂ 在鹼中也是氧化劑，能把 CH₃CH(OH)– 氧化成 CH₃CO–，所以乙醇和 2-丙醇也呈陽性。</p>
+<p>羧酸本身不易形成烯醇，要先用 PBr₃ 變成醯溴，再 α-溴化（<b>Hell–Volhard–Zelinskii 反應</b>），得到 α-溴羧酸；α-溴羧酸和 NH₃ 反應可以製備胺基酸。</p>` },
+    { h: 'α-烷基化：丙二酸酯與乙醯乙酸酯合成', w: 'malonic', body: `
+<p>烯醇離子和鹵烷進行 <b>SN2</b>，就在 α 碳上接了一個烷基。限制和 SN2 相同：只能用甲基、一級、烯丙基或苄基鹵烷；三級鹵烷只會脫去。</p>
+<p>夾在兩個羰基之間的 CH₂ 最好用：用 NaOEt 就能完全去質子，而且只會在這個位置反應。烷基化之後，用酸水解並加熱：</p>
+<ol><li>酯水解成羧酸，得到 <b>β-羰基羧酸</b>（或丙二酸）。</li>
+<li>β-羰基羧酸加熱時經過六員環過渡狀態，失去 CO₂，這一步稱為<b>脫羧</b>，先生成烯醇再互變成羰基。</li></ol>
+<ul><li><b>丙二酸酯合成</b>：CH₂(COOEt)₂ → R–CH₂–COOH，等於「把 R 接在乙酸上」。</li>
+<li><b>乙醯乙酸酯合成</b>：CH₃COCH₂COOEt → R–CH₂–COCH₃，等於「把 R 接在丙酮上」。</li>
+<li>烷基化可以做兩次（第二次接另一個 R'），得到 α 位有兩個取代基的產物。用 1,4-二溴丁烷做兩次分子內烷基化，還能接成環。</li></ul>` },
+    { h: '醛醇反應：烯醇離子加到羰基上', w: 'aldolmech', body: `
+<p>當親電子基換成另一分子的醛或酮，就是<b>醛醇反應</b>。它就是親核加成（醛與酮一章）：親核基剛好是另一個羰基化合物的烯醇離子。</p>
+<ul><li>加成產物是 <b>β-羥基醛或酮</b>（OH 在羰基的 β 碳上）。</li>
+<li>加熱後脫去一分子水，生成 <b>α,β-不飽和羰基化合物</b>，稱為<b>醛醇縮合</b>。C=C 和 C=O 共軛，是脫水的驅動力。</li>
+<li>反過來，β-羥基羰基在鹼中也能裂成兩個羰基化合物（逆醛醇），醣解作用中果糖-1,6-雙磷酸被醛縮酶切成兩個三碳醣，就是逆醛醇反應。</li></ul>
+<p>判斷醛醇產物的方法：把產物 α,β 位置的 C=C（或 Cα–Cβ 鍵）切開，β 碳變回 C=O，α 碳補回兩個 H，就得到原本的兩個羰基化合物。</p>` },
+    { h: '羰基縮合家族', w: 'condtab', body: `
+<p>只要換掉親核基或親電子基，就得到一系列反應。它們的共同步驟都是「烯醇離子的碳進攻一個缺電子的碳」：</p>
+<ul><li><b>交叉醛醇</b>：兩個不同的醛酮都能形成烯醇時，會得到四種產物的混合物。實用的做法是讓其中一方<b>沒有 α-H</b>（苯甲醛、甲醛），只能當親電子基。</li>
+<li><b>分子內醛醇</b>：二羰基化合物自己接成環，以五員和六員環為主。</li>
+<li><b>克來森縮合</b>：兩分子酯反應，四面體中間物把 EtO⁻ 擠出去（親核醯基取代），得到 <b>β-酮酯</b>。產物的 α-H（pKa 約 11）被鹼拿走，這一步把平衡拉向產物，所以要用一整當量的鹼。</li>
+<li><b>迪克曼縮合</b>：分子內的克來森縮合，1,6-二酯生成五員環、1,7-二酯生成六員環。</li>
+<li><b>麥可加成</b>：穩定的烯醇離子加到 α,β-不飽和羰基的 β 碳（1,4-共軛加成），得到 1,5-二羰基化合物。</li>
+<li><b>羅賓森環化</b>：麥可加成接著分子內醛醇縮合，一次造出一個環己烯酮，常用來合成類固醇。</li>
+<li><b>曼尼希反應</b>：烯醇攻擊由甲醛和胺生成的亞胺離子，得到 β-胺基羰基化合物。</li></ul>` },
+    { h: '生物體內的羰基縮合', body: `
+<ul><li><b>脂肪酸合成</b>：乙醯-CoA 先羧化成丙二醯-CoA，再和另一個醯基進行類似克來森的縮合，同時脫羧，一次接上兩個碳。這就是脂肪酸幾乎都是偶數碳的原因。</li>
+<li><b>檸檬酸循環</b>：檸檬酸合成酶讓乙醯-CoA 的 α 碳（烯醇形式）加到草醯乙酸的酮基上，是一種醛醇型反應。</li>
+<li><b>醣解與糖質新生</b>：醛縮酶催化的就是醛醇與逆醛醇反應；第一型醛縮酶用離胺酸和受質形成亞胺，再生成烯胺當親核基。</li>
+<li><b>酮體</b>：兩分子乙醯-CoA 經硫酯的克來森縮合生成乙醯乙醯-CoA；乙醯乙酸是 β-酮酸，會自發脫羧生成丙酮，所以酮酸中毒的病人呼吸有丙酮味。</li></ul>` },
+  ],
+  quiz: [
+    { q: '2-甲基環己酮在 NaOD/D₂O 中充分反應後，最多有幾個 H 被換成 D？', o: ['3', '2', '4', '11'], a: 0,
+      why: '只有 α-H 會交換：C2 上 1 個、C6 上 2 個，共 3 個。' },
+    { q: '(R)-3-甲基-2-戊酮放在稀 NaOH 中一段時間後，旋光度逐漸變成零，原因是？', o: ['經由平面的烯醇離子，α 碳的組態被打亂而消旋', '羰基被還原', '發生 SN2 反轉', '分子分解'], a: 0,
+      why: '掌性中心正好是 α 碳；去質子後變成平面的 sp² 碳，H 從兩面加回來的機會相等。' },
+    { q: '2-甲基環己酮用 LDA 在 −78 °C 處理後加入 CH₃I，主要產物為？', o: ['2,6-二甲基環己酮', '2,2-二甲基環己酮', '3-甲基環己酮', '2-甲基環己醇'], a: 0,
+      why: 'LDA 低溫不可逆，拿走較不擁擠的 C6 上的 H（動力學烯醇離子），甲基接到 C6。', show: { w: 'enolsel', set: { c: 'k' } } },
+    { q: '下列化合物中，α-H 酸性最強的是？', o: ['2,4-戊二酮', '丙酮', '乙酸乙酯', '丙二酸二乙酯'], a: 0,
+      why: '兩個酮基夾住的 CH₂ 負電荷可分散到兩個 O 上，且酮比酯更能穩定負電荷，pKa 約 9。' },
+    { q: '下列何者的碘仿試驗呈陽性？', o: ['2-丁醇', '1-丙醇', '3-戊酮', '苯甲醛'], a: 0,
+      why: '2-丁醇被氧化成 2-丁酮，含 CH₃CO–。', show: { w: 'iodoform', set: { i: 8 } } },
+    { q: '酮在鹼性條件下與 Br₂ 反應時，常得到多溴取代產物，原因是？', o: ['接上 Br 後剩下的 α-H 酸性更強，下一次取代更快', '鹼使 Br₂ 變成 Br⁺', '酮在鹼中變成羧酸', 'Br 是推電子基'], a: 0,
+      why: 'Br 拉電子，使同一個碳上剩下的 H 更容易被拿走。酸催化時則停在單取代。' },
+    { q: '以丙二酸酯合成法製備辛酸（octanoic acid），應使用哪一種鹵烷？', o: ['1-溴己烷', '1-溴辛烷', '1-溴庚烷', '1-溴戊烷'], a: 0,
+      why: '產物是 R–CH₂–COOH，比 R 多兩個碳；辛酸 8 個碳，R 要 6 個碳。', show: { w: 'malonic', set: { m: 'mal', r: 4, two: 0 } } },
+    { q: '乙醯乙酸乙酯依序以 NaOEt、CH₃CH₂Br 處理，再以 H₃O⁺ 加熱，產物為？', o: ['2-戊酮', '3-戊酮', '丁酸', '2-丁酮'], a: 0,
+      why: '乙醯乙酸酯合成＝把 R 接在丙酮的一端：CH₃CH₂–CH₂–COCH₃。', show: { w: 'malonic', set: { m: 'aca', r: 1, two: 0 } } },
+    { q: '乙醛在稀 NaOH 中的醛醇加成產物是？', o: ['3-羥基丁醛', '2-丁烯醛', '2-羥基丁醛', '丁酸'], a: 0,
+      why: '烯醇離子的 α 碳接到另一分子的羰基碳上，OH 在新鍵的 β 位：CH₃CH(OH)CH₂CHO。加熱脫水才是 2-丁烯醛。', show: { w: 'aldolmech', set: { step: 3 } } },
+    { q: '下列哪一組最適合進行只得到單一主產物的交叉醛醇縮合？', o: ['苯甲醛 + 丙酮', '乙醛 + 丙醛', '丙酮 + 丁酮', '乙醛 + 丙酮'], a: 0,
+      why: '苯甲醛沒有 α-H，只能當親電子基；其他組合兩方都能形成烯醇，產物混雜。', show: { w: 'condtab', set: { r: 'cross' } } },
+    { q: '2,6-庚二酮在鹼中加熱，分子內醛醇縮合的主要產物是？', o: ['3-甲基-2-環己烯酮', '3-甲基-2-環戊烯酮', '環庚酮', '2-甲基環己酮'], a: 0,
+      why: 'C1 甲基的烯醇離子攻擊 C6 羰基，接成六員環，脫水得到 3-甲基-2-環己烯酮。', show: { w: 'condtab', set: { r: 'intra' } } },
+    { q: '克來森縮合需要使用一整當量的鹼（如 NaOEt），主要原因是？', o: ['產物 β-酮酯的 α-H 很酸，被鹼拿走後才能推動平衡', '鹼會被酯消耗掉', '反應需要大量的 EtO⁻ 作為離去基', '鹼能加快水解'], a: 0,
+      why: '縮合本身接近平衡；產物（pKa 約 11）被 EtO⁻ 完全去質子，把反應拉向產物，最後再酸化。', show: { w: 'condtab', set: { r: 'claisen' } } },
+    { q: '丙二酸二乙酯的烯醇離子與甲基乙烯基酮（CH₂=CHCOCH₃）反應，新的 C–C 鍵形成在哪裡？', o: ['甲基乙烯基酮的 β 碳', '甲基乙烯基酮的羰基碳', '甲基乙烯基酮的 α 碳', '甲基碳'], a: 0,
+      why: '穩定的烯醇離子進行麥可加成（1,4-共軛加成），攻擊 β 碳，得到 1,5-二羰基化合物。', show: { w: 'condtab', set: { r: 'michael' } } },
+    { q: '酮酸中毒病人呼氣有丙酮味，丙酮的來源是？', o: ['乙醯乙酸（β-酮酸）自發脫羧', '乙醇被氧化', '葡萄糖直接分解', '丙酮酸還原'], a: 0,
+      why: 'β-酮酸加熱或自發經由六員環過渡狀態失去 CO₂，生成丙酮。' },
   ],
 });
 
@@ -1937,6 +2034,18 @@ const TERMS = {
     ['螯合效應', '多牙配位基形成的錯合物特別穩定，主要因為取代後粒子數增加、熵增加。'],
     ['π 逆授', '金屬把 d 電子回送到配位基（如 CO）的 π* 軌域，使 C≡O 鍵變弱。'],
   ],
+  'alpha': [
+    ['互變異構', '只差一個 H 位置、可以快速互換的異構物，例如酮式與烯醇式；不是共振。'],
+    ['動力學烯醇離子', '強而龐大的鹼（LDA）低溫下最快生成的烯醇離子，雙鍵取代較少。', { w: 'enolsel', set: { c: 'k' } }],
+    ['熱力學烯醇離子', '可逆條件下達平衡時較穩定、雙鍵取代較多的烯醇離子。', { w: 'enolsel', set: { c: 't' } }],
+    ['碘仿', 'CHI₃，黃色沉澱；甲基酮或 CH₃CH(OH)– 在 I₂/NaOH 中生成。', { w: 'iodoform', set: { i: 4 } }],
+    ['脫羧', 'β-羰基羧酸加熱時經六員環過渡狀態失去 CO₂。', { w: 'malonic', set: { m: 'mal', r: 1 } }],
+    ['丙二酸酯合成', '丙二酸二乙酯烷基化、水解、脫羧，得到 R–CH₂–COOH。', { w: 'malonic', set: { m: 'mal', r: 4 } }],
+    ['醛醇縮合', '烯醇離子加到另一分子醛酮的羰基上，再脫水成 α,β-不飽和羰基。', { w: 'aldolmech', set: { step: 4 } }],
+    ['克來森縮合', '兩分子酯在烷氧鹼中縮合成 β-酮酯。', { w: 'condtab', set: { r: 'claisen' } }],
+    ['麥可加成', '穩定的親核基加到 α,β-不飽和羰基的 β 碳（1,4-加成）。', { w: 'condtab', set: { r: 'michael' } }],
+    ['羅賓森環化', '麥可加成接分子內醛醇縮合，造出新的環己烯酮。', { w: 'condtab', set: { r: 'robinson' } }],
+  ],
   'ksp': [
     ['溶度積', 'Ksp：難溶鹽飽和溶液中離子濃度（係數次方）的乘積。', { w: 'ksp', set: { salt: 'AgCl' } }],
     ['同離子效應', '溶液中已有其中一種離子時，難溶鹽的溶解度下降。', { w: 'commonion', set: { c: 0.01 } }],
@@ -2358,7 +2467,8 @@ W.newman = el => {
   function draw() {
     const cx = 150, cy = 130, R = 52, L = 98, P = (a, r) => [cx + Math.cos(a * Math.PI / 180) * r, cy - Math.sin(a * Math.PI / 180) * r];
     const front = [[90, 'H', 'hl'], [210, 'H', ''], [330, 'H', '']], back = [[90 - ang, 'Br', 'br'], [210 - ang, 'CH₃', ''], [330 - ang, 'H', '']];
-    const bl = ([a, t, c]) => { const [x1, y1] = P(a, R), [x2, y2] = P(a, L); const [tx, ty] = P(a, L + 16); return `<line class="nb" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/><text class="at ${c}" x="${tx}" y="${ty + 5}" text-anchor="middle">${t}</text>`; };
+    const vis = a => { const r = ((a - 90) % 120 + 180) % 120 - 60; return Math.abs(r) < 16 ? a - r + (r < 0 ? -16 : 16) : a; };  // 重疊式時後方基團稍微錯開，畫面才看得到
+    const bl = ([a0, t, c]) => { const a = vis(a0), [x1, y1] = P(a, R), [x2, y2] = P(a, L); const [tx, ty] = P(a, L + 16); return `<line class="nb" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/><text class="at ${c}" x="${tx}" y="${ty + 5}" text-anchor="middle">${t}</text>`; };
     const fl = ([a, t, c]) => { const [x2, y2] = P(a, L - 10); const [tx, ty] = P(a, L + 6); return `<line class="nb" x1="${cx}" y1="${cy}" x2="${x2}" y2="${y2}"/><text class="at ${c}" x="${tx}" y="${ty + 5}" text-anchor="middle">${t}</text>`; };
     $('#nws', el).innerHTML = `<svg viewBox="0 0 300 260" class="mol" role="img" aria-label="紐曼投影式">${back.map(bl).join('')}<circle class="nc" cx="${cx}" cy="${cy}" r="${R}"/>${front.map(fl).join('')}<circle cx="${cx}" cy="${cy}" r="3" class="lp"/></svg>`;
     const d = ((ang % 360) + 360) % 360, anti = Math.abs(d - 180) <= 10, syn = d <= 10 || d >= 350;
@@ -2677,6 +2787,135 @@ W.addn = el => {
   $$('#adT tbody tr', el).forEach(t => { t.onclick = t.onkeydown = e => { if (e.type === 'keydown' && e.key !== 'Enter') return; cur = +t.dataset.i; draw(); }; });
   draw();
   return { set(s) { cur = s.i ?? cur; draw(); } };
+};
+
+/* ---------- 後中化學：α-碳化學的互動圖 ---------- */
+
+/* ===== 1. 動力學 vs 熱力學烯醇離子：2-甲基環己酮 ===== */
+W.enolsel = el => {
+  let cur = 'k';
+  const ring = { C1: { x: 0, y: 0.5, t: '' }, C2: { x: 0.87, y: 0, t: '' }, C3: { x: 0.87, y: -1, t: '' }, C4: { x: 0, y: -1.5, t: '' }, C5: { x: -0.87, y: -1, t: '' }, C6: { x: -0.87, y: 0, t: '' } };
+  const rb = [['C2', 'C3', 's'], ['C3', 'C4', 's'], ['C4', 'C5', 's'], ['C5', 'C6', 's']];
+  const sc = (m) => {   // m：'s' 起始、'ek'/'et' 烯醇離子、'pk'/'pt' 甲基化產物
+    const atoms = JSON.parse(JSON.stringify(ring)), bonds = [...rb];
+    atoms.O = { x: 0, y: 1.75, t: 'O', lp: m[0] === 'e' ? [30, 150, 90] : [30, 150], c: m[0] === 'e' ? '−' : '' };
+    atoms.M = { x: 1.9, y: 0.55, t: 'CH₃' };
+    bonds.push(['C2', 'M', 's'], ['C1', 'O', m[0] === 'e' ? 's' : 'd']);
+    bonds.push(['C1', 'C2', m === 'et' ? 'd' : 's'], ['C1', 'C6', m === 'ek' ? 'd' : 's']);
+    if (m === 's') { atoms.C2.halo = cur === 't' ? 0.32 : 0; atoms.C6.halo = cur === 'k' ? 0.32 : 0; }
+    if (m === 'pt') atoms.N = { x: 1.9, y: -0.5, t: 'CH₃', hl: 1 }, bonds.push(['C2', 'N', 's']);
+    if (m === 'pk') atoms.N = { x: -1.9, y: 0.55, t: 'CH₃', hl: 1 }, bonds.push(['C6', 'N', 's']);
+    return { atoms, bonds };
+  };
+  const C = { k: ['LDA，THF，−78 °C', 'ek', 'pk', '動力學烯醇離子', '2,6-二甲基環己酮'], t: ['NaOEt，EtOH，室溫（可逆、達平衡）', 'et', 'pt', '熱力學烯醇離子', '2,2-二甲基環己酮'] };
+  el.innerHTML = `${seg('esS', Object.entries(C).map(([k, v]) => [k, v[0]]), cur)}<div class="mrow" id="esR"></div><p class="note" id="esN"></p>`;
+  function draw() {
+    const c = C[cur], o = { w: 190, h: 170, s: 32, cy: 80 };
+    $('#esR', el).innerHTML = [[sc('s'), '2-甲基環己酮'], [sc(c[1]), c[3]], [sc(c[2]), `加 CH₃I → ${c[4]}`]].map(([s, t], i) => `${i ? '<span class="marr">→</span>' : ''}<figure>${MOL.svg(s, { ...o, label: t })}<figcaption>${t}</figcaption></figure>`).join('');
+    $('#esN', el).innerHTML = cur === 'k' ? '<b>LDA</b> 是又強又龐大的鹼（共軛酸 pKa 約 36），在低溫下一次就把 α-H 拿走、不可逆。它拿的是<b>比較容易靠近、H 比較多</b>的那一側（沒有甲基的 C6），生成速度最快的<b>動力學烯醇離子</b>。'
+      : '較弱的鹼（NaOEt，共軛酸 pKa 約 16）只拿走少量 α-H，而且可逆，兩種烯醇離子會互相轉換、達到平衡。平衡偏向<b>雙鍵上取代基較多</b>、比較穩定的一側（有甲基的 C2）：<b>熱力學烯醇離子</b>，和查依采夫規則的道理相同。';
+    pressSeg(el, 'esS', cur);
+  }
+  bindSeg(el, 'esS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.c || cur; draw(); } };
+};
+
+/* ===== 2. 碘仿試驗：哪些化合物呈陽性 ===== */
+W.iodoform = el => {
+  const D = [['乙醇', 'CH₃CH₂OH', 1, '先被 I₂ 氧化成乙醛 CH₃CHO，含 CH₃C=O。'], ['甲醇', 'CH₃OH', 0, '只有一個碳，無法形成 CH₃C=O。'], ['2-丙醇', 'CH₃CH(OH)CH₃', 1, '氧化成丙酮。'], ['1-丙醇', 'CH₃CH₂CH₂OH', 0, '氧化成丙醛 CH₃CH₂CHO，羰基旁是 CH₂CH₃ 而不是 CH₃。'],
+    ['丙酮', 'CH₃COCH₃', 1, '甲基酮。'], ['3-戊酮', 'CH₃CH₂COCH₂CH₃', 0, '羰基兩側都是乙基。'], ['苯乙酮', 'C₆H₅COCH₃', 1, '甲基酮，產物是苯甲酸根。'], ['乙醛', 'CH₃CHO', 1, '唯一呈陽性的醛。'], ['2-丁醇', 'CH₃CH(OH)CH₂CH₃', 1, '氧化成 2-丁酮。'], ['苯甲醛', 'C₆H₅CHO', 0, '沒有 α-H。'], ['乙酸', 'CH₃COOH', 0, '羧酸的 α-H 酸性太低，而且先被鹼變成羧酸根。']];
+  let cur = 4;
+  el.innerHTML = `<div class="w-row">${D.map(([n], i) => `<button class="btn sm ghost" type="button" data-i="${i}">${n}</button>`).join('')}</div><ol class="cs" id="ioC"></ol><p class="note" id="ioN"></p>`;
+  function draw() {
+    const [n, f, ok, why] = D[cur];
+    $('#ioC', el).innerHTML = ok ? `<li>${n}　${f}</li><li>I₂、NaOH：CH₃ 上的三個 α-H 依序被 I 取代 → R–CO–CI₃</li><li>OH⁻ 攻擊羰基，CI₃⁻ 是好的離去基 → R–COO⁻ + <b>CHI₃（黃色沉澱）</b></li>` : `<li>${n}　${f}</li><li>沒有 CH₃–C=O（或可被氧化成它的 CH₃–CH(OH)–）</li>`;
+    $('#ioN', el).innerHTML = `${ok ? '<span class="ok">陽性</span>' : '<span class="bad">陰性</span>'}：${why} 碘仿試驗檢驗的是 <b>CH₃–CO–</b> 和 <b>CH₃–CH(OH)–</b> 兩種結構。`;
+    $$('[data-i]', el).forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.i === cur)));
+  }
+  $$('[data-i]', el).forEach(b => { b.onclick = () => { cur = +b.dataset.i; draw(); }; });
+  draw();
+  return { set(s) { cur = s.i ?? cur; draw(); } };
+};
+
+/* ===== 3. 丙二酸酯與乙醯乙酸酯合成 ===== */
+W.malonic = el => {
+  // [鹵烷, R, 碳數, 丙二酸酯產物, 乙醯乙酸酯產物, 再加 CH₃ 的丙二酸酯產物, 再加 CH₃ 的乙醯乙酸酯產物]
+  const R = [['CH₃Br', 'CH₃', 1, '丙酸', '2-丁酮', '2-甲基丙酸', '3-甲基-2-丁酮'], ['CH₃CH₂Br', 'CH₃CH₂', 2, '丁酸', '2-戊酮', '2-甲基丁酸', '3-甲基-2-戊酮'], ['1-溴丙烷', 'CH₃(CH₂)₂', 3, '戊酸', '2-己酮', '2-甲基戊酸', '3-甲基-2-己酮'],
+    ['1-溴丁烷', 'CH₃(CH₂)₃', 4, '己酸', '2-庚酮', '2-甲基己酸', '3-甲基-2-庚酮'], ['1-溴己烷', 'CH₃(CH₂)₅', 6, '辛酸', '2-壬酮', '2-甲基辛酸', '3-甲基-2-壬酮'], ['苄基溴', 'C₆H₅CH₂', 7, '3-苯基丙酸', '4-苯基-2-丁酮', '2-甲基-3-苯基丙酸', '3-甲基-4-苯基-2-丁酮'], ['2-溴-2-甲基丙烷', '(CH₃)₃C', 4, null, null, null, null]];
+  const st = { m: 'mal', r: 4, two: 0 };
+  el.innerHTML = `${seg('mlS', [['mal', '丙二酸二乙酯 → 羧酸'], ['aca', '乙醯乙酸乙酯 → 甲基酮']], st.m)}<div class="w-row">${R.map(([n], i) => `<button class="btn sm ghost" type="button" data-r="${i}">${n}</button>`).join('')}</div>${seg('mlT', [['0', '烷基化一次'], ['1', '再用 CH₃I 烷基化一次']], '0')}<ol class="cs" id="mlC"></ol><p class="note" id="mlN"></p>`;
+  function draw() {
+    const r = R[st.r], mal = st.m === 'mal', start = mal ? 'CH₂(COOEt)₂' : 'CH₃COCH₂COOEt', tail = mal ? 'COOEt' : 'COCH₃';
+    if (!r[3]) {
+      $('#mlC', el).innerHTML = `<li>${start} + NaOEt → 烯醇離子</li><li>烯醇離子 + ${r[0]}：三級鹵烷無法進行 SN2</li>`;
+      $('#mlN', el).innerHTML = '<span class="bad">不能用</span>：烷基化是烯醇離子對鹵烷的 <b>SN2</b>，只能用甲基、一級（與苄基、烯丙基）鹵烷。三級鹵烷遇到強鹼只會發生 E2 脫去。';
+    } else {
+      const sub = st.two ? `CH₃–C(${r[1]})` : `${r[1]}–CH`;
+      $('#mlC', el).innerHTML = `<li>${start} + NaOEt → 夾在兩個羰基間的 α-H 被拿走（pKa ${mal ? '13' : '11'}）</li><li>烯醇離子 + ${r[0]}（SN2）→ ${r[1]}–CH(${mal ? 'COOEt' : 'COCH₃'})COOEt</li>${st.two ? `<li>再一次 NaOEt、CH₃I → ${sub}(${tail})COOEt</li>` : ''}<li>H₃O⁺、加熱：酯水解成 β-羰基羧酸，再<b>脫羧</b>（失去 CO₂）</li><li>產物：<b>${mal ? (st.two ? `${r[1]}–CH(CH₃)–COOH` : `${r[1]}–CH₂–COOH`) : (st.two ? `${r[1]}–CH(CH₃)–COCH₃` : `${r[1]}–CH₂–COCH₃`)}</b>　${mal ? r[st.two ? 5 : 3] : r[st.two ? 6 : 4]}</li>`;
+      $('#mlN', el).innerHTML = mal ? `丙二酸酯合成＝在 <b>CH₂–COOH</b> 上接 R：產物的碳數 = R 的碳數 + 2。所以要得到辛酸（8 個碳）要用 6 個碳的 1-溴己烷。` : `乙醯乙酸酯合成＝在 <b>CH₂–CO–CH₃</b>（丙酮的一端）上接 R，得到甲基酮：碳數 = R 的碳數 + 3。`;
+    }
+    pressSeg(el, 'mlS', st.m); pressSeg(el, 'mlT', String(st.two));
+    $$('[data-r]', el).forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.r === st.r)));
+  }
+  bindSeg(el, 'mlS', v => { st.m = v; draw(); });
+  bindSeg(el, 'mlT', v => { st.two = +v; draw(); });
+  $$('[data-r]', el).forEach(b => { b.onclick = () => { st.r = +b.dataset.r; draw(); }; });
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 4. 醛醇反應的機構（兩分子乙醛） ===== */
+W.aldolmech = el => {
+  const base = () => ({ Ca: { x: 0.4, y: -0.1, t: 'CH₂' }, Ha: { x: 0.4, y: -1.25, t: 'H' }, C1: { x: 1.5, y: 0.55, t: 'CH' }, O1: { x: 2.65, y: -0.05, t: 'O', lp: [60, 300] },
+    C2: { x: -1.3, y: 0.75, t: 'CH' }, O2: { x: -1.3, y: 2.0, t: 'O', lp: [45, 135] }, M2: { x: -2.55, y: 0.15, t: 'CH₃' }, B: { x: -0.6, y: -2.3, t: 'HO', c: '−', lp: [20] } });
+  const frames = () => {
+    const F0 = { atoms: base(), bonds: [['Ca', 'Ha', 's'], ['Ca', 'C1', 's'], ['C1', 'O1', 'd'], ['C2', 'O2', 'd'], ['C2', 'M2', 's']],
+      arrows: [{ f: { lp: ['B', 20] }, t: { a: 'Ha' }, bend: -0.3 }, { f: { b: ['Ca', 'Ha'] }, t: { m: ['Ca', 'C1'] }, bend: 0.6 }, { f: { b: ['C1', 'O1'] }, t: { a: 'O1' }, bend: -0.6 }], notes: [{ x: 0, y: -3.1, t: '兩分子乙醛 + OH⁻' }] };
+    const a1 = base(); Object.assign(a1.O1, { c: '−', lp: [0, 60, 300] }); a1.Ha.hide = 1; Object.assign(a1.B, { t: 'H₂O', c: '', lp: [] });
+    const F1 = { atoms: a1, bonds: [['Ca', 'C1', 'd'], ['C1', 'O1', 's'], ['C2', 'O2', 'd'], ['C2', 'M2', 's']],
+      arrows: [{ f: { lp: ['O1', 60] }, t: { m: ['O1', 'C1'] }, bend: 0.5 }, { f: { b: ['Ca', 'C1'] }, t: { a: 'C2' }, bend: 0.4 }, { f: { b: ['C2', 'O2'] }, t: { a: 'O2' }, bend: -0.6 }], notes: [{ x: 0, y: -3.1, t: '烯醇離子（親核基）' }] };
+    const a2 = base(); a2.Ha.hide = 1; Object.assign(a2.C2, { x: -0.75, y: 0.7 }); Object.assign(a2.O2, { x: -0.75, y: 1.95, c: '−', lp: [0, 90, 180] }); Object.assign(a2.M2, { x: -1.95, y: 0.1 }); Object.assign(a2.B, { t: 'H₂O', c: '', lp: [], x: -2.4, y: 2.3 });
+    const F2 = { atoms: a2, bonds: [['Ca', 'C1', 's'], ['C1', 'O1', 'd'], ['Ca', 'C2', 's'], ['C2', 'O2', 's'], ['C2', 'M2', 's']],
+      arrows: [{ f: { lp: ['O2', 180] }, t: { a: 'B' }, bend: -0.3 }], notes: [{ x: 0, y: -3.1, t: '烷氧離子' }] };
+    const a3 = JSON.parse(JSON.stringify(a2)); Object.assign(a3.O2, { t: 'OH', c: '', lp: [] }); Object.assign(a3.B, { t: 'HO', c: '−', lp: [] });
+    const F3 = { atoms: a3, bonds: F2.bonds, notes: [{ x: 0, y: -3.1, t: '3-羥基丁醛（醛醇加成產物）' }] };
+    const a4 = JSON.parse(JSON.stringify(a3)); Object.assign(a4.Ca, { t: 'CH' }); a4.O2.hide = 1; a4.B.hide = 1;
+    const F4 = { atoms: a4, bonds: [['Ca', 'C1', 's'], ['C1', 'O1', 'd'], ['Ca', 'C2', 'd'], ['C2', 'M2', 's']], notes: [{ x: 0, y: -3.1, t: '2-丁烯醛（α,β-不飽和醛）+ H₂O' }] };
+    return [
+      { sc: F0, cap: '<b>1. 形成烯醇離子</b>：OH⁻ 拿走 α-H，C–H 的電子推向 C=C，羰基的 π 電子推到 O 上。' },
+      { sc: F1, cap: '<b>2. 烯醇離子是親核基</b>：負電荷大部分在 O 上，但反應時用<b>碳端</b>進攻另一分子乙醛的羰基碳，形成新的 C–C 鍵。' },
+      { sc: F2, cap: '<b>3. 烷氧離子</b>：和一般親核加成一樣，得到帶負電的 O。' },
+      { sc: F3, cap: '<b>4. 質子化</b>：從水拿回 H⁺，得到 <b>β-羥基醛</b>（醛醇，aldol = ald + ol），OH⁻ 再生，所以鹼只需要催化量。' },
+      { sc: F4, cap: '<b>5. 加熱脫水</b>：α-H 仍然有酸性，失去 H 和 β 位的 OH（經由烯醇離子，E1cB），生成和羰基<b>共軛</b>的 C=C。這一步讓反應往右推，稱為<b>醛醇縮合</b>。' }];
+  };
+  const pl = mechPlayer(el, { frames, w: 460, h: 300, s: 50, cy: 140, label: '醛醇反應機構' });
+  return { set(s) { pl.go(s.step || 0, false); } };
+};
+
+/* ===== 5. 羰基縮合家族 ===== */
+W.condtab = el => {
+  const D = {
+    aldol: ['醛醇縮合', '醛或酮的烯醇離子', '另一分子醛或酮的羰基碳', 'β-羥基羰基 →（加熱）α,β-不飽和羰基', '2 CH₃CHO → CH₃CH(OH)CH₂CHO → CH₃CH=CHCHO', 'NaOH 催化量即可。'],
+    cross: ['交叉醛醇（克來森–施密特）', '酮（或醛）的烯醇離子', '<b>沒有 α-H</b> 的醛：苯甲醛、甲醛', 'α,β-不飽和酮', 'C₆H₅CHO + CH₃COCH₃ → C₆H₅CH=CHCOCH₃', '只讓一方能形成烯醇、另一方只能當親電子基，才不會得到四種產物的混合物。'],
+    intra: ['分子內醛醇', '同一分子的一端', '同一分子另一端的羰基', '五或六員環的環烯酮', '2,5-己二酮 → 3-甲基-2-環戊烯酮；2,6-庚二酮 → 3-甲基-2-環己烯酮', '可能的環有好幾種時，五員和六員環最有利（張力小）。'],
+    claisen: ['克來森縮合', '酯的烯醇離子（NaOEt）', '另一分子酯的羰基碳', '<b>β-酮酯</b>（失去 EtO⁻）', '2 CH₃COOEt → CH₃COCH₂COOEt（乙醯乙酸乙酯）+ EtOH', '產物夾在兩個羰基間的 H（pKa 約 11）會被 EtO⁻ 拿走，這一步推動平衡，所以需要<b>一當量</b>鹼，最後再酸化。酯用和鹼相同的烷氧基，避免轉酯化。'],
+    dieck: ['迪克曼縮合', '二酯一端的烯醇離子', '同一分子另一端的酯', '環狀 β-酮酯', '己二酸二乙酯（1,6-二酯）→ 2-氧代環戊烷甲酸乙酯（五員環）；1,7-二酯 → 六員環', '就是分子內的克來森縮合。'],
+    michael: ['麥可加成', '穩定的烯醇離子（丙二酸酯、乙醯乙酸酯、β-二酮）、烯胺或 Gilman 試劑', 'α,β-不飽和羰基的 <b>β 碳</b>（共軛加成，1,4-加成）', '1,5-二羰基化合物', 'CH₂(COOEt)₂ + CH₂=CHCOCH₃ → (EtOOC)₂CH–CH₂CH₂COCH₃', 'β 碳因為共振帶部分正電。「軟」的親核基走 1,4-加成；格任亞、有機鋰等「硬」親核基直接加到羰基碳（1,2-加成）。'],
+    robinson: ['羅賓森環化', '1,3-二羰基或酮的烯醇離子', '甲基乙烯基酮（MVK）', '新的六員環（環己烯酮）', '2-甲基-1,3-環己二酮 + MVK → 麥可加成 → 分子內醛醇縮合 → 雙環烯酮（類固醇骨架的起點）', '麥可加成 ＋ 分子內醛醇縮合，一次接上一個六員環。'],
+    mannich: ['曼尼希反應', '醛或酮的烯醇', '<b>亞胺離子</b>（甲醛 + 二級胺生成）', 'β-胺基羰基（曼尼希鹼）', 'CH₃COCH₃ + HCHO + (CH₃)₂NH → CH₃COCH₂CH₂N(CH₃)₂', '許多生物鹼的生物合成都經過這一步。'],
+  };
+  let cur = 'aldol';
+  el.innerHTML = `${seg('cdS', Object.entries(D).map(([k, v]) => [k, v[0]]), cur)}<table class="tbl" id="cdT"></table><p class="note" id="cdN"></p>`;
+  function draw() {
+    const d = D[cur];
+    $('#cdT', el).innerHTML = `<tbody><tr><th>親核基（誰當烯醇）</th><td>${d[1]}</td></tr><tr><th>親電子基（被攻擊）</th><td>${d[2]}</td></tr><tr><th>產物</th><td>${d[3]}</td></tr><tr><th>例子</th><td>${d[4]}</td></tr></tbody>`;
+    $('#cdN', el).innerHTML = `<b>${d[0]}</b>：${d[5]}`;
+    pressSeg(el, 'cdS', cur);
+  }
+  bindSeg(el, 'cdS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.r || cur; draw(); } };
 };
 
 /* ---------- 後中化學：胺類的互動圖 ---------- */
