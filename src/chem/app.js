@@ -29,7 +29,7 @@ function renderHome() {
 ${(() => { const nx = CH.find(c => !state.done[c.id]) || CH[0], any = CH.some(c => state.done[c.id]);
   return `<div class="cta"><a class="btn pri" href="#${nx.id}">${any ? '繼續：' : '從第一章開始：'}${nx.title}</a><a class="btn" href="#map">看課程地圖</a><a class="btn" href="#log">練習紀錄</a></div>`; })()}
 <h2 id="map">課程地圖</h2>
-<p class="mut tree-note">由下往上是先修順序：上面的章節用到下面的觀念。數字是三校歷屆試題中，<b>每份 50 題平均約考幾題</b>。點虛線框的是規劃中的章節。</p>
+<p class="mut tree-note">由上往下是學習順序：最基礎的章節在最上面，下面的章節會用到上面的觀念。數字是三校歷屆試題中，<b>每份 50 題平均約考幾題</b>。點虛線框的是規劃中的章節。</p>
 <div class="seg" id="wview">${WVIEW.map((v, i) => `<button aria-pressed="${i === state.wv}" data-i="${i}">${v}</button>`).join('')}</div>
 <div class="trees">${UNITS.map(p => `<div class="tree" data-k="${p.key}"><h3>${p.part}</h3><div class="tree-in"><svg class="tree-ln" aria-hidden="true"></svg>${treeRows(p)}</div></div>`).join('')}</div>
 <details class="tree-src"><summary>比重怎麼算的</summary><p>中國醫藥、義守、慈濟大學 106–115 學年度學士後中醫化學試題共 30 份、1498 題，逐題依主題分類。越近的年份越重要：106 年權重 1、107 年權重 2……115 年權重 10。「近三年」只看 113–115 年，不加權。106–110 年有 95 題只能看圖判斷產物、未細分主題，沒有算進來，所以各章加總略少於 50 題。一題常同時牽涉兩個主題，分類以主要考點為準。</p></details>
@@ -50,7 +50,7 @@ function treeRows(p) {
   const pos = {};   // 每列依上一列父節點的平均位置排序，減少連線交叉
   rows.forEach(r => { r.forEach((u, i) => { const ps = TREE[u].pre.filter(x => pos[x] != null); r[i] = [u, ps.length ? ps.reduce((a, x) => a + pos[x], 0) / ps.length : i / r.length]; });
     r.sort((a, b) => a[1] - b[1]); r.forEach(([u], i) => { pos[u] = r.length > 1 ? i / (r.length - 1) : .5; r[i] = u; }); });
-  return rows.reverse().map(r => `<div class="trow">${r.map(u => treeNode(u, p)).join('')}</div>`).join('');
+  return rows.map(r => `<div class="trow">${r.map(u => treeNode(u, p)).join('')}</div>`).join('');
 }
 function treeNode(u, p) {
   const c = unitCh(u), t = unitName(u), cross = TREE[u].pre.filter(x => !x.startsWith(p.key));
@@ -70,7 +70,7 @@ function treeLines() {
   $$('.tree-in').forEach(box => { const svg = box.querySelector('svg'), B = box.getBoundingClientRect(); let h = '';
     box.querySelectorAll('.tn').forEach(n => TREE[n.dataset.u].pre.forEach(pu => { const m = box.querySelector(`.tn[data-u="${pu}"]`); if (!m) return;
       const a = m.getBoundingClientRect(), b = n.getBoundingClientRect();
-      const x1 = a.left + a.width / 2 - B.left, y1 = a.top - B.top, x2 = b.left + b.width / 2 - B.left, y2 = b.bottom - B.top, my = (y1 + y2) / 2;
+      const x1 = a.left + a.width / 2 - B.left, y1 = a.bottom - B.top, x2 = b.left + b.width / 2 - B.left, y2 = b.top - B.top, my = (y1 + y2) / 2;
       h += `<path data-a="${pu}" data-b="${n.dataset.u}" d="M${x1} ${y1}C${x1} ${my} ${x2} ${my} ${x2} ${y2}"/>`; }));
     svg.setAttribute('width', B.width); svg.setAttribute('height', B.height); svg.innerHTML = h; });
 }

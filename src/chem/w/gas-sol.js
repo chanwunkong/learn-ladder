@@ -88,3 +88,65 @@ W.colli = el => {
   draw();
   return { set(s) { Object.assign(st, s); draw(); } };
 };
+
+/* ===== 5. 道耳頓分壓定律與排水集氣 ===== */
+W.dalton = el => {
+  const st = { a: 0.3, b: 0.1, w: 0 };
+  el.innerHTML = `<div class="w-row"><label class="rng">O₂（mol）<input type="range" id="dlA" min="0" max="0.5" step="0.01"><output class="mono" id="dlAo"></output></label><label class="rng">N₂（mol）<input type="range" id="dlB" min="0" max="0.5" step="0.01"><output class="mono" id="dlBo"></output></label></div>${seg('dlW', [['0', '乾燥容器'], ['1', '排水集氣（含 25 °C 水蒸氣）']], '0')}<p class="small mut">容器 10.0 L、25 °C</p><div id="dlG"></div><div class="cards" id="dlK"></div><p class="note" id="dlN"></p>`;
+  function draw() {
+    const k = RL * 298.15 / 10, pa = st.a * k, pb = st.b * k, pw = st.w ? 23.8 / 760 : 0, P = pa + pb + pw, W0 = 520, sc = W0 / Math.max(P, 1.5);
+    const seg2 = [[pa, '#2F3B99', 'O₂'], [pb, '#9AA3A0', 'N₂'], [pw, '#3D9BD6', 'H₂O']]; let x = 20;
+    $('#dlG', el).innerHTML = `<svg class="ch" viewBox="0 0 560 70" role="img" aria-label="分壓">${seg2.map(([p, c, t]) => { const w = p * sc, r = p > 0 ? `<rect x="${x}" y="14" width="${w}" height="32" fill="${c}"/>${w > 44 ? `<text class="wl" x="${x + w / 2}" y="35" text-anchor="middle">${t}</text>` : ''}` : ''; x += w; return r; }).join('')}<text class="tk" x="20" y="64">0</text><text class="tk" x="${Math.min(540, 20 + P * sc)}" y="64" text-anchor="middle">${fx(P, 3)} atm</text></svg>`;
+    $('#dlK', el).innerHTML = card('a', 'P(O₂) = n·RT/V', `${fx(pa, 3)} atm`) + card('b', 'P(N₂)', `${fx(pb, 3)} atm`) + (st.w ? card('w', 'P(H₂O)', `${fx(pw, 3)} atm`, '23.8 torr') : '') + card('t', '總壓', `${fx(P, 3)} atm`) + card('x', 'O₂ 的莫耳分率', P ? fx(pa / P, 3) : '—', 'P(O₂) ÷ P總');
+    $('#dlN', el).innerHTML = `每種氣體的分壓就像它單獨佔滿容器時的壓力，長條的總長度就是總壓：P總 = ΣPᵢ，Pᵢ = Xᵢ × P總。${st.w ? '用排水集氣法收集時，瓶中的氣體被水蒸氣飽和：要算收集到的氣體，必須先扣掉該溫度的水蒸氣壓。' : ''} 水蒸氣的分壓最多只能等於該溫度的飽和蒸氣壓，多出來的水會凝結成液體。`;
+    $('#dlA', el).value = st.a; $('#dlB', el).value = st.b; $('#dlAo', el).textContent = fx(st.a, 2); $('#dlBo', el).textContent = fx(st.b, 2); pressSeg(el, 'dlW', String(st.w));
+  }
+  $('#dlA', el).oninput = e => { st.a = +e.target.value; draw(); };
+  $('#dlB', el).oninput = e => { st.b = +e.target.value; draw(); };
+  bindSeg(el, 'dlW', v => { st.w = +v; draw(); });
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 6. 由 PV = (m/M)RT 求分子量 ===== */
+const GASM = [['H₂', 2.02], ['He', 4.00], ['CH₄', 16.04], ['NH₃', 17.03], ['Ne', 20.18], ['C₂H₂', 26.04], ['CO、N₂、C₂H₄', 28.0], ['C₂H₆', 30.07], ['O₂', 32.00], ['Ar', 39.95], ['CO₂、C₃H₈', 44.0], ['C₄H₈', 56.1], ['SO₂', 64.07], ['Cl₂', 70.90], ['C₆H₆', 78.11], ['Kr', 83.80]];
+W.molarmass = el => {
+  const st = { m: 9.33, V: 3.16, T: 32, P: 1.0 };
+  const PRE = [['9.33 g、3.16 L、32 °C、1 atm', [9.33, 3.16, 32, 1.0]], ['0.625 g、0.500 L、0 °C、1 atm', [0.625, 0.5, 0, 1.0]], ['1.26 g、0.660 L、127 °C、1.12 atm', [1.26, 0.66, 127, 1.12]]];
+  el.innerHTML = `<div class="w-row">${PRE.map(([t], i) => `<button class="btn sm ghost" type="button" data-p="${i}">${t}</button>`).join('')}</div><div class="w-row"><label class="rng">質量 m（g）<input type="range" id="mmM" min="0.1" max="12" step="0.005"><output class="mono" id="mmMo"></output></label><label class="rng">體積 V（L）<input type="range" id="mmV" min="0.1" max="5" step="0.01"><output class="mono" id="mmVo"></output></label></div><div class="w-row"><label class="rng">溫度（°C）<input type="range" id="mmT" min="-50" max="200" step="1"><output class="mono" id="mmTo"></output></label><label class="rng">壓力（atm）<input type="range" id="mmP" min="0.1" max="3" step="0.01"><output class="mono" id="mmPo"></output></label></div><ol class="cs" id="mmC"></ol><div class="bars pk" id="mmB"></div>`;
+  function draw() {
+    const T = st.T + 273.15, n = st.P * st.V / (RL * T), M = st.m / n, d = st.m / st.V;
+    $('#mmC', el).innerHTML = `<li>n = PV / RT = ${fx(st.P, 2)} × ${fx(st.V, 2)} ÷ (0.08206 × ${fx(T, 1)}) = ${fx(n, 4)} mol</li><li>M = m / n = ${st.m} ÷ ${fx(n, 4)} = <b>${fx(M, 1)} g/mol</b>　（也可寫成 M = dRT/P，密度 d = ${fx(d, 3)} g/L）</li>`;
+    const near = [...GASM].sort((a, b) => Math.abs(a[1] - M) - Math.abs(b[1] - M)).slice(0, 4);
+    $('#mmB', el).innerHTML = near.map(([g, mm], i) => `<div class="${i ? '' : 'on'}"><span>${g}</span><i class="ba" style="width:${Math.max(4, 100 - Math.abs(mm - M) / M * 300)}%"></i><b class="mono">${mm} g/mol</b></div>`).join('') + '<p class="small mut">最接近的候選氣體（長條越長越接近）</p>';
+    [['M', st.m, 3], ['V', st.V, 2], ['T', st.T, 0], ['P', st.P, 2]].forEach(([k, v, dg]) => { $(`#mm${k}`, el).value = v; $(`#mm${k}o`, el).textContent = fx(v, dg); });
+  }
+  [['M', 'm'], ['V', 'V'], ['T', 'T'], ['P', 'P']].forEach(([id, k]) => { $(`#mm${id}`, el).oninput = e => { st[k] = +e.target.value; draw(); }; });
+  $$('[data-p]', el).forEach(b => { b.onclick = () => { [st.m, st.V, st.T, st.P] = PRE[+b.dataset.p][1]; draw(); }; });
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 7. 真實氣體：PV/nRT 偏離 1 =====
+   凡得瓦常數 a（L²·atm/mol²）、b（L/mol），CRC Handbook */
+const VDW = { He: [0.0346, 0.0238], H2: [0.2476, 0.02661], N2: [1.370, 0.0387], CH4: [2.283, 0.04278], CO2: [3.640, 0.04267] }, VLAB = { He: 'He', H2: 'H₂', N2: 'N₂', CH4: 'CH₄', CO2: 'CO₂' };
+W.realgas = el => {
+  const st = { g: 'CO2', T: 300 };
+  el.innerHTML = `${seg('rgS', Object.keys(VDW).map(k => [k, VLAB[k]]), st.g)}<div class="w-row"><label class="rng">溫度（K）<input type="range" id="rgT" min="250" max="800" step="10"><output class="mono" id="rgTo"></output></label></div><div id="rgG"></div><p class="eq" id="rgF"></p><p class="note" id="rgN"></p>`;
+  const Z = (g, P, T) => { const [a, b] = VDW[g]; let lo = b * 1.0001, hi = 2 * RL * T / P + 1; const f = V => RL * T / (V - b) - a / (V * V) - P;
+    // 找最大根（氣相）：由大往小掃描
+    let V = hi; for (let i = 0; i < 60; i++) { const m = (lo + hi) / 2; if (f(m) > 0) lo = m; else hi = m; V = m; } return P * V / (RL * T); };
+  function draw() {
+    const Ps = Array.from({ length: 81 }, (_, i) => 1 + i * 10);
+    $('#rgG', el).innerHTML = chart({ w: 560, h: 250, x: [0, 800], y: [0, 2], xt: [0, 200, 400, 600, 800], yt: [0, 0.5, 1, 1.5, 2], xlab: '壓力 P（atm）', ylab: 'PV / nRT', label: '真實氣體' }, (X, Y) =>
+      `<line class="mk" x1="${X(0)}" x2="${X(800)}" y1="${Y(1)}" y2="${Y(1)}"/>` + Object.keys(VDW).map(g => `<path class="tline${g === st.g ? '' : ' faint'}" d="${path(Ps.map(P => [X(P), Y(clamp(Z(g, P, st.T), 0, 2))]))}"/>`).join('') + `<text class="tk" x="${X(790)}" y="${Y(1) - 6}" text-anchor="end">理想氣體 = 1</text>`);
+    const [a, b] = VDW[st.g];
+    $('#rgF', el).innerHTML = `(P + a·n²/V²)(V − n·b) = nRT　　${VLAB[st.g]}：a = ${a}、b = ${b}`;
+    $('#rgN', el).innerHTML = `曲線低於 1：分子互相吸引（a），撞牆的力道變小，實際壓力比理想值低；曲線高於 1：分子本身佔有體積（b），可活動的空間變小。a 越大（分子越大、越容易極化，如 CO₂）向下彎得越明顯；溫度升高時分子動能大、吸引力相對不重要，曲線更接近 1。所以氣體在<b>高溫、低壓</b>下最接近理想，He、H₂ 最接近理想氣體。`;
+    $('#rgT', el).value = st.T; $('#rgTo', el).textContent = `${st.T} K`; pressSeg(el, 'rgS', st.g);
+  }
+  bindSeg(el, 'rgS', v => { st.g = v; draw(); });
+  $('#rgT', el).oninput = e => { st.T = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
