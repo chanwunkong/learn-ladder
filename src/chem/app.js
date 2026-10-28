@@ -26,14 +26,67 @@ function renderHome() {
 <p class="eyebrow">學士後中醫入學考 · 化學</p>
 <h1 class="hero">不背反應，<br>看懂原理就推得出來。</h1>
 <p class="lede">普通化學和有機化學，每一章都從直覺和圖像開始：先動手看到現象，再推出公式與規則，最後用在題目上。普化學到的酸鹼、平衡、熱力學，會直接拿來解釋有機反應。</p>
-<div class="cta">${CH.map(c => `<a class="btn pri" href="#${c.id}">${unitName(c.unit)}：${c.title}</a>`).join('')}</div>
-<h2>課程地圖</h2>
-<div class="map">${UNITS.map(p => `<div><h3>${p.part}</h3><ol>${p.items.map(([u, t]) => { const c = unitCh(u); return `<li class="${c ? 'ok' : ''}">${c ? `<a href="#${c.id}">${t}</a>` : t}${c ? (state.done[c.id] ? ' <span class="okm">✓</span>' : '') : ' <small class="mut">製作中</small>'}</li>`; }).join('')}</ol></div>`).join('')}</div>
+${(() => { const nx = CH.find(c => !state.done[c.id]) || CH[0], any = CH.some(c => state.done[c.id]);
+  return `<div class="cta"><a class="btn pri" href="#${nx.id}">${any ? '繼續：' : '從第一章開始：'}${nx.title}</a><a class="btn" href="#map">看課程地圖</a></div>`; })()}
+<h2 id="map">課程地圖</h2>
+<p class="mut tree-note">由下往上是先修順序：上面的章節用到下面的觀念。數字是三校歷屆試題中，<b>每份 50 題平均約考幾題</b>。點虛線框的是規劃中的章節。</p>
+<div class="seg" id="wview">${WVIEW.map((v, i) => `<button aria-pressed="${i === state.wv}" data-i="${i}">${v}</button>`).join('')}</div>
+<div class="trees">${UNITS.map(p => `<div class="tree" data-k="${p.key}"><h3>${p.part}</h3><div class="tree-in"><svg class="tree-ln" aria-hidden="true"></svg>${treeRows(p)}</div></div>`).join('')}</div>
+<details class="tree-src"><summary>比重怎麼算的</summary><p>中國醫藥、義守、慈濟大學 106–115 學年度學士後中醫化學試題共 30 份、1498 題，逐題依主題分類。越近的年份越重要：106 年權重 1、107 年權重 2……115 年權重 10。「近三年」只看 113–115 年，不加權。106–110 年有 95 題只能看圖判斷產物、未細分主題，沒有算進來，所以各章加總略少於 50 題。一題常同時牽涉兩個主題，分類以主要考點為準。</p></details>
 <h2>怎麼使用</h2>
 <ul class="how"><li><b>每章是一堂課</b>：照小節順序讀，每節都有可以動手調整的圖。先玩圖、看說明，再往下讀。</li>
 <li><b>章末小題只用來確認懂了沒</b>：答錯時按「在圖上看」，回到圖上找出哪裡想錯。</li>
 <li><b>考試範圍</b>：中國醫藥、義守、慈濟大學學士後中醫的化學考科都包含普通化學與有機化學，命題以大學教科書為準；課程單元依教科書標準章節安排。</li></ul>
 </div>`;
+}
+
+const WVIEW = ['加權平均', '近三年', '中國醫藥', '義守', '慈濟'];
+state.wv = store.get('wv', 0);
+const isNew = u => !unitCh(u);
+function treeRows(p) {
+  const ids = p.items.map(i => i[0]), d = {};
+  const depth = u => d[u] ?? (d[u] = Math.max(-1, ...TREE[u].pre.filter(x => ids.includes(x)).map(depth)) + 1);
+  const rows = []; ids.forEach(u => (rows[depth(u)] = rows[depth(u)] || []).push(u));
+  const pos = {};   // 每列依上一列父節點的平均位置排序，減少連線交叉
+  rows.forEach(r => { r.forEach((u, i) => { const ps = TREE[u].pre.filter(x => pos[x] != null); r[i] = [u, ps.length ? ps.reduce((a, x) => a + pos[x], 0) / ps.length : i / r.length]; });
+    r.sort((a, b) => a[1] - b[1]); r.forEach(([u], i) => { pos[u] = r.length > 1 ? i / (r.length - 1) : .5; r[i] = u; }); });
+  return rows.reverse().map(r => `<div class="trow">${r.map(u => treeNode(u, p)).join('')}</div>`).join('');
+}
+function treeNode(u, p) {
+  const c = unitCh(u), t = unitName(u), cross = TREE[u].pre.filter(x => !x.startsWith(p.key));
+  return `<a class="tn${c ? '' : ' plan'}${c && state.done[c.id] ? ' done' : ''}" data-u="${u}" ${c ? `href="#${c.id}"` : 'tabindex="0"'}>
+<span class="tn-t">${t}${c && state.done[c.id] ? ' <span class="okm">✓</span>' : ''}</span>
+<span class="tn-w"><span class="tn-bar"><i></i></span><b></b></span>
+${c ? '' : '<small class="tn-s">規劃中</small>'}${cross.length ? `<small class="tn-x">先修：${cross.map(unitName).join('、')}</small>` : ''}</a>`;
+}
+function treeWeights() {
+  $$('.tn').forEach(n => { const w = TREE[n.dataset.u].w[state.wv], a = TREE[n.dataset.u].w[0];
+    n.querySelector('b').textContent = `≈ ${w.toFixed(1)} 題`;
+    n.querySelector('i').style.width = `${Math.min(100, w / 4 * 100)}%`;
+    n.style.setProperty('--heat', Math.min(1, w / 3.5).toFixed(2));
+    n.title = `${unitName(n.dataset.u)}：每份約 ${w.toFixed(1)} 題（${WVIEW[state.wv]}）` + (state.wv === 1 && w - a >= .4 ? '，比十年加權高' : ''); });
+}
+function treeLines() {
+  $$('.tree-in').forEach(box => { const svg = box.querySelector('svg'), B = box.getBoundingClientRect(); let h = '';
+    box.querySelectorAll('.tn').forEach(n => TREE[n.dataset.u].pre.forEach(pu => { const m = box.querySelector(`.tn[data-u="${pu}"]`); if (!m) return;
+      const a = m.getBoundingClientRect(), b = n.getBoundingClientRect();
+      const x1 = a.left + a.width / 2 - B.left, y1 = a.top - B.top, x2 = b.left + b.width / 2 - B.left, y2 = b.bottom - B.top, my = (y1 + y2) / 2;
+      h += `<path data-a="${pu}" data-b="${n.dataset.u}" d="M${x1} ${y1}C${x1} ${my} ${x2} ${my} ${x2} ${y2}"/>`; }));
+    svg.setAttribute('width', B.width); svg.setAttribute('height', B.height); svg.innerHTML = h; });
+}
+function treeFocus(u) {   // 標出這章的全部先修鏈
+  const set = new Set(), walk = x => { if (set.has(x)) return; set.add(x); TREE[x].pre.forEach(walk); };
+  if (u) walk(u);
+  $$('.tn').forEach(n => n.classList.toggle('lit', set.has(n.dataset.u)));
+  $$('.tree-ln path').forEach(p => p.classList.toggle('lit', set.has(p.dataset.a) && set.has(p.dataset.b)));
+  $$('.trees').forEach(t => t.classList.toggle('focus', !!u));
+}
+function bindTree() {
+  treeWeights(); treeLines();
+  $$('#wview button').forEach(b => b.onclick = () => { state.wv = +b.dataset.i; store.set('wv', state.wv);
+    $$('#wview button').forEach(x => x.setAttribute('aria-pressed', x === b)); treeWeights(); });
+  $$('.tn').forEach(n => { n.onmouseenter = n.onfocus = () => treeFocus(n.dataset.u); n.onmouseleave = n.onblur = () => treeFocus(null); });
+  if (!window.__treeRO) { window.__treeRO = new ResizeObserver(() => $('.trees') && treeLines()); window.__treeRO.observe($('#article')); }
 }
 
 const INST = {};   // 目前頁面上各互動圖的實例（練習題「在圖上看」用）
@@ -100,9 +153,9 @@ function route(h) {
   if (c && shown === id && sec) { const t = document.getElementById(`sec-${sec}`); if (t) t.scrollIntoView({ block: 'start' }); return; }  // 同一章只捲動，保留互動圖狀態
   shown = c ? id : null;
   if (c) { renderChapter(id); renderTOC(id); document.title = `${c.title}｜後中化學`; }
-  else { renderHome(); renderTOC(''); document.title = '後中化學｜學習階梯'; }
+  else { renderHome(); bindTree(); renderTOC(''); document.title = '後中化學｜學習階梯'; }
   $('#tocBox').classList.remove('open');
-  const t = sec && document.getElementById(`sec-${sec}`);
+  const t = sec ? document.getElementById(`sec-${sec}`) : id === 'map' && document.getElementById('map');
   if (t) setTimeout(() => t.scrollIntoView({ block: 'start' }), 0); else window.scrollTo(0, 0);
 }
 function boot() {

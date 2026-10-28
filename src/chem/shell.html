@@ -31,10 +31,32 @@ body { margin: 0; }
 .lede { font-size: 17px; color: var(--muted); }
 .cta { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 8px; }
 .cta .btn { text-decoration: none; }
-.map { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 8px 30px; }
-.map h3 { font-size: 15px; margin: 6px 0; }
-.map ol { margin: 0; padding-left: 22px; font-size: 14.5px; color: var(--muted); }
-.map li.ok { color: var(--ink); font-weight: 500; }
+.tree-note { font-size: 14.5px; margin: 0 0 10px; }
+.trees { display: grid; gap: 22px; }
+.tree h3 { font-size: 15px; margin: 6px 0 8px; }
+.tree-in { position: relative; display: flex; flex-direction: column; gap: 26px; padding: 4px 0; }
+.tree-ln { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+.tree-ln path { fill: none; stroke: color-mix(in srgb, var(--muted) 45%, transparent); stroke-width: 1.6; transition: stroke .15s, opacity .15s; }
+.trees.focus .tree-ln path { opacity: .35; }
+.trees.focus .tree-ln path.lit { stroke: var(--accent); stroke-width: 2.4; opacity: 1; }
+.trow { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; position: relative; }
+.tn { position: relative; flex: 0 1 168px; min-width: 128px; display: flex; flex-direction: column; gap: 5px; padding: 8px 10px; border-radius: 9px; background: var(--surface);
+  border: 1px solid var(--line); text-decoration: none; color: var(--ink); font-size: 13.5px; line-height: 1.35; cursor: pointer; transition: border-color .15s, opacity .15s, box-shadow .15s; }
+.tn:hover, .tn:focus-visible { border-color: var(--accent); outline: none; }
+.tn.plan { border-style: dashed; background: var(--bg); }
+.tn.done { border-color: var(--good); }
+.trees.focus .tn { opacity: .45; }
+.trees.focus .tn.lit { opacity: 1; box-shadow: 0 0 0 2px var(--accent); }
+.tn-t { font-weight: 600; }
+.tn-w { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+.tn-w b { font-family: var(--mono); font-weight: 500; white-space: nowrap; color: var(--muted); }
+.tn-bar { flex: 1; height: 6px; border-radius: 3px; background: var(--sunk); overflow: hidden; }
+.tn-bar i { display: block; height: 100%; border-radius: 3px; transition: width .25s; background: color-mix(in srgb, var(--eosin) calc(var(--heat, 0) * 100%), var(--accent)); }
+.tn-s { font-size: 11px; color: var(--warn); }
+.tn-x { font-size: 11px; color: var(--muted); }
+.tree-src { font-size: 13.5px; color: var(--muted); margin: 14px 0 4px; }
+.tree-src summary { cursor: pointer; }
+@media (max-width: 520px) { .tn { flex-basis: 140px; min-width: 0; padding: 7px 8px; font-size: 13px; } .trow { gap: 8px; } }
 .okm { color: var(--good); }
 .how li { margin-bottom: 6px; }
 .secnav { display: flex; flex-wrap: wrap; gap: 6px; margin: 18px 0 8px; }
