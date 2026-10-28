@@ -31,16 +31,31 @@ function cplxInfo(d) {
 }
 W.cname = el => {
   let cur = 'co5';
-  el.innerHTML = `${seg('cnS', Object.entries(CPLX).map(([k, v]) => [k, v.f]), cur)}<div class="qbal" id="cnQ"></div><div class="cards" id="cnK"></div><p class="note" id="cnN"></p>`;
+  el.innerHTML = `${seg('cnS', Object.entries(CPLX).map(([k, v]) => [k, v.f]), cur)}<div id="cnG"></div><div class="qeq" id="cnQ"></div><div class="cards" id="cnK"></div><p class="note" id="cnN"></p>`;
   const sg = v => (v > 0 ? `+${v}` : v < 0 ? `−${-v}` : '0');
-  const chips = (t, n, q, cls) => Array.from({ length: n }, () => `<span class="qc ${cls}${q > 0 ? ' pos' : q < 0 ? ' neg' : ''}">${t}<small>${sg(q)}</small></span>`).join('');
+  const chg = q => (q === 0 ? '' : `${Math.abs(q) > 1 ? Math.abs(q) : ''}${q > 0 ? '+' : '−'}`);
   function draw() {
-    const d = CPLX[cur], r = cplxInfo(d);
-    $('#cnQ', el).innerHTML = `<div class="qrow"><span class="qlab">方括號裡</span><span class="qbox">${chips(d.m, 1, r.ox, 'metal')}${d.lig.map(([t, n, c, dent]) => chips(t + (dent > 1 ? '（雙牙）' : ''), n, c, 'lig')).join('')}</span><span class="qsum">${sg(r.q)}</span></div>
-<div class="qrow"><span class="qlab">方括號外</span><span class="qbox">${d.out.length ? d.out.map(([t, n, c]) => chips(t, n, c, 'out')).join('') : '<span class="mut small">（沒有，整個是中性分子）</span>'}</span><span class="qsum">${sg(-r.q)}</span></div>
-<div class="qrow tot"><span class="qlab">全部加起來</span><span class="qbox"></span><span class="qsum">0</span></div>`;
-    $('#cnK', el).innerHTML = card('ox', `${d.m} 的氧化數`, sg(r.ox), `${sg(r.q)} − (${sg(r.ligQ)})`) + card('cn', '配位數', r.cn, '方括號內和金屬鍵結的原子數') + card('dn', 'd 電子數', `d${GROUP[d.m] - r.ox}`, `第 ${GROUP[d.m]} 族 − ${r.ox}`) + card('ion', '溶於水的粒子', r.ions, '錯離子 1 + 外界離子') + card('ag', '加過量 AgNO₃', `${r.agcl} AgCl`, '只有外界 Cl⁻ 會沉澱');
-    $('#cnN', el).innerHTML = `<b>整個化合物的電荷總和為 0</b>：方括號外的離子決定錯離子的電荷，再減去配位基的電荷，就是金屬的氧化數。<br>IUPAC 名稱：<b class="mono">${r.name}</b>`;
+    const d = CPLX[cur], r = cplxInfo(d), cx = 230, cy = 120, R = 84;
+    const ang = r.cn === 6 ? [90, 30, -30, -90, -150, 150] : r.cn === 4 ? [90, 0, -90, 180] : [180, 0];
+    const P = (a, rr) => [cx + Math.cos(a * Math.PI / 180) * rr, cy - Math.sin(a * Math.PI / 180) * rr];
+    let s = '', k = 0;
+    d.lig.forEach(([t, n, c, dent]) => { for (let i = 0; i < n; i++) {
+      if (dent === 1) { const [x, y] = P(ang[k], R); s += `<line class="cb" x1="${cx}" y1="${cy}" x2="${P(ang[k], R - 16)[0]}" y2="${P(ang[k], R - 16)[1]}"/><text class="cl${c < 0 ? ' neg' : ''}" x="${x}" y="${y + 5}" text-anchor="middle">${t}</text>`; k++; }
+      else { const a1 = ang[k], a2 = ang[k + 1], [x1, y1] = P(a1, R - 14), [x2, y2] = P(a2, R - 14), [lx, ly] = P((a1 + a2) / 2 + (Math.abs(a1 - a2) > 180 ? 180 : 0), R + 6);
+        s += `<line class="cb" x1="${cx}" y1="${cy}" x2="${x1}" y2="${y1}"/><line class="cb" x1="${cx}" y1="${cy}" x2="${x2}" y2="${y2}"/><path class="biden" d="M${x1} ${y1}Q${lx} ${ly} ${x2} ${y2}"/><text class="cl${c < 0 ? ' neg' : ''}" x="${lx}" y="${ly + 5}" text-anchor="middle">${t}</text>`; k += 2; }
+    } });
+    s += `<circle class="cm" cx="${cx}" cy="${cy}" r="27"/><text class="cmt" x="${cx}" y="${cy + 1}" text-anchor="middle">${d.m}</text><text class="cmq" x="${cx}" y="${cy + 16}" text-anchor="middle">${sg(r.ox)}</text>`;
+    s += `<path class="brk" d="M128 22H114V218H128"/><path class="brk" d="M332 22H346V218H332"/>${r.q ? `<text class="cq" x="352" y="30">${chg(r.q)}</text>` : ''}`;
+    const outs = d.out.flatMap(([t, n, c]) => Array.from({ length: n }, () => [t, c])), cat = outs.filter(o => o[1] > 0), an = outs.filter(o => o[1] < 0);
+    const col = (arr, x0) => arr.map(([t], i) => { const x = x0 + (i % 2) * 44, y = 70 + Math.floor(i / 2) * 50; return `<circle class="oi" cx="${x}" cy="${y}" r="18"/><text class="oit" x="${x}" y="${y + 5}" text-anchor="middle">${t}</text>`; }).join('');
+    s += col(cat, 30) + col(an, 392);
+    if (outs.length) s += `<text class="tk" x="${cat.length ? 52 : 414}" y="212" text-anchor="middle">外界離子</text>`;
+    $('#cnG', el).innerHTML = `<svg class="mol cpx" style="max-width:560px;margin:auto" viewBox="0 0 460 236" role="img" aria-label="${esc(d.f)} 的結構">${s}</svg>`;
+    const ligTerms = d.lig.map(([t, n, c]) => `${n > 1 ? `${n} × ` : ''}${t}（${sg(c)}）`).join(' + ');
+    $('#cnQ', el).innerHTML = `<p><span class="qk">錯離子</span>${d.m}（<b>x</b>）+ ${ligTerms} = ${sg(r.q)}　→　<b>x = ${sg(r.ox)}</b></p>`
+      + `<p><span class="qk">整個化合物</span>錯離子（${sg(r.q)}）${outs.length ? ` + ${d.out.map(([t, n, c]) => `${n > 1 ? `${n} × ` : ''}${t}（${sg(c)}）`).join(' + ')}` : ''} = 0</p>`;
+    $('#cnK', el).innerHTML = card('cn', '配位數', r.cn, '和金屬相連的原子數') + card('dn', 'd 電子數', `d${GROUP[d.m] - r.ox}`, `第 ${GROUP[d.m]} 族 − ${r.ox}`) + card('ion', '溶於水的粒子', r.ions, '錯離子 1 + 外界離子') + card('ag', '加過量 AgNO₃', `${r.agcl} AgCl`, '只有外界 Cl⁻ 會沉澱');
+    $('#cnN', el).innerHTML = `方括號裡的配位基用實線連在金屬上，溶於水時不會離開；方括號外的外界離子（虛線圓）會解離。IUPAC 名稱：<b class="mono">${r.name}</b>`;
     pressSeg(el, 'cnS', cur);
   }
   bindSeg(el, 'cnS', v => { cur = v; draw(); });
