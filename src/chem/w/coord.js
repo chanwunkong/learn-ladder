@@ -14,14 +14,17 @@ const CPLX = {
   en: { f: '[Co(en)₂Cl₂]Cl', m: 'Co', mn: 'cobalt', lig: [['Cl⁻', 2, -1, 1, 'chloro'], ['en', 2, 0, 2, 'ethylenediamine']], out: [['Cl⁻', 1, -1]] },
   ag: { f: 'Na[Ag(CN)₂]', m: 'Ag', mn: 'argentate', lig: [['CN⁻', 2, -1, 1, 'cyano']], out: [['Na⁺', 1, 1]] },
   ni: { f: '[Ni(CO)₄]', m: 'Ni', mn: 'nickel', lig: [['CO', 4, 0, 1, 'carbonyl']], out: [] },
+  aq: { f: '[Co(H₂O)₆]Br₃', m: 'Co', mn: 'cobalt', lig: [['H₂O', 6, 0, 1, 'aqua']], out: [['Br⁻', 3, -1]] },
+  ox: { f: 'Na[Cr(C₂O₄)₂(H₂O)₂]', m: 'Cr', mn: 'chromate', lig: [['H₂O', 2, 0, 1, 'aqua'], ['C₂O₄²⁻', 2, -2, 2, 'oxalato']], out: [['Na⁺', 1, 1]] },
 };
 const ROMAN = ['0', 'I', 'II', 'III', 'IV', 'V', 'VI'];
+const GROUP = { Cr: 6, Fe: 8, Co: 9, Ni: 10, Pt: 10, Ag: 11 };   // 過渡金屬的族數：d 電子數 = 族數 − 氧化數
 const MULT = ['', '', 'di', 'tri', 'tetra', 'penta', 'hexa'], MULT2 = ['', '', 'bis', 'tris', 'tetrakis'];
 const CNAME_OUT = { 'Cl⁻': 'chloride', 'Br⁻': 'bromide', 'K⁺': 'potassium', 'Na⁺': 'sodium' };
 function cplxInfo(d) {
   const outQ = d.out.reduce((s, [, n, q]) => s + n * q, 0), q = -outQ, ligQ = d.lig.reduce((s, [, n, c]) => s + n * c, 0), ox = q - ligQ;
   const cn = d.lig.reduce((s, [, n, , dent]) => s + n * dent, 0);
-  const lig = [...d.lig].sort((a, b) => a[4].localeCompare(b[4])).map(([, n, , , nm]) => nm === 'ethylenediamine' ? `${MULT2[n]}(${nm})` : MULT[n] + nm).join('');
+  const lig = [...d.lig].sort((a, b) => a[4].localeCompare(b[4])).map(([, n, , , nm]) => (nm === 'ethylenediamine' ? `${MULT2[n]}(${nm})` : MULT[n] + nm)).join('');
   const core = `${lig}${d.mn}(${ROMAN[ox]})`, cat = d.out.find(o => o[2] > 0), an = d.out.find(o => o[2] < 0);
   const name = cat ? `${CNAME_OUT[cat[0]]} ${core}` : an ? `${core} ${CNAME_OUT[an[0]]}` : core;
   return { q, ox, ligQ, cn, name, ions: d.out.length ? 1 + d.out.reduce((s, [, n]) => s + n, 0) : 1, agcl: an && an[0] === 'Cl⁻' ? an[1] : 0 };
@@ -36,7 +39,7 @@ W.cname = el => {
     $('#cnQ', el).innerHTML = `<div class="qrow"><span class="qlab">方括號裡</span><span class="qbox">${chips(d.m, 1, r.ox, 'metal')}${d.lig.map(([t, n, c, dent]) => chips(t + (dent > 1 ? '（雙牙）' : ''), n, c, 'lig')).join('')}</span><span class="qsum">${sg(r.q)}</span></div>
 <div class="qrow"><span class="qlab">方括號外</span><span class="qbox">${d.out.length ? d.out.map(([t, n, c]) => chips(t, n, c, 'out')).join('') : '<span class="mut small">（沒有，整個是中性分子）</span>'}</span><span class="qsum">${sg(-r.q)}</span></div>
 <div class="qrow tot"><span class="qlab">全部加起來</span><span class="qbox"></span><span class="qsum">0</span></div>`;
-    $('#cnK', el).innerHTML = card('ox', `${d.m} 的氧化數`, sg(r.ox), `${sg(r.q)} − (${sg(r.ligQ)})`) + card('cn', '配位數', r.cn, '方括號內和金屬鍵結的原子數') + card('ion', '溶於水的粒子', r.ions, '錯離子 1 + 外界離子') + card('ag', '加過量 AgNO₃', `${r.agcl} AgCl`, '只有外界 Cl⁻ 會沉澱');
+    $('#cnK', el).innerHTML = card('ox', `${d.m} 的氧化數`, sg(r.ox), `${sg(r.q)} − (${sg(r.ligQ)})`) + card('cn', '配位數', r.cn, '方括號內和金屬鍵結的原子數') + card('dn', 'd 電子數', `d${GROUP[d.m] - r.ox}`, `第 ${GROUP[d.m]} 族 − ${r.ox}`) + card('ion', '溶於水的粒子', r.ions, '錯離子 1 + 外界離子') + card('ag', '加過量 AgNO₃', `${r.agcl} AgCl`, '只有外界 Cl⁻ 會沉澱');
     $('#cnN', el).innerHTML = `<b>整個化合物的電荷總和為 0</b>：方括號外的離子決定錯離子的電荷，再減去配位基的電荷，就是金屬的氧化數。<br>IUPAC 名稱：<b class="mono">${r.name}</b>`;
     pressSeg(el, 'cnS', cur);
   }
@@ -94,7 +97,7 @@ W.dsplit = el => {
 };
 
 /* ===== 3. 高自旋與低自旋 ===== */
-const SPINEX = [['[Cr(H₂O)₆]³⁺', 3, 0.7], ['[Fe(H₂O)₆]²⁺', 6, 0.5], ['[Fe(CN)₆]⁴⁻', 6, 1.7], ['[CoF₆]³⁻', 6, 0.7], ['[Co(NH₃)₆]³⁺', 6, 1.5], ['[Mn(CN)₆]⁴⁻', 5, 1.5], ['[Co(H₂O)₆]²⁺', 7, 0.5], ['[Ni(H₂O)₆]²⁺', 8, 0.7]];
+const SPINEX = [['[Cr(H₂O)₆]³⁺', 3, 0.7], ['[Cr(en)₃]²⁺', 4, 1.3], ['[Mn(H₂O)₆]²⁺', 5, 0.5], ['[Fe(H₂O)₆]²⁺', 6, 0.5], ['[Fe(CN)₆]⁴⁻', 6, 1.7], ['[CoF₆]³⁻', 6, 0.7], ['[Co(NH₃)₆]³⁺', 6, 1.5], ['[Mn(CN)₆]⁴⁻', 5, 1.5], ['[Co(H₂O)₆]²⁺', 7, 0.5], ['[Ni(H₂O)₆]²⁺', 8, 0.7]];
 function spinFill(n, low) {   // 回傳 5 個格子（t₂g×3, eg×2）各放幾顆
   const ord = low ? [0, 1, 2, 0, 1, 2, 3, 4, 3, 4] : [0, 1, 2, 3, 4, 0, 1, 2, 3, 4], occ = [0, 0, 0, 0, 0];
   ord.slice(0, n).forEach(i => occ[i]++);
@@ -171,6 +174,8 @@ const OPRE = {
   fac: { t: 'fac-[MA₃B₃]', lab: 'BABABA', en: [] },
   mer: { t: 'mer-[MA₃B₃]', lab: 'BBBAAA', en: [] },
   cisen: { t: 'cis-[M(en)₂B₂]', lab: 'BNBNNN', en: [[1, 4], [3, 5]] },
+  cisbc: { t: 'cis-[M(en)₂BC]', lab: 'BNCNNN', en: [[1, 4], [3, 5]] },
+  transbc: { t: 'trans-[M(en)₂BC]', lab: 'NNNNBC', en: [[0, 2], [1, 3]] },
   transen: { t: 'trans-[M(en)₂B₂]', lab: 'NNNNBB', en: [[0, 2], [1, 3]] },
   abc: { t: '全 cis-[MA₂B₂C₂]', lab: 'ABACBC', en: [] },
 };
