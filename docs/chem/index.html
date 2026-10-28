@@ -210,6 +210,9 @@ svg.en.clip { overflow: hidden; }
 .mmv { font-family: var(--mono); font-size: 13px; font-weight: 700; fill: var(--ink); }
 .mma { stroke: var(--muted); stroke-width: 1.5; }
 .stk { display: flex; } .stk .ba { border-radius: 0; height: 16px; }
+.flb > div { grid-template-columns: minmax(150px, 190px) 1fr auto; }
+.zbar { position: relative; height: 16px; background: linear-gradient(90deg, transparent calc(50% - 1px), var(--line) calc(50% - 1px), var(--line) calc(50% + 1px), transparent calc(50% + 1px)); }
+.zbar i { position: absolute; top: 0; height: 16px; border-radius: 3px; } .zbar i.pos { background: #D0443C; } .zbar i.neg { background: #3D6FD6; }
 .tree-note { font-size: 14.5px; margin: 0 0 10px; }
 .trees { display: grid; gap: 22px; }
 .tree h3 { font-size: 15px; margin: 6px 0 8px; }
@@ -669,7 +672,7 @@ function mechPlayer(el, o) {
     if (!animate || n !== i + 1 || matchMedia('(prefers-reduced-motion: reduce)').matches) { i = n; show(); return; }
     const a = frames[i].sc, b = frames[n].sc, t0 = performance.now(), D = 900;
     const tick = now => {
-      const t = Math.min(1, (now - t0) / D), e = t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2;
+      const t = clamp((now - t0) / D, 0, 1), e = t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2;
       view.innerHTML = MOL.svg(MOL.lerp(a, b, e), { w: W, h: H, s: o.s || 56, cy: o.cy });
       if (en) en.innerHTML = eDraw(frames[i].at + (frames[n].at - frames[i].at) * e);
       if (t < 1) anim = requestAnimationFrame(tick); else { i = n; show(); }
@@ -2218,34 +2221,29 @@ CH.push({
 /* ---------- 後中化學：熱化學與熱力學 ---------- */
 CH.push({
   id: 'thermo', unit: 'g5', title: '熱化學與熱力學：ΔH、ΔS、ΔG',
-  lede: '反應會不會自己發生？放熱不是答案（冰在室溫會吸熱融化）。這一章把三個量串起來：ΔH 是熱、ΔS 是分散程度、ΔG = ΔH − TΔS 才是最後的判準。它也解釋了平衡常數、加熱為什麼有利於脫去反應，以及電池的電壓。',
+  lede: '反應會不會自己發生？放熱不是答案（冰在室溫會吸熱融化）。這一章從量熱開始，看能量守恆、焓、熵，最後用 ΔG = ΔH − TΔS 判斷自發，並連到平衡常數。',
   sections: [
-    { h: '焓與赫斯定律', w: 'hess', body: `
-<p>在定壓下，反應吸收或放出的熱稱為<b>焓變化 ΔH</b>：ΔH &lt; 0 放熱、ΔH &gt; 0 吸熱。</p>
-<p>焓是<b>狀態函數</b>：只和起點、終點有關，和走哪條路無關。所以反應可以拆成幾步，ΔH 相加不變，這就是<b>赫斯定律</b>。最常用的兩種算法：</p>
-<ul><li><b>生成焓</b>：ΔH°反應 = Σ n ΔH°f(產物) − Σ n ΔH°f(反應物)。元素在標準狀態（O₂(g)、C(石墨)、H₂(g)…）的 ΔH°f 定義為 0。</li>
-<li><b>鍵能</b>（估算）：ΔH ≈ Σ 斷開的鍵能 − Σ 生成的鍵能。斷鍵吸熱、成鍵放熱。</li></ul>
-<p>注意方程式倒過來，ΔH 變號；係數乘 n，ΔH 也乘 n。</p>` },
-    { h: '熵：能量分散的程度', w: 'entropy', body: `
-<p>為什麼有些吸熱反應還是會自己發生？因為還有另一個驅動力：<b>熵 S</b>，量度能量和粒子能以多少種方式分散。自然界自發地往「排法數更多」的方向走，就像打開隔板後，氣體不會自己全部擠回一邊。</p>
-<p>預測 ΔS 的正負，看「自由度」有沒有增加：</p>
-<ul><li>固體 → 液體 → 氣體：ΔS &gt; 0；</li><li>氣體分子數增加：ΔS &gt; 0（例如 CaCO₃(s) → CaO(s) + CO₂(g)）；</li><li>溶解、混合、升溫：通常 ΔS &gt; 0；</li><li>一個分子拆成兩個（例如脫去反應）：ΔS &gt; 0。</li></ul>` },
-    { h: '自由能：ΔG = ΔH − TΔS', w: 'gibbs', body: `
-<p>在定溫定壓下，判斷反應能不能自發只看一個量，<b>自由能</b>的變化：</p>
-<p class="eq">ΔG = ΔH − TΔS　　ΔG &lt; 0 自發；ΔG &gt; 0 不自發（逆反應自發）；ΔG = 0 平衡</p>
-<table class="tbl"><thead><tr><th>ΔH</th><th>ΔS</th><th>結果</th></tr></thead><tbody>
-<tr><td>−</td><td>+</td><td>任何溫度都自發</td></tr><tr><td>+</td><td>−</td><td>任何溫度都不自發</td></tr>
-<tr><td>−</td><td>−</td><td>低溫自發</td></tr><tr><td>+</td><td>+</td><td>高溫自發</td></tr></tbody></table>
-<p>後兩種情況有一個<b>轉折溫度 T = ΔH ÷ ΔS</b>。冰的熔化（ΔH、ΔS 都為正）轉折在 273 K：高於 0 °C 熔化自發，低於則結冰自發。</p>
-<p>「自發」只代表熱力學上可以發生，不代表快：鑽石變石墨是自發的，但慢到看不出來。快慢是動力學（活化能）的問題。</p>` },
-    { h: 'ΔG 把所有章節串起來', body: `
-<p>ΔG 會在後面一再出現：</p>
-<ul><li><b>平衡常數</b>：ΔG° = −RT ln K。ΔG° 越負，K 越大（化學平衡一章）。</li>
-<li><b>任意狀態</b>：ΔG = ΔG° + RT ln Q。Q &lt; K 時 ΔG &lt; 0，反應向右；Q = K 時 ΔG = 0，正是平衡。</li>
-<li><b>溫度對 K 的影響</b>：因為 ΔG° = ΔH° − TΔS°，吸熱反應升溫 K 變大。</li>
-<li><b>脫去反應喜歡加熱</b>：一個分子變成多個，ΔS &gt; 0，T 越大 −TΔS 越負（E1／E2 一節）。</li>
-<li><b>電化學</b>：ΔG° = −nFE°。電池電壓為正，代表反應自發。</li>
-<li><b>生物體</b>：ATP 水解（ΔG°' 約 −30.5 kJ/mol）和不自發的反應偶合，讓總 ΔG &lt; 0。</li></ul>` },
+    { h: '反應熱怎麼量？', w: 'calor', body: `
+<p>熱量 q = m·c·ΔT（c 為比熱）。兩個物體接觸到溫度相同時，一方放出的熱等於另一方吸收的熱，這就是<b>卡計</b>的原理。拖動質量、換不同的金屬，看最後溫度落在哪裡。</p>
+<p>咖啡杯卡計在<b>定壓</b>下測量，量到的熱是 ΔH；彈卡計是<b>定容</b>的密閉容器，量到的是內能變化 ΔE：q = C卡計 × ΔT。兩者相差氣體做的功：ΔH = ΔE + Δn(氣體)·RT。單位：1 cal = 4.184 J；功率 1 W = 1 J/s。</p>` },
+    { h: '熱和功如何改變系統的能量？', w: 'firstlaw', body: `
+<p><b>熱力學第一定律</b>：能量守恆，ΔE = q + w。系統吸熱 q &gt; 0；環境對系統做功 w &gt; 0，系統膨脹對外做功 w = −PΔV &lt; 0。切換三種過程，三條長條就是這個公式。</p>
+<p>理想氣體的內能只和溫度有關，所以等溫過程 ΔE = 0。q、w 和路徑有關；ΔE、ΔH、ΔS、ΔG 只和起點終點有關，稱為<b>狀態函數</b>。ΔE = nCᵥΔT 對所有理想氣體成立，但 Cᵥ = 3/2 R 只適用單原子氣體；Cₚ − Cᵥ = R。</p>` },
+    { h: '為什麼反應熱可以相加？', w: ['hess', 'bornhaber'], body: `
+<p>ΔH 是狀態函數：反應可以拆成幾步，ΔH 相加不變（<b>赫斯定律</b>）。方程式倒過來 ΔH 變號，係數乘 n、ΔH 也乘 n。常用的算法：</p>
+<ul><li><b>生成焓</b>：ΔH°反應 = Σ n ΔH°f(產物) − Σ n ΔH°f(反應物)。元素在標準狀態（O₂(g)、N₂(g)、Br₂(l)、C(石墨)…）的 ΔH°f = 0；O₃(g)、C(鑽石) 不是最穩定形式，ΔH°f ≠ 0。</li>
+<li><b>燃燒熱</b>：ΔH°反應 = Σ ΔH°c(反應物) − Σ ΔH°c(產物)（方向和生成焓相反）。</li>
+<li><b>鍵能</b>（估算）：ΔH ≈ Σ 斷開的鍵能 − Σ 生成的鍵能。</li></ul>
+<p>第二張圖是離子晶體的<b>波恩–哈柏循環</b>：用昇華熱、鍵能、游離能、電子親和力與生成焓反推晶格能。</p>` },
+    { h: '熵是什麼？', w: 'entropy', body: `
+<p>熵 S 量度能量和粒子能以多少種方式分散。拖動分子數：分子越多，「全部擠在一邊」的機率越小，自然變化往排法數多的方向走。ΔS &gt; 0 的常見情況：固 → 液 → 氣、氣體分子數增加、溶解與混合、升溫。少數溶解反而 ΔS &lt; 0：小而高電荷的離子（Ca²⁺、SO₄²⁻）使周圍水分子排列得很有秩序。</p>
+<p>計算公式：相變化 ΔS = ΔH/T；理想氣體等溫膨脹 ΔS = nR ln(V₂/V₁)；定壓加熱 ΔS = nCₚ ln(T₂/T₁)。系統放熱時環境的熵增加：ΔS環境 = −ΔH/T。自發過程使宇宙的總熵增加（熱力學第二定律）。</p>` },
+    { h: '反應會不會自己發生？', w: 'gibbs', body: `
+<p>定溫定壓下只看自由能：<b>ΔG = ΔH − TΔS</b>。ΔG &lt; 0 自發、ΔG &gt; 0 不自發、ΔG = 0 平衡。拖動 ΔH、ΔS 與溫度，直線 ΔG(T) 的截距是 ΔH、斜率是 −ΔS，穿過 0 的溫度 T = ΔH/ΔS 稱為轉折溫度。</p>
+<p>由此可以判斷：ΔH &lt; 0、ΔS &gt; 0 任何溫度都自發；ΔH &gt; 0、ΔS &lt; 0 永不自發；兩者同號時，放熱的（如結冰、原子結合成分子）低溫自發，吸熱的（如熔化、蛋白質變性）高溫自發。熔點、沸點正是 ΔG = 0 的溫度：T = ΔH/ΔS。「自發」不代表快，快慢是動力學的問題。</p>` },
+    { h: 'ΔG 和平衡常數有什麼關係？', w: 'vanthoff', body: `
+<p><b>ΔG° = −RT ln K</b>：ΔG° &lt; 0 時 K &gt; 1，ΔG° = 0 時 K = 1。代入 ΔG° = ΔH° − TΔS° 得到 ln K 對 1/T 的直線，斜率 −ΔH°/R：放熱反應升溫 K 變小，吸熱反應升溫 K 變大。</p>
+<p>任意狀態 ΔG = ΔG° + RT ln Q；Q = K 時 ΔG = 0。兩個反應相加時 ΔG° 相加（K 相乘），不自發的反應可以和強烈自發的反應偶合：例如 ZnS → Zn + S 不自發，但和 S + H₂ → H₂S 相加後總 ΔG 仍可判斷；生物體用 ATP 水解（約 −30.5 kJ/mol）推動合成反應。電化學中 ΔG° = −nFE°。</p>` },
   ],
   quiz: [
     { q: '已知 C(s) + ½O₂ → CO，ΔH = −110.5 kJ；C(s) + O₂ → CO₂，ΔH = −393.5 kJ。則 CO + ½O₂ → CO₂ 的 ΔH 為？', o: ['−283.0 kJ', '−504.0 kJ', '+283.0 kJ', '−110.5 kJ'], a: 0,
@@ -2260,6 +2258,48 @@ CH.push({
       why: 'ΔG° = −RT ln K，ΔG° 為負代表 ln K 為正，K > 1。自發與速率無關。' },
     { q: '為什麼加熱有利於脫去反應（相對於取代）？', o: ['脫去使分子數增加、ΔS > 0，高溫時 −TΔS 更有利', '加熱降低脫去的 ΔH', '加熱使鹼變弱', '加熱讓取代反應的 ΔS 變大'], a: 0,
       why: '脫去把一個分子變成烯、H–B、X⁻ 三個分子，熵增加；溫度越高，ΔG = ΔH − TΔS 越負。', show: { w: 'entropy', set: { N: 20 } } },
+  ],
+  exam: [
+    { src: '慈濟 111 第 31 題', q: '30.0 g、95.0 °C 的鋁塊放入 100.0 g、22.0 °C 的水中，最後溫度約為？（鋁比熱 0.897 J/(g·°C)）', o: ['26.4 °C', '30.5 °C', '22.9 °C', '58.5 °C'], a: 0,
+      why: '30 × 0.897 × (95 − T) = 100 × 4.184 × (T − 22)，T ≈ 26.4 °C。', show: { w: 'calor', set: { k: 'Al', mm: 30, mw: 100 } } },
+    { src: '中國醫藥 111 第 41 題', q: '熱容量 2.10 kJ/K 的彈卡計中燃燒 0.160 g CH₄（16.0 g/mol），溫度上升 4.24 K，CH₄ 的莫耳燃燒熱約為？', o: ['−890 kJ/mol', '−8.90 kJ/mol', '−56 kJ/mol', '−142 kJ/mol'], a: 0,
+      why: 'q = 2.10 × 4.24 = 8.90 kJ，÷ 0.0100 mol = 890 kJ/mol，放熱為負。' },
+    { src: '慈濟 114 第 10 題', q: '關於卡計的敘述，何者錯誤？', o: ['彈卡計量到的熱就是 ΔH', '咖啡杯卡計在定壓下測量', '彈卡計量到的熱是 ΔE', '有氣體生成時 ΔH 與 ΔE 不同'], a: 0,
+      why: '彈卡計定容，q = ΔE；ΔH = ΔE + Δn(g)RT。' },
+    { src: '中國醫藥 115 第 32 題', q: '1 mol 理想氣體等溫可逆膨脹到兩倍體積，何者正確？', o: ['ΔE = 0，系統吸熱', 'ΔE > 0', '系統放熱', 'w = 0'], a: 0,
+      why: '等溫 ΔE = 0；膨脹對外做功 w < 0，所以 q = −w > 0。', show: { w: 'firstlaw', set: { p: 'iso', r: 2 } } },
+    { src: '慈濟 115 第 2 題', q: '1 mol 理想氣體等溫由 V 膨脹到 3V，ΔS 為？', o: ['R ln 3', '3R', 'R/3', '0'], a: 0,
+      why: 'ΔS = nR ln(V₂/V₁) = R ln 3。', show: { w: 'firstlaw', set: { p: 'iso', r: 3 } } },
+    { src: '慈濟 114 第 13 題', q: '下列關係何者不適用於所有理想氣體？', o: ['Cᵥ = 3/2 R', 'ΔE = nCᵥΔT', 'ΔH = nCₚΔT', 'Cₚ − Cᵥ = R'], a: 0,
+      why: 'Cᵥ = 3/2 R 只適用單原子氣體；雙原子分子還有轉動，Cᵥ 較大。', show: { w: 'firstlaw', set: { p: 'cv' } } },
+    { src: '慈濟 115 第 39 題', q: '下列何者的標準生成熱不為 0？', o: ['C(鑽石)', 'C(石墨)', 'Br₂(l)', 'O₂(g)'], a: 0,
+      why: '碳的標準狀態是石墨；鑽石的 ΔH°f = +1.9 kJ/mol。' },
+    { src: '慈濟 111 第 40 題', q: '由燃燒熱 C₂H₂ −1300、H₂ −286、C₂H₆ −1560 kJ/mol，求 C₂H₂ + 2H₂ → C₂H₆ 的 ΔH？', o: ['−312 kJ', '+312 kJ', '−26 kJ', '−546 kJ'], a: 0,
+      why: 'ΔH = Σ燃燒熱(反應物) − Σ燃燒熱(產物) = (−1300 − 572) − (−1560) = −312 kJ。' },
+    { src: '義守 113 第 3 題', q: '由鍵能 C=O 745、H–H 436、C–H 413、O–H 463、C–O 358 kJ/mol，估算丙酮加氫成異丙醇的 ΔH？', o: ['−53 kJ', '+53 kJ', '−413 kJ', '−180 kJ'], a: 0,
+      why: '斷 C=O 與 H–H：745 + 436 = 1181；生成 C–O、C–H、O–H：358 + 413 + 463 = 1234；ΔH = 1181 − 1234 = −53 kJ。' },
+    { src: '慈濟 107 第 2 題', q: 'Na 昇華 107、Cl–Cl 鍵能 244、Na 游離能 496、Cl 電子親和力 −349、NaCl 生成焓 −411 kJ/mol，NaCl 的晶格能約為？', o: ['787 kJ/mol', '411 kJ/mol', '1159 kJ/mol', '−76 kJ/mol'], a: 0,
+      why: '−411 = 107 + 122 + 496 − 349 − U，U = 787 kJ/mol（鍵能只需一半）。', show: { w: 'bornhaber', set: { c: 'NaCl' } } },
+    { src: '慈濟 111 第 48 題', q: 'KCl 晶格能 701 kJ/mol，溶解熱 +17 kJ/mol，其水合能為？', o: ['−684 kJ/mol', '+718 kJ/mol', '−718 kJ/mol', '+684 kJ/mol'], a: 0,
+      why: '溶解熱 = 晶格能 + 水合能：17 = 701 + ΔH水合，ΔH水合 = −684。', show: { w: 'bornhaber', set: { c: 'NaCl' } } },
+    { src: '義守 115 第 21 題', q: '某反應低溫自發、高溫不自發，最合理的判斷是？', o: ['ΔH < 0、ΔS < 0', 'ΔH > 0、ΔS > 0', 'ΔH < 0、ΔS > 0', 'ΔH > 0、ΔS < 0'], a: 0,
+      why: '焓有利、熵不利：低溫時 TΔS 影響小，ΔG < 0。', show: { w: 'gibbs', set: { p: 'nh3' } } },
+    { src: '中國醫藥 108 第 20 題', q: '某物質熔化 ΔH° = 9.0 kJ/mol、ΔS° = 30.0 J/(mol·K)，熔點約為？', o: ['27 °C', '300 °C', '3.3 °C', '−27 °C'], a: 0,
+      why: 'T = ΔH/ΔS = 9000 ÷ 30.0 = 300 K = 27 °C。' },
+    { src: '慈濟 113 第 27 題', q: '−10 °C 時液態水結冰，ΔH、ΔS、ΔG 的符號為？', o: ['−、−、−', '+、+、−', '−、+、−', '+、−、+'], a: 0,
+      why: '結冰放熱、變得有序；低於熔點時自發。', show: { w: 'gibbs', set: { p: 'ice', T: 263 } } },
+    { src: '義守 110 第 17 題', q: '兩個原子自發結合成穩定的雙原子分子，ΔH、ΔS、ΔG 的符號為？', o: ['−、−、−', '+、+、+', '−、+、−', '+、−、−'], a: 0,
+      why: '成鍵放熱；兩個粒子變一個，熵減少；自發則 ΔG < 0。' },
+    { src: '義守 112 第 3 題', q: '蛋白質加熱變性（二級結構的氫鍵斷裂），ΔH 與 ΔS 為？', o: ['ΔH > 0、ΔS > 0', 'ΔH < 0、ΔS < 0', 'ΔH < 0、ΔS > 0', 'ΔH > 0、ΔS < 0'], a: 0,
+      why: '斷氫鍵吸熱；鏈變得鬆散、自由度增加；所以高溫才自發。' },
+    { src: '中國醫藥 106 第 25 題', q: '某弱酸解離的 ΔH = −8.0 kJ/mol、ΔS = −70 J/(mol·K)，27 °C 時 ΔG 為？', o: ['+13 kJ/mol', '−29 kJ/mol', '−13 kJ/mol', '+29 kJ/mol'], a: 0,
+      why: 'ΔG = −8.0 − 300 × (−0.070) = +13 kJ/mol（ΔS 要換成 kJ）。', show: { w: 'gibbs', set: { T: 300 } } },
+    { src: '義守 114 第 6 題', q: '關於 ΔG° 與平衡常數，何者正確？', o: ['ΔG° = 0 時 K = 1', 'ΔG° > 0 時 K > 1', 'ΔG° 越負 K 越小', 'K 與 ΔG° 無關'], a: 0,
+      why: 'ΔG° = −RT ln K。', show: { w: 'vanthoff', set: { r: 'nh3' } } },
+    { src: '慈濟 115 第 11 題', q: '以 ln K 對 1/T 作圖得到斜率為正的直線，此反應為？', o: ['放熱反應，升溫 K 變小', '吸熱反應，升溫 K 變大', '放熱反應，升溫 K 變大', '熵減少的反應'], a: 0,
+      why: '斜率 = −ΔH°/R > 0，所以 ΔH° < 0。', show: { w: 'vanthoff', set: { r: 'nh3' } } },
+    { src: '慈濟 108 第 3 題', q: '一個人休息時以約 100 W 的速率向環境放熱，一天放出的熱約為？', o: ['8.6 × 10⁶ J', '8.6 × 10³ J', '2.4 × 10³ J', '3.6 × 10⁵ J'], a: 0,
+      why: '100 J/s × 86400 s ≈ 8.6 × 10⁶ J。' },
   ],
 });
 
@@ -2422,6 +2462,9 @@ const TERMS = {
     ['格雷姆定律', '氣體擴散或逸散速率與分子量的平方根成反比。', { w: 'maxwell', set: { a: 'He', b: 'O2' } }],
   ],
   'thermo': [
+    ['卡計', '測量反應熱的裝置；咖啡杯卡計定壓量 ΔH，彈卡計定容量 ΔE。', { w: 'calor' }],
+    ['熱力學第一定律', '能量守恆：ΔE = q + w。', { w: 'firstlaw', set: { p: 'cp' } }],
+    ['波恩–哈柏循環', '用昇華熱、鍵能、游離能、電子親和力與生成焓反推晶格能的焓循環。', { w: 'bornhaber', set: { c: 'NaCl' } }],
     ['狀態函數', '只和起點、終點有關，與途徑無關的量，例如 H、S、G。', { w: 'hess', set: { ex: 'co', mode: 'direct' } }],
     ['赫斯定律', '反應分成幾步進行，ΔH 相加等於一步完成的 ΔH。', { w: 'hess', set: { ex: 'co', mode: 'steps' } }],
     ['生成焓', '由元素在標準狀態生成 1 莫耳化合物的焓變化；元素本身為 0。', { w: 'hess', set: { ex: 'ch4', mode: 'steps' } }],
@@ -5613,6 +5656,97 @@ W.gibbs = el => {
   $$('[data-p]', el).forEach(b => { b.onclick = () => { const p = PRE[b.dataset.p]; st.dH = p[1]; st.dS = p[2]; draw(); }; });
   draw();
   return { set(s) { if (s.p) { const p = PRE[s.p]; st.dH = p[1]; st.dS = p[2]; } if (s.T != null) st.T = s.T; draw(); } };
+};
+
+/* ===== 4. 卡計：放出的熱 = 吸收的熱 =====
+   比熱 J/(g·°C) */
+const SPH = { Al: ['鋁', 0.897], Fe: ['鐵', 0.449], Cu: ['銅', 0.385], Ag: ['銀', 0.235], Pb: ['鉛', 0.129] };
+W.calor = el => {
+  const st = { k: 'Cu', mm: 50, Tm: 95, mw: 100, Tw: 22 };
+  el.innerHTML = `${seg('clS', Object.entries(SPH).map(([k, v]) => [k, `${v[0]}（c = ${v[1]}）`]), st.k)}<div class="w-row"><label class="rng">金屬質量（g）<input type="range" id="clM" min="10" max="200" step="1"><output class="mono" id="clMo"></output></label><label class="rng">水的質量（g）<input type="range" id="clW" min="50" max="500" step="5"><output class="mono" id="clWo"></output></label></div><div id="clG"></div><p class="eq" id="clF"></p><p class="note" id="clN"></p>`;
+  function draw() {
+    const c = SPH[st.k][1], Cm = st.mm * c, Cw = st.mw * 4.184, Tf = (Cm * st.Tm + Cw * st.Tw) / (Cm + Cw), q = Cw * (Tf - st.Tw);
+    $('#clG', el).innerHTML = chart({ w: 560, h: 220, x: [0, 1], y: [0, 100], xt: [], yt: [0, 25, 50, 75, 100], ylab: '溫度（°C）', label: '熱平衡' }, (X, Y) =>
+      `<line class="tline" x1="${X(0.1)}" y1="${Y(st.Tm)}" x2="${X(0.9)}" y2="${Y(Tf)}" style="stroke:#D0443C"/><line class="tline" x1="${X(0.1)}" y1="${Y(st.Tw)}" x2="${X(0.9)}" y2="${Y(Tf)}"/><circle class="dot" cx="${X(0.9)}" cy="${Y(Tf)}" r="6"/>`
+      + `<text class="tk" x="${X(0.1)}" y="${Y(st.Tm) - 8}">金屬 ${st.Tm} °C</text><text class="tk" x="${X(0.1)}" y="${Y(st.Tw) + 16}">水 ${st.Tw} °C</text><text class="tk hl" x="${X(0.9)}" y="${Y(Tf) - 10}" text-anchor="end">最終 ${fx(Tf, 2)} °C</text>`);
+    $('#clF', el).innerHTML = `金屬放熱 ${st.mm} × ${c} × (${st.Tm} − ${fx(Tf, 2)}) = 水吸熱 ${st.mw} × 4.184 × (${fx(Tf, 2)} − ${st.Tw}) = <b>${fx(q, 0)} J</b>`;
+    $('#clN', el).innerHTML = `熱量 q = m·c·ΔT。兩者接觸直到溫度相同，金屬失去的熱等於水得到的熱。比熱小的金屬（鉛）同樣質量能帶進去的熱較少，水溫升高較少。水的比熱很大（4.184 J/(g·°C)），所以溫度變化很小。`;
+    $('#clM', el).value = st.mm; $('#clMo', el).textContent = st.mm; $('#clW', el).value = st.mw; $('#clWo', el).textContent = st.mw; pressSeg(el, 'clS', st.k);
+  }
+  bindSeg(el, 'clS', v => { st.k = v; draw(); });
+  $('#clM', el).oninput = e => { st.mm = +e.target.value; draw(); };
+  $('#clW', el).oninput = e => { st.mw = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 5. 熱力學第一定律：ΔE = q + w（1 mol 單原子理想氣體） ===== */
+W.firstlaw = el => {
+  const st = { p: 'iso', r: 2, dT: 50 };
+  el.innerHTML = `${seg('flS', [['iso', '等溫膨脹（298 K）'], ['cp', '定壓加熱'], ['cv', '定容加熱']], st.p)}<div class="w-row"><label class="rng" id="flL"><span></span><input type="range" id="flR"><output class="mono" id="flO"></output></label></div><div class="bars pk flb" id="flB"></div><div class="cards" id="flK"></div><p class="note" id="flN"></p>`;
+  const R = 8.314;
+  function draw() {
+    let q, w, dE, dS, txt;
+    if (st.p === 'iso') { w = -R * 298 * Math.log(st.r); dE = 0; q = -w; dS = R * Math.log(st.r); txt = `理想氣體的內能只和溫度有關，等溫時 ΔE = 0：氣體對外做的功 −w = nRT ln(V₂/V₁) 全部由吸收的熱補充。熵增加 ΔS = nR ln(V₂/V₁) = ${fx(dS, 2)} J/K。`; }
+    else if (st.p === 'cp') { q = 2.5 * R * st.dT; w = -R * st.dT; dE = 1.5 * R * st.dT; dS = 2.5 * R * Math.log((298 + st.dT) / 298); txt = `定壓下 q = ΔH = nCₚΔT（Cₚ = 5/2 R），其中一部分用來推動活塞（w = −PΔV = −nRΔT），其餘使內能增加 nCᵥΔT。所以 Cₚ − Cᵥ = R。`; }
+    else { q = 1.5 * R * st.dT; w = 0; dE = q; dS = 1.5 * R * Math.log((298 + st.dT) / 298); txt = `體積不變，不做功（w = 0），吸收的熱全部變成內能：q = ΔE = nCᵥΔT（單原子 Cᵥ = 3/2 R）。彈卡計就是定容，量到的是 ΔE。`; }
+    const mx = Math.max(Math.abs(q), Math.abs(w), Math.abs(dE), 1);
+    $('#flB', el).innerHTML = [['q（吸收的熱）', q], ['w（環境對系統做的功）', w], ['ΔE = q + w', dE]].map(([t, v]) => `<div><span>${t}</span><span class="zbar"><i class="${v >= 0 ? 'pos' : 'neg'}" style="width:${Math.abs(v) / mx * 50}%;${v >= 0 ? 'left:50%' : `right:50%`}"></i></span><b class="mono">${v >= 0 ? '+' : '−'}${fx(Math.abs(v), 0)} J</b></div>`).join('');
+    $('#flK', el).innerHTML = card('s', 'ΔS', `${fx(dS, 2)} J/K`) + card('t', '過程', st.p === 'iso' ? `V₂/V₁ = ${st.r}` : `ΔT = ${st.dT} K`);
+    $('#flN', el).innerHTML = `${txt} 符號規則：系統吸熱 q &gt; 0，環境對系統做功 w &gt; 0（被壓縮），系統對外做功 w &lt; 0（膨脹）。q 和 w 和路徑有關，ΔE、ΔH、ΔS 是狀態函數。`;
+    const L = $('#flL', el), r = $('#flR', el);
+    if (st.p === 'iso') { L.firstChild.textContent = '體積變為幾倍 V₂/V₁'; r.min = 1; r.max = 4; r.step = 0.1; r.value = st.r; $('#flO', el).textContent = fx(st.r, 1); }
+    else { L.firstChild.textContent = '升溫 ΔT（K）'; r.min = 0; r.max = 200; r.step = 5; r.value = st.dT; $('#flO', el).textContent = st.dT; }
+    pressSeg(el, 'flS', st.p);
+  }
+  bindSeg(el, 'flS', v => { st.p = v; draw(); });
+  $('#flR', el).oninput = e => { if (st.p === 'iso') st.r = +e.target.value; else st.dT = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 6. 波恩–哈柏循環：由生成焓求晶格能 =====
+   kJ/mol（教科書常用值）；晶格能由循環算出 */
+const BH = {
+  NaCl: [['Na(s) + ½Cl₂(g)', 0], ['Na(g) + ½Cl₂(g)', 107, 'Na 昇華'], ['Na(g) + Cl(g)', 122, '½ Cl–Cl 鍵能'], ['Na⁺(g) + e⁻ + Cl(g)', 496, 'Na 游離能'], ['Na⁺(g) + Cl⁻(g)', -349, 'Cl 電子親和力']], NaClf: -411,
+  LiF: [['Li(s) + ½F₂(g)', 0], ['Li(g) + ½F₂(g)', 161, 'Li 昇華'], ['Li(g) + F(g)', 79, '½ F–F 鍵能'], ['Li⁺(g) + e⁻ + F(g)', 520, 'Li 游離能'], ['Li⁺(g) + F⁻(g)', -328, 'F 電子親和力']], LiFf: -616,
+};
+W.bornhaber = el => {
+  let cur = 'NaCl';
+  el.innerHTML = `${seg('bhS', [['NaCl', 'NaCl'], ['LiF', 'LiF']], cur)}<div id="bhG"></div><p class="eq" id="bhF"></p><p class="note" id="bhN"></p>`;
+  function draw() {
+    const st = BH[cur], f = BH[cur + 'f'], lv = []; let e = 0; st.forEach(([t, d], i) => { if (i) e += d; lv.push([t, e, d, st[i][2]]); });
+    const U = lv[lv.length - 1][1] - f, top = Math.max(...lv.map(l => l[1])), bot = f, Y = v => 20 + (top - v) / (top - bot) * 250;
+    let s = lv.map(([t, v], i) => `<line class="lvl" x1="${60 + i * 60}" x2="${200 + i * 60}" y1="${Y(v)}" y2="${Y(v)}"/><text class="tk" x="${205 + i * 60}" y="${Y(v) + 4}">${t}</text>`).join('');
+    s += lv.slice(1).map(([, v, d, nm], i) => `<line class="${d > 0 ? 'dlt up' : 'dlt dn'}" x1="${110 + (i + 1) * 60}" x2="${110 + (i + 1) * 60}" y1="${Y(v - d)}" y2="${Y(v)}"/><text class="tk sm" x="${104 + (i + 1) * 60}" y="${(Y(v - d) + Y(v)) / 2 + 3}" text-anchor="end">${d > 0 ? '+' : ''}${d}</text>`).join('');
+    s += `<line class="lvl on" x1="60" x2="200" y1="${Y(f)}" y2="${Y(f)}"/><text class="tk hl" x="205" y="${Y(f) + 4}">${cur}(s)　ΔHf = ${f}</text><line class="dlt dn" x1="420" x2="420" y1="${Y(lv[lv.length - 1][1])}" y2="${Y(f)}"/><text class="tk hl" x="426" y="${(Y(lv[lv.length - 1][1]) + Y(f)) / 2}">−${fx(U, 0)}（晶格能）</text>`;
+    $('#bhG', el).innerHTML = `<svg class="en" style="max-width:640px" viewBox="40 0 600 285" role="img" aria-label="波恩–哈柏循環">${s}</svg>`;
+    $('#bhF', el).innerHTML = `ΔHf = ${st.slice(1).map(x => `(${x[1] > 0 ? '+' : ''}${x[1]})`).join(' + ')} + (−U)　→　U = <b>${fx(U, 0)} kJ/mol</b>`;
+    $('#bhN', el).innerHTML = `從元素到離子晶體，可以直接生成（ΔHf），也可以分步走：金屬昇華、非金屬斷鍵、游離、得電子，最後氣態離子結合成晶體（放出晶格能）。焓是狀態函數，兩條路的總和相同，所以可以用已知的各步驟反推晶格能。同樣的道理，溶解熱 = 晶格能 + 水合能：NaI 晶格能 686、溶解熱 −7.6 kJ/mol，則水合能 = −7.6 − 686 = −693.6 kJ/mol。`;
+    pressSeg(el, 'bhS', cur);
+  }
+  bindSeg(el, 'bhS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.c || cur; draw(); } };
+};
+
+/* ===== 7. ln K 對 1/T（凡特何夫） ===== */
+const VH = { nh3: ['N₂ + 3H₂ ⇌ 2NH₃（放熱）', -92.2, -198.7], no2: ['N₂O₄ ⇌ 2NO₂（吸熱）', 57.2, 175.8] };
+W.vanthoff = el => {
+  const st = { r: 'nh3', T: 298 };
+  el.innerHTML = `${seg('vhS', Object.entries(VH).map(([k, v]) => [k, v[0]]), st.r)}<div class="w-row"><label class="rng">溫度（K）<input type="range" id="vhT" min="250" max="800" step="5"><output class="mono" id="vhO"></output></label></div><div id="vhG"></div><p class="eq" id="vhF"></p><p class="note" id="vhN"></p>`;
+  function draw() {
+    const [nm, H, S] = VH[st.r], lnK = T => -H * 1000 / (8.314 * T) + S / 8.314, xs = Array.from({ length: 41 }, (_, i) => 1.25 + i * 0.0725), y = lnK(st.T), ys = xs.map(x => lnK(1000 / x)), lo = Math.floor(Math.min(...ys) / 5) * 5, hi = Math.ceil(Math.max(...ys) / 5) * 5;
+    $('#vhG', el).innerHTML = chart({ w: 560, h: 240, x: [1.25, 4.15], y: [lo, hi], xt: [1.5, 2, 2.5, 3, 3.5, 4], yt: [lo, (lo + hi) / 2, hi].map(Math.round), xlab: '1000 / T（K⁻¹）', ylab: 'ln K', label: 'ln K 對 1/T' }, (X, Y) =>
+      `<path class="tline" d="${path(xs.map((x, i) => [X(x), Y(ys[i])]))}"/><circle class="dot" cx="${X(1000 / st.T)}" cy="${Y(y)}" r="7"/>`);
+    $('#vhF', el).innerHTML = `ln K = −ΔH°/(RT) + ΔS°/R　→　斜率 = −ΔH°/R = ${fx(-H * 1000 / 8.314, 0)} K；${st.T} K 時 ln K = ${fx(y, 2)}，K = ${sci(Math.exp(y), 2)}`;
+    $('#vhN', el).innerHTML = `由 ΔG° = ΔH° − TΔS° = −RT ln K 得到這條直線。<b>放熱反應</b>斜率為正：往右（低溫）ln K 變大，升溫使 K 變小；<b>吸熱反應</b>相反，升溫 K 變大。這就是勒沙特列原理中溫度效應的定量版本。`;
+    $('#vhT', el).value = st.T; $('#vhO', el).textContent = `${st.T} K`; pressSeg(el, 'vhS', st.r);
+  }
+  bindSeg(el, 'vhS', v => { st.r = v; draw(); });
+  $('#vhT', el).oninput = e => { st.T = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
 };
 
 /* ---------- 後中化學：化學鍵與分子形狀的互動圖 ---------- */

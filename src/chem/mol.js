@@ -116,7 +116,7 @@ function mechPlayer(el, o) {
     if (!animate || n !== i + 1 || matchMedia('(prefers-reduced-motion: reduce)').matches) { i = n; show(); return; }
     const a = frames[i].sc, b = frames[n].sc, t0 = performance.now(), D = 900;
     const tick = now => {
-      const t = Math.min(1, (now - t0) / D), e = t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2;
+      const t = clamp((now - t0) / D, 0, 1), e = t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2;
       view.innerHTML = MOL.svg(MOL.lerp(a, b, e), { w: W, h: H, s: o.s || 56, cy: o.cy });
       if (en) en.innerHTML = eDraw(frames[i].at + (frames[n].at - frames[i].at) * e);
       if (t < 1) anim = requestAnimationFrame(tick); else { i = n; show(); }

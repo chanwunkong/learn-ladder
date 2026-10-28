@@ -129,6 +129,9 @@ svg.en.clip { overflow: hidden; }
 .mmv { font-family: var(--mono); font-size: 13px; font-weight: 700; fill: var(--ink); }
 .mma { stroke: var(--muted); stroke-width: 1.5; }
 .stk { display: flex; } .stk .ba { border-radius: 0; height: 16px; }
+.flb > div { grid-template-columns: minmax(150px, 190px) 1fr auto; }
+.zbar { position: relative; height: 16px; background: linear-gradient(90deg, transparent calc(50% - 1px), var(--line) calc(50% - 1px), var(--line) calc(50% + 1px), transparent calc(50% + 1px)); }
+.zbar i { position: absolute; top: 0; height: 16px; border-radius: 3px; } .zbar i.pos { background: #D0443C; } .zbar i.neg { background: #3D6FD6; }
 .tree-note { font-size: 14.5px; margin: 0 0 10px; }
 .trees { display: grid; gap: 22px; }
 .tree h3 { font-size: 15px; margin: 6px 0 8px; }
