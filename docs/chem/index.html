@@ -112,27 +112,45 @@ body { margin: 0; }
 .lede { font-size: 17px; color: var(--muted); }
 .cta { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 8px; }
 .cta .btn { text-decoration: none; }
-.isos { display: flex; flex-wrap: wrap; gap: 6px 14px; justify-content: center; }
-.isos figure { margin: 0; width: 190px; text-align: center; }
-.isos figcaption { font-size: 13px; color: var(--muted); }
-.iso .cb { stroke: var(--ink); stroke-width: 2; }
-.iso .cb.bk { stroke-dasharray: 4 3; stroke: var(--muted); }
-.iso .oct { fill: none; stroke: var(--line); stroke-width: 1.2; }
-.iso .enarc { fill: none; stroke: var(--good); stroke-width: 3; }
-.iso .mc { fill: var(--ink); }
-.iso .mt { fill: var(--bg); font-size: 12px; font-weight: 700; }
-.iso .lg circle { stroke: var(--surface); stroke-width: 1.5; }
-.iso .lg text { font-size: 12px; font-weight: 700; fill: #fff; }
-.iso .lg-A circle { fill: #6B7570; } .iso .lg-B circle { fill: #B5326C; } .iso .lg-C circle { fill: #2F3B99; } .iso .lg-N circle { fill: #23704A; }
-.en .ele { font-size: 16px; fill: var(--accent); font-weight: 700; letter-spacing: -2px; }
+.o3g svg { touch-action: none; cursor: grab; user-select: none; }
+.o3 .cb { stroke: var(--ink); stroke-width: 2.2; }
+.o3 .oe { stroke: var(--line); stroke-width: 1.2; }
+.o3 .mirror { stroke: var(--muted); stroke-dasharray: 5 5; }
+.o3 .enarc { fill: none; stroke: #23704A; stroke-width: 4; stroke-linecap: round; }
+.o3 .mc, .en .mc { fill: var(--ink); }
+.o3 .mt { fill: var(--bg); font-size: 12px; font-weight: 700; }
+.o3 .lg circle { stroke: var(--surface); stroke-width: 1.5; }
+.o3 .lg text { font-size: 12px; font-weight: 700; fill: #fff; }
+.lg-A circle { fill: #6B7570; } .lg-B circle { fill: #B5326C; } .lg-C circle { fill: #2F3B99; } .lg-N circle { fill: #23704A; }
+.en .axl { stroke: var(--line); stroke-width: 1.2; }
+.en .lobe { stroke: var(--surface); stroke-width: 1; opacity: .92; }
+.en .lgd { fill: #6B7570; stroke: var(--surface); stroke-width: 1.5; }
 .en .conn { stroke: var(--line); stroke-dasharray: 3 3; }
-.en .dlt { stroke: var(--eosin); stroke-width: 1.6; }
-.spec { position: relative; margin: 6px 0 22px; }
-.spec-bar { height: 22px; border-radius: 6px; background: linear-gradient(90deg, #7a2fb5, #3d3bd6 18%, #1f8fd6 30%, #1fb07a 42%, #8cc63a 52%, #f0d43a 60%, #f39a2e 70%, #e0412e 82%, #a3202a); }
-.spec i { position: absolute; top: -5px; width: 3px; height: 32px; background: var(--ink); border-radius: 2px; transform: translateX(-1.5px); transition: left .25s; }
-.spec span { position: absolute; top: 26px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
-.spec-l { left: 0; } .spec-r { right: 0; }
-.swatch { display: inline-block; width: 16px; height: 16px; border-radius: 4px; margin-right: 6px; vertical-align: -2px; border: 1px solid var(--line); }
+.en .dlt { stroke-width: 2.2; } .en .dlt.up { stroke: #D0443C; } .en .dlt.dn { stroke: #3D6FD6; }
+.en .eball { fill: var(--accent); } .en .eball.dn { fill: var(--eosin); }
+.en .ebt { font-size: 12px; font-weight: 700; fill: var(--accent-ink); }
+.en .stairs { fill: none; stroke: #EE8A25; stroke-width: 2.4; }
+.spc > div { grid-template-columns: minmax(130px, 170px) 1fr; }
+.spc > div small { display: block; font-size: 11.5px; color: var(--muted); font-weight: 400; }
+svg.en.clip { overflow: hidden; }
+.mrow.two figure { width: min(340px, 100%); }
+.spc .stk { display: flex; } .spc .stk i { height: 16px; border-radius: 0; }
+.spc .ba.up { background: #EE8A25; } .spc .ba.pr { background: #9AA3A0; }
+.qbal { display: grid; gap: 6px; margin: 4px 0 10px; }
+.qrow { display: grid; grid-template-columns: 76px 1fr 44px; gap: 8px; align-items: center; font-size: 13px; }
+.qrow.tot { border-top: 1px solid var(--line); padding-top: 6px; font-weight: 700; }
+.qlab { color: var(--muted); }
+.qbox { display: flex; flex-wrap: wrap; gap: 4px; }
+.qsum { font-family: var(--mono); font-size: 16px; font-weight: 700; text-align: right; }
+.qc { display: inline-flex; align-items: baseline; gap: 3px; padding: 3px 7px; border-radius: 6px; background: var(--sunk); border: 1px solid var(--line); font-size: 13px; }
+.qc small { font-family: var(--mono); font-size: 11px; }
+.qc.pos { background: #DCE6FA; border-color: #3D6FD6; color: #1E3F86; } .qc.neg { background: #F9DEDB; border-color: #D0443C; color: #8A231C; }
+.qc.metal { font-weight: 700; }
+.mrow figure.wide { width: min(360px, 100%); }
+.wseg { stroke: var(--surface); stroke-width: 2; } .wseg.eat { opacity: .22; } .wseg.see { stroke: var(--ink); stroke-width: 3.5; }
+.wl { font-size: 13px; font-weight: 700; fill: #fff; }
+.wsol { stroke: var(--line); stroke-width: 2; }
+.wcut { stroke: var(--ink); stroke-width: 2; }
 .mrow { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 6px; }
 .mrow figure { margin: 0; width: 190px; text-align: center; }
 .mrow figcaption { font-size: 13px; color: var(--muted); }
@@ -1227,97 +1245,82 @@ CH.push({
   ],
 });
 
-/* ---------- 後中化學：配位化學 ---------- */
+/* ---------- 後中化學：配位化學 ----------
+   寫法：每節一個問題開頭，靠可操作的圖表建立直覺；公式直接長在圖上。 */
 CH.push({
   id: 'coord', unit: 'g9b', title: '配位化學：錯合物的結構、顏色與磁性',
-  lede: '血紅素裡的鐵、抗癌藥順鉑、硫酸銅溶液的藍色，都來自金屬離子被一群分子或離子包圍形成的「錯合物」。這一章先學會拆解和命名錯合物，再用晶體場理論解釋它們為什麼有顏色、為什麼有些會被磁鐵吸引。',
+  lede: '硫酸銅為什麼是藍的？為什麼有的錯合物會被磁鐵吸、有的不會？答案都藏在中心金屬的五個 d 軌域裡。這一章用四張可以動手操作的圖，把它們一次看懂。',
   sections: [
-    { h: '錯合物的組成：路易斯酸鹼加合物', w: 'cname', body: `
-<p>過渡金屬離子有空的 d、s、p 軌域，可以接受孤對電子（路易斯酸）；帶孤對電子的分子或離子（路易斯鹼）圍上來配位，形成<b>錯合物</b>。</p>
-<ul><li><b>中心金屬</b>：通常是過渡金屬離子，例如 Co³⁺、Fe²⁺、Cu²⁺、Pt²⁺。</li>
-<li><b>配位基</b>：提供孤對電子的分子或離子，例如 NH₃、H₂O、Cl⁻、CN⁻、CO。只用一個原子配位的叫單牙配位基；乙二胺（en，H₂NCH₂CH₂NH₂）用兩個 N 原子同時配位，是雙牙配位基；EDTA 用六個位置抓住金屬，是六牙配位基。</li>
-<li><b>配位數</b>：中心金屬周圍直接相連的配位原子數，常見 2、4、6。雙牙配位基一個算兩個位置。</li>
-<li><b>外界離子</b>：寫在方括號外，只負責平衡電荷，溶於水時會解離出來。</li></ul>
-<p>判斷中心金屬氧化數：<b>錯離子電荷 = 金屬氧化數 + 各配位基電荷總和</b>。中性配位基（NH₃、H₂O、CO、en）不影響。</p>
-<p>維爾納（Werner）當年用 AgNO₃ 確定錯合物結構：CoCl₃·6NH₃、CoCl₃·5NH₃、CoCl₃·4NH₃ 每莫耳分別生成 3、2、1 莫耳 AgCl，表示配位在 Co 上的 Cl⁻ 不會沉澱，三者應寫成 [Co(NH₃)₆]Cl₃、[Co(NH₃)₅Cl]Cl₂、[Co(NH₃)₄Cl₂]Cl。選不同的錯合物，看它的組成、氧化數和 AgNO₃ 沉澱量。</p>` },
-    { h: '錯合物的命名', body: `
-<p>IUPAC 命名的步驟：</p>
-<ol><li><b>陽離子先、陰離子後</b>，和一般鹽類相同（potassium hexacyanoferrate(III)）。</li>
-<li>錯離子內：<b>配位基先、金屬後</b>，配位基依英文字母順序排列，<b>倍數字首不算進排序</b>（tetraammine 依 a 排，dichloro 依 c 排）。</li>
-<li>倍數字首用 di-、tri-、tetra-、penta-、hexa-；配位基名稱本身已含數字或較複雜時（例如 en）改用 bis-、tris-、tetrakis-，並加括號：dichlorobis(ethylenediamine)cobalt(III)。</li>
-<li>金屬後面用羅馬數字寫氧化數；錯離子是<b>陰離子</b>時，金屬名稱改成 <b>-ate</b>：cobaltate、platinate，部分用拉丁字根：Fe → ferrate、Cu → cuprate、Ag → argentate、Au → aurate、Pb → plumbate、Sn → stannate。</li></ol>
+    { h: '加 AgNO₃ 會沉澱幾個 Cl⁻？', w: 'cname', body: `
+<p>錯合物是一個金屬離子被一圈分子或離子抓住。抓住它的叫<b>配位基</b>：用自己的孤對電子和金屬「握手」。握了幾隻手就是<b>配位數</b>。</p>
+<p>寫化學式時，被抓住的放在方括號裡；方括號外的是<b>外界離子</b>，只負責讓電荷平衡，溶於水就跑出來。所以 AgNO₃ 只抓得到方括號<b>外面</b>的 Cl⁻。</p>
+<p>下面每個方塊是一個離子或分子，上面標著它的電荷。切換不同的錯合物：三列方塊加起來永遠是 0，金屬的氧化數就是「把帳算平」剩下的那一塊。</p>` },
+    { h: '名字怎麼念？', body: `
+<p>從電荷收支圖往下讀就是名字：<b>配位基（照英文字母排）→ 金屬 →（氧化數）</b>，方括號外的離子照一般鹽類放前面或後面。</p>
 <table class="tbl"><thead><tr><th>配位基</th><th>名稱</th><th>配位基</th><th>名稱</th></tr></thead><tbody>
-<tr><td>H₂O</td><td>aqua</td><td>Cl⁻、Br⁻、F⁻</td><td>chloro、bromo、fluoro（新制 chlorido…）</td></tr>
-<tr><td>NH₃</td><td>ammine（兩個 m）</td><td>CN⁻</td><td>cyano</td></tr>
+<tr><td>H₂O</td><td>aqua</td><td>Cl⁻、Br⁻</td><td>chloro、bromo</td></tr>
+<tr><td>NH₃</td><td>ammine</td><td>CN⁻</td><td>cyano</td></tr>
 <tr><td>CO</td><td>carbonyl</td><td>OH⁻</td><td>hydroxo</td></tr>
-<tr><td>NO</td><td>nitrosyl</td><td>NO₂⁻</td><td>nitro（N 配位）、nitrito（O 配位）</td></tr>
-<tr><td>en</td><td>ethylenediamine</td><td>C₂O₄²⁻</td><td>oxalato</td></tr></tbody></table>
-<p>例：[Co(NH₃)₅Cl]Cl₂ = pentaamminechlorocobalt(III) chloride；K₄[Fe(CN)₆] = potassium hexacyanoferrate(II)；[Ni(CO)₄] = tetracarbonylnickel(0)。</p>` },
-    { h: '形狀與異構物', w: 'ciso', body: `
-<p>配位數決定常見的形狀：</p>
-<ul><li><b>配位數 2</b>：直線形，例如 [Ag(NH₃)₂]⁺、[Ag(CN)₂]⁻。</li>
-<li><b>配位數 4</b>：四面體（例如 [Zn(NH₃)₄]²⁺、[NiCl₄]²⁻）或<b>平面四方</b>（d⁸ 的 Pt²⁺、Pd²⁺，以及強場的 Ni²⁺，例如 [Ni(CN)₄]²⁻、[Pt(NH₃)₂Cl₂]）。</li>
-<li><b>配位數 6</b>：八面體，最常見，例如 [Co(NH₃)₆]³⁺、[Fe(CN)₆]³⁻。</li></ul>
-<p>組成相同、結構不同的錯合物稱為異構物，分兩大類：</p>
-<ul><li><b>結構異構物</b>（連接方式不同）：<b>鍵結異構物</b>，同一個配位基用不同原子配位，例如 –NO₂（nitro）與 –ONO（nitrito）、–SCN 與 –NCS；<b>離子化異構物</b>，配位基和外界離子互換，例如 [Co(NH₃)₅Br]SO₄ 與 [Co(NH₃)₅SO₄]Br，前者加 BaCl₂ 產生沉澱、後者加 AgNO₃ 產生沉澱。</li>
-<li><b>立體異構物</b>（連接相同、空間排列不同）：<b>幾何異構物</b>（cis/trans、fac/mer）與<b>光學異構物</b>（互為鏡像、無法重疊）。</li></ul>
-<p>切換不同的組成，數一數有幾種幾何異構物，並找出哪些有鏡像異構物。</p>` },
-    { h: '晶體場理論：d 軌域分裂與磁性', w: 'cfield', body: `
-<p>把配位基看成帶負電的點，從八個方向中的六個（八面體的 ±x、±y、±z）靠近金屬。五個 d 軌域原本能量相同，但方向不同：</p>
-<ul><li>dz² 和 dx²−y² 的電子雲<b>正對</b>配位基，被排斥得較厲害，能量升高，稱為 <b>e<sub>g</sub></b>。</li>
-<li>dxy、dxz、dyz 指向配位基之間，能量較低，稱為 <b>t<sub>2g</sub></b>。</li></ul>
-<p>兩組的能量差稱為<b>晶體場分裂能 Δo</b>。四面體的配位基剛好落在軸之間，分裂方向相反（e 低、t₂ 高），而且只有四個配位基、都沒有正對軌域，分裂能 Δt 約只有 Δo 的 4/9。</p>
-<p>電子要放進這些軌域時，有兩股力量在競爭：往上跳到 e<sub>g</sub> 要花 Δo；在同一個軌域成對要花<b>成對能 P</b>。</p>
-<ul><li>Δo &lt; P（弱場配位基）：電子先各佔一格再成對，未成對電子多，稱為<b>高自旋</b>。</li>
-<li>Δo &gt; P（強場配位基）：電子先填滿 t<sub>2g</sub> 再往上，稱為<b>低自旋</b>。</li>
-<li>只有八面體的 d⁴、d⁵、d⁶、d⁷ 需要判斷；四面體 Δt 太小，幾乎都是高自旋。</li></ul>
-<p>有未成對電子的錯合物是<b>順磁性</b>，會被磁場吸引；全部成對則是<b>反磁性</b>。自旋磁矩 μ ≈ √(n(n+2)) BM（n 為未成對電子數），可用磁性測量反推 n。</p>
-<p>Δ 的大小也和金屬有關：同一金屬氧化數越高，Δ 越大（Co³⁺ &gt; Co²⁺）；同族往下（3d → 4d → 5d）Δ 明顯變大，所以 Pd、Pt 的錯合物幾乎都是低自旋。</p>` },
-    { h: '顏色與光譜化學序列', w: 'ccolor', body: `
-<p>d 電子吸收能量等於 Δ 的光子，從低能階跳到高能階（d–d 躍遷）。Δ 通常落在可見光的能量範圍，所以過渡金屬錯合物大多有顏色。我們看到的是<b>被吸收光的互補色</b>：吸收黃綠光的 [Ti(H₂O)₆]³⁺（約 500 nm）看起來是紫色。</p>
-<p>換算：Δ（kJ/mol）≈ 119,600 ÷ λ（nm）。</p>
-<p>把配位基依照造成的 Δ 由小到大排列，就是<b>光譜化學序列</b>：</p>
+<tr><td>en</td><td>ethylenediamine（用 bis、tris 計數）</td><td>NO₂⁻</td><td>nitro（N 端）、nitrito（O 端）</td></tr></tbody></table>
+<p>錯離子帶<b>負電</b>時，金屬名字改成 <b>-ate</b>：ferrate（Fe）、cuprate（Cu）、argentate（Ag）、aurate（Au）、plumbate（Pb）、stannate（Sn）。</p>` },
+    { h: 'd 軌域為什麼會分成兩組？', w: 'dsplit', body: `
+<p>金屬的五個 d 軌域形狀像花瓣，方向各不相同。六個配位基從 x、y、z 軸的六個方向靠近，它們帶著負電。</p>
+<p>拖動滑桿讓配位基靠近，再切換不同的軌域看：<b>花瓣正對配位基的被推高，躲在兩軸之間的往下掉</b>。上面兩個叫 eg，下面三個叫 t₂g，兩組的高度差就是<b>晶體場分裂能 Δo</b>。</p>
+<p>圖左的兩根箭頭就是平衡公式：三個軌域各降 0.4Δo、兩個各升 0.6Δo，一升一降剛好抵消，總能量不變。</p>` },
+    { h: '電子要爬樓梯，還是擠一擠？', w: 'spin', body: `
+<p>把電子一顆一顆放進去。前三顆各佔下層一格；第四顆開始要選：</p>
+<ul><li><b>爬樓梯</b>：上到 eg，代價是樓梯高度 Δo。</li>
+<li><b>擠一擠</b>：在下層和別人擠同一格，代價是<b>成對能 P</b>。</li></ul>
+<p>長條圖把兩種放法的總代價畫出來，電子選比較短的那條。樓梯矮選上樓，叫<b>高自旋</b>；樓梯高寧可擠，叫<b>低自旋</b>。樓梯高度由配位基決定：CN⁻、CO 推得最用力，Δo 最大。</p>
+<p>剩下的未成對電子 n 決定磁性：n &gt; 0 會被磁鐵吸（順磁），磁矩 μ = √(n(n+2))，卡片上會即時算出來。</p>
+<p>四面體只有四個配位基、而且都沒正對花瓣，樓梯只有八面體的約 4/9 高，所以幾乎都是高自旋。平面四方的 dx²−y² 被四個配位基正對，特別高；d⁸ 的 Ni²⁺（強場）、Pd²⁺、Pt²⁺ 會把它空著，八個電子全部成對，所以是反磁性。</p>` },
+    { h: '硫酸銅為什麼是藍的？', w: 'colorwheel', body: `
+<p>電子跳上樓梯需要能量，剛好等於 Δo 的那種顏色的光會被<b>吃掉</b>。白光少了一種顏色，剩下的混起來，就是色輪上<b>正對面</b>的顏色，稱為<b>互補色</b>。</p>
+<p>左圖是 Δo = hc/λ 這條曲線：樓梯越高，點越往左上，吃掉的光波長越短。右圖是色輪：變暗的那格被吃掉，中間圓是你看到的顏色。換配位基試試，它們由弱到強排成<b>光譜化學序列</b>：</p>
 <p class="eq">I⁻ &lt; Br⁻ &lt; Cl⁻ &lt; F⁻ &lt; OH⁻ &lt; H₂O &lt; NH₃ &lt; en &lt; NO₂⁻ &lt; CN⁻ &lt; CO</p>
-<p>鹵素離子是<b>弱場配位基</b>，CN⁻、CO 是<b>強場配位基</b>。同一個金屬換上較強的配位基，Δ 變大，吸收的光往短波長（藍、紫）移動，看到的顏色就跟著改變。</p>
-<p>沒有 d 電子（d⁰，如 Sc³⁺、Ti⁴⁺）或 d 軌域全滿（d¹⁰，如 Zn²⁺、Cu⁺、Ag⁺）的離子沒有 d–d 躍遷，化合物通常是白色，溶液無色。</p>` },
-    { h: '錯合物在生物與醫學', body: `
-<ul><li><b>血紅素</b>：Fe²⁺ 位於紫質（porphyrin）環中央，被四個 N 原子圍住，第五個位置接蛋白質的組胺酸，第六個位置結合 O₂。CO 是強場配位基，和血紅素的結合比 O₂ 強約 200 倍以上，所以一氧化碳中毒時 O₂ 被擠掉，組織缺氧。氰化物則是抓住細胞色素中的鐵，阻斷呼吸鏈。</li>
-<li><b>順鉑</b>（cisplatin，cis-[Pt(NH₃)₂Cl₂]）：進入細胞後 Cl⁻ 被水取代，Pt 再和 DNA 上相鄰的兩個鳥嘌呤 N7 配位，使 DNA 彎折而無法複製，用於治療睪丸癌、卵巢癌等。只有 cis 異構物有效，因為兩個可取代的位置必須相鄰。</li>
-<li><b>螯合效應</b>：多牙配位基形成的錯合物比相應的單牙配位基錯合物穩定得多。例如一個 en 取代兩個 NH₃ 時，溶液中的自由粒子數變多，熵增加（ΔS &gt; 0），使 ΔG 更負。EDTA 因此可以用來治療鉛中毒、在滴定中定量 Ca²⁺ 和 Mg²⁺。</li>
-<li>其他：維生素 B₁₂ 的中心是 Co，葉綠素的中心是 Mg²⁺，許多酵素的活性中心含 Zn²⁺、Cu²⁺、Fe。</li></ul>
-<p><b>金屬羰基錯合物與逆授鍵</b>：CO 用碳上的孤對電子配位給金屬（σ 鍵），金屬再把自己的 d 電子回送到 CO 的 π* 反鍵軌域（<b>π 逆授</b>）。逆授越多，C≡O 鍵越弱，IR 光譜的 C–O 伸縮頻率越低（自由 CO 約 2143 cm⁻¹）。金屬越富電子（錯合物帶越多負電），逆授越強：ν(CO) 的順序是 [Mn(CO)₆]⁺ &gt; Cr(CO)₆ &gt; [V(CO)₆]⁻。穩定的金屬羰基多半符合 <b>18 電子規則</b>：Ni(CO)₄ 中 Ni 的 10 個價電子加上 4 個 CO 各提供 2 個，共 18 個。</p>` },
+<p>硫酸銅溶液裡的 [Cu(H₂O)₆]²⁺ 吃掉的是紅橙光，所以看起來是藍色。d⁰（Sc³⁺、Ti⁴⁺）和 d¹⁰（Zn²⁺、Cu⁺、Ag⁺）沒有電子可以跳樓梯，所以無色。</p>` },
+    { h: '鏡子裡的錯合物是同一個嗎？', w: 'oct3d', body: `
+<p>同樣的配位基，排的位置不同就是不同的分子。相鄰（夾 90°）叫 <b>cis</b>，相對（夾 180°）叫 <b>trans</b>；三個相同的佔一個三角面叫 <b>fac</b>，排成一條經線叫 <b>mer</b>。這些統稱<b>幾何異構物</b>。</p>
+<p>更難的問題是：一個錯合物和它的鏡像，是不是同一個？拖動模型自己轉轉看，再按「疊疊看」讓電腦試遍八面體的 24 種轉法。疊不起來的就是一對<b>鏡像異構物</b>。</p>
+<p>結果可以這樣記：<b>有兩個 en 擠在 cis 位置，或三對配位基全都 cis，就疊不起來</b>。常考的數目：MA₄B₂ 有 2 種幾何異構物；MA₃B₃ 有 2 種；MA₂B₂C₂ 有 5 種幾何異構物，其中全 cis 的那種有鏡像，所以立體異構物共 6 種。</p>
+<p>平面四方的 MA₂B₂ 也有 cis、trans 兩種（順鉑是 cis），四面體的四個位置彼此都相鄰，沒有幾何異構物。</p>` },
+    { h: '錯合物在身體裡做什麼？', body: `
+<ul><li><b>血紅素</b>：Fe²⁺ 被紫質環上的四個 N 抓住，第六個位置接 O₂。CO 是強場配位基，抓得比 O₂ 緊約 200 倍以上，所以一氧化碳中毒時 O₂ 被擠掉。</li>
+<li><b>順鉑</b>：cis-[Pt(NH₃)₂Cl₂] 的兩個 Cl⁻ 被水換掉後，Pt 同時抓住 DNA 上相鄰的兩個鳥嘌呤，DNA 被夾彎而無法複製。只有 cis 能同時抓住相鄰的兩個鹼基。</li>
+<li><b>螯合效應</b>：一個 en 換掉兩個 NH₃，溶液裡的自由粒子變多、熵增加，所以多牙配位基抓得特別牢。EDTA 一次用六隻手，臨床上用來治療鉛中毒。</li>
+<li><b>金屬羰基</b>：CO 用碳的孤對電子給金屬，金屬再把 d 電子回送到 CO 的 π* 軌域（<b>π 逆授</b>），C≡O 被削弱，IR 頻率下降；錯合物負電越多，逆授越強，ν(CO)：[Mn(CO)₆]⁺ &gt; Cr(CO)₆ &gt; [V(CO)₆]⁻。</li></ul>` },
   ],
   quiz: [
     { q: '1 mol 的 [Co(NH₃)₅Cl]Cl₂ 溶於水後加入過量 AgNO₃，可得到幾莫耳 AgCl？', o: ['2', '3', '1', '0'], a: 0,
       why: '只有方括號外的 2 個 Cl⁻ 會解離出來沉澱；配位在 Co 上的 Cl⁻ 不會。', show: { w: 'cname', set: { c: 'co5' } } },
     { q: 'K₃[Fe(CN)₆] 中鐵的氧化數與配位數分別為？', o: ['+3，6', '+2，6', '+3，3', '−3，6'], a: 0,
-      why: '3 個 K⁺ 使錯離子帶 −3；6 個 CN⁻ 共 −6，所以 Fe = −3 − (−6) = +3。六個 CN⁻ 各佔一個位置，配位數 6。', show: { w: 'cname', set: { c: 'fe3' } } },
+      why: '3 個 K⁺ 共 +3，所以方括號裡是 −3；6 個 CN⁻ 共 −6，Fe 補上 +3 才平衡。', show: { w: 'cname', set: { c: 'fe3' } } },
     { q: '下列何者的 IUPAC 名稱正確？', o: ['[Cr(NH₃)₄Br₂]Br：tetraamminedibromochromium(III) bromide', 'K₄[Fe(CN)₆]：potassium hexacyanoiron(II)', '[Co(NH₃)₆]Cl₃：hexaamminecobalt(II) chloride', 'Na[Ag(CN)₂]：sodium dicyanosilver(I)'], a: 0,
-      why: '陰離子錯離子要用 -ate 與拉丁字根：hexacyanoferrate(II)、dicyanoargentate(I)；[Co(NH₃)₆]³⁺ 中 Co 是 +3。配位基依字母排序，ammine（a）在 bromo（b）前面。', show: { w: 'cname', set: { c: 'cr4' } } },
-    { q: '八面體錯離子 [Co(NH₃)₄Cl₂]⁺ 有幾種幾何異構物？', o: ['2', '3', '4', '1'], a: 0,
-      why: '兩個 Cl⁻ 可以相鄰（cis）或相對（trans），共 2 種。', show: { w: 'ciso', set: { t: 'ma4b2' } } },
-    { q: '下列何者具有光學異構物（鏡像異構物）？', o: ['cis-[Co(en)₂Cl₂]⁺', 'trans-[Co(en)₂Cl₂]⁺', 'cis-[Pt(NH₃)₂Cl₂]', '[Co(NH₃)₆]³⁺'], a: 0,
-      why: 'cis-[Co(en)₂Cl₂]⁺ 沒有對稱面，和鏡像無法重疊；trans 有對稱面。平面四方錯合物本身就在一個平面上，沒有鏡像異構物。', show: { w: 'ciso', set: { t: 'en2' } } },
-    { q: '八面體錯合物 [MA₂B₂C₂]（A、B、C 皆為單牙配位基）有幾種幾何異構物？', o: ['5', '6', '4', '3'], a: 0,
-      why: '三對都 trans 1 種、恰一對 trans 3 種、三對都 cis 1 種，共 5 種幾何異構物；全 cis 的那種有鏡像，所以立體異構物共 6 種。', show: { w: 'ciso', set: { t: 'ma2b2c2' } } },
+      why: '陰離子錯離子要用 -ate 與拉丁字根：hexacyanoferrate(II)、dicyanoargentate(I)；[Co(NH₃)₆]³⁺ 中 Co 是 +3。', show: { w: 'cname', set: { c: 'cr4' } } },
+    { q: '八面體錯合物中，能量被推高的 eg 組是哪兩個 d 軌域？', o: ['dz² 與 dx²−y²', 'dxy 與 dz²', 'dxz 與 dyz', 'dxy 與 dx²−y²'], a: 0,
+      why: '它們的花瓣沿著 x、y、z 軸，正對配位基。', show: { w: 'dsplit', set: { c: 1, o: 'x2' } } },
     { q: '[Fe(CN)₆]⁴⁻ 有幾個未成對電子？', o: ['0', '4', '2', '1'], a: 0,
-      why: 'Fe²⁺ 是 d⁶；CN⁻ 是強場配位基，低自旋，6 個電子全部成對填在 t<sub>2g</sub>，所以是反磁性。', show: { w: 'cfield', set: { ex: '[Fe(CN)₆]⁴⁻' } } },
+      why: 'Fe²⁺ 是 d⁶；CN⁻ 讓樓梯很高，6 顆電子全部擠在下層成對（低自旋），所以是反磁性。', show: { w: 'spin', set: { ex: '[Fe(CN)₆]⁴⁻' } } },
     { q: '[CoF₆]³⁻ 有幾個未成對電子？', o: ['4', '0', '2', '6'], a: 0,
-      why: 'Co³⁺ 是 d⁶；F⁻ 是弱場配位基，高自旋：t<sub>2g</sub>⁴e<sub>g</sub>²，4 個未成對電子。對照 [Co(NH₃)₆]³⁺ 是低自旋、反磁性。', show: { w: 'cfield', set: { ex: '[CoF₆]³⁻' } } },
-    { q: '四面體錯合物幾乎都是高自旋，主要原因是？', o: ['四面體的分裂能 Δt 只有 Δo 的約 4/9，小於成對能', '四面體的 d 軌域不分裂', '四面體只能用弱場配位基', '四面體的電子數較少'], a: 0,
-      why: '只有四個配位基，且都不正對 d 軌域，分裂能小，電子寧可往上放也不成對。', show: { w: 'cfield', set: { ex: '[NiCl₄]²⁻' } } },
-    { q: '平面四方錯離子中，能量最高的 d 軌域是？', o: ['dx²−y²', 'dz²', 'dxy', 'dxz 與 dyz'], a: 0,
-      why: '四個配位基落在 x、y 軸上，dx²−y² 的電子雲正對它們，被排斥最強。', show: { w: 'cfield', set: { ex: '[Ni(CN)₄]²⁻' } } },
+      why: 'Co³⁺ 是 d⁶；F⁻ 的樓梯矮，電子先上樓（高自旋）：下層 4、上層 2，4 個未成對。', show: { w: 'spin', set: { ex: '[CoF₆]³⁻' } } },
+    { q: '四面體錯合物幾乎都是高自旋，主要原因是？', o: ['四面體的分裂能只有八面體的約 4/9，小於成對能', '四面體的 d 軌域不分裂', '四面體只能用弱場配位基', '四面體的電子數較少'], a: 0,
+      why: '樓梯太矮，上樓永遠比擠一擠便宜。', show: { w: 'spin', set: { n: 6, g: 0.3 } } },
     { q: '下列 Cr³⁺ 八面體錯合物中，何者吸收的光波長最長？', o: ['[CrCl₆]³⁻', '[Cr(H₂O)₆]³⁺', '[Cr(NH₃)₆]³⁺', '[Cr(CN)₆]³⁻'], a: 0,
-      why: 'Cl⁻ 在光譜化學序列中最弱，Δo 最小，吸收光的能量最低、波長最長。', show: { w: 'ccolor', set: { l: 'Cl⁻' } } },
-    { q: '[Cr(H₂O)₆]³⁺ 吸收約 575 nm 的黃綠光，溶液看起來是什麼顏色？', o: ['紫色', '黃綠色', '紅色', '無色'], a: 0,
-      why: '看到的是被吸收光的互補色；黃綠光被扣掉，剩下的光看起來是紫色。', show: { w: 'ccolor', set: { l: 'H₂O' } } },
+      why: 'Cl⁻ 推力最弱，樓梯最矮，吃掉的光能量最低、波長最長。', show: { w: 'colorwheel', set: { l: 'Cl⁻' } } },
+    { q: '[Cr(H₂O)₆]³⁺ 吸收約 575 nm 的黃光，溶液看起來是什麼顏色？', o: ['紫色', '黃色', '紅色', '無色'], a: 0,
+      why: '色輪上黃色的正對面是紫色。', show: { w: 'colorwheel', set: { l: 'H₂O' } } },
     { q: '下列水溶液何者無色？', o: ['[Zn(H₂O)₆]²⁺', '[Cu(H₂O)₆]²⁺', '[Ni(H₂O)₆]²⁺', '[Co(H₂O)₆]²⁺'], a: 0,
-      why: 'Zn²⁺ 是 d¹⁰，d 軌域全滿，沒有 d–d 躍遷，所以不吸收可見光。' },
+      why: 'Zn²⁺ 是 d¹⁰，上下層都滿了，沒有電子可以跳樓梯。' },
+    { q: '八面體錯離子 [Co(NH₃)₄Cl₂]⁺ 有幾種幾何異構物？', o: ['2', '3', '4', '1'], a: 0,
+      why: '兩個 Cl⁻ 相鄰（cis）或相對（trans）。', show: { w: 'oct3d', set: { t: 'cis42' } } },
+    { q: '下列何者具有光學異構物（鏡像異構物）？', o: ['cis-[Co(en)₂Cl₂]⁺', 'trans-[Co(en)₂Cl₂]⁺', 'cis-[Pt(NH₃)₂Cl₂]', '[Co(NH₃)₆]³⁺'], a: 0,
+      why: 'cis-[Co(en)₂Cl₂]⁺ 的鏡像怎麼轉都疊不回去；trans 轉一下就疊得起來。', show: { w: 'oct3d', set: { t: 'cisen', fit: 1 } } },
+    { q: '八面體錯合物 [MA₂B₂C₂]（皆為單牙配位基）有幾種幾何異構物？', o: ['5', '6', '4', '3'], a: 0,
+      why: '三對都 trans 1 種、恰一對 trans 3 種、三對都 cis 1 種，共 5 種；全 cis 那種有鏡像，立體異構物共 6 種。', show: { w: 'oct3d', set: { t: 'abc', fit: 1 } } },
     { q: '乙二胺（en）取代兩個 NH₃ 形成的錯合物比較穩定，主要原因是？', o: ['反應後自由粒子數增加，熵增加', 'en 的 N 原子鹼性遠大於 NH₃', '反應強烈放熱', 'en 是強酸'], a: 0,
-      why: '螯合效應主要來自熵：一個 en 換出兩個 NH₃，溶液中的分子數變多，ΔS > 0。' },
+      why: '一個 en 換出兩個 NH₃，溶液中的分子數變多，ΔS > 0。' },
     { q: '下列金屬羰基錯合物中，何者的 C–O 伸縮振動頻率最高？', o: ['[Mn(CO)₆]⁺', 'Cr(CO)₆', '[V(CO)₆]⁻', '三者相同'], a: 0,
-      why: '帶正電的 Mn 錯合物 d 電子較不願回送，π 逆授最少，C≡O 鍵最強，伸縮頻率最高。' },
+      why: '帶正電的 Mn 錯合物 d 電子較不願回送，π 逆授最少，C≡O 最強。' },
   ],
 });
 
@@ -2021,18 +2024,19 @@ const TERMS = {
     ['變色範圍', '指示劑兩種顏色都明顯的 pH 區間，約為 pKa(HIn) ± 1。', { w: 'indicator', set: { ind: 'pp', v: 25 } }],
   ],
   'coord': [
-    ['配位基', '提供孤對電子給中心金屬的分子或離子（路易斯鹼），如 NH₃、H₂O、Cl⁻、CN⁻。', { w: 'cname', set: { c: 'co6' } }],
-    ['配位數', '直接與中心金屬相連的配位原子數；雙牙配位基算兩個。', { w: 'cname', set: { c: 'en' } }],
-    ['外界離子', '寫在方括號外、只平衡電荷的離子，溶於水會解離；外界的 Cl⁻ 才會和 Ag⁺ 沉澱。', { w: 'cname', set: { c: 'co5' } }],
-    ['幾何異構物', '連接相同、配位基在空間的相對位置不同（cis/trans、fac/mer）。', { w: 'ciso', set: { t: 'ma4b2' } }],
-    ['鍵結異構物', '同一個配位基用不同原子配位，例如 –NO₂ 與 –ONO。'],
-    ['晶體場分裂能', 'd 軌域在配位基電場中分成兩組後的能量差，八面體記為 Δo。', { w: 'cfield', set: { ex: '[Fe(H₂O)₆]²⁺' } }],
-    ['高自旋', 'Δ 小於成對能時，電子先各佔一個軌域再成對，未成對電子多。', { w: 'cfield', set: { ex: '[CoF₆]³⁻' } }],
-    ['低自旋', 'Δ 大於成對能時，電子先填滿低能階才往上，未成對電子少。', { w: 'cfield', set: { ex: '[Co(NH₃)₆]³⁺' } }],
-    ['光譜化學序列', '配位基依造成的分裂能由小到大排列：I⁻ < Br⁻ < Cl⁻ < F⁻ < H₂O < NH₃ < en < CN⁻ < CO。', { w: 'ccolor', set: { l: 'NH₃' } }],
-    ['互補色', '白光扣掉被吸收的顏色後剩下的顏色，就是錯合物看起來的顏色。', { w: 'ccolor', set: { l: 'H₂O' } }],
-    ['螯合效應', '多牙配位基形成的錯合物特別穩定，主要因為取代後粒子數增加、熵增加。'],
-    ['π 逆授', '金屬把 d 電子回送到配位基（如 CO）的 π* 軌域，使 C≡O 鍵變弱。'],
+    ['配位基', '用孤對電子和金屬「握手」的分子或離子，如 NH₃、H₂O、Cl⁻、CN⁻。', { w: 'cname', set: { c: 'co6' } }],
+    ['配位數', '金屬被握住的手數；雙牙配位基一個算兩隻手。', { w: 'cname', set: { c: 'en' } }],
+    ['外界離子', '方括號外、只負責平衡電荷的離子；溶於水會跑出來。', { w: 'cname', set: { c: 'co5' } }],
+    ['晶體場分裂能', 'eg 和 t₂g 兩組 d 軌域的高度差 Δo，也就是電子要爬的樓梯。', { w: 'dsplit', set: { c: 1, o: 'x2' } }],
+    ['成對能', '兩個電子擠在同一個軌域要付的代價 P。', { w: 'spin', set: { n: 4, g: 0.5 } }],
+    ['高自旋', '樓梯矮（Δo < P），電子先上樓再成對，未成對電子多。', { w: 'spin', set: { ex: '[CoF₆]³⁻' } }],
+    ['低自旋', '樓梯高（Δo > P），電子寧可在下層擠一擠，未成對電子少。', { w: 'spin', set: { ex: '[Co(NH₃)₆]³⁺' } }],
+    ['互補色', '色輪上和被吃掉的顏色正對面的顏色，就是看到的顏色。', { w: 'colorwheel', set: { l: 'H₂O' } }],
+    ['光譜化學序列', '配位基推高樓梯的能力由弱到強：I⁻ < Br⁻ < Cl⁻ < F⁻ < H₂O < NH₃ < en < CN⁻ < CO。', { w: 'colorwheel', set: { l: 'NH₃' } }],
+    ['幾何異構物', '同樣的配位基、位置不同：cis/trans、fac/mer。', { w: 'oct3d', set: { t: 'cis42' } }],
+    ['鏡像異構物', '和自己的鏡像怎麼轉都疊不起來的一對分子（光學異構物）。', { w: 'oct3d', set: { t: 'cisen', fit: 1 } }],
+    ['螯合效應', '多牙配位基抓得特別牢，主要因為取代後粒子數增加、熵增加。'],
+    ['π 逆授', '金屬把 d 電子回送到 CO 的 π* 軌域，使 C≡O 變弱。'],
   ],
   'alpha': [
     ['互變異構', '只差一個 H 位置、可以快速互換的異構物，例如酮式與烯醇式；不是共振。'],
@@ -3298,9 +3302,10 @@ W.alphaH = el => {
   return { set(s) { cur = s.i ?? cur; draw(); } };
 };
 
-/* ---------- 後中化學：配位化學的互動圖 ---------- */
+/* ---------- 後中化學：配位化學的互動圖 ----------
+   原則：讀者自己拖拉、切換；公式的每一項都對應圖上看得到的長度、位置或數字。 */
 
-/* ===== 1. 錯合物拆解：組成、氧化數、命名 =====
+/* ===== 1. 錯合物拆解：電荷收支圖 =====
    lig：[顯示, 個數, 電荷, 牙數, 英文名]；out：外界離子 [顯示, 個數, 電荷] */
 const CPLX = {
   co6: { f: '[Co(NH₃)₆]Cl₃', m: 'Co', mn: 'cobalt', lig: [['NH₃', 6, 0, 1, 'ammine']], out: [['Cl⁻', 3, -1]] },
@@ -3323,21 +3328,20 @@ function cplxInfo(d) {
   const lig = [...d.lig].sort((a, b) => a[4].localeCompare(b[4])).map(([, n, , , nm]) => nm === 'ethylenediamine' ? `${MULT2[n]}(${nm})` : MULT[n] + nm).join('');
   const core = `${lig}${d.mn}(${ROMAN[ox]})`, cat = d.out.find(o => o[2] > 0), an = d.out.find(o => o[2] < 0);
   const name = cat ? `${CNAME_OUT[cat[0]]} ${core}` : an ? `${core} ${CNAME_OUT[an[0]]}` : core;
-  return { q, ox, cn, name, ions: d.out.length ? 1 + d.out.reduce((s, [, n]) => s + n, 0) : 1, agcl: an && an[0] === 'Cl⁻' ? an[1] : 0, neutral: !d.out.length };
+  return { q, ox, ligQ, cn, name, ions: d.out.length ? 1 + d.out.reduce((s, [, n]) => s + n, 0) : 1, agcl: an && an[0] === 'Cl⁻' ? an[1] : 0 };
 }
 W.cname = el => {
   let cur = 'co5';
-  el.innerHTML = `${seg('cnS', Object.entries(CPLX).map(([k, v]) => [k, v.f]), cur)}<ol class="cs" id="cnC"></ol><div class="cards" id="cnK"></div><p class="note" id="cnN"></p>`;
+  el.innerHTML = `${seg('cnS', Object.entries(CPLX).map(([k, v]) => [k, v.f]), cur)}<div class="qbal" id="cnQ"></div><div class="cards" id="cnK"></div><p class="note" id="cnN"></p>`;
+  const sg = v => (v > 0 ? `+${v}` : v < 0 ? `−${-v}` : '0');
+  const chips = (t, n, q, cls) => Array.from({ length: n }, () => `<span class="qc ${cls}${q > 0 ? ' pos' : q < 0 ? ' neg' : ''}">${t}<small>${sg(q)}</small></span>`).join('');
   function draw() {
-    const d = CPLX[cur], r = cplxInfo(d), sg = v => (v > 0 ? `+${v}` : v < 0 ? `${v}` : '0');
-    const ligTxt = d.lig.map(([t, n, c]) => `${n} × ${t}（${sg(c)}）`).join('、');
-    $('#cnC', el).innerHTML = `<li>方括號內是錯離子；方括號外是<b>外界離子</b>：${d.out.length ? d.out.map(([t, n]) => `${n} 個 ${t}`).join('、') : '沒有（整個是中性分子）'}</li>
-<li>錯離子電荷 = ${r.neutral ? '0' : `−(外界離子總電荷) = ${sg(r.q)}`}</li>
-<li>配位基：${ligTxt}</li>
-<li>${d.m} 的氧化數 = ${sg(r.q)} − (${sg(d.lig.reduce((s, [, n, c]) => s + n * c, 0))}) = <b>${sg(r.ox)}</b></li>
-<li>配位數 = ${d.lig.map(([t, n, , dent]) => dent > 1 ? `${n} × ${dent}（${t} 是雙牙）` : `${n}`).join(' + ')} = <b>${r.cn}</b></li>`;
-    $('#cnK', el).innerHTML = card('ox', '中心金屬氧化數', `${sg(r.ox)}`) + card('cn', '配位數', r.cn) + card('ion', '溶於水的離子數', r.ions, '每 1 個化學式') + card('ag', '加過量 AgNO₃', `${r.agcl} mol AgCl`, '每 1 mol 錯合物');
-    $('#cnN', el).innerHTML = `IUPAC 名稱：<b class="mono">${r.name}</b><br>只有<b>外界</b>的 Cl⁻ 會和 Ag⁺ 生成 AgCl 沉澱；配位在金屬上的 Cl⁻ 被緊緊抓住，不會沉澱。溶液中的離子數也只算外界離子加上錯離子本身，所以導電度和凝固點下降可以用來判斷結構。${d.mn.endsWith('ate') ? '錯離子帶負電時，金屬名稱改成 <b>-ate</b> 結尾，鐵、銀、銅、金、鉛、錫用拉丁字根（ferrate、argentate、cuprate、aurate、plumbate、stannate）。' : ''}`;
+    const d = CPLX[cur], r = cplxInfo(d);
+    $('#cnQ', el).innerHTML = `<div class="qrow"><span class="qlab">方括號裡</span><span class="qbox">${chips(d.m, 1, r.ox, 'metal')}${d.lig.map(([t, n, c, dent]) => chips(t + (dent > 1 ? '（雙牙）' : ''), n, c, 'lig')).join('')}</span><span class="qsum">${sg(r.q)}</span></div>
+<div class="qrow"><span class="qlab">方括號外</span><span class="qbox">${d.out.length ? d.out.map(([t, n, c]) => chips(t, n, c, 'out')).join('') : '<span class="mut small">（沒有，整個是中性分子）</span>'}</span><span class="qsum">${sg(-r.q)}</span></div>
+<div class="qrow tot"><span class="qlab">全部加起來</span><span class="qbox"></span><span class="qsum">0</span></div>`;
+    $('#cnK', el).innerHTML = card('ox', `${d.m} 的氧化數`, sg(r.ox), `${sg(r.q)} − (${sg(r.ligQ)})`) + card('cn', '配位數', r.cn, '數方括號裡抓住金屬的手') + card('ion', '溶於水的粒子', r.ions, '錯離子 1 + 外界離子') + card('ag', '加過量 AgNO₃', `${r.agcl} AgCl`, '只有外界 Cl⁻ 會沉澱');
+    $('#cnN', el).innerHTML = `把每個離子想成帶電的小方塊：<b>整個化合物的電荷收支一定是 0</b>。方括號外的方塊決定錯離子帶多少電，再扣掉配位基的電荷，剩下的就是金屬的氧化數。<br>IUPAC 名稱：<b class="mono">${r.name}</b>`;
     pressSeg(el, 'cnS', cur);
   }
   bindSeg(el, 'cnS', v => { cur = v; draw(); });
@@ -3345,123 +3349,189 @@ W.cname = el => {
   return { set(s) { cur = s.c || cur; draw(); } };
 };
 
-/* ===== 2. 幾何異構物：八面體與平面四方 ===== */
-// 八面體六個位置的平面投影（T 上、U 下；赤道面 A、B、C、D，A–C、B–D 互為反式）
-const OCT = { T: [0, -1], U: [0, 1], A: [-0.9, 0.18], B: [0.38, 0.4], C: [0.9, -0.18], D: [-0.38, -0.4] };
-const SQP = { A: [-0.95, 0], B: [0, 0.62], C: [0.95, 0], D: [0, -0.62] };
-const ISO = {
-  ma4b2: { t: '[MA₄B₂]', geo: OCT, list: [['cis', { B: 'AB' }], ['trans', { B: 'TU' }]], note: 'MA₄B₂ 有 2 種幾何異構物：兩個 B 相鄰（cis，夾角 90°）或相對（trans，180°）。例：[Co(NH₃)₄Cl₂]⁺ 的 cis 是紫色、trans 是綠色。' },
-  ma3b3: { t: '[MA₃B₃]', geo: OCT, list: [['fac', { B: 'TAB' }], ['mer', { B: 'TAU' }]], note: 'MA₃B₃ 有 2 種：三個 B 佔同一個三角面（fac，彼此都是 cis），或排在通過金屬的同一條「子午線」上（mer，其中兩個是 trans）。' },
-  sq: { t: '平面 [MA₂B₂]', geo: SQP, list: [['cis', { B: 'AB' }], ['trans', { B: 'AC' }]], note: '平面四方的 MA₂B₂ 有 cis、trans 兩種，順鉑（cisplatin）就是 cis-[Pt(NH₃)₂Cl₂]，trans 異構物沒有抗癌活性。<b>四面體</b>的四個位置彼此都相鄰，MA₂B₂ 沒有幾何異構物。' },
-  en2: { t: '[M(en)₂B₂]', geo: OCT, list: [['trans', { B: 'TU', en: ['AB', 'CD'] }], ['cis', { B: 'TA', en: ['BC', 'DU'] }], ['cis 的鏡像', { B: 'TA', en: ['BC', 'DU'], mir: 1 }]], note: 'trans 有對稱面，是非掌性的；cis 沒有對稱面，它和鏡像疊不起來，所以 cis-[Co(en)₂Cl₂]⁺ 有一對<b>鏡像異構物</b>（光學異構物）。合計 3 種立體異構物。' },
-  ma2b2c2: { t: '[MA₂B₂C₂]', geo: OCT, list: [['全 trans', { A: 'TU', B: 'AC', C: 'BD' }], ['A trans', { A: 'TU', B: 'AB', C: 'CD' }], ['B trans', { B: 'TU', A: 'AB', C: 'CD' }], ['C trans', { C: 'TU', A: 'AB', B: 'CD' }], ['全 cis', { A: 'TA', B: 'BU', C: 'CD' }], ['全 cis 的鏡像', { A: 'TA', B: 'BU', C: 'CD', mir: 1 }]],
-    note: 'MA₂B₂C₂ 有 <b>5 種幾何異構物</b>：三對都 trans、只有一對 trans（3 種）、三對都 cis。全 cis 的那一種是掌性的，再多一個鏡像，所以立體異構物共 6 種。' },
+/* ===== 2. d 軌域分裂：拖近配位基 ===== */
+const DORB = {
+  xy: ['dxy', 't', [[1, 1, 0], [1, -1, 0], [-1, 1, 0], [-1, -1, 0]]],
+  xz: ['dxz', 't', [[1, 0, 1], [1, 0, -1], [-1, 0, 1], [-1, 0, -1]]],
+  yz: ['dyz', 't', [[0, 1, 1], [0, 1, -1], [0, -1, 1], [0, -1, -1]]],
+  z2: ['dz²', 'e', [[0, 0, 1], [0, 0, -1]]],
+  x2: ['dx²−y²', 'e', [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0]]],
 };
-W.ciso = el => {
-  let cur = 'ma4b2';
-  el.innerHTML = `${seg('ciS', Object.entries(ISO).map(([k, v]) => [k, v.t]), cur)}<div class="isos" id="ciG"></div><p class="note" id="ciN"></p>`;
-  const one = (geo, spec, cap) => {
-    const s = 44, cx = 80, cy = 70, P = Object.fromEntries(Object.entries(geo).map(([k, [x, y]]) => [k, [cx + (spec.mir ? -x : x) * s * 1.25, cy + y * s * 1.15]]));
-    const who = {}; ['A', 'B', 'C'].forEach(L => [...(spec[L] || '')].forEach(p => { who[p] = L; }));
-    const enP = new Set((spec.en || []).join('').split(''));
-    Object.keys(geo).forEach(p => { if (!who[p]) who[p] = enP.has(p) ? 'N' : 'A'; });
-    const back = p => p === 'C' || p === 'D';
-    const bonds = Object.keys(geo).map(p => `<line class="cb${back(p) && geo === OCT ? ' bk' : ''}" x1="${cx}" y1="${cy}" x2="${P[p][0]}" y2="${P[p][1]}"/>`).join('');
-    const edge = geo === OCT ? `<path class="oct" d="M${P.A}L${P.B}L${P.C}L${P.D}Z"/>` : `<path class="oct" d="M${P.A}L${P.B}L${P.C}L${P.D}Z"/>`;
-    const ens = (spec.en || []).map(([a, b]) => { const [x1, y1] = P[a], [x2, y2] = P[b], mx = (x1 + x2) / 2, my = (y1 + y2) / 2, ox = (mx - cx) * 0.55, oy = (my - cy) * 0.55;
-      return `<path class="enarc" d="M${x1} ${y1}Q${mx + ox} ${my + oy} ${x2} ${y2}"/>`; }).join('');
-    const ligs = Object.keys(geo).map(p => `<g class="lg lg-${who[p]}"><circle cx="${P[p][0]}" cy="${P[p][1]}" r="12"/><text x="${P[p][0]}" y="${P[p][1] + 4.5}" text-anchor="middle">${who[p]}</text></g>`).join('');
-    return `<figure><svg class="mol iso" viewBox="0 0 160 150" role="img" aria-label="${esc(cap)}">${edge}${bonds}${ens}<circle class="mc" cx="${cx}" cy="${cy}" r="11"/><text class="mt" x="${cx}" y="${cy + 4.5}" text-anchor="middle">M</text>${ligs}</svg><figcaption>${cap}</figcaption></figure>`;
-  };
-  function draw() {
-    const d = ISO[cur];
-    $('#ciG', el).innerHTML = d.list.map(([cap, spec]) => one(d.geo, spec, cap)).join('');
-    $('#ciN', el).innerHTML = d.note + (cur === 'en2' ? ' 圖中 N–N 弧線代表一個 en（乙二胺，雙牙配位基），只能跨在兩個 cis 位置上。' : '') + (d.geo === OCT ? ' 虛線是往紙面後方的鍵。' : '');
-    pressSeg(el, 'ciS', cur);
+W.dsplit = el => {
+  const st = { c: 0, o: 'x2' };
+  el.innerHTML = `<div class="w-row"><label class="rng">讓配位基靠近 →<input type="range" id="dsR" min="0" max="1" step="0.05"><output class="mono" id="dsO"></output></label></div>${seg('dsS', Object.entries(DORB).map(([k, v]) => [k, v[0]]), st.o)}<div class="mrow two" id="dsG"></div><p class="eq" id="dsF"></p><p class="note" id="dsN"></p>`;
+  const cx = 165, cy = 150, L = 55, EX = [-0.55, 0.4], EY = [0.95, 0.04], EZ = [0, -0.95];
+  const pj = v => [v[0] * EX[0] + v[1] * EY[0] + v[2] * EZ[0], v[0] * EX[1] + v[1] * EY[1] + v[2] * EZ[1]];
+  const P = (v, k = 1) => { const [x, y] = pj(v); return [cx + x * L * k, cy + y * L * k]; };
+  const mix = (a, b, t) => { const h = s => [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16)); const A = h(a), B = h(b); return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(',')})`; };
+  function lobe(d, col, big) {
+    const n = Math.hypot(...d), u = d.map(x => x / n), [sx, sy] = pj(u), len = Math.hypot(sx, sy), [x, y] = P(u, big ? 0.72 : 0.62);
+    return `<ellipse cx="${x}" cy="${y}" rx="${L * (big ? 0.58 : 0.5) * Math.max(len, 0.35)}" ry="${L * 0.23}" transform="rotate(${Math.atan2(sy, sx) * 180 / Math.PI} ${x} ${y})" fill="${col}" class="lobe"/>`;
   }
-  bindSeg(el, 'ciS', v => { cur = v; draw(); });
+  function draw() {
+    const c = st.c, rr = 2.4 - 1.2 * c, D = 120 * c, o = DORB[st.o], up = o[1] === 'e';
+    const col = mix('#9AA3A0', up ? '#D0443C' : '#3D6FD6', c);
+    let s = ['x', 'y', 'z'].map((a, i) => { const v = [0, 0, 0]; v[i] = 1.75; const w = v.map(x => -x), [x1, y1] = P(w), [x2, y2] = P(v), [tx, ty] = P(v.map(x => x * 1.1)); return `<line class="axl" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/><text class="tk" x="${tx}" y="${ty + 4}" text-anchor="middle">${a}</text>`; }).join('');
+    s += o[2].map(d => lobe(d, col, st.o === 'z2')).join('');
+    if (st.o === 'z2') s += `<path class="lobe" fill="${col}" d="${Array.from({ length: 37 }, (_, i) => { const t = i * Math.PI / 18, [x, y] = P([Math.cos(t) * 0.42, Math.sin(t) * 0.42, 0]); return `${i ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`; }).join('')}Z" fill-opacity=".85"/>`;
+    s += `<circle class="mc" cx="${cx}" cy="${cy}" r="6"/>`;
+    [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]].forEach(d => { const [x, y] = P(d.map(v => v * rr)); s += `<circle class="lgd" cx="${x}" cy="${y}" r="${9 - 2 * (d[0] < 0)}"/>`; });
+    const sL = s; s = '';   // 右邊：能階
+    const yb = 150, ye = yb - 0.6 * D, yt = yb + 0.4 * D;
+    s += `<line class="conn" x1="390" x2="620" y1="${yb}" y2="${yb}"/>`;
+    [['xy', 400], ['xz', 445], ['yz', 490]].forEach(([k, x]) => { s += `<line class="lvl${st.o === k ? ' on' : ''}" x1="${x}" x2="${x + 36}" y1="${yt}" y2="${yt}" style="stroke:${st.o === k ? '' : mix('#1A211F', '#3D6FD6', c)}"/>`; });
+    [['z2', 545], ['x2', 590]].forEach(([k, x]) => { s += `<line class="lvl${st.o === k ? ' on' : ''}" x1="${x}" x2="${x + 36}" y1="${ye}" y2="${ye}" style="stroke:${st.o === k ? '' : mix('#1A211F', '#D0443C', c)}"/>`; });
+    s += `<text class="tk" x="463" y="${yt + 20}" text-anchor="middle">t₂g（dxy dxz dyz）</text><text class="tk" x="585" y="${ye - 10}" text-anchor="middle">eg（dz² dx²−y²）</text>`;
+    if (D >= 60) s += `<line class="dlt up" x1="378" x2="378" y1="${yb}" y2="${ye}"/><line class="dlt dn" x1="378" x2="378" y1="${yb}" y2="${yt}"/><text class="lab" x="372" y="${(yb + ye) / 2 + 4}" text-anchor="end">+0.6Δo</text><text class="lab" x="372" y="${(yb + yt) / 2 + 4}" text-anchor="end">−0.4Δo</text>`;
+    $('#dsG', el).innerHTML = `<figure><svg class="en" viewBox="0 0 320 300" role="img" aria-label="d 軌域與配位基">${sL}</svg></figure><figure class="wide"><svg class="en" viewBox="320 0 320 300" role="img" aria-label="能階分裂">${s}</svg></figure>`;
+    $('#dsR', el).value = st.c; $('#dsO', el).textContent = c < 0.05 ? '很遠' : c > 0.95 ? '貼近' : `${Math.round(c * 100)}%`;
+    $('#dsF', el).innerHTML = `Δo ＝ ${Math.round(c * 100)}（任意單位）　　平衡：3 × (−0.4Δo) + 2 × (+0.6Δo) = ${fx(Math.abs(3 * -0.4 * c * 100 + 2 * 0.6 * c * 100), 0)}`;
+    $('#dsN', el).innerHTML = c < 0.05 ? '配位基還很遠：五個 d 軌域能量一樣，畫在同一條線上。把滑桿往右拖，讓六個灰色的配位基沿著 x、y、z 軸靠近。'
+      : up ? `<b>${o[0]}</b> 的花瓣<b>正對著</b>軸上的配位基（灰色球），電子雲被負電排斥，能量<b>往上推</b>。這兩個軌域合稱 eg。`
+        : `<b>${o[0]}</b> 的花瓣<b>夾在兩軸中間</b>，閃開了配位基，能量<b>往下掉</b>。這三個軌域合稱 t₂g。`;
+    pressSeg(el, 'dsS', st.o);
+  }
+  $('#dsR', el).oninput = e => { st.c = +e.target.value; draw(); };
+  bindSeg(el, 'dsS', v => { st.o = v; draw(); });
   draw();
-  return { set(s) { cur = s.t || cur; draw(); } };
+  return { set(s) { Object.assign(st, s); draw(); } };
 };
 
-/* ===== 3. 晶體場：d 軌域分裂與電子填法 ===== */
-const DION = { 'Ti³⁺': 1, 'V³⁺': 2, 'Cr³⁺': 3, 'Mn³⁺': 4, 'Mn²⁺': 5, 'Fe³⁺': 5, 'Fe²⁺': 6, 'Co³⁺': 6, 'Co²⁺': 7, 'Ni²⁺': 8, 'Cu²⁺': 9, 'Zn²⁺': 10 };
-// 各幾何的能階：[名稱, 軌域數, 相對能量（Δo 為 1）, 示意位置]；平面四方的位置只表示順序，未依比例
-const DGEO = {
-  oct: { t: '八面體', lv: [['t₂g（dxy, dxz, dyz）', 3, -0.4, -0.4], ['e_g（dz², dx²−y²）', 2, 0.6, 0.6]], d: 'Δo' },
-  tet: { t: '四面體', lv: [['e（dz², dx²−y²）', 2, -0.267, -0.27], ['t₂（dxy, dxz, dyz）', 3, 0.178, 0.18]], d: 'Δt ≈ 4/9 Δo' },
-  sq: { t: '平面四方', lv: [['dxz, dyz', 2, null, -0.62], ['dz²', 1, null, -0.3], ['dxy', 1, null, 0.12], ['dx²−y²', 1, null, 0.95]], d: '最高的 dx²−y² 正對四個配位基' },
-};
-const DEX = [['[Fe(H₂O)₆]²⁺', 'Fe²⁺', 'oct', 'w'], ['[Fe(CN)₆]⁴⁻', 'Fe²⁺', 'oct', 's'], ['[Fe(CN)₆]³⁻', 'Fe³⁺', 'oct', 's'], ['[CoF₆]³⁻', 'Co³⁺', 'oct', 'w'], ['[Co(NH₃)₆]³⁺', 'Co³⁺', 'oct', 's'],
-  ['[Co(H₂O)₆]²⁺', 'Co²⁺', 'oct', 'w'], ['[Mn(CN)₆]⁴⁻', 'Mn²⁺', 'oct', 's'], ['[FeCl₄]⁻', 'Fe³⁺', 'tet', 'w'], ['[NiCl₄]²⁻', 'Ni²⁺', 'tet', 'w'], ['[Ni(CN)₄]²⁻', 'Ni²⁺', 'sq', 's']];
-const svgSub = s => s.replace(/^t₂g(.*)$/, 't<tspan dy="4" font-size="80%">2g</tspan><tspan dy="-4">$1</tspan>').replace(/^e_g(.*)$/, 'e<tspan dy="4" font-size="80%">g</tspan><tspan dy="-4">$1</tspan>');
-function dfill(n, geo, strong) {
-  const lv = DGEO[geo].lv, occ = lv.map(l => Array(l[1]).fill(0));
-  if (geo === 'oct' && !strong || geo === 'tet') {   // 高自旋：先每個軌域各放一個，再由低往高配對
-    let k = n; occ.forEach(o => o.forEach((_, i) => { if (k > 0) { o[i] = 1; k--; } }));
-    occ.forEach(o => o.forEach((_, i) => { if (k > 0) { o[i] = 2; k--; } }));
-  } else {                                            // 低自旋：一層填滿再往上
-    let k = n; occ.forEach(o => { const m = Math.min(k, 2 * o.length); o.forEach((_, i) => { o[i] = m > i ? 1 : 0; }); o.forEach((_, i) => { if (m - o.length > i) o[i] = 2; }); k -= m; });
-  }
+/* ===== 3. 爬樓梯還是擠一擠：高自旋與低自旋 ===== */
+const SPINEX = [['[Cr(H₂O)₆]³⁺', 3, 0.7], ['[Fe(H₂O)₆]²⁺', 6, 0.5], ['[Fe(CN)₆]⁴⁻', 6, 1.7], ['[CoF₆]³⁻', 6, 0.7], ['[Co(NH₃)₆]³⁺', 6, 1.5], ['[Mn(CN)₆]⁴⁻', 5, 1.5], ['[Co(H₂O)₆]²⁺', 7, 0.5], ['[Ni(H₂O)₆]²⁺', 8, 0.7]];
+function spinFill(n, low) {   // 回傳 5 個格子（t₂g×3, eg×2）各放幾顆
+  const ord = low ? [0, 1, 2, 0, 1, 2, 3, 4, 3, 4] : [0, 1, 2, 3, 4, 0, 1, 2, 3, 4], occ = [0, 0, 0, 0, 0];
+  ord.slice(0, n).forEach(i => occ[i]++);
   return occ;
 }
-W.cfield = el => {
-  const st = { ion: 'Fe²⁺', geo: 'oct', f: 'w', ex: '[Fe(H₂O)₆]²⁺' };
-  el.innerHTML = `<div class="w-row">${DEX.map(([t]) => `<button class="btn sm ghost" type="button" data-ex="${t}">${t}</button>`).join('')}</div>${seg('cfI', Object.keys(DION).map(k => [k, `${k} d${DION[k]}`]), st.ion)}${seg('cfG', Object.entries(DGEO).map(([k, v]) => [k, v.t]), st.geo)}${seg('cfF', [['w', '弱場配位基（高自旋）'], ['s', '強場配位基（低自旋）']], st.f)}<div id="cfD"></div><div class="cards" id="cfK"></div><p class="note" id="cfN"></p>`;
+const spinCost = (occ, g) => { const up = occ[3] + occ[4], pr = occ.filter(o => o === 2).length; return { up, pr, v: up * g + pr }; };
+W.spin = el => {
+  const st = { n: 6, g: 0.5, ex: '[Fe(H₂O)₆]²⁺' };
+  el.innerHTML = `<div class="w-row">${SPINEX.map(([t]) => `<button class="btn sm ghost" type="button" data-ex="${t}">${t}</button>`).join('')}</div>
+<div class="w-row"><button class="btn sm" type="button" data-n="-1">－ 拿走一顆電子</button><button class="btn sm pri" type="button" data-n="1">＋ 放一顆電子</button><label class="rng">樓梯高度 Δo（以成對能 P 為 1）<input type="range" id="spG" min="0.3" max="1.9" step="0.2"><output class="mono" id="spO"></output></label></div>
+<div id="spD"></div><div class="bars pk spc" id="spB"></div><div class="cards" id="spK"></div><p class="note" id="spN"></p>`;
   function draw() {
-    const n = DION[st.ion], g = DGEO[st.geo], strong = st.geo === 'sq' || (st.geo === 'oct' && st.f === 's'), occ = dfill(n, st.geo, strong);
-    const W0 = 560, H = 250, mid = 125, sc = st.geo === 'oct' ? 150 : st.geo === 'tet' ? 150 : 95, lx = 40, rx = 230, ow = 34, gp = 10;
-    const yOf = l => mid - l[3] * sc;
-    const ele = (x, o) => o ? `<text class="ele" x="${x + ow / 2}" y="${0}" text-anchor="middle">${o === 2 ? '↑↓' : '↑'}</text>` : '';
-    let s = `<text class="lab" x="${lx}" y="${mid + 32}">自由離子的 5 個 d 軌域</text>`;
-    for (let i = 0; i < 5; i++) s += `<line class="lvl" x1="${lx + i * (ow * 0.7 + 6)}" x2="${lx + i * (ow * 0.7 + 6) + ow * 0.7}" y1="${mid}" y2="${mid}"/>`;
-    g.lv.forEach((l, j) => { const y = yOf(l), w = l[1] * ow + (l[1] - 1) * gp;
-      s += `<line class="conn" x1="${lx + 5 * (ow * 0.7 + 6)}" y1="${mid}" x2="${rx - 6}" y2="${y}"/>`;
-      occ[j].forEach((o, i) => { const x = rx + i * (ow + gp); s += `<line class="lvl" x1="${x}" x2="${x + ow}" y1="${y}" y2="${y}"/>${ele(x, o).replace('y="0"', `y="${y - 6}"`)}`; });
-      s += `<text class="tk" x="${rx + w + 12}" y="${y + 4}">${svgSub(l[0])}</text>`; });
-    if (st.geo !== 'sq') { const y1 = yOf(g.lv[0]), y2 = yOf(g.lv[g.lv.length - 1]), x = rx - 20;
-      s += `<line class="dlt" x1="${x}" x2="${x}" y1="${y1}" y2="${y2}"/><text class="lab" x="${x - 6}" y="${(y1 + y2) / 2 + 4}" text-anchor="end">${st.geo === 'oct' ? 'Δo' : 'Δt'}</text>`; }
-    $('#cfD', el).innerHTML = `<svg class="en" style="max-width:640px" viewBox="0 0 ${W0} ${H}" role="img" aria-label="d 軌域分裂圖">${s}</svg>`;
-    const unp = occ.flat().filter(o => o === 1).length;
-    const cfse = st.geo === 'sq' ? null : occ.reduce((a, o, j) => a + o.reduce((b, x) => b + x, 0) * g.lv[j][2], 0);
-    $('#cfK', el).innerHTML = card('n', '未成對電子', unp) + card('m', '磁性', unp ? '順磁' : '反磁') + card('mu', '自旋磁矩', `${fx(Math.sqrt(unp * (unp + 2)), 2)} BM`, '√(n(n+2))')
-      + (cfse == null ? '' : card('cf', '晶體場穩定能', `${fx(cfse, 2)} Δo`, st.geo === 'tet' ? '以 Δo 表示' : '不含成對能'));
-    const ex = DEX.find(e => e[0] === st.ex && e[1] === st.ion && e[2] === st.geo && (e[3] === st.f || st.geo !== 'oct'));
-    const why = st.geo === 'tet' ? '四面體的分裂能只有八面體的約 4/9，比電子成對所需的能量小，所以<b>四面體錯合物幾乎都是高自旋</b>。'
-      : st.geo === 'sq' ? '平面四方中 dx²−y² 正對四個配位基，能量特別高；d⁸ 的 Ni²⁺（強場）、Pd²⁺、Pt²⁺ 會把 8 個電子全部成對放在下面四個軌域，所以是<b>反磁性</b>。'
-      : n >= 4 && n <= 7 ? (st.f === 's' ? '強場配位基使 Δo 大於成對能，電子寧可在 t<sub>2g</sub> 成對，也不往上跳到 e<sub>g</sub>：<b>低自旋</b>。' : '弱場配位基的 Δo 小於成對能，電子先各自佔一個軌域（包括 e<sub>g</sub>）再成對：<b>高自旋</b>。')
-      : `d${n} 在八面體中高自旋和低自旋的填法相同，只有 d⁴–d⁷ 才需要判斷。`;
-    $('#cfN', el).innerHTML = `${ex ? `<b>${ex[0]}</b>：` : ''}${st.ion} 是 d${n}（過渡金屬離子先失去 4s 電子）。${why}`;
-    pressSeg(el, 'cfI', st.ion); pressSeg(el, 'cfG', st.geo); pressSeg(el, 'cfF', st.f);
-    $$('#cfF button', el).forEach(b => { b.disabled = st.geo !== 'oct'; });
+    const hi = spinFill(st.n, false), lo = spinFill(st.n, true), ch = spinCost(hi, st.g), cl = spinCost(lo, st.g), low = cl.v < ch.v - 1e-9, occ = low ? lo : hi;
+    const yt = 170, ye = yt - st.g * 50, sx = [300, 370, 440, 335, 405], sy = [yt, yt, yt, ye, ye];
+    let s = '';
+    sx.forEach((x, i) => {
+      s += `<line class="lvl" x1="${x - 26}" x2="${x + 26}" y1="${sy[i]}" y2="${sy[i]}"/>`;
+      const k = occ[i]; for (let j = 0; j < k; j++) { const bx = k === 2 ? x + (j ? 11 : -11) : x; s += `<circle class="eball${j ? ' dn' : ''}" cx="${bx}" cy="${sy[i] - 12}" r="9"/><text class="ebt" x="${bx}" y="${sy[i] - 8}" text-anchor="middle">${j ? '↓' : '↑'}</text>`; }
+    });
+    s += `<path class="stairs" d="M480 ${yt}${Array.from({ length: 4 }, (_, i) => `H${488 + i * 10}V${yt - (yt - ye) * (i + 1) / 4}`).join('')}H${530}"/><text class="lab" x="540" y="${(yt + ye) / 2 + 4}">爬樓梯：Δo</text>`;
+    s += `<text class="tk" x="370" y="${yt + 22}" text-anchor="middle">t₂g（下層 3 格）</text><text class="tk" x="370" y="${ye - 32}" text-anchor="middle">eg（上層 2 格）</text>`;
+    $('#spD', el).innerHTML = `<svg class="en" style="max-width:600px;margin:auto" viewBox="230 30 400 170" role="img" aria-label="電子填入 d 軌域">${s}</svg>`;
+    const U = 26, row = (nm, c, on) => `<div class="${on ? 'on' : ''}"><span>${nm}<small class="mono">${c.up}×${fx(st.g, 1)} + ${c.pr}×1 = ${fx(c.v, 1)}</small></span><span class="stk"><i class="ba up" style="width:${c.up * st.g * U}px"></i><i class="ba pr" style="width:${c.pr * U}px"></i></span></div>`;
+    $('#spB', el).innerHTML = row('高自旋：先上樓', ch, !low) + row('低自旋：先擠一擠', cl, low);
+    const unp = occ.filter(o => o === 1).length;
+    $('#spK', el).innerHTML = card('n', '電子數', `d${st.n}`) + card('u', '未成對電子 n', unp) + card('m', '磁性', unp ? '順磁（被磁鐵吸）' : '反磁') + card('mu', '磁矩 μ = √(n(n+2))', `${fx(Math.sqrt(unp * (unp + 2)), 2)} BM`, `√(${unp}×${unp + 2})`);
+    $('#spN', el).innerHTML = `長條圖就是公式：橘色＝上樓的電子數 × Δo，灰色＝成對數 × P。電子選<b>總長度較短</b>的那一種。${Math.abs(ch.v - cl.v) < 1e-9 ? `d${st.n} 兩種放法一樣，不用選。` : low ? '樓梯太高，寧可在下層擠一擠：<b>低自旋</b>。' : '樓梯很矮，上樓比擠在一起便宜：<b>高自旋</b>。'} 只有 d⁴～d⁷ 會出現兩種選擇。`;
+    $('#spG', el).value = st.g; $('#spO', el).textContent = `${fx(st.g, 1)} P`;
+    $('[data-n="-1"]', el).disabled = st.n <= 1; $('[data-n="1"]', el).disabled = st.n >= 10;
     $$('[data-ex]', el).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.ex === st.ex)));
   }
-  bindSeg(el, 'cfI', v => { st.ion = v; st.ex = ''; draw(); });
-  bindSeg(el, 'cfG', v => { st.geo = v; st.ex = ''; draw(); });
-  bindSeg(el, 'cfF', v => { st.f = v; st.ex = ''; draw(); });
-  $$('[data-ex]', el).forEach(b => { b.onclick = () => { const e = DEX.find(x => x[0] === b.dataset.ex); Object.assign(st, { ex: e[0], ion: e[1], geo: e[2], f: e[3] }); draw(); }; });
+  $('#spG', el).oninput = e => { st.g = +e.target.value; st.ex = ''; draw(); };
+  $$('[data-n]', el).forEach(b => { b.onclick = () => { st.n = clamp(st.n + +b.dataset.n, 1, 10); st.ex = ''; draw(); }; });
+  $$('[data-ex]', el).forEach(b => { b.onclick = () => { const e = SPINEX.find(x => x[0] === b.dataset.ex); Object.assign(st, { ex: e[0], n: e[1], g: e[2] }); draw(); }; });
   draw();
-  return { set(s) { if (s.ex) { const e = DEX.find(x => x[0] === s.ex); Object.assign(st, { ex: e[0], ion: e[1], geo: e[2], f: e[3] }); } else Object.assign(st, s, { ex: '' }); draw(); } };
+  return { set(s) { if (s.ex) { const e = SPINEX.find(x => x[0] === s.ex); Object.assign(st, { ex: e[0], n: e[1], g: e[2] }); } else Object.assign(st, s, { ex: '' }); draw(); } };
 };
 
-/* ===== 4. 顏色與光譜化學序列：[CrL₆] 的吸收 =====
+/* ===== 4. 吃掉一種顏色：Δ = hc/λ 與色輪 =====
    Cr³⁺ 八面體錯合物的 Δo（cm⁻¹，教科書常見值，四捨五入） */
 const CRL = [['Cl⁻', '[CrCl₆]³⁻', 13600], ['F⁻', '[CrF₆]³⁻', 15200], ['H₂O', '[Cr(H₂O)₆]³⁺', 17400], ['NH₃', '[Cr(NH₃)₆]³⁺', 21600], ['en', '[Cr(en)₃]³⁺', 21900], ['CN⁻', '[Cr(CN)₆]³⁻', 26600]];
-// 吸收波長 → 看到的顏色（互補色，近似）
-const SEEN = [[400, '淡黃（吸收在紫外區）', '#EFE3A0'], [435, '黃綠', '#A9C23A'], [480, '黃', '#E3BC2E'], [490, '橙', '#E08A2E'], [500, '紅', '#C8402E'], [560, '紫紅', '#A8306E'], [580, '紫', '#7650A8'], [595, '藍', '#3F5BC8'], [650, '藍綠', '#2E8A8C'], [800, '綠', '#3E9550']];
-W.ccolor = el => {
+// 色輪：相對的兩色互為互補色。[名稱, 顏色, 波長下限, 上限]
+const WHEEL = [['紅', '#D0352B', 650, 760], ['橙', '#EE8A25', 590, 650], ['黃', '#F2D23A', 560, 590], ['綠', '#3BA55C', 490, 560], ['藍', '#2F6FD6', 430, 490], ['紫', '#7A45B5', 380, 430]];
+W.colorwheel = el => {
   let cur = 'H₂O';
-  el.innerHTML = `${seg('ccS', CRL.map(([l]) => [l, l]), cur)}<p class="small mut">配位基由左到右照光譜化學序列排列：場強度（Δo）由弱到強。</p><div class="spec"><div class="spec-bar"></div><i id="ccM"></i><span class="spec-l">380 nm</span><span class="spec-r">750 nm</span></div><div class="cards" id="ccK"></div><p class="note" id="ccN"></p>`;
+  el.innerHTML = `${seg('cwS', CRL.map(([l]) => [l, l]), cur)}<p class="small mut">按鈕由左到右是光譜化學序列：配位基的「推力」由弱到強。</p><div class="mrow" id="cwG"></div><p class="eq" id="cwF"></p><p class="note" id="cwN"></p>`;
   function draw() {
-    const [l, f, d] = CRL.find(x => x[0] === cur), lam = 1e7 / d, seen = SEEN.find(s => lam < s[0]) || SEEN[SEEN.length - 1];
-    $('#ccM', el).style.left = `${clamp((lam - 380) / 370, 0, 1) * 100}%`;
-    $('#ccK', el).innerHTML = card('d', 'Δo', `${d.toLocaleString()} cm⁻¹`, `${Math.round(d * 0.01196)} kJ/mol`) + card('l', '吸收波長', `${Math.round(lam)} nm`) + `<div class="card" data-k="c"><span>看到的顏色</span><b><i class="swatch" style="background:${seen[2]}"></i>${seen[1]}</b></div>`;
-    $('#ccN', el).innerHTML = `<b>${f}</b>：電子吸收能量剛好等於 Δo 的光，從 t<sub>2g</sub> 跳到 e<sub>g</sub>。被吸收的顏色從白光中扣掉，眼睛看到的是它的<b>互補色</b>。配位基場越強 → Δo 越大 → 吸收的光能量越高、<b>波長越短</b>。${cur === 'CN⁻' ? '這裡的吸收已經跑到紫外區，可見光幾乎沒被吸收，所以顏色很淡。' : ''} d⁰ 和 d¹⁰（例如 Zn²⁺、Sc³⁺、Cu⁺）沒有 d–d 躍遷，溶液通常無色。`;
-    pressSeg(el, 'ccS', cur);
+    const [, f, cm] = CRL.find(x => x[0] === cur), E = cm * 0.01196, lam = 119600 / E, ai = WHEEL.findIndex(w => lam >= w[2] && lam < w[3]), si = ai < 0 ? -1 : (ai + 3) % 6;
+    const xs = Array.from({ length: 81 }, (_, i) => 360 + i * 5);
+    const plot = chart({ w: 340, h: 250, x: [360, 760], y: [140, 340], xt: [400, 500, 600, 700], yt: [150, 200, 250, 300], xlab: '被吃掉的光的波長 λ（nm）', ylab: 'Δo（kJ/mol）', label: 'Δ 與波長' }, (X, Y) =>
+      `${WHEEL.map(w => `<rect x="${X(Math.max(360, w[2]))}" y="${Y(140) - 6}" width="${X(w[3]) - X(Math.max(360, w[2]))}" height="6" fill="${w[1]}"/>`).join('')}<path class="tline" d="${path(xs.map(x => [X(x), Y(119600 / x)]))}"/>`
+      + `<line class="mk" x1="${X(lam)}" x2="${X(lam)}" y1="${Y(E)}" y2="${Y(140)}"/><line class="mk" x1="${X(360)}" x2="${X(lam)}" y1="${Y(E)}" y2="${Y(E)}"/><circle class="dot" cx="${X(lam)}" cy="${Y(E)}" r="7"/>`);
+    const R = 92, r0 = 44, cx = 115, cy = 115, arc = (i, rr) => { const a = (-90 + i * 60) * Math.PI / 180; return [cx + Math.cos(a) * rr, cy + Math.sin(a) * rr]; };
+    const segs = WHEEL.map((w, i) => { const [a, b, c, d] = [arc(i - 0.5, R), arc(i + 0.5, R), arc(i + 0.5, r0), arc(i - 0.5, r0)], [tx, ty] = arc(i, (R + r0) / 2);
+      return `<path class="wseg${i === ai ? ' eat' : ''}${i === si ? ' see' : ''}" d="M${a}A${R} ${R} 0 0 1 ${b}L${c}A${r0} ${r0} 0 0 0 ${d}Z" fill="${w[1]}"/><text class="wl" x="${tx}" y="${ty + 5}" text-anchor="middle">${w[0]}</text>`; }).join('');
+    const cut = ai < 0 ? '' : (() => { const [x1, y1] = arc(ai, r0 - 4), [x2, y2] = arc(si, r0 - 4); return `<line class="wcut" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" marker-end="url(#wa)"/>`; })();
+    const wheel = `<svg class="ch" viewBox="0 0 230 230" role="img" aria-label="互補色色輪"><defs><marker id="wa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" class="ahp"/></marker></defs>${segs}<circle cx="${cx}" cy="${cy}" r="${r0 - 8}" fill="${si < 0 ? '#F4EFC8' : WHEEL[si][1]}" class="wsol"/>${cut}</svg>`;
+    $('#cwG', el).innerHTML = `<figure class="wide">${plot}</figure><figure>${wheel}<figcaption>中間圓＝溶液看起來的顏色</figcaption></figure>`;
+    $('#cwF', el).innerHTML = `Δo = hc/λ　→　λ = 119,600 ÷ Δo(kJ/mol) = 119,600 ÷ ${Math.round(E)} = <b>${Math.round(lam)} nm</b>`;
+    $('#cwN', el).innerHTML = `<b>${f}</b>：${ai < 0 ? '樓梯太高，要吃的是紫外光；可見光幾乎都穿過去，溶液顏色很淡。' : `電子跳上樓梯時吃掉<b>${WHEEL[ai][0]}光</b>（色輪上變暗的那一格），剩下的光混起來，就是它在色輪<b>正對面</b>的<b>${WHEEL[si][0]}色</b>。`} 配位基推力越強 → 樓梯 Δo 越高 → 曲線上的點往左上走 → 吃掉的光越偏藍紫。`;
+    pressSeg(el, 'cwS', cur);
   }
-  bindSeg(el, 'ccS', v => { cur = v; draw(); });
+  bindSeg(el, 'cwS', v => { cur = v; draw(); });
   draw();
   return { set(s) { cur = s.l || cur; draw(); } };
+};
+
+/* ===== 5. 可以轉的八面體：異構物與鏡像 =====
+   六個方向：+x −x +y −y +z −z；lab：各方向的配位基；en：雙牙配位基跨的兩個方向 */
+const OD = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]];
+const OPRE = {
+  cis42: { t: 'cis-[MA₄B₂]', lab: 'BABAAA', en: [] },
+  trans42: { t: 'trans-[MA₄B₂]', lab: 'AAAABB', en: [] },
+  fac: { t: 'fac-[MA₃B₃]', lab: 'BABABA', en: [] },
+  mer: { t: 'mer-[MA₃B₃]', lab: 'BBBAAA', en: [] },
+  cisen: { t: 'cis-[M(en)₂B₂]', lab: 'BNBNNN', en: [[1, 4], [3, 5]] },
+  transen: { t: 'trans-[M(en)₂B₂]', lab: 'NNNNBB', en: [[0, 2], [1, 3]] },
+  abc: { t: '全 cis-[MA₂B₂C₂]', lab: 'ABACBC', en: [] },
+};
+const m3 = (A, B) => A.map((r, i) => B[0].map((_, j) => r.reduce((s, _, k) => s + A[i][k] * B[k][j], 0)));
+const mv = (A, v) => A.map(r => r[0] * v[0] + r[1] * v[1] + r[2] * v[2]);
+const rotA = (ax, t) => { const [x, y, z] = ax, c = Math.cos(t), s = Math.sin(t), C = 1 - c; return [[c + x * x * C, x * y * C - z * s, x * z * C + y * s], [y * x * C + z * s, c + y * y * C, y * z * C - x * s], [z * x * C - y * s, z * y * C + x * s, c + z * z * C]]; };
+const I3 = () => [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+const det3 = A => A[0][0] * (A[1][1] * A[2][2] - A[1][2] * A[2][1]) - A[0][1] * (A[1][0] * A[2][2] - A[1][2] * A[2][0]) + A[0][2] * (A[1][0] * A[2][1] - A[1][1] * A[2][0]);
+const SIGNED = (() => { const out = [], ps = [[0, 1, 2], [0, 2, 1], [1, 0, 2], [1, 2, 0], [2, 0, 1], [2, 1, 0]];
+  ps.forEach(p => [1, -1].forEach(a => [1, -1].forEach(b => [1, -1].forEach(c => { const M = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], sg = [a, b, c]; p.forEach((j, i) => { M[i][j] = sg[i]; }); out.push(M); })))); return out; })();
+const dirIdx = v => OD.findIndex(d => d.every((x, i) => Math.abs(x - v[i]) < 1e-6));
+// 鏡像能否用一個轉動疊回原本的樣子：找行列式 −1 的對稱操作 G，使配位基與 en 都對得上
+function mirrorMatch(p) {
+  return SIGNED.filter(G => det3(G) < 0).find(G => OD.every((v, i) => p.lab[dirIdx(mv(G, v))] === p.lab[i])
+    && p.en.every(([a, b]) => { const A = dirIdx(mv(G, OD[a])), B = dirIdx(mv(G, OD[b])); return p.en.some(([c, d]) => (c === A && d === B) || (c === B && d === A)); })) || null;
+}
+W.oct3d = el => {
+  let cur = 'cisen';
+  const V0 = m3(rotA([1, 0, 0], 0.38), rotA([0, 1, 0], -0.55)), S = [[-1, 0, 0], [0, 1, 0], [0, 0, 1]];
+  const st = { D: [I3(), I3()], A: I3() };   // D：兩個模型各自被拖動的轉動；A：鏡像模型自己的轉動
+  el.innerHTML = `${seg('o3S', Object.entries(OPRE).map(([k, v]) => [k, v.t]), cur)}<div id="o3G" class="o3g"></div><div class="w-row"><button class="btn sm pri" type="button" data-fit>疊疊看：右邊轉得成左邊嗎？</button><button class="btn sm" type="button" data-reset>轉回原位</button></div><p class="note" id="o3N"></p>`;
+  const T = m3(m3(V0.map((r, i) => V0.map(q => q[i])), S), V0);   // 模型空間中的鏡射：Vᵀ S V
+  function model(k) {   // 回傳畫面座標
+    const p = OPRE[cur], M = k ? m3(st.D[1], m3(V0, m3(st.A, T))) : m3(st.D[0], V0), cx = k ? 380 : 140;
+    return { pts: OD.map((v, i) => { const [x, y, z] = mv(M, v); return { i, x: cx + x * 78, y: 135 - y * 78, z, l: p.lab[i] }; }), cx };
+  }
+  function scene(k) {
+    const { pts, cx } = model(k), p = OPRE[cur], order = [...pts].sort((a, b) => a.z - b.z);
+    let s = '';
+    for (let i = 0; i < 6; i++) for (let j = i + 1; j < 6; j++) if (OD[i].every((x, q) => x + OD[j][q] !== 0 || x === 0) && dirIdx(OD[i].map(x => -x)) !== j) s += `<line class="oe" x1="${pts[i].x}" y1="${pts[i].y}" x2="${pts[j].x}" y2="${pts[j].y}"/>`;
+    const far = order.filter(q => q.z < 0), near = order.filter(q => q.z >= 0);
+    const bond = q => `<line class="cb" x1="${cx}" y1="135" x2="${q.x}" y2="${q.y}"/>`;
+    const lig = q => { const r = 14 + 3 * q.z; return `<g class="lg lg-${q.l}"><circle cx="${q.x}" cy="${q.y}" r="${r}"/><text x="${q.x}" y="${q.y + 4.5}" text-anchor="middle">${q.l}</text></g>`; };
+    const ens = p.en.map(([a, b]) => { const A = pts[a], B = pts[b], mx = (A.x + B.x) / 2, my = (A.y + B.y) / 2; return `<path class="enarc" d="M${A.x} ${A.y}Q${mx + (mx - cx) * 0.6} ${my + (my - 135) * 0.6} ${B.x} ${B.y}"/>`; }).join('');
+    return s + ens + far.map(bond).join('') + far.map(lig).join('') + `<circle class="mc" cx="${cx}" cy="135" r="12"/><text class="mt" x="${cx}" y="139.5" text-anchor="middle">M</text>` + near.map(bond).join('') + near.map(lig).join('');
+  }
+  function draw(msg) {
+    $('#o3G', el).innerHTML = `<svg class="mol o3" viewBox="20 0 480 270" role="img" aria-label="可轉動的八面體與鏡像"><line class="mirror" x1="260" x2="260" y1="10" y2="245"/><text class="tk" x="260" y="262" text-anchor="middle">鏡子</text>${scene(0)}${scene(1)}</svg>`;
+    $('#o3N', el).innerHTML = msg || `用手指或滑鼠<b>拖動</b>左右兩個模型，自己轉轉看。右邊是左邊在鏡子裡的樣子。${OPRE[cur].en.length ? '綠色弧線是一個 en（雙牙配位基），只能跨在相鄰的兩個位置。' : ''} 按「疊疊看」檢查：有沒有一種轉法能讓右邊和左邊完全重合？`;
+    pressSeg(el, 'o3S', cur);
+  }
+  function fit() {
+    const G = mirrorMatch(OPRE[cur]);
+    st.D = [I3(), I3()];
+    if (G) { st.A = m3(G, T); draw(`<span class="ok">疊得起來</span>：把右邊轉一下就和左邊一模一樣（現在兩邊排列相同）。所以它和鏡像是<b>同一個分子</b>，<b>沒有光學異構物</b>（非掌性）。`); }
+    else { st.A = I3(); draw(`<span class="bad">疊不起來</span>：八面體一共只有 24 種轉法，全部試過，右邊都無法和左邊重合。左右是一對<b>鏡像異構物</b>（光學異構物），這個錯合物是<b>掌性</b>的。`); }
+  }
+  let drag = null;
+  el.addEventListener('pointerdown', e => { const svg = e.target.closest('svg.o3'); if (!svg) return; const b = svg.getBoundingClientRect(); drag = { k: (e.clientX - b.left) / b.width > 0.5 ? 1 : 0, x: e.clientX, y: e.clientY }; svg.setPointerCapture?.(e.pointerId); });
+  el.addEventListener('pointermove', e => { if (!drag) return; const dx = e.clientX - drag.x, dy = e.clientY - drag.y; drag.x = e.clientX; drag.y = e.clientY;
+    st.D[drag.k] = m3(m3(rotA([0, 1, 0], dx * 0.012), rotA([1, 0, 0], dy * 0.012)), st.D[drag.k]); draw(); });
+  el.addEventListener('pointerup', () => { drag = null; });
+  bindSeg(el, 'o3S', v => { cur = v; st.D = [I3(), I3()]; st.A = I3(); draw(); });
+  $('[data-fit]', el).onclick = fit;
+  $('[data-reset]', el).onclick = () => { st.D = [I3(), I3()]; st.A = I3(); draw(); };
+  draw();
+  return { set(s) { if (s.t) { cur = s.t; st.D = [I3(), I3()]; st.A = I3(); } draw(); if (s.fit) fit(); } };
 };
 
 /* ---------- 後中化學：電化學的互動圖 ---------- */
