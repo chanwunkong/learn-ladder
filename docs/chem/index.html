@@ -155,6 +155,10 @@ svg.en.clip { overflow: hidden; }
 .mrow figure { margin: 0; width: 190px; text-align: center; }
 .mrow figcaption { font-size: 13px; color: var(--muted); }
 .marr { font-size: 22px; color: var(--muted); }
+.qsrc { font-size: 12px; font-family: var(--mono); color: var(--eosin); margin: 0 0 2px; }
+.toc-log { font-weight: 600; margin-bottom: 4px; }
+.logday { margin: 8px 0; } .logday summary { cursor: pointer; padding: 6px 0; }
+.logday .tbl td { vertical-align: top; }
 .tree-note { font-size: 14.5px; margin: 0 0 10px; }
 .trees { display: grid; gap: 22px; }
 .tree h3 { font-size: 15px; margin: 6px 0 8px; }
@@ -1249,14 +1253,14 @@ CH.push({
    寫法：每節一個問題開頭，靠可操作的圖表建立直覺；公式直接長在圖上。 */
 CH.push({
   id: 'coord', unit: 'g9b', title: '配位化學：錯合物的結構、顏色與磁性',
-  lede: '硫酸銅為什麼是藍的？為什麼有的錯合物會被磁鐵吸、有的不會？答案都藏在中心金屬的五個 d 軌域裡。這一章用四張可以動手操作的圖，把它們一次看懂。',
+  lede: '硫酸銅為什麼是藍的？為什麼有的錯合物有順磁性、有的沒有？答案都在中心金屬的五個 d 軌域裡。這一章的每張圖都可以自己操作，公式中的每一項都對應到圖上的長度或位置。',
   sections: [
     { h: '加 AgNO₃ 會沉澱幾個 Cl⁻？', w: 'cname', body: `
-<p>錯合物是一個金屬離子被一圈分子或離子抓住。抓住它的叫<b>配位基</b>：用自己的孤對電子和金屬「握手」。握了幾隻手就是<b>配位數</b>。</p>
-<p>寫化學式時，被抓住的放在方括號裡；方括號外的是<b>外界離子</b>，只負責讓電荷平衡，溶於水就跑出來。所以 AgNO₃ 只抓得到方括號<b>外面</b>的 Cl⁻。</p>
-<p>下面每個方塊是一個離子或分子，上面標著它的電荷。切換不同的錯合物：三列方塊加起來永遠是 0，金屬的氧化數就是「把帳算平」剩下的那一塊。</p>` },
+<p>錯合物由中心金屬離子和周圍的<b>配位基</b>組成：配位基提供孤對電子，和金屬形成配位共價鍵。直接和金屬鍵結的原子數稱為<b>配位數</b>。</p>
+<p>化學式中，配位在金屬上的寫在方括號裡；方括號外的是<b>外界離子</b>，只負責平衡電荷，溶於水會解離。所以 AgNO₃ 只會和方括號<b>外面</b>的 Cl⁻ 生成沉澱。</p>
+<p>下圖每個方塊是一個離子或分子，標著它的電荷。切換不同的錯合物：全部電荷加起來必為 0，由此可以求出金屬的氧化數。</p>` },
     { h: '名字怎麼念？', body: `
-<p>從電荷收支圖往下讀就是名字：<b>配位基（照英文字母排）→ 金屬 →（氧化數）</b>，方括號外的離子照一般鹽類放前面或後面。</p>
+<p>命名順序：<b>配位基（照英文字母排）→ 金屬 →（氧化數）</b>，方括號外的離子照一般鹽類放前面或後面。</p>
 <table class="tbl"><thead><tr><th>配位基</th><th>名稱</th><th>配位基</th><th>名稱</th></tr></thead><tbody>
 <tr><td>H₂O</td><td>aqua</td><td>Cl⁻、Br⁻</td><td>chloro、bromo</td></tr>
 <tr><td>NH₃</td><td>ammine</td><td>CN⁻</td><td>cyano</td></tr>
@@ -1264,30 +1268,38 @@ CH.push({
 <tr><td>en</td><td>ethylenediamine（用 bis、tris 計數）</td><td>NO₂⁻</td><td>nitro（N 端）、nitrito（O 端）</td></tr></tbody></table>
 <p>錯離子帶<b>負電</b>時，金屬名字改成 <b>-ate</b>：ferrate（Fe）、cuprate（Cu）、argentate（Ag）、aurate（Au）、plumbate（Pb）、stannate（Sn）。</p>` },
     { h: 'd 軌域為什麼會分成兩組？', w: 'dsplit', body: `
-<p>金屬的五個 d 軌域形狀像花瓣，方向各不相同。六個配位基從 x、y、z 軸的六個方向靠近，它們帶著負電。</p>
-<p>拖動滑桿讓配位基靠近，再切換不同的軌域看：<b>花瓣正對配位基的被推高，躲在兩軸之間的往下掉</b>。上面兩個叫 eg，下面三個叫 t₂g，兩組的高度差就是<b>晶體場分裂能 Δo</b>。</p>
-<p>圖左的兩根箭頭就是平衡公式：三個軌域各降 0.4Δo、兩個各升 0.6Δo，一升一降剛好抵消，總能量不變。</p>` },
-    { h: '電子要爬樓梯，還是擠一擠？', w: 'spin', body: `
-<p>把電子一顆一顆放進去。前三顆各佔下層一格；第四顆開始要選：</p>
-<ul><li><b>爬樓梯</b>：上到 eg，代價是樓梯高度 Δo。</li>
-<li><b>擠一擠</b>：在下層和別人擠同一格，代價是<b>成對能 P</b>。</li></ul>
-<p>長條圖把兩種放法的總代價畫出來，電子選比較短的那條。樓梯矮選上樓，叫<b>高自旋</b>；樓梯高寧可擠，叫<b>低自旋</b>。樓梯高度由配位基決定：CN⁻、CO 推得最用力，Δo 最大。</p>
-<p>剩下的未成對電子 n 決定磁性：n &gt; 0 會被磁鐵吸（順磁），磁矩 μ = √(n(n+2))，卡片上會即時算出來。</p>
-<p>四面體只有四個配位基、而且都沒正對花瓣，樓梯只有八面體的約 4/9 高，所以幾乎都是高自旋。平面四方的 dx²−y² 被四個配位基正對，特別高；d⁸ 的 Ni²⁺（強場）、Pd²⁺、Pt²⁺ 會把它空著，八個電子全部成對，所以是反磁性。</p>` },
+<p>五個 d 軌域的瓣（lobe）指向不同方向。八面體錯合物的六個配位基位於 ±x、±y、±z 軸上，帶負電（或孤對電子）。</p>
+<p>拖動滑桿讓配位基靠近，並切換不同的軌域：<b>瓣沿著軸、正對配位基的軌域（dz²、dx²−y²）受排斥，能量升高</b>；<b>瓣在兩軸之間的軌域（dxy、dxz、dyz）能量降低</b>。前者稱為 eg，後者稱為 t₂g，兩組的能量差就是<b>晶體場分裂能 Δo</b>。</p>
+<p>能階圖左側的兩根箭頭對應重心守恆：三個軌域各降 0.4Δo、兩個各升 0.6Δo，3(−0.4Δo) + 2(+0.6Δo) = 0。</p>` },
+    { h: '高自旋還是低自旋？', w: 'spin', body: `
+<p>逐一加入 d 電子。前三個各佔一個 t₂g 軌域；從第四個開始有兩種填法：</p>
+<ul><li>進入 eg：每個電子多需要 Δo。</li>
+<li>在 t₂g 中成對：每一對多需要<b>成對能 P</b>。</li></ul>
+<p>長條圖畫出兩種填法的總能量：(eg 電子數)×Δo + (成對數)×P，實際採取較低的那一種。Δo &lt; P 時為<b>高自旋</b>，Δo &gt; P 時為<b>低自旋</b>。Δo 由配位基決定，CN⁻、CO 最大。</p>
+<p>未成對電子數 n 決定磁性：n &gt; 0 為順磁性，n = 0 為反磁性。自旋磁矩 μ = √(n(n+2)) BM，卡片上即時計算。</p>
+<p>四面體只有四個配位基，且都不正對 d 軌域的瓣，Δt ≈ 4/9 Δo，小於成對能，所以幾乎都是高自旋。平面四方的 dx²−y² 正對四個配位基，能量特別高；d⁸ 的 Ni²⁺（強場）、Pd²⁺、Pt²⁺ 讓它保持空著，八個電子全部成對，為反磁性。</p>
+<p>直線形錯合物（兩個配位基在 z 軸上）則是 dz² 最高。</p>
+<p>舊教科書和考題也常用<b>價鍵理論</b>的混成來描述同一件事，對照如下：</p>
+<table class="tbl"><thead><tr><th>配位數</th><th>形狀</th><th>混成</th><th>例子</th></tr></thead><tbody>
+<tr><td>2</td><td>直線</td><td>sp</td><td>[Ag(NH₃)₂]⁺</td></tr>
+<tr><td>4</td><td>四面體</td><td>sp³</td><td>[Zn(NH₃)₄]²⁺、[Ni(CO)₄]、[NiCl₄]²⁻</td></tr>
+<tr><td>4</td><td>平面四方</td><td>dsp²</td><td>[Ni(CN)₄]²⁻、[Pt(NH₃)₂Cl₂]</td></tr>
+<tr><td>6</td><td>八面體（低自旋，內軌）</td><td>d²sp³</td><td>[Fe(CN)₆]³⁻、[Co(NH₃)₆]³⁺</td></tr>
+<tr><td>6</td><td>八面體（高自旋，外軌）</td><td>sp³d²</td><td>[CoF₆]³⁻、[Fe(H₂O)₆]²⁺</td></tr></tbody></table>` },
     { h: '硫酸銅為什麼是藍的？', w: 'colorwheel', body: `
-<p>電子跳上樓梯需要能量，剛好等於 Δo 的那種顏色的光會被<b>吃掉</b>。白光少了一種顏色，剩下的混起來，就是色輪上<b>正對面</b>的顏色，稱為<b>互補色</b>。</p>
-<p>左圖是 Δo = hc/λ 這條曲線：樓梯越高，點越往左上，吃掉的光波長越短。右圖是色輪：變暗的那格被吃掉，中間圓是你看到的顏色。換配位基試試，它們由弱到強排成<b>光譜化學序列</b>：</p>
+<p>電子從 t₂g 躍遷到 eg（d–d 躍遷）時，吸收能量等於 Δo 的光。白光被吸收一部分後，看到的是色輪上<b>正對面</b>的顏色，稱為<b>互補色</b>。</p>
+<p>左圖是 Δo = hc/λ：Δo 越大，點越往左上，吸收的波長越短。右圖是色輪：變暗的一格是被吸收的顏色，中間圓是看到的顏色。切換配位基，它們依 Δo 由小到大排成<b>光譜化學序列</b>：</p>
 <p class="eq">I⁻ &lt; Br⁻ &lt; Cl⁻ &lt; F⁻ &lt; OH⁻ &lt; H₂O &lt; NH₃ &lt; en &lt; NO₂⁻ &lt; CN⁻ &lt; CO</p>
-<p>硫酸銅溶液裡的 [Cu(H₂O)₆]²⁺ 吃掉的是紅橙光，所以看起來是藍色。d⁰（Sc³⁺、Ti⁴⁺）和 d¹⁰（Zn²⁺、Cu⁺、Ag⁺）沒有電子可以跳樓梯，所以無色。</p>` },
+<p>硫酸銅溶液中的 [Cu(H₂O)₆]²⁺ 吸收紅橙光，所以呈藍色。d⁰（Sc³⁺、Ti⁴⁺）和 d¹⁰（Zn²⁺、Cu⁺、Ag⁺）沒有 d–d 躍遷，所以無色。</p>` },
     { h: '鏡子裡的錯合物是同一個嗎？', w: 'oct3d', body: `
 <p>同樣的配位基，排的位置不同就是不同的分子。相鄰（夾 90°）叫 <b>cis</b>，相對（夾 180°）叫 <b>trans</b>；三個相同的佔一個三角面叫 <b>fac</b>，排成一條經線叫 <b>mer</b>。這些統稱<b>幾何異構物</b>。</p>
 <p>更難的問題是：一個錯合物和它的鏡像，是不是同一個？拖動模型自己轉轉看，再按「疊疊看」讓電腦試遍八面體的 24 種轉法。疊不起來的就是一對<b>鏡像異構物</b>。</p>
-<p>結果可以這樣記：<b>有兩個 en 擠在 cis 位置，或三對配位基全都 cis，就疊不起來</b>。常考的數目：MA₄B₂ 有 2 種幾何異構物；MA₃B₃ 有 2 種；MA₂B₂C₂ 有 5 種幾何異構物，其中全 cis 的那種有鏡像，所以立體異構物共 6 種。</p>
+<p>結論：<b>cis-[M(en)₂X₂]、[M(en)₃] 與全 cis 的 [MA₂B₂C₂] 為掌性</b>，其他常見組成可以和鏡像重合。常考的數目：MA₄B₂ 有 2 種幾何異構物；MA₃B₃ 有 2 種；MA₂B₂C₂ 有 5 種幾何異構物，其中全 cis 的那種有鏡像，所以立體異構物共 6 種。</p>
 <p>平面四方的 MA₂B₂ 也有 cis、trans 兩種（順鉑是 cis），四面體的四個位置彼此都相鄰，沒有幾何異構物。</p>` },
     { h: '錯合物在身體裡做什麼？', body: `
-<ul><li><b>血紅素</b>：Fe²⁺ 被紫質環上的四個 N 抓住，第六個位置接 O₂。CO 是強場配位基，抓得比 O₂ 緊約 200 倍以上，所以一氧化碳中毒時 O₂ 被擠掉。</li>
-<li><b>順鉑</b>：cis-[Pt(NH₃)₂Cl₂] 的兩個 Cl⁻ 被水換掉後，Pt 同時抓住 DNA 上相鄰的兩個鳥嘌呤，DNA 被夾彎而無法複製。只有 cis 能同時抓住相鄰的兩個鹼基。</li>
-<li><b>螯合效應</b>：一個 en 換掉兩個 NH₃，溶液裡的自由粒子變多、熵增加，所以多牙配位基抓得特別牢。EDTA 一次用六隻手，臨床上用來治療鉛中毒。</li>
+<ul><li><b>血紅素</b>：Fe²⁺ 和紫質環上的四個 N 配位，第六個位置結合 O₂。CO 是強場配位基，與血紅素的親和力約為 O₂ 的 200 倍以上，所以一氧化碳中毒時 O₂ 被取代。</li>
+<li><b>順鉑</b>：cis-[Pt(NH₃)₂Cl₂] 的兩個 Cl⁻ 被水換掉後，Pt 同時和 DNA 上相鄰的兩個鳥嘌呤 N7 配位，使 DNA 彎折而無法複製。只有 cis 的兩個空位相鄰，能同時配位兩個鹼基。</li>
+<li><b>螯合效應</b>：一個 en 換掉兩個 NH₃，溶液裡的自由粒子變多、熵增加，所以多牙配位基形成的錯合物特別穩定。EDTA 是六牙配位基，臨床上用來治療鉛中毒。</li>
 <li><b>金屬羰基</b>：CO 用碳的孤對電子給金屬，金屬再把 d 電子回送到 CO 的 π* 軌域（<b>π 逆授</b>），C≡O 被削弱，IR 頻率下降；錯合物負電越多，逆授越強，ν(CO)：[Mn(CO)₆]⁺ &gt; Cr(CO)₆ &gt; [V(CO)₆]⁻。</li></ul>` },
   ],
   quiz: [
@@ -1298,19 +1310,19 @@ CH.push({
     { q: '下列何者的 IUPAC 名稱正確？', o: ['[Cr(NH₃)₄Br₂]Br：tetraamminedibromochromium(III) bromide', 'K₄[Fe(CN)₆]：potassium hexacyanoiron(II)', '[Co(NH₃)₆]Cl₃：hexaamminecobalt(II) chloride', 'Na[Ag(CN)₂]：sodium dicyanosilver(I)'], a: 0,
       why: '陰離子錯離子要用 -ate 與拉丁字根：hexacyanoferrate(II)、dicyanoargentate(I)；[Co(NH₃)₆]³⁺ 中 Co 是 +3。', show: { w: 'cname', set: { c: 'cr4' } } },
     { q: '八面體錯合物中，能量被推高的 eg 組是哪兩個 d 軌域？', o: ['dz² 與 dx²−y²', 'dxy 與 dz²', 'dxz 與 dyz', 'dxy 與 dx²−y²'], a: 0,
-      why: '它們的花瓣沿著 x、y、z 軸，正對配位基。', show: { w: 'dsplit', set: { c: 1, o: 'x2' } } },
+      why: '它們的瓣沿著 x、y、z 軸，正對配位基。', show: { w: 'dsplit', set: { c: 1, o: 'x2' } } },
     { q: '[Fe(CN)₆]⁴⁻ 有幾個未成對電子？', o: ['0', '4', '2', '1'], a: 0,
-      why: 'Fe²⁺ 是 d⁶；CN⁻ 讓樓梯很高，6 顆電子全部擠在下層成對（低自旋），所以是反磁性。', show: { w: 'spin', set: { ex: '[Fe(CN)₆]⁴⁻' } } },
+      why: 'Fe²⁺ 是 d⁶；CN⁻ 為強場配位基，Δo > P，6 個電子全部在 t₂g 成對（低自旋），為反磁性。', show: { w: 'spin', set: { ex: '[Fe(CN)₆]⁴⁻' } } },
     { q: '[CoF₆]³⁻ 有幾個未成對電子？', o: ['4', '0', '2', '6'], a: 0,
-      why: 'Co³⁺ 是 d⁶；F⁻ 的樓梯矮，電子先上樓（高自旋）：下層 4、上層 2，4 個未成對。', show: { w: 'spin', set: { ex: '[CoF₆]³⁻' } } },
+      why: 'Co³⁺ 是 d⁶；F⁻ 為弱場配位基，Δo < P，高自旋 t₂g⁴eg²，4 個未成對電子。', show: { w: 'spin', set: { ex: '[CoF₆]³⁻' } } },
     { q: '四面體錯合物幾乎都是高自旋，主要原因是？', o: ['四面體的分裂能只有八面體的約 4/9，小於成對能', '四面體的 d 軌域不分裂', '四面體只能用弱場配位基', '四面體的電子數較少'], a: 0,
-      why: '樓梯太矮，上樓永遠比擠一擠便宜。', show: { w: 'spin', set: { n: 6, g: 0.3 } } },
+      why: 'Δt 小於 P，電子進入較高能階所需的能量比成對能小。', show: { w: 'spin', set: { n: 6, g: 0.3 } } },
     { q: '下列 Cr³⁺ 八面體錯合物中，何者吸收的光波長最長？', o: ['[CrCl₆]³⁻', '[Cr(H₂O)₆]³⁺', '[Cr(NH₃)₆]³⁺', '[Cr(CN)₆]³⁻'], a: 0,
-      why: 'Cl⁻ 推力最弱，樓梯最矮，吃掉的光能量最低、波長最長。', show: { w: 'colorwheel', set: { l: 'Cl⁻' } } },
+      why: 'Cl⁻ 在光譜化學序列中最弱，Δo 最小，吸收光的能量最低、波長最長。', show: { w: 'colorwheel', set: { l: 'Cl⁻' } } },
     { q: '[Cr(H₂O)₆]³⁺ 吸收約 575 nm 的黃光，溶液看起來是什麼顏色？', o: ['紫色', '黃色', '紅色', '無色'], a: 0,
-      why: '色輪上黃色的正對面是紫色。', show: { w: 'colorwheel', set: { l: 'H₂O' } } },
+      why: '色輪上黃色的互補色是紫色。', show: { w: 'colorwheel', set: { l: 'H₂O' } } },
     { q: '下列水溶液何者無色？', o: ['[Zn(H₂O)₆]²⁺', '[Cu(H₂O)₆]²⁺', '[Ni(H₂O)₆]²⁺', '[Co(H₂O)₆]²⁺'], a: 0,
-      why: 'Zn²⁺ 是 d¹⁰，上下層都滿了，沒有電子可以跳樓梯。' },
+      why: 'Zn²⁺ 是 d¹⁰，t₂g 與 eg 全滿，沒有 d–d 躍遷。' },
     { q: '八面體錯離子 [Co(NH₃)₄Cl₂]⁺ 有幾種幾何異構物？', o: ['2', '3', '4', '1'], a: 0,
       why: '兩個 Cl⁻ 相鄰（cis）或相對（trans）。', show: { w: 'oct3d', set: { t: 'cis42' } } },
     { q: '下列何者具有光學異構物（鏡像異構物）？', o: ['cis-[Co(en)₂Cl₂]⁺', 'trans-[Co(en)₂Cl₂]⁺', 'cis-[Pt(NH₃)₂Cl₂]', '[Co(NH₃)₆]³⁺'], a: 0,
@@ -1321,6 +1333,42 @@ CH.push({
       why: '一個 en 換出兩個 NH₃，溶液中的分子數變多，ΔS > 0。' },
     { q: '下列金屬羰基錯合物中，何者的 C–O 伸縮振動頻率最高？', o: ['[Mn(CO)₆]⁺', 'Cr(CO)₆', '[V(CO)₆]⁻', '三者相同'], a: 0,
       why: '帶正電的 Mn 錯合物 d 電子較不願回送，π 逆授最少，C≡O 最強。' },
+  ],
+  exam: [
+    { src: '中國醫藥 112 第 41 題', q: '下列錯合物各 1 mol 溶於水後加入過量 AgNO₃，何者生成的 AgCl 沉澱最多？', o: ['[Co(NH₃)₆]Cl₃', '[Co(NH₃)₄Cl₂]Cl', '[Co(NH₃)₃Cl₃]', 'K[Co(NH₃)₂Cl₄]'], a: 0,
+      why: '只數方括號外的 Cl⁻：依序為 3、1、0、0 個。', show: { w: 'cname', set: { c: 'co6' } } },
+    { src: '中國醫藥 112 第 42 題', q: '下列錯離子何者為反磁性？', o: ['[Co(NH₃)₆]³⁺', '[Fe(H₂O)₆]²⁺', '[CoF₆]³⁻', '[Mn(CN)₆]⁴⁻'], a: 0,
+      why: 'Co³⁺ d⁶ 遇強場 NH₃ 為低自旋 t₂g⁶，全部成對。[Fe(H₂O)₆]²⁺、[CoF₆]³⁻ 高自旋各 4 個未成對；[Mn(CN)₆]⁴⁻ 低自旋 d⁵ 仍有 1 個。', show: { w: 'spin', set: { ex: '[Co(NH₃)₆]³⁺' } } },
+    { src: '中國醫藥 111 第 4 題', q: '弱場八面體錯離子 [FeF₆]³⁻ 有幾個未成對電子？', o: ['5', '1', '3', '0'], a: 0,
+      why: 'Fe³⁺ 是 d⁵；弱場高自旋 t₂g³eg²，5 個電子各佔一個軌域。', show: { w: 'spin', set: { n: 5, g: 0.5 } } },
+    { src: '義守 112 第 8 題', q: '平面四方的 [Pt(NH₃)₄]²⁺ 與四面體的 [MnCl₄]²⁻，何者未成對電子較多？', o: ['[MnCl₄]²⁻，有 5 個', '[Pt(NH₃)₄]²⁺，有 2 個', '兩者相同', '兩者都沒有未成對電子'], a: 0,
+      why: 'Pt²⁺ d⁸ 平面四方：dx²−y² 空著，8 個電子全部成對；Mn²⁺ d⁵ 四面體一定高自旋，5 個未成對。' },
+    { src: '義守 112 第 15 題', q: '平面四方錯離子 [PdCl₄]²⁻ 中，能量最高的 d 軌域是？', o: ['dx²−y²', 'dz²', 'dxy', 'dxz'], a: 0,
+      why: '四個配位基位於 x、y 軸上，dx²−y² 的瓣正對它們。' },
+    { src: '慈濟 108 第 23 題', q: '直線形錯合物的兩個配位基位於 z 軸上，依晶體場理論能量最高的 d 軌域是？', o: ['dz²', 'dx²−y²', 'dxy', 'dxz 與 dyz'], a: 0,
+      why: '只有 dz² 的瓣沿著 z 軸，正對兩個配位基。' },
+    { src: '義守 112 第 31 題', q: '下列 Cr³⁺ 錯離子中，何者吸收光的波長最長？', o: ['[Cr(H₂O)₆]³⁺', '[Cr(NH₃)₆]³⁺', '[Cr(en)₃]³⁺', '[Cr(CN)₆]³⁻'], a: 0,
+      why: '四個選項中 H₂O 在光譜化學序列最前面，Δo 最小，吸收波長最長。', show: { w: 'colorwheel', set: { l: 'H₂O' } } },
+    { src: '慈濟 112 第 13 題', q: '下列配位基依場強度由強到弱排列，何者正確？', o: ['CN⁻ > en > H₂O > Br⁻', 'Br⁻ > H₂O > en > CN⁻', 'en > CN⁻ > Br⁻ > H₂O', 'H₂O > Br⁻ > CN⁻ > en'], a: 0,
+      why: '光譜化學序列：Br⁻ < H₂O < en < CN⁻。', show: { w: 'colorwheel', set: { l: 'CN⁻' } } },
+    { src: '義守 109 第 9 題', q: '兩個八面體錯合物分別吸收 600 nm 與 400 nm 的光，前者的 Δo 是後者的幾倍？', o: ['2/3', '3/2', '1', '4/9'], a: 0,
+      why: 'Δo = hc/λ，與波長成反比：400 ÷ 600 = 2/3。', show: { w: 'colorwheel', set: { l: 'F⁻' } } },
+    { src: '慈濟 112 第 1 題', q: '下列錯離子的混成軌域與形狀，何者正確？', o: ['[Ni(CN)₄]²⁻：dsp²，平面四方', '[Zn(NH₃)₄]²⁺：dsp²，平面四方', '[Fe(CN)₆]⁴⁻：sp³d²，八面體', '[Ag(NH₃)₂]⁺：sp³，四面體'], a: 0,
+      why: '[Zn(NH₃)₄]²⁺ 是 sp³ 四面體；[Fe(CN)₆]⁴⁻ 低自旋為 d²sp³；[Ag(NH₃)₂]⁺ 是 sp 直線。' },
+    { src: '慈濟 112 第 16 題', q: '下列物種中，C–O 伸縮振動頻率最低的是？', o: ['[V(CO)₆]⁻', 'Cr(CO)₆', '[Mn(CO)₆]⁺', '自由的 CO 分子'], a: 0,
+      why: '帶負電的 V 錯合物 d 電子最多，π 逆授最強，C≡O 鍵最弱。' },
+    { src: '慈濟 112 第 24 題', q: '下列何者具有 cis–trans 幾何異構物？', o: ['[Co(NH₃)₄Br₂]⁺', '[Co(NH₃)₅Br]²⁺', '[Zn(NH₃)₂Cl₂]（四面體）', '[Co(NH₃)₆]³⁺'], a: 0,
+      why: 'MA₄B₂ 的兩個 B 可相鄰或相對；MA₅B 只有一種；四面體的位置彼此都相鄰。', show: { w: 'oct3d', set: { t: 'cis42' } } },
+    { src: '慈濟 112 第 25 題', q: '關於順鉑 cis-[Pt(NH₃)₂Cl₂] 的敘述，何者錯誤？', o: ['和 trans 異構物一樣具有抗癌活性', 'Pt 的氧化數為 +2', '幾何形狀為平面四方', '分子具有極性'], a: 0,
+      why: '只有 cis 異構物能以相鄰的兩個位置同時和 DNA 配位；trans 沒有活性。' },
+    { src: '中國醫藥 111 第 3 題', q: '關於 [Co(en)₂Br₂]⁺ 的敘述，何者正確？', o: ['有 cis、trans 兩種幾何異構物，其中 cis 有一對鏡像異構物', 'Co 的氧化數為 +2', 'en 是單牙配位基', '沒有任何光學異構物'], a: 0,
+      why: 'Co 為 +3（2 個 Br⁻ 共 −2，整體 +1）；en 是雙牙配位基；cis 的鏡像無法重合。', show: { w: 'oct3d', set: { t: 'cisen', fit: 1 } } },
+    { src: '中國醫藥 109 第 16 題', q: '八面體錯離子 [Co(NH₃)₂(H₂O)₂Cl₂]⁺ 共有幾種立體異構物（含鏡像異構物）？', o: ['6', '5', '4', '3'], a: 0,
+      why: '屬於 MA₂B₂C₂：5 種幾何異構物，其中全 cis 的有一對鏡像，共 6 種。', show: { w: 'oct3d', set: { t: 'abc', fit: 1 } } },
+    { src: '義守 112 第 43 題', q: '0.010 m 的 [Co(NH₃)₅Cl]Cl₂ 水溶液，凝固點約下降多少？（水的 Kf = 1.86 °C/m，完全解離）', o: ['0.056 °C', '0.019 °C', '0.037 °C', '0.074 °C'], a: 0,
+      why: '解離成 [Co(NH₃)₅Cl]²⁺ 與 2 個 Cl⁻，i = 3：ΔTf = 3 × 1.86 × 0.010 ≈ 0.056 °C。', show: { w: 'cname', set: { c: 'co5' } } },
+    { src: '義守 106 第 13 題', q: 'K₄[Fe(CN)₆] 的正確 IUPAC 名稱為？', o: ['potassium hexacyanoferrate(II)', 'potassium hexacyanoiron(II)', 'tetrapotassium hexacyanoferrate(III)', 'potassium hexacyanoferrate(IV)'], a: 0,
+      why: '錯陰離子用 -ate，鐵用拉丁字根 ferrate；4 個 K⁺ 使錯離子為 −4，Fe = −4 − (−6) = +2；鹽類名稱不寫陽離子數目。', show: { w: 'cname', set: { c: 'fe2' } } },
   ],
 });
 
@@ -2024,18 +2072,18 @@ const TERMS = {
     ['變色範圍', '指示劑兩種顏色都明顯的 pH 區間，約為 pKa(HIn) ± 1。', { w: 'indicator', set: { ind: 'pp', v: 25 } }],
   ],
   'coord': [
-    ['配位基', '用孤對電子和金屬「握手」的分子或離子，如 NH₃、H₂O、Cl⁻、CN⁻。', { w: 'cname', set: { c: 'co6' } }],
-    ['配位數', '金屬被握住的手數；雙牙配位基一個算兩隻手。', { w: 'cname', set: { c: 'en' } }],
+    ['配位基', '提供孤對電子、和中心金屬形成配位鍵的分子或離子，如 NH₃、H₂O、Cl⁻、CN⁻。', { w: 'cname', set: { c: 'co6' } }],
+    ['配位數', '直接和中心金屬鍵結的原子數；雙牙配位基一個算兩個。', { w: 'cname', set: { c: 'en' } }],
     ['外界離子', '方括號外、只負責平衡電荷的離子；溶於水會跑出來。', { w: 'cname', set: { c: 'co5' } }],
-    ['晶體場分裂能', 'eg 和 t₂g 兩組 d 軌域的高度差 Δo，也就是電子要爬的樓梯。', { w: 'dsplit', set: { c: 1, o: 'x2' } }],
-    ['成對能', '兩個電子擠在同一個軌域要付的代價 P。', { w: 'spin', set: { n: 4, g: 0.5 } }],
-    ['高自旋', '樓梯矮（Δo < P），電子先上樓再成對，未成對電子多。', { w: 'spin', set: { ex: '[CoF₆]³⁻' } }],
-    ['低自旋', '樓梯高（Δo > P），電子寧可在下層擠一擠，未成對電子少。', { w: 'spin', set: { ex: '[Co(NH₃)₆]³⁺' } }],
-    ['互補色', '色輪上和被吃掉的顏色正對面的顏色，就是看到的顏色。', { w: 'colorwheel', set: { l: 'H₂O' } }],
-    ['光譜化學序列', '配位基推高樓梯的能力由弱到強：I⁻ < Br⁻ < Cl⁻ < F⁻ < H₂O < NH₃ < en < CN⁻ < CO。', { w: 'colorwheel', set: { l: 'NH₃' } }],
+    ['晶體場分裂能', '八面體中 eg 與 t₂g 兩組 d 軌域的能量差 Δo。', { w: 'dsplit', set: { c: 1, o: 'x2' } }],
+    ['成對能', '兩個電子進入同一軌域所需的額外能量 P。', { w: 'spin', set: { n: 4, g: 0.5 } }],
+    ['高自旋', 'Δo < P 時，電子先分別佔據各軌域（含 eg）再成對，未成對電子多。', { w: 'spin', set: { ex: '[CoF₆]³⁻' } }],
+    ['低自旋', 'Δo > P 時，電子先在 t₂g 成對，未成對電子少。', { w: 'spin', set: { ex: '[Co(NH₃)₆]³⁺' } }],
+    ['互補色', '色輪上與被吸收顏色相對的顏色，就是看到的顏色。', { w: 'colorwheel', set: { l: 'H₂O' } }],
+    ['光譜化學序列', '配位基依造成的 Δo 由小到大排列：I⁻ < Br⁻ < Cl⁻ < F⁻ < H₂O < NH₃ < en < CN⁻ < CO。', { w: 'colorwheel', set: { l: 'NH₃' } }],
     ['幾何異構物', '同樣的配位基、位置不同：cis/trans、fac/mer。', { w: 'oct3d', set: { t: 'cis42' } }],
     ['鏡像異構物', '和自己的鏡像怎麼轉都疊不起來的一對分子（光學異構物）。', { w: 'oct3d', set: { t: 'cisen', fit: 1 } }],
-    ['螯合效應', '多牙配位基抓得特別牢，主要因為取代後粒子數增加、熵增加。'],
+    ['螯合效應', '多牙配位基形成的錯合物特別穩定，主要因為取代後粒子數增加、熵增加。'],
     ['π 逆授', '金屬把 d 電子回送到 CO 的 π* 軌域，使 C≡O 變弱。'],
   ],
   'alpha': [
@@ -2517,7 +2565,7 @@ W.e1 = el => {
     const base = { Cb: { x: -0.7, y: 0, t: 'C' }, H: { x: -1.05, y: 1.0, t: 'H', hl: 1 }, b1: { x: -1.5, y: -0.45, t: 'H' }, b2: { x: -0.95, y: -0.95, t: 'H' } };
     const F0 = { atoms: { ...base, Ca: { x: 0.7, y: 0, t: 'C' }, Br: { x: 1.05, y: -1.0, t: 'Br', lp: [0, 270, 315] }, m1: { x: 1.55, y: 0.45, t: 'CH₃' }, m2: { x: 0.95, y: 0.95, t: 'CH₃' } },
       bonds: [['Cb', 'Ca', 's'], ['Cb', 'H', 's'], ['Cb', 'b1', 'w'], ['Cb', 'b2', 'h'], ['Ca', 'Br', 's'], ['Ca', 'm1', 'w'], ['Ca', 'm2', 'h']], arrows: [{ f: { b: ['Ca', 'Br'] }, t: { a: 'Br' }, bend: 0.7 }], notes: [{ x: 0, y: -2.0, t: '2-溴-2-甲基丙烷' }] };
-    const cat = { ...base, Ca: { x: 0.7, y: 0, t: 'C', c: '+' }, Br: { x: 1.8, y: -1.75, t: 'Br', c: '−', lp: [0, 90, 180, 270] }, m1: { x: 1.4, y: 0.75, t: 'CH₃' }, m2: { x: 1.4, y: -0.75, t: 'CH₃' } };
+    const cat = { ...base, Ca: { x: 0.7, y: 0, t: 'C', c: '+' }, Br: { x: 2.2, y: -1.3, t: 'Br', c: '−', lp: [0, 90, 180, 270] }, m1: { x: 1.4, y: 0.75, t: 'CH₃' }, m2: { x: 1.4, y: -0.75, t: 'CH₃' } };
     const cb = [['Cb', 'Ca', 's'], ['Cb', 'H', 's'], ['Cb', 'b1', 'w'], ['Cb', 'b2', 'h'], ['Ca', 'm1', 's'], ['Ca', 'm2', 's']];
     const F1 = { atoms: cat, bonds: cb };
     const F2 = { atoms: { ...cat, O: { x: -1.95, y: 2.15, t: 'H₂O', lp: [-52] } }, bonds: cb, arrows: [{ f: { lp: ['O', -52] }, t: { a: 'H' }, bend: -0.3 }, { f: { b: ['Cb', 'H'] }, t: { m: ['Cb', 'Ca'] }, bend: 0.5 }] };
@@ -3340,8 +3388,8 @@ W.cname = el => {
     $('#cnQ', el).innerHTML = `<div class="qrow"><span class="qlab">方括號裡</span><span class="qbox">${chips(d.m, 1, r.ox, 'metal')}${d.lig.map(([t, n, c, dent]) => chips(t + (dent > 1 ? '（雙牙）' : ''), n, c, 'lig')).join('')}</span><span class="qsum">${sg(r.q)}</span></div>
 <div class="qrow"><span class="qlab">方括號外</span><span class="qbox">${d.out.length ? d.out.map(([t, n, c]) => chips(t, n, c, 'out')).join('') : '<span class="mut small">（沒有，整個是中性分子）</span>'}</span><span class="qsum">${sg(-r.q)}</span></div>
 <div class="qrow tot"><span class="qlab">全部加起來</span><span class="qbox"></span><span class="qsum">0</span></div>`;
-    $('#cnK', el).innerHTML = card('ox', `${d.m} 的氧化數`, sg(r.ox), `${sg(r.q)} − (${sg(r.ligQ)})`) + card('cn', '配位數', r.cn, '數方括號裡抓住金屬的手') + card('ion', '溶於水的粒子', r.ions, '錯離子 1 + 外界離子') + card('ag', '加過量 AgNO₃', `${r.agcl} AgCl`, '只有外界 Cl⁻ 會沉澱');
-    $('#cnN', el).innerHTML = `把每個離子想成帶電的小方塊：<b>整個化合物的電荷收支一定是 0</b>。方括號外的方塊決定錯離子帶多少電，再扣掉配位基的電荷，剩下的就是金屬的氧化數。<br>IUPAC 名稱：<b class="mono">${r.name}</b>`;
+    $('#cnK', el).innerHTML = card('ox', `${d.m} 的氧化數`, sg(r.ox), `${sg(r.q)} − (${sg(r.ligQ)})`) + card('cn', '配位數', r.cn, '方括號內和金屬鍵結的原子數') + card('ion', '溶於水的粒子', r.ions, '錯離子 1 + 外界離子') + card('ag', '加過量 AgNO₃', `${r.agcl} AgCl`, '只有外界 Cl⁻ 會沉澱');
+    $('#cnN', el).innerHTML = `<b>整個化合物的電荷總和為 0</b>：方括號外的離子決定錯離子的電荷，再減去配位基的電荷，就是金屬的氧化數。<br>IUPAC 名稱：<b class="mono">${r.name}</b>`;
     pressSeg(el, 'cnS', cur);
   }
   bindSeg(el, 'cnS', v => { cur = v; draw(); });
@@ -3387,8 +3435,8 @@ W.dsplit = el => {
     $('#dsR', el).value = st.c; $('#dsO', el).textContent = c < 0.05 ? '很遠' : c > 0.95 ? '貼近' : `${Math.round(c * 100)}%`;
     $('#dsF', el).innerHTML = `Δo ＝ ${Math.round(c * 100)}（任意單位）　　平衡：3 × (−0.4Δo) + 2 × (+0.6Δo) = ${fx(Math.abs(3 * -0.4 * c * 100 + 2 * 0.6 * c * 100), 0)}`;
     $('#dsN', el).innerHTML = c < 0.05 ? '配位基還很遠：五個 d 軌域能量一樣，畫在同一條線上。把滑桿往右拖，讓六個灰色的配位基沿著 x、y、z 軸靠近。'
-      : up ? `<b>${o[0]}</b> 的花瓣<b>正對著</b>軸上的配位基（灰色球），電子雲被負電排斥，能量<b>往上推</b>。這兩個軌域合稱 eg。`
-        : `<b>${o[0]}</b> 的花瓣<b>夾在兩軸中間</b>，閃開了配位基，能量<b>往下掉</b>。這三個軌域合稱 t₂g。`;
+      : up ? `<b>${o[0]}</b> 的瓣<b>沿著軸</b>，正對配位基（灰色球），受到排斥，能量<b>升高</b>。這兩個軌域合稱 eg。`
+        : `<b>${o[0]}</b> 的瓣<b>在兩軸之間</b>，不正對配位基，能量<b>降低</b>。這三個軌域合稱 t₂g。`;
     pressSeg(el, 'dsS', st.o);
   }
   $('#dsR', el).oninput = e => { st.c = +e.target.value; draw(); };
@@ -3397,7 +3445,7 @@ W.dsplit = el => {
   return { set(s) { Object.assign(st, s); draw(); } };
 };
 
-/* ===== 3. 爬樓梯還是擠一擠：高自旋與低自旋 ===== */
+/* ===== 3. 高自旋與低自旋 ===== */
 const SPINEX = [['[Cr(H₂O)₆]³⁺', 3, 0.7], ['[Fe(H₂O)₆]²⁺', 6, 0.5], ['[Fe(CN)₆]⁴⁻', 6, 1.7], ['[CoF₆]³⁻', 6, 0.7], ['[Co(NH₃)₆]³⁺', 6, 1.5], ['[Mn(CN)₆]⁴⁻', 5, 1.5], ['[Co(H₂O)₆]²⁺', 7, 0.5], ['[Ni(H₂O)₆]²⁺', 8, 0.7]];
 function spinFill(n, low) {   // 回傳 5 個格子（t₂g×3, eg×2）各放幾顆
   const ord = low ? [0, 1, 2, 0, 1, 2, 3, 4, 3, 4] : [0, 1, 2, 3, 4, 0, 1, 2, 3, 4], occ = [0, 0, 0, 0, 0];
@@ -3408,7 +3456,7 @@ const spinCost = (occ, g) => { const up = occ[3] + occ[4], pr = occ.filter(o => 
 W.spin = el => {
   const st = { n: 6, g: 0.5, ex: '[Fe(H₂O)₆]²⁺' };
   el.innerHTML = `<div class="w-row">${SPINEX.map(([t]) => `<button class="btn sm ghost" type="button" data-ex="${t}">${t}</button>`).join('')}</div>
-<div class="w-row"><button class="btn sm" type="button" data-n="-1">－ 拿走一顆電子</button><button class="btn sm pri" type="button" data-n="1">＋ 放一顆電子</button><label class="rng">樓梯高度 Δo（以成對能 P 為 1）<input type="range" id="spG" min="0.3" max="1.9" step="0.2"><output class="mono" id="spO"></output></label></div>
+<div class="w-row"><button class="btn sm" type="button" data-n="-1">－ 拿走一顆電子</button><button class="btn sm pri" type="button" data-n="1">＋ 放一顆電子</button><label class="rng">分裂能 Δo（以成對能 P 為 1）<input type="range" id="spG" min="0.3" max="1.9" step="0.2"><output class="mono" id="spO"></output></label></div>
 <div id="spD"></div><div class="bars pk spc" id="spB"></div><div class="cards" id="spK"></div><p class="note" id="spN"></p>`;
   function draw() {
     const hi = spinFill(st.n, false), lo = spinFill(st.n, true), ch = spinCost(hi, st.g), cl = spinCost(lo, st.g), low = cl.v < ch.v - 1e-9, occ = low ? lo : hi;
@@ -3418,14 +3466,14 @@ W.spin = el => {
       s += `<line class="lvl" x1="${x - 26}" x2="${x + 26}" y1="${sy[i]}" y2="${sy[i]}"/>`;
       const k = occ[i]; for (let j = 0; j < k; j++) { const bx = k === 2 ? x + (j ? 11 : -11) : x; s += `<circle class="eball${j ? ' dn' : ''}" cx="${bx}" cy="${sy[i] - 12}" r="9"/><text class="ebt" x="${bx}" y="${sy[i] - 8}" text-anchor="middle">${j ? '↓' : '↑'}</text>`; }
     });
-    s += `<path class="stairs" d="M480 ${yt}${Array.from({ length: 4 }, (_, i) => `H${488 + i * 10}V${yt - (yt - ye) * (i + 1) / 4}`).join('')}H${530}"/><text class="lab" x="540" y="${(yt + ye) / 2 + 4}">爬樓梯：Δo</text>`;
+    s += `<line class="conn" x1="466" x2="520" y1="${yt}" y2="${yt}"/><line class="conn" x1="431" x2="520" y1="${ye}" y2="${ye}"/><line class="dlt up" x1="515" x2="515" y1="${yt}" y2="${ye}"/><text class="lab" x="524" y="${(yt + ye) / 2 + 4}">Δo</text>`;
     s += `<text class="tk" x="370" y="${yt + 22}" text-anchor="middle">t₂g（下層 3 格）</text><text class="tk" x="370" y="${ye - 32}" text-anchor="middle">eg（上層 2 格）</text>`;
     $('#spD', el).innerHTML = `<svg class="en" style="max-width:600px;margin:auto" viewBox="230 30 400 170" role="img" aria-label="電子填入 d 軌域">${s}</svg>`;
     const U = 26, row = (nm, c, on) => `<div class="${on ? 'on' : ''}"><span>${nm}<small class="mono">${c.up}×${fx(st.g, 1)} + ${c.pr}×1 = ${fx(c.v, 1)}</small></span><span class="stk"><i class="ba up" style="width:${c.up * st.g * U}px"></i><i class="ba pr" style="width:${c.pr * U}px"></i></span></div>`;
-    $('#spB', el).innerHTML = row('高自旋：先上樓', ch, !low) + row('低自旋：先擠一擠', cl, low);
+    $('#spB', el).innerHTML = row('高自旋', ch, !low) + row('低自旋', cl, low);
     const unp = occ.filter(o => o === 1).length;
-    $('#spK', el).innerHTML = card('n', '電子數', `d${st.n}`) + card('u', '未成對電子 n', unp) + card('m', '磁性', unp ? '順磁（被磁鐵吸）' : '反磁') + card('mu', '磁矩 μ = √(n(n+2))', `${fx(Math.sqrt(unp * (unp + 2)), 2)} BM`, `√(${unp}×${unp + 2})`);
-    $('#spN', el).innerHTML = `長條圖就是公式：橘色＝上樓的電子數 × Δo，灰色＝成對數 × P。電子選<b>總長度較短</b>的那一種。${Math.abs(ch.v - cl.v) < 1e-9 ? `d${st.n} 兩種放法一樣，不用選。` : low ? '樓梯太高，寧可在下層擠一擠：<b>低自旋</b>。' : '樓梯很矮，上樓比擠在一起便宜：<b>高自旋</b>。'} 只有 d⁴～d⁷ 會出現兩種選擇。`;
+    $('#spK', el).innerHTML = card('n', '電子數', `d${st.n}`) + card('u', '未成對電子 n', unp) + card('m', '磁性', unp ? '順磁性' : '反磁性') + card('mu', '磁矩 μ = √(n(n+2))', `${fx(Math.sqrt(unp * (unp + 2)), 2)} BM`, `√(${unp}×${unp + 2})`);
+    $('#spN', el).innerHTML = `長條＝總能量：橘色為 eg 電子數 × Δo，灰色為成對數 × P。實際採取<b>總長度較短</b>的填法。${Math.abs(ch.v - cl.v) < 1e-9 ? `d${st.n} 兩種放法一樣，不用選。` : low ? 'Δo > P：<b>低自旋</b>。' : 'Δo < P：<b>高自旋</b>。'} 只有 d⁴～d⁷ 會出現兩種選擇。`;
     $('#spG', el).value = st.g; $('#spO', el).textContent = `${fx(st.g, 1)} P`;
     $('[data-n="-1"]', el).disabled = st.n <= 1; $('[data-n="1"]', el).disabled = st.n >= 10;
     $$('[data-ex]', el).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.ex === st.ex)));
@@ -3437,18 +3485,18 @@ W.spin = el => {
   return { set(s) { if (s.ex) { const e = SPINEX.find(x => x[0] === s.ex); Object.assign(st, { ex: e[0], n: e[1], g: e[2] }); } else Object.assign(st, s, { ex: '' }); draw(); } };
 };
 
-/* ===== 4. 吃掉一種顏色：Δ = hc/λ 與色輪 =====
+/* ===== 4. 吸收與互補色：Δ = hc/λ 與色輪 =====
    Cr³⁺ 八面體錯合物的 Δo（cm⁻¹，教科書常見值，四捨五入） */
 const CRL = [['Cl⁻', '[CrCl₆]³⁻', 13600], ['F⁻', '[CrF₆]³⁻', 15200], ['H₂O', '[Cr(H₂O)₆]³⁺', 17400], ['NH₃', '[Cr(NH₃)₆]³⁺', 21600], ['en', '[Cr(en)₃]³⁺', 21900], ['CN⁻', '[Cr(CN)₆]³⁻', 26600]];
 // 色輪：相對的兩色互為互補色。[名稱, 顏色, 波長下限, 上限]
 const WHEEL = [['紅', '#D0352B', 650, 760], ['橙', '#EE8A25', 590, 650], ['黃', '#F2D23A', 560, 590], ['綠', '#3BA55C', 490, 560], ['藍', '#2F6FD6', 430, 490], ['紫', '#7A45B5', 380, 430]];
 W.colorwheel = el => {
   let cur = 'H₂O';
-  el.innerHTML = `${seg('cwS', CRL.map(([l]) => [l, l]), cur)}<p class="small mut">按鈕由左到右是光譜化學序列：配位基的「推力」由弱到強。</p><div class="mrow" id="cwG"></div><p class="eq" id="cwF"></p><p class="note" id="cwN"></p>`;
+  el.innerHTML = `${seg('cwS', CRL.map(([l]) => [l, l]), cur)}<p class="small mut">按鈕由左到右是光譜化學序列：Δo 由小到大。</p><div class="mrow" id="cwG"></div><p class="eq" id="cwF"></p><p class="note" id="cwN"></p>`;
   function draw() {
     const [, f, cm] = CRL.find(x => x[0] === cur), E = cm * 0.01196, lam = 119600 / E, ai = WHEEL.findIndex(w => lam >= w[2] && lam < w[3]), si = ai < 0 ? -1 : (ai + 3) % 6;
     const xs = Array.from({ length: 81 }, (_, i) => 360 + i * 5);
-    const plot = chart({ w: 340, h: 250, x: [360, 760], y: [140, 340], xt: [400, 500, 600, 700], yt: [150, 200, 250, 300], xlab: '被吃掉的光的波長 λ（nm）', ylab: 'Δo（kJ/mol）', label: 'Δ 與波長' }, (X, Y) =>
+    const plot = chart({ w: 340, h: 250, x: [360, 760], y: [140, 340], xt: [400, 500, 600, 700], yt: [150, 200, 250, 300], xlab: '吸收光的波長 λ（nm）', ylab: 'Δo（kJ/mol）', label: 'Δ 與波長' }, (X, Y) =>
       `${WHEEL.map(w => `<rect x="${X(Math.max(360, w[2]))}" y="${Y(140) - 6}" width="${X(w[3]) - X(Math.max(360, w[2]))}" height="6" fill="${w[1]}"/>`).join('')}<path class="tline" d="${path(xs.map(x => [X(x), Y(119600 / x)]))}"/>`
       + `<line class="mk" x1="${X(lam)}" x2="${X(lam)}" y1="${Y(E)}" y2="${Y(140)}"/><line class="mk" x1="${X(360)}" x2="${X(lam)}" y1="${Y(E)}" y2="${Y(E)}"/><circle class="dot" cx="${X(lam)}" cy="${Y(E)}" r="7"/>`);
     const R = 92, r0 = 44, cx = 115, cy = 115, arc = (i, rr) => { const a = (-90 + i * 60) * Math.PI / 180; return [cx + Math.cos(a) * rr, cy + Math.sin(a) * rr]; };
@@ -3458,7 +3506,7 @@ W.colorwheel = el => {
     const wheel = `<svg class="ch" viewBox="0 0 230 230" role="img" aria-label="互補色色輪"><defs><marker id="wa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" class="ahp"/></marker></defs>${segs}<circle cx="${cx}" cy="${cy}" r="${r0 - 8}" fill="${si < 0 ? '#F4EFC8' : WHEEL[si][1]}" class="wsol"/>${cut}</svg>`;
     $('#cwG', el).innerHTML = `<figure class="wide">${plot}</figure><figure>${wheel}<figcaption>中間圓＝溶液看起來的顏色</figcaption></figure>`;
     $('#cwF', el).innerHTML = `Δo = hc/λ　→　λ = 119,600 ÷ Δo(kJ/mol) = 119,600 ÷ ${Math.round(E)} = <b>${Math.round(lam)} nm</b>`;
-    $('#cwN', el).innerHTML = `<b>${f}</b>：${ai < 0 ? '樓梯太高，要吃的是紫外光；可見光幾乎都穿過去，溶液顏色很淡。' : `電子跳上樓梯時吃掉<b>${WHEEL[ai][0]}光</b>（色輪上變暗的那一格），剩下的光混起來，就是它在色輪<b>正對面</b>的<b>${WHEEL[si][0]}色</b>。`} 配位基推力越強 → 樓梯 Δo 越高 → 曲線上的點往左上走 → 吃掉的光越偏藍紫。`;
+    $('#cwN', el).innerHTML = `<b>${f}</b>：${ai < 0 ? 'Δo 太大，吸收在紫外區；可見光幾乎全部透過，溶液顏色很淡。' : `吸收<b>${WHEEL[ai][0]}光</b>（色輪上變暗的一格），看到的是相對位置的<b>${WHEEL[si][0]}色</b>。`} 配位基場越強 → Δo 越大 → 曲線上的點往左上移 → 吸收波長越短。`;
     pressSeg(el, 'cwS', cur);
   }
   bindSeg(el, 'cwS', v => { cur = v; draw(); });
@@ -4655,7 +4703,7 @@ function setDone(id, v) {
   if (typeof CLOUD !== 'undefined') { CLOUD.push(); CLOUD.render(); }
 }
 function renderTOC(cur) {
-  $('#toc').innerHTML = UNITS.map(p => `<p class="toc-h">${p.part}</p><ol>${p.items.map(([u, t], i) => { const c = unitCh(u);
+  $('#toc').innerHTML = `<a href="#log" class="toc-log${cur === 'log' ? ' cur' : ''}">練習紀錄</a>` + UNITS.map(p => `<p class="toc-h">${p.part}</p><ol>${p.items.map(([u, t], i) => { const c = unitCh(u);
     return c ? `<li><a href="#${c.id}" class="${c.id === cur ? 'cur' : ''} ${state.done[c.id] ? 'done' : ''}"${c.id === cur ? ' aria-current="page"' : ''}><span class="num">${p.key === 'g' ? '普' : '有'}${i + 1}</span><span>${c.title}</span></a></li>`
       : `<li><span class="soon"><span class="num">${p.key === 'g' ? '普' : '有'}${i + 1}</span><span>${t}</span><small>製作中</small></span></li>`; }).join('')}</ol>`).join('');
 }
@@ -4666,7 +4714,7 @@ function renderHome() {
 <h1 class="hero">不背反應，<br>看懂原理就推得出來。</h1>
 <p class="lede">普通化學和有機化學，每一章都從直覺和圖像開始：先動手看到現象，再推出公式與規則，最後用在題目上。普化學到的酸鹼、平衡、熱力學，會直接拿來解釋有機反應。</p>
 ${(() => { const nx = CH.find(c => !state.done[c.id]) || CH[0], any = CH.some(c => state.done[c.id]);
-  return `<div class="cta"><a class="btn pri" href="#${nx.id}">${any ? '繼續：' : '從第一章開始：'}${nx.title}</a><a class="btn" href="#map">看課程地圖</a></div>`; })()}
+  return `<div class="cta"><a class="btn pri" href="#${nx.id}">${any ? '繼續：' : '從第一章開始：'}${nx.title}</a><a class="btn" href="#map">看課程地圖</a><a class="btn" href="#log">練習紀錄</a></div>`; })()}
 <h2 id="map">課程地圖</h2>
 <p class="mut tree-note">由下往上是先修順序：上面的章節用到下面的觀念。數字是三校歷屆試題中，<b>每份 50 題平均約考幾題</b>。點虛線框的是規劃中的章節。</p>
 <div class="seg" id="wview">${WVIEW.map((v, i) => `<button aria-pressed="${i === state.wv}" data-i="${i}">${v}</button>`).join('')}</div>
@@ -4728,23 +4776,72 @@ function bindTree() {
   if (!window.__treeRO) { window.__treeRO = new ResizeObserver(() => $('.trees') && treeLines()); window.__treeRO.observe($('#article')); }
 }
 
+/* ---------- 練習紀錄：每次作答存一筆（只存在這台裝置的瀏覽器） ----------
+   { t: 時間戳, c: 章 id, k: 'q' 章末題／'x' 相似題, i: 題號, p: 選的選項, ok: 1/0, n: 這次第幾次作答 } */
+const LOG = store.get('log', []);
+function logAnswer(e) { LOG.push({ t: Date.now(), ...e }); if (LOG.length > 5000) LOG.splice(0, LOG.length - 5000); store.set('log', LOG); }
+const qbank = (c, k) => (k === 'x' ? c.exam : c.quiz) || [];
+const strip = h => String(h).replace(/<[^>]+>/g, '');
+const dstr = t => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+const tstr = t => { const d = new Date(t); return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
+function qblock(list, kind) {
+  return list.map((q, k) => `<div class="q" data-k="${kind}" data-q="${k}">${q.src ? `<p class="qsrc">仿 ${q.src}</p>` : ''}<p class="qt">${k + 1}. ${q.q}</p><div class="opts">${order(q, k).map(j => `<button class="opt" type="button" data-o="${j}">${q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('');
+}
+// 把連續的作答併成「一題一次」：同一章、同一題、同一頁面瀏覽中，從第 1 次作答到答對為止
+function sessions(log = LOG) {
+  const out = [];
+  log.forEach(e => { const last = out.length && [...out].reverse().find(s => s.c === e.c && s.k === e.k && s.i === e.i && !s.closed);
+    if (e.n === 1 || !last) out.push({ t: e.t, c: e.c, k: e.k, i: e.i, tries: 1, ok: e.ok, first: e.ok, closed: !!e.ok, end: e.t });
+    else { last.tries++; last.end = e.t; if (e.ok) { last.ok = 1; last.closed = true; } } });
+  return out;
+}
+function lastSeen(id) {
+  const ss = sessions().filter(s => s.c === id && s.k === 'q'); if (!ss.length) return '';
+  const d = dstr(ss[ss.length - 1].t), day = ss.filter(s => dstr(s.t) === d);
+  return `<br>上次練習 ${d}：${day.length} 題，第一次就答對 ${day.filter(s => s.first).length} 題。<a href="#log">看練習紀錄</a>`;
+}
+function renderLog() {
+  const ss = sessions(), days = [...new Set(ss.map(s => dstr(s.t)))].sort().reverse(), pct = (a, b) => (b ? `${Math.round(100 * a / b)}%` : '—');
+  const byCh = CH.map(c => { const x = ss.filter(s => s.c === c.id); return { c, n: x.length, f: x.filter(s => s.first).length, last: x.length ? dstr(x[x.length - 1].t) : '' }; }).filter(r => r.n);
+  const res = s => (s.first ? '<span class="ok">✓ 第一次答對</span>' : s.ok ? `<span class="warn">第 ${s.tries} 次答對</span>` : `<span class="bad">✗ 未答對</span>`);
+  $('#article').innerHTML = `<p class="eyebrow">後中化學</p><h1>練習紀錄</h1><p class="lede">每一次作答都會自動記錄：日期時間、章節、題目、作答次數與結果。紀錄存在這台裝置的瀏覽器中。</p>
+${ss.length ? `<div class="cards">${card('n', '練習題次', ss.length)}${card('f', '第一次就答對', pct(ss.filter(s => s.first).length, ss.length))}${card('d', '練習天數', days.length)}${card('l', '最近一次', `${dstr(ss[ss.length - 1].t)} ${tstr(ss[ss.length - 1].t)}`)}</div>
+<h2>各章</h2><table class="tbl"><thead><tr><th>章節</th><th>題次</th><th>第一次就答對</th><th>最近練習</th></tr></thead><tbody>${byCh.map(r => `<tr><td><a href="#${r.c.id}">${r.c.title}</a></td><td>${r.n}</td><td>${pct(r.f, r.n)}</td><td>${r.last}</td></tr>`).join('')}</tbody></table>
+<h2>每日紀錄</h2>${days.map((d, k) => { const x = ss.filter(s => dstr(s.t) === d);
+  return `<details class="logday"${k ? '' : ' open'}><summary><b>${d}</b>　${x.length} 題，第一次就答對 ${pct(x.filter(s => s.first).length, x.length)}</summary><table class="tbl"><thead><tr><th>時間</th><th>章節</th><th>題目</th><th>結果</th></tr></thead><tbody>${x.map(s => { const c = chOf(s.c), q = c && qbank(c, s.k)[s.i];
+    return `<tr><td class="mono">${tstr(s.t)}</td><td>${c ? `<a href="#${c.id}/${s.k === 'x' ? 'exam' : 'quiz'}">${c.title.split('：')[0]}</a>` : s.c}${s.k === 'x' ? '<small class="mut">（相似題）</small>' : ''}</td><td>${q ? strip(q.q).slice(0, 48) : '（題目已更新）'}</td><td>${res(s)}</td></tr>`; }).join('')}</tbody></table></details>`; }).join('')}
+<div class="w-row"><button class="btn sm" type="button" id="logCsv">下載 CSV</button><button class="btn sm ghost" type="button" id="logClr">清除全部紀錄</button></div>`
+  : '<p class="note">還沒有紀錄。到任何一章的「確認理解」或「歷屆考題相似題」作答，就會自動記在這裡。</p>'}`;
+  if (!ss.length) return;
+  $('#logCsv').onclick = () => {
+    const rows = [['日期', '時間', '章節', '類型', '題號', '題目', '作答次數', '第一次就答對', '最後答對']].concat(ss.map(s => { const c = chOf(s.c), q = c && qbank(c, s.k)[s.i];
+      return [dstr(s.t), tstr(s.t), c ? c.title : s.c, s.k === 'x' ? '相似題' : '章末題', s.i + 1, q ? strip(q.q) : '', s.tries, s.first ? '是' : '否', s.ok ? '是' : '否']; }));
+    const csv = '\ufeff' + rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = `化學練習紀錄-${dstr(Date.now())}.csv`; a.click();
+  };
+  $('#logClr').onclick = () => { if (confirm('確定要清除這台裝置上的全部練習紀錄？')) { LOG.length = 0; store.set('log', LOG); renderLog(); } };
+}
+
 const INST = {};   // 目前頁面上各互動圖的實例（練習題「在圖上看」用）
 function renderChapter(id) {
   const c = chOf(id), i = CH.indexOf(c), prev = CH[i - 1], next = CH[i + 1];
   $('#article').innerHTML = `<p class="eyebrow">${UNITS.find(p => p.items.some(x => x[0] === c.unit)).part} · ${unitName(c.unit)}</p><h1>${c.title}</h1><p class="lede">${c.lede}</p>
-<nav class="secnav" aria-label="本章小節">${c.sections.map((s, k) => `<a href="#${id}/${k + 1}">${k + 1}. ${s.h}</a>`).join('')}<a href="#${id}/quiz">確認理解</a></nav>${(TERMS[id] || []).length ? `<div class="tchips" aria-label="本章名詞"><span class="lbl">本章名詞</span>${TERMS[id].map((t, k) => `<button type="button" class="tchip" data-t="${k}">${t[0]}</button>`).join('')}</div>` : ''}
+<nav class="secnav" aria-label="本章小節">${c.sections.map((s, k) => `<a href="#${id}/${k + 1}">${k + 1}. ${s.h}</a>`).join('')}<a href="#${id}/quiz">確認理解</a>${c.exam ? `<a href="#${id}/exam">歷屆考題相似題</a>` : ''}</nav>${(TERMS[id] || []).length ? `<div class="tchips" aria-label="本章名詞"><span class="lbl">本章名詞</span>${TERMS[id].map((t, k) => `<button type="button" class="tchip" data-t="${k}">${t[0]}</button>`).join('')}</div>` : ''}
 ${c.sections.map((s, k) => `<section class="sec" id="sec-${k + 1}"><h2><span class="sn">${k + 1}</span>${s.h}</h2><div class="prose">${s.body}</div>${[].concat(s.w || []).map(w => `<div class="widget" data-w="${w}"></div>`).join('')}</section>`).join('')}
-<section class="sec" id="sec-quiz"><h2><span class="sn">✓</span>確認理解</h2><p class="mut small">答錯了沒關係：按「在圖上看」回到對應的圖，找出哪裡想錯。</p>${c.quiz.map((q, k) => `<div class="q" data-q="${k}"><p class="qt">${k + 1}. ${q.q}</p><div class="opts">${order(q, k).map(j => `<button class="opt" type="button" data-o="${j}">${q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('')}</section>
+<section class="sec" id="sec-quiz"><h2><span class="sn">✓</span>確認理解</h2><p class="mut small">答錯了沒關係：按「在圖上看」回到對應的圖，找出哪裡想錯。${lastSeen(id)}</p>${qblock(c.quiz, 'q')}</section>
+${c.exam ? `<section class="sec" id="sec-exam"><h2><span class="sn">考</span>歷屆考題相似題</h2><p class="mut small">依照中國醫藥、義守、慈濟大學歷屆試題的考法另外出的題目（化合物與數字已更換），每題標出參考的原題。</p>${qblock(c.exam, 'x')}</section>` : ''}
 <div class="foot"><button class="btn ${state.done[id] ? 'done' : ''}" type="button" id="doneBtn">${state.done[id] ? '已完成 ✓' : '標記為完成'}</button><nav class="pn">${prev ? `<a href="#${prev.id}"><small>上一章</small>${prev.title}</a>` : '<span></span>'}${next ? `<a href="#${next.id}" class="nx"><small>下一章</small>${next.title}</a>` : ''}</nav></div>`;
   for (const k in INST) delete INST[k];
   $$('.widget', $('#article')).forEach(w => { const n = w.dataset.w; try { const inst = W[n](w); if (!INST[n]) INST[n] = { inst, el: w }; } catch (e) { w.innerHTML = `<p class="note bad">互動圖載入失敗：${esc(e.message)}</p>`; console.error(e); } });
   const right = new Set();
   $$('.q', $('#article')).forEach(qe => {
-    const q = c.quiz[+qe.dataset.q], why = $('.why', qe);
+    const kind = qe.dataset.k, qi = +qe.dataset.q, q = (kind === 'x' ? c.exam : c.quiz)[qi], why = $('.why', qe);
+    let tries = 0;
     $$('.opt', qe).forEach(b => { b.onclick = () => {
       const ok = +b.dataset.o === q.a; b.classList.add(ok ? 'right' : 'wrong'); why.hidden = false;
+      logAnswer({ c: id, k: kind, i: qi, p: +b.dataset.o, ok: ok ? 1 : 0, n: ++tries });
       const demo = q.show && INST[q.show.w] ? '<button class="btn sm" type="button" data-show>在圖上看 ↑</button>' : '';
-      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}${demo}`; right.add(qe.dataset.q);
+      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}${demo}`; if (kind === 'q') right.add(qe.dataset.q);
         if (right.size === c.quiz.length && !state.done[id]) { setDone(id, true); markBtn(); } }
       else { b.disabled = true; why.className = 'why no'; why.innerHTML = `<b>再想想。</b>${demo ? '按下面的按鈕回到圖上看看。' : ''}${demo}`; }
       const sb = $('[data-show]', why); if (sb) sb.onclick = () => showOnChart(q.show);
@@ -4792,6 +4889,7 @@ function route(h) {
   if (c && shown === id && sec) { const t = document.getElementById(`sec-${sec}`); if (t) t.scrollIntoView({ block: 'start' }); return; }  // 同一章只捲動，保留互動圖狀態
   shown = c ? id : null;
   if (c) { renderChapter(id); renderTOC(id); document.title = `${c.title}｜後中化學`; }
+  else if (id === 'log') { renderLog(); renderTOC('log'); document.title = '練習紀錄｜後中化學'; }
   else { renderHome(); bindTree(); renderTOC(''); document.title = '後中化學｜學習階梯'; }
   $('#tocBox').classList.remove('open');
   const t = sec ? document.getElementById(`sec-${sec}`) : id === 'map' && document.getElementById('map');

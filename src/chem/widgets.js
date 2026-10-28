@@ -340,7 +340,7 @@ W.e1 = el => {
     const base = { Cb: { x: -0.7, y: 0, t: 'C' }, H: { x: -1.05, y: 1.0, t: 'H', hl: 1 }, b1: { x: -1.5, y: -0.45, t: 'H' }, b2: { x: -0.95, y: -0.95, t: 'H' } };
     const F0 = { atoms: { ...base, Ca: { x: 0.7, y: 0, t: 'C' }, Br: { x: 1.05, y: -1.0, t: 'Br', lp: [0, 270, 315] }, m1: { x: 1.55, y: 0.45, t: 'CH₃' }, m2: { x: 0.95, y: 0.95, t: 'CH₃' } },
       bonds: [['Cb', 'Ca', 's'], ['Cb', 'H', 's'], ['Cb', 'b1', 'w'], ['Cb', 'b2', 'h'], ['Ca', 'Br', 's'], ['Ca', 'm1', 'w'], ['Ca', 'm2', 'h']], arrows: [{ f: { b: ['Ca', 'Br'] }, t: { a: 'Br' }, bend: 0.7 }], notes: [{ x: 0, y: -2.0, t: '2-溴-2-甲基丙烷' }] };
-    const cat = { ...base, Ca: { x: 0.7, y: 0, t: 'C', c: '+' }, Br: { x: 1.8, y: -1.75, t: 'Br', c: '−', lp: [0, 90, 180, 270] }, m1: { x: 1.4, y: 0.75, t: 'CH₃' }, m2: { x: 1.4, y: -0.75, t: 'CH₃' } };
+    const cat = { ...base, Ca: { x: 0.7, y: 0, t: 'C', c: '+' }, Br: { x: 2.2, y: -1.3, t: 'Br', c: '−', lp: [0, 90, 180, 270] }, m1: { x: 1.4, y: 0.75, t: 'CH₃' }, m2: { x: 1.4, y: -0.75, t: 'CH₃' } };
     const cb = [['Cb', 'Ca', 's'], ['Cb', 'H', 's'], ['Cb', 'b1', 'w'], ['Cb', 'b2', 'h'], ['Ca', 'm1', 's'], ['Ca', 'm2', 's']];
     const F1 = { atoms: cat, bonds: cb };
     const F2 = { atoms: { ...cat, O: { x: -1.95, y: 2.15, t: 'H₂O', lp: [-52] } }, bonds: cb, arrows: [{ f: { lp: ['O', -52] }, t: { a: 'H' }, bend: -0.3 }, { f: { b: ['Cb', 'H'] }, t: { m: ['Cb', 'Ca'] }, bend: 0.5 }] };

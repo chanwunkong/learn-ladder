@@ -36,8 +36,8 @@ W.cname = el => {
     $('#cnQ', el).innerHTML = `<div class="qrow"><span class="qlab">方括號裡</span><span class="qbox">${chips(d.m, 1, r.ox, 'metal')}${d.lig.map(([t, n, c, dent]) => chips(t + (dent > 1 ? '（雙牙）' : ''), n, c, 'lig')).join('')}</span><span class="qsum">${sg(r.q)}</span></div>
 <div class="qrow"><span class="qlab">方括號外</span><span class="qbox">${d.out.length ? d.out.map(([t, n, c]) => chips(t, n, c, 'out')).join('') : '<span class="mut small">（沒有，整個是中性分子）</span>'}</span><span class="qsum">${sg(-r.q)}</span></div>
 <div class="qrow tot"><span class="qlab">全部加起來</span><span class="qbox"></span><span class="qsum">0</span></div>`;
-    $('#cnK', el).innerHTML = card('ox', `${d.m} 的氧化數`, sg(r.ox), `${sg(r.q)} − (${sg(r.ligQ)})`) + card('cn', '配位數', r.cn, '數方括號裡抓住金屬的手') + card('ion', '溶於水的粒子', r.ions, '錯離子 1 + 外界離子') + card('ag', '加過量 AgNO₃', `${r.agcl} AgCl`, '只有外界 Cl⁻ 會沉澱');
-    $('#cnN', el).innerHTML = `把每個離子想成帶電的小方塊：<b>整個化合物的電荷收支一定是 0</b>。方括號外的方塊決定錯離子帶多少電，再扣掉配位基的電荷，剩下的就是金屬的氧化數。<br>IUPAC 名稱：<b class="mono">${r.name}</b>`;
+    $('#cnK', el).innerHTML = card('ox', `${d.m} 的氧化數`, sg(r.ox), `${sg(r.q)} − (${sg(r.ligQ)})`) + card('cn', '配位數', r.cn, '方括號內和金屬鍵結的原子數') + card('ion', '溶於水的粒子', r.ions, '錯離子 1 + 外界離子') + card('ag', '加過量 AgNO₃', `${r.agcl} AgCl`, '只有外界 Cl⁻ 會沉澱');
+    $('#cnN', el).innerHTML = `<b>整個化合物的電荷總和為 0</b>：方括號外的離子決定錯離子的電荷，再減去配位基的電荷，就是金屬的氧化數。<br>IUPAC 名稱：<b class="mono">${r.name}</b>`;
     pressSeg(el, 'cnS', cur);
   }
   bindSeg(el, 'cnS', v => { cur = v; draw(); });
@@ -83,8 +83,8 @@ W.dsplit = el => {
     $('#dsR', el).value = st.c; $('#dsO', el).textContent = c < 0.05 ? '很遠' : c > 0.95 ? '貼近' : `${Math.round(c * 100)}%`;
     $('#dsF', el).innerHTML = `Δo ＝ ${Math.round(c * 100)}（任意單位）　　平衡：3 × (−0.4Δo) + 2 × (+0.6Δo) = ${fx(Math.abs(3 * -0.4 * c * 100 + 2 * 0.6 * c * 100), 0)}`;
     $('#dsN', el).innerHTML = c < 0.05 ? '配位基還很遠：五個 d 軌域能量一樣，畫在同一條線上。把滑桿往右拖，讓六個灰色的配位基沿著 x、y、z 軸靠近。'
-      : up ? `<b>${o[0]}</b> 的花瓣<b>正對著</b>軸上的配位基（灰色球），電子雲被負電排斥，能量<b>往上推</b>。這兩個軌域合稱 eg。`
-        : `<b>${o[0]}</b> 的花瓣<b>夾在兩軸中間</b>，閃開了配位基，能量<b>往下掉</b>。這三個軌域合稱 t₂g。`;
+      : up ? `<b>${o[0]}</b> 的瓣<b>沿著軸</b>，正對配位基（灰色球），受到排斥，能量<b>升高</b>。這兩個軌域合稱 eg。`
+        : `<b>${o[0]}</b> 的瓣<b>在兩軸之間</b>，不正對配位基，能量<b>降低</b>。這三個軌域合稱 t₂g。`;
     pressSeg(el, 'dsS', st.o);
   }
   $('#dsR', el).oninput = e => { st.c = +e.target.value; draw(); };
@@ -93,7 +93,7 @@ W.dsplit = el => {
   return { set(s) { Object.assign(st, s); draw(); } };
 };
 
-/* ===== 3. 爬樓梯還是擠一擠：高自旋與低自旋 ===== */
+/* ===== 3. 高自旋與低自旋 ===== */
 const SPINEX = [['[Cr(H₂O)₆]³⁺', 3, 0.7], ['[Fe(H₂O)₆]²⁺', 6, 0.5], ['[Fe(CN)₆]⁴⁻', 6, 1.7], ['[CoF₆]³⁻', 6, 0.7], ['[Co(NH₃)₆]³⁺', 6, 1.5], ['[Mn(CN)₆]⁴⁻', 5, 1.5], ['[Co(H₂O)₆]²⁺', 7, 0.5], ['[Ni(H₂O)₆]²⁺', 8, 0.7]];
 function spinFill(n, low) {   // 回傳 5 個格子（t₂g×3, eg×2）各放幾顆
   const ord = low ? [0, 1, 2, 0, 1, 2, 3, 4, 3, 4] : [0, 1, 2, 3, 4, 0, 1, 2, 3, 4], occ = [0, 0, 0, 0, 0];
@@ -104,7 +104,7 @@ const spinCost = (occ, g) => { const up = occ[3] + occ[4], pr = occ.filter(o => 
 W.spin = el => {
   const st = { n: 6, g: 0.5, ex: '[Fe(H₂O)₆]²⁺' };
   el.innerHTML = `<div class="w-row">${SPINEX.map(([t]) => `<button class="btn sm ghost" type="button" data-ex="${t}">${t}</button>`).join('')}</div>
-<div class="w-row"><button class="btn sm" type="button" data-n="-1">－ 拿走一顆電子</button><button class="btn sm pri" type="button" data-n="1">＋ 放一顆電子</button><label class="rng">樓梯高度 Δo（以成對能 P 為 1）<input type="range" id="spG" min="0.3" max="1.9" step="0.2"><output class="mono" id="spO"></output></label></div>
+<div class="w-row"><button class="btn sm" type="button" data-n="-1">－ 拿走一顆電子</button><button class="btn sm pri" type="button" data-n="1">＋ 放一顆電子</button><label class="rng">分裂能 Δo（以成對能 P 為 1）<input type="range" id="spG" min="0.3" max="1.9" step="0.2"><output class="mono" id="spO"></output></label></div>
 <div id="spD"></div><div class="bars pk spc" id="spB"></div><div class="cards" id="spK"></div><p class="note" id="spN"></p>`;
   function draw() {
     const hi = spinFill(st.n, false), lo = spinFill(st.n, true), ch = spinCost(hi, st.g), cl = spinCost(lo, st.g), low = cl.v < ch.v - 1e-9, occ = low ? lo : hi;
@@ -114,14 +114,14 @@ W.spin = el => {
       s += `<line class="lvl" x1="${x - 26}" x2="${x + 26}" y1="${sy[i]}" y2="${sy[i]}"/>`;
       const k = occ[i]; for (let j = 0; j < k; j++) { const bx = k === 2 ? x + (j ? 11 : -11) : x; s += `<circle class="eball${j ? ' dn' : ''}" cx="${bx}" cy="${sy[i] - 12}" r="9"/><text class="ebt" x="${bx}" y="${sy[i] - 8}" text-anchor="middle">${j ? '↓' : '↑'}</text>`; }
     });
-    s += `<path class="stairs" d="M480 ${yt}${Array.from({ length: 4 }, (_, i) => `H${488 + i * 10}V${yt - (yt - ye) * (i + 1) / 4}`).join('')}H${530}"/><text class="lab" x="540" y="${(yt + ye) / 2 + 4}">爬樓梯：Δo</text>`;
+    s += `<line class="conn" x1="466" x2="520" y1="${yt}" y2="${yt}"/><line class="conn" x1="431" x2="520" y1="${ye}" y2="${ye}"/><line class="dlt up" x1="515" x2="515" y1="${yt}" y2="${ye}"/><text class="lab" x="524" y="${(yt + ye) / 2 + 4}">Δo</text>`;
     s += `<text class="tk" x="370" y="${yt + 22}" text-anchor="middle">t₂g（下層 3 格）</text><text class="tk" x="370" y="${ye - 32}" text-anchor="middle">eg（上層 2 格）</text>`;
     $('#spD', el).innerHTML = `<svg class="en" style="max-width:600px;margin:auto" viewBox="230 30 400 170" role="img" aria-label="電子填入 d 軌域">${s}</svg>`;
     const U = 26, row = (nm, c, on) => `<div class="${on ? 'on' : ''}"><span>${nm}<small class="mono">${c.up}×${fx(st.g, 1)} + ${c.pr}×1 = ${fx(c.v, 1)}</small></span><span class="stk"><i class="ba up" style="width:${c.up * st.g * U}px"></i><i class="ba pr" style="width:${c.pr * U}px"></i></span></div>`;
-    $('#spB', el).innerHTML = row('高自旋：先上樓', ch, !low) + row('低自旋：先擠一擠', cl, low);
+    $('#spB', el).innerHTML = row('高自旋', ch, !low) + row('低自旋', cl, low);
     const unp = occ.filter(o => o === 1).length;
-    $('#spK', el).innerHTML = card('n', '電子數', `d${st.n}`) + card('u', '未成對電子 n', unp) + card('m', '磁性', unp ? '順磁（被磁鐵吸）' : '反磁') + card('mu', '磁矩 μ = √(n(n+2))', `${fx(Math.sqrt(unp * (unp + 2)), 2)} BM`, `√(${unp}×${unp + 2})`);
-    $('#spN', el).innerHTML = `長條圖就是公式：橘色＝上樓的電子數 × Δo，灰色＝成對數 × P。電子選<b>總長度較短</b>的那一種。${Math.abs(ch.v - cl.v) < 1e-9 ? `d${st.n} 兩種放法一樣，不用選。` : low ? '樓梯太高，寧可在下層擠一擠：<b>低自旋</b>。' : '樓梯很矮，上樓比擠在一起便宜：<b>高自旋</b>。'} 只有 d⁴～d⁷ 會出現兩種選擇。`;
+    $('#spK', el).innerHTML = card('n', '電子數', `d${st.n}`) + card('u', '未成對電子 n', unp) + card('m', '磁性', unp ? '順磁性' : '反磁性') + card('mu', '磁矩 μ = √(n(n+2))', `${fx(Math.sqrt(unp * (unp + 2)), 2)} BM`, `√(${unp}×${unp + 2})`);
+    $('#spN', el).innerHTML = `長條＝總能量：橘色為 eg 電子數 × Δo，灰色為成對數 × P。實際採取<b>總長度較短</b>的填法。${Math.abs(ch.v - cl.v) < 1e-9 ? `d${st.n} 兩種放法一樣，不用選。` : low ? 'Δo > P：<b>低自旋</b>。' : 'Δo < P：<b>高自旋</b>。'} 只有 d⁴～d⁷ 會出現兩種選擇。`;
     $('#spG', el).value = st.g; $('#spO', el).textContent = `${fx(st.g, 1)} P`;
     $('[data-n="-1"]', el).disabled = st.n <= 1; $('[data-n="1"]', el).disabled = st.n >= 10;
     $$('[data-ex]', el).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.ex === st.ex)));
@@ -133,18 +133,18 @@ W.spin = el => {
   return { set(s) { if (s.ex) { const e = SPINEX.find(x => x[0] === s.ex); Object.assign(st, { ex: e[0], n: e[1], g: e[2] }); } else Object.assign(st, s, { ex: '' }); draw(); } };
 };
 
-/* ===== 4. 吃掉一種顏色：Δ = hc/λ 與色輪 =====
+/* ===== 4. 吸收與互補色：Δ = hc/λ 與色輪 =====
    Cr³⁺ 八面體錯合物的 Δo（cm⁻¹，教科書常見值，四捨五入） */
 const CRL = [['Cl⁻', '[CrCl₆]³⁻', 13600], ['F⁻', '[CrF₆]³⁻', 15200], ['H₂O', '[Cr(H₂O)₆]³⁺', 17400], ['NH₃', '[Cr(NH₃)₆]³⁺', 21600], ['en', '[Cr(en)₃]³⁺', 21900], ['CN⁻', '[Cr(CN)₆]³⁻', 26600]];
 // 色輪：相對的兩色互為互補色。[名稱, 顏色, 波長下限, 上限]
 const WHEEL = [['紅', '#D0352B', 650, 760], ['橙', '#EE8A25', 590, 650], ['黃', '#F2D23A', 560, 590], ['綠', '#3BA55C', 490, 560], ['藍', '#2F6FD6', 430, 490], ['紫', '#7A45B5', 380, 430]];
 W.colorwheel = el => {
   let cur = 'H₂O';
-  el.innerHTML = `${seg('cwS', CRL.map(([l]) => [l, l]), cur)}<p class="small mut">按鈕由左到右是光譜化學序列：配位基的「推力」由弱到強。</p><div class="mrow" id="cwG"></div><p class="eq" id="cwF"></p><p class="note" id="cwN"></p>`;
+  el.innerHTML = `${seg('cwS', CRL.map(([l]) => [l, l]), cur)}<p class="small mut">按鈕由左到右是光譜化學序列：Δo 由小到大。</p><div class="mrow" id="cwG"></div><p class="eq" id="cwF"></p><p class="note" id="cwN"></p>`;
   function draw() {
     const [, f, cm] = CRL.find(x => x[0] === cur), E = cm * 0.01196, lam = 119600 / E, ai = WHEEL.findIndex(w => lam >= w[2] && lam < w[3]), si = ai < 0 ? -1 : (ai + 3) % 6;
     const xs = Array.from({ length: 81 }, (_, i) => 360 + i * 5);
-    const plot = chart({ w: 340, h: 250, x: [360, 760], y: [140, 340], xt: [400, 500, 600, 700], yt: [150, 200, 250, 300], xlab: '被吃掉的光的波長 λ（nm）', ylab: 'Δo（kJ/mol）', label: 'Δ 與波長' }, (X, Y) =>
+    const plot = chart({ w: 340, h: 250, x: [360, 760], y: [140, 340], xt: [400, 500, 600, 700], yt: [150, 200, 250, 300], xlab: '吸收光的波長 λ（nm）', ylab: 'Δo（kJ/mol）', label: 'Δ 與波長' }, (X, Y) =>
       `${WHEEL.map(w => `<rect x="${X(Math.max(360, w[2]))}" y="${Y(140) - 6}" width="${X(w[3]) - X(Math.max(360, w[2]))}" height="6" fill="${w[1]}"/>`).join('')}<path class="tline" d="${path(xs.map(x => [X(x), Y(119600 / x)]))}"/>`
       + `<line class="mk" x1="${X(lam)}" x2="${X(lam)}" y1="${Y(E)}" y2="${Y(140)}"/><line class="mk" x1="${X(360)}" x2="${X(lam)}" y1="${Y(E)}" y2="${Y(E)}"/><circle class="dot" cx="${X(lam)}" cy="${Y(E)}" r="7"/>`);
     const R = 92, r0 = 44, cx = 115, cy = 115, arc = (i, rr) => { const a = (-90 + i * 60) * Math.PI / 180; return [cx + Math.cos(a) * rr, cy + Math.sin(a) * rr]; };
@@ -154,7 +154,7 @@ W.colorwheel = el => {
     const wheel = `<svg class="ch" viewBox="0 0 230 230" role="img" aria-label="互補色色輪"><defs><marker id="wa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" class="ahp"/></marker></defs>${segs}<circle cx="${cx}" cy="${cy}" r="${r0 - 8}" fill="${si < 0 ? '#F4EFC8' : WHEEL[si][1]}" class="wsol"/>${cut}</svg>`;
     $('#cwG', el).innerHTML = `<figure class="wide">${plot}</figure><figure>${wheel}<figcaption>中間圓＝溶液看起來的顏色</figcaption></figure>`;
     $('#cwF', el).innerHTML = `Δo = hc/λ　→　λ = 119,600 ÷ Δo(kJ/mol) = 119,600 ÷ ${Math.round(E)} = <b>${Math.round(lam)} nm</b>`;
-    $('#cwN', el).innerHTML = `<b>${f}</b>：${ai < 0 ? '樓梯太高，要吃的是紫外光；可見光幾乎都穿過去，溶液顏色很淡。' : `電子跳上樓梯時吃掉<b>${WHEEL[ai][0]}光</b>（色輪上變暗的那一格），剩下的光混起來，就是它在色輪<b>正對面</b>的<b>${WHEEL[si][0]}色</b>。`} 配位基推力越強 → 樓梯 Δo 越高 → 曲線上的點往左上走 → 吃掉的光越偏藍紫。`;
+    $('#cwN', el).innerHTML = `<b>${f}</b>：${ai < 0 ? 'Δo 太大，吸收在紫外區；可見光幾乎全部透過，溶液顏色很淡。' : `吸收<b>${WHEEL[ai][0]}光</b>（色輪上變暗的一格），看到的是相對位置的<b>${WHEEL[si][0]}色</b>。`} 配位基場越強 → Δo 越大 → 曲線上的點往左上移 → 吸收波長越短。`;
     pressSeg(el, 'cwS', cur);
   }
   bindSeg(el, 'cwS', v => { cur = v; draw(); });

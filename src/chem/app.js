@@ -16,7 +16,7 @@ function setDone(id, v) {
   if (typeof CLOUD !== 'undefined') { CLOUD.push(); CLOUD.render(); }
 }
 function renderTOC(cur) {
-  $('#toc').innerHTML = UNITS.map(p => `<p class="toc-h">${p.part}</p><ol>${p.items.map(([u, t], i) => { const c = unitCh(u);
+  $('#toc').innerHTML = `<a href="#log" class="toc-log${cur === 'log' ? ' cur' : ''}">練習紀錄</a>` + UNITS.map(p => `<p class="toc-h">${p.part}</p><ol>${p.items.map(([u, t], i) => { const c = unitCh(u);
     return c ? `<li><a href="#${c.id}" class="${c.id === cur ? 'cur' : ''} ${state.done[c.id] ? 'done' : ''}"${c.id === cur ? ' aria-current="page"' : ''}><span class="num">${p.key === 'g' ? '普' : '有'}${i + 1}</span><span>${c.title}</span></a></li>`
       : `<li><span class="soon"><span class="num">${p.key === 'g' ? '普' : '有'}${i + 1}</span><span>${t}</span><small>製作中</small></span></li>`; }).join('')}</ol>`).join('');
 }
@@ -27,7 +27,7 @@ function renderHome() {
 <h1 class="hero">不背反應，<br>看懂原理就推得出來。</h1>
 <p class="lede">普通化學和有機化學，每一章都從直覺和圖像開始：先動手看到現象，再推出公式與規則，最後用在題目上。普化學到的酸鹼、平衡、熱力學，會直接拿來解釋有機反應。</p>
 ${(() => { const nx = CH.find(c => !state.done[c.id]) || CH[0], any = CH.some(c => state.done[c.id]);
-  return `<div class="cta"><a class="btn pri" href="#${nx.id}">${any ? '繼續：' : '從第一章開始：'}${nx.title}</a><a class="btn" href="#map">看課程地圖</a></div>`; })()}
+  return `<div class="cta"><a class="btn pri" href="#${nx.id}">${any ? '繼續：' : '從第一章開始：'}${nx.title}</a><a class="btn" href="#map">看課程地圖</a><a class="btn" href="#log">練習紀錄</a></div>`; })()}
 <h2 id="map">課程地圖</h2>
 <p class="mut tree-note">由下往上是先修順序：上面的章節用到下面的觀念。數字是三校歷屆試題中，<b>每份 50 題平均約考幾題</b>。點虛線框的是規劃中的章節。</p>
 <div class="seg" id="wview">${WVIEW.map((v, i) => `<button aria-pressed="${i === state.wv}" data-i="${i}">${v}</button>`).join('')}</div>
@@ -89,23 +89,72 @@ function bindTree() {
   if (!window.__treeRO) { window.__treeRO = new ResizeObserver(() => $('.trees') && treeLines()); window.__treeRO.observe($('#article')); }
 }
 
+/* ---------- 練習紀錄：每次作答存一筆（只存在這台裝置的瀏覽器） ----------
+   { t: 時間戳, c: 章 id, k: 'q' 章末題／'x' 相似題, i: 題號, p: 選的選項, ok: 1/0, n: 這次第幾次作答 } */
+const LOG = store.get('log', []);
+function logAnswer(e) { LOG.push({ t: Date.now(), ...e }); if (LOG.length > 5000) LOG.splice(0, LOG.length - 5000); store.set('log', LOG); }
+const qbank = (c, k) => (k === 'x' ? c.exam : c.quiz) || [];
+const strip = h => String(h).replace(/<[^>]+>/g, '');
+const dstr = t => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+const tstr = t => { const d = new Date(t); return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
+function qblock(list, kind) {
+  return list.map((q, k) => `<div class="q" data-k="${kind}" data-q="${k}">${q.src ? `<p class="qsrc">仿 ${q.src}</p>` : ''}<p class="qt">${k + 1}. ${q.q}</p><div class="opts">${order(q, k).map(j => `<button class="opt" type="button" data-o="${j}">${q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('');
+}
+// 把連續的作答併成「一題一次」：同一章、同一題、同一頁面瀏覽中，從第 1 次作答到答對為止
+function sessions(log = LOG) {
+  const out = [];
+  log.forEach(e => { const last = out.length && [...out].reverse().find(s => s.c === e.c && s.k === e.k && s.i === e.i && !s.closed);
+    if (e.n === 1 || !last) out.push({ t: e.t, c: e.c, k: e.k, i: e.i, tries: 1, ok: e.ok, first: e.ok, closed: !!e.ok, end: e.t });
+    else { last.tries++; last.end = e.t; if (e.ok) { last.ok = 1; last.closed = true; } } });
+  return out;
+}
+function lastSeen(id) {
+  const ss = sessions().filter(s => s.c === id && s.k === 'q'); if (!ss.length) return '';
+  const d = dstr(ss[ss.length - 1].t), day = ss.filter(s => dstr(s.t) === d);
+  return `<br>上次練習 ${d}：${day.length} 題，第一次就答對 ${day.filter(s => s.first).length} 題。<a href="#log">看練習紀錄</a>`;
+}
+function renderLog() {
+  const ss = sessions(), days = [...new Set(ss.map(s => dstr(s.t)))].sort().reverse(), pct = (a, b) => (b ? `${Math.round(100 * a / b)}%` : '—');
+  const byCh = CH.map(c => { const x = ss.filter(s => s.c === c.id); return { c, n: x.length, f: x.filter(s => s.first).length, last: x.length ? dstr(x[x.length - 1].t) : '' }; }).filter(r => r.n);
+  const res = s => (s.first ? '<span class="ok">✓ 第一次答對</span>' : s.ok ? `<span class="warn">第 ${s.tries} 次答對</span>` : `<span class="bad">✗ 未答對</span>`);
+  $('#article').innerHTML = `<p class="eyebrow">後中化學</p><h1>練習紀錄</h1><p class="lede">每一次作答都會自動記錄：日期時間、章節、題目、作答次數與結果。紀錄存在這台裝置的瀏覽器中。</p>
+${ss.length ? `<div class="cards">${card('n', '練習題次', ss.length)}${card('f', '第一次就答對', pct(ss.filter(s => s.first).length, ss.length))}${card('d', '練習天數', days.length)}${card('l', '最近一次', `${dstr(ss[ss.length - 1].t)} ${tstr(ss[ss.length - 1].t)}`)}</div>
+<h2>各章</h2><table class="tbl"><thead><tr><th>章節</th><th>題次</th><th>第一次就答對</th><th>最近練習</th></tr></thead><tbody>${byCh.map(r => `<tr><td><a href="#${r.c.id}">${r.c.title}</a></td><td>${r.n}</td><td>${pct(r.f, r.n)}</td><td>${r.last}</td></tr>`).join('')}</tbody></table>
+<h2>每日紀錄</h2>${days.map((d, k) => { const x = ss.filter(s => dstr(s.t) === d);
+  return `<details class="logday"${k ? '' : ' open'}><summary><b>${d}</b>　${x.length} 題，第一次就答對 ${pct(x.filter(s => s.first).length, x.length)}</summary><table class="tbl"><thead><tr><th>時間</th><th>章節</th><th>題目</th><th>結果</th></tr></thead><tbody>${x.map(s => { const c = chOf(s.c), q = c && qbank(c, s.k)[s.i];
+    return `<tr><td class="mono">${tstr(s.t)}</td><td>${c ? `<a href="#${c.id}/${s.k === 'x' ? 'exam' : 'quiz'}">${c.title.split('：')[0]}</a>` : s.c}${s.k === 'x' ? '<small class="mut">（相似題）</small>' : ''}</td><td>${q ? strip(q.q).slice(0, 48) : '（題目已更新）'}</td><td>${res(s)}</td></tr>`; }).join('')}</tbody></table></details>`; }).join('')}
+<div class="w-row"><button class="btn sm" type="button" id="logCsv">下載 CSV</button><button class="btn sm ghost" type="button" id="logClr">清除全部紀錄</button></div>`
+  : '<p class="note">還沒有紀錄。到任何一章的「確認理解」或「歷屆考題相似題」作答，就會自動記在這裡。</p>'}`;
+  if (!ss.length) return;
+  $('#logCsv').onclick = () => {
+    const rows = [['日期', '時間', '章節', '類型', '題號', '題目', '作答次數', '第一次就答對', '最後答對']].concat(ss.map(s => { const c = chOf(s.c), q = c && qbank(c, s.k)[s.i];
+      return [dstr(s.t), tstr(s.t), c ? c.title : s.c, s.k === 'x' ? '相似題' : '章末題', s.i + 1, q ? strip(q.q) : '', s.tries, s.first ? '是' : '否', s.ok ? '是' : '否']; }));
+    const csv = '\ufeff' + rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = `化學練習紀錄-${dstr(Date.now())}.csv`; a.click();
+  };
+  $('#logClr').onclick = () => { if (confirm('確定要清除這台裝置上的全部練習紀錄？')) { LOG.length = 0; store.set('log', LOG); renderLog(); } };
+}
+
 const INST = {};   // 目前頁面上各互動圖的實例（練習題「在圖上看」用）
 function renderChapter(id) {
   const c = chOf(id), i = CH.indexOf(c), prev = CH[i - 1], next = CH[i + 1];
   $('#article').innerHTML = `<p class="eyebrow">${UNITS.find(p => p.items.some(x => x[0] === c.unit)).part} · ${unitName(c.unit)}</p><h1>${c.title}</h1><p class="lede">${c.lede}</p>
-<nav class="secnav" aria-label="本章小節">${c.sections.map((s, k) => `<a href="#${id}/${k + 1}">${k + 1}. ${s.h}</a>`).join('')}<a href="#${id}/quiz">確認理解</a></nav>${(TERMS[id] || []).length ? `<div class="tchips" aria-label="本章名詞"><span class="lbl">本章名詞</span>${TERMS[id].map((t, k) => `<button type="button" class="tchip" data-t="${k}">${t[0]}</button>`).join('')}</div>` : ''}
+<nav class="secnav" aria-label="本章小節">${c.sections.map((s, k) => `<a href="#${id}/${k + 1}">${k + 1}. ${s.h}</a>`).join('')}<a href="#${id}/quiz">確認理解</a>${c.exam ? `<a href="#${id}/exam">歷屆考題相似題</a>` : ''}</nav>${(TERMS[id] || []).length ? `<div class="tchips" aria-label="本章名詞"><span class="lbl">本章名詞</span>${TERMS[id].map((t, k) => `<button type="button" class="tchip" data-t="${k}">${t[0]}</button>`).join('')}</div>` : ''}
 ${c.sections.map((s, k) => `<section class="sec" id="sec-${k + 1}"><h2><span class="sn">${k + 1}</span>${s.h}</h2><div class="prose">${s.body}</div>${[].concat(s.w || []).map(w => `<div class="widget" data-w="${w}"></div>`).join('')}</section>`).join('')}
-<section class="sec" id="sec-quiz"><h2><span class="sn">✓</span>確認理解</h2><p class="mut small">答錯了沒關係：按「在圖上看」回到對應的圖，找出哪裡想錯。</p>${c.quiz.map((q, k) => `<div class="q" data-q="${k}"><p class="qt">${k + 1}. ${q.q}</p><div class="opts">${order(q, k).map(j => `<button class="opt" type="button" data-o="${j}">${q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('')}</section>
+<section class="sec" id="sec-quiz"><h2><span class="sn">✓</span>確認理解</h2><p class="mut small">答錯了沒關係：按「在圖上看」回到對應的圖，找出哪裡想錯。${lastSeen(id)}</p>${qblock(c.quiz, 'q')}</section>
+${c.exam ? `<section class="sec" id="sec-exam"><h2><span class="sn">考</span>歷屆考題相似題</h2><p class="mut small">依照中國醫藥、義守、慈濟大學歷屆試題的考法另外出的題目（化合物與數字已更換），每題標出參考的原題。</p>${qblock(c.exam, 'x')}</section>` : ''}
 <div class="foot"><button class="btn ${state.done[id] ? 'done' : ''}" type="button" id="doneBtn">${state.done[id] ? '已完成 ✓' : '標記為完成'}</button><nav class="pn">${prev ? `<a href="#${prev.id}"><small>上一章</small>${prev.title}</a>` : '<span></span>'}${next ? `<a href="#${next.id}" class="nx"><small>下一章</small>${next.title}</a>` : ''}</nav></div>`;
   for (const k in INST) delete INST[k];
   $$('.widget', $('#article')).forEach(w => { const n = w.dataset.w; try { const inst = W[n](w); if (!INST[n]) INST[n] = { inst, el: w }; } catch (e) { w.innerHTML = `<p class="note bad">互動圖載入失敗：${esc(e.message)}</p>`; console.error(e); } });
   const right = new Set();
   $$('.q', $('#article')).forEach(qe => {
-    const q = c.quiz[+qe.dataset.q], why = $('.why', qe);
+    const kind = qe.dataset.k, qi = +qe.dataset.q, q = (kind === 'x' ? c.exam : c.quiz)[qi], why = $('.why', qe);
+    let tries = 0;
     $$('.opt', qe).forEach(b => { b.onclick = () => {
       const ok = +b.dataset.o === q.a; b.classList.add(ok ? 'right' : 'wrong'); why.hidden = false;
+      logAnswer({ c: id, k: kind, i: qi, p: +b.dataset.o, ok: ok ? 1 : 0, n: ++tries });
       const demo = q.show && INST[q.show.w] ? '<button class="btn sm" type="button" data-show>在圖上看 ↑</button>' : '';
-      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}${demo}`; right.add(qe.dataset.q);
+      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}${demo}`; if (kind === 'q') right.add(qe.dataset.q);
         if (right.size === c.quiz.length && !state.done[id]) { setDone(id, true); markBtn(); } }
       else { b.disabled = true; why.className = 'why no'; why.innerHTML = `<b>再想想。</b>${demo ? '按下面的按鈕回到圖上看看。' : ''}${demo}`; }
       const sb = $('[data-show]', why); if (sb) sb.onclick = () => showOnChart(q.show);
@@ -153,6 +202,7 @@ function route(h) {
   if (c && shown === id && sec) { const t = document.getElementById(`sec-${sec}`); if (t) t.scrollIntoView({ block: 'start' }); return; }  // 同一章只捲動，保留互動圖狀態
   shown = c ? id : null;
   if (c) { renderChapter(id); renderTOC(id); document.title = `${c.title}｜後中化學`; }
+  else if (id === 'log') { renderLog(); renderTOC('log'); document.title = '練習紀錄｜後中化學'; }
   else { renderHome(); bindTree(); renderTOC(''); document.title = '後中化學｜學習階梯'; }
   $('#tocBox').classList.remove('open');
   const t = sec ? document.getElementById(`sec-${sec}`) : id === 'map' && document.getElementById('map');
