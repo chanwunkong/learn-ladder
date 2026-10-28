@@ -25,10 +25,10 @@ window.__errs = []; addEventListener('error', e => __errs.push(e.message)); cons
     rep.widgets++;
     for (const b of [...w.querySelectorAll('.seg button')]) {
       b.click(); await sleep(5); check(w, `［${b.textContent.trim().slice(0, 10)}］`);
-      for (let k = 0; k < 6; k++) { const nx = w.querySelector('.mech-ctl [data-m="1"]'); if (!nx || nx.disabled) break; nx.click(); await sleep(950); rep.frames++; check(w, `［${b.textContent.trim().slice(0, 10)} 第${k + 2}步］`); }
+      for (let k = 0; k < 6; k++) { const nx = w.querySelector('.mech-ctl [data-m="1"]'); if (!nx || nx.disabled) break; nx.click(); await sleep(1300); rep.frames++; check(w, `［${b.textContent.trim().slice(0, 10)} 第${k + 2}步］`); }
     }
     for (const b of [...w.querySelectorAll('button.btn:not([data-m])')]) { b.click(); await sleep(5); check(w, `［${b.textContent.trim().slice(0, 10)}］`); }
-    if (!w.querySelector('.seg button')) { const z = w.querySelector('.mech-ctl [data-m="0"]'); if (z) z.click(); for (let k = 0; k < 6; k++) { const nx = w.querySelector('.mech-ctl [data-m="1"]'); if (!nx || nx.disabled) break; nx.click(); await sleep(950); rep.frames++; check(w, `［第${k + 2}步］`); } }
+    if (!w.querySelector('.seg button')) { const z = w.querySelector('.mech-ctl [data-m="0"]'); if (z) z.click(); for (let k = 0; k < 6; k++) { const nx = w.querySelector('.mech-ctl [data-m="1"]'); if (!nx || nx.disabled) break; nx.click(); await sleep(1300); rep.frames++; check(w, `［第${k + 2}步］`); } }
     for (const r of w.querySelectorAll('input[type=range]')) for (const v of [r.min, r.max, (+r.min + +r.max) / 2]) { r.value = v; fire(r, 'input'); }
     for (const s of w.querySelectorAll('select')) for (const o of [...s.options]) { s.value = o.value; fire(s, 'change'); }
     for (const c of w.querySelectorAll('input[type=checkbox]')) { c.click(); c.click(); }
