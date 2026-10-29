@@ -1593,27 +1593,41 @@ CH.push({
   id: 'biomol', unit: 'o12', title: '生物分子與合成策略',
   lede: '醣、蛋白質、脂質、核酸，都是前面學過的官能基與反應在生物體內的應用：半縮醛、醯胺、酯、Henderson–Hasselbalch。最後一節把整門課串起來：怎麼設計一條合成路線。',
   sections: [
-    { h: '醣類：分子內的半縮醛', w: 'sugar', body: `
+    { h: '醣為什麼是環狀的？', w: ['sugar', 'mutarot'], body: `
 <p>醣是多羥基醛或多羥基酮。葡萄糖在水中幾乎全部以<b>環狀</b>存在：C5 的 OH 攻擊 C1 的醛基，形成六元環的半縮醛（醛酮一章的親核加成）。</p>
 <ul><li><b>D／L</b>：費雪投影中，離羰基最遠的掌性碳（葡萄糖的 C5）OH 在右為 D。天然醣幾乎都是 D 型。</li>
 <li><b>α／β 變旋異構物</b>：環化時 C1 變成新的掌性中心。</li>
 <li><b>醣苷鍵</b>：半縮醛的 OH 和另一個醇形成縮醛，就是雙醣、多醣之間的連接。縮醛在鹼中穩定、在酸中水解。</li>
-<li><b>還原醣</b>：有游離半縮醛（能打開成醛）的醣，能還原多侖試劑或本氏液。蔗糖的兩個變旋碳都用在醣苷鍵上，所以不是還原醣。</li></ul>` },
-    { h: '胺基酸與蛋白質', w: 'aa', body: `
+<li><b>還原醣</b>：有游離半縮醛（能打開成醛）的醣，能還原多侖試劑或本氏液。蔗糖的兩個變旋碳都用在醣苷鍵上，所以不是還原醣。</li>
+<li><b>變旋現象</b>：第二張圖拉動 α／β 的比例，看平衡時的旋光度。</li></ul>
+<p>環狀葡萄糖（哌喃糖）有 5 個掌性碳（C1–C5），開鏈形式只有 4 個（C2–C5）。核糖（開鏈）有 3 個掌性碳。醛糖的碳鏈可以加長或縮短：基利亞尼–費雪合成在 C1 加一個碳（得到一對 C2 差向異構物）；佛爾降解移除 C1，所以 D-半乳糖與 D-塔羅糖（C2 差向異構物）降解後都得到 D-來蘇糖。</p>` },
+    { h: '胺基酸的電荷怎麼隨 pH 改變？', w: 'aa', body: `
 <p>胺基酸有 α-胺基與 α-羧基，在生理 pH 下以<b>兩性離子</b>存在（胺類一章）。側鏈決定胺基酸的性質：非極性、極性、酸性（Asp、Glu）、鹼性（Lys、Arg、His）。</p>
 <p>每個可解離基團都是一個酸鹼平衡，整個分子的電荷隨 pH 改變。淨電荷為零的 pH 稱為<b>等電點 pI</b>：</p>
 <ul><li>中性胺基酸：pI = (pKa₁ + pKa₂) ÷ 2；</li><li>酸性胺基酸：取兩個羧基 pKa 的平均；鹼性胺基酸：取兩個胺基 pKa 的平均。</li></ul>
 <p>胺基酸以<b>醯胺鍵</b>（胜肽鍵）相連成蛋白質。醯胺的共振使胜肽鍵平面且不能旋轉（結構一章），這限制了蛋白質主鏈的形狀，進而決定 α 螺旋、β 摺板等二級結構（由氫鍵穩定）。除了甘胺酸，天然胺基酸的 α 碳都是掌性中心，幾乎都是 L 型（多數為 S 構型；半胱胺酸因含 S 而為 R）。</p>` },
-    { h: '脂質與核酸', body: `
+    { h: '雙醣與多醣怎麼區分？', w: ['disac', 'sugarrel'], body: `
+<p>醣苷鍵的位置（1→4、1→6）與方向（α、β）決定了醣的性質。第一張圖比較常見的雙醣與多醣；第二張圖比較兩個單醣的費雪投影，判斷它們是鏡像、差向還是其他非鏡像異構物。例如 D-葡萄糖與 D-半乳糖是 C4 差向異構物，D-葡萄糖與 D-甘露糖是 C2 差向異構物。</p>` },
+    { h: '胜肽怎麼定序？蛋白質結構靠什麼維持？', body: `
+<ul><li><b>寫法</b>：胜肽從 <b>N 端</b>（游離 –NH₃⁺）寫到 <b>C 端</b>（游離 –COO⁻），例如 Gly–Ala–Phe。催產素是含一個雙硫鍵的九胜肽。</li>
+<li><b>艾德曼降解</b>：苯基異硫氰酸酯（PITC）只和 N 端的胺基反應，切下第一個胺基酸成為苯基硫乙內醯脲（PTH）衍生物，其餘胜肽不受影響，重複即可逐一定序。</li>
+<li><b>胜肽合成</b>：用 DCC 等偶合劑活化羧基形成醯胺鍵，胺基先用 Boc 或 Fmoc 保護。</li>
+<li><b>檢驗</b>：茚三酮與 α-胺基酸加熱生成紫色產物（脯胺酸是二級胺，呈黃色）。</li>
+<li><b>結構層次</b>：一級結構是胺基酸序列（以胜肽鍵相連）；二級結構（α 螺旋、β 摺板）由主鏈 C=O 與 N–H 之間的<b>氫鍵</b>維持，α 螺旋中每個 C=O 和往後第 4 個胺基酸的 N–H 形成氫鍵；三級結構由側鏈之間的作用維持，其中<b>雙硫鍵</b>是共價鍵，最強；四級結構是多條鏈的組合。</li>
+<li>甘胺酸的側鏈是 H，是唯一沒有掌性的胺基酸；脯胺酸的胺基接在環上（二級胺）。</li></ul>` },
+    { h: '脂質、萜類與核酸有什麼結構特徵？', w: 'dnaseq', body: `
 <p><b>脂質</b>：</p>
 <ul><li><b>三酸甘油酯</b>（油脂）是甘油與三個脂肪酸形成的<b>酯</b>。鹼性水解（皂化）得到肥皂（羧酸鈉）與甘油（羧酸衍生物一章）。</li>
 <li>飽和脂肪酸的長鏈可以緊密排列，熔點高（動物脂肪在室溫是固體）；不飽和脂肪酸的<b>順式</b>雙鍵讓鏈彎曲，排列鬆散，熔點低（植物油是液體）。部分氫化產生的反式脂肪則又能緊密排列。</li>
 <li><b>磷脂</b>有親水的頭（磷酸與胺）和疏水的尾，在水中自動排成雙層膜：細胞膜的基礎。</li>
-<li><b>類固醇</b>（膽固醇、性激素、皮質醇）都有相同的四環骨架。</li></ul>
+<li><b>類固醇</b>（膽固醇、性激素、皮質醇）都有相同的四環骨架。</li>
+<li><b>萜類</b>由五碳的異戊二烯單元首尾相接：單萜 C₁₀（薄荷醇、樟腦、檸檬烯）、倍半萜 C₁₅（法尼醇，3 個單元）、二萜 C₂₀（視網醇／維生素 A）、三萜 C₃₀（角鯊烯，類固醇的前驅物）。</li>
+<li><b>花生四烯酸</b> C₂₀H₃₂O₂ 是前列腺素的前驅物：不飽和度 5，其中 1 個是 C=O，所以有 4 個 C=C。</li></ul>
 <p><b>核酸</b>：</p>
 <ul><li>核苷酸 = 含氮鹼基 + 五碳醣（DNA 是去氧核糖、RNA 是核糖）+ 磷酸；核苷酸之間以<b>磷酸二酯鍵</b>相連。</li>
 <li>DNA 雙股以鹼基之間的<b>氫鍵</b>配對：A–T 兩個氫鍵、G–C 三個氫鍵，所以 G–C 含量高的 DNA 較難解開。</li>
-<li>嘌呤（A、G）與嘧啶（C、T、U）都是芳香雜環（芳香族一章）。</li></ul>` },
+<li>嘌呤（A、G）與嘧啶（C、T、U）都是芳香雜環（芳香族一章）。U 只在 RNA、T 只在 DNA。DNA 由四種鹼基組成，是掌性分子（去氧核糖有掌性中心）。核糖體約由 60% rRNA 與 40% 蛋白質組成。</li></ul>
+<p>下圖輸入一段 DNA 序列，看互補股與氫鍵數。</p>` },
     { h: '合成策略：從產物往回推', w: 'synth', body: `
 <p>合成題要從<b>目標分子往回推</b>（逆合成分析）：問自己「這個官能基可以從什麼做出來？」「這個 C–C 鍵可以用什麼反應接上？」一步步拆到簡單的起始物。</p>
 <p>常用的工具箱，正是前面各章的反應：</p>
@@ -1637,6 +1651,62 @@ CH.push({
       why: '氫鍵數目不同，所以 G–C 比例高的 DNA 熔解溫度較高。' },
     { q: '從苯合成間溴硝基苯，正確的步驟順序是？', o: ['先硝化，再溴化', '先溴化，再硝化', '同時加入 HNO₃ 與 Br₂', '順序沒有影響'], a: 0,
       why: '硝基是間位定位基；若先溴化，Br 是鄰對位定位基，會得到鄰、對位產物。', show: { w: 'synth', set: { i: 0 } } },
+  ],
+  exam: [
+    { src: '仿 中國醫 115 第 27 題', q: '下列何者不含醣類結構？', o: ['膽固醇', 'β-環糊精', '澱粉', '玻尿酸'], a: 0,
+      why: '玻尿酸是由醣醛酸與胺基醣組成的多醣。', show: { w: 'disac', set: { d: 'cyc' } } },
+    { src: '仿 中國醫 115 第 39 題', q: 'RNA 比 DNA 容易水解，主要原因是？', o: ['核糖的 2′-OH 可以攻擊相鄰的磷酸二酯鍵', 'RNA 含 U', 'RNA 是單股', 'RNA 分子較小'], a: 0,
+      why: '分子內的親核基加速水解。', show: { w: 'dnaseq', set: {} } },
+    { src: '仿 慈濟 115 第 46 題', q: 'α-D-葡萄糖與 α-D-半乳糖的關係是？', o: ['C4 差向異構物', '鏡像異構物', '變旋異構物', '構造異構物'], a: 0,
+      why: '只有 C4 的構型不同。', show: { w: 'sugarrel', set: { a: 'glc', b: 'gal' } } },
+    { src: '仿 中國醫 114 第 14 題', q: '下列鹼基何者只存在於 RNA 中？', o: ['尿嘧啶', '胞嘧啶', '腺嘌呤', '胸腺嘧啶'], a: 0,
+      why: 'RNA 用 U 取代 T。' },
+    { src: '仿 中國醫 114 第 15 題', q: '葡萄糖有 5 個 OH，乳糖分子有幾個 OH？', o: ['8', '10', '9', '5'], a: 0,
+      why: '兩個 OH 合成醣苷鍵的 O 橋。', show: { w: 'disac', set: { d: 'lac' } } },
+    { src: '仿 中國醫 114 第 34 題', q: '蛋白質 α 螺旋主要靠什麼維持？', o: ['主鏈 C=O 與 N–H 之間的氫鍵', '雙硫鍵', '離子鍵', '疏水作用'], a: 0,
+      why: '第 i 個殘基的 C=O 與第 i + 4 個的 N–H。' },
+    { src: '仿 慈濟 114 第 26 題', q: '脯胺酸在 pH 7.4 的主要形式是？', o: ['兩性離子（–NH₂⁺– 與 –COO⁻）', '全中性', '只有 –COOH', '帶 −2'], a: 0,
+      why: 'pH 介於兩個 pKa 之間。', show: { w: 'aa', set: { a: 'gly', pH: 7.4 } } },
+    { src: '仿 慈濟 113 第 3 題', q: '下列鹼基配對何者的氫鍵作用較強？', o: ['G–C', 'A–T', 'A–U', '一樣強'], a: 0,
+      why: 'G–C 三個氫鍵。', show: { w: 'dnaseq', set: { s: 'GGCCGC' } } },
+    { src: '仿 慈濟 113 第 46 題', q: '關於纖維素，何者正確？', o: ['與澱粉的單體相同，以 β(1→4) 鍵結', '以 α(1→4) 鍵結', '人體可以消化', '是還原醣的雙醣'], a: 0,
+      why: 'β 鍵讓鏈伸直，人體沒有對應的酶。', show: { w: 'disac', set: { d: 'cell' } } },
+    { src: '仿 中國醫 112 第 13 題', q: '醣類水解的產物，何者錯誤？', o: ['麥芽糖 → 葡萄糖 + 果糖', '乳糖 → 葡萄糖 + 半乳糖', '蔗糖 → 葡萄糖 + 果糖', '澱粉 → 葡萄糖'], a: 0,
+      why: '麥芽糖由兩個葡萄糖組成。', show: { w: 'disac', set: { d: 'mal' } } },
+    { src: '仿 義守 112 第 26 題', q: '下列何者不屬於單萜類？', o: ['視網醇（維生素 A）', '薄荷醇', '樟腦', '檸檬烯'], a: 0,
+      why: '視網醇有 20 個碳，是二萜。' },
+    { src: '仿 義守 112 第 38 題', q: '中藥中的配醣體，結構特徵是？', o: ['醣的半縮醛 OH 與另一分子形成縮醛', '醛與醇的混合物', '醣與胺形成醯胺', '醣的酯'], a: 0,
+      why: '醣苷鍵是縮醛。', show: { w: 'disac', set: { d: 'suc' } } },
+    { src: '仿 義守 112 第 44 題', q: '哪兩種醛糖經佛爾降解（移除 C1）後都得到 D-來蘇糖？', o: ['D-半乳糖與 D-塔羅糖', 'D-葡萄糖與 D-甘露糖', 'D-阿洛糖與 D-葡萄糖', 'D-葡萄糖與 D-半乳糖'], a: 0,
+      why: '移除 C1 後 C2 的立體消失，所以一對 C2 差向異構物得到同一個產物。', show: { w: 'sugarrel', set: { a: 'gal', b: 'tal' } } },
+    { src: '仿 義守 111 第 19 題', q: '開鏈的 D-核糖有幾個掌性中心？', o: ['3', '4', '2', '5'], a: 0,
+      why: 'C2、C3、C4。' },
+    { src: '仿 義守 111 第 41 題', q: 'α-與 β-D-葡萄糖的比旋光度分別為 +112° 與 +19°，平衡溶液為 +50°。β 型約佔？', o: ['67%', '33%', '50%', '75%'], a: 0,
+      why: '112(1 − x) + 19x = 50 → x ≈ 0.67。', show: { w: 'mutarot', set: { b: 67 } } },
+    { src: '仿 義守 110 第 21 題', q: '維持蛋白質三級結構的作用力中，何者最強？', o: ['雙硫鍵', '氫鍵', '疏水作用', '凡得瓦力'], a: 0,
+      why: '雙硫鍵是共價鍵。' },
+    { src: '仿 義守 110 第 23 題', q: '天門冬胺酸的 pKa 為 1.88、3.65、9.60，等電點約為？', o: ['2.8', '5.7', '6.6', '9.6'], a: 0,
+      why: '取兩個羧基 pKa 的平均。', show: { w: 'aa', set: { a: 'asp', pH: 2.77 } } },
+    { src: '仿 義守 110 第 36 題', q: '三胜肽與苯基異硫氰酸酯反應後切下的是？', o: ['N 端胺基酸的 PTH 衍生物', 'C 端胺基酸', '中間的胺基酸', '整條胜肽'], a: 0,
+      why: '艾德曼降解只作用在 N 端。' },
+    { src: '仿 慈濟 110 第 9 題', q: '離胺酸（pKa 2.2、9.0、10.5）在 pH 由 1 升到 12 的過程中，淨電荷依序為？', o: ['+2 → +1 → 0 → −1', '+1 → 0 → −1 → −2', '0 → −1 → −2 → −3', '+2 → 0 → −2'], a: 0,
+      why: '依序失去 COOH、α-NH₃⁺、側鏈 NH₃⁺ 的質子。', show: { w: 'aa', set: { a: 'lys', pH: 7 } } },
+    { src: '仿 中國醫 108 第 27 題', q: 'DNA 雙股中，氫鍵形成在哪兩個鹼基之間？', o: ['腺嘌呤與胸腺嘧啶', '腺嘌呤與鳥嘌呤', '胞嘧啶與胸腺嘧啶', '鳥嘌呤與尿嘧啶'], a: 0,
+      why: 'A–T、G–C。' },
+    { src: '仿 義守 108 第 2 題', q: '丙胺酸的 Ka₁ = 5.0 × 10⁻³、Ka₂ = 2.0 × 10⁻¹⁰，等電點約為？', o: ['6.0', '2.3', '9.7', '7.0'], a: 0,
+      why: 'pKa₁ = 2.30、pKa₂ = 9.70，平均 6.0。', show: { w: 'aa', set: { a: 'ala', pH: 6.0 } } },
+    { src: '仿 慈濟 108 第 20 題', q: '環狀葡萄糖分子有幾個掌性碳？', o: ['5', '4', '6', '3'], a: 0,
+      why: '環化後 C1 也變成掌性中心。', show: { w: 'sugar', set: {} } },
+    { src: '仿 慈濟 108 第 50 題', q: '麩胺酸的 pKa 為 2.2、4.3、9.7，等電點約為？', o: ['3.25', '6.95', '5.4', '9.7'], a: 0,
+      why: '酸性胺基酸取兩個羧基 pKa 的平均。', show: { w: 'aa', set: { a: 'glu', pH: 3.2 } } },
+    { src: '仿 義守 107 第 32 題', q: '下列何種胺基酸沒有掌性？', o: ['甘胺酸', '丙胺酸', '離胺酸', '纈胺酸'], a: 0,
+      why: 'α 碳上接兩個 H。' },
+    { src: '仿 義守 106 第 37 題', q: 'DNA 序列 5′-ATGC-3′ 的互補股（5′→3′）是？', o: ['GCAT', 'TACG', 'ATGC', 'CGTA'], a: 0,
+      why: '互補為 3′-TACG-5′，由 5′ 讀為 GCAT。', show: { w: 'dnaseq', set: { s: 'ATGC' } } },
+    { src: '仿 義守 106 第 30 題', q: '三酸甘油酯可以由哪兩種化合物製備？', o: ['羧酸與醇（甘油）', '羧酸與胺', '醇與醛', '醇與酮'], a: 0,
+      why: '是甘油與三個脂肪酸的酯。' },
+    { src: '仿 義守 106 第 32 題', q: '花生四烯酸 C₂₀H₃₂O₂ 是非環狀羧酸，含有幾個 C=C？', o: ['4', '5', '3', '6'], a: 0,
+      why: '不飽和度 5，扣掉 C=O。' },
   ],
 });
 
@@ -3968,6 +4038,8 @@ const TERMS = {
     ['不飽和度', '(2C + 2 + N − H − X) ÷ 2；每個環或雙鍵算 1。'],
   ],
   'biomol': [
+    ['差向異構物', '只有一個掌性碳構型不同的非鏡像異構物，例如葡萄糖與半乳糖（C4）。', { w: 'sugarrel', set: { a: 'glc', b: 'gal' } }],
+    ['變旋現象', 'α 與 β 型醣在水中互變，旋光度逐漸趨於定值。', { w: 'mutarot', set: { b: 64 } }],
     ['變旋異構物', '醣環化時 C1 新生成的掌性中心造成的 α、β 兩種異構物。', { w: 'sugar', set: { ab: 'a' } }],
     ['醣苷鍵', '半縮醛的 OH 與另一個醇形成的縮醛鍵，連接醣分子。'],
     ['還原醣', '有游離半縮醛、能打開成醛的醣，能還原本氏液。'],
@@ -5592,6 +5664,87 @@ W.isoavg = el => {
   return { set(s2) { cur = s2.e || cur; draw(); } };
 };
 
+/* ---------- 後中化學：生物分子的補充互動圖 ---------- */
+
+/* ===== 1. 雙醣與多醣 ===== */
+const DISAC = {
+  mal: ['麥芽糖', '葡萄糖 + 葡萄糖', 'α(1→4)', 1, '澱粉的水解產物。'],
+  cel: ['纖維二糖', '葡萄糖 + 葡萄糖', 'β(1→4)', 1, '纖維素的水解產物；和麥芽糖只差醣苷鍵是 β。'],
+  lac: ['乳糖', '半乳糖 + 葡萄糖', 'β(1→4)', 1, '乳汁中的雙醣。兩個單醣各有 5 個 OH，形成醣苷鍵時兩個 OH 合成一個 O 橋並失去水，所以乳糖剩 8 個 OH。乳糖不耐症是缺乏分解這個 β 鍵的乳糖酶。'],
+  suc: ['蔗糖', '葡萄糖 + 果糖', 'α1↔β2', 0, '兩個變旋碳都用在醣苷鍵上，沒有游離的半縮醛，是<b>非還原醣</b>。'],
+  sta: ['澱粉（直鏈＋支鏈）', '許多葡萄糖', 'α(1→4)，支鏈處 α(1→6)', 0, 'α 鍵讓鏈捲成螺旋，人體的澱粉酶可以水解。肝醣結構類似、分支更多。'],
+  cell: ['纖維素', '許多葡萄糖', 'β(1→4)', 0, 'β 鍵讓鏈伸直，鏈間大量氫鍵形成纖維；人體沒有水解 β(1→4) 的酶。和澱粉的單體相同。'],
+  cyc: ['β-環糊精', '7 個葡萄糖', 'α(1→4)，頭尾相接成環', 0, '環的內部疏水、外部親水，可以包覆藥物分子。'],
+};
+W.disac = el => {
+  let cur = 'lac';
+  el.innerHTML = `${seg('dsaS', Object.entries(DISAC).map(([k, v]) => [k, v[0]]), cur)}<div class="cards" id="dsaK"></div><p class="note" id="dsaN"></p>`;
+  function draw() {
+    const [n, m, l, r, w] = DISAC[cur];
+    $('#dsaK', el).innerHTML = card('m', '水解產物', m) + card('l', '醣苷鍵', l) + card('r', '還原醣？', r ? '是（有游離半縮醛）' : '否');
+    $('#dsaN', el).innerHTML = `<b>${n}</b>：${w} 醣苷鍵是縮醛，在酸或專一的酶作用下水解。中藥中的<b>配醣體</b>（glycoside）也是醣的半縮醛 OH 與另一個分子（醣苷配基）的 OH 形成的縮醛。`;
+    pressSeg(el, 'dsaS', cur);
+  }
+  bindSeg(el, 'dsaS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.d || cur; draw(); } };
+};
+
+/* ===== 2. 醣的異構關係 ===== */
+// 費雪投影 C2–C5 的 OH 方向（R 右、L 左）
+const SUGF = { glc: ['D-葡萄糖', 'RLRR'], man: ['D-甘露糖', 'LLRR'], gal: ['D-半乳糖', 'RLLR'], all: ['D-阿洛糖', 'RRRR'], lglc: ['L-葡萄糖', 'LRLL'], tal: ['D-塔羅糖', 'LLLR'] };
+W.sugarrel = el => {
+  const st = { a: 'glc', b: 'gal' };
+  const sel = (id, v) => `<select id="${id}">${Object.entries(SUGF).map(([k, x]) => `<option value="${k}"${k === v ? ' selected' : ''}>${x[0]}</option>`).join('')}</select>`;
+  el.innerHTML = `<div class="w-row"><label class="sel">醣 1 ${sel('srA', st.a)}</label><label class="sel">醣 2 ${sel('srB', st.b)}</label></div><div id="srG"></div><div class="cards" id="srK"></div><p class="note">比較 C2–C5 每個掌性碳的 OH 在右（R）或左（L）：全部相反是<b>鏡像異構物</b>（D 與 L）；只有一個不同是<b>差向異構物</b>（epimer，一種非鏡像異構物）；其他是一般的非鏡像異構物。環化後 C1 的 α／β 稱為<b>變旋異構物</b>（anomer），也是非鏡像異構物。</p>`;
+  function draw() {
+    const [na, fa] = SUGF[st.a], [nb, fb] = SUGF[st.b];
+    const fis = (f, x, nm) => `<text x="${x}" y="22" text-anchor="middle" style="font-size:14px;fill:var(--ink)">CHO</text>${[...f].map((c, i) => { const y = 50 + i * 30; return `<line x1="${x - 30}" x2="${x + 30}" y1="${y}" y2="${y}" style="stroke:var(--ink)"/><text x="${x + (c === 'R' ? 44 : -44)}" y="${y + 5}" text-anchor="middle" style="font-size:13px;fill:#B5326C">OH</text><text class="tk" x="${x - 8}" y="${y - 4}">C${i + 2}</text>`; }).join('')}<line x1="${x}" x2="${x}" y1="28" y2="170" style="stroke:var(--ink)"/><text x="${x}" y="188" text-anchor="middle" style="font-size:13px;fill:var(--ink)">CH₂OH</text><text class="tk" x="${x}" y="208" text-anchor="middle">${nm}</text>`;
+    $('#srG', el).innerHTML = `<svg class="en" viewBox="0 0 460 215" style="max-width:460px;margin:auto" role="img" aria-label="費雪投影">${fis(fa, 120, na)}${fis(fb, 340, nb)}</svg>`;
+    const diff = [...fa].map((c, i) => c !== fb[i] ? i + 2 : 0).filter(Boolean);
+    const rel = st.a === st.b ? '同一個化合物' : diff.length === 4 ? '鏡像異構物' : diff.length === 1 ? `C${diff[0]} 差向異構物（非鏡像異構物）` : '非鏡像異構物';
+    $('#srK', el).innerHTML = card('d', '不同的掌性碳', diff.length ? diff.map(d => 'C' + d).join('、') : '無') + card('r', '關係', rel);
+  }
+  $('#srA', el).onchange = e => { st.a = e.target.value; draw(); };
+  $('#srB', el).onchange = e => { st.b = e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); $('#srA', el).value = st.a; $('#srB', el).value = st.b; draw(); } };
+};
+
+/* ===== 3. 變旋：平衡時的旋光度 =====
+   [α]D：α-D-葡萄哌喃糖 +112.2°、β +18.7°；平衡 +52.7°（OpenStax《Organic Chemistry》25.5 節） */
+W.mutarot = el => {
+  let b = 64;
+  el.innerHTML = `<div class="w-row"><label class="rng">β 型佔 <input type="range" id="muR" min="0" max="100" step="1" value="64"><output class="mono" id="muO"></output></label></div><div class="cards" id="muK"></div><p class="note" id="muN"></p>`;
+  function draw() {
+    const r = 112.2 * (1 - b / 100) + 18.7 * b / 100;
+    $('#muO', el).textContent = `${b}%`;
+    $('#muK', el).innerHTML = card('a', '比旋光度', `+${fx(r, 1)}°`) + card('b', 'α : β', `${100 - b} : ${b}`);
+    $('#muN', el).innerHTML = `純的 α-D-葡萄糖（+112.2°）或 β 型（+18.7°）溶於水後，都會經開鏈形式互相轉換，旋光度逐漸變成同一個值 +52.7°，稱為<b>變旋</b>。平衡時 β 約 64%，因為 β 型所有的 OH（包括 C1）都在平伏鍵。計算方法：觀測值 = 112.2 × (α 的分率) + 18.7 × (β 的分率)。`;
+  }
+  $('#muR', el).oninput = e => { b = +e.target.value; draw(); };
+  draw();
+  return { set(s) { b = s.b ?? b; $('#muR', el).value = b; draw(); } };
+};
+
+/* ===== 4. 核酸鹼基配對 ===== */
+W.dnaseq = el => {
+  let seq = 'AATCGGATCTAG';
+  el.innerHTML = `<label class="sel">DNA 序列（5′→3′）<input id="dnI" value="${seq}" maxlength="24" style="font-family:var(--mono);border:1px solid var(--line);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--ink)"></label><div id="dnG"></div><div class="cards" id="dnK"></div><p class="note">A 與 T 之間 2 個氫鍵、G 與 C 之間 3 個氫鍵，所以 GC 比例越高，雙股越難分開。兩股方向相反（反平行），互補股從 5′ 端讀時要倒過來。RNA 用 U 取代 T，而且核糖的 2′-OH 可以攻擊相鄰的磷酸二酯鍵，所以 RNA 比 DNA 容易水解。</p>`;
+  const P = { A: 'T', T: 'A', G: 'C', C: 'G' };
+  function draw() {
+    const s = seq.toUpperCase().replace(/[^ATGC]/g, ''), c = [...s].map(x => P[x]).join(''), rc = [...c].reverse().join('');
+    const box = (ch, x, y) => `<rect x="${x - 11}" y="${y - 14}" width="22" height="22" rx="4" style="fill:${'AT'.includes(ch) ? '#2F3B99' : '#B5326C'};opacity:.85"/><text x="${x}" y="${y + 2}" text-anchor="middle" style="font-size:13px;fill:#fff;font-family:var(--mono)">${ch}</text>`;
+    const W0 = Math.max(200, 30 + s.length * 28);
+    $('#dnG', el).innerHTML = `<svg class="en" viewBox="0 0 ${W0} 110" style="max-width:${W0}px;margin:auto" role="img" aria-label="鹼基配對"><text class="tk" x="2" y="30">5′</text><text class="tk" x="2" y="92">3′</text>${[...s].map((ch, i) => { const x = 30 + i * 28; return box(ch, x, 30) + `<text class="tk" x="${x}" y="58" text-anchor="middle">${'GC'.includes(ch) ? '≡' : '='}</text>` + box(c[i], x, 92); }).join('')}</svg>`;
+    const gc = [...s].filter(x => 'GC'.includes(x)).length;
+    $('#dnK', el).innerHTML = card('c', '互補股（對齊寫，3′→5′）', c || '—') + card('r', '互補股（5′→3′）', rc || '—') + card('g', 'GC 比例', s.length ? `${fx(100 * gc / s.length, 0)}%` : '—') + card('h', '氫鍵總數', 2 * (s.length - gc) + 3 * gc);
+  }
+  $('#dnI', el).oninput = e => { seq = e.target.value; draw(); };
+  draw();
+  return { set(s) { seq = s.s || seq; $('#dnI', el).value = seq; draw(); } };
+};
+
 /* ---------- 後中化學：生物分子與合成策略的互動圖 ---------- */
 
 /* ===== 1. 胺基酸的帶電狀態與等電點 ===== */
@@ -5601,6 +5754,9 @@ W.aa = el => {
     gly: { n: '甘胺酸 Gly', g: [['α-COOH', 2.34, 'a'], ['α-NH₃⁺', 9.60, 'b']] },
     asp: { n: '天門冬胺酸 Asp', g: [['α-COOH', 1.88, 'a'], ['側鏈 COOH', 3.65, 'a'], ['α-NH₃⁺', 9.60, 'b']] },
     lys: { n: '離胺酸 Lys', g: [['α-COOH', 2.18, 'a'], ['α-NH₃⁺', 8.95, 'b'], ['側鏈 NH₃⁺', 10.53, 'b']] },
+    ala: { n: '丙胺酸 Ala', g: [['α-COOH', 2.34, 'a'], ['α-NH₃⁺', 9.69, 'b']] },
+    glu: { n: '麩胺酸 Glu', g: [['α-COOH', 2.19, 'a'], ['側鏈 COOH', 4.25, 'a'], ['α-NH₃⁺', 9.67, 'b']] },
+    his: { n: '組胺酸 His', g: [['α-COOH', 1.82, 'a'], ['側鏈咪唑', 6.00, 'b'], ['α-NH₃⁺', 9.17, 'b']] },
   };
   const st = { a: 'gly', pH: 7.4 };
   el.innerHTML = `${seg('aaS', Object.entries(A).map(([k, v]) => [k, v.n]), st.a)}<div class="w-row"><label class="rng">pH <input type="range" id="aaP" min="0" max="14" step="0.05"><output class="mono" id="aaPo"></output></label></div><div id="aaG"></div><div class="cards" id="aaK"></div><p class="note" id="aaN"></p>`;

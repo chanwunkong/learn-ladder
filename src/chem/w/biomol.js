@@ -7,6 +7,9 @@ W.aa = el => {
     gly: { n: '甘胺酸 Gly', g: [['α-COOH', 2.34, 'a'], ['α-NH₃⁺', 9.60, 'b']] },
     asp: { n: '天門冬胺酸 Asp', g: [['α-COOH', 1.88, 'a'], ['側鏈 COOH', 3.65, 'a'], ['α-NH₃⁺', 9.60, 'b']] },
     lys: { n: '離胺酸 Lys', g: [['α-COOH', 2.18, 'a'], ['α-NH₃⁺', 8.95, 'b'], ['側鏈 NH₃⁺', 10.53, 'b']] },
+    ala: { n: '丙胺酸 Ala', g: [['α-COOH', 2.34, 'a'], ['α-NH₃⁺', 9.69, 'b']] },
+    glu: { n: '麩胺酸 Glu', g: [['α-COOH', 2.19, 'a'], ['側鏈 COOH', 4.25, 'a'], ['α-NH₃⁺', 9.67, 'b']] },
+    his: { n: '組胺酸 His', g: [['α-COOH', 1.82, 'a'], ['側鏈咪唑', 6.00, 'b'], ['α-NH₃⁺', 9.17, 'b']] },
   };
   const st = { a: 'gly', pH: 7.4 };
   el.innerHTML = `${seg('aaS', Object.entries(A).map(([k, v]) => [k, v.n]), st.a)}<div class="w-row"><label class="rng">pH <input type="range" id="aaP" min="0" max="14" step="0.05"><output class="mono" id="aaPo"></output></label></div><div id="aaG"></div><div class="cards" id="aaK"></div><p class="note" id="aaN"></p>`;
