@@ -5,6 +5,7 @@ cd "$(dirname "$0")/../.."
 python3 build.py >/dev/null
 node tests/chem/chem.test.js >/dev/null
 node tests/chem/stereo.test.js >/dev/null
+node tests/chem/qid.test.js || exit 1
 out=$(bash tests/chem/smoke.sh 2>&1) || { echo "$out" | grep -v "^ok"; exit 1; }
 echo "$out" | grep -c "^ok" | xargs echo "smoke ok:"
 git add -A

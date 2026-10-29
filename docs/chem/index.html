@@ -871,7 +871,87 @@ CH.push({
         why: '酸 1.09 × 10⁻³ mol，NaOH 3.28 × 10⁻³ mol，比值 3。' },
       { src: '慈濟 108 第 22 題', q: '以 Ba(OH)₂ 溶液慢慢滴入 CuSO₄ 溶液，導電燈泡的亮度如何變化？', o: ['逐漸變暗，過了當量點後又變亮', '一直變亮', '一直變暗', '不變'], a: 0,
         why: '生成 BaSO₄ 與 Cu(OH)₂ 沉澱，離子減少；過量的 Ba(OH)₂ 又提供離子。' },
-    ],
+      { src: '仿 中國醫 114 第 26 題', q: '20 mL 0.1 M CH₃COOH 與 20 mL 0.1 M NaOH 混合後，何者正確？', o: ['溶液主要含醋酸根，呈鹼性', '溶液主要含醋酸分子與醋酸根', '[H⁺] = [OH⁻]', '溶液呈酸性'], a: 0,
+      why: '恰好中和，CH₃COO⁻ 水解產生 OH⁻。', show: { w: 'phcalc', set: { s: 'wb' } } },
+    { src: '仿 中國醫 114 第 37 題', q: '40.0 mL 0.25 M NaOH 與 60.0 mL 0.10 M HCl 混合，何者正確？', o: ['HCl 是限量試劑，反應後 [Na⁺] > [OH⁻]', 'NaOH 是限量試劑', '反應後 [Na⁺] = [Cl⁻]', '反應後 [Na⁺] 仍為 0.25 M'], a: 0,
+      why: 'NaOH 10 mmol、HCl 6 mmol；[Na⁺] = 0.10 M、[OH⁻] = 0.04 M、[Cl⁻] = 0.06 M。' },
+    { src: '仿 中國醫 114 第 41 題', q: '已知 HNO₂ 酸性強於 HCN，HBr 是強酸。下列在水中的鹼性由強到弱何者正確？', o: ['CN⁻ > NO₂⁻ > H₂O > Br⁻', 'Br⁻ > NO₂⁻ > CN⁻ > H₂O', 'NO₂⁻ > CN⁻ > Br⁻ > H₂O', 'OH⁻ > Br⁻ > CN⁻ > NO₂⁻'], a: 0,
+      why: '酸越弱，共軛鹼越強；強酸的共軛鹼 Br⁻ 比水更弱。', show: { w: 'kaladder', set: {} } },
+    { src: '仿 義守 114 第 29 題', q: '20.0 mL 未知濃度的 HF 以 0.100 M NaOH 滴定，加入 15.0 mL 時 pH = 3.00（Ka = 7.1 × 10⁻⁴），原 HF 濃度約為？', o: ['0.18 M', '0.075 M', '0.25 M', '0.36 M'], a: 0,
+      why: '[F⁻]/[HF] = Ka/[H⁺] = 0.71；F⁻ 1.5 mmol，HF 剩 2.11 mmol，共 3.61 mmol ÷ 20 mL。' },
+    { src: '仿 義守 114 第 37 題', q: '某弱酸性成分 pKa = 3.5，在血液 pH 7.4 中主要以何種形式存在？', o: ['帶負電的共軛鹼', '中性分子', '帶正電', '兩者各半'], a: 0,
+      why: 'pH 比 pKa 大約 4，[A⁻]/[HA] ≈ 10⁴。', show: { w: 'phcalc', set: {} } },
+    { src: '仿 慈濟 114 第 4 題', q: '下列共軛酸鹼對的敘述何者錯誤？', o: ['NH₄⁺ 的共軛鹼是 NH₂⁻', 'HCO₃⁻ 的共軛鹼是 CO₃²⁻', 'H₂PO₄⁻ 的共軛酸是 H₃PO₄', 'HSO₄⁻ 的共軛鹼是 SO₄²⁻'], a: 0,
+      why: '共軛酸鹼只差一個 H⁺，NH₄⁺ 的共軛鹼是 NH₃。', show: { w: 'abdef', set: {} } },
+    { src: '仿 慈濟 114 第 5 題', q: '等體積混合後，下列何者是緩衝溶液？', o: ['0.10 M NH₃ + 0.10 M NH₄Cl', '0.10 M HCl + 0.10 M NaCl', '0.10 M HCl + 0.05 M CH₃COONa', '0.10 M NaOH + 0.10 M NaCl'], a: 0,
+      why: '需要弱酸與其共軛鹼同時存在；第三組 HCl 過量，醋酸根全被轉成醋酸。' },
+    { src: '仿 慈濟 114 第 20 題', q: '1 L 緩衝溶液含 0.50 M CH₃COOH 與 0.50 M CH₃COONa（pKa 4.74），加入 0.10 mol HCl 後 pH 約為？', o: ['4.57', '4.74', '4.92', '3.74'], a: 0,
+      why: '酸變 0.60、鹼變 0.40，pH = 4.74 + log(0.40/0.60)。', show: { w: 'buffer', set: {} } },
+    { src: '仿 慈濟 114 第 21 題', q: '大氣中 SO₂ 為 0.40 ppm（體積），SO₂(g) + H₂O ⇌ H⁺ + HSO₃⁻ 的 K = 1.3 × 10⁻²，雨水 pH 約為？', o: ['4.14', '3.87', '5.12', '6.35'], a: 0,
+      why: 'P = 4.0 × 10⁻⁷ atm，[H⁺]² = K·P = 5.2 × 10⁻⁹。' },
+    { src: '仿 慈濟 114 第 34 題', q: '下列何者是路易斯酸，但不是布忍斯特酸？', o: ['BF₃', 'NH₄⁺', 'H₂O', 'HCl'], a: 0,
+      why: 'BF₃ 沒有可給出的 H⁺，但 B 有空軌域可接受電子對。', show: { w: 'abdef', set: {} } },
+    { src: '仿 中國醫 113 第 19 題', q: '50 mL NaHSO₃ 溶液恰與 25 mL 0.20 M NaOH 中和；同體積的 NaHSO₃ 能使多少 mL 0.050 M 酸性 KMnO₄ 褪色？', o: ['40 mL', '20 mL', '100 mL', '16 mL'], a: 0,
+      why: 'HSO₃⁻ 5 mmol，每個失去 2e⁻；MnO₄⁻ 得 5e⁻，需 2 mmol。' },
+    { src: '仿 中國醫 113 第 21 題', q: '5 mL 12 M HCl 要稀釋到多少體積，pH 才會和 0.50 M 醋酸（Ka = 1.8 × 10⁻⁵）相近？', o: ['20 L', '2 L', '200 mL', '200 L'], a: 0,
+      why: '醋酸 [H⁺] = √(9 × 10⁻⁶) = 3.0 × 10⁻³ M；60 mmol ÷ 3.0 × 10⁻³ M。' },
+    { src: '仿 慈濟 113 第 13 題', q: 'Ka：HF 7.2 × 10⁻⁴、HCOOH 1.8 × 10⁻⁴、HOCl 3.5 × 10⁻⁸、NH₄⁺ 5.6 × 10⁻¹⁰。最弱的共軛鹼是？', o: ['F⁻', 'HCOO⁻', 'OCl⁻', 'NH₃'], a: 0,
+      why: '酸越強，共軛鹼越弱。', show: { w: 'kaladder', set: {} } },
+    { src: '仿 慈濟 113 第 16 題', q: '溶液含 1.0 M HCN 與 2.0 M NaCN（Ka = 6.2 × 10⁻¹⁰），何者正確？', o: ['溶液呈鹼性，pH 約 9.5', '因 [HCN] ≠ [CN⁻]，不是緩衝溶液', '溶液 pH < 7', '[H⁺] > [OH⁻]'], a: 0,
+      why: 'pH = 9.21 + log 2 ≈ 9.51；比例不必 1:1 也是緩衝。' },
+    { src: '仿 中國醫 111 第 2 題', q: '0.0040 M 某溶液 pH = 3.10，該物質是？', o: ['弱酸', '強酸', '弱鹼', '強鹼'], a: 0,
+      why: '[H⁺] = 7.9 × 10⁻⁴ M，小於 0.0040 M，只部分解離。' },
+    { src: '仿 中國醫 111 第 15 題', q: '20 mL 0.10 M H₃PO₄ 與 30 mL 0.10 M NaOH 混合，pH 約為？（pKa₂ = 7.21）', o: ['7.21', '2.12', '4.67', '12.3'], a: 0,
+      why: 'H₃PO₄ 2 mmol、OH⁻ 3 mmol → H₂PO₄⁻ 與 HPO₄²⁻ 各 1 mmol。', show: { w: 'polyprot', set: {} } },
+    { src: '仿 中國醫 111 第 40 題', q: '指示劑 HIn 的 Ka = 1 × 10⁻⁹，pH 8.0 時 [HIn]/[In⁻] 為？', o: ['10', '1/10', '1', '100'], a: 0,
+      why: '[HIn]/[In⁻] = [H⁺]/Ka = 10⁻⁸ ÷ 10⁻⁹。' },
+    { src: '仿 慈濟 111 第 30 題', q: '下列何者適合作為緩衝溶液？', o: ['CH₃COOH 與 CH₃COONa', 'NaCl 與 NaOH', 'HCl 與 H₂SO₄', 'NH₃ 與 NaOH'], a: 0,
+      why: '弱酸與它的共軛鹼。' },
+    { src: '仿 慈濟 111 第 38 題', q: 'pH 4.6 的溶液中 [H⁺] 約為？', o: ['2.5 × 10⁻⁵ M', '4.6 × 10⁻¹ M', '4.0 × 10⁻¹⁰ M', '6.3 × 10⁻⁵ M'], a: 0,
+      why: '10⁻⁴·⁶。' },
+    { src: '仿 慈濟 110 第 6 題', q: '0.2 M NaOH 與 0.2 M 弱酸 HA（Ka = 1 × 10⁻⁵）等體積混合，離子濃度大小？', o: ['[Na⁺] > [A⁻] > [OH⁻] > [H⁺]', '[Na⁺] > [A⁻] > [H⁺] > [OH⁻]', '[A⁻] > [OH⁻] > [Na⁺] > [H⁺]', '[A⁻] > [Na⁺] > [H⁺] > [OH⁻]'], a: 0,
+      why: '恰好中和，少部分 A⁻ 水解產生 OH⁻。' },
+    { src: '仿 義守 109 第 3 題', q: '依布忍斯特–洛瑞理論，CaF₂ + H₂SO₄ → CaSO₄ + 2HF 中 CaF₂ 的角色是？', o: ['鹼', '酸', '既不是酸也不是鹼', '既是酸也是鹼'], a: 0,
+      why: 'F⁻ 接受 H⁺ 變成 HF。' },
+    { src: '仿 義守 109 第 35 題', q: '40.0 mL 0.40 M HCl 加入 25.0 mL 0.40 M NaOH 後，pH 約為？', o: ['1.03', '0.40', '1.43', '0.73'], a: 0,
+      why: '剩 6 mmol H⁺，在 65 mL 中為 0.092 M。' },
+    { src: '仿 慈濟 109 第 21 題', q: '指示劑 pKa 4.52，要從 90% 鹼型變成 90% 酸型，pH 要如何變化？', o: ['減少約 1.91', '增加約 1.91', '減少約 0.95', '增加約 0.95'], a: 0,
+      why: 'pH 由 pKa + log 9 變為 pKa − log 9。' },
+    { src: '仿 慈濟 109 第 22 題', q: '0.10 M 草酸（pKa₁ 1.25、pKa₂ 4.27）調到 pH 3.00 時，哪一種形式最多？', o: ['HC₂O₄⁻', 'H₂C₂O₄', 'C₂O₄²⁻', '三者相等'], a: 0,
+      why: 'pH 介於兩個 pKa 之間。', show: { w: 'polyprot', set: {} } },
+    { src: '仿 慈濟 109 第 24 題', q: '弱酸各種形式的分布分率 α 取決於？', o: ['Ka 與溶液的 pH', '只有總濃度', '總濃度與 [H⁺]', '只有 Ka'], a: 0,
+      why: 'α 只和 [H⁺] 與 Ka 有關，與總濃度無關。', show: { w: 'polyprot', set: {} } },
+    { src: '仿 慈濟 109 第 32 題', q: '每份 2.00 mL 的 H₂SO₄ 以 0.100 M NaOH 滴定，平均需 18.0 mL，H₂SO₄ 濃度為？', o: ['0.45 M', '0.90 M', '0.225 M', '1.80 M'], a: 0,
+      why: 'NaOH 1.8 mmol，H₂SO₄ 是二質子酸，0.9 mmol ÷ 2.00 mL。' },
+    { src: '仿 中國醫 108 第 13 題', q: '0.1 M NaF 溶液中，濃度最低的物種是？', o: ['H⁺', 'Na⁺', 'F⁻', 'OH⁻'], a: 0,
+      why: '溶液呈弱鹼性，[H⁺] 最小。' },
+    { src: '仿 義守 108 第 31 題', q: 'HF/F⁻ 緩衝溶液中，下列何者能降低 pH？', o: ['加入少量 HF', '加入少量 NaF', '加入少量 NaOH', '加入少量水'], a: 0,
+      why: '酸的比例增加。', show: { w: 'buffer', set: {} } },
+    { src: '仿 義守 108 第 32 題', q: '以 HCl 滴定 NH₃ 水溶液，最適宜的指示劑是？', o: ['甲基紅（pKa 約 5.0）', '酚酞（pKa 約 9.3）', '百里酚藍（pKa 約 1.7）', '茜素黃（pKa 約 11）'], a: 0,
+      why: '當量點是 NH₄⁺ 溶液，呈弱酸性。', show: { w: 'indicator', set: {} } },
+    { src: '仿 慈濟 108 第 21 題', q: '20.0 mL HF 加入 20.0 mL 0.10 M NaOH 後 pH 為 3.50（Ka = 7.1 × 10⁻⁴），原 HF 濃度約為？', o: ['0.14 M', '0.10 M', '0.20 M', '0.045 M'], a: 0,
+      why: '[F⁻]/[HF] = 7.1 × 10⁻⁴ ÷ 3.16 × 10⁻⁴ = 2.25；F⁻ 2 mmol、HF 0.89 mmol。' },
+    { src: '仿 慈濟 108 第 37 題', q: '醋酸溶液中加入半當量的下列何者，最不適合配成緩衝溶液？', o: ['NH₄Cl', 'NaOH', 'KOH', 'CH₃COONa'], a: 0,
+      why: 'NH₄Cl 不能提供醋酸根。' },
+    { src: '仿 慈濟 108 第 41 題', q: '以 NaOH 滴定 H₃PO₄，HPO₄²⁻ 的 pKa 等於何時的 pH？', o: ['[HPO₄²⁻] = [PO₄³⁻]', '[H₂PO₄⁻] = [HPO₄²⁻]', '[H₃PO₄] = [H₂PO₄⁻]', '[H₃PO₄] = [HPO₄²⁻]'], a: 0,
+      why: '酸與共軛鹼相等時 pH = pKa。', show: { w: 'polyprot', set: {} } },
+    { src: '仿 義守 107 第 13 題', q: '下列何者是緩衝溶液？', o: ['NaHCO₃ 與 Na₂CO₃', 'HNO₃ 與 NaNO₃', 'HCl 與 NaOH（等莫耳）', 'H₂SO₄ 與 CH₃COOH'], a: 0,
+      why: 'HCO₃⁻ 與 CO₃²⁻ 是共軛酸鹼對。' },
+    { src: '仿 義守 107 第 40 題', q: '0.098 g 某酸需 0.200 M NaOH 10.0 mL 達當量點，此酸最可能是？', o: ['H₂SO₄', 'HCl', 'HNO₃', 'CH₃COOH'], a: 0,
+      why: 'NaOH 2.0 mmol；H₂SO₄ 0.098 g = 1.0 mmol，二質子。' },
+    { src: '仿 慈濟 107 第 16 題', q: '下列混合何者不會形成緩衝溶液？', o: ['100 mL 0.10 M Na₂CO₃ + 100 mL 0.20 M HCl', '100 mL 0.10 M Na₂CO₃ + 50 mL 0.10 M HCl', '100 mL 0.10 M Na₂CO₃ + 75 mL 0.20 M HCl', '100 mL 0.10 M Na₂CO₃ + 10 mL 0.10 M HCl'], a: 0,
+      why: '第一組 HCl 剛好把 CO₃²⁻ 全變成 H₂CO₃，沒有共軛鹼。' },
+    { src: '仿 慈濟 107 第 24 題', q: '等體積 1.0 M HCN 與 1.0 M HNO₂ 混合，含量最多的三種成分是？', o: ['H₂O、HCN、HNO₂', 'CN⁻、NO₂⁻、H₂O', 'H⁺、NO₂⁻、H₂O', 'H⁺、OH⁻、H₂O'], a: 0,
+      why: '兩者都是弱酸，大部分不解離。' },
+    { src: '仿 中國醫 106 第 22 題', q: '0.10 M 的 C₅H₅NHCl、HCN、NaF、CH₃COONa、NaOH，pH 由低到高？', o: ['C₅H₅NHCl < HCN < NaF < CH₃COONa < NaOH', 'HCN < C₅H₅NHCl < NaF < CH₃COONa < NaOH', 'C₅H₅NHCl < HCN < CH₃COONa < NaF < NaOH', 'HCN < C₅H₅NHCl < CH₃COONa < NaF < NaOH'], a: 0,
+      why: '吡啶鎓 Ka 約 6 × 10⁻⁶ 比 HCN 強得多；HF 比醋酸強，F⁻ 是較弱的鹼。' },
+    { src: '仿 義守 106 第 25 題', q: '要配 pH 9.42 的緩衝溶液（NH₄⁺ pKa 9.24、log 1.5 = 0.176），應使用？', o: ['1.5 mol NH₃ + 1.0 mol NH₄Cl', '1.0 mol NH₃ + 1.5 mol NH₄Cl', '1.5 mol 吡啶 + 1.0 mol 吡啶鹽', '1.0 mol 吡啶 + 1.5 mol 吡啶鹽'], a: 0,
+      why: 'pH 比 pKa 高 0.18，鹼要多。' },
+    { src: '仿 慈濟 106 第 15 題', q: '以 HCl 滴定某弱鹼，半當量點 pH = 9.3，此鹼最可能是？', o: ['氨（NH₄⁺ pKa 9.3）', '苯胺（pKa 4.6）', '羥胺（pKa 6.0）', '聯胺（pKa 8.1）'], a: 0,
+      why: '半當量點 pH = 共軛酸的 pKa。', show: { w: 'titration', set: {} } },
+    { src: '仿 慈濟 106 第 16 題', q: '以 NaOH 標準溶液滴定食醋時，下列哪一項會使測得的醋酸含量偏低？', o: ['移取食醋的吸量管內壁殘留蒸餾水', 'NaOH 溶液吸收了空氣中的 CO₂', '滴過終點（溶液變深紅色）才停止', '錐形瓶中先加入蒸餾水稀釋'], a: 0,
+      why: '樣品被稀釋，實際取到的醋酸變少；其餘三項不影響或使結果偏高。' },
+  ],
   });
 
 /* ---------- 後中化學：羧酸及其衍生物 ---------- */
@@ -1586,6 +1666,78 @@ CH.push({
       why: '第 8 週期第 1 族，屬鹼金屬。' },
     { src: '慈濟 110 第 26 題', q: '下列元素電負度由小到大何者正確？', o: ['Cs < Na < Cl < F', 'F < Cl < Na < Cs', 'Na < Cs < F < Cl', 'Cl < F < Cs < Na'], a: 0,
       why: '電負度同族往上、同週期往右變大；F 最大，Cs 最小。', show: { w: 'trend', set: { p: 'en' } } },
+    { src: '仿 慈濟 115 第 23 題', q: 'Se²⁻、Br⁻、Rb⁺、Sr²⁺ 的半徑由小到大？', o: ['Sr²⁺ < Rb⁺ < Br⁻ < Se²⁻', 'Rb⁺ < Sr²⁺ < Br⁻ < Se²⁻', 'Se²⁻ < Br⁻ < Rb⁺ < Sr²⁺', 'Sr²⁺ < Rb⁺ < Se²⁻ < Br⁻'], a: 0,
+      why: '四者等電子（36 個電子），質子越多半徑越小。', show: { w: 'ionrad', set: {} } },
+    { src: '仿 中國醫 114 第 38 題', q: 'B、Be、N、O 中，第一游離能最小的是？', o: ['B', 'Be', 'N', 'O'], a: 0,
+      why: 'B 的 2p 電子能量較高、較易移走；Be 的 2s² 全滿。' },
+    { src: '仿 中國醫 114 第 42 題', q: '硒（Se，Z = 34）的價電子組態是？', o: ['4s²4p⁴', '3d¹⁰4s²4p⁴', '4s²4p⁶', '3s²3p⁴'], a: 0,
+      why: '價電子是最外層（n = 4）的電子。', show: { w: 'econf', set: {} } },
+    { src: '仿 義守 114 第 34 題', q: 'O、Cl、N、S 中電負度最高的是？', o: ['O', 'Cl', 'N', 'S'], a: 0,
+      why: '電負度約 3.44、3.16、3.04、2.58。' },
+    { src: '仿 慈濟 114 第 2 題', q: 'Na⁺、Mg²⁺、F⁻、O²⁻ 的半徑由大到小？', o: ['O²⁻ > F⁻ > Na⁺ > Mg²⁺', 'Mg²⁺ > Na⁺ > F⁻ > O²⁻', 'Na⁺ > Mg²⁺ > O²⁻ > F⁻', 'F⁻ > O²⁻ > Na⁺ > Mg²⁺'], a: 0,
+      why: '等電子（10 個電子），核電荷越大越小。', show: { w: 'ionrad', set: {} } },
+    { src: '仿 慈濟 114 第 19 題', q: '下列量子數組合 (n, l, mₗ, mₛ) 何者合理？', o: ['(3, 2, −2, +1/2)', '(2, 2, 0, +1/2)', '(3, 1, 2, −1/2)', '(1, 0, 0, +1)'], a: 0,
+      why: 'l < n、|mₗ| ≤ l、mₛ = ±1/2。' },
+    { src: '仿 慈濟 113 第 7 題', q: '氫原子下列躍遷中，吸收光子的波長最長的是？', o: ['n = 3 → 4', 'n = 1 → 2', 'n = 2 → 3', 'n = 1 → 3'], a: 0,
+      why: '能階差越小，波長越長；高能階之間的間距越來越小。', show: { w: 'hspec', set: {} } },
+    { src: '仿 中國醫 112 第 38 題', q: '電子組態 [Xe]4f¹⁴5d¹⁰6s²6p² 的元素是？', o: ['主族金屬（Pb）', '非金屬', '過渡金屬', '鑭系元素'], a: 0,
+      why: '第 14 族、第 6 週期是鉛。' },
+    { src: '仿 義守 112 第 12 題', q: '下列何者是合理的量子數組合？', o: ['n = 4, l = 3, mₗ = −3, mₛ = −1/2', 'n = 3, l = 3, mₗ = 1, mₛ = +1/2', 'n = 4, l = 2, mₗ = 3, mₛ = +1/2', 'n = 2, l = 1, mₗ = 0, mₛ = 1'], a: 0,
+      why: 'l 最大 n − 1，mₗ 從 −l 到 +l。' },
+    { src: '仿 義守 112 第 24 題', q: '下列基態電子組態有幾個正確？ (i) K [Ar]4s¹ (ii) Al 1s²2s²2p⁶3s²3p¹ (iii) Cr [Ar]4s²3d⁴ (iv) Se [Ar]3d¹⁰4s²4p⁴ (v) Cl 1s²2s²2p⁶3s²3p⁶', o: ['3 個', '2 個', '4 個', '5 個'], a: 0,
+      why: 'Cr 是 [Ar]4s¹3d⁵；Cl 是 3s²3p⁵。', show: { w: 'econf', set: {} } },
+    { src: '仿 中國醫 111 第 6 題', q: '可以用 n = 4、l = 1 描述的電子最多有幾個？', o: ['6', '2', '10', '14'], a: 0,
+      why: '4p 有 3 個軌域，每個 2 個電子。' },
+    { src: '仿 義守 111 第 24 題', q: '⁵⁶Fe³⁺ 有幾個電子、質子、中子？', o: ['23、26、30', '26、23、30', '26、26、30', '29、26、30'], a: 0,
+      why: 'Z = 26，失去 3 個電子；中子 = 56 − 26。', show: { w: 'nuclide', set: {} } },
+    { src: '仿 慈濟 111 第 42 題', q: 'Ar、K⁺、Cl⁻、Ca²⁺ 中半徑最小的是？', o: ['Ca²⁺', 'K⁺', 'Cl⁻', 'Ar'], a: 0,
+      why: '等電子，核電荷最大者最小。' },
+    { src: '仿 慈濟 111 第 43 題', q: 'K、Br、F 的電負度由小到大？', o: ['K < Br < F', 'Br < K < F', 'F < Br < K', 'K < F < Br'], a: 0,
+      why: '同族往上、同週期往右電負度增加。' },
+    { src: '仿 中國醫 110 第 25 題', q: '氫原子的游離能為 1.31 × 10⁶ J/mol，Li²⁺ 的游離能約為？', o: ['1.18 × 10⁷ J/mol', '3.93 × 10⁶ J/mol', '1.31 × 10⁶ J/mol', '5.24 × 10⁶ J/mol'], a: 0,
+      why: '單電子離子 E ∝ Z²，Li²⁺ 的 Z = 3，為 9 倍。', show: { w: 'hspec', set: {} } },
+    { src: '仿 中國醫 110 第 37 題', q: '銅（Cu，Z = 29）的基態電子組態是？', o: ['[Ar]4s¹3d¹⁰', '[Ar]4s²3d⁹', '[Ar]4s²3d¹⁰', '[Ar]3d¹¹'], a: 0,
+      why: '全滿的 3d¹⁰ 較穩定，和 Cr 的半滿 3d⁵ 一樣是例外。', show: { w: 'econf', set: {} } },
+    { src: '仿 慈濟 110 第 15 題', q: '氫原子可見光譜中的紅色譜線（656 nm）來自哪一個躍遷？', o: ['n = 3 → 2', 'n = 2 → 1', 'n = 4 → 3', 'n = 5 → 1'], a: 0,
+      why: '落到 n = 2 的巴耳末系在可見光區，3 → 2 能量最小、波長最長（紅）。', show: { w: 'hspec', set: {} } },
+    { src: '仿 慈濟 110 第 20 題', q: '煙火的各種顏色主要來自？', o: ['金屬離子的電子被激發後回到低能階放出特定波長的光', '有機染料燃燒', '氖、氬等氣體游離', '火藥本身的燃燒'], a: 0,
+      why: '焰色：Na 黃、Sr 紅、Ba 綠、Cu 藍綠。', show: { w: 'emspec', set: {} } },
+    { src: '仿 中國醫 109 第 7 題', q: 'K⁺、Ca²⁺、Cl⁻、Ar 中，移走最外層一個電子所需能量最大的是？', o: ['Ca²⁺', 'K⁺', 'Cl⁻', 'Ar'], a: 0,
+      why: '四者等電子，核電荷最大者最難移走電子。' },
+    { src: '仿 中國醫 109 第 11 題', q: '下列哪一組量子數 (n, l, mₗ, mₛ) 不存在？', o: ['(3, 3, 0, +1/2)', '(4, 2, −2, −1/2)', '(2, 1, 1, +1/2)', '(1, 0, 0, −1/2)'], a: 0,
+      why: 'l 必須小於 n。' },
+    { src: '仿 中國醫 109 第 21 題', q: '一個 4f 軌域有幾個節面（角節點）？', o: ['3', '0', '1', '4'], a: 0,
+      why: '角節點數 = l。' },
+    { src: '仿 義守 109 第 1 題', q: '下列第一游離能排序何者正確？', o: ['Na < Mg < Si < P', 'N < O < F', 'Cs > Rb > K', 'Mg < Al < Si'], a: 0,
+      why: 'O 比 N 小（N 半滿）；Al 比 Mg 小；同族往下變小。', show: { w: 'succie', set: {} } },
+    { src: '仿 義守 109 第 29 題', q: '位於 4d 軌域的電子，正確的量子數是？', o: ['n = 4, l = 2, mₗ = −2', 'n = 4, l = 3, mₗ = 0', 'n = 3, l = 2, mₗ = 1', 'n = 4, l = 2, mₗ = 3'], a: 0,
+      why: 'd 軌域 l = 2，mₗ 為 −2 到 +2。' },
+    { src: '仿 慈濟 109 第 25 題', q: '某元素 I₁ = 738、I₂ = 1451、I₃ = 7733 kJ/mol，它最可能是？', o: ['Mg', 'Na', 'Al', 'Si'], a: 0,
+      why: 'I₂ 到 I₃ 大跳，有 2 個價電子。', show: { w: 'succie', set: {} } },
+    { src: '仿 義守 108 第 35 題', q: '打斷某鍵需吸收波長 250 nm 的光，每莫耳能量約為？', o: ['479 kJ/mol', '240 kJ/mol', '120 kJ/mol', '958 kJ/mol'], a: 0,
+      why: 'E = hcN_A ÷ λ = 0.1197 J·m/mol ÷ 2.5 × 10⁻⁷ m。' },
+    { src: '仿 慈濟 108 第 46 題', q: '某元素 E₁ = 900、E₂ = 1757、E₃ = 14849 kJ/mol，價電子組態最可能為？', o: ['ns²', 'ns²np¹', 'ns¹', 'ns²np²'], a: 0,
+      why: '第 3 個電子要從內層移走。', show: { w: 'succie', set: {} } },
+    { src: '仿 慈濟 108 第 47 題', q: '關於電負度，何者正確？', o: ['同週期由左到右大致增加', '同族由上到下大致增加', 'F 電負度最大是因為最容易失去電子', '電負度越大金屬性越強'], a: 0,
+      why: 'F 最容易吸引鍵結電子；金屬電負度小。' },
+    { src: '仿 中國醫 107 第 4 題', q: '下列電子組態何者正確？', o: ['Cr：[Ar]4s¹3d⁵', 'Cu：[Ar]4s²3d⁹', 'Ag：[Kr]5s²4d⁹', 'Fe：[Ar]3d⁸'], a: 0,
+      why: 'Cu 與 Ag 都是 ns¹(n−1)d¹⁰；Fe 是 [Ar]4s²3d⁶。', show: { w: 'econf', set: {} } },
+    { src: '仿 中國醫 107 第 6 題', q: '下列電磁波依波長由長到短？', o: ['無線電波 > 微波 > 紅外光 > 可見光 > 紫外光 > X 射線', 'X 射線 > 紫外光 > 可見光 > 紅外光 > 微波 > 無線電波', '微波 > 無線電波 > 紅外光 > 可見光 > X 射線 > 紫外光', '可見光 > 紅外光 > 紫外光 > 微波 > 無線電波 > X 射線'], a: 0,
+      why: '能量越低波長越長。', show: { w: 'emspec', set: {} } },
+    { src: '仿 中國醫 107 第 19 題', q: 'F、Cl、S、P、Na 的電負度由大到小？', o: ['F > Cl > S > P > Na', 'F > S > Cl > P > Na', 'Cl > F > S > P > Na', 'F > Cl > P > S > Na'], a: 0,
+      why: '同週期往右增加；F 最大。' },
+    { src: '仿 義守 107 第 39 題', q: '下列哪一個軌域不存在？', o: ['2d', '4f', '5p', '6s'], a: 0,
+      why: 'n = 2 時 l 只能是 0 或 1。' },
+    { src: '仿 慈濟 107 第 21 題', q: 'He⁺ 的 2s 波函數含 (2 − Zr/a₀) 項（Z = 2，a₀ = 5.29 × 10⁻¹¹ m），徑向節點在距核多遠？', o: ['5.29 × 10⁻¹¹ m', '1.06 × 10⁻¹⁰ m', '2.65 × 10⁻¹¹ m', '7.92 × 10⁻¹¹ m'], a: 0,
+      why: '2 − 2r/a₀ = 0 → r = a₀。氫原子則在 2a₀。' },
+    { src: '仿 義守 106 第 2 題', q: '下列哪一組是等電子？', o: ['Na⁺ 和 F⁻', 'Na⁺ 和 K⁺', 'Cl⁻ 和 Br⁻', 'Fe²⁺ 和 Fe³⁺'], a: 0,
+      why: '兩者都是 10 個電子。' },
+    { src: '仿 義守 106 第 11 題', q: '具有 n = 4、l = 3、mₗ = −1 的軌域有幾個？', o: ['1', '3', '7', '14'], a: 0,
+      why: '三個量子數都確定，只對應一個軌域。' },
+    { src: '仿 義守 106 第 12 題', q: '鐵（Z = 26）的基態電子組態是？', o: ['[Ar]4s²3d⁶', '[Ar]4s⁰3d⁸', '[Ar]4s²3d⁴', '[Ar]4s¹3d⁷'], a: 0,
+      why: '依序填入 4s 再 3d。', show: { w: 'econf', set: {} } },
+    { src: '仿 慈濟 106 第 6 題', q: 'Cl、S、Si、Al、Na 的原子半徑由小到大？', o: ['Cl < S < Si < Al < Na', 'Na < Al < Si < S < Cl', 'S < Cl < Si < Al < Na', 'Cl < Si < S < Al < Na'], a: 0,
+      why: '同週期由左到右核電荷增加，半徑變小。' },
   ],
 });
 
@@ -9891,22 +10043,34 @@ function bindTree() {
   if (!window.__treeRO) { window.__treeRO = new ResizeObserver(() => $('.trees') && treeLines()); window.__treeRO.observe($('#article')); }
 }
 
-/* ---------- 練習紀錄：每次作答存一筆（只存在這台裝置的瀏覽器） ----------
-   { t: 時間戳, c: 章 id, k: 'q' 章末題／'x' 相似題, i: 題號, p: 選的選項, ok: 1/0, n: 這次第幾次作答 } */
-const LOG = store.get('log', []);
-function logAnswer(e) { LOG.push({ t: Date.now(), ...e }); if (LOG.length > 5000) LOG.splice(0, LOG.length - 5000); store.set('log', LOG); }
-const qbank = (c, k) => (k === 'x' ? c.exam : c.quiz) || [];
+/* ---------- 練習紀錄：每次作答存一筆（存在這台裝置的瀏覽器；登入後合併同步到雲端） ----------
+   { t: 時間戳, c: 章 id, k: 'q' 章末題／'x' 相似題, i: 當時的題號, h: 題目識別碼, qt: 題目文字快照, p: 選的選項, ok: 1/0, n: 這次第幾次作答 }
+   題庫更新（插入、刪除、重排題目）時紀錄不會錯位：一律用 h 找題目；找不到時顯示 qt 快照。
+   題目文字若要改寫又想保留舊紀錄的對應，在題目上加 id: '舊的識別碼'。紀錄永不因題庫更新而刪除。 */
 const strip = h => String(h).replace(/<[^>]+>/g, '');
+const qhash = s => { let h = 5381; for (const ch of s) h = ((h << 5) + h + ch.codePointAt(0)) >>> 0; return h.toString(36); };
+const qid = (cid, q, k) => q.id || qhash(cid + '|' + k + '|' + strip(q.q));
+const LOG = store.get('log', []);
+const qbank = (c, k) => (k === 'x' ? c.exam : c.quiz) || [];
+// 舊版紀錄只有題號：第一次載入時依「當時的題庫」補上識別碼與快照，之後題庫怎麼改都對得上
+(() => { let ch = 0; LOG.forEach(e => { if (e.h) return; const c = chOf(e.c), q = c && qbank(c, e.k)[e.i]; if (q) { e.h = qid(c.id, q, e.k); e.qt = strip(q.q).slice(0, 60); ch = 1; } }); if (ch) store.set('log', LOG); })();
+function logAnswer(e) { LOG.push({ t: Date.now(), ...e }); if (LOG.length > 20000) LOG.splice(0, LOG.length - 20000); store.set('log', LOG); if (typeof CLOUD !== 'undefined' && CLOUD.pushLog) CLOUD.pushLog(); }
+// 由識別碼找回目前的題目（題號可能已變）
+let QIX = null;
+function qfind(cid, h, k, i) {
+  if (!QIX) { QIX = {}; CH.forEach(c => ['q', 'x'].forEach(kk => qbank(c, kk).forEach((q, j) => { QIX[c.id + '|' + qid(c.id, q, kk)] = { c, k: kk, i: j, q }; }))); }
+  return (h && QIX[cid + '|' + h]) || (!h && chOf(cid) && qbank(chOf(cid), k)[i] ? { c: chOf(cid), k, i, q: qbank(chOf(cid), k)[i] } : null);
+}
 const dstr = t => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
 const tstr = t => { const d = new Date(t); return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
 function qblock(list, kind) {
-  return list.map((q, k) => `<div class="q" data-k="${kind}" data-q="${k}">${q.src ? `<p class="qsrc">仿 ${q.src}</p>` : ''}<p class="qt">${k + 1}. ${q.q}</p><div class="opts">${order(q, k).map(j => `<button class="opt" type="button" data-o="${j}">${q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('');
+  return list.map((q, k) => `<div class="q" data-k="${kind}" data-q="${k}">${q.src ? `<p class="qsrc">仿 ${String(q.src).replace(/^仿\s*/, '')}</p>` : ''}<p class="qt">${k + 1}. ${q.q}</p><div class="opts">${order(q, k).map(j => `<button class="opt" type="button" data-o="${j}">${q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('');
 }
 // 把連續的作答併成「一題一次」：同一章、同一題、同一頁面瀏覽中，從第 1 次作答到答對為止
 function sessions(log = LOG) {
   const out = [];
-  log.forEach(e => { const last = out.length && [...out].reverse().find(s => s.c === e.c && s.k === e.k && s.i === e.i && !s.closed);
-    if (e.n === 1 || !last) out.push({ t: e.t, c: e.c, k: e.k, i: e.i, tries: 1, ok: e.ok, first: e.ok, closed: !!e.ok, end: e.t });
+  log.forEach(e => { const key = e.h || e.k + e.i, last = out.length && [...out].reverse().find(s => s.c === e.c && s.key === key && !s.closed);
+    if (e.n === 1 || !last) out.push({ t: e.t, c: e.c, k: e.k, i: e.i, h: e.h, qt: e.qt, key, tries: 1, ok: e.ok, first: e.ok, closed: !!e.ok, end: e.t });
     else { last.tries++; last.end = e.t; if (e.ok) { last.ok = 1; last.closed = true; } } });
   return out;
 }
@@ -9923,14 +10087,14 @@ function renderLog() {
 ${ss.length ? `<div class="cards">${card('n', '練習題次', ss.length)}${card('f', '第一次就答對', pct(ss.filter(s => s.first).length, ss.length))}${card('d', '練習天數', days.length)}${card('l', '最近一次', `${dstr(ss[ss.length - 1].t)} ${tstr(ss[ss.length - 1].t)}`)}</div>
 <h2>各章</h2><table class="tbl"><thead><tr><th>章節</th><th>題次</th><th>第一次就答對</th><th>最近練習</th></tr></thead><tbody>${byCh.map(r => `<tr><td><a href="#${r.c.id}">${r.c.title}</a></td><td>${r.n}</td><td>${pct(r.f, r.n)}</td><td>${r.last}</td></tr>`).join('')}</tbody></table>
 <h2>每日紀錄</h2>${days.map((d, k) => { const x = ss.filter(s => dstr(s.t) === d);
-  return `<details class="logday"${k ? '' : ' open'}><summary><b>${d}</b>　${x.length} 題，第一次就答對 ${pct(x.filter(s => s.first).length, x.length)}</summary><table class="tbl"><thead><tr><th>時間</th><th>章節</th><th>題目</th><th>結果</th></tr></thead><tbody>${x.map(s => { const c = chOf(s.c), q = c && qbank(c, s.k)[s.i];
-    return `<tr><td class="mono">${tstr(s.t)}</td><td>${c ? `<a href="#${c.id}/${s.k === 'x' ? 'exam' : 'quiz'}">${c.title.split('：')[0]}</a>` : s.c}${s.k === 'x' ? '<small class="mut">（相似題）</small>' : ''}</td><td>${q ? strip(q.q).slice(0, 48) : '（題目已更新）'}</td><td>${res(s)}</td></tr>`; }).join('')}</tbody></table></details>`; }).join('')}
+  return `<details class="logday"${k ? '' : ' open'}><summary><b>${d}</b>　${x.length} 題，第一次就答對 ${pct(x.filter(s => s.first).length, x.length)}</summary><table class="tbl"><thead><tr><th>時間</th><th>章節</th><th>題目</th><th>結果</th></tr></thead><tbody>${x.map(s => { const c = chOf(s.c), f = qfind(s.c, s.h, s.k, s.i), q = f && f.q;
+    return `<tr><td class="mono">${tstr(s.t)}</td><td>${c ? `<a href="#${c.id}/${s.k === 'x' ? 'exam' : 'quiz'}">${c.title.split('：')[0]}</a>` : s.c}${s.k === 'x' ? '<small class="mut">（相似題）</small>' : ''}</td><td>${q ? strip(q.q).slice(0, 48) : s.qt ? `${esc(s.qt.slice(0, 48))}<small class="mut">（此題已改版）</small>` : '（題目已更新）'}</td><td>${res(s)}</td></tr>`; }).join('')}</tbody></table></details>`; }).join('')}
 <div class="w-row"><button class="btn sm" type="button" id="logCsv">下載 CSV</button><button class="btn sm ghost" type="button" id="logClr">清除全部紀錄</button></div>`
   : '<p class="note">還沒有紀錄。到任何一章的「確認理解」或「歷屆考題相似題」作答，就會自動記在這裡。</p>'}`;
   if (!ss.length) return;
   $('#logCsv').onclick = () => {
-    const rows = [['日期', '時間', '章節', '類型', '題號', '題目', '作答次數', '第一次就答對', '最後答對']].concat(ss.map(s => { const c = chOf(s.c), q = c && qbank(c, s.k)[s.i];
-      return [dstr(s.t), tstr(s.t), c ? c.title : s.c, s.k === 'x' ? '相似題' : '章末題', s.i + 1, q ? strip(q.q) : '', s.tries, s.first ? '是' : '否', s.ok ? '是' : '否']; }));
+    const rows = [['日期', '時間', '章節', '類型', '題號', '題目', '作答次數', '第一次就答對', '最後答對']].concat(ss.map(s => { const c = chOf(s.c), f = qfind(s.c, s.h, s.k, s.i), q = f && f.q;
+      return [dstr(s.t), tstr(s.t), c ? c.title : s.c, s.k === 'x' ? '相似題' : '章末題', f ? f.i + 1 : '', q ? strip(q.q) : s.qt || '', s.tries, s.first ? '是' : '否', s.ok ? '是' : '否']; }));
     const csv = '\ufeff' + rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = `化學練習紀錄-${dstr(Date.now())}.csv`; a.click();
   };
@@ -9954,7 +10118,7 @@ ${c.exam ? `<section class="sec" id="sec-exam"><h2><span class="sn">考</span>�
     let tries = 0;
     $$('.opt', qe).forEach(b => { b.onclick = () => {
       const ok = +b.dataset.o === q.a; b.classList.add(ok ? 'right' : 'wrong'); why.hidden = false;
-      logAnswer({ c: id, k: kind, i: qi, p: +b.dataset.o, ok: ok ? 1 : 0, n: ++tries });
+      logAnswer({ c: id, k: kind, i: qi, h: qid(id, q, kind), qt: strip(q.q).slice(0, 60), p: +b.dataset.o, ok: ok ? 1 : 0, n: ++tries });
       const demo = q.show && INST[q.show.w] ? '<button class="btn sm" type="button" data-show>在圖上看 ↑</button>' : '';
       if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}${demo}`; if (kind === 'q') right.add(qe.dataset.q);
         if (right.size === c.quiz.length && !state.done[id]) { setDone(id, true); markBtn(); } }
@@ -10023,6 +10187,7 @@ function boot() {
      tracks: [{ doc, get() → 已完成表, set(表) }]   課程頁一條；首頁列出全部課程，一次同步
      count() / total()                             面板上顯示的完成章數
      refresh()                                     從雲端合併進新章節後重畫畫面
+     logs: { doc, get() → 紀錄陣列, set(陣列) }（選用） 練習紀錄：與雲端取聯集合併，任何一邊都不會刪掉另一邊的紀錄
    介面：右上角按鈕 → 下拉面板說明「登入有什麼用」與目前同步狀態；hint() 給首頁的提示列。 */
 const CLOUD = (() => {
   const CFG = { apiKey: 'AIzaSyD8oEe02SY2PCDe3d40NtTprrApqW_DhB8', authDomain: 'test-5dbba.firebaseapp.com', projectId: 'test-5dbba' };
@@ -10044,7 +10209,7 @@ const CLOUD = (() => {
 <p>${T('用 Google 帳號登入後，你完成的章節會存到雲端。之後在手機或其他電腦登入同一個帳號，進度會自動接上。', 'Sign in with Google and the chapters you finish are saved to the cloud. Sign in with the same account on your phone or another computer and your progress follows you.')}</p>
 <p class="cp-st">${T(`目前：進度只存在這台裝置（已完成 ${n} / ${tot} 章）`, `Now: progress is saved on this device only (${n} / ${tot} chapters done)`)}</p>
 <button class="btn pri cp-go" type="button" id="cpIn">${G}<span>${T('用 Google 登入', 'Sign in with Google')}</span></button>
-<p class="cp-s">${T('不登入也能使用全部內容。這裡只儲存「完成了哪些章節」，不會讀取你的其他 Google 資料。', 'Everything works without signing in. Only the list of finished chapters is stored, nothing else from your Google account.')}</p>${e}`;
+<p class="cp-s">${T('不登入也能使用全部內容。這裡只儲存「完成了哪些章節」與練習紀錄，不會讀取你的其他 Google 資料。', 'Everything works without signing in. Only the list of finished chapters is stored, nothing else from your Google account.')}</p>${e}`;
     return `<p class="cp-t">${user.photoURL ? `<img class="cp-av" src="${esc(user.photoURL)}" alt="" referrerpolicy="no-referrer">` : ''}<span>${esc(user.displayName || T('已登入', 'Signed in'))}<small>${esc(user.email || '')}</small></span></p>
 <p class="cp-st ok">${busy ? T('同步中…', 'Syncing…') : `✓ ${T(`已同步 ${n} / ${tot} 章`, `${n} / ${tot} chapters synced`)}${last ? ` · ${time(last)}` : ''}`}</p>
 <p>${T('在其他裝置用同一個帳號登入，就會看到相同的進度；在任何一台標記完成，其他裝置也會跟著更新。', 'Sign in with the same account on another device to see the same progress. Chapters you finish anywhere show up everywhere.')}</p>
@@ -10082,6 +10247,24 @@ const CLOUD = (() => {
       .then(() => { busy = false; err = ''; last = Date.now(); render(); })
       .catch(e => { busy = false; err = T('同步失敗：', 'Sync failed: ') + e.code; render(); }), 800);
   }
+  // 練習紀錄：只增不減。上傳最近 3000 筆（Firestore 單一文件上限 1 MB）；下載時與本機取聯集
+  const lkey = e => `${e.t}|${e.c}|${e.h || e.k + e.i}|${e.p}`;
+  let ltimer = 0;
+  function pushLog() {
+    if (!user || !COURSE.logs) return;
+    clearTimeout(ltimer);
+    ltimer = setTimeout(() => ref(COURSE.logs.doc).set({ log: COURSE.logs.get().slice(-3000), updated: Date.now() }).catch(e => console.warn('log sync', e.code)), 2000);
+  }
+  async function pullLog() {
+    if (!COURSE.logs) return;
+    try {
+      const snap = await ref(COURSE.logs.doc).get(), remote = (snap.exists && snap.data().log) || [], local = COURSE.logs.get();
+      const seen = new Set(local.map(lkey)), add = remote.filter(e => !seen.has(lkey(e)));
+      if (add.length) COURSE.logs.set(local.concat(add).sort((a, b) => a.t - b.t));
+      const rs = new Set(remote.map(lkey));
+      if (local.some(e => !rs.has(lkey(e)))) pushLog();
+    } catch (e) { console.warn('log sync', e.code); }
+  }
   async function pull() {
     try {
       busy = true; render();
@@ -10093,6 +10276,7 @@ const CLOUD = (() => {
         if (add.length) { t.set(local); added += add.length; }
         if (Object.keys(local).some(k => !remote[k])) ahead = true;
       }
+      await pullLog();
       if (added) COURSE.refresh();
       busy = false; last = Date.now(); err = '';
       if (ahead) push(); else render();
@@ -10124,7 +10308,7 @@ const CLOUD = (() => {
     auth = firebase.auth(); db = firebase.firestore();
     auth.onAuthStateChanged(u => { user = u; ready = true; err = ''; render(); if (u) pull(); });
   }
-  return { start, push, hint, render };
+  return { start, push, pushLog, hint, render };
 })();
 
 
@@ -10135,6 +10319,7 @@ const COURSE = {
   tracks: [{ doc: 'chemLadder', get: () => state.done, set: m => { state.done = m; store.set('done', m); } }],
   count: () => CH.filter(c => state.done[c.id]).length, total: () => CH.length,
   refresh: () => { updateProgress(); route(location.hash.slice(1)); },
+  logs: { doc: 'chemLog', get: () => LOG, set: a => { LOG.length = 0; LOG.push(...a); store.set('log', LOG); } },
 };
 if (document.querySelector('meta[name="app-site"]')) {
   document.querySelector('.brand').insertAdjacentHTML('beforebegin', '<a class="home-link" href="../">‹ 學習階梯</a>');

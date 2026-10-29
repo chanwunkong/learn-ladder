@@ -5,6 +5,7 @@
      tracks: [{ doc, get() → 已完成表, set(表) }]   課程頁一條；首頁列出全部課程，一次同步
      count() / total()                             面板上顯示的完成章數
      refresh()                                     從雲端合併進新章節後重畫畫面
+     logs: { doc, get() → 紀錄陣列, set(陣列) }（選用） 練習紀錄：與雲端取聯集合併，任何一邊都不會刪掉另一邊的紀錄
    介面：右上角按鈕 → 下拉面板說明「登入有什麼用」與目前同步狀態；hint() 給首頁的提示列。 */
 const CLOUD = (() => {
   const CFG = { apiKey: 'AIzaSyD8oEe02SY2PCDe3d40NtTprrApqW_DhB8', authDomain: 'test-5dbba.firebaseapp.com', projectId: 'test-5dbba' };
@@ -26,7 +27,7 @@ const CLOUD = (() => {
 <p>${T('用 Google 帳號登入後，你完成的章節會存到雲端。之後在手機或其他電腦登入同一個帳號，進度會自動接上。', 'Sign in with Google and the chapters you finish are saved to the cloud. Sign in with the same account on your phone or another computer and your progress follows you.')}</p>
 <p class="cp-st">${T(`目前：進度只存在這台裝置（已完成 ${n} / ${tot} 章）`, `Now: progress is saved on this device only (${n} / ${tot} chapters done)`)}</p>
 <button class="btn pri cp-go" type="button" id="cpIn">${G}<span>${T('用 Google 登入', 'Sign in with Google')}</span></button>
-<p class="cp-s">${T('不登入也能使用全部內容。這裡只儲存「完成了哪些章節」，不會讀取你的其他 Google 資料。', 'Everything works without signing in. Only the list of finished chapters is stored, nothing else from your Google account.')}</p>${e}`;
+<p class="cp-s">${T('不登入也能使用全部內容。這裡只儲存「完成了哪些章節」與練習紀錄，不會讀取你的其他 Google 資料。', 'Everything works without signing in. Only the list of finished chapters is stored, nothing else from your Google account.')}</p>${e}`;
     return `<p class="cp-t">${user.photoURL ? `<img class="cp-av" src="${esc(user.photoURL)}" alt="" referrerpolicy="no-referrer">` : ''}<span>${esc(user.displayName || T('已登入', 'Signed in'))}<small>${esc(user.email || '')}</small></span></p>
 <p class="cp-st ok">${busy ? T('同步中…', 'Syncing…') : `✓ ${T(`已同步 ${n} / ${tot} 章`, `${n} / ${tot} chapters synced`)}${last ? ` · ${time(last)}` : ''}`}</p>
 <p>${T('在其他裝置用同一個帳號登入，就會看到相同的進度；在任何一台標記完成，其他裝置也會跟著更新。', 'Sign in with the same account on another device to see the same progress. Chapters you finish anywhere show up everywhere.')}</p>
@@ -64,6 +65,24 @@ const CLOUD = (() => {
       .then(() => { busy = false; err = ''; last = Date.now(); render(); })
       .catch(e => { busy = false; err = T('同步失敗：', 'Sync failed: ') + e.code; render(); }), 800);
   }
+  // 練習紀錄：只增不減。上傳最近 3000 筆（Firestore 單一文件上限 1 MB）；下載時與本機取聯集
+  const lkey = e => `${e.t}|${e.c}|${e.h || e.k + e.i}|${e.p}`;
+  let ltimer = 0;
+  function pushLog() {
+    if (!user || !COURSE.logs) return;
+    clearTimeout(ltimer);
+    ltimer = setTimeout(() => ref(COURSE.logs.doc).set({ log: COURSE.logs.get().slice(-3000), updated: Date.now() }).catch(e => console.warn('log sync', e.code)), 2000);
+  }
+  async function pullLog() {
+    if (!COURSE.logs) return;
+    try {
+      const snap = await ref(COURSE.logs.doc).get(), remote = (snap.exists && snap.data().log) || [], local = COURSE.logs.get();
+      const seen = new Set(local.map(lkey)), add = remote.filter(e => !seen.has(lkey(e)));
+      if (add.length) COURSE.logs.set(local.concat(add).sort((a, b) => a.t - b.t));
+      const rs = new Set(remote.map(lkey));
+      if (local.some(e => !rs.has(lkey(e)))) pushLog();
+    } catch (e) { console.warn('log sync', e.code); }
+  }
   async function pull() {
     try {
       busy = true; render();
@@ -75,6 +94,7 @@ const CLOUD = (() => {
         if (add.length) { t.set(local); added += add.length; }
         if (Object.keys(local).some(k => !remote[k])) ahead = true;
       }
+      await pullLog();
       if (added) COURSE.refresh();
       busy = false; last = Date.now(); err = '';
       if (ahead) push(); else render();
@@ -106,5 +126,5 @@ const CLOUD = (() => {
     auth = firebase.auth(); db = firebase.firestore();
     auth.onAuthStateChanged(u => { user = u; ready = true; err = ''; render(); if (u) pull(); });
   }
-  return { start, push, hint, render };
+  return { start, push, pushLog, hint, render };
 })();

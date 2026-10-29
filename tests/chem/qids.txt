@@ -1,0 +1,947 @@
+acid-base|1lhi6b9	用 NaOH 滴定醋酸，滴到半當量點時，溶液的 pH 等於什麼？
+acid-base|1swri8m	弱酸被強鹼滴定，為什麼當量點的 pH 大於 7？
+acid-base|1ex7t88	在醋酸／醋酸鈉緩衝溶液中加入少量 HCl，主要發生什麼反應？
+acid-base|12kz7cb	要配製 pH 5.0 的緩衝溶液，下列哪一組最適合？（pKa 已列出）
+acid-base|1x6drxt	20.0 mL 的 0.100 M 醋酸（pKa 4.74）加入 15.0 mL
+acid-base|1l8ov1g	用 NaOH 滴定醋酸，選哪一種指示劑最適合？
+acid-base|160go09	下列何者不是阿瑞尼斯鹼？
+acid-base|i3erkf	下列何者不是酸鹼反應？
+acid-base|36dwrl	下列何者是路易斯酸？
+acid-base|jnottu	2.0 × 10⁻⁸ M 的 HCl 水溶液 pH 約為？
+acid-base|xq8hv8	0.050 M 的某弱鹼溶液 pH 為 10.0，其 Kb 約為？
+acid-base|t1kalg	0.020 M 的咖啡因溶液（Kb = 4.1 × 10⁻⁴），pH 約為？
+acid-base|1p850fs	0.10 M 單質子弱酸的解離度為 1.0%，則 0.40 M 時的解離度約為？
+acid-base|1vajzpm	Ka(HF) = 7.2 × 10⁻⁴、Ka(HCN) = 6.2 × 10⁻¹
+acid-base|1y63me9	0.10 M 的 NaX、NaY、NaZ 溶液 pH 分別為 7.0、9.0、1
+acid-base|13pmofb	等濃度時，下列鹽類水溶液何者 pH 最小？
+acid-base|1149uhl	等濃度時，下列何者的水溶液 pH 最高？
+acid-base|1b619jr	H₃PO₄、H₃PO₃、H₃BO₃、H₂C₂O₄ 中，哪些是二質子酸？
+acid-base|1t8oqvr	H₃PO₄ 的 pKa₂ = 7.20，pH 8.20 時 [HPO₄²⁻] :
+acid-base|14na3hc	0.10 M 的 NaHCO₃ 溶液（H₂CO₃ pKa₁ 6.35、pKa₂ 
+acid-base|18ws5m6	0.10 M 的二質子酸 H₂A（Ka₁ = 1.0 × 10⁻⁴、Ka₂ = 
+acid-base|1mmlt47	pKa 6.4 的弱酸藥物在 pH 7.4 的血液中，約有多少比例是離子態？
+acid-base|1m2uacs	下列緩衝溶液何者緩衝容量最大？
+acid-base|1ir6630	要配製 pH 9.0 的緩衝溶液，應選用哪一個弱酸？
+acid-base|1489fls	0.210 g 的酸（分子量 192）以 0.100 M NaOH 滴定至終點，
+acid-base|wxy0yf	以 Ba(OH)₂ 溶液慢慢滴入 CuSO₄ 溶液，導電燈泡的亮度如何變化？
+acid-base|3macj1	20 mL 0.1 M CH₃COOH 與 20 mL 0.1 M NaOH 混
+acid-base|1xpgq89	40.0 mL 0.25 M NaOH 與 60.0 mL 0.10 M HCl
+acid-base|1gk1ypc	已知 HNO₂ 酸性強於 HCN，HBr 是強酸。下列在水中的鹼性由強到弱何者正
+acid-base|100wvr6	20.0 mL 未知濃度的 HF 以 0.100 M NaOH 滴定，加入 15
+acid-base|1nwy0y3	某弱酸性成分 pKa = 3.5，在血液 pH 7.4 中主要以何種形式存在？
+acid-base|106v9jp	下列共軛酸鹼對的敘述何者錯誤？
+acid-base|1o2tp6v	等體積混合後，下列何者是緩衝溶液？
+acid-base|q70o2y	1 L 緩衝溶液含 0.50 M CH₃COOH 與 0.50 M CH₃COO
+acid-base|2gopjl	大氣中 SO₂ 為 0.40 ppm（體積），SO₂(g) + H₂O ⇌ H⁺
+acid-base|15sloe7	下列何者是路易斯酸，但不是布忍斯特酸？
+acid-base|xa2u6m	50 mL NaHSO₃ 溶液恰與 25 mL 0.20 M NaOH 中和；同
+acid-base|utovhb	5 mL 12 M HCl 要稀釋到多少體積，pH 才會和 0.50 M 醋酸（
+acid-base|1gi0sr3	Ka：HF 7.2 × 10⁻⁴、HCOOH 1.8 × 10⁻⁴、HOCl 3
+acid-base|1yvn0w8	溶液含 1.0 M HCN 與 2.0 M NaCN（Ka = 6.2 × 10
+acid-base|1ozs8bv	0.0040 M 某溶液 pH = 3.10，該物質是？
+acid-base|e7te8c	20 mL 0.10 M H₃PO₄ 與 30 mL 0.10 M NaOH 混
+acid-base|5j2zxq	指示劑 HIn 的 Ka = 1 × 10⁻⁹，pH 8.0 時 [HIn]/[
+acid-base|8hy0ke	下列何者適合作為緩衝溶液？
+acid-base|i3kar2	pH 4.6 的溶液中 [H⁺] 約為？
+acid-base|1txnzof	0.2 M NaOH 與 0.2 M 弱酸 HA（Ka = 1 × 10⁻⁵）等
+acid-base|4ajlbo	依布忍斯特–洛瑞理論，CaF₂ + H₂SO₄ → CaSO₄ + 2HF 中 
+acid-base|1ua0jbo	40.0 mL 0.40 M HCl 加入 25.0 mL 0.40 M NaO
+acid-base|1qxd42z	指示劑 pKa 4.52，要從 90% 鹼型變成 90% 酸型，pH 要如何變化
+acid-base|1cvftxt	0.10 M 草酸（pKa₁ 1.25、pKa₂ 4.27）調到 pH 3.00
+acid-base|zvp7e8	弱酸各種形式的分布分率 α 取決於？
+acid-base|1jvcktc	每份 2.00 mL 的 H₂SO₄ 以 0.100 M NaOH 滴定，平均需
+acid-base|1dge68	0.1 M NaF 溶液中，濃度最低的物種是？
+acid-base|144prpa	HF/F⁻ 緩衝溶液中，下列何者能降低 pH？
+acid-base|1labeua	以 HCl 滴定 NH₃ 水溶液，最適宜的指示劑是？
+acid-base|8s8kkf	20.0 mL HF 加入 20.0 mL 0.10 M NaOH 後 pH 為
+acid-base|1x2nt2m	醋酸溶液中加入半當量的下列何者，最不適合配成緩衝溶液？
+acid-base|czk5m8	以 NaOH 滴定 H₃PO₄，HPO₄²⁻ 的 pKa 等於何時的 pH？
+acid-base|1y1ghnq	下列何者是緩衝溶液？
+acid-base|1xth5tc	0.098 g 某酸需 0.200 M NaOH 10.0 mL 達當量點，此酸
+acid-base|vb5dq0	下列混合何者不會形成緩衝溶液？
+acid-base|olpvqt	等體積 1.0 M HCN 與 1.0 M HNO₂ 混合，含量最多的三種成分是
+acid-base|ks58e0	0.10 M 的 C₅H₅NHCl、HCN、NaF、CH₃COONa、NaOH，
+acid-base|v2ejqk	要配 pH 9.42 的緩衝溶液（NH₄⁺ pKa 9.24、log 1.5 =
+acid-base|4am0kj	以 HCl 滴定某弱鹼，半當量點 pH = 9.3，此鹼最可能是？
+acid-base|3r31s9	以 NaOH 標準溶液滴定食醋時，下列哪一項會使測得的醋酸含量偏低？
+acyl|8oe9uk	羧酸衍生物與醛酮都會被親核基攻擊，為什麼羧酸衍生物發生「取代」而非「加成」？
+acyl|1sixctr	下列羧酸衍生物對親核醯基取代的反應性由大到小為？
+acyl|w5ssej	下列哪一個轉換「不能」直接進行？
+acyl|1ye5t5g	費雪酯化（K ≈ 4）中，下列哪一種做法無法提高酯的產率？
+acyl|uvyw1l	酯在鹼性條件下水解（皂化）為什麼是不可逆的？
+acyl|ayhgiz	乙酸乙酯與過量 CH₃MgBr 反應後酸處理，產物主要為？
+acyl|exdb4b	為什麼醯胺（例如蛋白質的胜肽鍵）在水中很穩定？
+acyl|eiwsvy	下列官能基在酸或鹼中加熱，何者最難水解？
+acyl|6ci3o5	乳酸（2-羥基丙酸）為什麼難以形成穩定的內酯？
+acyl|xdc671	下列化合物水解，哪些會得到苯甲酸？ I 乙酸苄酯 II 苯甲醯胺 III 乙酸苯
+acyl|12wbp2k	由水楊酸與乙酸酐合成阿斯匹靈，何者錯誤？
+acyl|7fw9sm	苯甲醯氯與環己醇合成苯甲酸環己酯時，常加入哪一種化合物？
+acyl|1tk8hsq	盤尼西林的 β-內醯胺比一般醯胺容易被打開，主要原因是？
+acyl|1u1r0gh	對親核基的反應性由高到低：I 乙醯氯 II 乙酸乙酯 III 乙酸酐 IV 乙醯
+acyl|qwd9zc	下列何者能用格里納羧化、也能用腈水解製得？
+acyl|1u0p84u	下列哪些與 LiAlH₄ 反應可得到異丁醇？ I 異丁酸 II 異丁酸甲酯 II
+acyl|11kf9t9	下列哪一個反應可以產生羧酸官能基？
+acyl|bnxmff	要由丙酸製得丙酸乙酯，先用哪一種試劑把酸活化？
+acyl|195meny	最適合把醯胺轉成胺的試劑是？
+acyl|nppnhz	把溴苯轉成苯甲酸最適合的試劑是？
+acyl|1q1o57p	丙酸乙酯與過量 CH₃MgX 反應後酸化，主產物是？
+acyl|4t80bp	酸催化酯水解的機構中，下列何者不是中間物？
+acyl|1j6cwiv	丁二酸加熱到高溫，主產物是？
+acyl|a311n0	親核醯基取代的反應性由高到低，何者正確？
+acyl|r7y4ed	γ-丁內酯與過量 CH₃MgBr 反應再酸化，產物是？
+alcohol|1mn59fv	乙醇（分子量 46）的沸點遠高於二甲醚（分子量 46），主要原因是？
+alcohol|1kmxks9	下列哪一種醇與盧卡斯試劑（濃 HCl／ZnCl₂）反應最快？
+alcohol|j6z6rf	(R)-2-丁醇與 PBr₃ 反應，產物為？
+alcohol|12y395g	1-丙醇以 K₂Cr₂O₇／H₂SO₄ 氧化，主產物為？
+alcohol|14gia76	下列哪一種醇不會被 K₂Cr₂O₇ 氧化？
+alcohol|1e3ko7a	以威廉森合成法製備第三丁基甲基醚 (CH₃)₃C–O–CH₃，應選擇哪一組試劑？
+alcohol|ukizbp	2,2-二甲基環氧乙烷在酸性甲醇中開環，CH₃OH 主要進攻哪一個碳？
+alcohol|13pefg8	3,3-二甲基-2-丁醇在濃 H₂SO₄ 加熱下脫水，主產物是？
+alcohol|1m6uoq7	關於以第三丁基醚作為醇的保護基，何者正確？
+alcohol|8retbe	下列何者是可行的威廉森醚合成？
+alcohol|2ir47c	中藥分析中常以 FeCl₃ 試劑檢測哪一類成分？
+alcohol|fob7sd	將一級醇氧化成羧酸，最合適的條件是？
+alcohol|1qtg14l	CH₃CH₂CH₂OH 以濃 H₂SO₄ 高溫脫水，產物是？
+alcohol|m8dhgw	由酚合成乙基苯基醚需要？
+alcohol|w3oy9x	酸催化脫水反應中，下列何者最快？
+alcohol|ln4ns8	外用酒精（rubbing alcohol）通常是指？
+alcohol|ph0z4	硫醇（R–SH）與相同 R 的醇相比，何者正確？
+alcohol|1rw0nd3	下列試劑何者能把 2-甲基-1-丁醇氧化成 2-甲基丁醛並停在醛？
+alcohol|t5e8x0	下列氧化劑何者會把 1-丙醇一路氧化成丙酸，而不是停在丙醛？
+alcohol|15dn7l8	下列何者不與 FeCl₃ 溶液顯色？
+alcohol|1s6a4bo	以產率而言，下列何者最不適合合成第三丁基甲基醚？
+alcohol|m3s0zl	四氫呋喃與過量 HBr 反應，主產物是？
+alcohol|m3aeif	2-乙基-1-丁醇與 SOCl₂／吡啶反應，產物是？
+alcohol|191d82w	下列醇何者最不易被 CrO₃ 氧化？
+alcohol|veo5qj	環戊醇與濃硫酸加熱，最可能的產物是？
+alcohol|1nlolko	HO–CH₂CH₂CH₂CH₂–Br 加入 NaH，主產物是？
+alcohol|b140ls	要把環己醇轉成氯環己烷，最合適的試劑是？
+alkene|wt3id8	丙烯和 HBr 反應的主產物是？
+alkene|h8ys6z	馬可尼可夫規則的根本原因是？
+alkene|10depkz	3-甲基-1-丁烯和 HBr 反應，主產物是？
+alkene|19c7x1f	環己烯和 Br₂ 反應的產物是？
+alkene|16tagaf	要從丙烯製備 1-丙醇，應使用哪一個方法？
+alkene|ak9olg	下列哪一個加成反應是同側（syn）加成？
+alkene|1x7nod4	1-丙炔在 H₂SO₄、HgSO₄ 催化下加水，主產物是？
+alkene|pbk6oj	HCl 加到 3-甲基-1-戊烯，得到 2-氯-3-甲基戊烷與另一個主要產物，它
+alkene|17ni3z0	要把 2-己炔轉成 trans-2-己烯，應使用？
+alkene|3e9a31	某烯經臭氧分解（Zn／AcOH 處理）得到丙酮與丙醛，原來的烯是？
+alkene|1lj8cim	1-戊炔在 H₂SO₄／HgSO₄ 催化下加水，主產物是？
+alkene|pbghaa	3,3-二甲基-1-丁烯經 ① Hg(OAc)₂, H₂O ② NaBH₄，主產
+alkene|1c7nck8	要把環己烯轉成反式-2-溴環己醇，應使用？
+alkene|h14c9j	要把丙烯轉成 1-溴丙烷，最佳試劑是？
+alkene|13v3ulx	要把 1-甲基環己烯轉成 trans-2-甲基環己醇（OH 不在接甲基的碳上），
+alkene|1gp4d3i	2-甲基-1-丁烯、2-甲基-2-丁烯、3-甲基-1-丁烯分別以 H₂／Pt 氫
+alkene|h8ajd9	要把苯乙烯 C₆H₅CH=CH₂ 轉成 C₆H₅CH₂CH₂OH，應使用？
+alkene|1v3caxp	下列何者能把 3-己炔轉成 (Z)-3-己烯？
+alkene|iu0a3n	cis-2-丁烯、trans-2-丁烯、1-丁烯氫化成丁烷，放熱由多到少？
+alkene|a6bpu8	下列烯何者經臭氧分解會得到丙酮？
+alkene|bf3j2c	HC≡CH 依序經 ① NaNH₂ ② CH₃CH₂CH₂CH₂Br ③ H₂,
+alkene|bxj2xp	要把 1-丁烯轉成 1-丁炔，最適合的步驟是？
+alkene|nw26h5	HCl 與 3-甲基-1-丁烯在 0 °C 反應得到 2-氯-2-甲基丁烷，原因
+alkene|15wq3bt	最適合把烯還原成烷的方法是？
+alkene|1z0ypzm	cis-2-丁烯與 Br₂ 加成，產物是？
+alkene|zrvep5	要把烯轉成環氧化物，應使用？
+alpha|d8vxv3	2-甲基環己酮在 NaOD/D₂O 中充分反應後，最多有幾個 H 被換成 D？
+alpha|1huy92y	(R)-3-甲基-2-戊酮放在稀 NaOH 中一段時間後，旋光度逐漸變成零，原因
+alpha|vudw2	2-甲基環己酮用 LDA 在 −78 °C 處理後加入 CH₃I，主要產物為？
+alpha|mr9mzo	下列化合物中，α-H 酸性最強的是？
+alpha|1ee5oz	下列何者的碘仿試驗呈陽性？
+alpha|7tfgly	酮在鹼性條件下與 Br₂ 反應時，常得到多溴取代產物，原因是？
+alpha|10phwi4	以丙二酸酯合成法製備辛酸（octanoic acid），應使用哪一種鹵烷？
+alpha|3eyq8r	乙醯乙酸乙酯依序以 NaOEt、CH₃CH₂Br 處理，再以 H₃O⁺ 加熱，產
+alpha|1lwzp4i	乙醛在稀 NaOH 中的醛醇加成產物是？
+alpha|1lh5j1c	下列哪一組最適合進行只得到單一主產物的交叉醛醇縮合？
+alpha|y69mat	2,6-庚二酮在鹼中加熱，分子內醛醇縮合的主要產物是？
+alpha|1jor095	克來森縮合需要使用一整當量的鹼（如 NaOEt），主要原因是？
+alpha|m2c9he	丙二酸二乙酯的烯醇離子與甲基乙烯基酮（CH₂=CHCOCH₃）反應，新的 C–C
+alpha|sdnp91	酮酸中毒病人呼氣有丙酮味，丙酮的來源是？
+alpha|1fj78w2	乙醯乙酸乙酯在 NaOEt 中與甲基乙烯基酮反應，屬於哪一種反應？
+alpha|1jtwu7w	下列縮合反應何者的起始物不是酯？
+alpha|1fdwmjd	下列何者能區分甲醇與乙醇？
+alpha|wabfwp	乙醯丙酮的烯醇式為什麼特別穩定？
+alpha|1k15dv4	要經分子內醛醇縮合合成 3-甲基-2-環戊烯酮，起始物是？
+alpha|13y4lkv	要在酮的 α 碳接上 –CHO（甲醯化），交叉克來森的試劑是？
+alpha|19c01ns	2,8-壬二酮以鹼處理後再以 NaBH₄ 還原，最終產物的環是幾員環？
+alpha|9qxowa	想只做 α-取代、避免羰基縮合，應如何操作？
+alpha|1i1mw95	下列何者可以由曼尼希反應製得？
+alpha|9tpyad	3-戊酮 CH₃CH₂COCH₂CH₃ 有幾個 α-氫？
+alpha|8sgehm	要用丙二酸酯合成得到辛酸，鹵烷應選？
+alpha|lve0z	克來森縮合的產物通稱為？
+alpha|dxkmsa	丁醛以稀 KOH 在低溫處理，主產物是？
+alpha|d3hfyv	2-甲基環己酮以鹼催化在過量 D₂O 中處理，每分子換入幾個 D？
+alpha|18uk0ru	丁酮以鹼處理得到的陰離子，下列哪些是它的共振式？
+alpha|1x9ii1n	要把環己酮轉成烯胺，最佳試劑是？
+alpha|k1eqwq	2-甲基環己酮以 LDA（−78 °C）處理再加 CH₃Br，主產物是？
+amine|x3vmnh	下列化合物鹼性最強的是？
+amine|std16o	某胺類藥物 pKaH = 9.4，在 pH 7.4 的血液中，以哪一種形式為主？
+amine|1w8d5eb	弱鹼性藥物為什麼主要在小腸而不是胃吸收？
+amine|wv10ir	用 NH₃ 和溴乙烷直接反應製備乙胺，產率不佳的主要原因是？
+amine|1ubtlic	霍夫曼脫去的主產物是取代較少的烯，原因是？
+amine|4426x6	苯胺經 NaNO₂/HCl（0–5 °C）再與 CuBr 反應，產物為？
+amine|14pc0wb	組織胺三個 N 的鹼性由強到弱：側鏈 –NH₂、咪唑的 =N–、咪唑的 N–H
+amine|s3g5iz	下列化合物何者鹼性最強？
+amine|10m37aw	下列含氮化合物，何者的 N 親核性最強？
+amine|16dbqz3	分子量相近時沸點由低到高：I 三乙胺 II 二丙胺 III 正己胺 IV 正己烷
+amine|cwpaj5	普魯卡因分子中的 Et₂N–CH₂– 與苯環上的 –NH₂ 分別屬於？
+amine|uhzpmd	環戊胺與苯甲醛反應，再以 H₂／Ni 處理，主產物是？
+amine|b9c9iw	下列重排反應何者不經過異氰酸酯中間體？
+amine|m6us5c	欣斯貝格試驗可以區分？
+amine|164j8o8	關於 N-亞硝基二甲胺（NDMA），何者錯誤？
+amine|1hsax8g	環狀胺經 ① 過量 CH₃I ② Ag₂O, H₂O ③ 加熱，這個步驟稱為？
+amine|1wk96nv	尼古丁以 KMnO₄ 氧化，主產物是？
+amine|1kvpq8w	苯肼與醛或酮在酸催化下加熱，得到？
+amine|f04klg	喹啉與 NaNH₂ 在 100 °C 反應，屬於？
+amine|1h1v80t	2,5-己二酮與 NH₃ 反應的產物是？
+amine|w0p41	欣斯貝格試驗中，二級胺的產物有什麼特徵？
+amine|g3xkfw	在水溶液中鹼性最強的是？
+amine|1azkwkp	吲哚在 0 °C 與 Br₂ 反應，主產物是？
+aromatic|wsicks	下列何者具有芳香性？
+aromatic|1rcj4vx	吡咯（pyrrole）的 N 為什麼幾乎沒有鹼性？
+aromatic|1ouma5u	苯和 Br₂/FeBr₃ 反應的產物是溴苯而非二溴環己二烯，主要原因是？
+aromatic|dfwkvn	親電子芳香取代反應中，速率決定步驟是？
+aromatic|1yvep0q	甲苯硝化的主產物是？
+aromatic|aqn5k4	硝基苯再硝化，主產物是？
+aromatic|a1124j	氯苯在親電子芳香取代中的表現是？
+aromatic|df99cw	下列何者具有芳香性？ 環丁二烯、環戊二烯負離子、環庚三烯陽離子、環辛四烯、吡咯
+aromatic|1hzs02z	下列取代苯何者進行親電子芳香取代最快？
+aromatic|1ursboe	下列何者無法進行傅–克烷基化？
+aromatic|1awvk4d	苯硝化反應真正的親電子試劑是？
+aromatic|rusi8i	下列重氮離子與苯酚偶合，何者最快？
+aromatic|1vidqxv	下列人名反應何者的產物不是醛？
+aromatic|w96w2l	硝化速率由快到慢：I 苯酚、II 甲苯、III 苯、IV 硝基苯
+aromatic|12tin8c	1,3-二氯苯單溴化的主產物是？
+aromatic|itiy5n	硝化速率由快到慢：I 酚、II 苯、III 氯苯、IV 硝基苯
+aromatic|5nfnjb	由苯合成間溴苯胺最佳的順序是？
+aromatic|1htt1gr	由苯合成 2-氯-4-硝基甲苯的最佳順序是？
+aromatic|9ixv6r	下列鹵化物何者適合與苯進行傅–克烷基化？
+aromatic|1idktta	下列化合物與熱的 KMnO₄ 反應，何者不會得到苯甲酸？
+aromatic|1h70s6v	環戊二烯陽離子的 π 分子軌域中，有幾個是成鍵軌域？
+aromatic|1vewxbg	苯甲酸經伯奇還原（Na, NH₃, EtOH），COOH 接在？
+aromatic|mg5tux	下列對苯的描述何者不正確？
+aromatic|1sfbukr	苯與 (CH₃)₂CHCH₂Cl、AlCl₃ 進行傅–克烷基化，主產物是？
+aromatic|pjcgow	苯先與 (CH₃)₂CHCOCl／AlCl₃ 反應，再以 Zn(Hg)／HCl 
+aromatic|zy9p7c	製備間溴乙苯最合理的方法是？
+aromatic|1vdbba5	氯苯與 NaOH 在 340 °C 反應生成酚，經過什麼中間體？
+aromatic|17mjfvt	下列何者具芳香性？ I 吡啶 II 吡咯 III 環戊二烯 IV 呋喃
+aromatic|qg799z	乙醯苯胺 C₆H₅NHCOCH₃ 以 Cl₂／FeCl₃ 單氯化，主產物是？
+aromatic|wrytfx	萘溴化有幾種單取代產物？
+aromatic|1rrmnhm	苯先以 CH₃COCl／AlCl₃ 反應，再以 Cl₂／FeCl₃ 反應，產物是
+aromatic|948unr	要把 4-氯苯胺轉成 4-氯苯甲胺（ClC₆H₄CH₂NH₂），合理的步驟是？
+aromatic|b0lh1x	異丙苯依序以 O₂ 與 H₃O⁺ 處理，主產物是？
+aromatic|18nf9rs	三個苯環「直線」相接的多環芳香烴是？
+atom|8s0wal	⁵⁶Fe³⁺（Fe 的原子序 26）有幾個質子、電子、中子？
+atom|1tqa1gn	下列電磁輻射，頻率由高到低何者正確？
+atom|1blu65y	氫原子的電子從 n = 3 掉到 n = 2，放出的光是什麼顏色？
+atom|xj7no3	氫原子的游離能為 1312 kJ/mol，則 He⁺ 的游離能約為？
+atom|hln21e	一維箱中粒子由基態激發到第一激發態，所需能量為？
+atom|11dsta	下列哪一組量子數不可能存在？
+atom|8t056i	4d 軌域有幾個角節面（節面）？
+atom|zssgfa	Cu（Z = 29）的基態電子組態為？
+atom|17dkauz	第二週期中，為什麼 O 的第一游離能比 N 低？
+atom|m8gcmn	下列等電子離子半徑由大到小何者正確？
+atom|pm5tea	某元素的連續游離能為 738、1451、7733、10543 kJ/mol，它屬
+atom|kodbt9	³²S²⁻（S 的原子序 16）有幾個質子、電子、中子？
+atom|s9p9rm	道耳頓原子說中，討論到下列哪一個概念？
+atom|1xu1lkc	Cl–Cl 鍵能為 243 kJ/mol，能使 Cl₂ 解離的光，最長波長約為？
+atom|3uvfqk	下列電磁波依波長由長到短排列，何者正確？
+atom|1jwq2tx	燃燒含鈉化合物時火焰呈黃色，這是因為鈉原子？
+atom|fhbhph	氫原子中電子由 n = 4 掉到 n = 2，放出的光波長約為？
+atom|1dytrbv	依波耳模型，下列何者的電子軌道半徑最大？
+atom|1n37r24	一維箱中粒子由 n = 2 激發到 n = 3，所需能量為？
+atom|1lsbduf	下列量子數組合 (n, ℓ, mℓ, ms) 何者正確？
+atom|nai5n0	一個原子中，量子數 n = 5、ℓ = 1 的電子最多有幾個？
+atom|hqu697	一個 3p 軌域有幾個節面（平面）與幾個球面節點？
+atom|1alfuiz	下列軌域名稱中，哪一個不存在？
+atom|kzphfr	鉬（Mo，Z = 42，與 Cr 同族）的基態電子組態為？
+atom|1keuk8m	下列哪一組粒子的電子組態都相同？
+atom|1hkn2pg	下列何者代表激發態的氮原子？
+atom|1ycoy4y	下列等電子粒子半徑由大到小，何者正確？
+atom|bu6pup	某元素連續游離能為 578、1817、2745、11577 kJ/mol，此元素
+atom|13iw7vw	下列元素中，第二游離能最大的是？
+atom|euhoav	下列元素第一游離能由小到大，何者正確？
+atom|1t2hgh5	下列變化何者放熱（ΔH < 0）？
+atom|11rctml	若原子序 119 的元素可以穩定存在，最可能的性質是？
+atom|aut2mx	下列元素電負度由小到大何者正確？
+atom|1bsyfxt	Se²⁻、Br⁻、Rb⁺、Sr²⁺ 的半徑由小到大？
+atom|1ifbd8	B、Be、N、O 中，第一游離能最小的是？
+atom|1dfdumo	硒（Se，Z = 34）的價電子組態是？
+atom|1vuef40	O、Cl、N、S 中電負度最高的是？
+atom|nohwys	Na⁺、Mg²⁺、F⁻、O²⁻ 的半徑由大到小？
+atom|19d0tt9	下列量子數組合 (n, l, mₗ, mₛ) 何者合理？
+atom|1455gzw	氫原子下列躍遷中，吸收光子的波長最長的是？
+atom|112xgiu	電子組態 [Xe]4f¹⁴5d¹⁰6s²6p² 的元素是？
+atom|f9zs9x	下列何者是合理的量子數組合？
+atom|1tzh2ni	下列基態電子組態有幾個正確？ (i) K [Ar]4s¹ (ii) Al 1s²
+atom|krredx	可以用 n = 4、l = 1 描述的電子最多有幾個？
+atom|9sqrb2	⁵⁶Fe³⁺ 有幾個電子、質子、中子？
+atom|16t3ep0	Ar、K⁺、Cl⁻、Ca²⁺ 中半徑最小的是？
+atom|q2wt7s	K、Br、F 的電負度由小到大？
+atom|1fnfzxo	氫原子的游離能為 1.31 × 10⁶ J/mol，Li²⁺ 的游離能約為？
+atom|zzm9ub	銅（Cu，Z = 29）的基態電子組態是？
+atom|1t17qmq	氫原子可見光譜中的紅色譜線（656 nm）來自哪一個躍遷？
+atom|1rjan58	煙火的各種顏色主要來自？
+atom|14ux5xw	K⁺、Ca²⁺、Cl⁻、Ar 中，移走最外層一個電子所需能量最大的是？
+atom|1ulecfo	下列哪一組量子數 (n, l, mₗ, mₛ) 不存在？
+atom|seny3u	一個 4f 軌域有幾個節面（角節點）？
+atom|14zeblu	下列第一游離能排序何者正確？
+atom|qvoiwj	位於 4d 軌域的電子，正確的量子數是？
+atom|k36a6h	某元素 I₁ = 738、I₂ = 1451、I₃ = 7733 kJ/mol，
+atom|1ytzi65	打斷某鍵需吸收波長 250 nm 的光，每莫耳能量約為？
+atom|11wqnhq	某元素 E₁ = 900、E₂ = 1757、E₃ = 14849 kJ/mol
+atom|1bjxwht	關於電負度，何者正確？
+atom|7rfaoo	下列電子組態何者正確？
+atom|c3eykg	下列電磁波依波長由長到短？
+atom|1g1bfw	F、Cl、S、P、Na 的電負度由大到小？
+atom|18v1y8k	下列哪一個軌域不存在？
+atom|uqa3ck	He⁺ 的 2s 波函數含 (2 − Zr/a₀) 項（Z = 2，a₀ = 5
+atom|1pqgtug	下列哪一組是等電子？
+atom|1sdr10n	具有 n = 4、l = 3、mₗ = −1 的軌域有幾個？
+atom|163me4c	鐵（Z = 26）的基態電子組態是？
+atom|1lz84q0	Cl、S、Si、Al、Na 的原子半徑由小到大？
+biomol|939oao	β-D-葡萄哌喃糖比 α 型更穩定（平衡時約 64%），主要原因是？
+biomol|14tum31	下列何者不是還原醣？
+biomol|rse8jp	甘胺酸的 pKa₁ = 2.34、pKa₂ = 9.60，其等電點為？
+biomol|137iue6	在 pH 7.4 時，離胺酸（pI 9.74）的淨電荷為？
+biomol|1yh6nhb	為什麼植物油在室溫是液體，而動物脂肪是固體？
+biomol|1g1o6q5	DNA 中 G–C 配對比 A–T 配對更穩定，原因是？
+biomol|17athli	從苯合成間溴硝基苯，正確的步驟順序是？
+biomol|o4pt0m	下列何者不含醣類結構？
+biomol|3orfxz	RNA 比 DNA 容易水解，主要原因是？
+biomol|90nska	α-D-葡萄糖與 α-D-半乳糖的關係是？
+biomol|rnzy2k	下列鹼基何者只存在於 RNA 中？
+biomol|1ea9ojp	葡萄糖有 5 個 OH，乳糖分子有幾個 OH？
+biomol|1gw4mzo	蛋白質 α 螺旋主要靠什麼維持？
+biomol|1qiwz74	脯胺酸在 pH 7.4 的主要形式是？
+biomol|ydl9l0	下列鹼基配對何者的氫鍵作用較強？
+biomol|11mvaac	關於纖維素，何者正確？
+biomol|16zonee	醣類水解的產物，何者錯誤？
+biomol|ooukdr	下列何者不屬於單萜類？
+biomol|18o26ld	中藥中的配醣體，結構特徵是？
+biomol|ednx4c	哪兩種醛糖經佛爾降解（移除 C1）後都得到 D-來蘇糖？
+biomol|1mxoem9	開鏈的 D-核糖有幾個掌性中心？
+biomol|1wb2035	α-與 β-D-葡萄糖的比旋光度分別為 +112° 與 +19°，平衡溶液為 +
+biomol|hseght	維持蛋白質三級結構的作用力中，何者最強？
+biomol|1rak1pp	天門冬胺酸的 pKa 為 1.88、3.65、9.60，等電點約為？
+biomol|17gjy5d	三胜肽與苯基異硫氰酸酯反應後切下的是？
+biomol|duehx4	離胺酸（pKa 2.2、9.0、10.5）在 pH 由 1 升到 12 的過程中
+biomol|135fz54	DNA 雙股中，氫鍵形成在哪兩個鹼基之間？
+biomol|1ivbvsc	丙胺酸的 Ka₁ = 5.0 × 10⁻³、Ka₂ = 2.0 × 10⁻¹⁰，
+biomol|17c4pgv	環狀葡萄糖分子有幾個掌性碳？
+biomol|1h5qpj2	麩胺酸的 pKa 為 2.2、4.3、9.7，等電點約為？
+biomol|c3qzmd	下列何種胺基酸沒有掌性？
+biomol|j25mud	DNA 序列 5′-ATGC-3′ 的互補股（5′→3′）是？
+biomol|kunebe	三酸甘油酯可以由哪兩種化合物製備？
+biomol|1f245ub	花生四烯酸 C₂₀H₃₂O₂ 是非環狀羧酸，含有幾個 C=C？
+biomol|1iih9mc	只有一個六員環、C2 與 C4 都是 C=O、C5 接甲基的鹼基是？
+biomol|11s0hc2	費雪投影中，四碳醛糖 C2 的 OH 在左、C3 的 OH 在右，它是？
+biomol|18ket7	下列醣何者是 L 型？
+biomol|mozor1	糖解中，下列哪一個化合物能直接把磷酸轉給 ADP 生成 ATP？
+biomol|f5rlw	某電子傳遞反應轉移 2 個電子，電位差 ΔE°′ = +0.20 V，ΔG°′ 
+biomol|eo0i7m	檸檬酸沒有光學活性，主要因為？
+biomol|a5khzr	下列何者的結構含有 2-氯苯基、環己酮與 NHCH₃？
+biomol|13x9dai	苯并哌喃酮中，苯基接在 C3 的骨架稱為？
+biomol|xbhe01	穿心蓮內酯被蛋白質的半胱胺酸攻擊而形成共價鍵，最可能進攻哪個位置？
+biomol|i9es8v	Millad 透明劑是山梨醇的縮醛，以酸催化水解會得到？
+biomol|10dprop	色胺酸的側鏈是？
+biomol|1bgsqao	下列 R 基團與胺基酸名稱的組合，何者正確？
+biomol|1ehv9u2	哈沃斯投影中，D-葡萄糖 C2 的 OH 朝下，在費雪投影中它在？
+bonding|1yqwyhp	一個氧原子形成 3 個鍵、有 1 對孤對電子，它的形式電荷是？
+bonding|1bpucub	碳陽離子（例如 (CH₃)₃C⁺）中心碳的混成和形狀為？
+bonding|unye9n	畫共振結構時，下列何者正確？
+bonding|iuq2kw	醋酸根（CH₃COO⁻）中兩個 C–O 鍵的鍵長？
+bonding|1ta6l0j	為什麼醯胺的 C–N 鍵不能自由旋轉？
+bonding|1irhdj2	苯的六個 C–C 鍵長？
+bonding|1uwvgs3	分子式 C₈H₈O₂ 的化合物，不飽和度為？
+bonding|1pfo1ws	分子式 C₃H₄ 的化合物共有幾種構造異構物？
+bonding|12a8o3g	C₆H₁₄ 有 a 種構造異構物、C₇H₁₆ 有 b 種，a + b = ？
+bonding|8qqny1	下列何者不是 C₇H₁₆ 的構造異構物？
+bonding|1llpyhq	開鏈的 C₅H₁₀（包含 cis/trans）共有幾種異構物？
+bonding|u5qp6s	HC≡C–CH₂CH₂–C(=O)NH₂ 含有哪些官能基？
+bonding|1r0rmef	乙醯胺酚（N-乙醯基-對-胺基苯酚）含有哪兩種官能基？
+bonding|nkdus1	CO₂、CH₃OH、HCOOH、H₂CO 中碳的氧化程度由高到低為？
+bonding|1v4soiq	下列環烷中，每個 CH₂ 的燃燒熱最大的是？
+bonding|awps7j	環丙烷、環戊烷、環己烷的穩定性由高到低為？
+bonding|adgiqd	下列 C₇H₁₆ 異構物中，何者沸點最高？
+carbonyl|j74scs	醛與酮最典型的反應類型是？
+carbonyl|d263hv	丙酮與 CH₃MgBr 反應後再酸處理，產物是？
+carbonyl|150v61p	NaBH₄ 還原丁醛（CH₃CH₂CH₂CHO）得到？
+carbonyl|15lnte7	下列何者在水中最容易形成水合物？
+carbonyl|1o5v0i0	為什麼常把醛、酮轉成縮醛來「保護」羰基？
+carbonyl|1v4lsf3	醛、酮與一級胺生成亞胺的反應，為什麼在弱酸（pH 約 4–5）下最快？
+carbonyl|z1mohk	丙酮 α-H 的 pKa 約 19，遠比一般 C–H（約 50）酸，原因是？
+carbonyl|1wfcsd4	2-環己烯酮與 (CH₃)₂CuLi 反應再加水，主產物是？
+carbonyl|dcbsbb	下列何種試劑能分辨丙醛與丙酮？
+carbonyl|pi9sq5	維蒂希反應可以完成下列哪一種轉換？
+carbonyl|gv978o	下列何者可以由羰基化合物與格里納試劑以三種不同組合製得？
+carbonyl|6dbr9w	丙酮在酸催化下形成縮醛，哪一種醇最容易？
+carbonyl|17j2nb4	要把溴苯轉成苯甲酸，試劑是？
+carbonyl|163u48e	要把環戊酮轉成環戊烷，可用？
+carbonyl|vanq5	維蒂希反應的產物是？
+carbonyl|gtyply	下列哪一個反應會得到一級醇？
+carbonyl|v3sfji	下列反應何者產生二級醇？
+carbonyl|h1a499	苯乙酮與 CH₃MgBr 在乙醚中反應，再以 H₃O⁺ 處理，主產物是？
+carbonyl|1r5pecl	下列酮類何者最容易與水互溶？
+carbonyl|12516z5	下列哪一個反應不會得到醛或酮？
+carbonyl|1swxwxd	下列何者的產物不是苯甲醛？
+carbonyl|slq82l	丁醛與 CH₃CH₂MgBr 反應，再 H₃O⁺，產物是？
+carbonyl|1g3bley	要分辨乙醛與丙酮，除了托倫斯試劑，還可以用？
+conj|trx8mh	下列何者是共軛二烯？
+conj|17le97q	下列何者的紫外光最大吸收波長最長？
+conj|152sc5y	1,3-丁二烯的 HOMO 是哪一個軌域？
+conj|31jllr	1,3-丁二烯在 −80 °C 與 HBr 反應，主產物是？
+conj|19igb2b	Diels–Alder 反應中，雙烯必須採取哪一種構形？
+conj|1coi5qx	6π 電子的多烯在加熱下閉環，旋轉方式是？
+conj|qh7nci	烯丙基苯基醚加熱後的主產物是？
+conj|yh3orx	下列何者是共軛二烯？ I. 1,2-己二烯 II. 1,3-己二烯 III. 2
+conj|12unxui	1,3,5-己三烯的 LUMO 有幾個節面？
+conj|kznya9	關於 Diels–Alder 反應，何者錯誤？
+conj|1u3n715	1,3-環己二烯與 1 當量 HBr 反應，會得到幾種構造異構產物？
+conj|kl9eoe	cis-3,4-二甲基環丁烯照光開環，主產物是？
+conj|3annsk	cis-3,4-二甲基環丁烯加熱開環，產物是？
+conj|1ht9lk9	下列二烯何者可以進行 Diels–Alder 反應？
+conj|1e6ncbc	下列雙烯與馬來酐反應，何者最快？
+conj|f3op92	若二烯 λmax 約 220 nm，每多一個共軛雙鍵增加 30 nm，要吸收 4
+conj|ram82p	下列化合物何者氫化熱最低？
+conj|o7afix	烯丙基乙烯基醚 CH₂=CHOCH₂CH=CH₂ 加熱進行克萊森重排，產物是？
+conj|vtueno	下列化合物何者 π → π* 躍遷所需能量最大？
+conj|z3i6z6	下列分子何者的吸收波長最長？
+conj|fdou1y	1,3-丁二烯與反式肉桂酸（trans-C₆H₅CH=CHCOOH）反應，產物中
+conj|1gvcbhf	7-脫氫膽固醇照光轉成前維生素 D₃ 的第一步是？
+conj|182dfmx	下列化合物何者紫外光吸收波長最長？
+coord|1w6fhez	1 mol 的 [Co(NH₃)₅Cl]Cl₂ 溶於水後加入過量 AgNO₃，可
+coord|lbx92u	K₃[Fe(CN)₆] 中鐵的氧化數與配位數分別為？
+coord|vp3tw1	下列何者的 IUPAC 名稱正確？
+coord|7sfizp	八面體錯合物中，能量被推高的 eg 組是哪兩個 d 軌域？
+coord|jznts2	[Fe(CN)₆]⁴⁻ 有幾個未成對電子？
+coord|3r49v0	[CoF₆]³⁻ 有幾個未成對電子？
+coord|1i25k6o	四面體錯合物幾乎都是高自旋，主要原因是？
+coord|1843u3r	下列 Cr³⁺ 八面體錯合物中，何者吸收的光波長最長？
+coord|164jc5w	[Cr(H₂O)₆]³⁺ 吸收約 575 nm 的黃光，溶液看起來是什麼顏色？
+coord|tjdcrz	下列水溶液何者無色？
+coord|1v055jp	八面體錯離子 [Co(NH₃)₄Cl₂]⁺ 有幾種幾何異構物？
+coord|kjwa6i	下列何者具有光學異構物（鏡像異構物）？
+coord|gm5aoe	八面體錯合物 [MA₂B₂C₂]（皆為單牙配位基）有幾種幾何異構物？
+coord|1tltlmb	乙二胺（en）取代兩個 NH₃ 形成的錯合物比較穩定，主要原因是？
+coord|1f4awj1	下列金屬羰基錯合物中，何者的 C–O 伸縮振動頻率最高？
+coord|bp8bai	下列錯合物各 1 mol 溶於水後加入過量 AgNO₃，何者生成的 AgCl 沉
+coord|iyqwyf	下列錯離子何者為反磁性？
+coord|2fnveb	弱場八面體錯離子 [FeF₆]³⁻ 有幾個未成對電子？
+coord|6s9dde	平面四方的 [Pt(NH₃)₄]²⁺ 與四面體的 [MnCl₄]²⁻，何者未成對
+coord|saqccg	平面四方錯離子 [PdCl₄]²⁻ 中，能量最高的 d 軌域是？
+coord|1ijwcl1	直線形錯合物的兩個配位基位於 z 軸上，依晶體場理論能量最高的 d 軌域是？
+coord|o6t4jy	下列 Cr³⁺ 錯離子中，何者吸收光的波長最長？
+coord|lo0ttw	下列配位基依場強度由強到弱排列，何者正確？
+coord|1sbxou9	兩個八面體錯合物分別吸收 600 nm 與 400 nm 的光，前者的 Δo 是
+coord|evwnqo	下列錯離子的混成軌域與形狀，何者正確？
+coord|pr3lrj	下列物種中，C–O 伸縮振動頻率最低的是？
+coord|h5c48	下列何者具有 cis–trans 幾何異構物？
+coord|1waidhg	關於順鉑 cis-[Pt(NH₃)₂Cl₂] 的敘述，何者錯誤？
+coord|iaefjm	關於 [Co(en)₂Br₂]⁺ 的敘述，何者正確？
+coord|3vtdzn	八面體錯離子 [Co(NH₃)₂(H₂O)₂Cl₂]⁺ 共有幾種立體異構物（含鏡
+coord|bpje74	0.010 m 的 [Co(NH₃)₅Cl]Cl₂ 水溶液，凝固點約下降多少？（
+coord|1a92ya8	K₄[Fe(CN)₆] 的正確 IUPAC 名稱為？
+coord|2nrsa2	下列錯離子中，何者的中心金屬不是 d⁸？
+coord|93crke	下列錯離子何者最可能是平面四方形？
+coord|6gzl24	下列錯離子中，何者的金屬離子是 d⁵？
+coord|7nfzsk	錯離子 [Co(C₂O₄)₃]³⁻ 中 Co 的配位數是？
+coord|k2x0z2	K₄[Fe(CN)₆]、[Co(NH₃)₄Cl₂]Cl、[Cu(H₂O)₄]SO
+coord|105m00v	K₃[CoCl₆]、[Co(NH₃)₃Cl₃]、[Co(NH₃)₅Cl]Cl₂、
+coord|iztifz	[Cr(H₂O)₆]Cl₃ 的正確命名為？
+coord|1bb0ydy	二乙三胺 H₂NCH₂CH₂NHCH₂CH₂NH₂ 與金屬離子形成螯合物時，屬於
+coord|hmnstm	下列錯合物何者具有光學活性？
+coord|1owiss9	關於 [Co(en)₂(H₂O)Cl]²⁺ 的異構現象，何者正確？
+coord|eobw9x	[Co(NH₃)₅Br]²⁺ 中任一個 NH₃ 被 Br⁻ 隨機取代，生成 ci
+coord|gd3mjo	[Zn(NH₃)₄]²⁺、[Pt(NH₃)₄]²⁺（平面四方）、[Fe(CN)₆
+coord|1j4sx4c	[Cr(en)₃]²⁺（en 為強場配位基）有幾個未成對電子？
+coord|yd6rl4	[M(H₂O)₆]²⁺ 為高自旋、[M(CN)₆]⁴⁻ 為低自旋，且兩者未成對電
+coord|1qqb7ui	八面體的 Cr³⁺ 錯合物，強場與弱場配位基下的磁性為？
+coord|10wihs2	直線形錯合物（配位基在 z 軸）中，下列哪一組 d 軌域能量相同？
+coord|1icmj6p	依 18 電子規則計算，二茂鐵 Fe(C₅H₅)₂ 中鐵周圍的價電子總數為？
+coord|1vg896g	過渡金屬錯合物大多有顏色，主要原因是？
+desc|1ik31pn	下列何者會形成含 H⁻ 的離子氫化物？
+desc|nn0wtp	下列氧化物何者是兩性？
+desc|v7u917	在純矽中摻入少量硼，形成何種半導體？
+desc|rv9y46	下列碳的同素異形體中，何者的碳全部是 sp³？
+desc|yg0s05	一組數據彼此很接近，但平均值和真值相差很多，表示？
+desc|nzu8ec	某溶液稀釋 10 倍後吸光度為 0.60，檢量線斜率為 0.30 (mg/mL)
+desc|1wbcfmx	KH 加入過量的水中，反應為？
+desc|h1f9cy	某第四週期金屬與水反應產生氫氣，溶液加酚酞變紅，此金屬與它扮演的角色是？
+desc|1gff7ge	下列何者不適合裝在玻璃容器中？
+desc|1v5kvum	三瓶未標示的濃鹽酸、濃硫酸、濃硝酸各放入一小片銅，常溫下產生紅棕色氣體的是？
+desc|11qqmp7	由 Ga、In、P 組成、莫耳分率依序為 0.30、0.22、0.48 的材料，
+desc|1uvi8k3	p 型半導體是在純矽中摻入少量的？
+desc|krj4yh	關於 C₆₀ 的敘述，何者錯誤？
+desc|19sx6oy	金奈米粒子溶液在白光下透射光呈紫紅色，原因是？
+desc|1tq7oe3	人類牙齒的主要無機成分是？
+desc|liy4yj	維生素 B₁₂ 中所含的過渡金屬是？
+desc|l2vnpp	破壞臭氧層的冷媒分子，關鍵是含有哪一種鍵？
+desc|73ki68	分析結果中的系統誤差主要表現為？
+desc|15ketc3	層析定量採用內標準法，主要優點是？
+desc|1qk8f5g	檢量線斜率 0.25 (mg/mL)⁻¹。取 0.50 mL 樣品稀釋到 10.
+desc|1vit1jb	佛哈德法以 SCN⁻ 滴定 Ag⁺，終點的判斷依據是？
+desc|18tkr60	滴定管液面在 20.1 與 20.2 刻度之間正中央，讀數應記錄為？
+electro|1qovo8o	Zn 與 Cu 組成的賈法尼電池（E°：Zn²⁺/Zn −0.76 V，Cu²⁺
+electro|1oae7pt	賈法尼電池中，電子的流動方向為？
+electro|3mjhyt	下列何者是最強的還原劑？
+electro|ydnwrn	某電池 E° = 0.30 V，n = 2，其 ΔG° 約為？
+electro|1b7vgnp	Zn–Cu 電池放電一段時間後，電壓會？
+electro|vzkk4k	以 2.0 A 電流電解 CuSO₄ 溶液 965 秒，陰極析出多少銅？（Cu 
+electro|1dp5hi8	為什麼不能電解 NaCl 水溶液得到金屬鈉？
+electro|viauvy	下列物質中，何者含有氧化數最高的原子？
+electro|8obsqa	巴豆酸 CH₃CH=CHCOOH 中所有碳原子的氧化數總和為？
+electro|1f750mz	K₃N、N₂H₄、NH₂OH、N₂O₃、Ca(NO₃)₂ 中 N 的氧化數由低到
+electro|31g76y	酸性溶液中 MnO₄⁻ + H₂C₂O₄ → Mn²⁺ + CO₂ 平衡後，H₂
+electro|z2u32c	SO₃²⁻ + MnO₄⁻ → SO₄²⁻ + Mn²⁺（酸性）平衡後，共轉移幾
+electro|1a7sy2u	Al + OH⁻ + H₂O → Al(OH)₄⁻ + H₂ 平衡（最簡整數）後
+electro|wdiad7	Cl₂/Cl⁻ +1.36、Mg²⁺/Mg −2.37、H⁺/H₂ 0.00、A
+electro|oul3sn	若金屬 X 是比金屬 Y 強的還原劑，則？
+electro|1gt93pe	Mn + Zn²⁺ → Zn + Mn²⁺ 會發生，Fe + Co²⁺ → Fe
+electro|1a2szan	標準狀態下，下列哪一種金屬不能在鹼性溶液中把水還原成 H₂？
+electro|14ffyek	電池反應的係數全部乘 2，標準電池電位會？
+electro|1y1ql03	Ag⁺/Ag +0.80 V、Zn²⁺/Zn −0.76 V 組成電池，何者正確
+electro|1rqlpag	某電池 E° = 1.10 V、n = 2，ΔG° 約為？
+electro|gsi7kh	電池完全放電時，下列何者正確？
+electro|alk2m5	銅濃差電池兩側 [Cu²⁺] 為 1.0 M 與 1.0 × 10⁻³ M，25
+electro|zhc4z6	AgBr(s) + e⁻ → Ag + Br⁻ E° = +0.07 V、Ag⁺
+electro|1b4x79p	以 5.0 A 電流電解 CuSO₄ 溶液 20 分鐘，析出的銅約為？（Cu 6
+electro|clzk4	以 4.0 A 電解熔融 MCl 16.0 分鐘得 0.92 g 金屬，M 是？
+electro|2tsmzm	以 Pt 電極電解含酚酞的 Na₂SO₄ 溶液，何者正確？
+electro|7q2qhc	關於鉛蓄電池放電，何者正確？
+equilibrium|fjrow0	反應達到化學平衡時，下列敘述何者正確？
+equilibrium|etq6pg	CaCO₃(s) ⇌ CaO(s) + CO₂(g) 的平衡常數表示式為何？
+equilibrium|1dnze8x	N₂O₄ ⇌ 2NO₂ 的 K = 4.6 × 10⁻³。若 [N₂O₄] = 
+equilibrium|19rvlfz	N₂O₄ ⇌ 2NO₂ 達平衡後將容器體積壓縮為一半，重新達平衡時，下列何者正確
+equilibrium|16cxaup	對吸熱反應而言，升高溫度會使平衡常數 K 如何變化？
+equilibrium|1tmke2	在反應中加入催化劑，對平衡有什麼影響？
+equilibrium|1cx56v9	某反應在 25 °C 的 ΔG° = −11.4 kJ/mol，其平衡常數 K 
+equilibrium|al6apc	下列何種改變會使平衡移動，但不改變平衡常數？
+equilibrium|14okdf1	若 ½N₂ + 3/2 H₂ ⇌ NH₃ 的平衡常數為 K，則 N₂ + 3H₂
+equilibrium|1y476jq	NO + ½O₂ ⇌ NO₂ 的平衡常數 K₁，2NO₂ ⇌ 2NO + O₂ 
+equilibrium|1qrv7de	A + B ⇌ C（K = 12）、2A + B ⇌ D（K = 130），則 
+equilibrium|1w3bj3h	CO(g) + Cl₂(g) ⇌ COCl₂(g) 的 Kp 與 Kc 關係為？
+equilibrium|10n6jv8	4HCl(g) + O₂(g) ⇌ 2H₂O(g) + 2Cl₂(g) 的 Kp
+equilibrium|1xszzh1	C(s) + CO₂(g) ⇌ 2CO(g) 的平衡常數表示式為？
+equilibrium|1fs0z4p	NH₄NO₃(s) ⇌ N₂O(g) + 2H₂O(g) 達平衡時總壓 3.0 
+equilibrium|1hv1e98	2NOBr(g) ⇌ 2NO(g) + Br₂(g)，起始只有 NOBr 2.0
+equilibrium|wv12td	0.50 mol H₂ 與 0.50 mol I₂ 在 1.0 L 中反應（H₂
+equilibrium|1x7jwsz	N₂ + 3H₂ ⇌ 2NH₃ 的 K = 0.50。將 N₂、H₂、NH₃ 各
+equilibrium|itw3i8	Co(H₂O)₆²⁺（粉紅）+ 4Cl⁻ ⇌ CoCl₄²⁻（藍）+ 6H₂O，
+equilibrium|p68lmh	N₂ + 3H₂ ⇌ 2NH₃（ΔH = −92 kJ）。下列何者可以增加 NH
+equilibrium|1jzui0c	4NH₃(g) + 5O₂(g) ⇌ 4NO(g) + 6H₂O(g) 達平衡後
+gas|1s5gqt7	定量氣體在定溫下，壓力由 1 atm 增加到 3 atm，體積變為原來的？
+gas|tcl3v1	定壓下，27 °C 的氣體加熱到 327 °C，體積變為原來的？
+gas|1jj4xx4	0 °C、1 atm 下，1 莫耳理想氣體的體積約為？
+gas|107ikgk	同溫下，H₂（M = 2）與 O₂（M = 32）的擴散速率比為？
+gas|i84nme	同溫度下，He 與 CO₂ 分子的平均動能相比？
+gas|eg06uw	在什麼條件下，真實氣體最接近理想氣體？
+gas|693yxa	25 °C、755 torr 下以排水集氣法收集到 250 mL 的 H₂（25
+gas|flal7	在定容條件下加熱一定量的理想氣體，下列何者必定增加？
+gas|1u6486	實驗式為 CH₂ 的化合物 1.26 g，在 127 °C、1.12 atm 下
+gas|1oni7r2	定溫定容下，容器中的 O₃ 全部轉變成 O₂（2O₃ → 3O₂），原本壓力 0
+gas|ddk7bw	25 °C、1.00 atm 下，2.45 L 的未知氣體重 4.00 g，其分
+gas|za425r	0 °C、1 atm 下某氣體 0.625 g 佔 0.500 L，此氣體最可能
+gas|ez3tnr	等質量的甲、乙兩氣體，同溫同壓下甲的體積是乙的 2/3。若乙為 CH₄，甲可能是
+gas|b5s66j	空氣中 N₂ 佔 78%（體積），1 atm、27 °C 下 2.0 L 空氣含
+gas|1dbno0e	同溫下 He 的方均根速率是 CH₄ 的幾倍？
+gas|qaekit	He 與 CH₄ 的逸散速率比（He/CH₄）約為？
+gas|1lqfobx	下列各組氣體，何者最容易用逸散分離？
+gas|8li3iy	關於理想氣體，何者正確？
+gas|1lwdqw8	定容密閉容器中的 N₂ 由 25 °C 加熱到 250 °C，下列何者不變？
+gas|l1rfy4	關於真實氣體，何者錯誤？
+gas|11bhp3v	凡得瓦方程式中，常數 a 最大的氣體是？
+gas|csqup9	室溫常壓下 1 cm³ 的空氣中大約有多少個氣體分子？
+kinetics|1csv3nw	某反應 A + B → C，[A] 加倍時初速率變為 4 倍，[B] 加倍時初速
+kinetics|jwywda	一級反應的半生期為 10 分鐘，經過 30 分鐘後剩下原來的多少？
+kinetics|qgl2nh	若某反應的 ln[A] 對時間作圖得到直線，這個反應對 A 是幾級？
+kinetics|1kjf8lm	升高溫度使反應速率增加，最主要的原因是？
+kinetics|3lyred	關於催化劑，下列敘述何者錯誤？
+kinetics|1ngssu2	兩步驟反應中，第一步慢、第二步快。下列何者正確？
+kinetics|76ka1b	反應能量圖中的「中間物」和「過渡狀態」有什麼不同？
+kinetics|wmtutx	2O₃(g) → 3O₂(g) 中，O₃ 的消失速率為 6.0 × 10⁻³ a
+kinetics|72dwgv	某反應的初速率數據：[A] 0.10、[B] 0.10 時速率 2.0 × 10
+kinetics|w1c7ur	速率式為 rate = k[X]²[Y] 的氣體反應，若定溫下把容器體積壓縮為一
+kinetics|157lh8y	rate = k[A][B]，[A]₀ = 0.001 M、[B]₀ = 1.0
+kinetics|3rvl0v	一級反應半生期 10 分鐘，A 由 4.0 M 降到 0.50 M 需要多久？
+kinetics|1izq3vz	一級反應的 k = 1.16 × 10⁻³ s⁻¹，半生期約為？
+kinetics|xi6sal	二級反應的初濃度 0.20 M，10 分鐘後剩下一半，速率常數 k 為？
+kinetics|116tnad	一級反應以 ln[A] 對時間作圖，直線的斜率為？
+kinetics|16fg2j7	一級反應中，起始濃度增加為 10 倍，半生期如何變化？
+kinetics|199krrx	零級反應 A → B + C，k = 0.040 M/s，[A]₀ = 1.0 
+kinetics|gvg9lz	同樣由 T₁ 升到 T₂，反應甲的 k 變 2 倍、反應乙變 8 倍，兩者活化能
+kinetics|13bajoj	某反應正反應活化能 30 kJ/mol、逆反應 95 kJ/mol，ΔH 為？
+kinetics|myldy8	加入催化劑後，下列何者會改變？
+kinetics|2py1hr	Cl + O₃ → ClO + O₂（慢）；ClO + O → Cl + O₂（
+kinetics|1ib13f1	2A + 2B → C 的機構：A + B → D（慢）、D + B → E（快
+kinetics|bmj8pw	2NO + O₂ → 2NO₂ 的速率式為 rate = k[NO]²[O₂]。
+ksp|jfp2q	AgCl 的 Ksp = 1.8 × 10⁻¹⁰，其在純水中的莫耳溶解度約為？
+ksp|1ixfr4i	CaF₂ 的溶解度為 s，則 Ksp 為？
+ksp|1bhucew	Ag₂CrO₄（Ksp 1.1 × 10⁻¹²）與 AgCl（Ksp 1.8 ×
+ksp|1p9nunu	AgCl 在 0.10 M NaCl 溶液中的溶解度約為？
+ksp|1rwtx3t	等體積混合 2.0 × 10⁻⁴ M AgNO₃ 與 2.0 × 10⁻⁴ M 
+ksp|1eumwpm	下列哪一種難溶鹽的溶解度最不受加酸影響？
+ksp|piibsa	AgCl 可以溶於氨水，主要原因是？
+ksp|vo71df	AgBr 在純水中的溶解度為 7.1 × 10⁻⁷ M，其 Ksp 約為？
+ksp|r6386r	飽和 PbI₂ 溶液中 [I⁻] = 3.0 × 10⁻³ M，PbI₂ 的 K
+ksp|g85kk8	Fe(OH)₃ 的 Ksp = 2.8 × 10⁻³⁹，飽和溶液中由它溶出的 [
+ksp|ql2v2s	某難溶鹽的 Ksp 可寫成 Ksp = (1/2)[A]³（[A] 為陽離子濃度
+ksp|fcvaov	PbI₂（1.4 × 10⁻⁸）、CaCO₃（8.7 × 10⁻⁹）、Mg(OH
+ksp|18x6gn1	Mg(OH)₂（Ksp = 8.9 × 10⁻¹²）在 pH 11.0 的緩衝溶
+ksp|flsqvm	AgX 與 AgY 的 Ksp 相近，而 HX 的 Ka 遠大於 HY。在酸性溶
+ksp|1wob5fd	改變溶液 pH 時，下列何者的溶解度變化最大？
+ksp|1smp7pr	AgCl 的 Ksp = 1.8 × 10⁻¹⁰、Ag(NH₃)₂⁺ 的 Kf 
+ksp|17cihl2	Ag(NH₃)₂⁺ 的 Kf = 1.5 × 10⁷、Ag(CN)₂⁻ 的 Kf
+ksp|1x39rzj	把氨水慢慢滴入 Cu²⁺ 溶液，一開始生成的沉澱是？
+ksp|1wanyir	溶液含 2.0 × 10⁻³ M Pb²⁺ 與 1.0 × 10⁻⁴ M Cu⁺
+ksp|1v87pj4	要依序分離 Ag⁺、Pb²⁺、Ni²⁺，加入試劑的順序應為？
+ksp|j0xg87	AgCl 在下列哪一種溶液中溶解度最高？
+mo|1m5v922	成鍵分子軌域的能量比原來的原子軌域低，主要原因是？
+mo|1vmo0jj	O₂ 有順磁性，根據分子軌域理論的原因是？
+mo|1928qua	O₂⁻ 的鍵級為？
+mo|14115y3	下列何者鍵級最大？
+mo|12btyjg	下列何者不能穩定存在（鍵級為 0）？
+mo|1idpf8	下列何者為反磁性？
+mo|14vbfhe	O₂、O₂⁺、O₂⁻ 的鍵長由短到長為？
+mo|n7cabs	分子軌域組態為 (σ1s)²(σ*1s)²(σ2s)²(σ*2s)²(π2p)⁴
+mo|1imuwhw	O₂ 失去一個電子後，鍵級為？
+mo|1p4ju27	若 N₂ 帶電荷 X 時鍵級為 2.5，X 可能為？
+mo|1ltjl1w	下列何者為順磁性？
+mo|2qyyjy	關於 NO⁺ 的敘述，何者正確？
+mo|xzkj9o	關於 O₂ 與 NO 的敘述，何者正確？
+mo|m5k5gx	C₂⁻、C₂、C₂⁺ 中，哪些是順磁性？
+mo|4devu9	下列何者的鍵能最小？
+mo|exehpe	下列何者鍵級最大？
+mo|19n6yjq	異核分子 HF 的反鍵 σ* 軌域 ψ* = c₁ψ(F) − c₂ψ(H)，係
+mo|1wrmksc	下列何者最不穩定？
+mo|fqfl94	某分子的價電子組態為 (σ2s)²(σ*2s)²(π2p)²，且兩個 π 電子分
+mo|1j69zu4	關於鑽石與石墨烯，何者正確？
+naming|y9nbvo	(CH₃)₃CCH₂CH(CH₃)₂ 的正確名稱？
+naming|pru1dx	兩個方向編號後位置數組相同（3,4）時，誰拿較小的號碼？
+naming|s1mf70	5-ethyl-3,5-dimethylheptane 這個名字錯在哪裡？
+naming|134znt7	排字母順序時，sec-butyl 排在哪個字母？
+naming|1hmcm7l	tert-butyl 的連接碳是？
+naming|1clwvp1	bicyclo[3.2.1]octane 有幾個碳？
+naming|66nmt5	分子同時有 –COOH 與 –OH，命名時？
+naming|1yjxcqi	CH₃COCH₂CH₂OH 的名稱？
+naming|awzkja	cis-2-butene 的 E/Z 組態？
+naming|1csksf1	–CH₂OH 和 –CH(CH₃)₂ 依 CIP 規則誰較優先？
+naming|1v61izt	對二氯苯的編號寫法？
+naming|ku2nw3	CH₃CH₂COOCH₃ 的名稱？
+naming|191mwkv	主鏈 7 個碳，2、3、5 號碳各有一個甲基、4 號碳有一個丙基。正確名稱？
+naming|gaqvxh	下列名稱何者正確？
+naming|1cyc4vk	CH₃–CHCl–CH(CH₂CH₃)–CH₂CH₂CH₃ 的名稱？
+naming|1naicg	CH₃CH₂–CH(CH₃)–CH(CH₂CH₃)–CH₂CH₃ 的名稱？
+naming|jwt25v	取代基 –C(CH₃)₂CH₂CH(CH₃)₂ 的名稱？
+naming|12sh46f	CH₂=CH–CH₂–C≡CH 的名稱？
+naming|o3zvdm	2-chlorobut-2-ene 中，Cl 與 C4 的甲基在雙鍵同側。組態為
+naming|1t4u27	左邊雙鍵碳上方接 Br、下方接 Cl；右邊雙鍵碳上方接 CH₃、下方接 OH。組
+naming|1vtf8jd	環己烷上有一個乙基和一個甲基，彼此在 1,3 位置。名稱？
+naming|1xxoo2s	下列取代基接在環己烷上，何者應命名為「cyclohexyl＋烷」？
+naming|1y3egeq	環戊烯中，異丙基接在緊鄰雙鍵的飽和碳上。名稱？
+naming|1jv65n8	金剛烷（adamantane，C₁₀H₁₆）的骨架有 12 個 C–C 鍵，它是
+naming|ryvjkf	苯甲酸的 2 號位有 Br、4 號位有 NO₂。名稱？
+naming|z9mrvl	HCOOCH₂CH₂CH₃ 的名稱？
+naming|7s198c	CH₃CH(OH)CH₂CH(CH₃)₂ 的 IUPAC 名稱？
+naming|1oa1jx4	2,2,4-trimethylhexane 的立體中心是幾號碳？
+naming|12tp3hq	下列試劑名稱與縮寫的組合，何者錯誤？
+naming|do9pz	下列名稱與化學式何者不相符？
+naming|pjtmlf	diphenylamine 的結構是？
+naming|xt0chz	dibenzo-p-dioxin 名稱中的 p 指的是？
+naming|1kx8b5w	R₂C=N–NH₂ 這類化合物稱為？
+org-acid|k5lser	CH₃COOH（pKa 4.76）+ OH⁻ ⇌ CH₃COO⁻ + H₂O（p
+org-acid|cpc9r8	要把乙炔 HC≡CH（pKa 25）的 H 拿走，下列哪個鹼可以？
+org-acid|137ltp	下列酸性由強到弱排列何者正確？
+org-acid|137gr87	為什麼醋酸（pKa 4.76）比乙醇（pKa 16）酸性強得多？
+org-acid|1wsytms	下列羧酸何者酸性最強？
+org-acid|134p1my	下列化合物何者鹼性最弱？
+org-acid|79nbrq	下列何者是最好的離去基？
+org-acid|1181b5k	下列取代酚何者酸性最強？
+org-acid|751kt6	OCH₃ 放在酚的哪個位置會讓酸性變強？
+org-acid|1vs3y6v	環戊二烯（pKa 約 16）比環庚三烯（約 36）酸得多，原因是？
+org-acid|11kvwoc	要完全拿走丙酮的 α-H（pKa 19.3），最適合的鹼是？
+org-acid|gzvdfb	乙醚中的苯甲酸與酚，用哪一種水溶液萃取可以分開？
+org-acid|ik7ljy	下列苯胺的共軛酸（苯胺鹽酸鹽）何者 pKa 最小？
+org-acid|1atbokt	在 THF 中，下列何者鹼性最弱？
+org-acid|1g7zj30	下列酚類依酸性由弱到強排列：I 對甲酚、II 酚、III 對氯酚、IV 對硝基酚
+org-acid|hkt7zl	下列碳氫化合物何者酸性最強？
+org-acid|1war5wb	酸性由強到弱：I 甲醇、II 乙炔、III (CF₃)₂CHOH、IV 2-丙醇
+org-acid|1t7zt2q	NaH（共軛酸 H₂，pKa 約 35）無法有效去質子化下列何者？
+org-acid|ob5o9q	乙醯乙酸乙酯 CH₃COCH₂COOCH₂CH₃ 中，Ha 為兩個 C=O 之間
+org-acid|1aod0x0	下列酚類何者酸性最強？
+org-acid|gakhqp	要讓 2-丙醇不可逆地完全轉成 2-丙氧化鈉，可以使用？
+org-acid|jf0kk7	4-羥基苯甲酸分子中，哪一個 H 最酸？
+org-acid|o297li	下列酚的 pKa 由大到小：I 對甲氧基酚、II 酚、III 間硝基酚、IV 對
+org-acid|89vumv	pKa 由小到大：I 乙酸、II 氨、III 乙醇、IV 酚、V 乙炔
+org-acid|1388p8q	要以液－液萃取分離苯甲酸與 4-羥基苯甲醛，最適合的組合是？
+org-acid|bvpblk	維生素 C 的酸性主要來自？
+org-acid|c5qd8m	酸性由強到弱：I 鄰羥基苯甲酸、II 間羥基苯甲酸、III 苯甲酸、IV 對羥基
+org-acid|um7bjq	酸性由弱到強：I 乙酸乙酯（α-H）、II 丙二酸二乙酯、III 乙醯丙酮、IV
+org-acid|bv7un5	pKa 由高到低：I 丁酸、II 2-氯丁酸、III 3-氯丁酸、IV 4-氯丁
+phase|xdi4xh	在高山上煮水，水的沸點比 100 °C 低，原因是？
+phase|gabjse	為什麼在 1 atm 下乾冰不會熔化成液體，而是直接昇華？
+phase|17jtsmc	水的固液平衡線斜率為負，代表？
+phase|1td3dn8	面心立方晶胞中含有幾個原子？
+phase|wefjxc	下列離子晶體何者熔點最高？
+phase|1f63wbn	¹⁴C 的半衰期為 5730 年，某古物中 ¹⁴C 只剩活體的 1/8，其年代約
+phase|1kylsar	²³⁸₉₂U 經 α 衰變後的產物是？
+phase|kbmicv	某液體 20 °C 時蒸氣壓 40 torr、50 °C 時 200 torr，
+phase|1lxeubk	1.00 mol 苯在熔點熔化再於沸點汽化（ΔH熔化 10.9、ΔH汽化 31.
+phase|1ixigaj	2.00 mol 的水在 100 °C 汽化（ΔH蒸發 40.7 kJ/mol）
+phase|gwds93	冷凍乾燥是在相圖的哪一個區域進行？
+phase|1lnh6wy	下列何者的臨界溫度最高？
+phase|1wo88sj	下列何者不屬於立方晶系的晶胞？
+phase|1a2vuxb	CsCl 晶胞中 Cl⁻ 在角落、Cs⁺ 在體心，每個晶胞含幾個 CsCl？
+phase|1th2p15	某金屬為體心立方，邊長 400 pm，原子半徑約為？
+phase|o3ws8n	銅（63.55 g/mol）為面心立方，邊長 361 pm，密度約為？
+phase|1q5xwtc	下列堆積效率何者正確？
+phase|4nl5iu	以 λ = 1.54 Å 的 X 射線在 θ = 30° 得到第一級繞射，晶面間
+phase|1vddwpu	²²²Rn 進行 α 衰變的產物是？
+phase|zqe05w	PET 造影使用 ¹⁸F，它的衰變產物與放出的粒子為？
+phase|lkihzz	下列何者不帶電？
+phase|g7fadn	某核種的活度在 30.0 秒內由 3200 Bq 降到 100 Bq，半衰期為？
+phase|1e897zp	¹³¹I 的半衰期 8.0 天，衰變掉 87.5% 需要多久？
+phase|1fqbrne	²H + ³H → ⁴He + n（²H 2.0141、³H 3.0161、⁴H
+phase|1wpo05k	太陽的能量主要來自？
+phase|1bhewye	布拉維晶格共有幾種？
+radpoly|owa0n6	三級碳自由基比一級碳自由基穩定，主要原因是？
+radpoly|118dtpn	在連鎖反應中，哪一個步驟讓自由基數目減少？
+radpoly|ctm7po	丙烷氯化，1-氯丙烷與 2-氯丙烷的比例約為？
+radpoly|iehh8u	2-甲基丙烷溴化，主產物是？
+radpoly|1lzrt5s	要在環己烯的烯丙位接上 Br 而不加成到雙鍵，應使用？
+radpoly|gow8d0	下列何者是縮合聚合物？
+radpoly|ibcp9y	下列單體何者聚合後可以有同排、對排與雜排三種結構？
+radpoly|93oqg9	異丁烯 CH₂=C(CH₃)₂ 最適合用哪一種聚合？
+radpoly|1hyar3w	異丙基自由基比丙基自由基穩定，主要原因是？
+radpoly|1nkcysg	2,3-二甲基丁烷在光照下單氯化，2-氯-2,3-二甲基丁烷約佔？
+radpoly|6bze7n	2-甲基戊烷與 Cl₂ 照光，會得到幾種單氯取代產物 C₆H₁₃Cl（不計立體異
+radpoly|1or89l3	丁烷自由基氯化得到 2-氯丁烷 : 1-氯丁烷 = 72 : 28，每個二級 H
+radpoly|ws6g5j	乙苯在光照下與 Br₂ 反應，最快被溴化的位置是？
+radpoly|fbrvx2	下列碳自由基何者最穩定？
+radpoly|9qh52n	要在 2-甲基丁烷的三級碳上選擇性地接上一個 Br，最適當的方法是？
+radpoly|1o2kluf	下列何者可作為自由基連鎖聚合的起始劑？
+radpoly|gji1oy	Carbowax（聚乙二醇）的單體是？
+radpoly|vzoycl	下列何者只由取代乙烯類單體聚合而成？
+radpoly|ffvm3y	關於尼龍-6,6，何者錯誤？
+radpoly|10fuhgp	下列何者聚合可生成同排、對排與雜排聚合物？
+radpoly|11vyj0u	聚酯 –[OCH₂CH₂O–CO–C₆H₄–CO]ₙ– 的單體是？
+radpoly|8c3cng	下列何者為加成聚合物？ I. 聚丙烯 II. 鐵氟龍 III. 尼龍
+radpoly|igkhot	聚乙烯通常以何種方法製得？
+radpoly|7qwnjf	環氧樹脂是由哪兩種單體共聚而成？
+radpoly|mvfm6q	下列塑膠何者抗腐蝕性最佳？
+radpoly|59xgd7	下列何者不是導電聚合物？
+radpoly|af8ezr	天然橡膠是哪一種單體的聚合物？
+radpoly|26eesi	齊格勒–納塔觸媒（TiCl₄／Al(C₂H₅)₃）用於製備？
+radpoly|zymck	有機玻璃（Plexiglas）是哪一種高分子？
+rxn|1471tai	下列何者能把醯氯 RCOCl 轉成酮 RCOR′ 而不繼續變成醇？
+rxn|9at4zt	格里納試劑與 D₂O 反應，產物是？
+rxn|s110wd	要讓分子中的酮不和格里納試劑反應，應先把它變成？
+rxn|jgswko	由烯一步得到醛，應使用？
+rxn|1y3p3an	酯以 DIBAL-H 在 −78 °C 還原，產物是？
+rxn|afryqo	鈴木偶合需要哪兩種反應物？
+rxn|14acm5u	要由 4-溴環己酮製備 4-氘環己酮，最佳步驟是？
+rxn|1lc407c	下列反應何者的產物不是羧酸？
+rxn|sxek0n	環戊醇依序經濃 H₂SO₄ 加熱、OsO₄ 再 NaHSO₃，最終產物是？
+rxn|rho4mp	要由 2-溴丁烷製得 OH 在 C1、並在 C2 接 D 的產物，最合適的順序是
+rxn|7y29sf	下列何者以 t-BuOK 進行 E2 生成 4-第三丁基環己烯最快？
+rxn|133rvqr	要由溴苯和環己酮製備 1-苯基環己醇，試劑是？
+rxn|19awwi6	1-溴丙烷依序與 Mg、環氧乙烷、H₃O⁺ 反應，產物是？
+rxn|l7r86y	下列反應式何者有誤？
+rxn|1whntti	下列化合物何者最不適合直接用來製備格里納試劑？
+rxn|pb7kpd	下列哪一個組合能得到預期的產物？
+rxn|6kr56i	2,3-二甲基-2,3-丁二醇（片吶醇）在酸中加熱，產物是？
+rxn|1l9lzbh	1,2-環己二醇以 NaIO₄ 處理，產物是？
+rxn|go5mjh	1,7-辛二烯以格拉布斯催化劑進行閉環烯烴複分解，主產物是？
+rxn|k1ow5p	威爾金森催化劑的化學式是？
+rxn|oie3tp	末端炔與碘苯在 Pd 與 CuI 催化下偶合成 Ph–C≡C–R，這是哪一個反應
+rxn|1t961hn	下列偶合反應與試劑的配對何者錯誤？
+rxn|1510uhd	下列哪一個反應會產生卡賓？
+rxn|1nondfp	只有 5 毫克的固體產物，下列純化方法何者最不適合？
+rxn|145f0kc	關於蒸餾操作，何者錯誤？
+rxn|2mwcrq	關於有機電化學合成，何者錯誤？
+rxn|1lu3pth	下列哪一個反應不會放出 CO₂？
+sn-e|1cx0q35	SN2 反應的速率式為何？
+sn-e|l4xbd3	(R)-2-溴丁烷和 NaOH 經 SN2 反應，主要產物是什麼？
+sn-e|thpg7a	下列鹵烷進行 SN2 反應，何者最快？
+sn-e|hyu7oh	下列碳陽離子何者最穩定？
+sn-e|1uhdjse	光學活性的三級鹵烷在水中進行 SN1 反應，產物的立體化學通常是？
+sn-e|m0lwwb	E2 反應中，被拿走的 β-H 和離去基需要什麼相對位置？
+sn-e|1jkqnul	2-溴-2-甲基丁烷和第三丁氧化鉀（t-BuOK）反應，主要產物是？
+sn-e|apffov	2-溴丙烷和乙氧化鈉（NaOEt）在乙醇中反應，主要走哪一條路？
+sn-e|1v85boa	為什麼醇要在酸性條件下才能進行取代反應？
+sn-e|1powve5	(R)-2-溴丁烷與 OH⁻ 進行 SN2 反應，產物 2-丁醇的組態為？
+sn-e|1mhqcaf	2-溴丁烷與乙醇鈉反應，速率和兩者濃度都成正比；把 β-H 換成 D 後速率明顯
+sn-e|1azx6cu	下列鹵化物何者只能走 SN1、不能走 SN2？
+sn-e|grlaoc	cis- 與 trans-1-溴-2-甲基環己烷分別以強鹼進行 E2，何者正確？
+sn-e|1hh3mkh	承上題，反式異構物的主產物是？
+sn-e|1q0lyvc	下列碳陽離子何者最穩定？
+sn-e|1lpqkiv	在 DMF 中，下列何者是最好的親核基？
+sn-e|1b7j8gq	在甲醇中進行 SN2，下列何者是最好的親核基？
+sn-e|mjh773	下列化合物在甲醇中加熱進行 SN1，速率最快的是？
+sn-e|1keoyyf	1-氯-1-甲基環己烷在水中進行 SN1，速率式為？
+sn-e|141fskh	SN2 中的「2」代表？
+sn-e|ce3wmi	(CH₃)₃COH + HBr → (CH₃)₃CBr + H₂O 的速率決定步
+sn-e|7xazj2	下列何者進行 SN1 最快？
+sn-e|kcjb9k	CH₃Br + CN⁻ 為 SN2。兩者濃度都變為 3 倍，速率變為幾倍？
+sn-e|1tfkcum	要由光學純的 2-丁醇合成 (S)-2-甲基丁腈（CN 取代 OH 的位置），應
+sn-e|17j2sus	下列何者是極性非質子性溶劑？
+sn-e|1ufyy07	下列氯烷在水中反應（溶劑解）最快的是？
+sn-e|1lymthl	下列何者不適用於 E1 反應？
+sn-e|1c6vu99	2,2-二溴戊烷與 2 當量 NaNH₂ 反應，主產物最可能是？
+sn-e|u58x65	在 DMSO 中與 NaCN 取代最快的是？
+sn-e|xpkamj	下列何者在甲醇中取代反應最快？
+sn-e|wp39px	鹵烷與強鹼進行 E2 的速率式為？
+sn-e|108toer	(R)-2-溴戊烷與 NaCN 在 DMSO 中的主產物是？
+spectro|ndjtag	IR 光譜在 1715 cm⁻¹ 有強而尖的吸收，在 3200–3550 cm⁻
+spectro|1pxqyl9	下列哪一個 IR 特徵最能區分羧酸與醇？
+spectro|uan3xg	乙酸乙酯的 ¹H NMR 中，δ 4.1 的訊號分裂成幾根峰？
+spectro|1ah3l7p	某化合物的 ¹H NMR 有一個七重峰（1H）與一個雙重峰（6H），可能含有什麼
+spectro|5ot1u0	¹H NMR 在 δ 9.8 出現一個單峰（1H），最可能是？
+spectro|1g109yr	質譜中 M 與 M+2 峰高度約相等，分子最可能含有？
+spectro|1g9mqel	C₄H₈O 的不飽和度為？
+spectro|r3ye6d	以 CDCl₃ 為溶劑的 ¹³C NMR 中，77 ppm 的強度 1:1:1 
+spectro|38zvvg	紅外光譜中接近 1700 cm⁻¹ 的強吸收來自？
+spectro|wpyy7	2-己酮（M = 100）的質譜中，下列哪一個 m/z 來自麥克拉弗蒂重排？
+spectro|p2rbsx	下列術語何者與質譜分析無關？
+spectro|8xmcey	下列鍵的 IR 吸收強度由強到弱：C=O、C=C（對稱取代）、C–O
+spectro|1va9cmo	下列何者最適合作為 ¹H NMR 的溶劑？
+spectro|1j8zo5y	¹H NMR 中約 9–10 ppm 的訊號最可能來自？
+spectro|1sa91dt	某化合物的 M : M+2 : M+4 約 9 : 6 : 1，它含有？
+spectro|8lzvv9	下列化合物何者 C=O 的 IR 頻率最低？
+spectro|3fl46c	電磁波依頻率由高到低排列，何者正確？
+spectro|8h6swi	最適合區分順式與反式-2-丁烯的是？
+spectro|f5zpv1	分子的振動能階躍遷對應哪一種電磁波？
+spectro|1aj8pgg	質譜中下列何者是陽離子（而非自由基陽離子）？
+spectro|z2ro7p	正丁苯的質譜中，經麥克拉弗蒂重排產生的離子 m/z 為？
+spectro|142annx	NMR 的核自旋躍遷吸收的是哪一種電磁波？
+spectro|1i1gvlb	2D-NOESY 圖譜提供什麼資訊？
+spectro|19ya05e	激發態分子放出螢光與磷光回到基態，何者較快？
+spectro|nufnjt	下列哪一組原子核都沒有 NMR 訊號？
+spectro|1dk21q7	下列振動何者最不可能有 IR 吸收？
+spectro|3ziqag	某化合物的 M : M+2 : M+4 : M+6 = 27 : 27 : 9 
+spectro|xmkbkn	某芳香烴（M = 120）質譜在 m/z 91 有強峰，最可能是？
+spectro|6fas2k	下列伸縮振動頻率最大的是？
+spectro|14xq6q7	丙酸甲酯的 ¹³C NMR 有幾根訊號？
+spectro|3xampz	下列何者 C=O 的 IR 頻率最大？
+spectro|8bjjsb	2-甲基戊烷的 DEPT-90 與 DEPT-135 分別有幾個正峰、幾個負峰？
+spectro|rhxefz	下列何者的質譜在 m/z 58 有明顯的峰？
+spectro|15x3tll	¹⁶O₂ 與 ¹⁸O₂ 的力常數相同，它們的振動頻率比（¹⁶O₂ : ¹⁸O₂）
+stereo|10kn7mg	下列哪一個分子有掌性中心？
+stereo|fs7h1o	依 CIP 規則，下列基團優先順序何者正確？
+stereo|19p41	最低優先的 H 在楔形（朝向你）時，看到 1 → 2 → 3 是順時針，這個掌性
+stereo|1ncwjjx	(2R,3R)-酒石酸和 (2R,3S)-酒石酸的關係是？
+stereo|1ty39i	內消旋（meso）化合物的特徵是？
+stereo|nhv08q	丁烷最穩定的構形是？
+stereo|3y0grm	甲基環己烷在室溫下，甲基主要位於？
+stereo|1hffrao	反式-1,2-二甲基環己烷最穩定的椅式中，兩個甲基在？
+stereo|vmdy5e	某樣品含 90% (+)-酒石酸與 10% (−)-酒石酸，光學純度是？
+stereo|1bleni6	天然胺基酸（L 型）的 α-碳大多是哪一種組態？
+stereo|81vm6d	下列 C₄H₉Br 異構物何者具有掌性？
+stereo|87krnh	關於順式與反式十氫萘，何者正確？
+stereo|8hhony	酒石酸 HOOCCH(OH)CH(OH)COOH 的敘述何者正確？
+stereo|o5x3e9	分離外消旋混合物最適合的方法是？
+stereo|cbbhi3	純 (+)-酒石酸的比旋光度 +12.7°，某混合物為 +6.35°。(+) 異
+stereo|15bq4y	(+)-酒石酸比旋光度 +12.0°。80% (+) 與 20% (−) 的混合
+stereo|oyiycj	(R)-2-丁醇比旋光度 −13.52°，某 R/S 混合物為 +6.76°。R
+stereo|uqo7fh	下列敘述何者錯誤？
+stereo|1gmskkk	關於立體異構物，何者正確？
+stereo|1980i79	下列何者具有光學活性？
+stereo|zqbgoz	下列二甲基環己烷在最穩定的椅式中，兩個甲基都在平伏鍵的是？
+stereo|zd8k0	環己烷在 800 °C 時有 30% 為扭船式。椅式 ⇌ 扭船式的平衡常數約為？
+stereo|dmjqyo	FCH₂CH₂OH 最穩定的構形是？
+stereo|zewrbi	下列胺基酸何者有兩個掌性中心？
+stereo|nvyeli	2-丁酮以 NaBH₄ 還原，得到的 2-丁醇是？
+stereo|vedgic	下列分子中，哪一個的四個 H 不在同一平面？
+stereo|1edrbve	下列何者是掌性分子？
+stereo|1hxwe9i	下列哪一組理論上可以用蒸餾分離？
+stereo|q63vwv	開鏈形式的葡萄糖（2,3,4,5,6-五羥基己醛）有幾個掌性中心？
+stereo|b6smt5	膽固醇有幾個掌性中心？
+stereo|jzthji	C₅H₁₂ 的構造異構物有 a 種、C₇H₁₆ 有 b 種，a + b = ？
+stereo|a0ocdp	非環狀 C₅H₁₀（含幾何異構物）有幾種？
+stoich|1ns3yji	3 mol N₂ 與 6 mol H₂ 反應生成 NH₃（N₂ + 3H₂ → 
+stoich|1fm8vvy	將 50.0 mL 的 6.0 M HCl 稀釋成 1.5 M，最後體積應為？
+stoich|bwhek2	下列水溶液何者凝固點最低？
+stoich|1f08w0b	依數性質為什麼要用重量莫耳濃度（m）而不是體積莫耳濃度（M）？
+stoich|xsha37	把紅血球放進純水中會發生什麼事？
+stoich|18nfd3o	25 °C 純水蒸氣壓為 23.8 torr，在 0.90 mol 水中溶入 0
+stoich|16u6y4x	兩個測量值 12.4 與 3.157 相加與相乘時，結果應分別保留幾位有效數字？
+stoich|rg1owq	下列何者質量最大？
+stoich|16j1f8a	360 g 葡萄糖 C₆H₁₂O₆ 中含有幾莫耳的 H 原子？
+stoich|k64s1w	5.0 g 的雌黃 As₂S₃（As 74.92、S 32.07）中含有約多少克
+stoich|11ywhi	某化合物含 C 54.5%、H 9.2%，其餘為 O，分子量 88。其分子式為？
+stoich|1xmn1ox	某含 x 個結晶水的鹽 1.00 g 加熱除去結晶水後剩 0.73 g，則該水合
+stoich|1629nub	4.86 g 的 Mg 與 100.0 mL 的 3.0 M HCl 作用（Mg
+stoich|11t1c2	35.5 g 的 Cl₂ 與過量 PCl₃ 反應（PCl₃ + Cl₂ → PC
+stoich|4awrqd	以下列反應製造 H₂，何者的原子經濟最高？
+stoich|8g1hyu	1 mol 某烷類完全燃燒需要 8 mol O₂，此烷類為？
+stoich|1g9l157	等莫耳的正戊烷、異戊烷、新戊烷完全燃燒，生成 CO₂ 的量為何？
+stoich|1uixkp6	下列何者完全燃燒時，生成的 CO₂ 與 H₂O 分子數相同？
+stoich|mvn0eh	2.45 M 甲醇水溶液的密度為 0.976 g/mL，其重量莫耳濃度約為？
+stoich|csf6c4	64 g 甲醇（32 g/mol）與 72 g 水混合，甲醇的莫耳分率為？
+stoich|1ytjkys	10.0 g NH₄NO₃（80.0 g/mol）配成 250.0 mL 溶液，
+stoich|1uy2evc	要使 1.0 kg 水在 −3.72 °C 才結冰，需加入多少克乙二醇（62 g
+stoich|1jdpd7w	0.10 mol 的 CoCl₃·xNH₃ 溶於 500 g 水中，凝固點為 −
+stoich|bfhzbf	1.5 g 蛋白質溶於 0.10 L 水中，27 °C 時滲透壓為 0.012 
+stoich|6qy1m8	純 A、B 的蒸氣壓分別為 300 與 100 torr，形成理想溶液後，蒸氣中
+stoich|1yyh3ii	戊烷與己烷等莫耳混合（25 °C 蒸氣壓 511 與 150 torr），蒸氣中
+stoich|ahtxrc	O₂ 在 25 °C、1 atm 下的溶解度為 1.3 × 10⁻³ mol/L
+stoich|16hlvpk	濃度均為 0.1 M 時，下列何者的離子強度最大？
+stoich|c3ayql	下列何者是膠體？
+thermo|11edsn2	已知 C(s) + ½O₂ → CO，ΔH = −110.5 kJ；C(s) +
+thermo|pd8r8x	下列哪一個過程的 ΔS 為負？
+thermo|k32gxe	ΔH > 0 且 ΔS > 0 的反應，何時自發？
+thermo|oiz71t	冰熔化的 ΔH = +6.01 kJ/mol、ΔS = +22.0 J/(K·m
+thermo|g3ligu	某反應 ΔG° < 0，下列何者正確？
+thermo|1e7l5iw	為什麼加熱有利於脫去反應（相對於取代）？
+thermo|kb7rt9	30.0 g、95.0 °C 的鋁塊放入 100.0 g、22.0 °C 的水中
+thermo|1unepus	熱容量 2.10 kJ/K 的彈卡計中燃燒 0.160 g CH₄（16.0 g
+thermo|1xajux5	關於卡計的敘述，何者錯誤？
+thermo|1qjsbk	1 mol 理想氣體等溫可逆膨脹到兩倍體積，何者正確？
+thermo|14p7ooe	1 mol 理想氣體等溫由 V 膨脹到 3V，ΔS 為？
+thermo|c52g8g	下列關係何者不適用於所有理想氣體？
+thermo|1elqwx5	下列何者的標準生成熱不為 0？
+thermo|l4aqn7	由燃燒熱 C₂H₂ −1300、H₂ −286、C₂H₆ −1560 kJ/mo
+thermo|33a1rg	由鍵能 C=O 745、H–H 436、C–H 413、O–H 463、C–O 
+thermo|17d24ae	Na 昇華 107、Cl–Cl 鍵能 244、Na 游離能 496、Cl 電子親
+thermo|1q42ovu	KCl 晶格能 701 kJ/mol，溶解熱 +17 kJ/mol，其水合能為？
+thermo|1o36g7b	某反應低溫自發、高溫不自發，最合理的判斷是？
+thermo|13a7676	某物質熔化 ΔH° = 9.0 kJ/mol、ΔS° = 30.0 J/(mol
+thermo|10dk3rf	−10 °C 時液態水結冰，ΔH、ΔS、ΔG 的符號為？
+thermo|tqc7hk	兩個原子自發結合成穩定的雙原子分子，ΔH、ΔS、ΔG 的符號為？
+thermo|660rw6	蛋白質加熱變性（二級結構的氫鍵斷裂），ΔH 與 ΔS 為？
+thermo|g518o3	某弱酸解離的 ΔH = −8.0 kJ/mol、ΔS = −70 J/(mol·
+thermo|j5waic	關於 ΔG° 與平衡常數，何者正確？
+thermo|17ou1mh	以 ln K 對 1/T 作圖得到斜率為正的直線，此反應為？
+thermo|40pjco	一個人休息時以約 100 W 的速率向環境放熱，一天放出的熱約為？
+vsepr|g0o2ds	下列哪一個鍵的極性最大？
+vsepr|1yaa14x	NH₃ 的分子形狀為何？
+vsepr|10rw2ah	XeF₄ 的形狀為何？
+vsepr|yb2z74	CH₄、NH₃、H₂O 的鍵角大小順序為？
+vsepr|16o5lnn	下列何者為非極性分子？
+vsepr|1jxt8co	為什麼 H₂O 的沸點（100 °C）遠高於 H₂S（−60 °C）？
+vsepr|9r3q2y	下列分子間作用力何者通常最強？
+vsepr|1irnf56	下列何者為非極性分子？
+vsepr|8huovc	BF₃、CCl₄、SO₂、XeF₂、SF₄、ClF₃ 中，偶極矩不為零的有幾個？
+vsepr|rrxkdu	氰離子 CN⁻ 的最佳路易斯結構中，C 的形式電荷為？
+vsepr|75y61n	若把 POCl₃ 畫成 P–O 單鍵（每個原子都符合八隅體），P 與 O 的形式
+vsepr|otacn6	在 [N≡C–O]⁻ 中，N 的形式電荷與氧化數分別為？
+vsepr|brdc7x	關於 N₂O 的共振結構，何者正確？
+vsepr|mgwtsn	丙烯腈 CH₂=CH–C≡N 有幾個 σ 鍵、幾個 π 鍵？
+vsepr|u4zmet	C₆₀ 分子中每個碳原子接三個碳，共有幾個 C–C 鍵？
+vsepr|3xx5ou	下列粒子中 C–O 鍵長由短到長，何者正確？
+vsepr|1p42tyk	下列何者的 N–N 鍵長最短？
+vsepr|1jn7yip	I₃⁻ 的分子形狀為？
+vsepr|1w9txh3	BrF₃ 的分子形狀為？
+vsepr|e6twpw	若 XF₅ 為四角錐形，X 最可能是？
+vsepr|1top36t	IF₃ 與 IF₅ 中心 I 的混成軌域分別為？
+vsepr|1hb5dcp	NO₂⁺、NO₂⁻、NH₄⁺ 中 N 的混成依序為？
+vsepr|4exqnv	下列鍵角由大到小何者正確？
+vsepr|1mbiyu7	C₂H₄、HCHO、BF₃、NH₃、H₂O₂、H₂C=C=CH₂ 中，所有原子共
+vsepr|1d3tmq7	下列離子化合物何者晶格能最大？
+vsepr|19aqf3i	下列何者的熔點最高？
+vsepr|19zihk3	下列化學鍵的極性由大到小，何者正確？
+vsepr|8k24kt	下列化合物沸點由低到高，何者正確？
+vsepr|spl8tf	1-丙醇、2-丙醇、甲乙醚的沸點由高到低為？
+vsepr|1km73a2	CH₃OCH₃、CH₄、F⁻、CH₃COOH、K⁺ 中，能和水形成氫鍵的是？
+vsepr|u5wkjn	下列化合物在水中的溶解度由低到高，何者正確？
+vsepr|t7ah7y	KCl、C₂H₅OH、C₃H₈、Ar 的沸點由低到高為？
+vsepr|13inebq	鄰、間、對-二甲苯中，熔點最高的是？

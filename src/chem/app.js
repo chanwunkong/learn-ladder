@@ -89,22 +89,34 @@ function bindTree() {
   if (!window.__treeRO) { window.__treeRO = new ResizeObserver(() => $('.trees') && treeLines()); window.__treeRO.observe($('#article')); }
 }
 
-/* ---------- 練習紀錄：每次作答存一筆（只存在這台裝置的瀏覽器） ----------
-   { t: 時間戳, c: 章 id, k: 'q' 章末題／'x' 相似題, i: 題號, p: 選的選項, ok: 1/0, n: 這次第幾次作答 } */
-const LOG = store.get('log', []);
-function logAnswer(e) { LOG.push({ t: Date.now(), ...e }); if (LOG.length > 5000) LOG.splice(0, LOG.length - 5000); store.set('log', LOG); }
-const qbank = (c, k) => (k === 'x' ? c.exam : c.quiz) || [];
+/* ---------- 練習紀錄：每次作答存一筆（存在這台裝置的瀏覽器；登入後合併同步到雲端） ----------
+   { t: 時間戳, c: 章 id, k: 'q' 章末題／'x' 相似題, i: 當時的題號, h: 題目識別碼, qt: 題目文字快照, p: 選的選項, ok: 1/0, n: 這次第幾次作答 }
+   題庫更新（插入、刪除、重排題目）時紀錄不會錯位：一律用 h 找題目；找不到時顯示 qt 快照。
+   題目文字若要改寫又想保留舊紀錄的對應，在題目上加 id: '舊的識別碼'。紀錄永不因題庫更新而刪除。 */
 const strip = h => String(h).replace(/<[^>]+>/g, '');
+const qhash = s => { let h = 5381; for (const ch of s) h = ((h << 5) + h + ch.codePointAt(0)) >>> 0; return h.toString(36); };
+const qid = (cid, q, k) => q.id || qhash(cid + '|' + k + '|' + strip(q.q));
+const LOG = store.get('log', []);
+const qbank = (c, k) => (k === 'x' ? c.exam : c.quiz) || [];
+// 舊版紀錄只有題號：第一次載入時依「當時的題庫」補上識別碼與快照，之後題庫怎麼改都對得上
+(() => { let ch = 0; LOG.forEach(e => { if (e.h) return; const c = chOf(e.c), q = c && qbank(c, e.k)[e.i]; if (q) { e.h = qid(c.id, q, e.k); e.qt = strip(q.q).slice(0, 60); ch = 1; } }); if (ch) store.set('log', LOG); })();
+function logAnswer(e) { LOG.push({ t: Date.now(), ...e }); if (LOG.length > 20000) LOG.splice(0, LOG.length - 20000); store.set('log', LOG); if (typeof CLOUD !== 'undefined' && CLOUD.pushLog) CLOUD.pushLog(); }
+// 由識別碼找回目前的題目（題號可能已變）
+let QIX = null;
+function qfind(cid, h, k, i) {
+  if (!QIX) { QIX = {}; CH.forEach(c => ['q', 'x'].forEach(kk => qbank(c, kk).forEach((q, j) => { QIX[c.id + '|' + qid(c.id, q, kk)] = { c, k: kk, i: j, q }; }))); }
+  return (h && QIX[cid + '|' + h]) || (!h && chOf(cid) && qbank(chOf(cid), k)[i] ? { c: chOf(cid), k, i, q: qbank(chOf(cid), k)[i] } : null);
+}
 const dstr = t => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
 const tstr = t => { const d = new Date(t); return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
 function qblock(list, kind) {
-  return list.map((q, k) => `<div class="q" data-k="${kind}" data-q="${k}">${q.src ? `<p class="qsrc">仿 ${q.src}</p>` : ''}<p class="qt">${k + 1}. ${q.q}</p><div class="opts">${order(q, k).map(j => `<button class="opt" type="button" data-o="${j}">${q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('');
+  return list.map((q, k) => `<div class="q" data-k="${kind}" data-q="${k}">${q.src ? `<p class="qsrc">仿 ${String(q.src).replace(/^仿\s*/, '')}</p>` : ''}<p class="qt">${k + 1}. ${q.q}</p><div class="opts">${order(q, k).map(j => `<button class="opt" type="button" data-o="${j}">${q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('');
 }
 // 把連續的作答併成「一題一次」：同一章、同一題、同一頁面瀏覽中，從第 1 次作答到答對為止
 function sessions(log = LOG) {
   const out = [];
-  log.forEach(e => { const last = out.length && [...out].reverse().find(s => s.c === e.c && s.k === e.k && s.i === e.i && !s.closed);
-    if (e.n === 1 || !last) out.push({ t: e.t, c: e.c, k: e.k, i: e.i, tries: 1, ok: e.ok, first: e.ok, closed: !!e.ok, end: e.t });
+  log.forEach(e => { const key = e.h || e.k + e.i, last = out.length && [...out].reverse().find(s => s.c === e.c && s.key === key && !s.closed);
+    if (e.n === 1 || !last) out.push({ t: e.t, c: e.c, k: e.k, i: e.i, h: e.h, qt: e.qt, key, tries: 1, ok: e.ok, first: e.ok, closed: !!e.ok, end: e.t });
     else { last.tries++; last.end = e.t; if (e.ok) { last.ok = 1; last.closed = true; } } });
   return out;
 }
@@ -121,14 +133,14 @@ function renderLog() {
 ${ss.length ? `<div class="cards">${card('n', '練習題次', ss.length)}${card('f', '第一次就答對', pct(ss.filter(s => s.first).length, ss.length))}${card('d', '練習天數', days.length)}${card('l', '最近一次', `${dstr(ss[ss.length - 1].t)} ${tstr(ss[ss.length - 1].t)}`)}</div>
 <h2>各章</h2><table class="tbl"><thead><tr><th>章節</th><th>題次</th><th>第一次就答對</th><th>最近練習</th></tr></thead><tbody>${byCh.map(r => `<tr><td><a href="#${r.c.id}">${r.c.title}</a></td><td>${r.n}</td><td>${pct(r.f, r.n)}</td><td>${r.last}</td></tr>`).join('')}</tbody></table>
 <h2>每日紀錄</h2>${days.map((d, k) => { const x = ss.filter(s => dstr(s.t) === d);
-  return `<details class="logday"${k ? '' : ' open'}><summary><b>${d}</b>　${x.length} 題，第一次就答對 ${pct(x.filter(s => s.first).length, x.length)}</summary><table class="tbl"><thead><tr><th>時間</th><th>章節</th><th>題目</th><th>結果</th></tr></thead><tbody>${x.map(s => { const c = chOf(s.c), q = c && qbank(c, s.k)[s.i];
-    return `<tr><td class="mono">${tstr(s.t)}</td><td>${c ? `<a href="#${c.id}/${s.k === 'x' ? 'exam' : 'quiz'}">${c.title.split('：')[0]}</a>` : s.c}${s.k === 'x' ? '<small class="mut">（相似題）</small>' : ''}</td><td>${q ? strip(q.q).slice(0, 48) : '（題目已更新）'}</td><td>${res(s)}</td></tr>`; }).join('')}</tbody></table></details>`; }).join('')}
+  return `<details class="logday"${k ? '' : ' open'}><summary><b>${d}</b>　${x.length} 題，第一次就答對 ${pct(x.filter(s => s.first).length, x.length)}</summary><table class="tbl"><thead><tr><th>時間</th><th>章節</th><th>題目</th><th>結果</th></tr></thead><tbody>${x.map(s => { const c = chOf(s.c), f = qfind(s.c, s.h, s.k, s.i), q = f && f.q;
+    return `<tr><td class="mono">${tstr(s.t)}</td><td>${c ? `<a href="#${c.id}/${s.k === 'x' ? 'exam' : 'quiz'}">${c.title.split('：')[0]}</a>` : s.c}${s.k === 'x' ? '<small class="mut">（相似題）</small>' : ''}</td><td>${q ? strip(q.q).slice(0, 48) : s.qt ? `${esc(s.qt.slice(0, 48))}<small class="mut">（此題已改版）</small>` : '（題目已更新）'}</td><td>${res(s)}</td></tr>`; }).join('')}</tbody></table></details>`; }).join('')}
 <div class="w-row"><button class="btn sm" type="button" id="logCsv">下載 CSV</button><button class="btn sm ghost" type="button" id="logClr">清除全部紀錄</button></div>`
   : '<p class="note">還沒有紀錄。到任何一章的「確認理解」或「歷屆考題相似題」作答，就會自動記在這裡。</p>'}`;
   if (!ss.length) return;
   $('#logCsv').onclick = () => {
-    const rows = [['日期', '時間', '章節', '類型', '題號', '題目', '作答次數', '第一次就答對', '最後答對']].concat(ss.map(s => { const c = chOf(s.c), q = c && qbank(c, s.k)[s.i];
-      return [dstr(s.t), tstr(s.t), c ? c.title : s.c, s.k === 'x' ? '相似題' : '章末題', s.i + 1, q ? strip(q.q) : '', s.tries, s.first ? '是' : '否', s.ok ? '是' : '否']; }));
+    const rows = [['日期', '時間', '章節', '類型', '題號', '題目', '作答次數', '第一次就答對', '最後答對']].concat(ss.map(s => { const c = chOf(s.c), f = qfind(s.c, s.h, s.k, s.i), q = f && f.q;
+      return [dstr(s.t), tstr(s.t), c ? c.title : s.c, s.k === 'x' ? '相似題' : '章末題', f ? f.i + 1 : '', q ? strip(q.q) : s.qt || '', s.tries, s.first ? '是' : '否', s.ok ? '是' : '否']; }));
     const csv = '\ufeff' + rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = `化學練習紀錄-${dstr(Date.now())}.csv`; a.click();
   };
@@ -152,7 +164,7 @@ ${c.exam ? `<section class="sec" id="sec-exam"><h2><span class="sn">考</span>�
     let tries = 0;
     $$('.opt', qe).forEach(b => { b.onclick = () => {
       const ok = +b.dataset.o === q.a; b.classList.add(ok ? 'right' : 'wrong'); why.hidden = false;
-      logAnswer({ c: id, k: kind, i: qi, p: +b.dataset.o, ok: ok ? 1 : 0, n: ++tries });
+      logAnswer({ c: id, k: kind, i: qi, h: qid(id, q, kind), qt: strip(q.q).slice(0, 60), p: +b.dataset.o, ok: ok ? 1 : 0, n: ++tries });
       const demo = q.show && INST[q.show.w] ? '<button class="btn sm" type="button" data-show>在圖上看 ↑</button>' : '';
       if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}${demo}`; if (kind === 'q') right.add(qe.dataset.q);
         if (right.size === c.quiz.length && !state.done[id]) { setDone(id, true); markBtn(); } }
