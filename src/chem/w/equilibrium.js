@@ -129,3 +129,37 @@ W.kdg = el => {
   draw();
   return { set(s) { Object.assign(st, s); draw(); } };
 };
+
+/* ===== 5. K 的運算：反向、乘係數、相加 ===== */
+W.kalgebra = el => {
+  const K1 = 12, K2 = 130;
+  const OPS = [['倒過來寫', 'C ⇌ A + B', '1 / K₁', 1 / K1], ['係數乘 2', '2A + 2B ⇌ 2C', 'K₁²', K1 * K1], ['係數乘 ½', '½A + ½B ⇌ ½C', '√K₁', Math.sqrt(K1)], ['兩式相加', '3A + 2B ⇌ C + D', 'K₁ × K₂', K1 * K2], ['式 2 減式 1', 'A + C ⇌ D', 'K₂ ÷ K₁', K2 / K1]];
+  let cur = 3;
+  el.innerHTML = `<p class="eq">式 1：A + B ⇌ C　K₁ = ${K1}　　式 2：2A + B ⇌ D　K₂ = ${K2}</p>${seg('kaS', OPS.map((o, i) => [String(i), o[0]]), '3')}<div class="kaG" id="kaG"></div><p class="note" id="kaN"></p>`;
+  function draw() {
+    const [nm, rx, f, v] = OPS[cur];
+    $('#kaG', el).innerHTML = `<div class="cards">${card('r', '新的反應', rx)}${card('f', '新的 K', f)}${card('v', '數值', fx(v, v < 1 ? 3 : 1))}</div>`;
+    $('#kaN', el).innerHTML = `K 是產物濃度的次方相乘除以反應物的次方相乘，所以對方程式的操作會變成對 K 的操作：<b>反向</b>時分子分母互換 → 倒數；<b>係數乘 n</b> 時每個次方乘 n → K 的 n 次方；<b>兩式相加</b>時兩個分式相乘 → K 相乘；<b>相減</b>就是加上反向的式子 → 相除。這和熱化學中 ΔH 的「倒過來變號、乘 n、相加」完全對應（ΔG° = −RT ln K，ΔG° 相加就是 K 相乘）。`;
+    pressSeg(el, 'kaS', String(cur));
+  }
+  bindSeg(el, 'kaS', v => { cur = +v; draw(); });
+  draw();
+  return { set(s) { cur = s.i ?? cur; draw(); } };
+};
+
+/* ===== 6. Kp 與 Kc：差在 (RT)^Δn ===== */
+const KPC = [['CO + Cl₂ ⇌ COCl₂', 1, 2], ['N₂ + 3H₂ ⇌ 2NH₃', 2, 4], ['4HCl + O₂ ⇌ 2H₂O + 2Cl₂', 4, 5], ['H₂ + I₂ ⇌ 2HI', 2, 2], ['N₂O₄ ⇌ 2NO₂', 2, 1], ['NH₄NO₃(s) ⇌ N₂O + 2H₂O（氣體）', 3, 0]];
+W.kpkc = el => {
+  const st = { i: 0, T: 640 };
+  el.innerHTML = `${seg('kpS', KPC.map((r, i) => [String(i), r[0]]), '0')}<div class="w-row"><label class="rng">溫度（K）<input type="range" id="kpT" min="250" max="1000" step="10"><output class="mono" id="kpO"></output></label></div><div class="cards" id="kpK"></div><p class="eq" id="kpF"></p><p class="note">理想氣體的分壓 P = (n/V)RT = [濃度]·RT，所以把每個濃度換成分壓時，各乘上一次 RT。產物的次方比反應物多 Δn 次，整體就多乘 (RT)^Δn（R = 0.08206，壓力用 atm）。Δn = 0 時 Kp = Kc。只算<b>氣體</b>的係數；固體、純液體不寫進 K。</p>`;
+  function draw() {
+    const [rx, gp, gr] = KPC[st.i], dn = gp - gr, RT = 0.08206 * st.T;
+    $('#kpK', el).innerHTML = card('n', 'Δn（氣體）', `${dn > 0 ? '+' : ''}${dn}`, `${gp} − ${gr}`) + card('rt', 'RT', fx(RT, 2)) + card('f', 'Kp ÷ Kc', sci(RT ** dn, 3));
+    $('#kpF', el).innerHTML = `${rx}：Kp = Kc × (RT)^Δn = Kc × (${fx(RT, 2)})^${dn}`;
+    $('#kpT', el).value = st.T; $('#kpO', el).textContent = `${st.T} K`; pressSeg(el, 'kpS', String(st.i));
+  }
+  bindSeg(el, 'kpS', v => { st.i = +v; draw(); });
+  $('#kpT', el).oninput = e => { st.T = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};

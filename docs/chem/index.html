@@ -1588,35 +1588,35 @@ CH.push({
   id: 'equilibrium', unit: 'g7', title: '化學平衡：K、Q 與勒沙特列原理',
   lede: '反應不一定會「做完」。這一章看懂平衡為什麼停在某個比例、怎麼預測反應往哪邊走，以及外界改變時系統如何調整。後面的酸鹼、溶解度、電化學，全部建立在這一章上。',
   sections: [
-    { h: '平衡是動態的：正逆反應一樣快', w: 'eqdyn', body: `
+    { h: '反應停下來了嗎？', w: 'eqdyn', body: `
 <p>A ⇌ B 的反應同時往兩個方向進行。正反應速率 = k<sub>f</sub>[A]，逆反應速率 = k<sub>r</sub>[B]。剛開始只有 A，正反應很快、逆反應是 0；隨著 A 變少、B 變多，正反應變慢、逆反應變快，直到兩者<b>一樣快</b>。</p>
 <p>這時濃度不再改變，稱為<b>化學平衡</b>。注意：反應並沒有停止，只是每秒有多少 A 變成 B，就有多少 B 變回 A。</p>
 <p>平衡時 k<sub>f</sub>[A] = k<sub>r</sub>[B]，整理得到：</p>
 <p class="eq">[B] ÷ [A] = k<sub>f</sub> ÷ k<sub>r</sub> = K（平衡常數）</p>
 <p>改從純 B 開始試試：最後到達的比例完全一樣。<b>平衡組成只由 K 決定，和從哪一邊出發無關。</b></p>` },
-    { h: '平衡常數 K：怎麼寫、代表什麼', body: `
+    { h: '平衡常數 K 怎麼寫、怎麼運算？', w: ['kalgebra', 'kpkc'], body: `
 <p>對一般反應 aA + bB ⇌ cC + dD，平衡常數是「產物濃度的係數次方相乘」除以「反應物濃度的係數次方相乘」：</p>
 <p class="eq">K = [C]<sup>c</sup>[D]<sup>d</sup> ÷ ([A]<sup>a</sup>[B]<sup>b</sup>)</p>
 <ul><li><b>純固體與純液體不寫進 K</b>（例如水當溶劑時），因為它們的「濃度」不會改變。</li>
 <li><b>K 很大（≫ 1）</b>：平衡時幾乎都是產物，反應「幾乎完全」。例如上一章的 HA + OH⁻ → A⁻ + H₂O，K ≈ 1.8 × 10⁹。</li>
 <li><b>K 很小（≪ 1）</b>：平衡時幾乎都是反應物。例如醋酸的解離 Ka = 1.8 × 10⁻⁵，所以醋酸溶液裡大部分還是 HA。</li>
-<li><b>反應倒過來寫，K 變成倒數</b>；係數全部乘 2，K 變成平方；兩個反應相加，K 相乘。</li>
-<li>氣體反應也可以用分壓寫成 Kp，Kp = Kc(RT)<sup>Δn</sup>，Δn 是氣體產物與反應物的莫耳數差。</li></ul>
+</ul>
+<p>對方程式的操作會變成對 K 的操作（第一張圖）；氣體反應用分壓寫成 Kp，和 Kc 差 (RT)^Δn（第二張圖）。固體分解產生兩種氣體時（例如 NH₄NO₃(s) → N₂O + 2H₂O），兩種氣體的分壓比等於係數比，由總壓就能求出 Kp。</p>
 <p>K 只和<b>溫度</b>有關：改變濃度、壓力或加入催化劑，K 都不變。</p>` },
-    { h: '反應商 Q：還沒平衡時往哪走', w: 'qk', body: `
+    { h: '還沒平衡時，反應往哪邊走？', w: 'qk', body: `
 <p>把「目前」的濃度代入 K 的式子，得到的值叫<b>反應商 Q</b>。比較 Q 和 K 就知道反應往哪個方向走：</p>
 <ul><li><b>Q &lt; K</b>：產物不夠，反應<b>向右</b>。</li><li><b>Q &gt; K</b>：產物太多，反應<b>向左</b>。</li><li><b>Q = K</b>：已經平衡。</li></ul>
 <p>要算平衡濃度，用 <b>ICE 表</b>：I（Initial）起始濃度、C（Change）變化量、E（Equilibrium）平衡濃度。變化量依係數比例寫成 −x、+2x，把平衡濃度代入 K 的式子解出 x。</p>
 <p>以 N₂O₄ ⇌ 2NO₂ 為例，調整起始濃度：有時 Q 比 K 小、有時比 K 大，x 的正負代表反應的方向。</p>` },
-    { h: '勒沙特列原理：干擾之後系統怎麼調整', w: 'lechat', body: `
+    { h: '平衡被干擾之後會怎樣？', w: 'lechat', body: `
 <p>勒沙特列原理說：平衡受到干擾時，系統會往<b>部分抵銷干擾</b>的方向移動。但與其背口訣，不如每次都用 Q 和 K 判斷，永遠不會錯：</p>
-<table class="tbl"><thead><tr><th>干擾</th><th>改變了什麼</th><th>結果</th></tr></thead><tbody>
-<tr><td>加入反應物或產物</td><td>Q 改變，K 不變</td><td>往消耗加入物的方向移動</td></tr>
-<tr><td>壓縮體積（加壓）</td><td>所有氣體濃度同倍增加；氣體分子數多的一側，Q 受影響較大</td><td>往<b>氣體分子數較少</b>的一側移動</td></tr>
-<tr><td>改變溫度</td><td>Q 不變，<b>K 改變</b></td><td>升溫往吸熱方向，降溫往放熱方向</td></tr>
-<tr><td>加入催化劑</td><td>都不變</td><td>平衡不移動，只是更快到達</td></tr></tbody></table>
+<ul><li>加入或移走反應物、產物：Q 改變、K 不變，往消耗加入物的方向移動。加入純固體或純液體不影響。</li>
+<li>壓縮體積：往氣體分子數較少的一側移動；<b>定容下加入惰性氣體</b>，各氣體的分壓不變，平衡不移動。</li>
+<li>改變溫度：Q 不變、<b>K 改變</b>，升溫往吸熱方向移動。這是唯一會改變 K 的因素。</li>
+<li>催化劑：平衡不移動，只是更快到達。</li></ul>
+<p>錯離子的顏色也是例子：Co(H₂O)₆²⁺（粉紅）+ 4Cl⁻ ⇌ CoCl₄²⁻（藍）+ 6H₂O。加入 AgNO₃ 會把 Cl⁻ 沉澱成 AgCl，平衡往左，溶液變粉紅。</p>
 <p>N₂O₄（無色）⇌ 2NO₂（紅棕色）的正反應吸熱。試試各種干擾：先看干擾後 Q 和 K 的關係，再讓系統回到平衡。注意加壓時顏色先變深（濃度加倍）、再稍微變淡（反應向左），這是經典的課堂示範。</p>` },
-    { h: 'K 由什麼決定：ΔG° 與溫度', w: 'kdg', body: `
+    { h: 'K 由什麼決定？', w: 'kdg', body: `
 <p>平衡常數和標準自由能變化有一條直接的關係：</p>
 <p class="eq">ΔG° = −RT ln K　　⇔　　K = e<sup>−ΔG°/RT</sup></p>
 <ul><li>ΔG° &lt; 0 → K &gt; 1，產物有利；ΔG° &gt; 0 → K &lt; 1，反應物有利。</li>
@@ -1639,6 +1639,36 @@ CH.push({
       why: '催化劑同時降低正逆反應的活化能，兩個方向等比例加快，所以 K 和平衡組成都不變，只是更快到達平衡。' },
     { q: '某反應在 25 °C 的 ΔG° = −11.4 kJ/mol，其平衡常數 K 約為多少？', o: ['約 100', '約 0.01', '約 1', '約 11.4'], a: 0,
       why: 'K = e^(−ΔG°/RT) = e^(11400 ÷ (8.314 × 298)) = e^4.6 ≈ 100。也可以用「每 5.7 kJ/mol 差 10 倍」心算：11.4 是兩個 5.7，所以 K ≈ 10² 。', show: { w: 'kdg', set: { dG: -11.4, T: 298 } } },
+  ],
+  exam: [
+    { src: '義守 115 第 22 題', q: '下列何種改變會使平衡移動，但不改變平衡常數？', o: ['增加反應物的濃度', '改變溫度', '定容下加入惰性氣體', '加入催化劑'], a: 0,
+      why: '只有溫度改變 K；惰性氣體（定容）與催化劑都不使平衡移動。', show: { w: 'lechat' } },
+    { src: '慈濟 113 第 12 題', q: '若 ½N₂ + 3/2 H₂ ⇌ NH₃ 的平衡常數為 K，則 N₂ + 3H₂ ⇌ 2NH₃ 的平衡常數為？', o: ['K²', '2K', 'K/2', '√K'], a: 0,
+      why: '係數乘 2，K 變平方。', show: { w: 'kalgebra', set: { i: 1 } } },
+    { src: '義守 109 第 33 題', q: 'NO + ½O₂ ⇌ NO₂ 的平衡常數 K₁，2NO₂ ⇌ 2NO + O₂ 的平衡常數 K₂。兩者的關係為？', o: ['K₂ = 1/K₁²', 'K₂ = K₁²', 'K₂ = 1/K₁', 'K₂ = 2K₁'], a: 0,
+      why: '式 2 是式 1 反向（倒數）再乘 2（平方）。', show: { w: 'kalgebra', set: { i: 0 } } },
+    { src: '義守 107 第 12 題', q: 'A + B ⇌ C（K = 12）、2A + B ⇌ D（K = 130），則 A + C ⇌ D 的 K 約為？', o: ['10.8', '1560', '142', '118'], a: 0,
+      why: '式 2 減式 1：130 ÷ 12 ≈ 10.8。', show: { w: 'kalgebra', set: { i: 4 } } },
+    { src: '義守 113 第 7 題', q: 'CO(g) + Cl₂(g) ⇌ COCl₂(g) 的 Kp 與 Kc 關係為？', o: ['Kp = Kc/(RT)', 'Kp = Kc·RT', 'Kp = Kc', 'Kp = Kc(RT)²'], a: 0,
+      why: 'Δn = 1 − 2 = −1。', show: { w: 'kpkc', set: { i: 0 } } },
+    { src: '慈濟 115 第 16 題', q: '4HCl(g) + O₂(g) ⇌ 2H₂O(g) + 2Cl₂(g) 的 Kp 與 Kc 關係為？', o: ['Kp = Kc(RT)⁻¹', 'Kp = Kc(RT)', 'Kp = Kc(RT)⁵', 'Kp = Kc'], a: 0,
+      why: 'Δn = 4 − 5 = −1。', show: { w: 'kpkc', set: { i: 2 } } },
+    { src: '慈濟 111 第 37 題', q: 'C(s) + CO₂(g) ⇌ 2CO(g) 的平衡常數表示式為？', o: ['[CO]² / [CO₂]', '[CO]² / ([C][CO₂])', '[C][CO₂] / [CO]²', '[CO] / [CO₂]'], a: 0,
+      why: '純固體 C 不寫進 K。' },
+    { src: '中國醫藥 110 第 32 題', q: 'NH₄NO₃(s) ⇌ N₂O(g) + 2H₂O(g) 達平衡時總壓 3.0 atm，Kp 為？', o: ['4.0', '9.0', '3.0', '27'], a: 0,
+      why: 'P(N₂O) = 1.0、P(H₂O) = 2.0 atm（比例 1 : 2）：Kp = 1.0 × 2.0² = 4.0。', show: { w: 'kpkc', set: { i: 5 } } },
+    { src: '慈濟 111 第 18 題', q: '2NOBr(g) ⇌ 2NO(g) + Br₂(g)，起始只有 NOBr 2.0 atm，平衡時 NOBr 為 1.2 atm，Kp 約為？', o: ['0.18', '0.36', '0.80', '0.44'], a: 0,
+      why: 'NOBr 減少 0.8 → NO 0.8、Br₂ 0.4：Kp = 0.8² × 0.4 ÷ 1.2² ≈ 0.18。', show: { w: 'qk' } },
+    { src: '中國醫藥 113 第 33 題', q: '0.50 mol H₂ 與 0.50 mol I₂ 在 1.0 L 中反應（H₂ + I₂ ⇌ 2HI，Kc = 49），平衡時 [HI] 約為？', o: ['0.78 M', '0.39 M', '0.11 M', '1.0 M'], a: 0,
+      why: '(2x)² ÷ (0.50 − x)² = 49 → 2x ÷ (0.50 − x) = 7 → x = 0.389，[HI] = 0.78 M。', show: { w: 'qk' } },
+    { src: '中國醫藥 109 第 4 題', q: 'N₂ + 3H₂ ⇌ 2NH₃ 的 K = 0.50。將 N₂、H₂、NH₃ 各 1.0 mol 放入 1.0 L 容器，反應往哪個方向？', o: ['向左，因為 Q = 1.0 > K', '向右，因為 Q < K', '已達平衡', '無法判斷'], a: 0,
+      why: 'Q = 1² ÷ (1 × 1³) = 1.0 > 0.50，產物太多，向左。', show: { w: 'qk' } },
+    { src: '慈濟 115 第 19 題', q: 'Co(H₂O)₆²⁺（粉紅）+ 4Cl⁻ ⇌ CoCl₄²⁻（藍）+ 6H₂O，加入下列何者會使溶液更藍？', o: ['濃鹽酸', 'AgNO₃', '水', 'NaNO₃'], a: 0,
+      why: '增加 Cl⁻，平衡往右；AgNO₃ 會移走 Cl⁻，加水會往左。' },
+    { src: '義守 106 第 4 題', q: 'N₂ + 3H₂ ⇌ 2NH₃（ΔH = −92 kJ）。下列何者可以增加 NH₃ 的平衡產量？', o: ['降溫與加壓', '升溫與加壓', '升溫與減壓', '降溫與減壓'], a: 0,
+      why: '放熱反應降溫往右；氣體分子數 4 → 2，加壓往右。', show: { w: 'lechat' } },
+    { src: '中國醫藥 106 第 35 題', q: '4NH₃(g) + 5O₂(g) ⇌ 4NO(g) + 6H₂O(g) 達平衡後降低壓力（增大體積），平衡如何移動？', o: ['向右，生成更多 NO', '向左', '不移動', 'K 變大'], a: 0,
+      why: '氣體分子數 9 → 10，減壓往分子數多的一側（右）；K 不變。' },
   ],
 });
 
@@ -4573,6 +4603,40 @@ W.kdg = el => {
   }
   $('#kgd', el).oninput = e => { st.dG = +e.target.value; draw(); };
   $('#kgt', el).oninput = e => { st.T = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 5. K 的運算：反向、乘係數、相加 ===== */
+W.kalgebra = el => {
+  const K1 = 12, K2 = 130;
+  const OPS = [['倒過來寫', 'C ⇌ A + B', '1 / K₁', 1 / K1], ['係數乘 2', '2A + 2B ⇌ 2C', 'K₁²', K1 * K1], ['係數乘 ½', '½A + ½B ⇌ ½C', '√K₁', Math.sqrt(K1)], ['兩式相加', '3A + 2B ⇌ C + D', 'K₁ × K₂', K1 * K2], ['式 2 減式 1', 'A + C ⇌ D', 'K₂ ÷ K₁', K2 / K1]];
+  let cur = 3;
+  el.innerHTML = `<p class="eq">式 1：A + B ⇌ C　K₁ = ${K1}　　式 2：2A + B ⇌ D　K₂ = ${K2}</p>${seg('kaS', OPS.map((o, i) => [String(i), o[0]]), '3')}<div class="kaG" id="kaG"></div><p class="note" id="kaN"></p>`;
+  function draw() {
+    const [nm, rx, f, v] = OPS[cur];
+    $('#kaG', el).innerHTML = `<div class="cards">${card('r', '新的反應', rx)}${card('f', '新的 K', f)}${card('v', '數值', fx(v, v < 1 ? 3 : 1))}</div>`;
+    $('#kaN', el).innerHTML = `K 是產物濃度的次方相乘除以反應物的次方相乘，所以對方程式的操作會變成對 K 的操作：<b>反向</b>時分子分母互換 → 倒數；<b>係數乘 n</b> 時每個次方乘 n → K 的 n 次方；<b>兩式相加</b>時兩個分式相乘 → K 相乘；<b>相減</b>就是加上反向的式子 → 相除。這和熱化學中 ΔH 的「倒過來變號、乘 n、相加」完全對應（ΔG° = −RT ln K，ΔG° 相加就是 K 相乘）。`;
+    pressSeg(el, 'kaS', String(cur));
+  }
+  bindSeg(el, 'kaS', v => { cur = +v; draw(); });
+  draw();
+  return { set(s) { cur = s.i ?? cur; draw(); } };
+};
+
+/* ===== 6. Kp 與 Kc：差在 (RT)^Δn ===== */
+const KPC = [['CO + Cl₂ ⇌ COCl₂', 1, 2], ['N₂ + 3H₂ ⇌ 2NH₃', 2, 4], ['4HCl + O₂ ⇌ 2H₂O + 2Cl₂', 4, 5], ['H₂ + I₂ ⇌ 2HI', 2, 2], ['N₂O₄ ⇌ 2NO₂', 2, 1], ['NH₄NO₃(s) ⇌ N₂O + 2H₂O（氣體）', 3, 0]];
+W.kpkc = el => {
+  const st = { i: 0, T: 640 };
+  el.innerHTML = `${seg('kpS', KPC.map((r, i) => [String(i), r[0]]), '0')}<div class="w-row"><label class="rng">溫度（K）<input type="range" id="kpT" min="250" max="1000" step="10"><output class="mono" id="kpO"></output></label></div><div class="cards" id="kpK"></div><p class="eq" id="kpF"></p><p class="note">理想氣體的分壓 P = (n/V)RT = [濃度]·RT，所以把每個濃度換成分壓時，各乘上一次 RT。產物的次方比反應物多 Δn 次，整體就多乘 (RT)^Δn（R = 0.08206，壓力用 atm）。Δn = 0 時 Kp = Kc。只算<b>氣體</b>的係數；固體、純液體不寫進 K。</p>`;
+  function draw() {
+    const [rx, gp, gr] = KPC[st.i], dn = gp - gr, RT = 0.08206 * st.T;
+    $('#kpK', el).innerHTML = card('n', 'Δn（氣體）', `${dn > 0 ? '+' : ''}${dn}`, `${gp} − ${gr}`) + card('rt', 'RT', fx(RT, 2)) + card('f', 'Kp ÷ Kc', sci(RT ** dn, 3));
+    $('#kpF', el).innerHTML = `${rx}：Kp = Kc × (RT)^Δn = Kc × (${fx(RT, 2)})^${dn}`;
+    $('#kpT', el).value = st.T; $('#kpO', el).textContent = `${st.T} K`; pressSeg(el, 'kpS', String(st.i));
+  }
+  bindSeg(el, 'kpS', v => { st.i = +v; draw(); });
+  $('#kpT', el).oninput = e => { st.T = +e.target.value; draw(); };
   draw();
   return { set(s) { Object.assign(st, s); draw(); } };
 };
