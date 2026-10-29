@@ -2,6 +2,9 @@
 # 後中化學：無頭 Chrome 打開每一章，操作每個互動圖（按鈕、滑桿、選單、機構逐步播放）與每題練習題，回報錯誤。
 # 用法：bash tests/chem/smoke.sh（需先 python3 build.py）
 cd "$(dirname "$0")/../.." || exit 1
+# 各檔案的頂層名稱共用同一個 script 範圍，重複宣告會讓整頁失效
+dup=$(grep -ho "^\(const\|let\|function\) [A-Za-z0-9_]*" src/chem/*.js src/chem/w/*.js src/chem/ch/*.js | awk '{print $2}' | sort | uniq -d)
+[ -n "$dup" ] && { echo "FAIL 重複的頂層名稱：$dup"; exit 1; }
 CHROME="${CHROME:-/Applications/Google Chrome.app/Contents/MacOS/Google Chrome}"
 TMP=$(mktemp -d)
 cat > "$TMP/probe.js" <<'JS'
