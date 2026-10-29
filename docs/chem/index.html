@@ -1884,27 +1884,29 @@ CH.push({
   id: 'ksp', unit: 'g9', title: '溶解度與錯合物平衡',
   lede: '「難溶」的鹽其實還是會溶一點點，而溶多少也是一個平衡。這一章用 Ksp 計算溶解度、判斷會不會沉澱，再看同離子、pH 和錯合物如何把溶解度推高或壓低。',
   sections: [
-    { h: '溶度積 Ksp 與莫耳溶解度', w: 'ksp', body: `
+    { h: '難溶的鹽到底溶了多少？', w: 'ksp', body: `
 <p>難溶鹽在飽和溶液中，固體和離子之間達成平衡。平衡常數叫<b>溶度積 Ksp</b>（固體不寫入）：</p>
 <p class="eq">AₓBᵧ(s) ⇌ x A + y B　　Ksp = [A]ˣ[B]ʸ</p>
 <p>用 ICE 的方式設溶解度為 s，代入就能互相換算。兩個常見陷阱：</p>
 <ul><li>係數要變成次方，濃度也要乘上係數：CaF₂ 的 [F⁻] = 2s，Ksp = s(2s)² = 4s³。</li>
 <li><b>只有同類型（1:1 比 1:1）的鹽，才能直接用 Ksp 大小比較溶解度</b>。</li></ul>` },
-    { h: '同離子效應', w: 'commonion', body: `
+    { h: '溶液裡已經有同樣的離子時呢？', w: 'commonion', body: `
 <p>溶液裡如果已經有其中一種離子（同離子），難溶鹽的溶解度會大幅下降，稱為<b>同離子效應</b>。這是勒沙特列原理：多出來的離子把平衡推回固體那一側。</p>
 <p>計算時，若外加離子濃度 c 遠大於溶解度 s，可以近似 [同離子] ≈ c，直接得到 s ≈ Ksp ÷ c（1:1 型）。</p>
 <p>醫學上的例子：鋇餐（BaSO₄）攝影時，Ba²⁺ 有毒，但 BaSO₄ 的 Ksp 很小，而且腸胃中有硫酸根，溶解的 Ba²⁺ 極少。</p>` },
-    { h: '會不會沉澱：Q 與 Ksp', w: 'precip', body: `
+    { h: '會不會沉澱？誰先沉澱？', w: ['precip', 'selprec'], body: `
 <p>和化學平衡一章一樣，把目前的離子濃度代入得到<b>離子積 Q</b>：</p>
 <ul><li>Q &lt; Ksp：未飽和，不沉澱（還能再溶）。</li><li>Q = Ksp：飽和。</li><li>Q &gt; Ksp：過飽和，<b>沉澱</b>直到 Q 降回 Ksp。</li></ul>
 <p>兩杯溶液混合時，別忘了體積變大、各自的濃度要先稀釋再相乘。</p>
-<p><b>選擇性沉澱</b>：溶液中有 Cl⁻ 和 I⁻ 時慢慢加入 Ag⁺，Ksp 較小的 AgI 會先沉澱，可藉此分離離子。</p>` },
-    { h: 'pH 與錯合物：讓沉澱溶解', body: `
-<p>只要把其中一種離子「拿走」，平衡就會往溶解的方向移動：</p>
-<ul><li><b>pH</b>：陰離子是弱酸的共軛鹼時（OH⁻、CO₃²⁻、S²⁻、F⁻、PO₄³⁻），加酸會把它們變成弱酸，溶解度大增。所以 CaCO₃（石灰岩、牙齒的羥磷灰石）遇酸會溶解，蛀牙就是口腔細菌產生的酸溶解牙釉質。Cl⁻ 是強酸的共軛鹼，AgCl 的溶解度不受 pH 影響。</li>
-<li><b>錯合物</b>：金屬離子和配位基（NH₃、CN⁻、EDTA）形成錯離子，生成常數 Kf 通常很大。AgCl 溶於氨水：AgCl + 2NH₃ ⇌ Ag(NH₃)₂⁺ + Cl⁻，K = Ksp × Kf = 1.8 × 10⁻¹⁰ × 1.7 × 10⁷ ≈ 3 × 10⁻³，比在純水中大很多。</li>
-<li><b>螯合劑</b>：EDTA 用六個位置同時抓住金屬離子，Kf 極大，臨床上用來治療鉛中毒，實驗室用來滴定 Ca²⁺、Mg²⁺（水的硬度）。</li></ul>
-<p>錯合物中，配位基提供孤對電子給金屬離子（路易斯鹼給路易斯酸），配位數常見 2（直線）、4（四面體或平面四方）、6（八面體）。</p>` },
+<p><b>選擇性沉澱</b>：溶液中有兩種離子時慢慢加入沉澱劑，先算出各自「開始沉澱所需的濃度」，最小的先沉澱（第二張圖）。</p>` },
+    { h: '加酸為什麼能溶解某些沉澱？', w: 'phsol', body: `
+<p>只要把其中一種離子「拿走」，溶解平衡就往右移動。陰離子是<b>弱酸的共軛鹼</b>時（OH⁻、CO₃²⁻、S²⁻、F⁻、PO₄³⁻、CH₃COO⁻），加酸會把它們變成弱酸，溶解度大增：CaCO₃（石灰岩、牙齒的羥磷灰石）遇酸溶解，蛀牙就是口腔細菌產生的酸溶解了牙釉質。Cl⁻ 是強酸的共軛鹼，AgCl 的溶解度不受 pH 影響。</p>
+<p>圖上是氫氧化物在緩衝溶液中的溶解度：s = Ksp ÷ [OH⁻]ⁿ，log s 對 pH 是斜率 −n 的直線。</p>` },
+    { h: '錯合物為什麼能溶解沉澱？', w: 'complexsol', body: `
+<p>金屬離子和配位基（NH₃、CN⁻，或六牙的螯合劑 EDTA）形成錯離子，生成常數 Kf 通常很大，大量消耗游離的金屬離子。總反應是溶解與錯合兩式相加：</p>
+<p class="eq">AgCl(s) + 2NH₃ ⇌ Ag(NH₃)₂⁺ + Cl⁻　　K = Ksp × Kf</p>
+<p>拖動配位基濃度、換不同的鹽：AgCl 溶於氨水，AgBr 只溶一點，AgI 幾乎不溶，要用 Kf 更大的 CN⁻ 才能溶解。氨水滴入 Cu²⁺ 溶液時，先生成 Cu(OH)₂ 沉澱（氨水提供 OH⁻），過量後沉澱溶解成深藍色的 [Cu(NH₃)₄]²⁺。</p>
+<p>錯合物的結構、命名與顏色在<a href="#coord">配位化學</a>一章詳細介紹。</p>` },
   ],
   quiz: [
     { q: 'AgCl 的 Ksp = 1.8 × 10⁻¹⁰，其在純水中的莫耳溶解度約為？', o: ['1.3 × 10⁻⁵ M', '1.8 × 10⁻¹⁰ M', '9.0 × 10⁻¹¹ M', '3.6 × 10⁻⁵ M'], a: 0,
@@ -1921,6 +1923,36 @@ CH.push({
       why: 'Cl⁻ 是強酸 HCl 的共軛鹼，幾乎不接受 H⁺；其他陰離子是弱酸的共軛鹼，加酸會被消耗，使溶解度變大。' },
     { q: 'AgCl 可以溶於氨水，主要原因是？', o: ['Ag⁺ 與 NH₃ 形成錯離子 Ag(NH₃)₂⁺，使 [Ag⁺] 降低', '氨水是強酸', 'NH₃ 會與 Cl⁻ 反應', '氨水使溫度升高'], a: 0,
       why: '錯離子的生成常數很大，大量消耗 Ag⁺，溶解平衡往右移。' },
+  ],
+  exam: [
+    { src: '義守 115 第 20 題', q: 'AgBr 在純水中的溶解度為 7.1 × 10⁻⁷ M，其 Ksp 約為？', o: ['5.0 × 10⁻¹³', '7.1 × 10⁻⁷', '1.4 × 10⁻⁶', '3.6 × 10⁻¹⁹'], a: 0,
+      why: '1:1 型：Ksp = s² = (7.1 × 10⁻⁷)² ≈ 5.0 × 10⁻¹³。', show: { w: 'ksp', set: { salt: 'AgBr' } } },
+    { src: '中國醫藥 111 第 23 題', q: '飽和 PbI₂ 溶液中 [I⁻] = 3.0 × 10⁻³ M，PbI₂ 的 Ksp 約為？', o: ['1.4 × 10⁻⁸', '9.0 × 10⁻⁶', '4.5 × 10⁻⁹', '2.7 × 10⁻⁸'], a: 0,
+      why: '[Pb²⁺] = 1.5 × 10⁻³：Ksp = 1.5 × 10⁻³ × (3.0 × 10⁻³)² ≈ 1.4 × 10⁻⁸。', show: { w: 'ksp', set: { salt: 'PbI2' } } },
+    { src: '慈濟 110 第 5 題', q: 'Fe(OH)₃ 的 Ksp = 2.8 × 10⁻³⁹，飽和溶液中由它溶出的 [OH⁻] 約為？', o: ['3 × 10⁻¹⁰ M', '1 × 10⁻¹⁰ M', '2.8 × 10⁻³⁹ M', '1 × 10⁻⁷ M'], a: 0,
+      why: 'Ksp = 27s⁴，s ≈ 1.0 × 10⁻¹⁰，[OH⁻] = 3s ≈ 3 × 10⁻¹⁰ M（遠小於水的 10⁻⁷，溶液 pH 仍約 7）。', show: { w: 'ksp', set: { salt: 'FeOH3' } } },
+    { src: '中國醫藥 113 第 14 題', q: '某難溶鹽的 Ksp 可寫成 Ksp = (1/2)[A]³（[A] 為陽離子濃度），其化學式可能是？', o: ['A₂B', 'AB₂', 'AB', 'A₃B'], a: 0,
+      why: 'A₂B：[A] = 2s、[B] = s = [A]/2，Ksp = [A]²[B] = [A]³/2。' },
+    { src: '義守 111 第 2 題', q: 'PbI₂（1.4 × 10⁻⁸）、CaCO₃（8.7 × 10⁻⁹）、Mg(OH)₂（8.9 × 10⁻¹²）、AgBr（5.0 × 10⁻¹³）中，莫耳溶解度最大的是？', o: ['PbI₂', 'CaCO₃', 'Mg(OH)₂', 'AgBr'], a: 0,
+      why: 'PbI₂ s = ∛(Ksp/4) ≈ 1.5 × 10⁻³；CaCO₃ √Ksp ≈ 9 × 10⁻⁵；Mg(OH)₂ ≈ 1.3 × 10⁻⁴；AgBr ≈ 7 × 10⁻⁷。', show: { w: 'ksp', set: { salt: 'PbI2' } } },
+    { src: '中國醫藥 110 第 22 題', q: 'Mg(OH)₂（Ksp = 8.9 × 10⁻¹²）在 pH 11.0 的緩衝溶液中，溶解度為？', o: ['8.9 × 10⁻⁶ M', '8.9 × 10⁻⁹ M', '1.3 × 10⁻⁴ M', '8.9 × 10⁻³ M'], a: 0,
+      why: '[OH⁻] = 10⁻³：s = 8.9 × 10⁻¹² ÷ 10⁻⁶ = 8.9 × 10⁻⁶ M。', show: { w: 'phsol', set: { s: 'MgOH2', pH: 11 } } },
+    { src: '義守 112 第 21 題', q: 'AgX 與 AgY 的 Ksp 相近，而 HX 的 Ka 遠大於 HY。在酸性溶液中何者溶解度較大？', o: ['AgY', 'AgX', '相同', '無法判斷'], a: 0,
+      why: 'HY 較弱，Y⁻ 是較強的鹼，容易被 H⁺ 拿走，溶解平衡右移。', show: { w: 'phsol' } },
+    { src: '慈濟 108 第 13 題', q: '改變溶液 pH 時，下列何者的溶解度變化最大？', o: ['ZnS', 'AgCl', 'PbI₂', 'BaSO₄'], a: 0,
+      why: 'S²⁻ 是很弱的酸 HS⁻ 的共軛鹼，加酸大幅增加溶解度；其他陰離子是強酸的共軛鹼。' },
+    { src: '慈濟 108 第 4 題', q: 'AgCl 的 Ksp = 1.8 × 10⁻¹⁰、Ag(NH₃)₂⁺ 的 Kf = 1.7 × 10⁷，AgCl 在 1.0 M NH₃ 中的溶解度約為？', o: ['0.050 M', '1.3 × 10⁻⁵ M', '3.1 × 10⁻³ M', '0.50 M'], a: 0,
+      why: 'K = 3.1 × 10⁻³，s ÷ (1.0 − 2s) = √K = 0.055，s ≈ 0.050 M，比純水大約 4000 倍。', show: { w: 'complexsol', set: { s: 'AgCl', l: 'nh3', c: 1 } } },
+    { src: '中國醫藥 113 第 27 題', q: 'Ag(NH₃)₂⁺ 的 Kf = 1.5 × 10⁷、Ag(CN)₂⁻ 的 Kf = 1.0 × 10²¹，Ag(NH₃)₂⁺ + 2CN⁻ ⇌ Ag(CN)₂⁻ + 2NH₃ 的 K 為？', o: ['6.7 × 10¹³', '1.5 × 10²⁸', '1.5 × 10⁻¹⁴', '1.0 × 10²¹'], a: 0,
+      why: '第二式減第一式：K = 1.0 × 10²¹ ÷ 1.5 × 10⁷。' },
+    { src: '中國醫藥 114 第 49 題', q: '把氨水慢慢滴入 Cu²⁺ 溶液，一開始生成的沉澱是？', o: ['Cu(OH)₂', 'CuO', 'Cu₂O', '[Cu(NH₃)₄]²⁺'], a: 0,
+      why: '少量氨水只提供 OH⁻；過量時才形成深藍色的可溶錯離子。', show: { w: 'complexsol' } },
+    { src: '中國醫藥 114 第 48 題', q: '溶液含 2.0 × 10⁻³ M Pb²⁺ 與 1.0 × 10⁻⁴ M Cu⁺，慢慢加入 NaI，何者先沉澱？（PbI₂ 1.4 × 10⁻⁸、CuI 1.1 × 10⁻¹²）', o: ['CuI，[I⁻] 達 1.1 × 10⁻⁸ M 時', 'PbI₂，[I⁻] 達 2.6 × 10⁻³ M 時', '同時沉澱', 'CuI，[I⁻] 達 1.1 × 10⁻¹² M 時'], a: 0,
+      why: 'CuI 需 [I⁻] = 1.1 × 10⁻¹² ÷ 10⁻⁴ = 1.1 × 10⁻⁸；PbI₂ 需 √(1.4 × 10⁻⁸ ÷ 2.0 × 10⁻³) = 2.6 × 10⁻³。', show: { w: 'selprec', set: { c: 'pb' } } },
+    { src: '中國醫藥 110 第 27 題', q: '要依序分離 Ag⁺、Pb²⁺、Ni²⁺，加入試劑的順序應為？', o: ['NaCl → Na₂SO₄ → Na₂S', 'Na₂S → NaCl → Na₂SO₄', 'Na₂SO₄ → Na₂S → NaCl', 'Na₂S → Na₂SO₄ → NaCl'], a: 0,
+      why: 'S²⁻ 會使三者都沉澱，必須最後加；SO₄²⁻ 會使 Ag₂SO₄ 也部分沉澱，所以先用 Cl⁻ 除去 Ag⁺。' },
+    { src: '慈濟 106 第 8 題', q: 'AgCl 在下列哪一種溶液中溶解度最高？', o: ['0.20 M NH₃', '純水', '0.20 M NaCl', '0.20 M HNO₃'], a: 0,
+      why: 'NH₃ 形成錯離子；NaCl 有同離子效應；HNO₃ 對 Cl⁻ 無影響。', show: { w: 'complexsol', set: { s: 'AgCl', c: 0.2 } } },
   ],
 });
 
@@ -2655,7 +2687,7 @@ const TERMS = {
     ['溶度積', 'Ksp：難溶鹽飽和溶液中離子濃度（係數次方）的乘積。', { w: 'ksp', set: { salt: 'AgCl' } }],
     ['同離子效應', '溶液中已有其中一種離子時，難溶鹽的溶解度下降。', { w: 'commonion', set: { c: 0.01 } }],
     ['離子積', '目前離子濃度代入 Ksp 式子的值 Q；Q > Ksp 就會沉澱。', { w: 'precip', set: { ca: 2e-4, cb: 2e-4 } }],
-    ['選擇性沉澱', '慢慢加入沉澱劑，讓 Ksp 較小的鹽先沉澱，藉此分離離子。'],
+    ['選擇性沉澱', '慢慢加入沉澱劑，開始沉澱所需濃度最低的離子先沉澱，藉此分離離子。', { w: 'selprec', set: { c: 'cl' } }],
     ['螯合劑', '用多個位置同時抓住金屬離子的配位基，例如 EDTA。'],
   ],
   'electro': [
@@ -5146,6 +5178,10 @@ const KSP = {
   BaSO4: { n: 'BaSO₄', k: 1.1e-10, x: 1, y: 1, c: 'Ba²⁺', a: 'SO₄²⁻' },
   CaF2: { n: 'CaF₂', k: 3.9e-11, x: 1, y: 2, c: 'Ca²⁺', a: 'F⁻' },
   Ag2CrO4: { n: 'Ag₂CrO₄', k: 1.1e-12, x: 2, y: 1, c: 'Ag⁺', a: 'CrO₄²⁻' },
+  PbI2: { n: 'PbI₂', k: 1.4e-8, x: 1, y: 2, c: 'Pb²⁺', a: 'I⁻' },
+  MgOH2: { n: 'Mg(OH)₂', k: 8.9e-12, x: 1, y: 2, c: 'Mg²⁺', a: 'OH⁻' },
+  FeOH3: { n: 'Fe(OH)₃', k: 2.8e-39, x: 1, y: 3, c: 'Fe³⁺', a: 'OH⁻' },
+  Ca3PO42: { n: 'Ca₃(PO₄)₂', k: 2.0e-33, x: 3, y: 2, c: 'Ca²⁺', a: 'PO₄³⁻' },
 };
 const solub = d => (d.k / (d.x ** d.x * d.y ** d.y)) ** (1 / (d.x + d.y));
 
@@ -5155,11 +5191,11 @@ W.ksp = el => {
   el.innerHTML = `${seg('kpS', Object.entries(KSP).map(([k, v]) => [k, v.n]), cur)}<ol class="cs" id="kpC"></ol><div class="bars pk" id="kpB"></div><p class="small mut">各鹽類在純水中的莫耳溶解度 s（對數長度）</p><p class="note" id="kpN"></p>`;
   function draw() {
     const d = KSP[cur], s = solub(d), co = d.x === 1 ? 's' : `${d.x}s`, an = d.y === 1 ? 's' : `${d.y}s`;
-    $('#kpC', el).innerHTML = `<li>${d.n}(s) ⇌ ${d.x > 1 ? d.x : ''}${d.c} + ${d.y > 1 ? d.y : ''}${d.a}</li><li>設溶解度為 s（M）：[${d.c}] = ${co}、[${d.a}] = ${an}</li><li>Ksp = (${co})${d.x > 1 ? '²' : ''}(${an})${d.y > 1 ? '²' : ''} = ${d.x ** d.x * d.y ** d.y === 1 ? '' : d.x ** d.x * d.y ** d.y}s${d.x + d.y > 2 ? '³' : '²'} = ${sci(d.k)}</li><li>s = <b>${sci(s)} M</b></li>`;
+    $('#kpC', el).innerHTML = `<li>${d.n}(s) ⇌ ${d.x > 1 ? d.x : ''}${d.c} + ${d.y > 1 ? d.y : ''}${d.a}</li><li>設溶解度為 s（M）：[${d.c}] = ${co}、[${d.a}] = ${an}</li><li>Ksp = (${co})${d.x > 1 ? SUP[d.x] : ''}(${an})${d.y > 1 ? SUP[d.y] : ''} = ${d.x ** d.x * d.y ** d.y === 1 ? '' : d.x ** d.x * d.y ** d.y}s${SUP[d.x + d.y] || ''} = ${sci(d.k)}</li><li>s = <b>${sci(s)} M</b></li>`;
     const ls = Object.values(KSP).map(solub), lo = Math.log10(Math.min(...ls)), hi = Math.log10(Math.max(...ls));
     $('#kpB', el).innerHTML = Object.entries(KSP).map(([k, v]) => { const sv = solub(v); return `<div class="${k === cur ? 'on' : ''}"><span>${v.n}（Ksp ${sci(v.k, 1)}）</span><i class="ba" style="width:${8 + 92 * (Math.log10(sv) - lo) / (hi - lo)}%"></i><b class="mono">${sci(sv, 1)} M</b></div>`; }).join('');
     $('#kpN', el).innerHTML = cur === 'Ag2CrO4' ? '注意：Ag₂CrO₄ 的 Ksp（1.1 × 10⁻¹²）比 AgCl（1.8 × 10⁻¹⁰）小，但溶解度反而<b>比較大</b>。因為 Ksp 的式子次方不同（s³ 對 s²），<b>只有化學式類型相同的鹽才能直接用 Ksp 比較溶解度</b>。'
-      : `${d.n}：Ksp 是飽和溶液中離子濃度乘積（各取係數次方），固體不寫入。${d.x + d.y === 2 ? '1:1 型的鹽 s = √Ksp。' : `${d.x}:${d.y} 型的鹽 Ksp = 4s³，s = ∛(Ksp/4)。`} 鹵化銀的溶解度 AgCl > AgBr > AgI，這是用沉澱顏色（白、淡黃、黃）鑑定鹵離子的基礎。`;
+      : `${d.n}：Ksp 是飽和溶液中離子濃度乘積（各取係數次方），固體不寫入。${d.x + d.y === 2 ? '1:1 型的鹽 s = √Ksp。' : `${d.x}:${d.y} 型的鹽 Ksp = ${d.x ** d.x * d.y ** d.y}s${SUP[d.x + d.y]}，s = (Ksp ÷ ${d.x ** d.x * d.y ** d.y}) 的 ${d.x + d.y} 次方根。`}${d.a === 'OH⁻' ? ` 飽和溶液的 [OH⁻] = ${d.y}s = ${sci(d.y * solub(d), 2)} M（若小於 10⁻⁷，pH 實際由水決定）。` : ''} 鹵化銀的溶解度 AgCl > AgBr > AgI，這是用沉澱顏色（白、淡黃、黃）鑑定鹵離子的基礎。`;
     pressSeg(el, 'kpS', cur);
   }
   bindSeg(el, 'kpS', v => { cur = v; draw(); });
@@ -5198,6 +5234,65 @@ W.precip = el => {
   $('#ppB', el).oninput = e => { st.cb = 10 ** +e.target.value; draw(); };
   draw();
   return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+
+/* ===== 4. 溶解度和 pH：氫氧化物與弱酸鹽 ===== */
+W.phsol = el => {
+  const H = { MgOH2: ['Mg(OH)₂', 8.9e-12, 2], ZnOH2: ['Zn(OH)₂', 3.0e-17, 2], FeOH3: ['Fe(OH)₃', 2.8e-39, 3] };
+  const st = { s: 'MgOH2', pH: 10 };
+  el.innerHTML = `${seg('psS', Object.entries(H).map(([k, v]) => [k, v[0]]), st.s)}<div class="w-row"><label class="rng">溶液的 pH（緩衝）<input type="range" id="psH" min="2" max="13" step="0.1"><output class="mono" id="psO"></output></label></div><div id="psG"></div><p class="eq" id="psF"></p><p class="note" id="psN"></p>`;
+  function draw() {
+    const [nm, K, n] = H[st.s], ls = pH => Math.log10(K) + n * (14 - pH), xs = Array.from({ length: 111 }, (_, i) => 2 + i * 0.1);
+    $('#psG', el).innerHTML = chart({ w: 560, h: 230, x: [2, 13], y: [-10, 4], xt: [2, 4, 6, 8, 10, 12], yt: [-10, -6, -2, 2], xlab: 'pH', ylab: 'log 溶解度（M）', label: '溶解度與 pH' }, (X, Y) =>
+      `<path class="tline" d="${path(xs.map(x => [X(x), Y(clamp(ls(x), -10, 4))]))}"/><circle class="dot" cx="${X(st.pH)}" cy="${Y(clamp(ls(st.pH), -10, 4))}" r="7"/>`);
+    $('#psF', el).innerHTML = `s = Ksp ÷ [OH⁻]${SUP[n]} = ${sci(K, 2)} ÷ (10⁻${fx(14 - st.pH, 1)})${SUP[n]} = <b>${sci(10 ** ls(st.pH), 2)} M</b>　（log s 對 pH 的斜率 = −${n}）`;
+    $('#psN', el).innerHTML = `pH 每降低 1，[OH⁻] 變 1/10，${nm} 的溶解度增加 10${n === 2 ? '²' : '³'} 倍。同樣的道理適用於所有<b>弱酸的陰離子</b>（CO₃²⁻、S²⁻、F⁻、CH₃COO⁻、PO₄³⁻）：加酸把陰離子變成弱酸，溶解平衡往右。陰離子是強酸的共軛鹼（Cl⁻、Br⁻、I⁻、SO₄²⁻ 幾乎不受影響）時，溶解度和 pH 無關。兩種 Ksp 相近的銀鹽，共軛酸越弱的那一種越容易溶於酸。`;
+    $('#psH', el).value = st.pH; $('#psO', el).textContent = fx(st.pH, 1); pressSeg(el, 'psS', st.s);
+  }
+  bindSeg(el, 'psS', v => { st.s = v; draw(); });
+  $('#psH', el).oninput = e => { st.pH = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 5. 錯合物使沉澱溶解：K = Ksp × Kf ===== */
+W.complexsol = el => {
+  const SALT = { AgCl: ['AgCl', 1.8e-10], AgBr: ['AgBr', 5.0e-13], AgI: ['AgI', 8.3e-17] }, LIG = { nh3: ['NH₃', 'Ag(NH₃)₂⁺', 1.7e7], cn: ['CN⁻', 'Ag(CN)₂⁻', 1.0e21] };
+  const st = { s: 'AgBr', l: 'nh3', c: 1.0 };
+  el.innerHTML = `${seg('csS', Object.entries(SALT).map(([k, v]) => [k, v[0]]), st.s)}${seg('csL', Object.entries(LIG).map(([k, v]) => [k, v[0]]), st.l)}<div class="w-row"><label class="rng">配位基濃度（M）<input type="range" id="csC" min="0.05" max="6" step="0.05"><output class="mono" id="csO"></output></label></div><div class="bars pk" id="csB"></div><p class="eq" id="csF"></p><p class="note" id="csN"></p>`;
+  function draw() {
+    const [nm, ksp] = SALT[st.s], [ln, cx, kf] = LIG[st.l], K = ksp * kf, r = Math.sqrt(K), s = r * st.c / (1 + 2 * r), s0 = Math.sqrt(ksp);
+    const lo = Math.log10(s0) - 1, hi = 1, w = v => clamp((Math.log10(v) - lo) / (hi - lo), 0.02, 1) * 100;
+    $('#csB', el).innerHTML = `<div><span>在純水中</span><i class="ba" style="width:${w(s0)}%"></i><b class="mono">${sci(s0, 2)} M</b></div><div class="on"><span>在 ${fx(st.c, 2)} M ${ln} 中</span><i class="ba" style="width:${w(Math.min(s, st.c / 2))}%"></i><b class="mono">${sci(s, 2)} M</b></div><p class="small mut">長條為對數長度</p>`;
+    $('#csF', el).innerHTML = `${nm}(s) + 2${ln} ⇌ ${cx} + ${nm.slice(2)}⁻　K = Ksp × Kf = ${sci(ksp, 1)} × ${sci(kf, 1)} = ${sci(K, 2)}；s² ÷ (C − 2s)² = K → s = √K·C ÷ (1 + 2√K)`;
+    $('#csN', el).innerHTML = `配位基把 Ag⁺ 抓成錯離子，使 [Ag⁺] 極低，溶解平衡往右。總平衡常數是兩個反應相加：K = Ksp × Kf。${K > 1 ? '這裡 K 大於 1，沉澱幾乎可以全部溶解（受配位基的量限制）。' : `K 小於 1，Ksp 越小的鹽越難溶：AgCl 溶於氨水，AgI 幾乎不溶，需要形成常數更大的 CN⁻。`}`;
+    $('#csC', el).value = st.c; $('#csO', el).textContent = fx(st.c, 2); pressSeg(el, 'csS', st.s); pressSeg(el, 'csL', st.l);
+  }
+  bindSeg(el, 'csS', v => { st.s = v; draw(); });
+  bindSeg(el, 'csL', v => { st.l = v; draw(); });
+  $('#csC', el).oninput = e => { st.c = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 6. 選擇性沉澱：誰先沉澱 ===== */
+W.selprec = el => {
+  const SYS = { ag: ['Cl⁻ 加入 Ag⁺ 與 Pb²⁺（各 0.010 M）', [['AgCl', 1.8e-10, 0.010, 1], ['PbCl₂', 1.7e-5, 0.010, 2]]], cl: ['Ag⁺ 加入 Cl⁻ 與 I⁻（各 0.010 M）', [['AgI', 8.3e-17, 0.010, 1], ['AgCl', 1.8e-10, 0.010, 1]]], pb: ['I⁻ 加入 2.0 × 10⁻³ M Pb²⁺ 與 1.0 × 10⁻⁴ M Cu⁺', [['CuI', 1.1e-12, 1.0e-4, 1], ['PbI₂', 1.4e-8, 2.0e-3, 2]]] };
+  let cur = 'cl';
+  el.innerHTML = `${seg('spS', Object.entries(SYS).map(([k, v]) => [k, v[0]]), cur)}<div id="spG"></div><ol class="cs" id="spC"></ol><p class="note" id="spN"></p>`;
+  function draw() {
+    const [, d] = SYS[cur], th = d.map(([n, k, c, m]) => [n, (k / c) ** (1 / m)]), lo = Math.floor(Math.log10(Math.min(...th.map(t => t[1])))) - 1, hi = Math.ceil(Math.log10(Math.max(...th.map(t => t[1])))) + 1;
+    $('#spG', el).innerHTML = chart({ w: 560, h: 140, x: [lo, hi], y: [0, 1], xt: Array.from({ length: hi - lo + 1 }, (_, i) => lo + i).filter((_, i) => i % 2 === 0), yt: [], xlab: 'log 加入的沉澱劑濃度（M）　→ 越往右加得越多', label: '開始沉澱的濃度' }, (X, Y) =>
+      th.map(([n, v], i) => `<line class="mk" x1="${X(Math.log10(v))}" x2="${X(Math.log10(v))}" y1="${Y(0)}" y2="${Y(1)}"/><circle class="dot" cx="${X(Math.log10(v))}" cy="${Y(0.5)}" r="6"/><text class="tk hl" x="${X(Math.log10(v)) + (X(Math.log10(v)) > 380 ? -8 : 8)}" y="${Y(i ? 0.25 : 0.8)}" text-anchor="${X(Math.log10(v)) > 380 ? 'end' : 'start'}">${n} 開始沉澱</text>`).join(''));
+    $('#spC', el).innerHTML = d.map(([n, k, c, m]) => `<li>${n}：Ksp ${sci(k, 1)} ÷ ${sci(c, 1)} ${m > 1 ? `開 ${m} 次方根` : ''} = ${sci((k / c) ** (1 / m), 2)} M</li>`).join('');
+    const first = th[0][1] < th[1][1] ? th[0] : th[1];
+    $('#spN', el).innerHTML = `慢慢加入沉澱劑時，Q 先達到 Ksp 的那一種先沉澱：<b>${first[0]}</b> 需要的濃度最低。比較時要算出「開始沉澱所需的濃度」，化學式類型不同時不能直接比 Ksp。分離多種金屬離子時，依序加入只會沉澱其中一種的試劑，例如 Ag⁺、Pb²⁺、Ni²⁺ 的混合溶液依序加 NaCl（AgCl）、Na₂SO₄（PbSO₄）、Na₂S（NiS）。`;
+    pressSeg(el, 'spS', cur);
+  }
+  bindSeg(el, 'spS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.c || cur; draw(); } };
 };
 
 /* ---------- 後中化學：分子軌域理論的互動圖 ---------- */
