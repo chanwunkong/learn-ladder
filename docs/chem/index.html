@@ -2284,20 +2284,36 @@ CH.push({
   id: 'org-acid', unit: 'o2', title: '有機酸鹼：用 pKa 預測反應',
   lede: '有機反應的第一步常常是酸鹼反應：誰把 H⁺ 給誰。這一章用一張 pKa 表預測反應方向，再用一個問題判斷任何分子的酸性強弱：拿走 H⁺ 之後，留下的負電荷穩不穩定？',
   sections: [
-    { h: '用 pKa 預測反應方向', w: 'pkaeq', body: `
+    { h: '酸鹼反應會往哪一邊走？', w: 'pkaeq', body: `
 <p>酸鹼反應 HA + B⁻ ⇌ A⁻ + HB，兩邊各有一個酸（HA 和 HB）。平衡永遠偏向<b>較弱的酸</b>（pKa 較大）那一側：</p>
 <p class="eq">K = 10<sup>(pKa of HB − pKa of HA)</sup></p>
 <p>pKa 每差 1，平衡常數差 10 倍。所以只要查兩個 pKa，就知道一個鹼能不能拿走某個 H⁺。這就是為什麼：</p>
 <ul><li>NaOH（共軛酸 H₂O，15.7）拿不走乙炔的 H（25），但 NaNH₂（共軛酸 NH₃，約 35）可以。</li>
 <li>碳酸氫鈉（共軛酸 H₂CO₃，6.35）能溶解羧酸（約 4–5），但不能溶解酚（10）：實驗室用這個差別把兩者分開。</li></ul>` },
-    { h: '什麼讓酸變強：看共軛鹼', w: 'ario', body: `
+    { h: '什麼讓酸變強？', w: 'ario', body: `
 <p>酸性強弱取決於<b>共軛鹼有多穩定</b>：拿走 H⁺ 後留下的負電荷越穩定，酸就越強。判斷負電荷穩定度依序看四個因素（重要性大致由高到低）：</p>
 <ol><li><b>原子</b>：負電荷在哪個原子上。同一族看大小（越大越穩定，HI 最強）；同一週期看電負度（越大越穩定，HF > H₂O > NH₃ > CH₄）。</li>
 <li><b>共振</b>：負電荷能不能分散到其他原子上（羧酸 > 酚 > 醇）。</li>
 <li><b>誘導</b>：附近有沒有拉電子基（例如 Cl、F、NO₂）幫忙分攤負電荷；越多越強、越近越強。</li>
 <li><b>軌域</b>：負電荷所在軌域的 s 性質（sp > sp² > sp³）。</li></ol>
-<p>逐一切換看看每個因素造成多大的差別。</p>` },
-    { h: '鹼性：看共軛酸的 pKa', w: 'basic', body: `
+<p>逐一切換看看每個因素造成多大的差別。</p>
+<p>誘導效應隨距離快速減弱：2-氯丁酸 pKa 2.86、3-氯丁酸 4.05、4-氯丁酸 4.52，丁酸本身 4.82。同樣的道理，(CF₃)₂CHOH 的六個 F 讓它的 pKa 降到約 9.3，比一般醇（甲醇 15.5、2-丙醇 17）強了一百萬倍以上。醇的烷基越多，烷氧離子越難被水分子包圍（溶劑化），所以 t-BuOH（18）比甲醇弱。</p>
+<p>維生素 C 沒有羧基，卻是酸（pKa 約 4.1）：它的酸性 H 在一個<b>與 C=O 共軛的烯醇 OH</b> 上，拿走 H⁺ 後負電荷可以經過 C=C 共振到 C=O 的 O 上，效果和羧酸根很像。</p>` },
+    { h: '苯環上的取代基放在哪裡，差別有多大？', w: 'subst', body: `
+<p>切換母體與取代基，比較鄰、間、對三個位置。判斷時把取代基的影響拆成兩部分：</p>
+<ul><li><b>誘導效應</b>：經過 σ 鍵，三個位置都有，離得越近越強。</li>
+<li><b>共振效應</b>：經過苯環的 π 系統，<b>只在鄰位和對位</b>有作用，間位沒有。</li></ul>
+<p>酚氧離子的負電荷會共振到鄰、對位的碳上，所以 NO₂ 放在這兩個位置可以直接接手負電荷，酸性大增；OCH₃ 放在這兩個位置則把電子推進來，酸性變弱。苯甲酸的負電荷在 COO⁻ 上、不進入苯環，取代基的影響比酚小，但方向相同；另外苯甲酸有<b>鄰位效應</b>：鄰位取代基把 COOH 擠出苯環平面，幾乎都讓酸性變強。苯胺看的是共軛酸的 pKa：拉電子基讓 N 的孤對電子更不容易接 H⁺，苯胺的鹼性變弱。</p>` },
+    { h: '碳上的 H 什麼時候會變酸？要用哪個鹼？', w: 'deprot', body: `
+<p>C–H 通常不酸（乙烷 pKa 約 50），但如果拿走 H⁺ 後的碳負電荷能被穩定，pKa 就會大幅下降。選擇要拿走的 H，看哪些鹼夠強。三種讓 C–H 變酸的方式：</p>
+<ol><li><b>共振到電負度大的原子</b>：C=O 旁邊的 α-H（酮約 19、酯約 25）；夾在兩個 C=O 中間的 H 更酸（乙醯丙酮約 9、丙二酸二乙酯約 13）。</li>
+<li><b>共軛鹼是芳香性的</b>：環戊二烯（16）失去 H⁺ 後是 6π 的芳香陰離子；環庚三烯（約 36）失去 H⁺ 後是 8π，不是芳香性，所以酸性弱得多。</li>
+<li><b>s 性質高</b>：末端炔（25）比烯（44）、烷（50）酸。</li></ol>
+<p>選鹼的原則：鹼的共軛酸 pKa 要比目標 H 大，才能幾乎完全拿走。常用強鹼由弱到強：吡啶（5.2）< NaOH（15.7）≈ NaOEt（16）< t-BuOK（18）< NaH（35）≈ NaNH₂ < LDA（36）< n-BuLi（50）。</p>` },
+    { h: '怎麼用酸鹼把混合物分開？', w: 'extract', body: `
+<p>有機分子在中性時溶於乙醚等有機溶劑；變成離子（鹽）後溶於水。切換加入的水溶液，看每個化合物最後在哪一層。</p>
+<p>選擇萃取用的溶液，就是一次 pKa 的比較：碳酸氫根的共軛酸 H₂CO₃ pKa 6.35，只能拿走羧酸（約 4–5）的 H，拿不走酚（10）或 4-羥基苯甲醛（7.6）的 H；NaOH 兩者都能拿走。胺則用稀鹽酸轉成銨鹽萃取到水層。這種利用酸鹼反應改變溶解度的分離法稱為<b>酸鹼萃取</b>。</p>` },
+    { h: '鹼性強弱看什麼？', w: 'basic', body: `
 <p>判斷鹼性強弱，比較它的共軛酸的 pKa（常寫成 pKaH）：<b>共軛酸越弱，鹼越強</b>。對胺類來說，關鍵是 N 上的孤對電子「有多自由」：</p>
 <ul><li>烷基推電子 → 孤對電子更容易給出，鹼性稍強；</li><li>孤對電子參與共振（苯胺、醯胺）→ 被分散掉，鹼性大幅下降；</li><li>孤對電子在 s 性質較高的軌域（吡啶的 sp²）→ 抓得較緊，鹼性較弱。</li></ul>
 <p>同樣的道理也解釋了好的離去基：離去基就是很弱的鹼（共軛酸很強），帶著電子對離開後很穩定。</p>` },
@@ -2317,6 +2333,52 @@ CH.push({
       why: '醯胺 N 的孤對電子和 C=O 強烈共振，幾乎沒有鹼性（pKaH 約 −0.5）。苯胺的孤對電子和苯環共振，鹼性也弱（4.6），但仍比醯胺強得多。', show: { w: 'basic', set: { i: 5 } } },
     { q: '下列何者是最好的離去基？', o: ['I⁻', 'F⁻', 'OH⁻', 'NH₂⁻'], a: 0,
       why: '好的離去基是弱鹼：共軛酸越強越好。HI 的 pKa 約 −10，I⁻ 最穩定；NH₂⁻ 的共軛酸 NH₃ pKa 約 35，是極差的離去基。' },
+    { q: '下列取代酚何者酸性最強？', o: ['對硝基酚', '間硝基酚', '對氯酚', '對甲酚'], a: 0,
+      why: 'NO₂ 在對位能以共振接手負電荷（pKa 7.15）；間位只有誘導效應（8.36）。', show: { w: 'subst', set: { p: 'phenol', x: 'NO2' } } },
+    { q: 'OCH₃ 放在酚的哪個位置會讓酸性變強？', o: ['間位', '對位', '鄰位與對位', '任何位置都變弱'], a: 0,
+      why: '間位不能共振推電子，只剩 O 的誘導拉電子（9.65 < 9.99）；對位共振推電子，酸性變弱（10.21）。', show: { w: 'subst', set: { p: 'phenol', x: 'OCH3' } } },
+    { q: '環戊二烯（pKa 約 16）比環庚三烯（約 36）酸得多，原因是？', o: ['環戊二烯負離子是 6π 芳香性的', '環戊二烯分子較小', '環庚三烯有較多 H', '環戊二烯的 C 是 sp 混成'], a: 0,
+      why: '環戊二烯負離子有 6 個 π 電子，符合 4n + 2；環庚三烯負離子是 8π，不是芳香性。', show: { w: 'deprot', set: { a: 2 } } },
+    { q: '要完全拿走丙酮的 α-H（pKa 19.3），最適合的鹼是？', o: ['LDA', 'NaOH', 'NaHCO₃', '吡啶'], a: 0,
+      why: 'LDA 的共軛酸 pKa 約 36，遠大於 19.3；NaOH（15.7）只能產生少量烯醇離子。', show: { w: 'deprot', set: { a: 4 } } },
+    { q: '乙醚中的苯甲酸與酚，用哪一種水溶液萃取可以分開？', o: ['5% NaHCO₃', '1 M NaOH', '水', '1 M HCl'], a: 0,
+      why: 'NaHCO₃ 只把苯甲酸轉成鹽拉進水層，酚留在乙醚層。', show: { w: 'extract', set: { c: 'bic' } } },
+  ],
+  exam: [
+    { src: '仿 中國醫 115 第 7 題', q: '下列苯胺的共軛酸（苯胺鹽酸鹽）何者 pKa 最小？', o: ['對硝基苯胺鹽', '苯胺鹽', '對甲基苯胺鹽', '對甲氧基苯胺鹽'], a: 0,
+      why: 'NO₂ 拉電子，共軛酸最強（pKa 約 1.0），也就是對硝基苯胺鹼性最弱。', show: { w: 'subst', set: { p: 'anil', x: 'NO2' } } },
+    { src: '仿 中國醫 115 第 8 題', q: '在 THF 中，下列何者鹼性最弱？', o: ['NaHCO₃', 'NaNH₂', 'NaH', 't-BuOK'], a: 0,
+      why: '比較共軛酸的 pKa：H₂CO₃ 6.35，t-BuOH 18，H₂ 與 NH₃ 約 35。', show: { w: 'deprot', set: { a: 3 } } },
+    { src: '仿 義守 115 第 14 題', q: '下列酚類依酸性由弱到強排列：I 對甲酚、II 酚、III 對氯酚、IV 對硝基酚', o: ['I < II < III < IV', 'II < I < III < IV', 'IV < III < II < I', 'I < III < II < IV'], a: 0,
+      why: 'pKa：10.26、9.99、9.41、7.15。', show: { w: 'subst', set: { p: 'phenol', x: 'Cl' } } },
+    { src: '仿 中國醫 114 第 23 題', q: '下列碳氫化合物何者酸性最強？', o: ['環戊二烯', '環庚三烯', '甲苯', '丙烯'], a: 0,
+      why: '環戊二烯的共軛鹼是芳香性的 6π 陰離子（pKa 約 16）。', show: { w: 'deprot', set: { a: 2 } } },
+    { src: '仿 義守 110 第 6 題', q: '酸性由強到弱：I 甲醇、II 乙炔、III (CF₃)₂CHOH、IV 2-丙醇', o: ['III > I > IV > II', 'III > IV > I > II', 'I > III > IV > II', 'II > III > I > IV'], a: 0,
+      why: 'pKa 約 9.3、15.5、17、25：F 的誘導效應最強；烷基多的醇溶劑化較差；炔的 C–H 最弱。' },
+    { src: '仿 中國醫 112 第 31 題', q: 'NaH（共軛酸 H₂，pKa 約 35）無法有效去質子化下列何者？', o: ['甲苯的甲基 H（pKa 約 41）', '丙酮', '乙醇', '丙二酸二乙酯'], a: 0,
+      why: '甲苯甲基 H 的 pKa 比 H₂ 大，平衡偏向左邊。', show: { w: 'deprot', set: { a: 9 } } },
+    { src: '仿 中國醫 112 第 34 題', q: '乙醯乙酸乙酯 CH₃COCH₂COOCH₂CH₃ 中，Ha 為兩個 C=O 之間的 CH₂、Hb 為酮旁的 CH₃、Hc 為 OCH₂CH₃ 末端的 CH₃。酸性由強到弱？', o: ['Ha > Hb > Hc', 'Hb > Ha > Hc', 'Hc > Hb > Ha', 'Ha > Hc > Hb'], a: 0,
+      why: 'Ha 負電荷可共振到兩個 O（pKa 約 11）；Hb 只有一個 C=O（約 20）；Hc 沒有共振（約 50）。', show: { w: 'deprot', set: { a: 0 } } },
+    { src: '仿 義守 111 第 16 題', q: '下列酚類何者酸性最強？', o: ['對硝基酚', '間硝基酚', '對氯酚', '間氯酚'], a: 0,
+      why: '對位 NO₂ 兼具共振與誘導拉電子。', show: { w: 'subst', set: { p: 'phenol', x: 'NO2' } } },
+    { src: '仿 義守 111 第 49 題', q: '要讓 2-丙醇不可逆地完全轉成 2-丙氧化鈉，可以使用？', o: ['Na 或 NaH', '只能用 NaOH', 'NaOH 或 NaH', 'NaHCO₃'], a: 0,
+      why: 'Na 和 NaH 反應後放出 H₂ 氣體，不可逆；NaOH 的共軛酸 H₂O（15.7）比醇（17）酸，平衡偏向左邊。', show: { w: 'deprot', set: { a: 3 } } },
+    { src: '仿 慈濟 110 第 12 題', q: '4-羥基苯甲酸分子中，哪一個 H 最酸？', o: ['COOH 的 H', '酚 OH 的 H', '苯環上的 H', '都一樣'], a: 0,
+      why: '羧酸 pKa 約 4.6，酚約 9–10，苯環 C–H 約 43。' },
+    { src: '仿 慈濟 109 第 2 題', q: '下列酚的 pKa 由大到小：I 對甲氧基酚、II 酚、III 間硝基酚、IV 對硝基酚', o: ['I > II > III > IV', 'IV > III > II > I', 'II > I > III > IV', 'I > II > IV > III'], a: 0,
+      why: 'pKa：10.21、9.99、8.36、7.15。對位 OCH₃ 共振推電子讓酸性變弱。', show: { w: 'subst', set: { p: 'phenol', x: 'OCH3' } } },
+    { src: '仿 慈濟 109 第 34 題', q: 'pKa 由小到大：I 乙酸、II 氨、III 乙醇、IV 酚、V 乙炔', o: ['I → IV → III → V → II', 'I → III → IV → V → II', 'IV → I → III → V → II', 'I → IV → V → III → II'], a: 0,
+      why: '4.76、10、16、25、35。', show: { w: 'pkaeq', set: { a: 2, b: 9 } } },
+    { src: '仿 慈濟 108 第 5 題', q: '要以液－液萃取分離苯甲酸與 4-羥基苯甲醛，最適合的組合是？', o: ['乙醚與 5% NaHCO₃ 水溶液', '乙醚與水', '乙醚與 1 M NaOH', '乙醚與 1 M HCl'], a: 0,
+      why: 'NaHCO₃ 只拿走苯甲酸（4.2）的 H；4-羥基苯甲醛（7.6）留在乙醚。NaOH 會把兩者都拉進水層。', show: { w: 'extract', set: { c: 'bic' } } },
+    { src: '仿 慈濟 107 第 40 題', q: '維生素 C 的酸性主要來自？', o: ['與 C=O 共軛的烯醇 OH', '羧酸基', '一級醇的 OH', '環上的 C–H'], a: 0,
+      why: '維生素 C 沒有羧基；烯醇 OH 失去 H⁺ 後負電荷可共振到內酯的 C=O，pKa 約 4.1。' },
+    { src: '仿 中國醫 106 第 2 題', q: '酸性由強到弱：I 鄰羥基苯甲酸、II 間羥基苯甲酸、III 苯甲酸、IV 對羥基苯甲酸', o: ['I > II > III > IV', 'IV > III > II > I', 'II > I > III > IV', 'I > III > II > IV'], a: 0,
+      why: 'pKa：2.97、4.06、4.20、4.58。鄰位有分子內氫鍵穩定羧酸根；對位 OH 共振推電子。', show: { w: 'subst', set: { p: 'benzoic', x: 'OH' } } },
+    { src: '仿 慈濟 106 第 37 題', q: '酸性由弱到強：I 乙酸乙酯（α-H）、II 丙二酸二乙酯、III 乙醯丙酮、IV 乙酸', o: ['I < II < III < IV', 'II < I < III < IV', 'I < III < II < IV', 'IV < III < II < I'], a: 0,
+      why: 'pKa 約 25、13、9、4.76。兩個 C=O 比一個強，酮的 C=O 比酯的強。', show: { w: 'deprot', set: { a: 1 } } },
+    { src: '仿 慈濟 106 第 44 題', q: 'pKa 由高到低：I 丁酸、II 2-氯丁酸、III 3-氯丁酸、IV 4-氯丁酸', o: ['I > IV > III > II', 'II > III > IV > I', 'I > II > III > IV', 'IV > III > II > I'], a: 0,
+      why: '4.82、4.52、4.05、2.86：Cl 越靠近羧基，誘導效應越強。', show: { w: 'ario', set: { t: 'ind' } } },
   ],
 });
 
@@ -3024,6 +3086,8 @@ const TERMS = {
     ['共振混成', '各共振結構的加權平均，電荷與 π 電子分散在多個原子上。', { w: 'reson', set: { ex: 'acetate', step: 2 } }],
   ],
   'org-acid': [
+    ['酸鹼萃取', '用酸或鹼把有機酸、鹼轉成離子，使它從有機層移到水層的分離法。', { w: 'extract', set: { c: 'bic' } }],
+    ['鄰位效應', '苯甲酸的鄰位取代基使 COOH 偏離苯環平面，酸性增強。', { w: 'subst', set: { p: 'benzoic', x: 'CH3' } }],
     ['共軛鹼', '酸失去 H⁺ 後留下的物種；共軛鹼越穩定，酸越強。', { w: 'ario', set: { t: 'row' } }],
     ['誘導', '電負度大的原子經 σ 鍵把電子拉向自己，影響鄰近電荷的穩定度。', { w: 'ario', set: { t: 'ind' } }],
     ['s 性質', '混成軌域中 s 軌域所佔的比例；越高電子越靠近原子核。', { w: 'ario', set: { t: 'orb' } }],
@@ -5889,6 +5953,113 @@ W.alkyl = el => {
   bindSeg(el, 'akS', v => { cur = v; draw(); });
   draw();
   return { set(s) { cur = s.k || cur; draw(); } };
+};
+
+/* ---------- 後中化學：有機酸鹼的互動圖 ---------- */
+
+/* ===== 1. 苯環取代基的位置與 pKa =====
+   數值：CRC Handbook of Chemistry and Physics（25 °C 水溶液），取到小數點後兩位的約略值 */
+const SUBP = {
+  phenol: { n: '取代酚 X–C₆H₄OH', p0: 9.99, y: [6.5, 11], d: { NO2: [7.23, 8.36, 7.15], Cl: [8.56, 9.12, 9.41], CH3: [10.29, 10.09, 10.26], OCH3: [9.98, 9.65, 10.21] } },
+  benzoic: { n: '取代苯甲酸 X–C₆H₄COOH', p0: 4.20, y: [1.5, 5], d: { NO2: [2.17, 3.45, 3.44], Cl: [2.94, 3.83, 3.99], CH3: [3.91, 4.27, 4.37], OCH3: [4.09, 4.09, 4.47], OH: [2.97, 4.06, 4.58] } },
+  anil: { n: '取代苯胺的共軛酸 X–C₆H₄NH₃⁺', p0: 4.63, y: [-1, 6], d: { NO2: [-0.26, 2.47, 1.00], Cl: [2.66, 3.52, 3.98], CH3: [4.44, 4.73, 5.08], OCH3: [4.52, 4.23, 5.34] } },
+};
+const SUBN = { NO2: 'NO₂', Cl: 'Cl', CH3: 'CH₃', OCH3: 'OCH₃', OH: 'OH' };
+const SUBWHY = {
+  NO2: ['拉電子：誘導效應在三個位置都有；在鄰、對位還能以共振把負電荷拉到 NO₂ 的 O 上，所以鄰、對位的影響比間位大得多。', '間位不能共振，只剩誘導效應。'],
+  Cl: ['Cl 的誘導效應拉電子，距離越近越強（鄰 > 間 > 對）；在鄰、對位它的孤對電子還會以共振稍微推回電子，所以對位影響最小。', ''],
+  CH3: ['甲基微弱地推電子，讓負電荷較不穩定，酸性稍弱（pKa 稍大）。', ''],
+  OCH3: ['OCH₃ 在鄰、對位以共振推電子（O 的孤對電子進入苯環），酸性變弱；在間位不能共振，只剩 O 的誘導拉電子，酸性反而變強。', ''],
+  OH: ['OH 和 OCH₃ 一樣：對位共振推電子，酸性變弱；間位只有誘導拉電子。鄰位的水楊酸特別強，因為羧酸根和相鄰的 OH 形成分子內氫鍵。', ''],
+};
+W.subst = el => {
+  const st = { p: 'phenol', x: 'NO2' };
+  el.innerHTML = `${seg('suP', Object.entries(SUBP).map(([k, v]) => [k, v.n]), st.p)}<div class="seg" id="suX" role="group"></div><div id="suG"></div><p class="small mut">25 °C 水溶液的 pKa（CRC Handbook 約略值）。虛線是沒有取代基的母體。</p><p class="note" id="suN"></p>`;
+  function draw() {
+    const P = SUBP[st.p]; if (!P.d[st.x]) st.x = 'NO2';
+    $('#suX', el).innerHTML = Object.keys(P.d).map(k => `<button type="button" data-v="${k}" aria-pressed="${k === st.x}">${SUBN[k]}</button>`).join('');
+    $$('#suX button', el).forEach(b => { b.onclick = () => { st.x = b.dataset.v; draw(); }; });
+    const v = P.d[st.x], cats = ['鄰位 (o)', '間位 (m)', '對位 (p)'], step = (P.y[1] - P.y[0]) > 5 ? 1 : 0.5;
+    const yt = []; for (let t = Math.ceil(P.y[0] / step) * step; t <= P.y[1]; t += step) yt.push(+t.toFixed(1));
+    $('#suG', el).innerHTML = chart({ x: [0, 3], y: P.y, yt, ylab: 'pKa', h: 260, label: 'pKa 與取代位置' }, (X, Y) => {
+      let s = `<line x1="${X(0)}" x2="${X(3)}" y1="${Y(P.p0)}" y2="${Y(P.p0)}" style="stroke:var(--muted);stroke-dasharray:5 4"/><text class="tk" x="${X(3) - 4}" y="${Y(P.p0) - 6}" text-anchor="end">母體 ${P.p0}</text>`;
+      v.forEach((p, i) => { const x = X(i + 0.5), up = p > P.p0; s += `<rect x="${x - 22}" y="${Math.min(Y(p), Y(P.p0))}" width="44" height="${Math.max(2, Math.abs(Y(p) - Y(P.p0)))}" style="fill:${up ? 'var(--base)' : 'var(--acid)'};opacity:.85"/><text class="tk" x="${x}" y="${up ? Y(p) - 6 : Y(p) + 15}" text-anchor="middle">${p.toFixed(2)}</text><text class="tk" x="${x}" y="${Y(P.y[0]) + 16}" text-anchor="middle">${cats[i]}</text>`; });
+      return s;
+    });
+    const strong = v.indexOf(Math.min(...v));
+    $('#suN', el).innerHTML = `${SUBWHY[st.x][0]}${SUBWHY[st.x][1] ? ' ' + SUBWHY[st.x][1] : ''}<br>${st.p === 'anil' ? 'pKa 越小，表示共軛酸越強、<b>苯胺本身的鹼性越弱</b>：拉電子基讓 N 的孤對電子更不願意接 H⁺。' : `向下的長條表示酸性變強。此組最強的是<b>${cats[strong]}</b>。`}${st.p === 'benzoic' ? ' 苯甲酸有「鄰位效應」：幾乎任何鄰位取代基（連 CH₃ 也是）都讓酸性變強，因為 COOH 被擠出苯環平面。' : ''}`;
+    pressSeg(el, 'suP', st.p);
+  }
+  bindSeg(el, 'suP', v => { st.p = v; draw(); });
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 2. 選哪個鹼才拿得走這個 H =====
+   pKa 主要採 OpenStax《Organic Chemistry》（McMurry）與 Evans pKa 表的約略值 */
+const DPA = [
+  ['乙醯丙酮 CH₃COCH₂COCH₃', 9, '負電荷可以共振到兩個 C=O 的 O 上。'],
+  ['丙二酸二乙酯 CH₂(COOEt)₂', 13, '兩個酯基共振；酯的 OR 推電子，C=O 接受負電荷的能力比酮弱，所以比乙醯丙酮弱。'],
+  ['環戊二烯 C₅H₆', 16, '共軛鹼是 6 個 π 電子、平面、環狀共軛的芳香陰離子，特別穩定，是最酸的烴之一。'],
+  ['乙醇 CH₃CH₂OH', 16, '負電荷在電負度大的 O 上，但沒有共振。'],
+  ['丙酮 CH₃COCH₃（α-H）', 19.3, '負電荷共振到一個 C=O 的 O 上（烯醇離子）。'],
+  ['乙炔 HC≡CH', 25, '負電荷在 sp 軌域，s 性質 50%，靠近原子核。'],
+  ['乙酸乙酯（α-H）', 25, '只有一個 C=O，而且 OR 推電子，比酮的 α-H 弱。'],
+  ['三苯甲烷 (C₆H₅)₃CH', 31.5, '負電荷共振分散到三個苯環。'],
+  ['氨 NH₃', 35, 'N 的電負度比 O 小，負電荷較不穩定。'],
+  ['甲苯 C₆H₅CH₃', 41, '苄基陰離子可以共振到苯環，但苯環接受負電荷的能力遠不如 C=O。'],
+  ['乙烷 CH₃CH₃', 50, 'sp³ 碳、沒有共振，幾乎不酸。'],
+];
+const DPB = [
+  ['吡啶', 5.2, '吡啶鎓'], ['NaHCO₃', 6.35, 'H₂CO₃'], ['NaOH', 15.7, 'H₂O'], ['NaOEt', 16, '乙醇'], ['t-BuOK', 18, 't-BuOH'],
+  ['NaH', 35, 'H₂（氣體逸出，不可逆）'], ['NaNH₂', 35, 'NH₃'], ['LDA', 36, '二異丙基胺'], ['n-BuLi', 50, '丁烷'],
+];
+W.deprot = el => {
+  let ia = 4;
+  el.innerHTML = `<label class="sel">要拿走的 H <select id="dpA">${DPA.map((a, i) => `<option value="${i}"${i === ia ? ' selected' : ''}>${a[0]}（pKa ${a[1]}）</option>`).join('')}</select></label><div id="dpG"></div><div class="cards" id="dpK"></div><p class="note" id="dpN"></p>`;
+  function draw() {
+    const A = DPA[ia];
+    $('#dpG', el).innerHTML = chart({ x: [0, 55], y: [0, 10], xt: [0, 10, 20, 30, 40, 50], xlab: 'pKa（鹼的位置 = 共軛酸的 pKa）', h: 250, label: '去質子化' }, (X, Y) => {
+      let s = `<line x1="${X(A[1])}" x2="${X(A[1])}" y1="${Y(10)}" y2="${Y(0)}" style="stroke:var(--acid);stroke-width:2"/><text class="tk" x="${X(A[1])}" y="${Y(9.4)}" text-anchor="${A[1] > 40 ? 'end' : 'start'}" dx="${A[1] > 40 ? -4 : 4}" style="fill:var(--acid)">要拿走的 H：pKa ${A[1]}</text>`;
+      s += `<rect x="${X(A[1])}" y="${Y(8.6)}" width="${X(55) - X(A[1])}" height="${Y(0) - Y(8.6)}" style="fill:var(--good, #23704A);opacity:.08"/>`;
+      DPB.forEach(([n, p], j) => { const ok = p > A[1] + 1, y = Y(1 + (j % 4) * 2); const lf = p > 45 || (p < A[1] && A[1] - p < 9); s += `<circle cx="${X(p)}" cy="${y}" r="6" style="fill:${ok ? '#23704A' : 'var(--muted)'}"/><text class="tk" x="${X(p) + (lf ? -9 : 9)}" y="${y + 4}" text-anchor="${lf ? 'end' : 'start'}" style="fill:${ok ? '#23704A' : 'var(--muted)'}">${n}</text>`; });
+      return s;
+    });
+    const ok = DPB.filter(b => b[1] > A[1] + 1).map(b => b[0]), no = DPB.filter(b => b[1] <= A[1] + 1).map(b => b[0]);
+    $('#dpK', el).innerHTML = card('a', '能幾乎完全拿走', ok.join('、') || '（都不行）') + card('b', '不夠強', no.join('、') || '（無）');
+    $('#dpN', el).innerHTML = `<b>${A[0]}</b>：${A[2]}<br>綠色區域內的鹼，共軛酸的 pKa 比要拿走的 H 大，平衡偏向產物（差 1 就是 10 倍）。所以在 THF 中鹼性 n-BuLi > LDA > t-BuOK > 吡啶。NaH 的共軛酸是 H₂，生成後以氣體離開，反應不可逆；鈉金屬 Na 和醇是氧化還原反應（2ROH + 2Na → 2RONa + H₂），也不可逆。NaOH 和乙醇的 pKa 幾乎相同，只能得到平衡混合物。`;
+  }
+  $('#dpA', el).onchange = e => { ia = +e.target.value; draw(); };
+  draw();
+  return { set(s) { ia = s.a ?? ia; $('#dpA', el).value = ia; draw(); } };
+};
+
+/* ===== 3. 用酸鹼萃取分離混合物 =====
+   [名稱, 類別（a 酸 b 鹼 n 中性）, pKa（鹼為共軛酸的 pKa）] */
+const EXCMP = [['苯甲酸', 'a', 4.2], ['4-羥基苯甲醛', 'a', 7.6], ['酚', 'a', 10.0], ['苯胺', 'b', 4.6], ['萘', 'n', 0]];
+const EXW = { w: ['水', 7], bic: ['5% NaHCO₃', 6.35], oh: ['1 M NaOH', 15.7], hcl: ['1 M HCl', -1.7] };
+W.extract = el => {
+  let cur = 'bic';
+  el.innerHTML = `${seg('exS', Object.entries(EXW).map(([k, v]) => [k, v[0]]), cur)}<div id="exG"></div><p class="note" id="exN"></p>`;
+  function where(c) {
+    const [, t, p] = c, [, q] = EXW[cur];
+    if (cur === 'w') return 0;
+    if (t === 'a' && cur !== 'hcl') return q > p + 1 ? 1 : 0;
+    if (t === 'b' && cur === 'hcl') return 1;
+    return 0;
+  }
+  function draw() {
+    const top = [], bot = [];
+    EXCMP.forEach(c => (where(c) ? bot : top).push(c));
+    const ion = c => c[1] === 'a' ? c[0] + '⁻（鹽）' : c[0] + 'H⁺（鹽）';
+    const row = (arr, y, f) => arr.map((c, i) => `<text class="tk" x="${220}" y="${y + i * 20}" text-anchor="middle" style="font-size:13px;fill:var(--ink)">${f(c)}</text>`).join('');
+    $('#exG', el).innerHTML = `<svg class="en" viewBox="0 0 440 300" style="max-width:440px;margin:auto" role="img" aria-label="分液漏斗"><path d="M120 20 H320 V170 L240 250 V290 H200 V250 L120 170 Z" style="fill:none;stroke:var(--ink);stroke-width:2"/><path d="M121 30 H319 V110 H121 Z" style="fill:#E9A23B;opacity:.18"/><path d="M121 110 H319 V170 L240 249 H200 L121 170 Z" style="fill:#3B7BE9;opacity:.16"/><text class="tk" x="330" y="70">乙醚層（上）</text><text class="tk" x="330" y="160">水層（下）</text>${row(top, 52, c => c[0])}${row(bot, 132, ion)}</svg>`;
+    $('#exN', el).innerHTML = `${EXW[cur][0]}：${cur === 'w' ? '中性的有機分子都留在乙醚層，無法分離。' : cur === 'hcl' ? '只有鹼（苯胺）被質子化成銨鹽，溶進水層。' : `只有 pKa 比 ${EXW[cur][1]}（鹼的共軛酸）小的酸會被拿走 H⁺，變成帶電的鹽溶進水層。`}帶電的離子溶於水，中性分子溶於有機溶劑：這就是<b>酸鹼萃取</b>。所以 NaHCO₃ 能把羧酸和酚分開（只拿走羧酸的 H），NaOH 則把兩者都拉進水層。水層再加酸，就能把酸沉澱回收。`;
+    pressSeg(el, 'exS', cur);
+  }
+  bindSeg(el, 'exS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.c || cur; draw(); } };
 };
 
 /* ---------- 後中化學：有機基礎（形式電荷、混成、共振、有機酸鹼）的互動圖 ---------- */
