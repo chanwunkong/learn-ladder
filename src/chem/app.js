@@ -134,13 +134,13 @@ ${ss.length ? `<div class="cards">${card('n', '練習題次', ss.length)}${card(
 <h2>各章</h2><table class="tbl"><thead><tr><th>章節</th><th>題次</th><th>第一次就答對</th><th>最近練習</th></tr></thead><tbody>${byCh.map(r => `<tr><td><a href="#${r.c.id}">${r.c.title}</a></td><td>${r.n}</td><td>${pct(r.f, r.n)}</td><td>${r.last}</td></tr>`).join('')}</tbody></table>
 <h2>每日紀錄</h2>${days.map((d, k) => { const x = ss.filter(s => dstr(s.t) === d);
   return `<details class="logday"${k ? '' : ' open'}><summary><b>${d}</b>　${x.length} 題，第一次就答對 ${pct(x.filter(s => s.first).length, x.length)}</summary><table class="tbl"><thead><tr><th>時間</th><th>章節</th><th>題目</th><th>結果</th></tr></thead><tbody>${x.map(s => { const c = chOf(s.c), f = qfind(s.c, s.h, s.k, s.i), q = f && f.q;
-    return `<tr><td class="mono">${tstr(s.t)}</td><td>${c ? `<a href="#${c.id}/${s.k === 'x' ? 'exam' : 'quiz'}">${c.title.split('：')[0]}</a>` : s.c}${s.k === 'x' ? '<small class="mut">（相似題）</small>' : ''}</td><td>${q ? strip(q.q).slice(0, 48) : s.qt ? `${esc(s.qt.slice(0, 48))}<small class="mut">（此題已改版）</small>` : '（題目已更新）'}</td><td>${res(s)}</td></tr>`; }).join('')}</tbody></table></details>`; }).join('')}
+    return `<tr><td class="mono">${tstr(s.t)}</td><td>${c ? `<a href="#${c.id}/${s.k === 'x' ? 'exam' : 'quiz'}">${c.title.split('：')[0]}</a>` : s.c}${s.k === 'x' ? '<small class="mut">（相似題）</small>' : s.k === 'd' ? '<small class="mut">（推產物）</small>' : ''}</td><td>${q ? strip(q.q).slice(0, 48) : s.k === 'd' ? esc(s.qt || '') : s.qt ? `${esc(s.qt.slice(0, 48))}<small class="mut">（此題已改版）</small>` : '（題目已更新）'}</td><td>${res(s)}</td></tr>`; }).join('')}</tbody></table></details>`; }).join('')}
 <div class="w-row"><button class="btn sm" type="button" id="logCsv">下載 CSV</button><button class="btn sm ghost" type="button" id="logClr">清除全部紀錄</button></div>`
   : '<p class="note">還沒有紀錄。到任何一章的「確認理解」或「歷屆考題相似題」作答，就會自動記在這裡。</p>'}`;
   if (!ss.length) return;
   $('#logCsv').onclick = () => {
     const rows = [['日期', '時間', '章節', '類型', '題號', '題目', '作答次數', '第一次就答對', '最後答對']].concat(ss.map(s => { const c = chOf(s.c), f = qfind(s.c, s.h, s.k, s.i), q = f && f.q;
-      return [dstr(s.t), tstr(s.t), c ? c.title : s.c, s.k === 'x' ? '相似題' : '章末題', f ? f.i + 1 : '', q ? strip(q.q) : s.qt || '', s.tries, s.first ? '是' : '否', s.ok ? '是' : '否']; }));
+      return [dstr(s.t), tstr(s.t), c ? c.title : s.c, s.k === 'x' ? '相似題' : s.k === 'd' ? '推產物' : '章末題', f ? f.i + 1 : '', q ? strip(q.q) : s.qt || '', s.tries, s.first ? '是' : '否', s.ok ? '是' : '否']; }));
     const csv = '\ufeff' + rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = `化學練習紀錄-${dstr(Date.now())}.csv`; a.click();
   };
