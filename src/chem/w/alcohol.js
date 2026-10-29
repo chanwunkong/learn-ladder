@@ -28,13 +28,13 @@ W.alcconv = el => {
 
 /* ===== 3. 醇的氧化：看帶 OH 的碳上有幾個 H ===== */
 W.oxid = el => {
-  const A = { p: ['一級醇 RCH₂OH', 2], s: ['二級醇 R₂CHOH', 1], t: ['三級醇 R₃COH', 0] }, O = { pcc: 'PCC（溫和）', cr: 'K₂Cr₂O₇／H₂SO₄（強）' };
+  const A = { p: ['一級醇 RCH₂OH', 2], s: ['二級醇 R₂CHOH', 1], t: ['三級醇 R₃COH', 0] }, O = { pcc: 'PCC', swern: '斯沃恩（DMSO, (COCl)₂）', dmp: '戴斯–馬丁（DMP）', cr: 'K₂Cr₂O₇／H₂SO₄（瓊斯）', mn: 'KMnO₄' }, MILD = { pcc: 1, swern: 1, dmp: 1 };
   const st = { a: 'p', o: 'pcc' };
   el.innerHTML = `${seg('oxA', Object.entries(A).map(([k, v]) => [k, v[0]]), st.a)}${seg('oxO', Object.entries(O), st.o)}<div class="oxpath" id="oxP"></div><p class="note" id="oxN"></p>`;
   function draw() {
-    const [nm, h] = A[st.a], steps = h === 0 ? [nm, '不反應'] : h === 1 ? [nm, '酮 R₂C=O'] : st.o === 'pcc' ? [nm, '醛 RCHO'] : [nm, '醛 RCHO', '羧酸 RCOOH'];
+    const [nm, h] = A[st.a], steps = h === 0 ? [nm, '不反應'] : h === 1 ? [nm, '酮 R₂C=O'] : MILD[st.o] ? [nm, '醛 RCHO'] : [nm, '醛 RCHO', '羧酸 RCOOH'];
     $('#oxP', el).innerHTML = steps.map((s, i) => `<span class="oxs${i === steps.length - 1 ? ' end' : ''}">${s}</span>`).join('<span class="oxa">→</span>');
-    $('#oxN', el).innerHTML = `帶 OH 的碳上有 <b>${h} 個 H</b>。醇氧化時，這個碳要失去一個 H（連同 O–H 的 H）形成 C=O，所以：${h === 0 ? '三級醇沒有 H 可以拿，<b>不會被氧化</b>（強烈條件下只會斷 C–C 鍵）。' : h === 1 ? '二級醇氧化一次就成為酮，酮的羰基碳上已經沒有 H，停在這裡。' : st.o === 'pcc' ? '一級醇氧化成醛；PCC 在無水條件下反應，醛無法形成水合物，所以停在醛。' : '一級醇先成醛；在水溶液中醛的羰基碳上還有 H，會繼續被氧化成羧酸。'}`;
+    $('#oxN', el).innerHTML = `帶 OH 的碳上有 <b>${h} 個 H</b>。醇氧化時，這個碳要失去一個 H（連同 O–H 的 H）形成 C=O，所以：${h === 0 ? '三級醇沒有 H 可以拿，<b>不會被氧化</b>（強烈條件下只會斷 C–C 鍵）。' : h === 1 ? '二級醇氧化一次就成為酮，酮的羰基碳上已經沒有 H，停在這裡。' : MILD[st.o] ? '一級醇氧化成醛；PCC、斯沃恩氧化、戴斯–馬丁試劑（以及 CrO₃·吡啶的沙瑞特試劑）都在無水條件下反應，醛無法形成水合物，所以停在醛。' : '一級醇先成醛；在水溶液中醛形成水合物，羰基碳上還有 H，會繼續被氧化成羧酸（瓊斯試劑、KMnO₄、Na₂Cr₂O₇ 都是如此）。'}`;
     pressSeg(el, 'oxA', st.a); pressSeg(el, 'oxO', st.o);
   }
   bindSeg(el, 'oxA', v => { st.a = v; draw(); }); bindSeg(el, 'oxO', v => { st.o = v; draw(); });
