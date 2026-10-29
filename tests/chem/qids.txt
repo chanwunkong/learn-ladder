@@ -459,6 +459,24 @@ coord|1qqb7ui	八面體的 Cr³⁺ 錯合物，強場與弱場配位基下的磁
 coord|10wihs2	直線形錯合物（配位基在 z 軸）中，下列哪一組 d 軌域能量相同？
 coord|1icmj6p	依 18 電子規則計算，二茂鐵 Fe(C₅H₅)₂ 中鐵周圍的價電子總數為？
 coord|1vg896g	過渡金屬錯合物大多有顏色，主要原因是？
+coord|1xcr6ut	下列錯合物中，哪一個的中心金屬是 d⁶？
+coord|nz7j51	各 1 mol 下列化合物溶於水後加入過量 AgNO₃，何者產生最多 AgCl？
+coord|ir2p9f	下列錯離子何者為八面體？
+coord|132wscg	高自旋的 [Fe(H₂O)₆]³⁺ 有幾個未成對電子？
+coord|9odjhx	[Co(CN)₆]³⁻、[Mn(CN)₆]⁴⁻、[V(CN)₆]³⁻、[Cr(C
+coord|7bh4f7	八面體 [MA₃B₃] 有幾個幾何異構物？
+coord|n427j9	[Fe(CN)₆]⁴⁻、[Fe(H₂O)₆]²⁺、[Fe(CN)₆]³⁻、[Mn
+coord|srr8l6	[Ni(H₂O)₆]²⁺ 有幾個未成對電子？
+coord|1aep41p	[Zn(NH₃)₄]²⁺、[Cu(NH₃)₄]²⁺、[Ni(H₂O)₆]²⁺、[
+coord|rxqvms	下列錯合物的混成與形狀，何者正確？
+coord|k43wu9	K₄[Fe(CN)₆] 中的鐵離子有幾個未成對電子？
+coord|1wqaqpt	關於 [Co(en)₂Cl₂]⁺，何者正確？
+coord|jwn46c	依光譜化學序列，下列何者吸收的可見光波長最短？
+coord|mm601q	Pt(NH₃)₂Cl₂、[Co(NH₃)₅Cl]²⁺、[Co(NH₃)₄Cl₂]
+coord|hkc0xr	關於 [Co(NH₃)₅Cl]Cl₂，何者正確？
+coord|1te0jf5	[Mn(CN)₆]³⁻ 中 CN⁻ 為強場配位基，Mn 有幾個未成對電子？
+coord|1ipqqxf	下列錯離子何者吸收的光波長最長？
+coord|1xu7sjw	下列敘述何者正確？
 desc|1ik31pn	下列何者會形成含 H⁻ 的離子氫化物？
 desc|nn0wtp	下列氧化物何者是兩性？
 desc|v7u917	在純矽中摻入少量硼，形成何種半導體？
@@ -481,6 +499,20 @@ desc|15ketc3	層析定量採用內標準法，主要優點是？
 desc|1qk8f5g	檢量線斜率 0.25 (mg/mL)⁻¹。取 0.50 mL 樣品稀釋到 10.
 desc|1vit1jb	佛哈德法以 SCN⁻ 滴定 Ag⁺，終點的判斷依據是？
 desc|18tkr60	滴定管液面在 20.1 與 20.2 刻度之間正中央，讀數應記錄為？
+desc|1hht4q7	下列元素何者較容易形成離子氫化物？
+desc|n8920u	地球上氦氣的主要來源是？
+desc|65ubjo	下列碳的同素異形體中，哪一個全部是 sp³ 碳？
+desc|1xegy9u	某材料由 In、Ga、P 組成，莫耳分率依序為 0.24、0.25、0.51，此
+desc|18t8688	矽中摻雜少量鎵，會造成？
+desc|58euys	Cs、Na、Li、Mg 中熔點最低的是？
+desc|1tk7yp9	關於 C₆₀，何者錯誤？
+desc|19m60hs	一氧化碳有毒，主要因為？
+desc|1ilpxav	Na、Mg、Al、Cr 中，哪一個在化合物中的氧化態種類最多？
+desc|1o90yq8	4NH₃(g) + 5O₂(g) → 4NO(g) + 6H₂O(l)，已知 Δ
+desc|1vzfsd4	氣相層析的火焰離子化偵測器（FID）產生訊號的原理是？
+desc|15ceton	原子吸收光譜中，譜線都卜勒增寬的主要原因是？
+desc|j22ulw	關於薄層層析（TLC），何者錯誤？
+desc|1aousd8	以 BaSO₄ 沉澱分析樣品中的硫，得 BaSO₄ m 克（BaSO₄ 233.
 electro|1qovo8o	Zn 與 Cu 組成的賈法尼電池（E°：Zn²⁺/Zn −0.76 V，Cu²⁺
 electro|1oae7pt	賈法尼電池中，電子的流動方向為？
 electro|3mjhyt	下列何者是最強的還原劑？
@@ -529,6 +561,20 @@ equilibrium|1x7jwsz	N₂ + 3H₂ ⇌ 2NH₃ 的 K = 0.50。將 N₂、H₂、NH�
 equilibrium|itw3i8	Co(H₂O)₆²⁺（粉紅）+ 4Cl⁻ ⇌ CoCl₄²⁻（藍）+ 6H₂O，
 equilibrium|p68lmh	N₂ + 3H₂ ⇌ 2NH₃（ΔH = −92 kJ）。下列何者可以增加 NH
 equilibrium|1jzui0c	4NH₃(g) + 5O₂(g) ⇌ 4NO(g) + 6H₂O(g) 達平衡後
+equilibrium|gblty2	反應商數 Q 大於平衡常數 K 時，反應會？
+equilibrium|1su9iyv	某氣相反應氣體分子數減少，且 K 隨溫度升高而變大，ΔH 與 ΔS 的符號為？
+equilibrium|18vai0a	CaCO₃(s) ⇌ CaO(s) + CO₂(g) 達平衡後，何者正確？
+equilibrium|gn4vde	2SO₂ + O₂ ⇌ 2SO₃，Kc = 4.3 × 10⁶；某時 [SO₂]
+equilibrium|uny7hy	Zn(s) + 2HCl(g) → ZnCl₂(s) + H₂(g) 在密閉容器
+equilibrium|3p4bo2	關於反應商數 Q，何者錯誤？
+equilibrium|quu066	N₂(g) + O₂(g) ⇌ 2NO(g) 是吸熱反應，下列何者正確？
+equilibrium|dp3c0i	N₂ + 3H₂ ⇌ 2NH₃（放熱），下列何者能提高 NH₃ 的平衡產率？
+equilibrium|15p90hw	下列哪一項改變會使平衡常數 K 改變？
+equilibrium|11c1or9	Hb + O₂ → HbO₂ 的 ΔG° = −68 kJ/mol，Hb + C
+equilibrium|jb0e88	N₂H₄(g) ⇌ 2H₂(g) + N₂(g)，Kp = 1.6 × 10³。
+equilibrium|oq4hgx	NH₄NO₃(s) ⇌ N₂O(g) + 2H₂O(g) 達平衡時總壓 1.5 
+equilibrium|15fkbuo	下列平衡常數表示式何者錯誤？
+equilibrium|1tb7ja2	N₂O₄(g) ⇌ 2NO₂(g) 在 319 K 的 Kp = 0.66，Kc
 gas|1s5gqt7	定量氣體在定溫下，壓力由 1 atm 增加到 3 atm，體積變為原來的？
 gas|tcl3v1	定壓下，27 °C 的氣體加熱到 327 °C，體積變為原來的？
 gas|1jj4xx4	0 °C、1 atm 下，1 莫耳理想氣體的體積約為？
@@ -551,6 +597,20 @@ gas|1lwdqw8	定容密閉容器中的 N₂ 由 25 °C 加熱到 250 °C，下列�
 gas|l1rfy4	關於真實氣體，何者錯誤？
 gas|11bhp3v	凡得瓦方程式中，常數 a 最大的氣體是？
 gas|csqup9	室溫常壓下 1 cm³ 的空氣中大約有多少個氣體分子？
+gas|gojver	吸氣時肺部體積變大、壓力下降，空氣因而進入，主要符合哪一個定律？
+gas|ac7hj7	20.0 mol 氦氣在 1 atm 下由 0 °C 加熱到 50 °C，體積由
+gas|xrapsx	凡得瓦方程式的正確形式是？
+gas|1x2tp4m	27 °C、0.500 atm 時某氣體密度為 0.893 g/L，此氣體最可能
+gas|hji5df	氣體在 760 torr 的定壓下膨脹，對外做功 1520 J，體積增加約為？（
+gas|17o77bf	關於氣體的行為，下列敘述何者錯誤？
+gas|7xpxxa	100 °C 時 2 L 真空容器中加入 6.4 g O₂ 與 1.8 g H₂
+gas|1m1kpyt	活塞隔開兩室，27 °C 時兩室體積都是 V。左室加熱到 127 °C，右室維持
+gas|1jqopd8	25 °C 時水的蒸氣壓為 23.8 torr，此時水蒸氣的密度約為？
+gas|efldyp	定壓下氖氣由 20 °C 加熱到 80 °C，密度如何變化？
+gas|51efhv	25 °C、1.00 atm 的 HCl 氣體 2.45 L 完全溶入水，配成 
+gas|8gza3w	下列何者含有最多的原子？
+gas|1ej6jtb	0 °C、同體積的三個容器：A 為 200 torr 的 He、B 為 400 
+gas|og6dj1	25 °C、1 atm 下，各 50 g 的 Cl₂、CO₂、NH₃、SO₂ 中
 kinetics|1csv3nw	某反應 A + B → C，[A] 加倍時初速率變為 4 倍，[B] 加倍時初速
 kinetics|jwywda	一級反應的半生期為 10 分鐘，經過 30 分鐘後剩下原來的多少？
 kinetics|qgl2nh	若某反應的 ln[A] 對時間作圖得到直線，這個反應對 A 是幾級？
@@ -574,6 +634,29 @@ kinetics|myldy8	加入催化劑後，下列何者會改變？
 kinetics|2py1hr	Cl + O₃ → ClO + O₂（慢）；ClO + O → Cl + O₂（
 kinetics|1ib13f1	2A + 2B → C 的機構：A + B → D（慢）、D + B → E（快
 kinetics|bmj8pw	2NO + O₂ → 2NO₂ 的速率式為 rate = k[NO]²[O₂]。
+kinetics|tv0at9	溫度升高時反應速率加快，主要原因是？
+kinetics|1ufwxvb	2N₂O₅(g) → 4NO₂(g) + O₂(g) 為一級反應、半生期 t。定
+kinetics|1sj54q6	一級反應中，反應物初濃度加倍時會？
+kinetics|1ryv1b9	反應 A + B → 產物，實驗：[A] 0.10、[B] 0.10 時速率 2
+kinetics|5rmrpc	一級反應的速率常數 k 與半生期的乘積等於？
+kinetics|1xpjedc	2NOBr → 2NO + Br₂，rate = k[NOBr]²。初濃度 0.
+kinetics|1fjre2a	Cl + O₃ → ClO + O₂；ClO + O → Cl + O₂。何者是
+kinetics|1et6g5r	零級反應的積分速率式是？
+kinetics|1lhfu00	下列哪一項會改變反應的速率常數 k？
+kinetics|blb5br	某反應對 A 為二級，以下列哪一種作圖會得到直線？
+kinetics|7murct	二級反應 A → 產物，k = 5.0 × 10⁻³ M⁻¹min⁻¹，[A] 
+kinetics|rnjbtk	2NO + 2H₂ → N₂ + 2H₂O：[NO] 0.10、[H₂] 0.2
+kinetics|mcgx2h	某藥物水解為一級反應，初濃度 0.080 M，經過 4 個半生期後濃度約為？
+kinetics|qsosi	一級反應 k = 3.47 × 10⁻⁴ s⁻¹，初壓 0.200 atm 降到
+kinetics|acgjen	機構 2NO ⇌ N₂O₂（快）、N₂O₂ + O₂ → 2NO₂（慢），速率式
+kinetics|yce80g	某反應由 300 K 升到 310 K 時速率常數加倍，活化能約為？（ln 2 
+kinetics|sqxmzk	零級、一級、二級反應在相同初濃度下第一個半生期都是 100 s，第二個半生期分別
+kinetics|xrfluk	速率決定步驟分別為「自由基＋自由基」、「自由基＋分子」、「分子＋分子」，活化能 
+kinetics|1h6ry5k	一級反應中 [A] 由 0.400 M 降到 0.200 M 需 25 s，速率
+kinetics|171zuo	二級反應 k = 2.0 × 10⁻³ M⁻¹s⁻¹，[A]₀ = 0.050 
+kinetics|18vhbqc	一級反應的初濃度減半，半生期會？
+kinetics|rh0wij	O₃ ⇌ O₂ + O（快）、O + O₃ → 2O₂（慢）。[O₃] 加倍且 
+kinetics|1c9bb51	一級反應以哪一種作圖會得到直線？
 ksp|jfp2q	AgCl 的 Ksp = 1.8 × 10⁻¹⁰，其在純水中的莫耳溶解度約為？
 ksp|1ixfr4i	CaF₂ 的溶解度為 s，則 Ksp 為？
 ksp|1bhucew	Ag₂CrO₄（Ksp 1.1 × 10⁻¹²）與 AgCl（Ksp 1.8 ×
@@ -595,6 +678,17 @@ ksp|1x39rzj	把氨水慢慢滴入 Cu²⁺ 溶液，一開始生成的沉澱是�
 ksp|1wanyir	溶液含 2.0 × 10⁻³ M Pb²⁺ 與 1.0 × 10⁻⁴ M Cu⁺
 ksp|1v87pj4	要依序分離 Ag⁺、Pb²⁺、Ni²⁺，加入試劑的順序應為？
 ksp|j0xg87	AgCl 在下列哪一種溶液中溶解度最高？
+ksp|n9tsx4	Mg(OH)₂（Ksp 4.0 × 10⁻¹²）、AgOH（1.0 × 10⁻⁸
+ksp|wpr7v4	AgCl 的 Ksp = 1.8 × 10⁻¹⁰，Ag(NH₃)₂⁺ 的 Kf 
+ksp|1envhqk	各 1.0 mol 的 BaSO₄、KCl、CaCl₂、Na₃PO₄ 分別加入 
+ksp|uf2ky2	AgX 與 AgY 在水中溶解度相近，但 AgY 比 AgX 更易溶於酸，HX 
+ksp|bet024	醋酸銀飽和溶液中分別加入 HNO₃ 或 NH₃，溶解度如何變化？
+ksp|113p3ge	Cu²⁺、Pb²⁺、Ni²⁺ 各 0.10 M，通入 H₂S 使 [H₂S] =
+ksp|2kevo7	AX 的 Ksp 為 K₁、BX 的 Ksp 為 K₂，兩者在同一杯水中達飽和，
+ksp|egjvnc	Ag₂CrO₄（Ksp 1.1 × 10⁻¹²）、AgCl（1.8 × 10⁻¹
+ksp|vy44my	某鹽類溶解度 1.0 × 10⁻² mol/L，25 °C 時飽和溶液滲透壓為 
+ksp|1gtb6ua	要溶解相同莫耳數的下列鹽類，何者需水最少？
+ksp|ndoojd	Mg(OH)₂ 在 25 °C 的溶解度為 9.6 × 10⁻³ g/L（式量 
 mo|1m5v922	成鍵分子軌域的能量比原來的原子軌域低，主要原因是？
 mo|1vmo0jj	O₂ 有順磁性，根據分子軌域理論的原因是？
 mo|1928qua	O₂⁻ 的鍵級為？
@@ -615,6 +709,25 @@ mo|19n6yjq	異核分子 HF 的反鍵 σ* 軌域 ψ* = c₁ψ(F) − c₂ψ(H)，
 mo|1wrmksc	下列何者最不穩定？
 mo|fqfl94	某分子的價電子組態為 (σ2s)²(σ*2s)²(π2p)²，且兩個 π 電子分
 mo|1j69zu4	關於鑽石與石墨烯，何者正確？
+mo|efbvfl	O₂ 具有順磁性的原因是？
+mo|pi5ku8	電子組態 (σ2s)²(σ*2s)²(π2p)⁴(σ2p)²(π*2p)¹ 的雙
+mo|1bqrv42	下列何者的 N 為 sp 混成？
+mo|12l7rzg	SF₆ 中心 S 的混成是？
+mo|zqbeb2	關於 O₂ 與 O₂⁺，何者正確？
+mo|i8ot4d	超氧離子 O₂⁻ 的鍵級與未成對電子數是？
+mo|65ab8m	關於順磁性物質，何者一定正確？
+mo|1npof01	C₂ 得到或失去電子後鍵級變成 2.5，它是？
+mo|oqm4gb	依分子軌域理論，下列何者最不可能存在？
+mo|1qtbcy0	O₂⁻、O₂²⁻、N₂、CN⁻ 中何者為順磁性？
+mo|q63z16	F₂⁺、F₂、F₂⁻ 中，哪些是順磁性？
+mo|fq6ai0	NO、CO、N₂、[Co(NH₃)₆]³⁺ 中何者為順磁性？
+mo|1thuiw8	O₂ 失去兩個電子成為 O₂²⁺，鍵級為？
+mo|q9u8py	NO 得失電子後鍵級變成 3，它是？
+mo|zs7l3o	B₂、C₂、N₂⁺、O₂、F₂、NO、CN⁻、O₂⁻ 中有幾個是順磁性？
+mo|16rhczi	CN⁻ 的鍵級是？
+mo|7bd1qb	某雙原子分子的價電子組態為 (σ2s)²(σ*2s)²(σ2p)²(π2p)⁴(
+mo|7t6sf7	下列何者在基態不是順磁性？
+mo|6owx4n	過氧離子 O₂²⁻ 的鍵級是？
 naming|y9nbvo	(CH₃)₃CCH₂CH(CH₃)₂ 的正確名稱？
 naming|pru1dx	兩個方向編號後位置數組相同（3,4）時，誰拿較小的號碼？
 naming|s1mf70	5-ethyl-3,5-dimethylheptane 這個名字錯在哪裡？
@@ -703,6 +816,10 @@ phase|1e897zp	¹³¹I 的半衰期 8.0 天，衰變掉 87.5% 需要多久？
 phase|1fqbrne	²H + ³H → ⁴He + n（²H 2.0141、³H 3.0161、⁴H
 phase|1wpo05k	太陽的能量主要來自？
 phase|1bhewye	布拉維晶格共有幾種？
+phase|dergb8	銅為面心立方，晶胞邊長 3.61 Å，銅原子半徑約為？
+phase|rxz9ir	某液體在 300 K 的蒸氣壓為 76.0 mmHg，正常沸點為 350 K，莫
+phase|q8mfsd	某晶胞中，A 原子在 8 個角落、B 原子在體心、O 原子在 6 個面心，化學式
+phase|1055lzf	體心立方金屬的原子半徑 r 與晶胞邊長 a 的關係是？
 radpoly|owa0n6	三級碳自由基比一級碳自由基穩定，主要原因是？
 radpoly|118dtpn	在連鎖反應中，哪一個步驟讓自由基數目減少？
 radpoly|ctm7po	丙烷氯化，1-氯丙烷與 2-氯丙烷的比例約為？
@@ -945,3 +1062,51 @@ vsepr|1km73a2	CH₃OCH₃、CH₄、F⁻、CH₃COOH、K⁺ 中，能和水形�
 vsepr|u5wkjn	下列化合物在水中的溶解度由低到高，何者正確？
 vsepr|t7ah7y	KCl、C₂H₅OH、C₃H₈、Ar 的沸點由低到高為？
 vsepr|13inebq	鄰、間、對-二甲苯中，熔點最高的是？
+vsepr|1446vp2	依 VSEPR 理論，下列何者是平面三角形？
+vsepr|126zncy	下列哪一個 H–X 鍵的偶極矩最大？
+vsepr|1tltrev	CS₂、PCl₃、H₂S、NF₃ 中，何者是非極性分子？
+vsepr|1y4oulf	H₂O 的 H–O–H 鍵角最接近？
+vsepr|1xkqqvn	H₂O 與 CH₄ 都是四個電子區域，H₂O 的鍵角較小，主要因為？
+vsepr|2zvdhl	SiF₄、SF₄、XeF₄、CCl₄、[ZnCl₄]²⁻ 中，哪些是正四面體？
+vsepr|1rn1au1	下列分子何者極性最大？
+vsepr|r6yhog	BF₃、C₂H₂、H₂O、CH₄、SO₃、NH₃、C₆H₆ 中，有幾個分子所有原
+vsepr|3oyeeg	下列何者的偶極矩為零？
+vsepr|vaxs85	ICl₄⁻ 是平面四邊形，中心 I 的混成是？
+vsepr|1whrx03	下列何者有分子偶極矩？
+vsepr|1n0r4ox	下列何者是極性分子？
+vsepr|jtci52	下列何者含極性鍵卻是非極性分子？
+vsepr|1nsre3f	SF₆、SCl₂、PCl₃、H₂S 中，何者是非極性分子？
+vsepr|1axxyix	下列哪一個鍵角最大？
+vsepr|11xkjkf	XeF₂ 的形狀與中心原子的混成是？
+vsepr|73o3uz	元素 X 的電子組態為 [Ar]3d¹⁰4s²4p⁴，它最可能形成哪一種最高價的
+vsepr|uioeic	丙二烯 CH₂=C=CH₂ 兩端碳與中央碳的混成分別是？
+vsepr|otgo04	下列哪兩者形狀相同？
+vsepr|1oea9x1	下列何者的 C–O 鍵最長？
+vsepr|1eokn11	下列分子形狀何者正確？
+vsepr|1kr2qgx	C–C、C=C、C≡C、C–H 中，最短的是？
+vsepr|19dno8l	下列何者的偶極矩不為零？
+vsepr|1ksb166	X 為 1s²2s²2p⁴，Y 為 1s²2s²2p⁶3s²3p¹，兩者形成的化
+vsepr|k67rl7	兩原子間位能 E = A/r¹² − B/r⁶，A = 6.40 × 10³ k
+vsepr|1w9bqq0	SO₂ 的 O–S–O 鍵角約為？
+vsepr|acqm6g	BF₃、SO₂、SF₆、XeF₄、PCl₅ 中偶極矩為零的有幾個？
+vsepr|taxx56	下列何者需要用共振結構才能正確描述？
+vsepr|v7jdue	關於 NF₃，何者正確？
+vsepr|1hq85dw	BrF₅ 中心原子的電子對排列（電子區域幾何）是？
+vsepr|1l4hb2k	SF₄ 的分子形狀是？
+vsepr|wwa56e	下列何者晶格能最大？
+vsepr|17cve1t	MgO、NaF、NaCl、KCl 中熔點最高的是？
+vsepr|1vh68qc	CO（:C≡O:）中 C 的形式電荷是？
+vsepr|7td1wc	H₂Te、H₂Se、H₂S 的沸點隨分子量下降而降低，H₂O 卻最高，主要原因是
+vsepr|1syja8q	HF、HCl、HBr、HI 的沸點由高到低？
+vsepr|1erohpx	二丙胺（沸點 109 °C）比同分子量的三乙胺（89 °C）沸點高，主因是？
+vsepr|1kzwqg2	在 1 atm、0 °C 時，下列何者是液體？
+vsepr|1q1xpi3	乙醇水溶液中，分子之間最主要的作用力是？
+vsepr|152j9wo	下列沸點順序何者正確？
+vsepr|inlqr5	Ar、C₂H₆、C₂H₅OH、KCl 的沸點由低到高？
+vsepr|1km4q7k	壁虎能在天花板行走，主要靠什麼作用力？
+vsepr|wuw5rb	己烷、1-戊醇、1-丁醇、乙醇在水中的溶解度由小到大？
+vsepr|1dwusah	CH₂Cl₂、C₂H₅OH、KCl、SiO₂ 中沸點最低的是？
+vsepr|1rm7kw9	CH₄、CH₃F、CH₃Cl、CH₃Br、CH₃I 中，25 °C 時為液體的是
+vsepr|1qayruu	1-戊醇與 2-甲基-2-丁醇（同分子式）何者沸點較高？
+vsepr|92gi4n	Cl₂、Br₂、ICl、IBr 中沸點最低的是？
+vsepr|4hxcvb	丙酸、1-丙醇、甲基乙基醚、丁烷（分子量相近）的沸點由高到低？
