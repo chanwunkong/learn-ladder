@@ -17,7 +17,7 @@ const SUBWHY = {
 };
 W.subst = el => {
   const st = { p: 'phenol', x: 'NO2' };
-  el.innerHTML = `${seg('suP', Object.entries(SUBP).map(([k, v]) => [k, v.n]), st.p)}<div class="seg" id="suX" role="group"></div><div id="suG"></div><p class="small mut">25 °C 水溶液的 pKa（CRC Handbook 約略值）。虛線是沒有取代基的母體。</p><p class="note" id="suN"></p>`;
+  el.innerHTML = `${seg('suP', Object.entries(SUBP).map(([k, v]) => [k, v.n]), st.p)}<div class="seg" id="suX" role="group"></div><div id="suG"></div><p class="small mut">25 °C 水溶液的 pKa（CRC Handbook 約略值）。虛線是沒有取代基的母體。</p><p class="small"><b>歷屆考法</b>：只考排序（「四種酚依酸性排列」「哪個苯胺鹽 pKa 最小」），記住方向即可：拉電子基在鄰、對位最強，間位次之；推電子基相反。數字不必背。</p><p class="note" id="suN"></p>`;
   function draw() {
     const P = SUBP[st.p]; if (!P.d[st.x]) st.x = 'NO2';
     $('#suX', el).innerHTML = Object.keys(P.d).map(k => `<button type="button" data-v="${k}" aria-pressed="${k === st.x}">${SUBN[k]}</button>`).join('');

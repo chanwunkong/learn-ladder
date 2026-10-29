@@ -29,7 +29,7 @@ W.easgen = el => {
 const NRATE = [['酚 C₆H₅OH', 1000, 'a', '強活化（孤對電子共振推電子）', '鄰、對位'], ['甲苯 C₆H₅CH₃', 25, 'a', '弱活化（烷基推電子）', '鄰、對位'], ['苯', 1, 'n', '參考', '—'], ['氯苯 C₆H₅Cl', 0.033, 'h', '弱鈍化（誘導拉電子 > 共振推電子）', '鄰、對位'], ['硝基苯 C₆H₅NO₂', 6e-8, 'd', '強鈍化（共振與誘導都拉電子）', '間位']];
 W.easrate = el => {
   let cur = 1;
-  el.innerHTML = `<div id="erG"></div><div class="cards" id="erK"></div><p class="note" id="erN"></p>`;
+  el.innerHTML = `<div id="erG"></div><p class="small"><b>歷屆考法</b>：排硝化或溴化速率的順序（酚 > 甲苯 > 苯 > 氯苯 > 硝基苯），不考數值。</p><div class="cards" id="erK"></div><p class="note" id="erN"></p>`;
   const COL = { a: 'var(--c3)', n: 'var(--muted)', h: 'var(--c4)', d: 'var(--c2)' };
   function draw() {
     $('#erG', el).innerHTML = chart({ x: [-8, 3.5], y: [0, NRATE.length], xt: [-8, -6, -4, -2, 0, 2], xlab: 'log（硝化相對速率，苯 = 0）', h: 260, label: '硝化相對速率' }, (X, Y) => NRATE.map(([n, r, k], i) => { const y = Y(NRATE.length - i - 0.5), lr = Math.log10(r); return `<g data-i="${i}" style="cursor:pointer"><rect x="${Math.min(X(0), X(lr))}" y="${y - 12}" width="${Math.max(2, Math.abs(X(lr) - X(0)))}" height="24" style="fill:${COL[k]};opacity:${i === cur ? 1 : 0.55}"/><text class="tk" x="${lr >= 0 ? X(0) - 6 : X(0) + 6}" y="${y + 4}" text-anchor="${lr >= 0 ? 'end' : 'start'}" style="fill:var(--ink)">${n}</text></g>`; }).join('') + `<line x1="${X(0)}" x2="${X(0)}" y1="${Y(0)}" y2="${Y(NRATE.length)}" style="stroke:var(--ink)"/>`);

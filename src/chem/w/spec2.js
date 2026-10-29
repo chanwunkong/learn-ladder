@@ -26,7 +26,7 @@ const COF = [
 ];
 W.cofreq = el => {
   let cur = 6;
-  el.innerHTML = `<div id="cfG"></div><p class="note" id="cfN"></p>`;
+  el.innerHTML = `<p class="small"><b>歷屆考法</b>：要記的只有特徵位置（C=O 約 1700–1715、共軛約 1690、羧酸 O–H 2500–3300 寬峰）；其他是比較「哪個 C=O 頻率最大或最小」。</p><div id="cfG"></div><p class="note" id="cfN"></p>`;
   function draw() {
     $('#cfG', el).innerHTML = chart({ x: [1620, 1840], y: [0, COF.length], xt: [1650, 1700, 1750, 1800], xlab: 'C=O 伸縮振動（cm⁻¹）', h: 300, label: '羰基 IR 頻率' }, (X, Y) => COF.map(([n, v], i) => { const y = Y(COF.length - i - 0.5); return `<g data-i="${i}" style="cursor:pointer"><line x1="${X(1620)}" x2="${X(v)}" y1="${y}" y2="${y}" style="stroke:${i === cur ? 'var(--c2)' : 'var(--line)'};stroke-width:2"/><circle cx="${X(v)}" cy="${y}" r="7" style="fill:${i === cur ? 'var(--c2)' : 'var(--c1)'}"/><text class="tk" x="${X(v) - 12}" y="${y + 4}" text-anchor="end" style="fill:var(--ink)">${n} ${v}</text></g>`; }).join(''));
     $$('#cfG [data-i]', el).forEach(g => { g.onclick = () => { cur = +g.dataset.i; draw(); }; });

@@ -99,7 +99,7 @@ W.alkyne = el => {
 const HHYD = [['CH₂=CH₂ 乙烯', 137, 0], ['CH₃CH=CH₂ 丙烯', 126, 1], ['cis-2-丁烯', 120, 2], ['(CH₃)₂C=CH₂ 2-甲基丙烯', 119, 2], ['trans-2-丁烯', 116, 2], ['(CH₃)₂C=CHCH₃ 2-甲基-2-丁烯', 113, 3], ['(CH₃)₂C=C(CH₃)₂ 2,3-二甲基-2-丁烯', 111, 4]];
 W.hhyd = el => {
   let cur = 2;
-  el.innerHTML = `<div class="bars pk" id="hhB"></div><p class="small mut">氫化熱（−ΔH°，kJ/mol），OpenStax《Organic Chemistry》表 7.2。點一列看說明。</p><p class="note" id="hhN"></p>`;
+  el.innerHTML = `<div class="bars pk" id="hhB"></div><p class="small mut">氫化熱（−ΔH°，kJ/mol），OpenStax《Organic Chemistry》表 7.2。點一列看說明。</p><p class="small"><b>歷屆考法</b>：比較放熱多寡或「何者氫化熱最低」：取代越多、反式、共軛的放熱越少。數字不必背。</p><p class="note" id="hhN"></p>`;
   function draw() {
     $('#hhB', el).innerHTML = HHYD.map(([n, v], i) => `<div class="${i === cur ? 'on' : ''}" data-i="${i}" role="button"><span>${n}</span><i class="ba" style="width:${(v - 100) * 2.4}%"></i><b class="mono">${v}</b></div>`).join('');
     $$('#hhB [data-i]', el).forEach(d => { d.onclick = () => { cur = +d.dataset.i; draw(); }; });
