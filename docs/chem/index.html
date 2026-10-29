@@ -221,6 +221,9 @@ svg.en.clip { overflow: hidden; }
 .cband { fill: #DCE6FA; stroke: #3D6FD6; } .vband { fill: #F9DEDB; stroke: #D0443C; }
 .en .hole { fill: var(--surface); stroke: var(--ink); stroke-width: 1.5; }
 .ring0 { fill: #F9DEDB; stroke: var(--surface); } .ring1 { fill: var(--surface); stroke: #F9DEDB; } .shot { fill: var(--ink); }
+.dbb { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; } .dbb i { width: 30px; height: 30px; border-radius: 6px; background: var(--accent); display: inline-block; }
+.isol { columns: 2; font-size: 14px; } @media (max-width: 520px) { .isol { columns: 1; } }
+#olG [data-i] { cursor: pointer; }
 .tree-note { font-size: 14.5px; margin: 0 0 10px; }
 .trees { display: grid; gap: 22px; }
 .tree h3 { font-size: 15px; margin: 6px 0 8px; }
@@ -1363,7 +1366,7 @@ CH.push({
   id: 'bonding', unit: 'o1', title: '結構、鍵結與共振',
   lede: '有機反應全是電子在移動。這一章學會三件事：看出哪個原子帶電（形式電荷）、看出原子的形狀（混成），以及看出電子可以分散到哪裡（共振）。之後的酸鹼、反應機構都靠這三個工具。',
   sections: [
-    { h: '形式電荷：哪個原子帶電', w: 'fc', body: `
+    { h: '分子中哪個原子帶電？', w: 'fc', body: `
 <p>路易斯結構裡，每個原子「名義上」擁有的電子 = 自己的孤對電子 + 每個鍵分一半。和它原本的價電子比較，就得到<b>形式電荷</b>：</p>
 <p class="eq">形式電荷 = 價電子數 − 非鍵電子數 − 鍵數</p>
 <p>有機化學裡只要記住幾個常見組合，一眼就能看出電荷在哪：</p>
@@ -1372,13 +1375,13 @@ CH.push({
 <tr><td>N</td><td>3 鍵、1 對孤對</td><td>4 鍵（銨）</td><td>2 鍵、2 對孤對</td></tr>
 <tr><td>O</td><td>2 鍵、2 對孤對</td><td>3 鍵、1 對孤對（H₃O⁺）</td><td>1 鍵、3 對孤對（HO⁻）</td></tr></tbody></table>
 <p>第二週期元素（C、N、O）周圍最多 8 個電子（八隅），這是判斷結構對不對的第一道檢查。</p>` },
-    { h: '混成：原子的形狀', w: 'hyb', body: `
+    { h: '碳原子用什麼軌域成鍵？', w: 'hyb', body: `
 <p>先數原子周圍的<b>電子區域</b>：每個 σ 鍵算一個（雙鍵、參鍵也只算一個），每對孤對電子算一個。區域數決定混成與形狀：</p>
 <ul><li><b>4 個 → sp³</b>：四面體，約 109.5°。</li><li><b>3 個 → sp²</b>：平面三角形，120°，剩一個 p 軌域可以形成 π 鍵。</li><li><b>2 個 → sp</b>：直線，180°，剩兩個 p 軌域形成兩個 π 鍵。</li></ul>
 <p>兩個觀念之後一直會用到：</p>
 <ol><li><b>π 鍵在 p 軌域上，位於鍵軸的上下</b>，比 σ 鍵弱、離原子核遠，所以 π 電子容易被親電子試劑攻擊（烯烴加成的基礎）。</li>
 <li><b>s 性質越高，電子越靠近原子核、抓得越緊</b>：sp > sp² > sp³。這解釋了末端炔的酸性。</li></ol>` },
-    { h: '共振：電子可以分散到哪裡', w: 'reson', body: `
+    { h: '電子可以分散到哪裡？', w: 'reson', body: `
 <p>有些分子無法用一個路易斯結構正確描述，例如醋酸根的兩個 C–O 鍵長度完全相同。這時畫出幾個<b>共振結構</b>，真正的分子是它們的<b>共振混成</b>。</p>
 <p>畫共振結構的規則：</p>
 <ol><li><b>只移動電子（π 電子和孤對電子），原子不動</b>。σ 鍵不移動。</li>
@@ -1387,6 +1390,12 @@ CH.push({
 <p>判斷哪個共振結構貢獻較大：</p>
 <ul><li>所有原子都有八隅的優先；</li><li>電荷較少（電荷分離少）的優先；</li><li>負電荷落在電負度較大原子（O &gt; C）上的優先。</li></ul>
 <p>共振不是分子在幾個結構之間「切換」，而是電子同時分散在這些位置。<b>電荷或電子越能分散，分子越穩定</b>：這一句話會解釋酸性、鹼性、碳陽離子穩定度和芳香性。</p>` },
+    { h: '分子裡有哪些官能基？', w: ['fgroups', 'oxlevel'], body: `
+<p>有機分子的反應性由<b>官能基</b>決定。點選各官能基，比較容易混淆的組合。第二張圖是碳的<b>氧化程度</b>：碳每多接一個 O（或 N、鹵素）、少接一個 H，就被氧化一級，烷 → 醇 → 醛（酮）→ 羧酸 → CO₂ 是一連串的氧化，反方向就是還原。</p>` },
+    { h: '一個分子式可以有幾種結構？', w: ['dbe', 'isomers'], body: `
+<p>由分子式先算<b>不飽和度</b>（環與 π 鍵的總數），就知道結構中可能有什麼：不飽和度 4 以上常常有苯環。接著有系統地列出<b>構造異構物</b>：分子式相同、原子連接方式不同的化合物。烯類還要考慮雙鍵兩端的 cis/trans；有掌性中心時還有鏡像異構物（立體化學一章）。</p>` },
+    { h: '環越小越不穩定嗎？', w: 'strain', body: `
+<p>環烷的 C–C–C 鍵角被迫偏離 109.5°，相鄰的 C–H 也可能重疊，這些額外的能量稱為<b>環張力</b>。燃燒熱可以量出它：每個 CH₂ 的燃燒熱越大，分子越不穩定。環丙烷張力最大，環己烷幾乎沒有張力。雙環化合物以橋頭碳之間的三條橋的碳數命名，例如雙環[3.3.0]辛烷是兩個五元環共用一個邊、雙環[2.2.1]庚烷是降冰片烷（有機命名一章）。</p>` },
   ],
   quiz: [
     { q: '一個氧原子形成 3 個鍵、有 1 對孤對電子，它的形式電荷是？', o: ['+1', '0', '−1', '+2'], a: 0,
@@ -1401,6 +1410,19 @@ CH.push({
       why: '共振使 C–N 有部分 π 鍵性質，旋轉會破壞 p 軌域的重疊，所以醯胺（包括蛋白質的胜肽鍵）是平面的。', show: { w: 'reson', set: { ex: 'amide', step: 2 } } },
     { q: '苯的六個 C–C 鍵長？', o: ['全部相同（約 139 pm）', '三長三短交替', '全部等於雙鍵', '全部等於單鍵'], a: 0,
       why: '苯是兩個凱庫勒結構的共振混成，π 電子均勻分布在整個環上，六個鍵完全相同。', show: { w: 'reson', set: { ex: 'benzene', step: 2 } } },
+  ],
+  exam: [
+    { src: '慈濟 111 第 24 題', q: '分子式 C₈H₈O₂ 的化合物，不飽和度為？', o: ['5', '4', '6', '3'], a: 0, why: '(2×8 + 2 − 8) ÷ 2 = 5。', show: { w: 'dbe' } },
+    { src: '中國醫藥 115 第 35 題', q: '分子式 C₃H₄ 的化合物共有幾種構造異構物？', o: ['3', '2', '4', '1'], a: 0, why: '丙炔、丙二烯、環丙烯。', show: { w: 'isomers', set: { c: 'c3h4' } } },
+    { src: '義守 114 第 7 題', q: 'C₆H₁₄ 有 a 種構造異構物、C₇H₁₆ 有 b 種，a + b = ？', o: ['14', '12', '13', '11'], a: 0, why: '5 + 9 = 14。', show: { w: 'isomers', set: { c: 'c7' } } },
+    { src: '慈濟 114 第 16 題', q: '下列何者不是 C₇H₁₆ 的構造異構物？', o: ['2,3-二甲基丁烷', '2,2-二甲基戊烷', '3-乙基戊烷', '2,2,3-三甲基丁烷'], a: 0, why: '2,3-二甲基丁烷只有 6 個碳（C₆H₁₄）。', show: { w: 'isomers', set: { c: 'c7' } } },
+    { src: '中國醫藥 108 第 36 題', q: '開鏈的 C₅H₁₀（包含 cis/trans）共有幾種異構物？', o: ['6', '5', '4', '7'], a: 0, why: '5 種構造異構物，2-戊烯另有 cis/trans。', show: { w: 'isomers', set: { c: 'c5e' } } },
+    { src: '中國醫藥 115 第 37 題', q: 'HC≡C–CH₂CH₂–C(=O)NH₂ 含有哪些官能基？', o: ['炔基與醯胺基', '炔基與胺基', '酮基與醯胺基', '烯基與胺基'], a: 0, why: 'C≡C 是炔；C(=O)–NH₂ 是醯胺，不是胺。', show: { w: 'fgroups', set: { i: 13 } } },
+    { src: '慈濟 115 第 1 題', q: '乙醯胺酚（N-乙醯基-對-胺基苯酚）含有哪兩種官能基？', o: ['酚與醯胺', '醇與胺', '酚與胺', '酯與胺'], a: 0, why: '苯環上的 OH 是酚；N 接著 C=O 是醯胺。', show: { w: 'fgroups', set: { i: 4 } } },
+    { src: '義守 110 第 3 題', q: 'CO₂、CH₃OH、HCOOH、H₂CO 中碳的氧化程度由高到低為？', o: ['CO₂ > HCOOH > H₂CO > CH₃OH', 'CH₃OH > H₂CO > HCOOH > CO₂', 'HCOOH > CO₂ > H₂CO > CH₃OH', 'CO₂ > H₂CO > HCOOH > CH₃OH'], a: 0, why: '+4 > +2 > 0 > −2。', show: { w: 'oxlevel' } },
+    { src: '義守 107 第 23 題', q: '下列環烷中，每個 CH₂ 的燃燒熱最大的是？', o: ['環丙烷', '環丁烷', '環戊烷', '環己烷'], a: 0, why: '環丙烷張力最大。', show: { w: 'strain' } },
+    { src: '中國醫藥 111 第 29 題', q: '環丙烷、環戊烷、環己烷的穩定性由高到低為？', o: ['環己烷 > 環戊烷 > 環丙烷', '環丙烷 > 環戊烷 > 環己烷', '環戊烷 > 環己烷 > 環丙烷', '三者相同'], a: 0, why: '環張力越小越穩定。', show: { w: 'strain' } },
+    { src: '中國醫藥 106 第 44 題', q: '下列 C₇H₁₆ 異構物中，何者沸點最高？', o: ['庚烷', '2-甲基己烷', '2,3-二甲基戊烷', '2,2,3-三甲基丁烷'], a: 0, why: '直鏈接觸面積最大，分散力最強。', show: { w: 'isomers', set: { c: 'c7' } } },
   ],
 });
 
@@ -2868,6 +2890,10 @@ const TERMS = {
     ['β⁻ 衰變', '中子轉成質子並放出電子，原子序加 1、質量數不變。'],
   ],
   'bonding': [
+    ['官能基', '決定有機分子反應性的原子團，如 –OH、C=O、–COOH。', { w: 'fgroups' }],
+    ['不飽和度', '分子中環與 π 鍵的總數：(2C + 2 + N − H − X) ÷ 2。', { w: 'dbe' }],
+    ['構造異構物', '分子式相同、原子連接方式不同的化合物。', { w: 'isomers' }],
+    ['環張力', '環烷鍵角偏離 109.5° 與 C–H 重疊造成的額外能量。', { w: 'strain' }],
     ['形式電荷', '價電子數 − 非鍵電子數 − 鍵數；顯示電荷落在哪個原子上。', { w: 'fc', set: { e: 'O', b: 3, lp: 1 } }],
     ['八隅', '第二週期元素（C、N、O）周圍最多 8 個電子。', { w: 'fc', set: { e: 'C', b: 4, lp: 0 } }],
     ['混成', '原子的 s 與 p 軌域混合成能量相同的新軌域：sp³、sp²、sp。', { w: 'hyb', set: { h: 'sp2' } }],
@@ -5757,6 +5783,88 @@ W.basic = el => {
     $$('[data-i]', el).forEach(d => { d.onclick = d.onkeydown = e => { if (e.type === 'keydown' && e.key !== 'Enter') return; cur = +d.dataset.i; draw(); }; });
     $('#bsN', el).innerHTML = `<b>${B[cur][0]}</b>：共軛酸 pKaH = ${B[cur][1]}。${B[cur][2]} 原則：<b>共軛酸越弱（pKaH 越大），鹼就越強</b>；孤對電子越「自由」，越容易接 H⁺。`;
   }
+  draw();
+  return { set(s) { cur = s.i ?? cur; draw(); } };
+};
+
+/* ===== 不飽和度：環 + π 鍵的數目 ===== */
+const DBEF = [['C₉H₁₀O₃', 9, 10, 0, 0, '例：一個苯環（4）＋ 一個 C=O（1）'], ['C₆H₆', 6, 6, 0, 0, '苯：一個環 ＋ 三個 C=C'], ['C₅H₁₀', 5, 10, 0, 0, '一個 C=C（烯類）或一個環（環烷）'], ['C₃H₄', 3, 4, 0, 0, '丙炔、丙二烯、環丙烯'], ['C₇H₈', 7, 8, 0, 0, '甲苯'], ['C₁₁H₁₁NO₂S', 11, 11, 1, 0, '含 N 的分子：N 每個加 1'], ['C₃H₄Cl₂', 3, 4, 0, 2, '鹵素當作 H 計算']];
+W.dbe = el => {
+  let cur = 0;
+  el.innerHTML = `${seg('dbS', DBEF.map((v, i) => [String(i), v[0]]), '0')}<p class="eq" id="dbF"></p><div class="dbb" id="dbB"></div><p class="note" id="dbN"></p>`;
+  function draw() {
+    const [f, C, H, N, X, ex] = DBEF[cur], d = (2 * C + 2 + N - H - X) / 2;
+    $('#dbF', el).innerHTML = `不飽和度 = (2C + 2 + N − H − X) ÷ 2 = (2×${C} + 2 + ${N} − ${H} − ${X}) ÷ 2 = <b>${d}</b>`;
+    $('#dbB', el).innerHTML = Array.from({ length: d }, () => '<i></i>').join('') || '<span class="mut small">0：飽和，沒有環也沒有 π 鍵</span>';
+    $('#dbN', el).innerHTML = `${f}：每個方塊代表「一個環或一個 π 鍵」。${ex}。飽和的開鏈分子 CₙH₂ₙ₊₂ 不飽和度為 0；每多一個環或雙鍵少 2 個 H，參鍵算 2。O、S 不影響計算。所以 C₉H₁₀O₃ 最多可以有 5 個雙鍵（沒有環時）。`;
+    pressSeg(el, 'dbS', String(cur));
+  }
+  bindSeg(el, 'dbS', v => { cur = +v; draw(); });
+  draw();
+  return { set(s) { cur = s.i ?? cur; draw(); } };
+};
+
+/* ===== 同分異構物：一個一個列出來 ===== */
+const ISOL = {
+  c4: ['C₄H₁₀', ['丁烷', '2-甲基丙烷（異丁烷）']],
+  c5: ['C₅H₁₂', ['戊烷', '2-甲基丁烷（異戊烷）', '2,2-二甲基丙烷（新戊烷）']],
+  c6: ['C₆H₁₄', ['己烷', '2-甲基戊烷', '3-甲基戊烷', '2,2-二甲基丁烷', '2,3-二甲基丁烷']],
+  c7: ['C₇H₁₆', ['庚烷', '2-甲基己烷', '3-甲基己烷', '2,2-二甲基戊烷', '2,3-二甲基戊烷', '2,4-二甲基戊烷', '3,3-二甲基戊烷', '3-乙基戊烷', '2,2,3-三甲基丁烷']],
+  c5e: ['C₅H₁₀（開鏈烯類）', ['1-戊烯', 'cis-2-戊烯', 'trans-2-戊烯', '2-甲基-1-丁烯', '3-甲基-1-丁烯', '2-甲基-2-丁烯']],
+  c3h4: ['C₃H₄', ['丙炔 HC≡C–CH₃', '丙二烯 H₂C=C=CH₂', '環丙烯']],
+};
+W.isomers = el => {
+  let cur = 'c7';
+  el.innerHTML = `${seg('isS', Object.entries(ISOL).map(([k, v]) => [k, v[0]]), cur)}<ol class="isol" id="isL"></ol><div class="cards" id="isK"></div><p class="note" id="isN"></p>`;
+  function draw() {
+    const [f, L] = ISOL[cur];
+    $('#isL', el).innerHTML = L.map(n => `<li>${n}</li>`).join('');
+    $('#isK', el).innerHTML = card('n', '數目', L.length, cur === 'c5e' ? '其中 2-戊烯有 cis/trans，構造異構物 5 種' : '');
+    $('#isN', el).innerHTML = `系統地數：先寫最長的主鏈，再把碳一個一個移成支鏈，每次都用 IUPAC 命名檢查有沒有重複（「4-甲基己烷」其實就是 3-甲基己烷）。烷類的異構物數目隨碳數快速增加：C₄ 2 種、C₅ 3 種、C₆ 5 種、C₇ 9 種。支鏈越多越接近球形，沸點越低（庚烷 98 °C、2,2,3-三甲基丁烷 81 °C）。`;
+    pressSeg(el, 'isS', cur);
+  }
+  bindSeg(el, 'isS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.c || cur; draw(); } };
+};
+
+/* ===== 碳的氧化程度 ===== */
+W.oxlevel = el => {
+  const L = [['CH₄', -4, '4 個 C–H'], ['CH₃OH', -2, '3 個 C–H、1 個 C–O'], ['H₂C=O', 0, '2 個 C–H、2 個 C–O（雙鍵算 2）'], ['HCOOH', 2, '1 個 C–H、3 個 C–O'], ['CO₂', 4, '4 個 C–O']];
+  let cur = 2;
+  el.innerHTML = `<div id="olG"></div><p class="note" id="olN"></p>`;
+  function draw() {
+    $('#olG', el).innerHTML = chart({ w: 560, h: 200, x: [-0.5, 4.5], y: [-5, 5], xt: [], yt: [-4, -2, 0, 2, 4], ylab: '碳的氧化數', label: '碳的氧化程度' }, (X, Y) =>
+      L.map(([f, o], i) => `<rect x="${X(i) - 30}" y="${Y(Math.max(0, o))}" width="60" height="${Math.abs(Y(o) - Y(0))}" class="${i === cur ? 'bv' : 'bc'}" data-i="${i}" role="button"/><text class="tk hl" x="${X(i)}" y="${Y(o) + (o >= 0 ? -6 : 14)}" text-anchor="middle">${f}</text>`).join('') + `<line class="mk" x1="${X(-0.5)}" x2="${X(4.5)}" y1="${Y(0)}" y2="${Y(0)}"/>`);
+    $('#olN', el).innerHTML = `<b>${L[cur][0]}</b>：${L[cur][2]}，碳的氧化數 ${L[cur][1] > 0 ? '+' : ''}${L[cur][1]}。快速算法：碳每接一個電負度較大的原子（O、N、鹵素）的鍵 +1，每接一個 H −1，接碳不計。由左到右是一連串的氧化：烷 → 醇 → 醛 → 羧酸 → CO₂。點長條切換。`;
+    $$('#olG [data-i]', el).forEach(r => { r.onclick = () => { cur = +r.dataset.i; draw(); }; });
+  }
+  draw();
+  return { set(s) { cur = s.i ?? cur; draw(); } };
+};
+
+/* ===== 環張力：每個 CH₂ 的燃燒熱 =====
+   kJ/mol（McMurry《Organic Chemistry》） */
+W.strain = el => {
+  const D = [[3, 697.1], [4, 686.2], [5, 664.0], [6, 658.6], [7, 662.4], [8, 663.6]];
+  el.innerHTML = `<div id="stG"></div><p class="note">把環烷的燃燒熱除以 CH₂ 數，和沒有張力的長鏈烷類（每個 CH₂ 約 658.6 kJ/mol）比較，多出來的就是<b>環張力</b>。環丙烷的鍵角只有 60°，遠小於 109.5°（角張力），而且相鄰的 C–H 全部重疊（扭轉張力），每個 CH₂ 的燃燒熱最大、最不穩定；環己烷可以形成椅式構形，幾乎沒有張力。比較異構物的穩定性時，燃燒熱越大越不穩定。</p>`;
+  $('#stG', el).innerHTML = chart({ w: 560, h: 230, x: [2.5, 8.5], y: [650, 700], xt: [3, 4, 5, 6, 7, 8], yt: [650, 660, 670, 680, 690, 700], xlab: '環的大小（碳數）', ylab: '每個 CH₂ 的燃燒熱（kJ/mol）', label: '環張力' }, (X, Y) =>
+    `<line class="mk" x1="${X(2.5)}" x2="${X(8.5)}" y1="${Y(658.6)}" y2="${Y(658.6)}"/>` + D.map(([n, v]) => `<rect x="${X(n) - 22}" y="${Y(v)}" width="44" height="${Y(650) - Y(v)}" class="${n === 3 ? 'bv' : 'bc'}"/><text class="tk" x="${X(n)}" y="${Y(v) - 5}" text-anchor="middle">${v}</text>`).join(''));
+  return { set() {} };
+};
+
+/* ===== 官能基 ===== */
+const FG = [['烯', 'C=C', 'CH₂=CH₂'], ['炔', 'C≡C', 'HC≡CH'], ['芳香環', '苯環', 'C₆H₅–'], ['醇', 'C–OH（sp³ 碳）', 'CH₃CH₂OH'], ['酚', 'OH 接在苯環上', 'C₆H₅OH'], ['醚', 'C–O–C', 'CH₃OCH₃'], ['硫醚', 'C–S–C', 'CH₃SCH₃'], ['醛', '–CHO', 'CH₃CHO'], ['酮', 'C–CO–C', 'CH₃COCH₃'], ['羧酸', '–COOH', 'CH₃COOH'], ['酯', '–COO–C', 'CH₃COOCH₃'], ['內酯', '環狀的酯', 'γ-丁內酯'], ['胺', '–NH₂、–NHR、–NR₂', 'CH₃NH₂'], ['醯胺', '–CO–N', 'CH₃CONH₂'], ['內醯胺', '環狀的醯胺', 'β-內醯胺（青黴素）'], ['腈', '–C≡N', 'CH₃CN'], ['鹵烷', 'C–X', 'CH₃Cl']];
+W.fgroups = el => {
+  let cur = 13;
+  el.innerHTML = `<div class="w-row">${FG.map(([n], i) => `<button class="btn sm ghost" type="button" data-i="${i}">${n}</button>`).join('')}</div><div class="cards" id="fgK"></div><p class="note" id="fgN"></p>`;
+  function draw() {
+    const [n, s, e] = FG[cur];
+    $('#fgK', el).innerHTML = card('n', '官能基', n) + card('s', '結構特徵', s) + card('e', '例子', e);
+    $('#fgN', el).innerHTML = `容易混淆的幾組：<b>醇與酚</b>（OH 接在 sp³ 碳或苯環上）、<b>胺與醯胺</b>（N 旁邊有沒有 C=O）、<b>酮、醛與羧酸衍生物</b>（羰基兩側接的是 C、H 或 O/N）、<b>醚與酯</b>（O 旁邊有沒有 C=O）。環狀的酯和醯胺稱為內酯與內醯胺。乙醯胺酚（普拿疼）同時含有<b>酚</b>與<b>醯胺</b>。`;
+    $$('[data-i]', el).forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.i === cur)));
+  }
+  $$('[data-i]', el).forEach(b => { b.onclick = () => { cur = +b.dataset.i; draw(); }; });
   draw();
   return { set(s) { cur = s.i ?? cur; draw(); } };
 };

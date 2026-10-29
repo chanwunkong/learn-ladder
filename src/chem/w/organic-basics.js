@@ -145,3 +145,85 @@ W.basic = el => {
   draw();
   return { set(s) { cur = s.i ?? cur; draw(); } };
 };
+
+/* ===== 不飽和度：環 + π 鍵的數目 ===== */
+const DBEF = [['C₉H₁₀O₃', 9, 10, 0, 0, '例：一個苯環（4）＋ 一個 C=O（1）'], ['C₆H₆', 6, 6, 0, 0, '苯：一個環 ＋ 三個 C=C'], ['C₅H₁₀', 5, 10, 0, 0, '一個 C=C（烯類）或一個環（環烷）'], ['C₃H₄', 3, 4, 0, 0, '丙炔、丙二烯、環丙烯'], ['C₇H₈', 7, 8, 0, 0, '甲苯'], ['C₁₁H₁₁NO₂S', 11, 11, 1, 0, '含 N 的分子：N 每個加 1'], ['C₃H₄Cl₂', 3, 4, 0, 2, '鹵素當作 H 計算']];
+W.dbe = el => {
+  let cur = 0;
+  el.innerHTML = `${seg('dbS', DBEF.map((v, i) => [String(i), v[0]]), '0')}<p class="eq" id="dbF"></p><div class="dbb" id="dbB"></div><p class="note" id="dbN"></p>`;
+  function draw() {
+    const [f, C, H, N, X, ex] = DBEF[cur], d = (2 * C + 2 + N - H - X) / 2;
+    $('#dbF', el).innerHTML = `不飽和度 = (2C + 2 + N − H − X) ÷ 2 = (2×${C} + 2 + ${N} − ${H} − ${X}) ÷ 2 = <b>${d}</b>`;
+    $('#dbB', el).innerHTML = Array.from({ length: d }, () => '<i></i>').join('') || '<span class="mut small">0：飽和，沒有環也沒有 π 鍵</span>';
+    $('#dbN', el).innerHTML = `${f}：每個方塊代表「一個環或一個 π 鍵」。${ex}。飽和的開鏈分子 CₙH₂ₙ₊₂ 不飽和度為 0；每多一個環或雙鍵少 2 個 H，參鍵算 2。O、S 不影響計算。所以 C₉H₁₀O₃ 最多可以有 5 個雙鍵（沒有環時）。`;
+    pressSeg(el, 'dbS', String(cur));
+  }
+  bindSeg(el, 'dbS', v => { cur = +v; draw(); });
+  draw();
+  return { set(s) { cur = s.i ?? cur; draw(); } };
+};
+
+/* ===== 同分異構物：一個一個列出來 ===== */
+const ISOL = {
+  c4: ['C₄H₁₀', ['丁烷', '2-甲基丙烷（異丁烷）']],
+  c5: ['C₅H₁₂', ['戊烷', '2-甲基丁烷（異戊烷）', '2,2-二甲基丙烷（新戊烷）']],
+  c6: ['C₆H₁₄', ['己烷', '2-甲基戊烷', '3-甲基戊烷', '2,2-二甲基丁烷', '2,3-二甲基丁烷']],
+  c7: ['C₇H₁₆', ['庚烷', '2-甲基己烷', '3-甲基己烷', '2,2-二甲基戊烷', '2,3-二甲基戊烷', '2,4-二甲基戊烷', '3,3-二甲基戊烷', '3-乙基戊烷', '2,2,3-三甲基丁烷']],
+  c5e: ['C₅H₁₀（開鏈烯類）', ['1-戊烯', 'cis-2-戊烯', 'trans-2-戊烯', '2-甲基-1-丁烯', '3-甲基-1-丁烯', '2-甲基-2-丁烯']],
+  c3h4: ['C₃H₄', ['丙炔 HC≡C–CH₃', '丙二烯 H₂C=C=CH₂', '環丙烯']],
+};
+W.isomers = el => {
+  let cur = 'c7';
+  el.innerHTML = `${seg('isS', Object.entries(ISOL).map(([k, v]) => [k, v[0]]), cur)}<ol class="isol" id="isL"></ol><div class="cards" id="isK"></div><p class="note" id="isN"></p>`;
+  function draw() {
+    const [f, L] = ISOL[cur];
+    $('#isL', el).innerHTML = L.map(n => `<li>${n}</li>`).join('');
+    $('#isK', el).innerHTML = card('n', '數目', L.length, cur === 'c5e' ? '其中 2-戊烯有 cis/trans，構造異構物 5 種' : '');
+    $('#isN', el).innerHTML = `系統地數：先寫最長的主鏈，再把碳一個一個移成支鏈，每次都用 IUPAC 命名檢查有沒有重複（「4-甲基己烷」其實就是 3-甲基己烷）。烷類的異構物數目隨碳數快速增加：C₄ 2 種、C₅ 3 種、C₆ 5 種、C₇ 9 種。支鏈越多越接近球形，沸點越低（庚烷 98 °C、2,2,3-三甲基丁烷 81 °C）。`;
+    pressSeg(el, 'isS', cur);
+  }
+  bindSeg(el, 'isS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.c || cur; draw(); } };
+};
+
+/* ===== 碳的氧化程度 ===== */
+W.oxlevel = el => {
+  const L = [['CH₄', -4, '4 個 C–H'], ['CH₃OH', -2, '3 個 C–H、1 個 C–O'], ['H₂C=O', 0, '2 個 C–H、2 個 C–O（雙鍵算 2）'], ['HCOOH', 2, '1 個 C–H、3 個 C–O'], ['CO₂', 4, '4 個 C–O']];
+  let cur = 2;
+  el.innerHTML = `<div id="olG"></div><p class="note" id="olN"></p>`;
+  function draw() {
+    $('#olG', el).innerHTML = chart({ w: 560, h: 200, x: [-0.5, 4.5], y: [-5, 5], xt: [], yt: [-4, -2, 0, 2, 4], ylab: '碳的氧化數', label: '碳的氧化程度' }, (X, Y) =>
+      L.map(([f, o], i) => `<rect x="${X(i) - 30}" y="${Y(Math.max(0, o))}" width="60" height="${Math.abs(Y(o) - Y(0))}" class="${i === cur ? 'bv' : 'bc'}" data-i="${i}" role="button"/><text class="tk hl" x="${X(i)}" y="${Y(o) + (o >= 0 ? -6 : 14)}" text-anchor="middle">${f}</text>`).join('') + `<line class="mk" x1="${X(-0.5)}" x2="${X(4.5)}" y1="${Y(0)}" y2="${Y(0)}"/>`);
+    $('#olN', el).innerHTML = `<b>${L[cur][0]}</b>：${L[cur][2]}，碳的氧化數 ${L[cur][1] > 0 ? '+' : ''}${L[cur][1]}。快速算法：碳每接一個電負度較大的原子（O、N、鹵素）的鍵 +1，每接一個 H −1，接碳不計。由左到右是一連串的氧化：烷 → 醇 → 醛 → 羧酸 → CO₂。點長條切換。`;
+    $$('#olG [data-i]', el).forEach(r => { r.onclick = () => { cur = +r.dataset.i; draw(); }; });
+  }
+  draw();
+  return { set(s) { cur = s.i ?? cur; draw(); } };
+};
+
+/* ===== 環張力：每個 CH₂ 的燃燒熱 =====
+   kJ/mol（McMurry《Organic Chemistry》） */
+W.strain = el => {
+  const D = [[3, 697.1], [4, 686.2], [5, 664.0], [6, 658.6], [7, 662.4], [8, 663.6]];
+  el.innerHTML = `<div id="stG"></div><p class="note">把環烷的燃燒熱除以 CH₂ 數，和沒有張力的長鏈烷類（每個 CH₂ 約 658.6 kJ/mol）比較，多出來的就是<b>環張力</b>。環丙烷的鍵角只有 60°，遠小於 109.5°（角張力），而且相鄰的 C–H 全部重疊（扭轉張力），每個 CH₂ 的燃燒熱最大、最不穩定；環己烷可以形成椅式構形，幾乎沒有張力。比較異構物的穩定性時，燃燒熱越大越不穩定。</p>`;
+  $('#stG', el).innerHTML = chart({ w: 560, h: 230, x: [2.5, 8.5], y: [650, 700], xt: [3, 4, 5, 6, 7, 8], yt: [650, 660, 670, 680, 690, 700], xlab: '環的大小（碳數）', ylab: '每個 CH₂ 的燃燒熱（kJ/mol）', label: '環張力' }, (X, Y) =>
+    `<line class="mk" x1="${X(2.5)}" x2="${X(8.5)}" y1="${Y(658.6)}" y2="${Y(658.6)}"/>` + D.map(([n, v]) => `<rect x="${X(n) - 22}" y="${Y(v)}" width="44" height="${Y(650) - Y(v)}" class="${n === 3 ? 'bv' : 'bc'}"/><text class="tk" x="${X(n)}" y="${Y(v) - 5}" text-anchor="middle">${v}</text>`).join(''));
+  return { set() {} };
+};
+
+/* ===== 官能基 ===== */
+const FG = [['烯', 'C=C', 'CH₂=CH₂'], ['炔', 'C≡C', 'HC≡CH'], ['芳香環', '苯環', 'C₆H₅–'], ['醇', 'C–OH（sp³ 碳）', 'CH₃CH₂OH'], ['酚', 'OH 接在苯環上', 'C₆H₅OH'], ['醚', 'C–O–C', 'CH₃OCH₃'], ['硫醚', 'C–S–C', 'CH₃SCH₃'], ['醛', '–CHO', 'CH₃CHO'], ['酮', 'C–CO–C', 'CH₃COCH₃'], ['羧酸', '–COOH', 'CH₃COOH'], ['酯', '–COO–C', 'CH₃COOCH₃'], ['內酯', '環狀的酯', 'γ-丁內酯'], ['胺', '–NH₂、–NHR、–NR₂', 'CH₃NH₂'], ['醯胺', '–CO–N', 'CH₃CONH₂'], ['內醯胺', '環狀的醯胺', 'β-內醯胺（青黴素）'], ['腈', '–C≡N', 'CH₃CN'], ['鹵烷', 'C–X', 'CH₃Cl']];
+W.fgroups = el => {
+  let cur = 13;
+  el.innerHTML = `<div class="w-row">${FG.map(([n], i) => `<button class="btn sm ghost" type="button" data-i="${i}">${n}</button>`).join('')}</div><div class="cards" id="fgK"></div><p class="note" id="fgN"></p>`;
+  function draw() {
+    const [n, s, e] = FG[cur];
+    $('#fgK', el).innerHTML = card('n', '官能基', n) + card('s', '結構特徵', s) + card('e', '例子', e);
+    $('#fgN', el).innerHTML = `容易混淆的幾組：<b>醇與酚</b>（OH 接在 sp³ 碳或苯環上）、<b>胺與醯胺</b>（N 旁邊有沒有 C=O）、<b>酮、醛與羧酸衍生物</b>（羰基兩側接的是 C、H 或 O/N）、<b>醚與酯</b>（O 旁邊有沒有 C=O）。環狀的酯和醯胺稱為內酯與內醯胺。乙醯胺酚（普拿疼）同時含有<b>酚</b>與<b>醯胺</b>。`;
+    $$('[data-i]', el).forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.i === cur)));
+  }
+  $$('[data-i]', el).forEach(b => { b.onclick = () => { cur = +b.dataset.i; draw(); }; });
+  draw();
+  return { set(s) { cur = s.i ?? cur; draw(); } };
+};
