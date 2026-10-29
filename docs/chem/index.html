@@ -213,6 +213,9 @@ svg.en.clip { overflow: hidden; }
 .flb > div { grid-template-columns: minmax(150px, 190px) 1fr auto; }
 .zbar { position: relative; height: 16px; background: linear-gradient(90deg, transparent calc(50% - 1px), var(--line) calc(50% - 1px), var(--line) calc(50% + 1px), transparent calc(50% + 1px)); }
 .zbar i { position: absolute; top: 0; height: 16px; border-radius: 3px; } .zbar i.pos { background: #D0443C; } .zbar i.neg { background: #3D6FD6; }
+.tline.cat { stroke: var(--good); stroke-dasharray: 6 4; }
+.mrl li { margin: 6px 0; } .mrc { display: inline-block; padding: 1px 6px; border-radius: 5px; border: 1px solid var(--line); }
+.mrc.cat { background: #DFF1E6; border-color: #23704A; color: #165236; font-weight: 700; } .mrc.int { background: #F9DEDB; border-color: #D0443C; color: #8A231C; font-weight: 700; }
 .tree-note { font-size: 14.5px; margin: 0 0 10px; }
 .trees { display: grid; gap: 22px; }
 .tree h3 { font-size: 15px; margin: 6px 0 8px; }
@@ -1714,31 +1717,23 @@ CH.push({
 /* ---------- 後中化學：化學動力學 ---------- */
 CH.push({
   id: 'kinetics', unit: 'g6', title: '化學動力學：反應有多快',
-  lede: '熱力學告訴你反應「會不會」發生，動力學告訴你「多快」發生。這一章從實驗數據推出速率式，看懂半生期與活化能，最後連到反應機構：SN1 和 SN2 的速率式就是這樣來的。',
+  lede: '熱力學告訴你反應「會不會」發生，動力學告訴你「多快」發生。這一章從速率的定義開始，由實驗數據推出速率式，看懂半生期與活化能，最後連到反應機構：SN1 和 SN2 的速率式就是這樣來的。',
   sections: [
-    { h: '速率式要靠實驗決定', w: 'ratelaw', body: `
-<p>反應速率是單位時間內濃度的變化。對 aA + bB → 產物，<b>速率式</b>寫成：</p>
-<p class="eq">rate = k [A]<sup>m</sup> [B]<sup>n</sup></p>
-<p>m、n 是<b>反應級數</b>，<b>不一定等於方程式的係數</b>，必須由實驗決定；k 是速率常數，只受溫度與催化劑影響。</p>
-<p>最常用的方法是<b>初速率法</b>：每次只改變一種反應物的濃度，看初速率怎麼變。濃度變 2 倍時速率變 2 倍 → 一級；變 4 倍 → 二級；不變 → 零級。</p>
-<p>試著自己做實驗找出三個反應的速率式。後兩個就是上一章的 SN1 和 SN2：方程式長得幾乎一樣，速率式卻不同，因為反應機構不同。</p>` },
-    { h: '濃度隨時間怎麼變：積分速率式與半生期', w: 'order', body: `
-<p>把速率式積分，就得到濃度和時間的關係。三種級數各有一種「畫成直線」的方式：</p>
-<table class="tbl"><thead><tr><th>級數</th><th>直線關係</th><th>半生期</th></tr></thead><tbody>
-<tr><td>零級</td><td>[A] = [A]₀ − kt</td><td>[A]₀ ÷ 2k</td></tr>
-<tr><td>一級</td><td>ln[A] = ln[A]₀ − kt</td><td><b>0.693 ÷ k</b>（與濃度無關）</td></tr>
-<tr><td>二級</td><td>1/[A] = 1/[A]₀ + kt</td><td>1 ÷ (k[A]₀)</td></tr></tbody></table>
-<p><b>半生期</b>是濃度降到一半所需的時間。一級反應的半生期固定，所以經過 n 個半生期剩下 (1/2)ⁿ：這是放射性定年和藥物劑量計算的基礎。</p>` },
-    { h: '為什麼加熱會變快：活化能', w: 'arrh', body: `
-<p>分子要反應，必須以足夠的能量碰撞，越過能量障礙，這個最小能量就是<b>活化能 Ea</b>。阿瑞尼斯方程式：</p>
-<p class="eq">k = A e<sup>−Ea/RT</sup>　　ln(k₂/k₁) = (Ea/R)(1/T₁ − 1/T₂)</p>
-<p>同溫度的分子動能不全相同，而是一個分佈。只有分佈<b>尾巴</b>上能量超過 Ea 的分子能反應。溫度稍微升高，平均能量只多一點，但尾巴抬高很多，所以速率大增：Ea ≈ 50 kJ/mol 的反應，室溫附近每升高 10 °C 速率約加倍。</p>
-<p><b>催化劑</b>提供另一條活化能較低的路徑。它同樣降低正反應和逆反應的障礙，所以更快到達平衡，但<b>不改變 ΔH、ΔG 與平衡常數</b>。</p>` },
-    { h: '反應機構與速率決定步驟', w: 'rds', body: `
-<p>多數反應不是一步完成，而是由幾個<b>基本步驟</b>組成。基本步驟的速率式可以直接從係數寫出（例如 A + B → C 的速率 = k[A][B]），但整體反應不行。</p>
-<p>整體速率由<b>最慢的步驟</b>（速率決定步驟）決定，就像高速公路收費站最慢的那一關決定車流量。在能量圖上，看<b>最高的過渡狀態</b>。</p>
-<ul><li>過渡狀態：能量的最高點，無法分離，只存在一瞬間。</li><li><b>中間物</b>：兩個過渡狀態之間的能量低谷，壽命雖短但真實存在（例如碳陽離子）。</li></ul>
-<p>調整兩個過渡狀態的高度，看速率式怎麼跟著改變。用速率式「反推」機構，是研究反應機構最基本的方法。</p>` },
+    { h: '「反應速率」指的是哪一個物種？', w: 'ratestoich', body: `
+<p>反應速率是單位時間內濃度的變化。同一個反應中，各物種變化的快慢和係數成正比，除以係數之後才是唯一的「反應速率」。拖動速率、換不同的反應，看各物種的長條怎麼一起變化。</p>` },
+    { h: '速率式要怎麼決定？', w: 'ratelaw', body: `
+<p>對 aA + bB → 產物，速率式寫成 <b>rate = k[A]ᵐ[B]ⁿ</b>。級數 m、n 不一定等於係數，必須由實驗決定；速率常數 k 只受溫度與催化劑影響，單位隨總級數改變（一級 s⁻¹、二級 M⁻¹s⁻¹）。</p>
+<p><b>初速率法</b>：每次只改變一種反應物的濃度。濃度變 2 倍時速率變 2 倍 → 一級；變 4 倍 → 二級；不變 → 零級；也可能出現分數級數。由任一組數據代回速率式就能算出 k。</p>
+<p>其他情況：某反應物大量過量時，它的濃度幾乎不變，可併入 k，稱為<b>準一級反應</b>。定溫下把氣體體積壓縮成一半，所有濃度加倍，速率變為 2^(總級數) 倍。</p>` },
+    { h: '濃度隨時間怎麼變？', w: 'order', body: `
+<p>把速率式積分，就得到濃度和時間的關係。切換三種級數：只有一種作圖會是直線（零級 [A] 對 t、一級 ln[A] 對 t、二級 1/[A] 對 t），斜率都和 k 有關（一級的斜率是 −k）。</p>
+<p>半生期：零級 [A]₀/2k，一級 <b>0.693/k</b>（和濃度無關，k·t½ = ln 2），二級 1/(k[A]₀)。一級反應經過 n 個半生期剩下 (1/2)ⁿ：16 atm 降到 1 atm 需要 4 個半生期。放射性衰變與多數藥物的排除都是一級反應。</p>` },
+    { h: '為什麼加熱會變快？', w: ['arrh', 'eadiag'], body: `
+<p>分子要以足夠的能量碰撞才能越過能量障礙，這個最小能量就是活化能 Ea。<b>阿瑞尼斯方程式</b>：k = A e^(−Ea/RT)，ln(k₂/k₁) = (Ea/R)(1/T₁ − 1/T₂)。溫度稍微升高，分子能量分布的尾巴抬高很多，所以速率大增。同樣的升溫下，速率常數增加越多的反應活化能越大：變 4 倍的活化能是變 2 倍的 2 倍（ln 4 = 2 ln 2）。</p>
+<p>第二張是能量圖：正反應與逆反應的活化能相差 ΔH。<b>催化劑</b>提供活化能較低的路徑，同時加快正逆反應，不改變 ΔH 與平衡常數。自由基和自由基結合幾乎不需要活化能，所以這類步驟極快。</p>` },
+    { h: '反應機構和速率式有什麼關係？', w: ['rds', 'mechroles'], body: `
+<p>多數反應由幾個<b>基本步驟</b>組成。基本步驟的速率式可以直接由係數寫出，整體反應不行。整體速率由最慢的步驟（<b>速率決定步驟</b>）決定；慢步驟前面有快速平衡時，速率式會包含平衡步驟的反應物（第一張圖）。</p>
+<p>第二張圖把各步驟相加：兩邊都出現、最後被消去的物種中，<b>先消耗後再生的是催化劑</b>，<b>先生成後消耗的是中間物</b>。過渡狀態是能量最高點、只存在一瞬間；中間物位於兩個過渡狀態之間的低谷，壽命雖短但真實存在（例如碳陽離子）。</p>` },
   ],
   quiz: [
     { q: '某反應 A + B → C，[A] 加倍時初速率變為 4 倍，[B] 加倍時初速率不變。速率式為？', o: ['rate = k[A]²', 'rate = k[A][B]', 'rate = k[A]²[B]', 'rate = k[B]'], a: 0,
@@ -1755,6 +1750,40 @@ CH.push({
       why: '最慢的步驟決定整體速率。第一步慢時，中間物一生成就被消耗掉，不會累積；速率式只含第一步的反應物，例如 SN1 的 rate = k[RX]。', show: { w: 'rds', set: { h1: 0.9, h2: 0.65 } } },
     { q: '反應能量圖中的「中間物」和「過渡狀態」有什麼不同？', o: ['中間物位於能量低谷、壽命雖短但真實存在；過渡狀態位於能量最高點、無法分離', '兩者是同一件事', '過渡狀態比中間物穩定', '中間物位於能量最高點'], a: 0,
       why: '中間物（例如碳陽離子）在兩個障礙之間的低谷，可以被偵測甚至捕捉；過渡狀態是舊鍵將斷、新鍵將成的瞬間，只是能量曲線上的最高點。', show: { w: 'rds', set: { h1: 0.85, h2: 0.7 } } },
+  ],
+  exam: [
+    { src: '義守 109 第 4 題', q: '2O₃(g) → 3O₂(g) 中，O₃ 的消失速率為 6.0 × 10⁻³ atm/s，則 O₂ 的生成速率為？', o: ['9.0 × 10⁻³ atm/s', '4.0 × 10⁻³ atm/s', '6.0 × 10⁻³ atm/s', '1.8 × 10⁻² atm/s'], a: 0,
+      why: '÷ 2 再 × 3：6.0 × 10⁻³ × 3/2 = 9.0 × 10⁻³。', show: { w: 'ratestoich', set: { r: 'o3', v: 0.003 } } },
+    { src: '義守 106 第 16 題', q: '某反應的初速率數據：[A] 0.10、[B] 0.10 時速率 2.0 × 10⁻³；[A] 0.20、[B] 0.10 時 8.0 × 10⁻³；[A] 0.10、[B] 0.30 時 6.0 × 10⁻³。速率式為？', o: ['rate = k[A]²[B]', 'rate = k[A][B]', 'rate = k[A][B]²', 'rate = k[A]²[B]²'], a: 0,
+      why: '[A] 2 倍 → 速率 4 倍（二級）；[B] 3 倍 → 速率 3 倍（一級）。', show: { w: 'ratelaw' } },
+    { src: '慈濟 110 第 43 題', q: '速率式為 rate = k[X]²[Y] 的氣體反應，若定溫下把容器體積壓縮為一半，初速率變為原來的？', o: ['8 倍', '4 倍', '2 倍', '不變'], a: 0,
+      why: '濃度都變 2 倍：2² × 2 = 8。' },
+    { src: '義守 107 第 11 題', q: 'rate = k[A][B]，[A]₀ = 0.001 M、[B]₀ = 1.0 M 時，可以視為何種反應？', o: ['對 A 的準一級反應，k\' = k[B]₀', '零級反應', '對 B 的一級反應', '三級反應'], a: 0,
+      why: 'B 大量過量，反應過程中 [B] 幾乎不變，併入速率常數。' },
+    { src: '慈濟 115 第 47 題', q: '一級反應半生期 10 分鐘，A 由 4.0 M 降到 0.50 M 需要多久？', o: ['30 分鐘', '40 分鐘', '20 分鐘', '80 分鐘'], a: 0,
+      why: '4.0 → 2.0 → 1.0 → 0.50，共 3 個半生期。', show: { w: 'order', set: { n: 1 } } },
+    { src: '中國醫藥 113 第 34 題', q: '一級反應的 k = 1.16 × 10⁻³ s⁻¹，半生期約為？', o: ['10 分鐘', '1 分鐘', '100 分鐘', '0.17 分鐘'], a: 0,
+      why: 't½ = 0.693 ÷ 1.16 × 10⁻³ = 597 s ≈ 10 分鐘。' },
+    { src: '中國醫藥 115 第 33 題', q: '二級反應的初濃度 0.20 M，10 分鐘後剩下一半，速率常數 k 為？', o: ['0.50 M⁻¹min⁻¹', '0.069 min⁻¹', '0.050 M⁻¹min⁻¹', '2.0 M⁻¹min⁻¹'], a: 0,
+      why: '二級 t½ = 1/(k[A]₀)：k = 1 ÷ (0.20 × 10) = 0.50。', show: { w: 'order', set: { n: 2 } } },
+    { src: '中國醫藥 111 第 5 題', q: '一級反應以 ln[A] 對時間作圖，直線的斜率為？', o: ['−k', 'k', '−1/k', '1/k'], a: 0,
+      why: 'ln[A] = ln[A]₀ − kt。', show: { w: 'order', set: { n: 1 } } },
+    { src: '慈濟 110 第 18 題', q: '一級反應中，起始濃度增加為 10 倍，半生期如何變化？', o: ['不變', '變為 10 倍', '變為 1/10', '變為 √10 倍'], a: 0,
+      why: '一級反應 t½ = 0.693/k，和濃度無關。', show: { w: 'order', set: { n: 1 } } },
+    { src: '中國醫藥 106 第 24 題', q: '零級反應 A → B + C，k = 0.040 M/s，[A]₀ = 1.0 M，5 秒後 [B] 為？', o: ['0.20 M', '0.80 M', '0.040 M', '1.0 M'], a: 0,
+      why: '零級：每秒固定消耗 0.040 M，5 秒消耗 0.20 M，生成等量的 B。', show: { w: 'order', set: { n: 0 } } },
+    { src: '義守 107 第 43 題', q: '同樣由 T₁ 升到 T₂，反應甲的 k 變 2 倍、反應乙變 8 倍，兩者活化能比（甲 : 乙）為？', o: ['1 : 3', '1 : 4', '1 : 8', '1 : 2'], a: 0,
+      why: 'ln(k₂/k₁) 與 Ea 成正比：ln 2 : ln 8 = 1 : 3。', show: { w: 'arrh' } },
+    { src: '義守 108 第 16 題', q: '某反應正反應活化能 30 kJ/mol、逆反應 95 kJ/mol，ΔH 為？', o: ['−65 kJ/mol', '+65 kJ/mol', '+125 kJ/mol', '−125 kJ/mol'], a: 0,
+      why: 'ΔH = Ea(正) − Ea(逆) = 30 − 95。', show: { w: 'eadiag', set: { r: 60, p: 0 } } },
+    { src: '中國醫藥 107 第 15 題', q: '加入催化劑後，下列何者會改變？', o: ['正、逆反應的活化能', '反應的 ΔH', '平衡常數', '產物的平衡濃度'], a: 0,
+      why: '催化劑降低活化能，其他熱力學量不變。', show: { w: 'eadiag', set: { cat: 1 } } },
+    { src: '義守 106 第 17 題', q: 'Cl + O₃ → ClO + O₂（慢）；ClO + O → Cl + O₂（快）。催化劑與中間物分別為？', o: ['Cl；ClO', 'ClO；Cl', 'O₃；O', 'O₂；Cl'], a: 0,
+      why: 'Cl 先消耗後再生；ClO 先生成後消耗。', show: { w: 'mechroles', set: { m: 'cl' } } },
+    { src: '義守 108 第 25 題', q: '2A + 2B → C 的機構：A + B → D（慢）、D + B → E（快）、A + E → C（快）。速率式為？', o: ['rate = k[A][B]', 'rate = k[A]²[B]²', 'rate = k[D][B]', 'rate = k[A][E]'], a: 0,
+      why: '第一步最慢，由它的反應物寫出。', show: { w: 'mechroles', set: { m: 'ab' } } },
+    { src: '慈濟 107 第 15 題', q: '2NO + O₂ → 2NO₂ 的速率式為 rate = k[NO]²[O₂]。下列哪個機構符合？', o: ['2NO ⇌ N₂O₂（快速平衡）；N₂O₂ + O₂ → 2NO₂（慢）', 'NO + O₂ → NO₃（慢）；NO₃ + NO → 2NO₂（快）', '2NO → N₂O₂（慢）；N₂O₂ + O₂ → 2NO₂（快）', 'O₂ → 2O（慢）；NO + O → NO₂（快）'], a: 0,
+      why: '慢步驟 rate = k₂[N₂O₂][O₂]，快速平衡 [N₂O₂] = K[NO]²，代入得 k[NO]²[O₂]。', show: { w: 'rds', set: { h1: 0.7, h2: 0.9 } } },
   ],
 });
 
@@ -2473,6 +2502,8 @@ const TERMS = {
     ['轉折溫度', 'ΔH 與 ΔS 同號時，ΔG 由正變負的溫度 T = ΔH ÷ ΔS。', { w: 'gibbs', set: { p: 'caco3', T: 1110 } }],
   ],
   'kinetics': [
+    ['準一級反應', '某反應物大量過量、濃度幾乎不變時，速率式看起來像一級。'],
+    ['催化劑', '先消耗後再生的物種；降低活化能，不改變 ΔH 與平衡常數。', { w: 'mechroles', set: { m: 'cl' } }],
     ['速率式', 'rate = k[A]ᵐ[B]ⁿ；級數 m、n 由實驗決定，不一定等於係數。', { w: 'ratelaw', set: { rx: 'sn2' } }],
     ['初速率法', '每次只改變一種反應物濃度，看初速率變幾倍來決定級數。', { w: 'ratelaw', set: { rx: 'no', rows: [[0.1, 0.1], [0.2, 0.1], [0.1, 0.2]] } }],
     ['半生期', '濃度降到一半所需的時間；一級反應為 0.693 ÷ k，與濃度無關。', { w: 'order', set: { n: 1 } }],
@@ -4798,6 +4829,75 @@ W.rds = el => {
   $('#rd2', el).oninput = e => { st.h2 = +e.target.value; draw(); };
   draw();
   return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 5. 各物種的速率：除以係數 ===== */
+const RST = { o3: ['2O₃ → 3O₂', [['O₃', 2, -1], ['O₂', 3, 1]]], nh3: ['N₂ + 3H₂ → 2NH₃', [['N₂', 1, -1], ['H₂', 3, -1], ['NH₃', 2, 1]]], n2o5: ['2N₂O₅ → 4NO₂ + O₂', [['N₂O₅', 2, -1], ['NO₂', 4, 1], ['O₂', 1, 1]]] };
+W.ratestoich = el => {
+  const st = { r: 'o3', v: 0.009 };
+  el.innerHTML = `${seg('rsS', Object.entries(RST).map(([k, v]) => [k, v[0]]), st.r)}<div class="w-row"><label class="rng">反應速率（每單位係數）<input type="range" id="rsV" min="0.001" max="0.02" step="0.0005"><output class="mono" id="rsO"></output></label></div><div class="bars pk flb" id="rsB"></div><p class="eq" id="rsF"></p><p class="note">同一個反應只有一個「反應速率」：各物種濃度變化的快慢除以自己的係數後都相等。反應物的濃度減少（藍），產物增加（紅）。題目給某一物種的速率時，先除以它的係數，再乘上另一物種的係數。</p>`;
+  function draw() {
+    const [, sp] = RST[st.r], mx = Math.max(...sp.map(s => s[1])) * st.v;
+    $('#rsB', el).innerHTML = sp.map(([t, c, sg]) => `<div><span>Δ[${t}]/Δt</span><span class="zbar"><i class="${sg > 0 ? 'pos' : 'neg'}" style="width:${c * st.v / mx * 50}%;${sg > 0 ? 'left:50%' : 'right:50%'}"></i></span><b class="mono">${sg > 0 ? '+' : '−'}${sci(c * st.v, 2)}</b></div>`).join('');
+    $('#rsF', el).innerHTML = `反應速率 = ${sp.map(([t, c, sg]) => `${sg < 0 ? '−' : ''}(1/${c}) Δ[${t}]/Δt`).join(' = ')} = ${sci(st.v, 2)}`;
+    $('#rsV', el).value = st.v; $('#rsO', el).textContent = sci(st.v, 2); pressSeg(el, 'rsS', st.r);
+  }
+  bindSeg(el, 'rsS', v => { st.r = v; draw(); });
+  $('#rsV', el).oninput = e => { st.v = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 6. 能量圖：正、逆反應的活化能與催化劑 ===== */
+W.eadiag = el => {
+  const st = { r: 40, p: 10, ts: 90, cat: 0 };
+  el.innerHTML = `<div class="w-row"><label class="rng">反應物能量<input type="range" id="eaR" min="0" max="80" step="1"><output class="mono" id="eaRo"></output></label><label class="rng">產物能量<input type="range" id="eaP" min="0" max="80" step="1"><output class="mono" id="eaPo"></output></label></div>${seg('eaC', [['0', '無催化劑'], ['1', '加催化劑']], '0')}<div id="eaG"></div><p class="eq" id="eaF"></p><p class="note" id="eaN"></p>`;
+  function draw() {
+    const ts = Math.max(st.ts, st.r + 5, st.p + 5), tc = Math.max(st.r, st.p) + (ts - Math.max(st.r, st.p)) * 0.45, Y = v => 220 - v * 2, xs = Array.from({ length: 101 }, (_, i) => i / 100);
+    const curve = top => xs.map(x => { const v = x < 0.5 ? st.r + (top - st.r) * (1 - Math.cos(Math.PI * x * 2)) / 2 : st.p + (top - st.p) * (1 + Math.cos(Math.PI * (x - 0.5) * 2)) / 2; return [40 + x * 480, Y(v)]; });
+    let s = `<path class="tline" d="${path(curve(ts))}"/>${st.cat ? `<path class="tline cat" d="${path(curve(tc))}"/>` : ''}`;
+    s += `<line class="dlt up" x1="150" x2="150" y1="${Y(st.r)}" y2="${Y(ts)}"/><text class="tk" x="144" y="${(Y(st.r) + Y(ts)) / 2}" text-anchor="end">Ea（正）${ts - st.r}</text>`;
+    s += `<line class="dlt dn" x1="410" x2="410" y1="${Y(st.p)}" y2="${Y(ts)}"/><text class="tk" x="416" y="${(Y(st.p) + Y(ts)) / 2}">Ea（逆）${ts - st.p}</text>`;
+    s += `<line class="conn" x1="40" x2="540" y1="${Y(st.r)}" y2="${Y(st.r)}"/><line class="dlt" x1="530" x2="530" y1="${Y(st.r)}" y2="${Y(st.p)}" style="stroke:var(--accent)"/><text class="tk hl" x="524" y="${Y(st.p) + (st.p < st.r ? 14 : -6)}" text-anchor="end">ΔH = ${st.p - st.r}</text>`;
+    $('#eaG', el).innerHTML = `<svg class="en" style="max-width:620px" viewBox="0 0 560 230" role="img" aria-label="活化能">${s}</svg>`;
+    $('#eaF', el).innerHTML = `ΔH = Ea（正）− Ea（逆）= ${ts - st.r} − ${ts - st.p} = <b>${st.p - st.r} kJ/mol</b>${st.cat ? `　；加催化劑後 Ea（正）= ${fx(tc - st.r, 0)}、Ea（逆）= ${fx(tc - st.p, 0)}，ΔH 不變` : ''}`;
+    $('#eaN', el).innerHTML = `${st.p < st.r ? '產物比反應物低：放熱，逆反應的活化能較大。' : '產物比反應物高：吸熱，正反應的活化能較大。'} 催化劑提供另一條較低的路徑（虛線），<b>正、逆反應的活化能降低同樣多</b>，所以兩個方向都變快、較快達到平衡，但 ΔH 與平衡常數不變。`;
+    [['R', 'r'], ['P', 'p']].forEach(([i, k]) => { $(`#ea${i}`, el).value = st[k]; $(`#ea${i}o`, el).textContent = st[k]; }); pressSeg(el, 'eaC', String(st.cat));
+  }
+  $('#eaR', el).oninput = e => { st.r = +e.target.value; draw(); };
+  $('#eaP', el).oninput = e => { st.p = +e.target.value; draw(); };
+  bindSeg(el, 'eaC', v => { st.cat = +v; draw(); });
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 7. 反應機構：誰是催化劑、誰是中間物 ===== */
+const MECH = {
+  no: ['臭氧被 NO 破壞', [[['O₃', 'NO'], ['NO₂', 'O₂'], '慢'], [['NO₂', 'O'], ['NO', 'O₂'], '快']]],
+  cl: ['氟氯碳化物的 Cl', [[['Cl', 'O₃'], ['ClO', 'O₂'], '慢'], [['ClO', 'O'], ['Cl', 'O₂'], '快']]],
+  h2o2: ['I⁻ 催化 H₂O₂ 分解', [[['H₂O₂', 'I⁻'], ['H₂O', 'IO⁻'], '慢'], [['H₂O₂', 'IO⁻'], ['H₂O', 'O₂', 'I⁻'], '快']]],
+  ab: ['2A + 2B → C', [[['A', 'B'], ['D'], '慢'], [['D', 'B'], ['E'], '快'], [['A', 'E'], ['C'], '快']]],
+};
+W.mechroles = el => {
+  let cur = 'no';
+  el.innerHTML = `${seg('mrS', Object.entries(MECH).map(([k, v]) => [k, v[0]]), cur)}<ol class="cs mrl" id="mrL"></ol><p class="eq" id="mrF"></p><div class="cards" id="mrK"></div><p class="note" id="mrN"></p>`;
+  function draw() {
+    const [, steps] = MECH[cur], first = {}, net = {};
+    steps.forEach(([r, p]) => { r.forEach(x => { if (!first[x]) first[x] = 'r'; net[x] = (net[x] || 0) - 1; }); p.forEach(x => { if (!first[x]) first[x] = 'p'; net[x] = (net[x] || 0) + 1; }); });
+    const both = Object.keys(net).filter(x => steps.some(s => s[0].includes(x)) && steps.some(s => s[1].includes(x)) && net[x] === 0);
+    const role = x => (both.includes(x) ? (first[x] === 'r' ? 'cat' : 'int') : '');
+    const chip = x => `<span class="mrc ${role(x)}">${x}</span>`;
+    $('#mrL', el).innerHTML = steps.map(([r, p, sp]) => `<li>${r.map(chip).join(' + ')} → ${p.map(chip).join(' + ')}　<small>（${sp}）</small></li>`).join('');
+    const fmt = side => Object.entries(net).filter(([, n]) => side * n > 0).map(([x, n]) => `${Math.abs(n) > 1 ? Math.abs(n) : ''}${x}`).join(' + ');
+    $('#mrF', el).innerHTML = `相加、消去兩邊相同的物種：${fmt(-1)} → ${fmt(1)}`;
+    const slow = steps.find(s => s[2] === '慢'), cats = both.filter(x => first[x] === 'r'), ints = both.filter(x => first[x] === 'p');
+    $('#mrK', el).innerHTML = card('c', '催化劑（綠）', cats.join('、') || '無', '先消耗、後再生') + card('i', '中間物（紅）', ints.join('、') || '無', '先生成、後消耗') + card('r', '速率式', `rate = k[${slow[0].join('][')}]`, '由第一步慢步驟寫出');
+    $('#mrN', el).innerHTML = `把各步驟相加得到總反應。兩邊都出現、最後被消去的物種有兩種：<b>先當反應物、最後又生成回來的是催化劑</b>；<b>先被生成、隨後被消耗的是中間物</b>。慢步驟是第一步時，速率式直接用它的反應物寫出${slow[0].includes('I⁻') ? '（催化劑也可以出現在速率式中）' : ''}。`;
+    pressSeg(el, 'mrS', cur);
+  }
+  bindSeg(el, 'mrS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.m || cur; draw(); } };
 };
 
 /* ---------- 後中化學：溶解度平衡的互動圖 ----------

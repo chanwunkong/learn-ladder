@@ -98,3 +98,72 @@ W.rds = el => {
   draw();
   return { set(s) { Object.assign(st, s); draw(); } };
 };
+
+/* ===== 5. 各物種的速率：除以係數 ===== */
+const RST = { o3: ['2O₃ → 3O₂', [['O₃', 2, -1], ['O₂', 3, 1]]], nh3: ['N₂ + 3H₂ → 2NH₃', [['N₂', 1, -1], ['H₂', 3, -1], ['NH₃', 2, 1]]], n2o5: ['2N₂O₅ → 4NO₂ + O₂', [['N₂O₅', 2, -1], ['NO₂', 4, 1], ['O₂', 1, 1]]] };
+W.ratestoich = el => {
+  const st = { r: 'o3', v: 0.009 };
+  el.innerHTML = `${seg('rsS', Object.entries(RST).map(([k, v]) => [k, v[0]]), st.r)}<div class="w-row"><label class="rng">反應速率（每單位係數）<input type="range" id="rsV" min="0.001" max="0.02" step="0.0005"><output class="mono" id="rsO"></output></label></div><div class="bars pk flb" id="rsB"></div><p class="eq" id="rsF"></p><p class="note">同一個反應只有一個「反應速率」：各物種濃度變化的快慢除以自己的係數後都相等。反應物的濃度減少（藍），產物增加（紅）。題目給某一物種的速率時，先除以它的係數，再乘上另一物種的係數。</p>`;
+  function draw() {
+    const [, sp] = RST[st.r], mx = Math.max(...sp.map(s => s[1])) * st.v;
+    $('#rsB', el).innerHTML = sp.map(([t, c, sg]) => `<div><span>Δ[${t}]/Δt</span><span class="zbar"><i class="${sg > 0 ? 'pos' : 'neg'}" style="width:${c * st.v / mx * 50}%;${sg > 0 ? 'left:50%' : 'right:50%'}"></i></span><b class="mono">${sg > 0 ? '+' : '−'}${sci(c * st.v, 2)}</b></div>`).join('');
+    $('#rsF', el).innerHTML = `反應速率 = ${sp.map(([t, c, sg]) => `${sg < 0 ? '−' : ''}(1/${c}) Δ[${t}]/Δt`).join(' = ')} = ${sci(st.v, 2)}`;
+    $('#rsV', el).value = st.v; $('#rsO', el).textContent = sci(st.v, 2); pressSeg(el, 'rsS', st.r);
+  }
+  bindSeg(el, 'rsS', v => { st.r = v; draw(); });
+  $('#rsV', el).oninput = e => { st.v = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 6. 能量圖：正、逆反應的活化能與催化劑 ===== */
+W.eadiag = el => {
+  const st = { r: 40, p: 10, ts: 90, cat: 0 };
+  el.innerHTML = `<div class="w-row"><label class="rng">反應物能量<input type="range" id="eaR" min="0" max="80" step="1"><output class="mono" id="eaRo"></output></label><label class="rng">產物能量<input type="range" id="eaP" min="0" max="80" step="1"><output class="mono" id="eaPo"></output></label></div>${seg('eaC', [['0', '無催化劑'], ['1', '加催化劑']], '0')}<div id="eaG"></div><p class="eq" id="eaF"></p><p class="note" id="eaN"></p>`;
+  function draw() {
+    const ts = Math.max(st.ts, st.r + 5, st.p + 5), tc = Math.max(st.r, st.p) + (ts - Math.max(st.r, st.p)) * 0.45, Y = v => 220 - v * 2, xs = Array.from({ length: 101 }, (_, i) => i / 100);
+    const curve = top => xs.map(x => { const v = x < 0.5 ? st.r + (top - st.r) * (1 - Math.cos(Math.PI * x * 2)) / 2 : st.p + (top - st.p) * (1 + Math.cos(Math.PI * (x - 0.5) * 2)) / 2; return [40 + x * 480, Y(v)]; });
+    let s = `<path class="tline" d="${path(curve(ts))}"/>${st.cat ? `<path class="tline cat" d="${path(curve(tc))}"/>` : ''}`;
+    s += `<line class="dlt up" x1="150" x2="150" y1="${Y(st.r)}" y2="${Y(ts)}"/><text class="tk" x="144" y="${(Y(st.r) + Y(ts)) / 2}" text-anchor="end">Ea（正）${ts - st.r}</text>`;
+    s += `<line class="dlt dn" x1="410" x2="410" y1="${Y(st.p)}" y2="${Y(ts)}"/><text class="tk" x="416" y="${(Y(st.p) + Y(ts)) / 2}">Ea（逆）${ts - st.p}</text>`;
+    s += `<line class="conn" x1="40" x2="540" y1="${Y(st.r)}" y2="${Y(st.r)}"/><line class="dlt" x1="530" x2="530" y1="${Y(st.r)}" y2="${Y(st.p)}" style="stroke:var(--accent)"/><text class="tk hl" x="524" y="${Y(st.p) + (st.p < st.r ? 14 : -6)}" text-anchor="end">ΔH = ${st.p - st.r}</text>`;
+    $('#eaG', el).innerHTML = `<svg class="en" style="max-width:620px" viewBox="0 0 560 230" role="img" aria-label="活化能">${s}</svg>`;
+    $('#eaF', el).innerHTML = `ΔH = Ea（正）− Ea（逆）= ${ts - st.r} − ${ts - st.p} = <b>${st.p - st.r} kJ/mol</b>${st.cat ? `　；加催化劑後 Ea（正）= ${fx(tc - st.r, 0)}、Ea（逆）= ${fx(tc - st.p, 0)}，ΔH 不變` : ''}`;
+    $('#eaN', el).innerHTML = `${st.p < st.r ? '產物比反應物低：放熱，逆反應的活化能較大。' : '產物比反應物高：吸熱，正反應的活化能較大。'} 催化劑提供另一條較低的路徑（虛線），<b>正、逆反應的活化能降低同樣多</b>，所以兩個方向都變快、較快達到平衡，但 ΔH 與平衡常數不變。`;
+    [['R', 'r'], ['P', 'p']].forEach(([i, k]) => { $(`#ea${i}`, el).value = st[k]; $(`#ea${i}o`, el).textContent = st[k]; }); pressSeg(el, 'eaC', String(st.cat));
+  }
+  $('#eaR', el).oninput = e => { st.r = +e.target.value; draw(); };
+  $('#eaP', el).oninput = e => { st.p = +e.target.value; draw(); };
+  bindSeg(el, 'eaC', v => { st.cat = +v; draw(); });
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 7. 反應機構：誰是催化劑、誰是中間物 ===== */
+const MECH = {
+  no: ['臭氧被 NO 破壞', [[['O₃', 'NO'], ['NO₂', 'O₂'], '慢'], [['NO₂', 'O'], ['NO', 'O₂'], '快']]],
+  cl: ['氟氯碳化物的 Cl', [[['Cl', 'O₃'], ['ClO', 'O₂'], '慢'], [['ClO', 'O'], ['Cl', 'O₂'], '快']]],
+  h2o2: ['I⁻ 催化 H₂O₂ 分解', [[['H₂O₂', 'I⁻'], ['H₂O', 'IO⁻'], '慢'], [['H₂O₂', 'IO⁻'], ['H₂O', 'O₂', 'I⁻'], '快']]],
+  ab: ['2A + 2B → C', [[['A', 'B'], ['D'], '慢'], [['D', 'B'], ['E'], '快'], [['A', 'E'], ['C'], '快']]],
+};
+W.mechroles = el => {
+  let cur = 'no';
+  el.innerHTML = `${seg('mrS', Object.entries(MECH).map(([k, v]) => [k, v[0]]), cur)}<ol class="cs mrl" id="mrL"></ol><p class="eq" id="mrF"></p><div class="cards" id="mrK"></div><p class="note" id="mrN"></p>`;
+  function draw() {
+    const [, steps] = MECH[cur], first = {}, net = {};
+    steps.forEach(([r, p]) => { r.forEach(x => { if (!first[x]) first[x] = 'r'; net[x] = (net[x] || 0) - 1; }); p.forEach(x => { if (!first[x]) first[x] = 'p'; net[x] = (net[x] || 0) + 1; }); });
+    const both = Object.keys(net).filter(x => steps.some(s => s[0].includes(x)) && steps.some(s => s[1].includes(x)) && net[x] === 0);
+    const role = x => (both.includes(x) ? (first[x] === 'r' ? 'cat' : 'int') : '');
+    const chip = x => `<span class="mrc ${role(x)}">${x}</span>`;
+    $('#mrL', el).innerHTML = steps.map(([r, p, sp]) => `<li>${r.map(chip).join(' + ')} → ${p.map(chip).join(' + ')}　<small>（${sp}）</small></li>`).join('');
+    const fmt = side => Object.entries(net).filter(([, n]) => side * n > 0).map(([x, n]) => `${Math.abs(n) > 1 ? Math.abs(n) : ''}${x}`).join(' + ');
+    $('#mrF', el).innerHTML = `相加、消去兩邊相同的物種：${fmt(-1)} → ${fmt(1)}`;
+    const slow = steps.find(s => s[2] === '慢'), cats = both.filter(x => first[x] === 'r'), ints = both.filter(x => first[x] === 'p');
+    $('#mrK', el).innerHTML = card('c', '催化劑（綠）', cats.join('、') || '無', '先消耗、後再生') + card('i', '中間物（紅）', ints.join('、') || '無', '先生成、後消耗') + card('r', '速率式', `rate = k[${slow[0].join('][')}]`, '由第一步慢步驟寫出');
+    $('#mrN', el).innerHTML = `把各步驟相加得到總反應。兩邊都出現、最後被消去的物種有兩種：<b>先當反應物、最後又生成回來的是催化劑</b>；<b>先被生成、隨後被消耗的是中間物</b>。慢步驟是第一步時，速率式直接用它的反應物寫出${slow[0].includes('I⁻') ? '（催化劑也可以出現在速率式中）' : ''}。`;
+    pressSeg(el, 'mrS', cur);
+  }
+  bindSeg(el, 'mrS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.m || cur; draw(); } };
+};
