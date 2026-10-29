@@ -337,6 +337,7 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 .mol .at { font-size: 16px; font-weight: 600; fill: var(--ink); }
 .mol .at.hl { fill: var(--bad); }
 .mol .at.br { fill: var(--base); }
+.mol .cnum { font-size: 12px; font-weight: 700; fill: var(--acid); font-family: var(--mono); }
 .mol .lp { fill: var(--ink); }
 .mol .chg { fill: var(--surface); stroke: var(--ink); stroke-width: 1.2; }
 .mol .chgt { font-size: 12px; font-weight: 700; fill: var(--ink); }
@@ -2162,6 +2163,122 @@ CH.push({
   ],
 });
 
+/* ---------- 後中化學：有機命名 ---------- */
+CH.push({
+  id: 'naming', unit: 'o1b', title: '有機命名',
+  lede: '每一份考卷都有「這個結構叫什麼」或「這個名字是哪個結構」的題目。IUPAC 命名其實只有幾個步驟：選主鏈、編號、排序，再加上官能基的字尾與立體組態。這一章把步驟一個個拆開，用圖檢查每一步。',
+  sections: [
+    { h: '烷類的名字怎麼組成？', w: 'namealk', body: `
+<p>名稱由三部分組成：<b>取代基</b>（字首）+ <b>主鏈</b>的字根 + 官能基字尾。碳數的字根是 meth-（1）、eth-（2）、prop-（3）、but-（4）、pent-（5）、hex-（6）、hept-（7）、oct-（8）、non-（9）、dec-（10），中文依序是甲、乙、丙、丁、戊、己、庚、辛、壬、癸。</p>
+<p>上圖切換編號方向，比較兩個方向的位置數組。命名步驟：</p>
+<ol><li><b>選主鏈</b>：最長的連續碳鏈。有兩條一樣長時，選取代基較多的那條。主鏈不一定畫成一直線，要沿著轉折去數。</li>
+<li><b>編號</b>：從靠近取代基的一端開始。兩個方向逐一比較位置數字，第一個不同的數字較小的方向正確（2,2,4 勝過 2,4,4）。若兩個方向完全相同，讓英文字母排在前面的取代基拿較小的號碼（3-ethyl-4-methylhexane）。</li>
+<li><b>排序</b>：取代基依英文字母順序寫，數字和名稱之間用連字號，數字之間用逗號。相同的取代基合併成 di-、tri-、tetra-，這些倍數字首<b>不算進字母排序</b>（ethyl 排在 dimethyl 前面）。</li></ol>
+<p>鹵素和烷基一樣是字首（fluoro、chloro、bromo、iodo），一起參加編號與排序：2-chloro-3-methylpentane。</p>` },
+    { h: '取代基的名字有哪些？', w: 'alkyl', body: `
+<p>取代基是主鏈上的分支，把烷的字尾 -ane 換成 -yl：CH₃– 是 methyl，CH₃CH₂– 是 ethyl。三個碳以上的取代基，連接點不同就有不同的名字，切換上圖看連接碳的位置。</p>
+<p>連接碳是幾級碳，決定了 sec-、tert- 字首：<b>二級碳</b>連接的丁基是 sec-butyl，<b>三級碳</b>連接的是 tert-butyl。iso- 指末端有 (CH₃)₂CH– 的分支。</p>
+<p>如果分支本身還有分支，就把分支當成一條小鏈，從連接碳編為 1 號，整個名稱放進括號：–C(CH₃)₂CH₂CH(CH₃)₂ 的最長鏈是 4 個碳，1 號碳上有兩個甲基、3 號碳上有一個，名稱是 (1,1,3-trimethylbutyl)。</p>` },
+    { h: '環狀化合物怎麼命名？', w: 'bicyclo', body: `
+<p><b>單環</b>：在字根前加 cyclo-，例如 cyclohexane。環上只有一個取代基時不必編號（methylcyclohexane）；有兩個以上時，讓位置數組最小，若平手則字母較前的取代基為 1 號：1-ethyl-3-methylcyclohexane。環與鏈相連時，碳數較多的當主體：環己烷接辛基叫 cyclohexyloctane（1-cyclohexyloctane），接丁基則叫 butylcyclohexane。</p>
+<p><b>環烯</b>：雙鍵的兩個碳一定是 1、2 號，再讓取代基拿最小的號碼：異丙基接在雙鍵旁的飽和碳上，名稱是 3-isopropylcyclopentene。兩個雙鍵隔一個單鍵的六員環是 1,3-cyclohexadiene，隔兩個的是 1,4-cyclohexadiene。</p>
+<p><b>雙環</b>：兩個環共用的碳稱為<b>橋頭碳</b>，上圖切換幾個例子。名稱是 bicyclo[a.b.c]＋總碳數的字根，a、b、c 是三條橋上的碳數，由大到小排列。</p>
+<p>要數一個分子有<b>幾個環</b>，看骨架上的鍵數與原子數：環數 = 鍵數 − 原子數 + 1（只算構成骨架的鍵和原子，不算 H）。降冰片烷有 7 個碳、8 個 C–C 鍵，所以是 2 個環；金剛烷 10 個碳、12 個 C–C 鍵，是 3 個環。</p>` },
+    { h: '有好幾個官能基時，誰當字尾？', w: 'suffix', body: `
+<p>點選上圖的官能基，看它當字尾與當字首時的寫法。規則是：</p>
+<ol><li>優先順序最高的官能基當<b>字尾</b>，主鏈必須包含它，並且給它最小的編號。</li>
+<li>其他官能基改成字首，和烷基一起排字母順序：HOCH₂CH₂CHO 是 3-hydroxypropanal。</li>
+<li>字尾前要寫出位置：CH₃CH(OH)CH₃ 是 propan-2-ol（舊寫法 2-propanol）。(CH₃)₂CHCH₂CH₂OH 先讓 OH 拿 1 號，名稱是 3-methylbutan-1-ol（舊寫法 3-methyl-1-butanol），俗名 isopentyl alcohol。</li></ol>
+<p><b>烯與炔</b>：雙鍵用 -ene、參鍵用 -yne，主鏈要盡量包含多重鍵。同時有兩者時，讓多重鍵整組拿最小的編號；若兩個方向一樣，雙鍵優先拿小號。所以 CH₃CH=CH–C≡CH 從參鍵端編號（1、3）勝過從另一端（2、4），名稱是 pent-3-en-1-yne；CH₂=CH–CH₂–C≡CH 兩端都是（1、4），雙鍵拿 1 號：pent-1-en-4-yne。</p>
+<p><b>酯</b>的名稱分兩段：先寫接在 O 上的烷基，再寫酸的部分（-ic acid 改成 -ate）。CH₃COOCH(CH₃)₂ 是 isopropyl acetate（乙酸異丙酯），HCOOCH₂CH₃ 是 ethyl formate（甲酸乙酯），CH₃CH₂COOCH₂CH₃ 是 ethyl propanoate。中文剛好相反：先講酸，再講醇的部分。</p>` },
+    { h: '雙鍵的 E 和 Z 怎麼判斷？', w: 'ez', body: `
+<p>雙鍵不能旋轉，所以兩端的基團可以在同側或對側。選擇上圖四個位置的基團，看組態怎麼變。判斷步驟：</p>
+<ol><li>在雙鍵的每一個碳上，用 <b>CIP 規則</b>比出兩個基團中優先的一個：先比直接相連原子的原子序（Br &gt; Cl &gt; O &gt; C &gt; H）；相同時，往外一層列出各自接的三個原子，由大到小逐一比較，第一個不同的就決定勝負（–CH₂OH 的 (O,H,H) 勝過 –CH(CH₃)₂ 的 (C,C,H)）。雙鍵視為接了兩個相同原子。</li>
+<li>兩個優先基團在同側為 <b>Z</b>，在對側為 <b>E</b>。</li></ol>
+<p>cis/trans 只適用於兩端各有一個相同基團（通常是 H）的情形；E/Z 適用於所有雙鍵。兩者不一定對應：(Z)-2-bromobut-2-ene 的兩個甲基是 trans。</p>
+<p>分子有兩個雙鍵時，每一個都要標出組態和位置，寫在名稱最前面，例如 (3E,5Z)-octa-3,5-diene。立體中心的 R/S 也一樣寫在前面並加上位置：(4R)-2,2,4-trimethylhexane。R/S 的判斷在「構形與立體化學」一章。</p>` },
+    { h: '苯的衍生物與常見俗名', body: `
+<p>苯環上的取代基有許多保留的俗名，IUPAC 也接受，考題常直接使用：</p>
+<ul><li><b>母體名稱</b>：toluene（甲苯，C₆H₅CH₃）、phenol（酚，C₆H₅OH）、aniline（苯胺，C₆H₅NH₂）、anisole（苯甲醚，C₆H₅OCH₃）、benzaldehyde（苯甲醛，C₆H₅CHO）、benzoic acid（苯甲酸）、acetophenone（苯乙酮，C₆H₅COCH₃）。</li>
+<li>苯環當取代基時叫 <b>phenyl</b>（C₆H₅–），C₆H₅CH₂– 叫 benzyl。(C₆H₅)₂NH 是 diphenylamine，C₆H₅CH₂NH₂ 是 benzylamine。</li>
+<li>二取代苯用 <b>ortho-（o-，1,2）、meta-（m-，1,3）、para-（p-，1,4）</b>。三個以上取代基時改用數字：以母體的官能基碳為 1 號，其他取代基拿最小號碼、依字母排序。例如 4-chloro-3-methylbenzaldehyde：CHO 所在的碳是 1 號。</li>
+<li><b>戴奧辛</b>（2,3,7,8-tetrachlorodibenzo-p-dioxin）：中間的六員環含兩個互為對位（1,4）的 O，兩側各接一個苯環，四個 Cl 分別在兩側苯環上離 O 最遠的位置。</li></ul>
+<p>常見俗名與結構：acetone（丙酮）、acetic acid（乙酸）、formic acid（甲酸）、formaldehyde（甲醛）、diethyl ether（乙醚，CH₃CH₂OCH₂CH₃）、methyl acetate（乙酸甲酯，CH₃COOCH₃）。</p>
+<p>含氮官能基的名稱：R₂C=N–R 是亞胺（imine），R₂C=N–OH 是肟（oxime），R₂C=N–NH₂ 是腙（hydrazone），R₂C=N₂ 是重氮化合物（diazo），R–N=N–R 是偶氮化合物（azo）。</p>
+<p>試劑常用縮寫：LiAlH₄（lithium aluminum hydride，LAH）、DIBAL-H（diisobutylaluminum hydride）、NaBH₄（sodium borohydride）、L-Selectride（lithium tri-sec-butylborohydride）、LDA（lithium diisopropylamide）、PCC（pyridinium chlorochromate）、mCPBA（meta-chloroperoxybenzoic acid）、NBS（N-bromosuccinimide），溶劑 THF（tetrahydrofuran）、DMSO（dimethyl sulfoxide）、DMF（N,N-dimethylformamide）。</p>` },
+  ],
+  quiz: [
+    { q: '(CH₃)₃CCH₂CH(CH₃)₂ 的正確名稱？', o: ['2,2,4-trimethylpentane', '2,4,4-trimethylpentane', 'isooctane-2,2,4', '1,1,1,3-tetramethylbutane'], a: 0,
+      why: '主鏈 5 個碳，兩個方向的位置是 2,2,4 與 2,4,4，第一個不同的數字 2 < 4。', show: { w: 'namealk', set: { i: 1, rev: 0 } } },
+    { q: '兩個方向編號後位置數組相同（3,4）時，誰拿較小的號碼？', o: ['英文字母排在前面的取代基', '碳數較多的取代基', '先寫在結構左邊的', '任意都可以'], a: 0,
+      why: '例如 3-ethyl-4-methylhexane，ethyl 的 e 在 methyl 的 m 前面。' },
+    { q: '5-ethyl-3,5-dimethylheptane 這個名字錯在哪裡？', o: ['編號方向錯了，應為 3-ethyl-3,5-dimethylheptane', '取代基順序錯了', '主鏈選錯了', '沒有錯'], a: 0,
+      why: '反向編號的位置是 3,3,5，比 3,5,5 小。', show: { w: 'namealk', set: { i: 3, rev: 1 } } },
+    { q: '排字母順序時，sec-butyl 排在哪個字母？', o: ['b', 's', 'u', '最後'], a: 0,
+      why: 'sec-、tert- 以及 di-、tri- 不參加排序；iso- 要參加。', show: { w: 'alkyl', set: { k: 'sbu' } } },
+    { q: 'tert-butyl 的連接碳是？', o: ['三級碳', '一級碳', '二級碳', '四級碳'], a: 0,
+      why: '連接碳上接了三個甲基（連同主鏈共四個碳）。', show: { w: 'alkyl', set: { k: 'tbu' } } },
+    { q: 'bicyclo[3.2.1]octane 有幾個碳？', o: ['8', '6', '7', '9'], a: 0,
+      why: '3 + 2 + 1 + 2 個橋頭碳 = 8。', show: { w: 'bicyclo', set: { c: 'nb' } } },
+    { q: '分子同時有 –COOH 與 –OH，命名時？', o: ['字尾為 -oic acid，OH 寫成 hydroxy-', '字尾為 -ol，COOH 寫成 carboxy-', '兩個都當字尾', '依位置先後決定'], a: 0,
+      why: '羧酸優先順序高於醇。', show: { w: 'suffix', set: { i: 0 } } },
+    { q: 'CH₃COCH₂CH₂OH 的名稱？', o: ['4-hydroxybutan-2-one', '1-hydroxybutan-3-one', '3-oxobutan-1-ol', '4-hydroxy-2-butanal'], a: 0,
+      why: '酮優先於醇，C=O 要拿最小號碼（2），OH 在 4 號。', show: { w: 'suffix', set: { i: 5 } } },
+    { q: 'cis-2-butene 的 E/Z 組態？', o: ['Z', 'E', '沒有 E/Z', '要看溫度'], a: 0,
+      why: '每端的優先基團都是 CH₃，兩個在同側。', show: { w: 'ez', set: { a: 1, b: 0, c: 1, d: 0 } } },
+    { q: '–CH₂OH 和 –CH(CH₃)₂ 依 CIP 規則誰較優先？', o: ['–CH₂OH', '–CH(CH₃)₂', '兩者相同', '無法比較'], a: 0,
+      why: '直接相連都是 C；下一層 (O,H,H) 與 (C,C,H) 比較，第一個 O > C。', show: { w: 'ez', set: { a: 4, b: 3, c: 1, d: 0 } } },
+    { q: '對二氯苯的編號寫法？', o: ['1,4-dichlorobenzene', '1,2-dichlorobenzene', '1,3-dichlorobenzene', '1,6-dichlorobenzene'], a: 0,
+      why: 'para = 1,4；ortho = 1,2；meta = 1,3。' },
+    { q: 'CH₃CH₂COOCH₃ 的名稱？', o: ['methyl propanoate（丙酸甲酯）', 'propyl methanoate', 'ethyl acetate', 'methyl butanoate'], a: 0,
+      why: 'O 上的烷基是甲基，酸的部分有 3 個碳（含羰基碳）。', show: { w: 'suffix', set: { i: 1 } } },
+  ],
+  exam: [
+    { src: '仿 中國醫 110 第 7 題', q: '主鏈 7 個碳，2、3、5 號碳各有一個甲基、4 號碳有一個丙基。正確名稱？', o: ['2,3,5-trimethyl-4-propylheptane', '4-propyl-2,3,5-trimethylheptane', '4-sec-butyl-2,3-dimethylheptane', '3,5,6-trimethyl-4-propylheptane'], a: 0,
+      why: '經過丙基的鏈也是 7 個碳，但只有 3 個取代基，所以選 4 個取代基的那條；字母 m 在 p 前面。' },
+    { src: '仿 義守 110 第 2 題', q: '下列名稱何者正確？', o: ['4,4-diethyl-2-methylhexane', '3-ethyl-4,4-dimethylhexane', '2-ethylpentane', '5,5-dimethyl-3-ethylhexane'], a: 0,
+      why: 'B 應為 4-ethyl-3,3-dimethylhexane；C 主鏈選錯，應為 3-methylhexane；D 編號與排序都錯，應為 4-ethyl-2,2-dimethylhexane。' },
+    { src: '仿 中國醫 112 第 1 題', q: 'CH₃–CHCl–CH(CH₂CH₃)–CH₂CH₂CH₃ 的名稱？', o: ['2-chloro-3-ethylhexane', '3-ethyl-2-chlorohexane', '5-chloro-4-ethylhexane', '3-(1-chloroethyl)hexane'], a: 0,
+      why: '最長鏈 6 個碳；Cl 也是字首，和烷基一起編號、排序，c 在 e 前面。' },
+    { src: '仿 義守 108 第 39 題', q: 'CH₃CH₂–CH(CH₃)–CH(CH₂CH₃)–CH₂CH₃ 的名稱？', o: ['3-ethyl-4-methylhexane', '4-ethyl-3-methylhexane', '3-methyl-4-ethylhexane', '3-sec-butylpentane'], a: 0,
+      why: '主鏈 6 個碳，兩個方向都是 3,4，由字母較前的 ethyl 拿 3 號。' },
+    { src: '仿 慈濟 115 第 13 題', q: '取代基 –C(CH₃)₂CH₂CH(CH₃)₂ 的名稱？', o: ['1,1,3-trimethylbutyl', '1,3,3-trimethylbutyl', '1,1,3,3-tetramethylpropyl', '2,2,4-trimethylbutyl'], a: 0,
+      why: '從連接碳編為 1 號，取最長的 4 碳鏈，甲基在 1、1、3。', show: { w: 'alkyl', set: { k: 'tbu' } } },
+    { src: '仿 中國醫 114 第 17 題', q: 'CH₂=CH–CH₂–C≡CH 的名稱？', o: ['pent-1-en-4-yne', 'pent-4-en-1-yne', 'pent-1-yn-4-ene', 'pent-4-yn-1-ene'], a: 0,
+      why: '兩個方向都是 1、4，平手時雙鍵拿較小的號碼；名稱中 -en- 寫在 -yne 前面。', show: { w: 'suffix', set: { i: 8 } } },
+    { src: '仿 慈濟 115 第 28 題', q: '2-chlorobut-2-ene 中，Cl 與 C4 的甲基在雙鍵同側。組態為？', o: ['Z', 'E', '沒有幾何異構', '要看 C1 的位置'], a: 0,
+      why: 'C2 上 Cl > CH₃；C3 上 CH₃ > H。兩個優先基團同側。', show: { w: 'ez', set: { a: 6, b: 1, c: 1, d: 0 } } },
+    { src: '仿 慈濟 115 第 41 題', q: '左邊雙鍵碳上方接 Br、下方接 Cl；右邊雙鍵碳上方接 CH₃、下方接 OH。組態為？', o: ['E', 'Z', 'cis', '沒有幾何異構'], a: 0,
+      why: '左邊 Br 優先（在上），右邊 OH 優先（在下），兩者在對側。', show: { w: 'ez', set: { a: 7, b: 6, c: 1, d: 5 } } },
+    { src: '仿 義守 114 第 42 題', q: '環己烷上有一個乙基和一個甲基，彼此在 1,3 位置。名稱？', o: ['1-ethyl-3-methylcyclohexane', '3-ethyl-1-methylcyclohexane', '1-methyl-3-ethylcyclohexane', '1-ethyl-5-methylcyclohexane'], a: 0,
+      why: '兩種編號都是 1,3，由字母較前的 ethyl 拿 1 號。' },
+    { src: '仿 中國醫 106 第 37 題', q: '下列取代基接在環己烷上，何者應命名為「cyclohexyl＋烷」？', o: ['octyl', 'hexyl', 'tert-butyl', 'cyclopentyl'], a: 0,
+      why: '鏈的碳數（8）多於環（6）時，鏈當主體。' },
+    { src: '仿 慈濟 114 第 50 題', q: '環戊烯中，異丙基接在緊鄰雙鍵的飽和碳上。名稱？', o: ['3-isopropylcyclopentene', '2-isopropylcyclopentene', '4-isopropylcyclopentene', '5-isopropylcyclopentene'], a: 0,
+      why: '雙鍵碳固定為 1、2 號，往取代基的方向編號，取代基在 3 號。' },
+    { src: '仿 中國醫 106 第 8 題', q: '金剛烷（adamantane，C₁₀H₁₆）的骨架有 12 個 C–C 鍵，它是幾環分子？', o: ['三環', '二環', '四環', '單環'], a: 0,
+      why: '環數 = 12 − 10 + 1 = 3；不飽和度 (22 − 16) ÷ 2 = 3 也相符。' },
+    { src: '仿 慈濟 113 第 26 題', q: '苯甲酸的 2 號位有 Br、4 號位有 NO₂。名稱？', o: ['2-bromo-4-nitrobenzoic acid', '4-nitro-2-bromobenzoic acid', '1-bromo-3-nitro-6-carboxybenzene', '2-carboxy-5-nitrobromobenzene'], a: 0,
+      why: 'COOH 所在碳為 1 號，母體是 benzoic acid；取代基依字母 b、n 排列。' },
+    { src: '仿 義守 106 第 26 題', q: 'HCOOCH₂CH₂CH₃ 的名稱？', o: ['propyl formate（甲酸丙酯）', 'ethyl acetate（乙酸乙酯）', 'methyl propanoate', 'formyl propane'], a: 0,
+      why: 'O 上接丙基，酸的部分只有一個碳（甲酸）。前三個選項互為異構物。', show: { w: 'suffix', set: { i: 1 } } },
+    { src: '仿 義守 106 第 27 題', q: 'CH₃CH(OH)CH₂CH(CH₃)₂ 的 IUPAC 名稱？', o: ['4-methylpentan-2-ol', '2-methylpentan-4-ol', '1,3-dimethylbutan-1-ol', '4-methylhexan-2-ol'], a: 0,
+      why: '主鏈 5 個碳，OH 當字尾要拿最小號碼（2），甲基在 4。', show: { w: 'suffix', set: { i: 6 } } },
+    { src: '仿 義守 115 第 27 題', q: '2,2,4-trimethylhexane 的立體中心是幾號碳？', o: ['C4', 'C2', 'C3', 'C5'], a: 0,
+      why: 'C4 接 H、CH₃、CH₂CH₃、CH₂C(CH₃)₃ 四個不同基團；名稱寫成 (4R)- 或 (4S)-。C2 接了三個甲基。' },
+    { src: '仿 義守 112 第 25 題', q: '下列試劑名稱與縮寫的組合，何者錯誤？', o: ['tetrahydrofuran — DMF', 'N-bromosuccinimide — NBS', 'pyridinium chlorochromate — PCC', 'diisobutylaluminum hydride — DIBAL-H'], a: 0,
+      why: 'tetrahydrofuran 是 THF；DMF 是 N,N-dimethylformamide。' },
+    { src: '仿 義守 107 第 25 題', q: '下列名稱與化學式何者不相符？', o: ['ethyl formate，CH₃COOCH₃', 'anisole，C₆H₅OCH₃', 'acetone，CH₃COCH₃', 'aniline，C₆H₅NH₂'], a: 0,
+      why: 'CH₃COOCH₃ 是 methyl acetate；ethyl formate 是 HCOOCH₂CH₃。' },
+    { src: '仿 義守 114 第 45 題', q: 'diphenylamine 的結構是？', o: ['(C₆H₅)₂NH', 'C₆H₅CH₂NH₂', 'H₂N–C₆H₄–C₆H₄–NH₂', 'C₆H₅NHCH₃'], a: 0,
+      why: '兩個 phenyl 接在同一個 N 上；B 是 benzylamine，C 是聯苯二胺。' },
+    { src: '仿 中國醫 108 第 41 題', q: 'dibenzo-p-dioxin 名稱中的 p 指的是？', o: ['中間六員環的兩個 O 互為對位（1,4）', '兩個苯環互為對位', '四個 Cl 在對位', '分子是平面的'], a: 0,
+      why: '1,4-dioxin 的兩個 O 在六員環的相對位置。' },
+    { src: '仿 義守 112 第 16 題', q: 'R₂C=N–NH₂ 這類化合物稱為？', o: ['腙（hydrazone）', '肟（oxime）', '亞胺（imine）', '重氮化合物（diazo）'], a: 0,
+      why: '肟是 C=N–OH，亞胺是 C=N–R，重氮是 C=N₂。' },
+  ],
+});
+
 /* ---------- 後中化學：有機酸鹼 ---------- */
 CH.push({
   id: 'org-acid', unit: 'o2', title: '有機酸鹼：用 pKa 預測反應',
@@ -2888,6 +3005,11 @@ const TERMS = {
     ['半衰期', '放射性原子核數目減半所需的時間，和起始量無關。', { w: 'decay', set: { i: 'c14', n: 1 } }],
     ['α 衰變', '放出 ⁴₂He，質量數減 4、原子序減 2。'],
     ['β⁻ 衰變', '中子轉成質子並放出電子，原子序加 1、質量數不變。'],
+  ],
+  'naming': [
+    ['主鏈', '命名時選出的最長連續碳鏈；一樣長時選取代基較多的。', { w: 'namealk', set: { i: 0, rev: 0 } }],
+    ['橋頭碳', '雙環化合物中兩個環共用、連接三條橋的碳。', { w: 'bicyclo', set: { c: 'nb' } }],
+    ['CIP 規則', '依原子序比較取代基優先順序的規則，用於 E/Z 與 R/S。', { w: 'ez', set: { a: 4, b: 3, c: 1, d: 0 } }],
   ],
   'bonding': [
     ['官能基', '決定有機分子反應性的原子團，如 –OH、C=O、–COOH。', { w: 'fgroups' }],
@@ -5637,6 +5759,136 @@ W.o2series = el => {
   $('#osG', el).innerHTML = chart({ w: 560, h: 230, x: [0.7, 2.8], y: [105, 155], xt: [1, 1.5, 2, 2.5], yt: [110, 120, 130, 140, 150], xlab: '鍵級', ylab: 'O–O 鍵長（pm）', label: 'O₂ 系列鍵長' }, (X, Y) =>
     `<path class="tline faint" d="${path(O2S.map(([, b, l]) => [X(b), Y(l)]))}"/>` + O2S.map(([t, b, l]) => `<circle class="dot" cx="${X(b)}" cy="${Y(l)}" r="6"/><text class="tk" x="${X(b) + 10}" y="${Y(l) - 6}">${t} ${l} pm</text>`).join(''));
   return { set() {} };
+};
+
+/* ---------- 後中化學：有機命名的互動圖 ---------- */
+
+/* ===== 1. 烷類命名：主鏈、編號、排序 =====
+   n：主鏈碳數；subs：[位置（由左編號）, 英文, 中文, 碳數] */
+const ALKN = [
+  { n: 6, subs: [[2, 'methyl', '甲基', 1], [3, 'ethyl', '乙基', 2]], en: 'hexane', zh: '己烷' },
+  { n: 5, subs: [[2, 'methyl', '甲基', 1], [2, 'methyl', '甲基', 1], [4, 'methyl', '甲基', 1]], en: 'pentane', zh: '戊烷' },
+  { n: 5, subs: [[2, 'chloro', '氯', 0], [3, 'methyl', '甲基', 1]], en: 'pentane', zh: '戊烷' },
+  { n: 7, subs: [[3, 'methyl', '甲基', 1], [5, 'ethyl', '乙基', 2], [5, 'methyl', '甲基', 1]], en: 'heptane', zh: '庚烷' },
+];
+const MULTI = ['', '', 'di', 'tri', 'tetra'], MULTIZ = ['', '', '二', '三', '四'];
+function alkName(p, rev) {
+  const subs = p.subs.map(([i, e, z, c]) => [rev ? p.n + 1 - i : i, e, z, c]);
+  const g = {}; subs.forEach(([i, e, z]) => { (g[e] = g[e] || { z, l: [] }).l.push(i); });
+  const keys = Object.keys(g).sort();
+  const en = keys.map(k => `${g[k].l.sort((a, b) => a - b).join(',')}-${MULTI[g[k].l.length]}${k}`).join('-') + p.en;
+  const zh = keys.map(k => `${g[k].l.sort((a, b) => a - b).join(',')}-${MULTIZ[g[k].l.length]}${g[k].z}`).join('-') + p.zh;
+  return { en, zh, loc: subs.map(s => s[0]).sort((a, b) => a - b) };
+}
+W.namealk = el => {
+  const st = { i: 0, rev: 0 };
+  el.innerHTML = `${seg('naS', ALKN.map((p, i) => [String(i), `結構 ${i + 1}`]), '0')}${seg('naD', [['0', '由左往右編號'], ['1', '由右往左編號']], '0')}<div id="naG"></div><div class="cards" id="naK"></div><p class="note" id="naN"></p>`;
+  function draw() {
+    const p = ALKN[st.i], atoms = {}, bonds = [], cnt = {};
+    p.subs.forEach(([i]) => { cnt[i] = (cnt[i] || 0) + 1; });
+    for (let k = 1; k <= p.n; k++) { const x = (k - (p.n + 1) / 2) * 0.87, y = k % 2 ? -0.25 : 0.25; atoms['c' + k] = { x, y, t: '' }; atoms['n' + k] = { x, y: y - Math.sign(y) * 0.6, t: `<tspan class="cnum">${st.rev ? p.n + 1 - k : k}</tspan>` }; if (k > 1) bonds.push(['c' + (k - 1), 'c' + k, 's']); }
+    const used = {};
+    p.subs.forEach(([i, e, z, c], j) => { const C0 = atoms['c' + i], dir = Math.sign(C0.y), dx = cnt[i] > 1 ? (used[i] ? 0.45 : -0.45) : 0; used[i] = 1;
+      if (c === 0) { atoms['s' + j] = { x: C0.x + dx, y: C0.y + dir * 0.95, t: 'Cl' }; bonds.push(['c' + i, 's' + j, 's']); return; }
+      let prev = 'c' + i; for (let m = 0; m < c; m++) { const id = `s${j}_${m}`; atoms[id] = { x: C0.x + dx + (m ? 0.5 : 0), y: C0.y + dir * (0.95 + m * 0.5), t: '' }; bonds.push([prev, id, 's']); prev = id; } });
+    $('#naG', el).innerHTML = MOL.svg({ atoms, bonds }, { w: 520, h: 230, s: 50, label: '主鏈與編號' });
+    const a = alkName(p, 0), b = alkName(p, 1), cur = st.rev ? b : a;
+    const cmp = (x, y) => { for (let k = 0; k < x.length; k++) if (x[k] !== y[k]) return x[k] < y[k] ? 0 : 1; return 0; };
+    const best = cmp(a.loc, b.loc);
+    $('#naK', el).innerHTML = card('l', '目前的取代基位置', cur.loc.join(', ')) + card('o', '另一方向', (st.rev ? a : b).loc.join(', ')) + card('n', '名稱', st.rev === best ? '<span class="ok">✓ 正確</span>' : '<span class="bad">✗ 編號方向不對</span>');
+    $('#naN', el).innerHTML = `<b class="mono">${cur.en}</b>（${cur.zh}）<br>步驟：① 找出最長的碳鏈當主鏈（一樣長時選取代基較多的）；② 從靠近取代基的一端編號，比較兩個方向的位置數組，第一個不同的數字較小者為準；③ 取代基依英文字母排序（di-、tri- 不算進排序），同樣的取代基用 di-、tri- 合併。`;
+    pressSeg(el, 'naS', String(st.i)); pressSeg(el, 'naD', String(st.rev));
+  }
+  bindSeg(el, 'naS', v => { st.i = +v; draw(); });
+  bindSeg(el, 'naD', v => { st.rev = +v; draw(); });
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 2. E/Z：CIP 優先順序 =====
+   [顯示, 優先序（越大越高）, 判斷依據] */
+const CIPG = [['H', 0, '原子序 1'], ['CH₃', 1, 'C（H, H, H）'], ['CH₂CH₃', 2, 'C（C, H, H）'], ['CH(CH₃)₂', 3, 'C（C, C, H）'], ['CH₂OH', 3.5, 'C（O, H, H）'], ['OH', 4, 'O，原子序 8'], ['Cl', 5, 'Cl，原子序 17'], ['Br', 6, 'Br，原子序 35']];
+W.ez = el => {
+  const st = { a: 6, b: 1, c: 2, d: 0 };   // a、b 在左邊碳（上、下），c、d 在右邊碳（上、下）
+  const sel = (id, v) => `<select id="${id}">${CIPG.map((g, i) => `<option value="${i}"${i === v ? ' selected' : ''}>${g[0]}</option>`).join('')}</select>`;
+  el.innerHTML = `<div class="w-row"><label class="sel">左上 ${sel('ezA', st.a)}</label><label class="sel">左下 ${sel('ezB', st.b)}</label><label class="sel">右上 ${sel('ezC', st.c)}</label><label class="sel">右下 ${sel('ezD', st.d)}</label></div><div id="ezG"></div><div class="cards" id="ezK"></div><p class="note" id="ezN"></p>`;
+  function draw() {
+    const [A, B, C, D] = [st.a, st.b, st.c, st.d].map(i => CIPG[i]);
+    const hiL = A[1] > B[1] ? 'up' : A[1] < B[1] ? 'down' : null, hiR = C[1] > D[1] ? 'up' : C[1] < D[1] ? 'down' : null;
+    const atoms = { C1: { x: -0.65, y: 0, t: '' }, C2: { x: 0.65, y: 0, t: '' }, a: { x: -1.45, y: 0.9, t: A[0], halo: hiL === 'up' ? 0.45 : 0 }, b: { x: -1.45, y: -0.9, t: B[0], halo: hiL === 'down' ? 0.45 : 0 }, c: { x: 1.45, y: 0.9, t: C[0], halo: hiR === 'up' ? 0.45 : 0 }, d: { x: 1.45, y: -0.9, t: D[0], halo: hiR === 'down' ? 0.45 : 0 } };
+    $('#ezG', el).innerHTML = MOL.svg({ atoms, bonds: [['C1', 'C2', 'd'], ['C1', 'a', 's'], ['C1', 'b', 's'], ['C2', 'c', 's'], ['C2', 'd', 's']] }, { w: 420, h: 210, s: 60, label: 'E/Z 判斷' });
+    const res = !hiL || !hiR ? '無幾何異構' : hiL === hiR ? 'Z' : 'E';
+    $('#ezK', el).innerHTML = card('l', '左邊碳的優先基', hiL ? (hiL === 'up' ? A[0] : B[0]) : '兩者相同') + card('r', '右邊碳的優先基', hiR ? (hiR === 'up' ? C[0] : D[0]) : '兩者相同') + card('z', '組態', res);
+    $('#ezN', el).innerHTML = !hiL || !hiR ? '雙鍵任一端接了兩個相同的基團，就沒有 E/Z（也沒有 cis/trans）異構物。'
+      : `每個雙鍵碳上，比較兩個取代基的優先順序（CIP 規則：先比直接相連原子的原子序，相同時再比下一層的原子：${[A, B, C, D].map(g => `${g[0]} ${g[2]}`).join('；')}）。圈起來的是高優先基：兩個高優先基在<b>同側為 Z</b>（zusammen），<b>對側為 E</b>（entgegen）。E/Z 和 cis/trans 不一定相同：cis/trans 只看兩個相同的基團。`;
+  }
+  [['A', 'a'], ['B', 'b'], ['C', 'c'], ['D', 'd']].forEach(([i, k]) => { $(`#ez${i}`, el).onchange = e => { st[k] = +e.target.value; draw(); }; });
+  draw();
+  return { set(s) { Object.assign(st, s); [['A', 'a'], ['B', 'b'], ['C', 'c'], ['D', 'd']].forEach(([i, k]) => { $(`#ez${i}`, el).value = st[k]; }); draw(); } };
+};
+
+/* ===== 3. 雙環化合物：三條橋 ===== */
+const BIC = { nb: ['降冰片烷', [2, 2, 1]], bco: ['雙環[2.2.2]辛烷', [2, 2, 2]], b330: ['雙環[3.3.0]辛烷', [3, 3, 0]], dec: ['十氫萘', [4, 4, 0]], b311: ['雙環[3.1.1]庚烷', [3, 1, 1]] };
+W.bicyclo = el => {
+  let cur = 'nb';
+  el.innerHTML = `${seg('bcS', Object.entries(BIC).map(([k, v]) => [k, v[0]]), cur)}<div id="bcG"></div><p class="eq" id="bcF"></p><p class="note">兩個環共用兩個以上的碳時，被共用的兩端稱為<b>橋頭碳</b>。三條連接橋頭碳的「橋」各有幾個碳，由大到小寫在方括號裡，總碳數 = 三條橋的碳數 + 2（兩個橋頭碳），字根依總碳數命名。橋上碳數為 0 表示兩個橋頭碳直接相連（兩環共用一個邊）。</p>`;
+  const COL = ['#2F3B99', '#B5326C', '#23704A'];
+  function draw() {
+    const [nm, br] = BIC[cur], L = [90, 145], R = [430, 145];
+    const hd = `<circle cx="${L[0]}" cy="${L[1]}" r="11" style="fill:var(--bg);stroke:var(--ink);stroke-width:2"/><circle cx="${R[0]}" cy="${R[1]}" r="11" style="fill:var(--bg);stroke:var(--ink);stroke-width:2"/><text class="tk" x="${L[0]}" y="${L[1] + 32}" text-anchor="middle">橋頭碳</text><text class="tk" x="${R[0]}" y="${R[1] + 32}" text-anchor="middle">橋頭碳</text>`;
+    let s = '';
+    br.forEach((n, j) => { const yOff = [-95, 95, 0][j]; if (n === 0) { s += `<line x1="${L[0]}" y1="${L[1]}" x2="${R[0]}" y2="${R[1]}" style="stroke:${COL[j]};stroke-width:3"/><text class="tk" x="260" y="${L[1] - 10}" text-anchor="middle" style="fill:${COL[j]}">直接相連（0 個碳）</text>`; return; }
+      const pts = Array.from({ length: n }, (_, k) => [L[0] + (R[0] - L[0]) * (k + 1) / (n + 1), L[1] + yOff * Math.sin(Math.PI * (k + 1) / (n + 1)) * (j === 2 ? 0 : 1)]);
+      s += `<path d="${path([L, ...pts, R])}" fill="none" style="stroke:${COL[j]};stroke-width:3"/>` + pts.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="8" style="fill:${COL[j]}"/>`).join('') + `<text class="tk" x="260" y="${L[1] + yOff + (j === 0 ? -14 : j === 1 ? 26 : -16)}" text-anchor="middle" style="fill:${COL[j]}">${n} 個碳</text>`; });
+    $('#bcG', el).innerHTML = `<svg class="en" style="max-width:560px;margin:auto" viewBox="40 20 440 260" role="img" aria-label="雙環結構">${s}${hd}</svg>`;
+    const tot = br.reduce((a, b) => a + b, 0) + 2, root = ['', '', '', '', '', '', '', 'heptane', 'octane', 'nonane', 'decane'][tot];
+    $('#bcF', el).innerHTML = `${nm}：bicyclo[${br.join('.')}]${root}　（${br.join(' + ')} + 2 = ${tot} 個碳）`;
+    pressSeg(el, 'bcS', cur);
+  }
+  bindSeg(el, 'bcS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.c || cur; draw(); } };
+};
+
+/* ===== 4. 官能基的命名優先順序 ===== */
+const SUFX = [['羧酸', '-oic acid', 'carboxy-', 'CH₃CH₂COOH propanoic acid'], ['酯', '-oate', '—', 'CH₃COOCH₂CH₃ ethyl acetate（乙酸乙酯）'], ['醯胺', '-amide', 'carbamoyl-', 'CH₃CONH₂ ethanamide'], ['腈', '-nitrile', 'cyano-', 'CH₃CN ethanenitrile'], ['醛', '-al', 'oxo-／formyl-', 'CH₃CH₂CHO propanal'], ['酮', '-one', 'oxo-', 'CH₃COCH₂CH₃ butan-2-one'], ['醇', '-ol', 'hydroxy-', '(CH₃)₂CHCH₂CH₂OH 3-methylbutan-1-ol'], ['胺', '-amine', 'amino-', 'CH₃CH₂NH₂ ethanamine'], ['烯、炔', '-ene、-yne', '—', 'HC≡C–CH=CH–CH₃ pent-3-en-1-yne'], ['鹵素、烷基', '（只當字首）', 'chloro-、methyl-', 'CH₃CHClCH₃ 2-chloropropane']];
+W.suffix = el => {
+  let cur = 6;
+  el.innerHTML = `<div class="bars pk sfx" id="sxB"></div><div class="cards" id="sxK"></div><p class="note">分子中有好幾個官能基時，優先順序最高的當<b>字尾</b>，主鏈要包含它並給它最小的編號，其他官能基改用<b>字首</b>。烯、炔用字尾 -ene、-yne 插在字根中；同時有雙鍵和參鍵時，給多重鍵整組最小編號，若相同則雙鍵優先。酯的名稱是「醇的烷基 + 酸的 -oate」，例如 CH₃CH₂COOCH₃ 是 methyl propanoate。</p>`;
+  function draw() {
+    $('#sxB', el).innerHTML = SUFX.map(([n], i) => `<div class="${i === cur ? 'on' : ''}" data-i="${i}" role="button"><span>${i + 1}. ${n}</span><i class="ba" style="width:${100 - i * 9}%"></i><b></b></div>`).join('');
+    const [n, sx, px, ex] = SUFX[cur];
+    $('#sxK', el).innerHTML = card('s', '當字尾', sx) + card('p', '當字首', px) + card('e', '例子', ex);
+    $$('#sxB [data-i]', el).forEach(d => { d.onclick = () => { cur = +d.dataset.i; draw(); }; });
+  }
+  draw();
+  return { set(s) { cur = s.i ?? cur; draw(); } };
+};
+
+/* ===== 5. 常見烷基：連接點在哪個碳 ===== */
+const ALKYL = {
+  pr: ['propyl', '丙基', [[0.87, 0.5], [1.73, 0], [2.6, 0.5]], [[0, 1], [1, 2], [2, 3]], 1, 'CH₃CH₂CH₂–'],
+  ipr: ['isopropyl', '異丙基', [[0.87, 0.5], [1.73, 0], [0.87, 1.5]], [[0, 1], [1, 2], [1, 3]], 2, '(CH₃)₂CH–，IUPAC 名 1-methylethyl'],
+  bu: ['butyl', '丁基', [[0.87, 0.5], [1.73, 0], [2.6, 0.5], [3.46, 0]], [[0, 1], [1, 2], [2, 3], [3, 4]], 1, 'CH₃CH₂CH₂CH₂–'],
+  sbu: ['sec-butyl', '第二丁基', [[0.87, 0.5], [1.73, 0], [2.6, 0.5], [0.87, 1.5]], [[0, 1], [1, 2], [2, 3], [1, 4]], 2, 'CH₃CH₂CH(CH₃)–，IUPAC 名 1-methylpropyl'],
+  ibu: ['isobutyl', '異丁基', [[0.87, 0.5], [1.73, 0], [2.6, 0.5], [1.73, -1]], [[0, 1], [1, 2], [2, 3], [2, 4]], 1, '(CH₃)₂CHCH₂–，IUPAC 名 2-methylpropyl'],
+  tbu: ['tert-butyl', '第三丁基', [[1, 0], [1.5, 0.87], [1.5, -0.87], [2, 0]], [[0, 1], [1, 2], [1, 3], [1, 4]], 3, '(CH₃)₃C–，IUPAC 名 1,1-dimethylethyl'],
+};
+W.alkyl = el => {
+  let cur = 'sbu';
+  el.innerHTML = `${seg('akS', Object.entries(ALKYL).map(([k, v]) => [k, v[0]]), cur)}<div id="akG"></div><div class="cards" id="akK"></div><p class="note">連接點（接到主鏈的碳）用色塊標出。sec-（secondary）表示連接碳是二級碳，tert-（tertiary）表示三級碳。排字母順序時，<b>sec-、tert- 不算</b>（sec-butyl 排在 b），<b>iso- 要算</b>（isopropyl 排在 i）。結構更複雜的取代基，從連接碳編為 1 號，名稱放在括號裡，例如 (1,1,3-trimethylbutyl)。</p>`;
+  function draw() {
+    const [en, zh, pts, bd, deg, f] = ALKYL[cur], atoms = { R: { x: 0, y: 0, t: '主鏈' } };
+    pts.forEach(([x, y], i) => { atoms['c' + i] = { x: x - 1.6, y, t: '', halo: i === 0 ? 0.32 : 0 }; });
+    atoms.R.x = -1.6 - 0.9;
+    const bonds = bd.map(([a, b]) => [a ? 'c' + (a - 1) : 'R', 'c' + (b - 1), 's']);
+    $('#akG', el).innerHTML = MOL.svg({ atoms, bonds }, { w: 420, h: 190, s: 50, cx: 250, label: en });
+    $('#akK', el).innerHTML = card('n', '名稱', `${en}（${zh}）`) + card('d', '連接碳', ['', '一級', '二級', '三級'][deg] + '碳') + card('f', '式子', f);
+    pressSeg(el, 'akS', cur);
+  }
+  bindSeg(el, 'akS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.k || cur; draw(); } };
 };
 
 /* ---------- 後中化學：有機基礎（形式電荷、混成、共振、有機酸鹼）的互動圖 ---------- */
