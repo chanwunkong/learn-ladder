@@ -94,3 +94,30 @@ W.hiP = el => {
   el.innerHTML = `<div class="bars pk">${HIP.map(([n, g]) => `<div><span>${n}</span><i class="${g < -30.5 ? 'ba' : g === -30.5 ? 'bha' : 'bha'}" style="width:${100 * -g / 62}%;${g === -30.5 ? 'background:var(--c2)' : g > -30.5 ? 'opacity:.45' : ''}"></i><b class="mono">${g}</b></div>`).join('')}</div><p class="small mut">水解的 ΔG°′（kJ/mol），Lehninger《Principles of Biochemistry》的約略值</p><p class="note">水解放出的自由能比 ATP 多（長條比 ATP 長）的化合物，可以直接把磷酸轉給 ADP 生成 ATP（受質層次磷酸化）。糖解中做這件事的是 <b>1,3-雙磷酸甘油酸</b>與 <b>PEP</b>；葡萄糖-6-磷酸、果糖-6-磷酸放出的能量不夠。氧化還原反應的自由能則用 ΔG = −nFΔE 計算：每轉移 1 mol 電子、電位差 0.1 V，約 −9.6 kJ。</p>`;
   return { set() {} };
 };
+
+/* ===== 5. 20 種胺基酸的側鏈 ===== */
+const AA20 = [
+  ['np', 'Gly', 'G', '甘胺酸', '–H', '唯一沒有掌性的胺基酸'], ['np', 'Ala', 'A', '丙胺酸', '–CH₃', ''], ['np', 'Val', 'V', '纈胺酸', '–CH(CH₃)₂', '必需'], ['np', 'Leu', 'L', '白胺酸', '–CH₂CH(CH₃)₂', '必需'],
+  ['np', 'Ile', 'I', '異白胺酸', '–CH(CH₃)CH₂CH₃', '必需；側鏈也有掌性中心（共 2 個）'], ['np', 'Pro', 'P', '脯胺酸', '–CH₂CH₂CH₂–（接回 N 成環）', '二級胺；茚三酮呈黃色；會打斷 α 螺旋'], ['np', 'Met', 'M', '甲硫胺酸', '–CH₂CH₂SCH₃', '必需；蛋白質合成的起始胺基酸'],
+  ['ar', 'Phe', 'F', '苯丙胺酸', '–CH₂C₆H₅', '必需'], ['ar', 'Tyr', 'Y', '酪胺酸', '–CH₂C₆H₄OH（對位酚）', '由苯丙胺酸合成'], ['ar', 'Trp', 'W', '色胺酸', '–CH₂–吲哚（接在吲哚 C3）', '必需；血清素的前驅物'],
+  ['po', 'Ser', 'S', '絲胺酸', '–CH₂OH', ''], ['po', 'Thr', 'T', '蘇胺酸', '–CH(OH)CH₃', '必需；側鏈也有掌性中心'], ['po', 'Cys', 'C', '半胱胺酸', '–CH₂SH', '形成雙硫鍵；L-半胱胺酸是 R'], ['po', 'Asn', 'N', '天門冬醯胺', '–CH₂CONH₂', ''], ['po', 'Gln', 'Q', '麩醯胺', '–CH₂CH₂CONH₂', ''],
+  ['ac', 'Asp', 'D', '天門冬胺酸', '–CH₂COOH', 'pI 約 2.8'], ['ac', 'Glu', 'E', '麩胺酸', '–CH₂CH₂COOH', 'pI 約 3.2'],
+  ['ba', 'Lys', 'K', '離胺酸', '–(CH₂)₄NH₂', '必需；pI 約 9.7'], ['ba', 'Arg', 'R', '精胺酸', '–(CH₂)₃NHC(=NH)NH₂（胍基）', '最鹼，pI 約 10.8'], ['ba', 'His', 'H', '組胺酸', '–CH₂–咪唑', '必需；側鏈 pKa 約 6，可在生理 pH 附近得失質子'],
+];
+const AAC = { np: '非極性', ar: '芳香族', po: '極性不帶電', ac: '酸性', ba: '鹼性' };
+W.aaside = el => {
+  const st = { c: 'ar', i: 9 };
+  el.innerHTML = `${seg('a2C', Object.entries(AAC), st.c)}<div class="w-row" id="a2L"></div><div class="cards" id="a2K"></div><p class="note">所有胺基酸都是 H₂N–CH(R)–COOH，差別只在側鏈 R。辨認順序：先看 R 有沒有苯環（芳香族）、有沒有 COOH（酸性）或額外的 N（鹼性）、有沒有 OH／SH／醯胺（極性），其餘是非極性。</p>`;
+  function draw() {
+    const L = AA20.map((a, i) => [a, i]).filter(([a]) => a[0] === st.c);
+    if (!L.some(([, i]) => i === st.i)) st.i = L[0][1];
+    $('#a2L', el).innerHTML = L.map(([a, i]) => `<button class="btn sm${i === st.i ? ' pri' : ''}" type="button" data-i="${i}">${a[3]} ${a[1]}</button>`).join('');
+    $$('#a2L [data-i]', el).forEach(b => { b.onclick = () => { st.i = +b.dataset.i; draw(); }; });
+    const [, t3, t1, n, r, w] = AA20[st.i];
+    $('#a2K', el).innerHTML = card('n', '名稱', `${n}（${t3}，${t1}）`) + card('r', '側鏈 R', r) + card('w', '特點', w || '—');
+    pressSeg(el, 'a2C', st.c);
+  }
+  bindSeg(el, 'a2C', v => { st.c = v; draw(); });
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
