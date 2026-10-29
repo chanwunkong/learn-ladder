@@ -540,6 +540,30 @@ electro|1b4x79p	以 5.0 A 電流電解 CuSO₄ 溶液 20 分鐘，析出的銅�
 electro|clzk4	以 4.0 A 電解熔融 MCl 16.0 分鐘得 0.92 g 金屬，M 是？
 electro|2tsmzm	以 Pt 電極電解含酚酞的 Na₂SO₄ 溶液，何者正確？
 electro|7q2qhc	關於鉛蓄電池放電，何者正確？
+electro|vfd3s7	某電池反應轉移 2 mol 電子，電池電位 1.20 V，ΔG° 約為？
+electro|1ezuvoz	2Ag⁺ + Cu → 2Ag + Cu²⁺（E°：Ag⁺/Ag 0.80 V、
+electro|15w7hqi	Zn²⁺/Zn −0.76 V、Ag⁺/Ag +0.80 V，Zn–Ag 電池的
+electro|1lsz3h4	Ce⁴⁺ + e⁻ → Ce³⁺ 的 E° = +1.61 V，Ce⁴⁺ 是？
+electro|2plr0b	某氧化還原反應 n = 2、E° = 0.30 V，25 °C 的平衡常數約為？
+electro|q8a3wr	以電解法把 Cu²⁺ 鍍成 Cu，發生在哪一極？
+electro|64lz89	Al（Al³⁺/Al −1.66 V）與 Ag（Ag⁺/Ag +0.80 V）組
+electro|1347kq3	下列哪一個反應可能在電化學電池的陰極發生？
+electro|gjz4aw	100 mL 0.10 M Fe²⁺ 以 0.10 M Ce⁴⁺ 滴定，加入 5
+electro|tjaiyq	2Ag⁺ + Ni → 2Ag + Ni²⁺（Ag⁺/Ag 0.80 V、Ni²
+electro|w88jzr	Zn（−0.76 V）、Cu（+0.34 V）、Ag（+0.80 V）、Au（+
+electro|161vnjr	在酸性溶液中平衡 SO₃²⁻ + MnO₄⁻ → SO₄²⁻ + Mn²⁺，最小
+electro|19afei6	Zn–Cu 電池放電時，何者正確？
+electro|14ivfra	下列反應何者不是氧化還原反應？
+electro|1al4h13	K₂Cr₂O₇ 與 HCl 反應生成 KCl、CrCl₃、Cl₂ 與 H₂O，最
+electro|11hbww9	鎳鎘電池每個電池 E° = 1.30 V、轉移 2 個電子，ΔG° 約為？
+electro|14qw0zi	Fe²⁺/Fe −0.44 V、Fe³⁺/Fe²⁺ +0.76 V，Fe³⁺ +
+electro|l4h3ak	甲醇燃料電池 CH₃OH + 1.5O₂ → CO₂ + 2H₂O，E° = 1
+electro|1xxfid7	下列何者最不可能當氧化劑？
+electro|1qghfxf	下列鹵素何者不能用化學氧化劑由其 NaX 製得？
+electro|5mics9	已知 X + YO → XO + Y、Z + XO → ZO + X，哪一種氧化
+electro|pj591j	Cu 溶於稀硝酸生成 NO（NO₃⁻/NO 0.96 V、Cu²⁺/Cu 0.3
+electro|1plkkem	Zn | Zn²⁺(1 M) || Cu²⁺(1 M) | Cu 電池，下列何者
+electro|sdkfro	Cr(s) + 3Fe³⁺ → Cr³⁺ + 3Fe²⁺ 的標準電位為？（Cr³
 equilibrium|fjrow0	反應達到化學平衡時，下列敘述何者正確？
 equilibrium|etq6pg	CaCO₃(s) ⇌ CaO(s) + CO₂(g) 的平衡常數表示式為何？
 equilibrium|1dnze8x	N₂O₄ ⇌ 2NO₂ 的 K = 4.6 × 10⁻³。若 [N₂O₄] = 
@@ -820,6 +844,16 @@ phase|dergb8	銅為面心立方，晶胞邊長 3.61 Å，銅原子半徑約為�
 phase|rxz9ir	某液體在 300 K 的蒸氣壓為 76.0 mmHg，正常沸點為 350 K，莫
 phase|q8mfsd	某晶胞中，A 原子在 8 個角落、B 原子在體心、O 原子在 6 個面心，化學式
 phase|1055lzf	體心立方金屬的原子半徑 r 與晶胞邊長 a 的關係是？
+phase|f2sxxp	硼中子捕獲治療（BNCT）利用 α 粒子殺死癌細胞，α 粒子最重要的特性是？
+phase|4xcmqg	β⁺ 衰變放出的粒子是？
+phase|fhq9w	¹⁴C 的半衰期為 5730 年，某樣本的 ¹⁴C 剩下原來的 1/8，年代約為
+phase|mnx6nf	β⁻ 衰變放出的 β 粒子是？
+phase|1d1ffhz	⁸⁷Rb 的半衰期為 4.9 × 10¹⁰ 年，某樣品每小時衰變 7000 次，
+phase|1wlo006	α 粒子、β 粒子、質子、中子中質量最大的是？
+phase|2ljzb0	現今 ²³⁸U : ²³⁵U = 99.28 : 0.72，半衰期分別為 4.5
+phase|wik7vh	⁶⁰Co 的半衰期為 5.27 年，8.0 g 衰變到剩 0.50 g 約需多少
+phase|xumrg0	¹³¹I 的半衰期為 8 天，24 天後剩 1.5 g，原本約有多少克？
+phase|1cb2rrb	⁵⁹Co 捕獲一個中子後得到？
 radpoly|owa0n6	三級碳自由基比一級碳自由基穩定，主要原因是？
 radpoly|118dtpn	在連鎖反應中，哪一個步驟讓自由基數目減少？
 radpoly|ctm7po	丙烷氯化，1-氯丙烷與 2-氯丙烷的比例約為？
@@ -1003,6 +1037,33 @@ stoich|1yyh3ii	戊烷與己烷等莫耳混合（25 °C 蒸氣壓 511 與 150 tor
 stoich|ahtxrc	O₂ 在 25 °C、1 atm 下的溶解度為 1.3 × 10⁻³ mol/L
 stoich|16hlvpk	濃度均為 0.1 M 時，下列何者的離子強度最大？
 stoich|c3ayql	下列何者是膠體？
+stoich|1berux4	關於離子的水合能，何者正確？
+stoich|hps1yw	甲杯 18 g 葡萄糖溶於 50 g 水、乙杯 5 g 非揮發性溶質 X 溶於 
+stoich|zes4ol	打開汽水時冒出氣泡，主要原因是？
+stoich|1i4zixe	在製劑中加入甘油防止低溫結冰，利用的是哪一種依數性質？
+stoich|tx05w1	92 g 甘油（C₃H₈O₃，1.0 mol）溶於 180 g 水，25 °C 
+stoich|1kbe93o	0.010 M MgCl₂ 溶液在 25 °C 的滲透壓為 0.660 atm，
+stoich|yvbmzv	O₂ 在水中的亨利常數 1.3 × 10⁻³ mol/(L·atm)，分壓 0.
+stoich|veifr2	要使 200 g 苯（Kb = 2.53 °C/m）的沸點上升 1.00 °C，
+stoich|dcc6lx	25 °C 純水蒸氣壓 23.8 torr，要在 250 g 水中加入多少克葡萄
+stoich|1rfcjfy	3.0 g 某物溶於 50 g 水，凝固點下降 0.62 °C（Kf = 1.8
+stoich|rly6w0	某聚合物 2.0 g 溶成 100 mL 溶液，27 °C 時滲透壓 0.023
+stoich|1jx8uxa	20 °C、1 atm 下 1 體積水可溶解 0.88 體積 CO₂，亨利常數約
+stoich|14y450a	葡萄糖溶液（密度 1.03 g/mL）在 25 °C 的滲透壓為 12.2 at
+stoich|1i9jvwi	2.40 g 某物溶於 80.0 g 水，凝固點為 −0.310 °C（Kf =
+stoich|scwbht	2.00 g 蛋白質配成 100 mL 溶液，25 °C 的滲透壓為 7.6 t
+stoich|1fc2h8p	10%（重量）葡萄糖水溶液的重量莫耳濃度與凝固點約為？
+stoich|1eybhah	葡萄糖與 NaCl 莫耳比 1 : 1 的混合物 23.85 g 溶於 200 
+stoich|1pysf25	下列水溶液何者凝固點下降最多？
+stoich|1rfocjz	50 ppm 的 NaF 水溶液相當於？
+stoich|p3cnj5	N₂ 在水中的亨利常數 6.8 × 10⁻⁴ mol/(L·atm)，分壓 0.
+stoich|1fmz9rx	25 °C 時 0.0050 M CaCl₂ 溶液的滲透壓約為？
+stoich|9uci5a	下列何者沸點最低？
+stoich|y35if8	NaOH（40 g/mol）溶液：甲 1.0 M（密度 1.05）、乙 1.0 
+stoich|18wo8c9	下列水溶液何者凝固點最低？
+stoich|2z6enw	下列 0.3 m 水溶液，凝固點最低的是？
+stoich|4r3det	苯（750 torr）與甲苯（300 torr）的溶液，蒸氣中苯的莫耳分率為 0
+stoich|1h9gmne	各 0.010 mol 溶於 1 L 水：K₃[Fe(CN)₆]、CaCl₂、[
 thermo|11edsn2	已知 C(s) + ½O₂ → CO，ΔH = −110.5 kJ；C(s) +
 thermo|pd8r8x	下列哪一個過程的 ΔS 為負？
 thermo|k32gxe	ΔH > 0 且 ΔS > 0 的反應，何時自發？
