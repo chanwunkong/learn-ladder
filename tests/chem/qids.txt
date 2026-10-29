@@ -1064,6 +1064,40 @@ stoich|18wo8c9	下列水溶液何者凝固點最低？
 stoich|2z6enw	下列 0.3 m 水溶液，凝固點最低的是？
 stoich|4r3det	苯（750 torr）與甲苯（300 torr）的溶液，蒸氣中苯的莫耳分率為 0
 stoich|1h9gmne	各 0.010 mol 溶於 1 L 水：K₃[Fe(CN)₆]、CaCl₂、[
+stoich|1nv15c1	FeCr₂O₄ + K₂CO₃ + O₂ → K₂CrO₄ + Fe₂O₃ + 
+stoich|59tweu	MnO₂ + 4HCl → MnCl₂ + Cl₂ + 2H₂O，0.50 mo
+stoich|15atdxo	胃中有 50 mL 0.20 M HCl，一錠制酸劑含 400 mg CaCO₃
+stoich|1spph1	1.950 g 某二價金屬硫化物 MS 在空氣中焙燒成 1.628 g 氧化物 
+stoich|8ot42r	C₃H₈ + O₂ → CO₂ + H₂O 以最小整數平衡後，係數總和為？
+stoich|h8zswn	有效數字的乘除運算，結果應保留？
+stoich|1w4mwpv	25 g CaCO₃ 完全分解，理論上可得多少克 CaO？
+stoich|1r70bf0	一錠含 0.75 g CaCO₃，可以中和多少莫耳 HCl？
+stoich|y0v0qf	等質量的乙烯與環己烷完全燃燒，何者正確？
+stoich|fq7bqh	4Ag + 2H₂S + O₂ → 2Ag₂S + 2H₂O，21.6 g Ag
+stoich|b42miv	固體藥材中鉛含量 10 ppm，相當於？
+stoich|1miz9bj	10 mL 某烴 CₓHᵧ 與 80 mL O₂ 完全燃燒後回到常溫（水為液體）
+stoich|8gjcat	2.0 g 礦石中的 Fe₂O₃ 溶解並全部還原成 Fe²⁺，需 0.020 M
+stoich|1fpypv5	5.0 L 密閉容器中 1.0 mol 丁烷完全燃燒費時 20 s，CO₂ 的平
+stoich|bhcnaq	0.500 g 某激素溶於 10.0 g 苯（Kf = 5.12 °C/m），凝
+stoich|gjao16	每排放 1 m³ CO₂（25 °C、1 atm，1 mol = 24.5 L）
+stoich|m1nok5	16.0 g NH₄NO₃（80 g/mol）配成 250 mL 溶液 A；25
+stoich|33qkb6	4.86 g Mg 與 100 mL 3.0 M HCl 反應，產生多少克 H₂
+stoich|1sd95z7	某氣體在 0 °C、1 atm 的密度為 1.25 g/L，含碳 85.7%（其
+stoich|19m3uot	KCl 與 NaCl 混合物中 Cl 含量為 50.0%，NaCl 的重量百分比
+stoich|5sd1ph	要從體積百分比 50% 的酒精水溶液取出 1.0 mol 乙醇（乙醇密度 0.7
+stoich|1c9h9l7	某化合物含 N 30.4%、O 69.6%，分子量約 92，分子式為？
+stoich|8y8u7o	64.0 g 萘（128 g/mol）溶於 500 g 苯（凝固點 5.50 °
+stoich|1xl7j9f	某化合物由 X 與 H 組成，X 佔質量 87.5%，H 原子數是 X 的 4 
+stoich|1rg2sp6	某化合物含 C 40.0%、H 6.7%、O 53.3%，0.10 mol 重 
+stoich|1frvepl	銅的原子量 63.55，由 ⁶³Cu 與 ⁶⁵Cu 組成，兩者比例約為？
+stoich|1kgvbf8	20.0 g CH₄ 與 C₂H₄ 的混合物完全燃燒得 59.7 g CO₂，C
+stoich|2hndq	同溫同壓下 6.0 L H₂ 與足量 N₂ 完全反應，生成多少公升 NH₃？
+stoich|vb66f7	5.0 g CaCO₃ 與 SiO₂ 的混合物與過量鹽酸反應，產生 1.32 g
+stoich|1cingff	CO 與 CO₂ 的混合物中碳的質量分率為 30%，CO₂ 的質量分率約為？
+stoich|13td5fb	氯的平均原子量是 35.45，隨機拿起一個氯原子，它的質量恰為 35.45 的機
+stoich|15t423i	2H₂S + SO₂ → 3S + 2H₂O，6.8 g H₂S 與 9.6 g
+stoich|748ool	15.27 與 2.1 相加、相乘時，結果分別有幾位有效數字？
+stoich|1p3omw6	4NH₃ + 5O₂ → 4NO + 6H₂O，生成 2.0 mol NO 需要
 thermo|11edsn2	已知 C(s) + ½O₂ → CO，ΔH = −110.5 kJ；C(s) +
 thermo|pd8r8x	下列哪一個過程的 ΔS 為負？
 thermo|k32gxe	ΔH > 0 且 ΔS > 0 的反應，何時自發？
@@ -1090,6 +1124,49 @@ thermo|g518o3	某弱酸解離的 ΔH = −8.0 kJ/mol、ΔS = −70 J/(mol·
 thermo|j5waic	關於 ΔG° 與平衡常數，何者正確？
 thermo|17ou1mh	以 ln K 對 1/T 作圖得到斜率為正的直線，此反應為？
 thermo|40pjco	一個人休息時以約 100 W 的速率向環境放熱，一天放出的熱約為？
+thermo|r0j0rz	1 atm、100 °C 時水與水蒸氣處於平衡，何者正確？
+thermo|i2qkaw	C₂H₄ 的燃燒熱 −1411 kJ/mol，CO₂ −394、H₂O(l) −
+thermo|7s04yj	下列何者不是狀態函數？
+thermo|1czbps9	水結冰 H₂O(l) → H₂O(s) 時，系統的熵變化為？
+thermo|1ez9bzc	下列熱力學敘述何者正確？
+thermo|1d85yw7	ZnS(s) → Zn(s) + S(s) 的 ΔG° = +201.3 kJ，
+thermo|hwmyuj	定溫定壓下，下列反應何者是「環境對系統做功」？
+thermo|2ks7ht	丙烷燃燒熱 −2220 kJ/mol（生成 H₂O(l)），CO₂ −393.5
+thermo|y163uc	定溫定壓下，下列哪一組不是自發反應？
+thermo|qc99bx	甲醇 CH₃OH(l) 完全燃燒生成 CO₂ 與 H₂O(g)，ΔH° 為？（Δ
+thermo|1wh4vpv	在任何溫度下都不會自發的反應是？
+thermo|3q5zjb	2C₆H₆(l) + 15O₂ → 12CO₂ + 6H₂O(l) 的 ΔH° 
+thermo|h9wxbn	CO₂ 的 ΔH°f = −393.5 kJ/mol，CO 的燃燒熱為 −283
+thermo|1n5752a	1 mol 氣體由狀態 A 膨脹到狀態 B，下列何者與路徑有關？
+thermo|x24cs1	兩個原子在標準狀態下自發結合成穩定的雙原子分子，ΔH°、ΔS°、ΔG° 的符號依
+thermo|cjn1ss	2NO₂(g) → N₂O₄(g) 的 ΔH < 0、ΔS < 0，何者正確？
+thermo|dim99t	2.00 mol 單原子理想氣體在定壓下由 300 K 加熱到 600 K，熵變
+thermo|hd9bqs	50 mL 0.20 M HCl 與 30 mL 0.40 M NaOH 混合（
+thermo|16gdigb	某反應 ΔH° = +60 kJ/mol、ΔS° = +150 J/mol·K，
+thermo|b0px13	CH₄ + Cl₂ → CH₃Cl + HCl，鍵能 C–H 413、Cl–Cl
+thermo|m68cqo	A(s) → A(l) 的 ΔH° = 6.0 kJ/mol、ΔS° = 22.
+thermo|1poedvd	CH₄ + 2O₂ → CO₂ + 2H₂O(g)，鍵能 C–H 413、O=O
+thermo|1cuuczd	2H₂(g) + O₂(g) → 2H₂O(l) 的熵變化最可能是？
+thermo|19tgd5j	H₂ + Cl₂ → 2HCl 的 ΔH = −184 kJ，H–H 鍵能 43
+thermo|181ql9	甲醇 ΔH°f：液態 −238.7、氣態 −201.2 kJ/mol；S°：液態
+thermo|6x6vxl	2NO₂(g) → N₂O₄(g)（ΔH°f：NO₂ 33.2、N₂O₄ 9.2
+thermo|vvice3	某反應 ΔH° = +80 kJ、ΔS° = −120 J/K，何者正確？
+thermo|g7odev	水的解離常數 Kw 隨溫度升高而變大，H₂O → H⁺ + OH⁻ 的 ΔH° 
+thermo|v0pi7u	100 g 某金屬加熱到 100.0 °C 後放入 200 g、20.0 °C 
+thermo|1ds7jji	CaO 的 ΔH°f = −635.1、H₂O(l) −285.8 kJ/mol
+thermo|18fw828	Br₂(l) → Br₂(g) 在 25 °C 的 ΔG° = +3.1 kJ/
+thermo|1czmtnr	理想氣體等溫壓縮時，何者不變？
+thermo|r6xapy	圓筒中燃料燃燒放出 506.5 J，全部用來在 1 atm 下推動活塞，原始體積
+thermo|d3klqw	下列關於自由能的敘述何者正確？
+thermo|1grexkb	H₂O(l) 與 H₂O(g) 的 ΔH°f 分別為 −285.8 與 −241
+thermo|1snsnag	下列變化何者 ΔH 與 ΔS 皆大於零？
+thermo|uw3a8	A₂ + B₂ → 2AB 的 ΔH = −300 kJ，A–A 鍵能是 A–B
+thermo|egrdv5	2Cu + ½O₂ → Cu₂O 的 ΔH = −169 kJ；Cu₂O + ½
+thermo|f55fz9	各 100 g、95 °C 的金屬放入 100 mL、25 °C 的水中，比熱最
+thermo|k9flo3	某反應在 25 °C 的 ΔH° = +92 kJ、ΔG° = +33 kJ，Δ
+thermo|2qmyxw	燃燒熱：C₂H₂ −1300、H₂ −286、C₂H₆ −1560 kJ/mol
+thermo|dl1ucu	定溫定壓下的自發過程，下列哪些一定成立？ I. ΔS(系統) + ΔS(環境) 
+thermo|j6cvme	CaSO₄(s) → Ca²⁺(aq) + SO₄²⁻(aq) 的 ΔS° 為負
 vsepr|g0o2ds	下列哪一個鍵的極性最大？
 vsepr|1yaa14x	NH₃ 的分子形狀為何？
 vsepr|10rw2ah	XeF₄ 的形狀為何？
