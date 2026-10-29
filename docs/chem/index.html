@@ -466,8 +466,9 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 @media (max-width: 860px) {
   .layout { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .toc-btn { display: inline-flex; }
-  #tocBox { display: none; position: fixed; inset: 56px 0 0 0; z-index: 30; background: var(--bg); max-height: none; padding: 10px 16px 40px; }
+  #tocBox { display: none; position: static; max-height: none; overflow: visible; padding: 10px 0 40px; }
   #tocBox.open { display: block; }
+  #tocBox.open + main { display: none; }
   .mech { grid-template-columns: minmax(0, 1fr); }
   .tgrid { grid-template-columns: minmax(0, 1fr); }
   .tgrid .beaker { max-width: 240px; margin: 0 auto; width: 100%; }
@@ -2170,29 +2171,29 @@ CH.push({
   sections: [
     { h: '烷類的名字怎麼組成？', w: 'namealk', body: `
 <p>名稱由三部分組成：<b>取代基</b>（字首）+ <b>主鏈</b>的字根 + 官能基字尾。碳數的字根是 meth-（1）、eth-（2）、prop-（3）、but-（4）、pent-（5）、hex-（6）、hept-（7）、oct-（8）、non-（9）、dec-（10），中文依序是甲、乙、丙、丁、戊、己、庚、辛、壬、癸。</p>
-<p>上圖切換編號方向，比較兩個方向的位置數組。命名步驟：</p>
+<p>下圖切換編號方向，比較兩個方向的位置數組。命名步驟：</p>
 <ol><li><b>選主鏈</b>：最長的連續碳鏈。有兩條一樣長時，選取代基較多的那條。主鏈不一定畫成一直線，要沿著轉折去數。</li>
 <li><b>編號</b>：從靠近取代基的一端開始。兩個方向逐一比較位置數字，第一個不同的數字較小的方向正確（2,2,4 勝過 2,4,4）。若兩個方向完全相同，讓英文字母排在前面的取代基拿較小的號碼（3-ethyl-4-methylhexane）。</li>
 <li><b>排序</b>：取代基依英文字母順序寫，數字和名稱之間用連字號，數字之間用逗號。相同的取代基合併成 di-、tri-、tetra-，這些倍數字首<b>不算進字母排序</b>（ethyl 排在 dimethyl 前面）。</li></ol>
 <p>鹵素和烷基一樣是字首（fluoro、chloro、bromo、iodo），一起參加編號與排序：2-chloro-3-methylpentane。</p>` },
     { h: '取代基的名字有哪些？', w: 'alkyl', body: `
-<p>取代基是主鏈上的分支，把烷的字尾 -ane 換成 -yl：CH₃– 是 methyl，CH₃CH₂– 是 ethyl。三個碳以上的取代基，連接點不同就有不同的名字，切換上圖看連接碳的位置。</p>
+<p>取代基是主鏈上的分支，把烷的字尾 -ane 換成 -yl：CH₃– 是 methyl，CH₃CH₂– 是 ethyl。三個碳以上的取代基，連接點不同就有不同的名字，切換下圖看連接碳的位置。</p>
 <p>連接碳是幾級碳，決定了 sec-、tert- 字首：<b>二級碳</b>連接的丁基是 sec-butyl，<b>三級碳</b>連接的是 tert-butyl。iso- 指末端有 (CH₃)₂CH– 的分支。</p>
 <p>如果分支本身還有分支，就把分支當成一條小鏈，從連接碳編為 1 號，整個名稱放進括號：–C(CH₃)₂CH₂CH(CH₃)₂ 的最長鏈是 4 個碳，1 號碳上有兩個甲基、3 號碳上有一個，名稱是 (1,1,3-trimethylbutyl)。</p>` },
     { h: '環狀化合物怎麼命名？', w: 'bicyclo', body: `
 <p><b>單環</b>：在字根前加 cyclo-，例如 cyclohexane。環上只有一個取代基時不必編號（methylcyclohexane）；有兩個以上時，讓位置數組最小，若平手則字母較前的取代基為 1 號：1-ethyl-3-methylcyclohexane。環與鏈相連時，碳數較多的當主體：環己烷接辛基叫 cyclohexyloctane（1-cyclohexyloctane），接丁基則叫 butylcyclohexane。</p>
 <p><b>環烯</b>：雙鍵的兩個碳一定是 1、2 號，再讓取代基拿最小的號碼：異丙基接在雙鍵旁的飽和碳上，名稱是 3-isopropylcyclopentene。兩個雙鍵隔一個單鍵的六員環是 1,3-cyclohexadiene，隔兩個的是 1,4-cyclohexadiene。</p>
-<p><b>雙環</b>：兩個環共用的碳稱為<b>橋頭碳</b>，上圖切換幾個例子。名稱是 bicyclo[a.b.c]＋總碳數的字根，a、b、c 是三條橋上的碳數，由大到小排列。</p>
+<p><b>雙環</b>：兩個環共用的碳稱為<b>橋頭碳</b>，下圖切換幾個例子。名稱是 bicyclo[a.b.c]＋總碳數的字根，a、b、c 是三條橋上的碳數，由大到小排列。</p>
 <p>要數一個分子有<b>幾個環</b>，看骨架上的鍵數與原子數：環數 = 鍵數 − 原子數 + 1（只算構成骨架的鍵和原子，不算 H）。降冰片烷有 7 個碳、8 個 C–C 鍵，所以是 2 個環；金剛烷 10 個碳、12 個 C–C 鍵，是 3 個環。</p>` },
     { h: '有好幾個官能基時，誰當字尾？', w: 'suffix', body: `
-<p>點選上圖的官能基，看它當字尾與當字首時的寫法。規則是：</p>
+<p>點選下圖的官能基，看它當字尾與當字首時的寫法。規則是：</p>
 <ol><li>優先順序最高的官能基當<b>字尾</b>，主鏈必須包含它，並且給它最小的編號。</li>
 <li>其他官能基改成字首，和烷基一起排字母順序：HOCH₂CH₂CHO 是 3-hydroxypropanal。</li>
 <li>字尾前要寫出位置：CH₃CH(OH)CH₃ 是 propan-2-ol（舊寫法 2-propanol）。(CH₃)₂CHCH₂CH₂OH 先讓 OH 拿 1 號，名稱是 3-methylbutan-1-ol（舊寫法 3-methyl-1-butanol），俗名 isopentyl alcohol。</li></ol>
 <p><b>烯與炔</b>：雙鍵用 -ene、參鍵用 -yne，主鏈要盡量包含多重鍵。同時有兩者時，讓多重鍵整組拿最小的編號；若兩個方向一樣，雙鍵優先拿小號。所以 CH₃CH=CH–C≡CH 從參鍵端編號（1、3）勝過從另一端（2、4），名稱是 pent-3-en-1-yne；CH₂=CH–CH₂–C≡CH 兩端都是（1、4），雙鍵拿 1 號：pent-1-en-4-yne。</p>
 <p><b>酯</b>的名稱分兩段：先寫接在 O 上的烷基，再寫酸的部分（-ic acid 改成 -ate）。CH₃COOCH(CH₃)₂ 是 isopropyl acetate（乙酸異丙酯），HCOOCH₂CH₃ 是 ethyl formate（甲酸乙酯），CH₃CH₂COOCH₂CH₃ 是 ethyl propanoate。中文剛好相反：先講酸，再講醇的部分。</p>` },
     { h: '雙鍵的 E 和 Z 怎麼判斷？', w: 'ez', body: `
-<p>雙鍵不能旋轉，所以兩端的基團可以在同側或對側。選擇上圖四個位置的基團，看組態怎麼變。判斷步驟：</p>
+<p>雙鍵不能旋轉，所以兩端的基團可以在同側或對側。選擇下圖四個位置的基團，看組態怎麼變。判斷步驟：</p>
 <ol><li>在雙鍵的每一個碳上，用 <b>CIP 規則</b>比出兩個基團中優先的一個：先比直接相連原子的原子序（Br &gt; Cl &gt; O &gt; C &gt; H）；相同時，往外一層列出各自接的三個原子，由大到小逐一比較，第一個不同的就決定勝負（–CH₂OH 的 (O,H,H) 勝過 –CH(CH₃)₂ 的 (C,C,H)）。雙鍵視為接了兩個相同原子。</li>
 <li>兩個優先基團在同側為 <b>Z</b>，在對側為 <b>E</b>。</li></ol>
 <p>cis/trans 只適用於兩端各有一個相同基團（通常是 H）的情形；E/Z 適用於所有雙鍵。兩者不一定對應：(Z)-2-bromobut-2-ene 的兩個甲基是 trans。</p>
@@ -2578,36 +2579,53 @@ CH.push({
   id: 'stereo', unit: 'o3', title: '構形與立體化學',
   lede: '分子式相同、原子連接方式也相同，只差在空間中的排列，性質卻可能天差地遠：一個是藥、一個沒有藥效甚至有毒。這一章看懂分子的「左右手」和「姿勢」，SN2 的構型反轉、E2 的反式共平面都建立在這裡。',
   sections: [
-    { h: '左手和右手：掌性', w: 'chiral', body: `
+    { h: '分子為什麼會有左右手？', w: 'chiral', body: `
 <p>你的左手和右手互為鏡像，但不管怎麼轉都疊不起來。分子也一樣：如果一個分子和它的鏡像無法重疊，就稱為<b>掌性分子</b>（chiral），它和鏡像是一對<b>鏡像異構物</b>（enantiomers）。</p>
 <p>最常見的原因是<b>掌性中心</b>：一個 sp³ 碳連著<b>四個不同</b>的基團。立體式的畫法：</p>
 <ul><li>實線：在紙面上；<b>楔形</b>（實心三角形）：朝向你；<b>虛楔</b>（斜線）：遠離你。</li></ul>
 <p>比較 2-丁醇（四個基團都不同）和 2-丙醇（有兩個 CH₃）。把鏡像轉過來疊到原分子上：2-丙醇疊得起來，因為它有一個穿過分子的鏡面；2-丁醇疊不起來。</p>
 <p>鏡像異構物的熔點、沸點、溶解度完全相同，差別只在<b>使平面偏極光旋轉的方向相反</b>，以及和其他掌性分子（例如體內的酵素、受體）的作用不同。等量的一對鏡像異構物混合物稱為<b>外消旋</b>混合物，旋光互相抵消。</p>` },
-    { h: 'R 和 S：給左右手取名字', w: 'rs', body: `
+    { h: '怎麼判斷 R 還是 S？', w: 'rs', body: `
 <p>用 Cahn–Ingold–Prelog（CIP）規則命名掌性中心，三個步驟：</p>
 <ol><li><b>排優先順序</b>：看直接連在掌性中心上的原子，<b>原子序大的優先</b>。相同時往下一層，把各自連著的三個原子由大到小排好，從第一個開始比，第一個不同處決定勝負。雙鍵把相連的原子算兩次。</li>
 <li><b>把最低優先（通常是 H）放到遠離你的位置</b>（虛楔）。</li>
 <li>看 1 → 2 → 3 的方向：<b>順時針 = R</b>（rectus，右），<b>逆時針 = S</b>（sinister，左）。</li></ol>
 <p>實用技巧：如果 H 在楔形（朝向你），直接看方向再把答案<b>反過來</b>；任意交換兩個基團，構型就反轉一次。</p>
-<p>注意：R/S 只是命名，和旋光方向（+／−）沒有固定關係，必須用實驗量測。</p>` },
-    { h: '兩個掌性中心：非鏡像異構物與內消旋', w: 'fischer', body: `
+<p>注意：R/S 只是命名，和旋光方向（+／−）沒有固定關係，必須用實驗量測。</p>
+<p>胺基酸與醣類常用 <b>D/L</b>：費雪投影式中，最下面的掌性中心（胺基酸的 α-碳）上 OH 或 NH₂ 在左為 L、在右為 D。天然胺基酸都是 L 型，除了半胱胺酸（CH₂SH 的 S 原子序大，使優先順序改變，是 R）以外都是 S。異白胺酸和蘇胺酸有兩個掌性中心。</p>
+<p>數大分子（膽固醇、前列腺素、藥物）的掌性中心：逐一檢查每個 sp³ 碳，跳過 CH₂、CH₃ 和雙鍵碳；環上的碳只要兩側的環路徑不同就算不同基團。膽固醇有 8 個掌性中心。</p>` },
+    { h: '兩個掌性中心會有幾種異構物？', w: 'fischer', body: `
 <p>有 n 個掌性中心，最多有 2ⁿ 個立體異構物。兩個中心時有四種組合：(R,R)、(S,S)、(R,S)、(S,R)。</p>
 <ul><li>構型<b>全部相反</b>：鏡像異構物，例如 (R,R) 和 (S,S)。</li>
 <li>只有<b>部分相反</b>：<b>非鏡像異構物</b>（diastereomers），例如 (R,R) 和 (R,S)。它們不是鏡像，物理性質不同，可以用一般方法分離。</li>
 <li>如果分子兩半結構相同，(R,S) 可能和自己的鏡像相同：分子內有鏡面，稱為<b>內消旋</b>（meso）化合物，雖然有掌性中心卻沒有光學活性。</li></ul>
 <p>這裡用<b>費雪投影式</b>表示：碳鏈直放，<b>橫線朝向你、直線遠離你</b>。費雪投影式只能在紙面上轉 180°，不能轉 90° 或翻面，否則構型會變。</p>
-<p>切換酒石酸和 2-溴-3-氯丁烷，比較為什麼前者只有 3 個立體異構物、後者有 4 個。</p>` },
-    { h: '構形：單鍵可以轉', w: 'butane', body: `
+<p>切換酒石酸和 2-溴-3-氯丁烷，比較為什麼前者只有 3 個立體異構物、後者有 4 個。</p>
+<p>兩個常考的判斷：</p>
+<ul><li>「有掌性中心就一定是掌性分子」是<b>錯的</b>：內消旋化合物就是反例。判斷分子有沒有掌性，要看它有沒有<b>鏡面或對稱中心</b>；有任一個就不是掌性分子。</li>
+<li>沒有掌性中心也可能是掌性分子：兩端各接兩個不同基團的丙二烯（R₂C=C=CR₂）。丙二烯兩端的 CH₂ 互相垂直，四個 H 不在同一平面。</li></ul>` },
+    { h: '單鍵轉動時，哪個姿勢最穩？', w: 'butane', body: `
 <p>C–C 單鍵可以自由旋轉，旋轉造成的不同空間排列稱為<b>構形</b>（conformation）。構形之間轉換很快，不能分離，這點和需要斷鍵才能互換的<b>構型</b>（configuration，如 R/S）不同。</p>
 <p>用<b>紐曼投影式</b>沿著 C–C 鍵看過去：前面的碳是中心點，後面的碳是圓。</p>
 <ul><li><b>交錯式</b>：前後的鍵錯開，能量低。</li><li><b>重疊式</b>：前後的鍵正對，電子互斥（扭轉張力），能量高。</li></ul>
-<p>丁烷還要考慮兩個甲基的距離：<b>反式</b>（180°）最穩定；<b>間扭式</b>（60°）兩個甲基相鄰，高 3.8 kJ/mol；兩個甲基重疊時最高。上一章 E2 需要 H 和離去基「反式共平面」，指的就是這種 180° 的交錯構形。</p>` },
-    { h: '環己烷的椅式：直立鍵與平伏鍵', w: 'chair', body: `
+<p>丁烷還要考慮兩個甲基的距離：<b>反式</b>（180°）最穩定；<b>間扭式</b>（60°）兩個甲基相鄰，高 3.8 kJ/mol；兩個甲基重疊時最高。上一章 E2 需要 H 和離去基「反式共平面」，指的就是這種 180° 的交錯構形。</p>
+<p>例外：FCH₂CH₂F 最穩定的是<b>間扭式</b>（gauche effect），FCH₂CH₂OH 也是間扭式，因為 OH 和 F 靠近時可以形成分子內氫鍵。</p>` },
+    { h: '環己烷的取代基為什麼偏好平伏鍵？', w: 'chair', body: `
 <p>環己烷不是平的，而是折成<b>椅式</b>：所有鍵角接近 109.5°，而且每個 C–C 鍵都是交錯式，沒有角張力也沒有扭轉張力。</p>
 <p>每個碳有兩個位置：</p>
 <ul><li><b>直立鍵</b>（axial）：和環的軸平行，上下交替。</li><li><b>平伏鍵</b>（equatorial）：大致沿著環的外圍向外伸。</li></ul>
 <p>椅式可以<b>環翻轉</b>，翻轉後所有直立鍵變成平伏鍵、平伏鍵變成直立鍵。取代基在直立鍵時，會和同一側、隔一個碳的兩個直立 H 擠在一起（<b>1,3-雙直立作用</b>），所以大的取代基偏好<b>平伏鍵</b>。基團越大，偏好越明顯：第三丁基幾乎 100% 待在平伏鍵。</p>` },
+    { h: '雙取代環己烷：哪個椅式最穩？有沒有掌性？', w: 'disub', body: `
+<p>兩個取代基時，先決定每個取代基在各個椅式中是直立還是平伏，再比較兩個椅式的能量。切換位置、順反和取代基看看。</p>
+<p>順式（cis）表示兩個取代基在環的同一面，反式（trans）是不同面。由於直立鍵在相鄰碳上上下交替，同一面的兩個鍵在相鄰碳（1,2）上是一個直立一個平伏，在隔一個碳（1,3）上是兩個都直立或兩個都平伏。</p>
+<p>兩個環共用一個邊的<b>十氫萘</b>也一樣：反式十氫萘的兩個環以平伏鍵相接，比順式穩定，而且不能環翻轉；順式十氫萘可以翻轉，但一定有一個鍵是直立的。</p>
+<p>椅式和扭船式的平衡：室溫下 99.99% 是椅式；加熱到 800 °C 時扭船式約 30%，K = 30 ÷ 70 ≈ 0.43。</p>` },
+    { h: '旋光度怎麼量？外消旋混合物怎麼分開？', w: 'ee', body: `
+<p>鏡像異構物唯一的物理差別是旋光方向。旋光計由起偏鏡、樣品管和檢偏鏡組成，量到的旋光度 α 和樣品管長度、濃度成正比，換算成<b>比旋光度</b>：</p>
+<p class="eq">[α] = α ÷ (l × c)　（l 單位 dm，c 單位 g/mL）</p>
+<p>比旋光度還和溫度、光的波長（常用鈉 D 線 589 nm）與溶劑有關。拉動下圖的比例，看混合物的旋光度怎麼變：<b>光學純度 = 觀測比旋光度 ÷ 純物質的比旋光度</b>，等於鏡像過量（ee）。</p>
+<p><b>為什麼會得到外消旋？</b>非掌性的反應物經過平面的中間體（C=O、C=C、碳陽離子）時，試劑從平面兩側（Re 面與 Si 面）進攻的機率相同，得到等量的 R 與 S。例如 NaBH₄ 還原苯乙酮或 H₂ 加成，產物是外消旋混合物。只有掌性的試劑或酵素會偏向一側。</p>
+<p><b>分離（光學離析）</b>：鏡像異構物的沸點、溶解度都一樣，不能直接蒸餾或結晶分離。讓外消旋的酸和一個純的掌性鹼反應，生成兩種<b>非鏡像異構</b>的鹽，它們的溶解度不同，可以結晶分開，再加酸還原回來。非鏡像異構物之間可以用蒸餾、結晶、層析分離。</p>` },
   ],
   quiz: [
     { q: '下列哪一個分子有掌性中心？', o: ['2-丁醇 CH₃CH(OH)CH₂CH₃', '2-丙醇 CH₃CH(OH)CH₃', '乙醇 CH₃CH₂OH', '甘胺酸 H₂NCH₂COOH'], a: 0,
@@ -2624,6 +2642,58 @@ CH.push({
       why: '反式是交錯式，而且兩個甲基離得最遠，沒有扭轉張力也沒有立體擁擠。', show: { w: 'butane', set: { ang: 180 } } },
     { q: '甲基環己烷在室溫下，甲基主要位於？', o: ['平伏鍵（約 95%）', '直立鍵（約 95%）', '兩者各半', '環平面上'], a: 0,
       why: '甲基在直立鍵時有 1,3-雙直立作用，能量高約 7.6 kJ/mol，所以約 95% 的分子處在甲基平伏的構形。', show: { w: 'chair', set: { sub: 'me', axial: true } } },
+    { q: '反式-1,2-二甲基環己烷最穩定的椅式中，兩個甲基在？', o: ['都在平伏鍵', '都在直立鍵', '一個直立、一個平伏', '環平面上'], a: 0,
+      why: '反式 1,2- 的兩個椅式是 (a,a) 與 (e,e)，(e,e) 較穩定。', show: { w: 'disub', set: { pos: 2, cis: 0, g: 'mm' } } },
+    { q: '某樣品含 90% (+)-酒石酸與 10% (−)-酒石酸，光學純度是？', o: ['80%', '90%', '10%', '45%'], a: 0,
+      why: 'ee = 90 − 10 = 80%。', show: { w: 'ee', set: { m: 'tart', x: 90 } } },
+    { q: '天然胺基酸（L 型）的 α-碳大多是哪一種組態？', o: ['S（半胱胺酸例外是 R）', 'R', 'S 與 R 各半', '沒有掌性'], a: 0,
+      why: 'L 對應的是 S，但半胱胺酸的 CH₂SH 優先順序高於 COOH，命名變成 R。' },
+  ],
+  exam: [
+    { src: '仿 義守 115 第 12 題', q: '下列 C₄H₉Br 異構物何者具有掌性？', o: ['2-溴丁烷', '1-溴丁烷', '1-溴-2-甲基丙烷', '2-溴-2-甲基丙烷'], a: 0,
+      why: '2-溴丁烷的 C2 接 H、Br、CH₃、CH₂CH₃。', show: { w: 'chiral', set: { set: 'butanol', rot: true } } },
+    { src: '仿 中國醫 115 第 6 題', q: '關於順式與反式十氫萘，何者正確？', o: ['反式較穩定，兩個環以平伏鍵相接，不能環翻轉', '順式較穩定，因為可以環翻轉', '兩者能量相同', '反式較不穩定，因為有角張力'], a: 0,
+      why: '順式一定有一個環接在直立鍵上，有額外的立體擁擠。' },
+    { src: '仿 中國醫 115 第 11 題', q: '酒石酸 HOOCCH(OH)CH(OH)COOH 的敘述何者正確？', o: ['有 2 個掌性中心，但只有 3 個立體異構物', '有 2 個掌性中心，共 4 個立體異構物', '只有 1 個掌性中心', '所有立體異構物都有光學活性'], a: 0,
+      why: '(R,S) 是內消旋化合物，和 (S,R) 是同一個。', show: { w: 'fischer', set: { mol: 'tart', sides: ['right', 'left'] } } },
+    { src: '仿 義守 115 第 46 題', q: '分離外消旋混合物最適合的方法是？', o: ['和純的掌性試劑反應成非鏡像異構物，再結晶分離', '簡單蒸餾', '酸鹼中和', '改變溫度分餾結晶'], a: 0,
+      why: '鏡像異構物物性相同；非鏡像異構物的溶解度不同。' },
+    { src: '仿 慈濟 113 第 5 題', q: '純 (+)-酒石酸的比旋光度 +12.7°，某混合物為 +6.35°。(+) 異構物佔多少？', o: ['75%', '50%', '25%', '63.5%'], a: 0,
+      why: 'ee = 6.35 ÷ 12.7 = 50%；(+) − (−) = 50 且兩者和為 100，(+) = 75%。', show: { w: 'ee', set: { m: 'tart', x: 75 } } },
+    { src: '仿 義守 109 第 39 題', q: '(+)-酒石酸比旋光度 +12.0°。80% (+) 與 20% (−) 的混合物，比旋光度為？', o: ['+7.2°', '+9.6°', '+4.8°', '+12.0°'], a: 0,
+      why: 'ee = 60%，12.0 × 0.6 = 7.2。', show: { w: 'ee', set: { m: 'tart', x: 80 } } },
+    { src: '仿 慈濟 110 第 32 題', q: '(R)-2-丁醇比旋光度 −13.52°，某 R/S 混合物為 +6.76°。R : S 約為？', o: ['1 : 3', '3 : 1', '1 : 1', '1 : 2'], a: 0,
+      why: '旋光為正，S 過量；ee = 50%，S 75%、R 25%。', show: { w: 'ee', set: { m: 'but', x: 75 } } },
+    { src: '仿 義守 114 第 31 題', q: '下列敘述何者錯誤？', o: ['有掌性碳原子的分子一定是掌性分子', '掌性分子沒有鏡面也沒有對稱中心', '掌性分子有鏡像異構物', '外消旋混合物沒有旋光'], a: 0,
+      why: '內消旋化合物有掌性碳原子，卻不是掌性分子。' },
+    { src: '仿 義守 113 第 11 題', q: '關於立體異構物，何者正確？', o: ['R 與 S 等量的混合物稱為外消旋混合物', '非鏡像異構物的物理性質都相同', '內消旋化合物有光學活性', '鏡像異構物的沸點不同'], a: 0,
+      why: '鏡像異構物物性相同、非鏡像異構物不同；內消旋化合物沒有光學活性。' },
+    { src: '仿 慈濟 111 第 33 題', q: '下列何者具有光學活性？', o: ['trans-1,3-二氯環己烷', 'cis-1,3-二氯環己烷', 'cis-1,4-二氯環己烷', 'trans-1,4-二氯環己烷'], a: 0,
+      why: 'cis-1,3 是內消旋；1,4- 有穿過 C1、C4 的鏡面。', show: { w: 'disub', set: { pos: 3, cis: 0, g: 'mm' } } },
+    { src: '仿 中國醫 108 第 32 題', q: '下列二甲基環己烷在最穩定的椅式中，兩個甲基都在平伏鍵的是？', o: ['cis-1,3-', 'cis-1,2-', 'trans-1,3-', 'cis-1,4-'], a: 0,
+      why: '可以 (e,e) 的是 cis-1,3、trans-1,2、trans-1,4。', show: { w: 'disub', set: { pos: 3, cis: 1, g: 'mm' } } },
+    { src: '仿 義守 109 第 10 題', q: '環己烷在 800 °C 時有 30% 為扭船式。椅式 ⇌ 扭船式的平衡常數約為？', o: ['0.43', '0.30', '2.3', '0.70'], a: 0,
+      why: 'K = 30 ÷ 70。' },
+    { src: '仿 中國醫 111 第 31 題', q: 'FCH₂CH₂OH 最穩定的構形是？', o: ['F 與 OH 為間扭式（60°）', 'F 與 OH 為反式（180°）', 'F 與 OH 重疊（0°）', '各構形能量相同'], a: 0,
+      why: '間扭式時 OH 和 F 可形成分子內氫鍵，FCH₂CH₂F 也偏好間扭式。', show: { w: 'butane', set: { ang: 60 } } },
+    { src: '仿 慈濟 110 第 28 題', q: '下列胺基酸何者有兩個掌性中心？', o: ['異白胺酸', '白胺酸', '纈胺酸', '甘胺酸'], a: 0,
+      why: '異白胺酸側鏈的 CH(CH₃)CH₂CH₃ 也是掌性中心。' },
+    { src: '仿 義守 111 第 35 題', q: '2-丁酮以 NaBH₄ 還原，得到的 2-丁醇是？', o: ['外消旋混合物', '只有 R', '只有 S', '非掌性分子'], a: 0,
+      why: '氫負離子從平面 C=O 的兩面進攻機率相同。' },
+    { src: '仿 慈濟 108 第 27 題', q: '下列分子中，哪一個的四個 H 不在同一平面？', o: ['丙二烯 CH₂=C=CH₂', '乙烯', '環丁二烯', '對二氯苯'], a: 0,
+      why: '丙二烯中央碳的兩個 π 鍵互相垂直，兩端的 CH₂ 也互相垂直。' },
+    { src: '仿 義守 110 第 20 題', q: '下列何者是掌性分子？', o: ['3-甲基己烷', '3-甲基戊烷', 'cis-1,3-二甲基環己烷', '4-甲基環己酮'], a: 0,
+      why: '3-甲基己烷的 C3 接 H、CH₃、乙基、丙基。cis-1,3 是內消旋。', show: { w: 'disub', set: { pos: 3, cis: 1, g: 'mm' } } },
+    { src: '仿 義守 113 第 46 題', q: '下列哪一組理論上可以用蒸餾分離？', o: ['(2R,3R)- 與內消旋-2,3-二溴丁烷', '(R)- 與 (S)-2-丁醇', 'D- 與 L-甘油醛', '(+)- 與 (−)-酒石酸'], a: 0,
+      why: '只有非鏡像異構物的沸點不同。' },
+    { src: '仿 中國醫 113 第 6 題', q: '開鏈形式的葡萄糖（2,3,4,5,6-五羥基己醛）有幾個掌性中心？', o: ['4', '5', '6', '3'], a: 0,
+      why: 'C2–C5 各接四個不同基團；C1 是醛基、C6 是 CH₂OH。' },
+    { src: '仿 慈濟 113 第 23 題', q: '膽固醇有幾個掌性中心？', o: ['8', '6', '7', '9'], a: 0,
+      why: 'C3、C8、C9、C10、C13、C14、C17、C20，共 2⁸ = 256 種可能的立體異構物，天然只有一種。' },
+    { src: '仿 義守 114 第 7 題', q: 'C₅H₁₂ 的構造異構物有 a 種、C₇H₁₆ 有 b 種，a + b = ？', o: ['12', '11', '13', '14'], a: 0,
+      why: '戊烷 3 種、庚烷 9 種。', show: { w: 'isomers', set: {} } },
+    { src: '仿 中國醫 108 第 36 題', q: '非環狀 C₅H₁₀（含幾何異構物）有幾種？', o: ['6', '5', '7', '4'], a: 0,
+      why: '1-戊烯、cis/trans-2-戊烯、2-甲基-1-丁烯、3-甲基-1-丁烯、2-甲基-2-丁烯。' },
   ],
 });
 
@@ -3094,6 +3164,9 @@ const TERMS = {
     ['pKaH', '鹼的共軛酸的 pKa；越大，鹼越強。', { w: 'basic', set: { i: 2 } }],
   ],
   'stereo': [
+    ['比旋光度', '[α] = α ÷ (l × c)，和溫度、波長、溶劑有關。', { w: 'ee', set: { m: 'tart', x: 100 } }],
+    ['光學純度', '觀測比旋光度 ÷ 純物質比旋光度，等於鏡像過量 ee。', { w: 'ee', set: { m: 'tart', x: 75 } }],
+    ['十氫萘', '兩個環己烷共用一個邊的雙環化合物，反式較穩定。'],
     ['掌性分子', '和自己的鏡像無法重疊的分子。', { w: 'chiral', set: { set: 'butanol', rot: true } }],
     ['掌性中心', '連著四個不同基團的 sp³ 碳。', { w: 'chiral', set: { set: 'butanol' } }],
     ['鏡像異構物', '互為鏡像、無法重疊的一對立體異構物，所有掌性中心的構型都相反。', { w: 'fischer', set: { mol: 'tart', sides: ['right', 'left'] } }],
@@ -6830,6 +6903,67 @@ W.chair = el => {
   return { set(s) { if (s.sub) sub = s.sub; if (s.axial != null) f = s.axial ? 1 : -1; draw(); } };
 };
 
+/* ===== 6. 旋光度與光學純度 ===== */
+const EEC = { tart: ['酒石酸', '(+)', '(−)', 12.0], but: ['2-丁醇', '(S)-(+)', '(R)-(−)', 13.52] };
+W.ee = el => {
+  const st = { m: 'tart', x: 75 };
+  el.innerHTML = `${seg('eeS', Object.entries(EEC).map(([k, v]) => [k, v[0]]), st.m)}<div class="w-row"><label class="sel" style="flex:1">右旋異構物佔 <input type="range" id="eeX" min="0" max="100" step="5" value="${st.x}" style="flex:1"><b class="mono" id="eeO"></b></label></div><div id="eeG"></div><div class="cards" id="eeK"></div><p class="note" id="eeN"></p>`;
+  function draw() {
+    const [n, p, m, a0] = EEC[st.m], x = st.x / 100, ee = 2 * x - 1, obs = a0 * ee, ang = obs * 3;
+    $('#eeO', el).textContent = `${st.x}%`;
+    const r = 80, cx = 110, cy = 105, t = ang * Math.PI / 180;
+    const bar = (w, c, x0) => `<rect x="${x0}" y="70" width="${w}" height="30" style="fill:${c}"/>`;
+    $('#eeG', el).innerHTML = `<svg class="en" viewBox="0 0 520 210" style="max-width:560px;margin:auto" role="img" aria-label="旋光">
+<circle cx="${cx}" cy="${cy}" r="${r}" style="fill:none;stroke:var(--line);stroke-width:2"/><line x1="${cx}" y1="${cy - r}" x2="${cx}" y2="${cy + r}" style="stroke:var(--muted);stroke-dasharray:4 4"/>
+<line x1="${cx - r * Math.sin(t)}" y1="${cy + r * Math.cos(t)}" x2="${cx + r * Math.sin(t)}" y2="${cy - r * Math.cos(t)}" style="stroke:var(--acid);stroke-width:4"/>
+<text class="tk" x="${cx}" y="${cy + r + 18}" text-anchor="middle">偏振面（角度放大 3 倍）</text>
+${bar(260 * x, '#2F3B99', 240)}${bar(260 * (1 - x), '#B5326C', 240 + 260 * x)}
+<text class="tk" x="240" y="60">${p} ${st.x}%</text><text class="tk" x="500" y="60" text-anchor="end">${m} ${100 - st.x}%</text>
+<rect x="240" y="120" width="${260 * Math.abs(ee)}" height="14" style="fill:var(--acid);opacity:.8"/><text class="tk" x="240" y="152">多出來的部分 = 鏡像過量 ${fx(Math.abs(ee) * 100, 0)}%</text></svg>`;
+    $('#eeK', el).innerHTML = card('a', '純右旋的比旋光度', `+${a0}°`) + card('o', '混合物的比旋光度', `${obs >= 0 ? '+' : '−'}${fx(Math.abs(obs), 2)}°`) + card('e', '光學純度（ee）', `${fx(Math.abs(ee) * 100, 0)}%`);
+    $('#eeN', el).innerHTML = `等量的一對鏡像異構物旋光互相抵消，只有「多出來的那部分」會旋光。所以 <b>光學純度 = 觀測比旋光度 ÷ 純物質比旋光度 = 鏡像過量 (ee) = 多的 % − 少的 %</b>。${st.x === 50 ? '現在是外消旋混合物，旋光為 0。' : `${fx(Math.abs(ee) * 100, 0)}% 的過量加上其餘 ${fx(100 - Math.abs(ee) * 100, 0)}% 的外消旋部分。`}`;
+    pressSeg(el, 'eeS', st.m);
+  }
+  bindSeg(el, 'eeS', v => { st.m = v; draw(); });
+  $('#eeX', el).oninput = e => { st.x = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); $('#eeX', el).value = st.x; draw(); } };
+};
+
+/* ===== 7. 雙取代環己烷：兩個椅式比一比 ===== */
+W.disub = el => {
+  const st = { pos: 2, cis: 1, g: 'mm' };
+  const AV = { me: ['CH₃', 7.6], tb: ['t-Bu', 22.8] };
+  el.innerHTML = `${seg('dsP', [['2', '1,2-'], ['3', '1,3-'], ['4', '1,4-']], '2')}${seg('dsC', [['1', '順式 cis'], ['0', '反式 trans']], '1')}${seg('dsG', [['mm', '兩個甲基'], ['mt', '甲基＋第三丁基']], 'mm')}<div id="dsV"></div><div class="cards" id="dsK"></div><p class="note" id="dsN"></p>`;
+  const r = 1.2, h = 0.3, S = 52, A = 40;
+  function chair(cx, fl, subs) {
+    const P = Array.from({ length: 6 }, (_, k) => { const t = k * Math.PI / 3, z = fl * (k % 2 ? -1 : 1) * h; return { t, z, sx: cx + r * Math.cos(t) * S, sy: 110 - (0.32 * r * Math.sin(t) + z) * S }; });
+    let s = P.map((p, i) => { const q = P[(i + 1) % 6]; return `<line class="b" x1="${p.sx}" y1="${p.sy}" x2="${q.sx}" y2="${q.sy}"/>`; }).join('');
+    let E = 0; const lab = [];
+    subs.forEach(([k, up, g]) => { const p = P[k], ax = (up > 0) === (p.z > 0), sg = Math.sign(p.z);
+      const e = ax ? [p.sx, p.sy - sg * A] : [p.sx + Math.cos(p.t) * A * 0.95, p.sy - 0.32 * Math.sin(p.t) * A + sg * A * 0.35];
+      if (ax) E += AV[g][1];
+      s += `<line class="b" x1="${p.sx}" y1="${p.sy}" x2="${e[0]}" y2="${e[1]}"/><text class="at${ax ? ' hl' : ' br'}" style="font-size:13px" x="${e[0] + (ax ? 0 : Math.cos(p.t) * 22)}" y="${e[1] + (ax ? (sg > 0 ? -6 : 16) : 5)}" text-anchor="middle">${AV[g][0]}</text>`;
+      lab.push(`C${k + 1} ${ax ? '直立' : '平伏'}`); });
+    return { s, E, lab };
+  }
+  function draw() {
+    const k2 = st.pos - 1, g2 = st.g === 'mm' ? 'me' : 'tb', subs = [[0, 1, 'me'], [k2, st.cis ? 1 : -1, g2]];
+    const a = chair(150, 1, subs), b = chair(430, -1, subs), best = a.E <= b.E ? 0 : 1;
+    $('#dsV', el).innerHTML = `<svg class="mol" viewBox="0 0 580 220" role="img" aria-label="兩個椅式構形">${a.s}${b.s}<text class="tk" x="290" y="20" text-anchor="middle">⇄ 環翻轉 ⇄</text><text class="tk" x="150" y="210" text-anchor="middle">${a.lab.join('、')}</text><text class="tk" x="430" y="210" text-anchor="middle">${b.lab.join('、')}</text></svg>`;
+    const same = st.g === 'mm', pos = st.pos, chiral = pos === 4 ? false : same ? !st.cis : true;
+    $('#dsK', el).innerHTML = card('a', '左邊椅式（直立的能量）', `${fx(a.E, 1)} kJ/mol${best === 0 && a.E !== b.E ? ' ✓' : ''}`) + card('b', '右邊椅式', `${fx(b.E, 1)} kJ/mol${best === 1 && a.E !== b.E ? ' ✓' : ''}`) + card('c', '掌性', chiral ? '掌性（有鏡像異構物）' : same && pos !== 4 ? '內消旋（非掌性）' : '非掌性');
+    const ee = a.E === 0 || b.E === 0;
+    $('#dsN', el).innerHTML = `紅色是直立的取代基，每個直立甲基約多 7.6 kJ/mol、第三丁基約 22.8 kJ/mol。${a.E === b.E ? '兩個椅式各有一個直立、一個平伏，能量相同。' : ee ? '其中一個椅式兩個取代基都在平伏鍵，最穩定。' : '兩個椅式都有直立的取代基，較大的基團會優先待在平伏鍵。'}規律：<b>順式 1,3-、反式 1,2-、反式 1,4-</b> 可以兩個都平伏。${pos === 4 ? '1,4-取代物有一個穿過 C1 和 C4 的鏡面，順反都不是掌性分子。' : same ? (st.cis ? '兩個相同取代基的順式異構物分子內有鏡面，是內消旋化合物。' : '反式異構物沒有鏡面，有一對鏡像異構物，具光學活性。') : '兩個取代基不同時，1,2- 與 1,3- 的順、反式都沒有鏡面，都是掌性分子。'}`;
+    pressSeg(el, 'dsP', String(st.pos)); pressSeg(el, 'dsC', String(st.cis)); pressSeg(el, 'dsG', st.g);
+  }
+  bindSeg(el, 'dsP', v => { st.pos = +v; draw(); });
+  bindSeg(el, 'dsC', v => { st.cis = +v; draw(); });
+  bindSeg(el, 'dsG', v => { st.g = v; draw(); });
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
 /* ---------- 後中化學：計量化學與溶液的互動圖 ---------- */
 const AM = { H: 1.008, C: 12.01, N: 14.01, O: 16.00, S: 32.07, Cl: 35.45, Ca: 40.08, As: 74.92 };
 const parseF = f => { const out = {}; f.replace(/([A-Z][a-z]?)(\d*)/g, (_, e, n) => { out[e] = (out[e] || 0) + (+n || 1); }); return out; };
@@ -7580,13 +7714,13 @@ function route(h) {
   if (c) { renderChapter(id); renderTOC(id); document.title = `${c.title}｜後中化學`; }
   else if (id === 'log') { renderLog(); renderTOC('log'); document.title = '練習紀錄｜後中化學'; }
   else { renderHome(); bindTree(); renderTOC(''); document.title = '後中化學｜學習階梯'; }
-  $('#tocBox').classList.remove('open');
+  $('#tocBox').classList.remove('open'); $('#tocBtn').textContent = '☰ 單元';
   const t = sec ? document.getElementById(`sec-${sec}`) : id === 'map' && document.getElementById('map');
   if (t) setTimeout(() => t.scrollIntoView({ block: 'start' }), 0); else window.scrollTo(0, 0);
 }
 function boot() {
   addEventListener('hashchange', () => route(location.hash.slice(1)));
-  $('#tocBtn').onclick = () => $('#tocBox').classList.toggle('open');
+  $('#tocBtn').onclick = () => { const o = $('#tocBox').classList.toggle('open'); $('#tocBtn').textContent = o ? '✕ 關閉' : '☰ 單元'; window.scrollTo(0, 0); };
   updateProgress(); route(location.hash.slice(1));
 }
 

@@ -385,8 +385,9 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 @media (max-width: 860px) {
   .layout { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .toc-btn { display: inline-flex; }
-  #tocBox { display: none; position: fixed; inset: 56px 0 0 0; z-index: 30; background: var(--bg); max-height: none; padding: 10px 16px 40px; }
+  #tocBox { display: none; position: static; max-height: none; overflow: visible; padding: 10px 0 40px; }
   #tocBox.open { display: block; }
+  #tocBox.open + main { display: none; }
   .mech { grid-template-columns: minmax(0, 1fr); }
   .tgrid { grid-template-columns: minmax(0, 1fr); }
   .tgrid .beaker { max-width: 240px; margin: 0 auto; width: 100%; }

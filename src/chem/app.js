@@ -204,12 +204,12 @@ function route(h) {
   if (c) { renderChapter(id); renderTOC(id); document.title = `${c.title}｜後中化學`; }
   else if (id === 'log') { renderLog(); renderTOC('log'); document.title = '練習紀錄｜後中化學'; }
   else { renderHome(); bindTree(); renderTOC(''); document.title = '後中化學｜學習階梯'; }
-  $('#tocBox').classList.remove('open');
+  $('#tocBox').classList.remove('open'); $('#tocBtn').textContent = '☰ 單元';
   const t = sec ? document.getElementById(`sec-${sec}`) : id === 'map' && document.getElementById('map');
   if (t) setTimeout(() => t.scrollIntoView({ block: 'start' }), 0); else window.scrollTo(0, 0);
 }
 function boot() {
   addEventListener('hashchange', () => route(location.hash.slice(1)));
-  $('#tocBtn').onclick = () => $('#tocBox').classList.toggle('open');
+  $('#tocBtn').onclick = () => { const o = $('#tocBox').classList.toggle('open'); $('#tocBtn').textContent = o ? '✕ 關閉' : '☰ 單元'; window.scrollTo(0, 0); };
   updateProgress(); route(location.hash.slice(1));
 }

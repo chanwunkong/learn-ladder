@@ -178,3 +178,64 @@ W.chair = el => {
   draw();
   return { set(s) { if (s.sub) sub = s.sub; if (s.axial != null) f = s.axial ? 1 : -1; draw(); } };
 };
+
+/* ===== 6. 旋光度與光學純度 ===== */
+const EEC = { tart: ['酒石酸', '(+)', '(−)', 12.0], but: ['2-丁醇', '(S)-(+)', '(R)-(−)', 13.52] };
+W.ee = el => {
+  const st = { m: 'tart', x: 75 };
+  el.innerHTML = `${seg('eeS', Object.entries(EEC).map(([k, v]) => [k, v[0]]), st.m)}<div class="w-row"><label class="sel" style="flex:1">右旋異構物佔 <input type="range" id="eeX" min="0" max="100" step="5" value="${st.x}" style="flex:1"><b class="mono" id="eeO"></b></label></div><div id="eeG"></div><div class="cards" id="eeK"></div><p class="note" id="eeN"></p>`;
+  function draw() {
+    const [n, p, m, a0] = EEC[st.m], x = st.x / 100, ee = 2 * x - 1, obs = a0 * ee, ang = obs * 3;
+    $('#eeO', el).textContent = `${st.x}%`;
+    const r = 80, cx = 110, cy = 105, t = ang * Math.PI / 180;
+    const bar = (w, c, x0) => `<rect x="${x0}" y="70" width="${w}" height="30" style="fill:${c}"/>`;
+    $('#eeG', el).innerHTML = `<svg class="en" viewBox="0 0 520 210" style="max-width:560px;margin:auto" role="img" aria-label="旋光">
+<circle cx="${cx}" cy="${cy}" r="${r}" style="fill:none;stroke:var(--line);stroke-width:2"/><line x1="${cx}" y1="${cy - r}" x2="${cx}" y2="${cy + r}" style="stroke:var(--muted);stroke-dasharray:4 4"/>
+<line x1="${cx - r * Math.sin(t)}" y1="${cy + r * Math.cos(t)}" x2="${cx + r * Math.sin(t)}" y2="${cy - r * Math.cos(t)}" style="stroke:var(--acid);stroke-width:4"/>
+<text class="tk" x="${cx}" y="${cy + r + 18}" text-anchor="middle">偏振面（角度放大 3 倍）</text>
+${bar(260 * x, '#2F3B99', 240)}${bar(260 * (1 - x), '#B5326C', 240 + 260 * x)}
+<text class="tk" x="240" y="60">${p} ${st.x}%</text><text class="tk" x="500" y="60" text-anchor="end">${m} ${100 - st.x}%</text>
+<rect x="240" y="120" width="${260 * Math.abs(ee)}" height="14" style="fill:var(--acid);opacity:.8"/><text class="tk" x="240" y="152">多出來的部分 = 鏡像過量 ${fx(Math.abs(ee) * 100, 0)}%</text></svg>`;
+    $('#eeK', el).innerHTML = card('a', '純右旋的比旋光度', `+${a0}°`) + card('o', '混合物的比旋光度', `${obs >= 0 ? '+' : '−'}${fx(Math.abs(obs), 2)}°`) + card('e', '光學純度（ee）', `${fx(Math.abs(ee) * 100, 0)}%`);
+    $('#eeN', el).innerHTML = `等量的一對鏡像異構物旋光互相抵消，只有「多出來的那部分」會旋光。所以 <b>光學純度 = 觀測比旋光度 ÷ 純物質比旋光度 = 鏡像過量 (ee) = 多的 % − 少的 %</b>。${st.x === 50 ? '現在是外消旋混合物，旋光為 0。' : `${fx(Math.abs(ee) * 100, 0)}% 的過量加上其餘 ${fx(100 - Math.abs(ee) * 100, 0)}% 的外消旋部分。`}`;
+    pressSeg(el, 'eeS', st.m);
+  }
+  bindSeg(el, 'eeS', v => { st.m = v; draw(); });
+  $('#eeX', el).oninput = e => { st.x = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); $('#eeX', el).value = st.x; draw(); } };
+};
+
+/* ===== 7. 雙取代環己烷：兩個椅式比一比 ===== */
+W.disub = el => {
+  const st = { pos: 2, cis: 1, g: 'mm' };
+  const AV = { me: ['CH₃', 7.6], tb: ['t-Bu', 22.8] };
+  el.innerHTML = `${seg('dsP', [['2', '1,2-'], ['3', '1,3-'], ['4', '1,4-']], '2')}${seg('dsC', [['1', '順式 cis'], ['0', '反式 trans']], '1')}${seg('dsG', [['mm', '兩個甲基'], ['mt', '甲基＋第三丁基']], 'mm')}<div id="dsV"></div><div class="cards" id="dsK"></div><p class="note" id="dsN"></p>`;
+  const r = 1.2, h = 0.3, S = 52, A = 40;
+  function chair(cx, fl, subs) {
+    const P = Array.from({ length: 6 }, (_, k) => { const t = k * Math.PI / 3, z = fl * (k % 2 ? -1 : 1) * h; return { t, z, sx: cx + r * Math.cos(t) * S, sy: 110 - (0.32 * r * Math.sin(t) + z) * S }; });
+    let s = P.map((p, i) => { const q = P[(i + 1) % 6]; return `<line class="b" x1="${p.sx}" y1="${p.sy}" x2="${q.sx}" y2="${q.sy}"/>`; }).join('');
+    let E = 0; const lab = [];
+    subs.forEach(([k, up, g]) => { const p = P[k], ax = (up > 0) === (p.z > 0), sg = Math.sign(p.z);
+      const e = ax ? [p.sx, p.sy - sg * A] : [p.sx + Math.cos(p.t) * A * 0.95, p.sy - 0.32 * Math.sin(p.t) * A + sg * A * 0.35];
+      if (ax) E += AV[g][1];
+      s += `<line class="b" x1="${p.sx}" y1="${p.sy}" x2="${e[0]}" y2="${e[1]}"/><text class="at${ax ? ' hl' : ' br'}" style="font-size:13px" x="${e[0] + (ax ? 0 : Math.cos(p.t) * 22)}" y="${e[1] + (ax ? (sg > 0 ? -6 : 16) : 5)}" text-anchor="middle">${AV[g][0]}</text>`;
+      lab.push(`C${k + 1} ${ax ? '直立' : '平伏'}`); });
+    return { s, E, lab };
+  }
+  function draw() {
+    const k2 = st.pos - 1, g2 = st.g === 'mm' ? 'me' : 'tb', subs = [[0, 1, 'me'], [k2, st.cis ? 1 : -1, g2]];
+    const a = chair(150, 1, subs), b = chair(430, -1, subs), best = a.E <= b.E ? 0 : 1;
+    $('#dsV', el).innerHTML = `<svg class="mol" viewBox="0 0 580 220" role="img" aria-label="兩個椅式構形">${a.s}${b.s}<text class="tk" x="290" y="20" text-anchor="middle">⇄ 環翻轉 ⇄</text><text class="tk" x="150" y="210" text-anchor="middle">${a.lab.join('、')}</text><text class="tk" x="430" y="210" text-anchor="middle">${b.lab.join('、')}</text></svg>`;
+    const same = st.g === 'mm', pos = st.pos, chiral = pos === 4 ? false : same ? !st.cis : true;
+    $('#dsK', el).innerHTML = card('a', '左邊椅式（直立的能量）', `${fx(a.E, 1)} kJ/mol${best === 0 && a.E !== b.E ? ' ✓' : ''}`) + card('b', '右邊椅式', `${fx(b.E, 1)} kJ/mol${best === 1 && a.E !== b.E ? ' ✓' : ''}`) + card('c', '掌性', chiral ? '掌性（有鏡像異構物）' : same && pos !== 4 ? '內消旋（非掌性）' : '非掌性');
+    const ee = a.E === 0 || b.E === 0;
+    $('#dsN', el).innerHTML = `紅色是直立的取代基，每個直立甲基約多 7.6 kJ/mol、第三丁基約 22.8 kJ/mol。${a.E === b.E ? '兩個椅式各有一個直立、一個平伏，能量相同。' : ee ? '其中一個椅式兩個取代基都在平伏鍵，最穩定。' : '兩個椅式都有直立的取代基，較大的基團會優先待在平伏鍵。'}規律：<b>順式 1,3-、反式 1,2-、反式 1,4-</b> 可以兩個都平伏。${pos === 4 ? '1,4-取代物有一個穿過 C1 和 C4 的鏡面，順反都不是掌性分子。' : same ? (st.cis ? '兩個相同取代基的順式異構物分子內有鏡面，是內消旋化合物。' : '反式異構物沒有鏡面，有一對鏡像異構物，具光學活性。') : '兩個取代基不同時，1,2- 與 1,3- 的順、反式都沒有鏡面，都是掌性分子。'}`;
+    pressSeg(el, 'dsP', String(st.pos)); pressSeg(el, 'dsC', String(st.cis)); pressSeg(el, 'dsG', st.g);
+  }
+  bindSeg(el, 'dsP', v => { st.pos = +v; draw(); });
+  bindSeg(el, 'dsC', v => { st.cis = +v; draw(); });
+  bindSeg(el, 'dsG', v => { st.g = v; draw(); });
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
