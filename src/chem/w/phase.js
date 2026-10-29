@@ -85,3 +85,94 @@ W.decay = el => {
   draw();
   return { set(s) { Object.assign(st, s); draw(); } };
 };
+
+/* ===== 4. 蒸氣壓與克勞修斯–克拉佩龍 =====
+   ΔH蒸發 kJ/mol、正常沸點 K（教科書常用值） */
+const VAPL = { water: ['水', 40.7, 373.15], ethanol: ['乙醇', 38.6, 351.4], ipa: ['異丙醇', 44.0, 355.5], ether: ['乙醚', 26.5, 307.6] };
+W.ccvap = el => {
+  const st = { l: 'water', P: 0.70 };
+  el.innerHTML = `${seg('cvS', Object.entries(VAPL).map(([k, v]) => [k, v[0]]), st.l)}<div class="w-row"><label class="rng">外界壓力（atm）<input type="range" id="cvP" min="0.1" max="2" step="0.01"><output class="mono" id="cvO"></output></label></div><div id="cvG"></div><p class="eq" id="cvF"></p><p class="note" id="cvN"></p>`;
+  function draw() {
+    const [nm, H, Tb] = VAPL[st.l], lnP = T => -H * 1000 / 8.314 * (1 / T - 1 / Tb), T = 1 / (1 / Tb - Math.log(st.P) * 8.314 / (H * 1000)), xs = Array.from({ length: 41 }, (_, i) => 2.5 + i * 0.025);
+    $('#cvG', el).innerHTML = chart({ w: 560, h: 240, x: [2.5, 3.5], y: [-3, 1], xt: [2.6, 2.8, 3.0, 3.2, 3.4], yt: [-3, -2, -1, 0, 1], xlab: '1000 / T（K⁻¹）', ylab: 'ln P（atm）', label: '克勞修斯–克拉佩龍' }, (X, Y) =>
+      Object.entries(VAPL).map(([k, v]) => `<path class="tline${k === st.l ? '' : ' faint'}" d="${path(xs.map(x => [X(x), Y(clamp(-v[1] * 1000 / 8.314 * (1 / (1000 / x) - 1 / v[2]), -3, 1))]))}"/>`).join('')
+      + `<line class="mk" x1="${X(2.5)}" x2="${X(3.5)}" y1="${Y(Math.log(st.P))}" y2="${Y(Math.log(st.P))}"/><circle class="dot" cx="${X(1000 / T)}" cy="${Y(Math.log(st.P))}" r="7"/>`);
+    $('#cvF', el).innerHTML = `ln(P₂/P₁) = −(ΔH蒸發/R)(1/T₂ − 1/T₁)　斜率 = −ΔH/R = ${fx(-H * 1000 / 8.314, 0)} K；${fx(st.P, 2)} atm 下的沸點 = <b>${fx(T - 273.15, 1)} °C</b>`;
+    $('#cvN', el).innerHTML = `ln P 對 1/T 是直線，斜率由蒸發熱決定（分子間作用力越強，ΔH 越大、直線越陡）。沸點是蒸氣壓等於外界壓力的溫度：把壓力調低（高山上），水平線往下移，沸點降低。已知兩個溫度的蒸氣壓，就能用上式求出 ΔH蒸發 或其他溫度的蒸氣壓。蒸發時 ΔS = ΔH蒸發 ÷ T沸點（${nm}：${fx(H * 1000 / Tb, 0)} J/(mol·K)）。`;
+    $('#cvP', el).value = st.P; $('#cvO', el).textContent = fx(st.P, 2); pressSeg(el, 'cvS', st.l);
+  }
+  bindSeg(el, 'cvS', v => { st.l = v; draw(); });
+  $('#cvP', el).oninput = e => { st.P = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 5. 加熱曲線：冰 → 水蒸氣 ===== */
+W.heatcurve = el => {
+  const st = { m: 18 };
+  el.innerHTML = `<div class="w-row"><label class="rng">水的質量（g）<input type="range" id="hcM" min="5" max="100" step="1"><output class="mono" id="hcO"></output></label></div><div id="hcG"></div><ol class="cs" id="hcC"></ol><p class="note">溫度不變的兩段是相變化：吸收的熱用來克服分子間作用力，而不是使分子跑更快。汽化熱遠大於熔化熱，因為液體變成氣體要把分子完全拉開。</p>`;
+  function draw() {
+    const n = st.m / 18.02, seg2 = [['冰 −20 → 0 °C', st.m * 2.09 * 20, -20, 0], ['熔化（0 °C）', n * 6.01e3, 0, 0], ['水 0 → 100 °C', st.m * 4.184 * 100, 0, 100], ['汽化（100 °C）', n * 40.7e3, 100, 100], ['水蒸氣 100 → 120 °C', st.m * 2.01 * 20, 100, 120]];
+    const tot = seg2.reduce((a, s) => a + s[1], 0); let q = 0; const pts = [[0, -20]]; seg2.forEach(s => { q += s[1]; pts.push([q / 1000, s[3]]); });
+    $('#hcG', el).innerHTML = chart({ w: 560, h: 230, x: [0, tot / 1000], y: [-30, 130], xt: [0, +(tot / 2000).toFixed(1), +(tot / 1000).toFixed(1)], yt: [-20, 0, 50, 100], xlab: '加入的熱（kJ）', ylab: '溫度（°C）', label: '加熱曲線' }, (X, Y) => `<path class="tline" d="${path(pts.map(([x, y]) => [X(x), Y(y)]))}"/>`);
+    $('#hcC', el).innerHTML = seg2.map(([t, v]) => `<li>${t}：${fx(v / 1000, 2)} kJ</li>`).join('') + `<li>合計 ${fx(tot / 1000, 2)} kJ（升溫用 q = mcΔT；相變化用 q = n·ΔH）</li>`;
+    $('#hcM', el).value = st.m; $('#hcO', el).textContent = st.m;
+  }
+  $('#hcM', el).oninput = e => { st.m = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 6. 晶胞的密度：d = Z·M ÷ (Nₐ·a³) ===== */
+W.celldens = el => {
+  const LAT = { sc: ['簡單立方', 1, a => a / 2, '2r = a'], bcc: ['體心立方', 2, a => Math.sqrt(3) * a / 4, '4r = √3·a'], fcc: ['面心立方', 4, a => Math.sqrt(2) * a / 4, '4r = √2·a'] };
+  const st = { l: 'bcc', a: 300, M: 95.95 };
+  el.innerHTML = `${seg('cdS2', Object.entries(LAT).map(([k, v]) => [k, v[0]]), st.l)}<div class="w-row"><label class="rng">邊長 a（pm）<input type="range" id="cdA" min="200" max="600" step="1"><output class="mono" id="cdAo"></output></label><label class="rng">莫耳質量（g/mol）<input type="range" id="cdM" min="20" max="200" step="0.05"><output class="mono" id="cdMo"></output></label></div><div class="cards" id="cdK"></div><p class="eq" id="cdF"></p>`;
+  function draw() {
+    const [nm, Z, rf, rel] = LAT[st.l], a = st.a * 1e-10, d = Z * st.M / (6.022e23 * a ** 3);
+    $('#cdK', el).innerHTML = card('z', '每個晶胞原子數 Z', Z) + card('r', `原子半徑（${rel}）`, `${fx(rf(st.a), 1)} pm`) + card('d', '密度', `${fx(d, 2)} g/cm³`);
+    $('#cdF', el).innerHTML = `d = Z·M ÷ (Nₐ·a³) = ${Z} × ${st.M} ÷ (6.022 × 10²³ × (${st.a} × 10⁻¹⁰ cm)³) = <b>${fx(d, 2)} g/cm³</b>`;
+    $('#cdA', el).value = st.a; $('#cdAo', el).textContent = st.a; $('#cdM', el).value = st.M; $('#cdMo', el).textContent = st.M; pressSeg(el, 'cdS2', st.l);
+  }
+  bindSeg(el, 'cdS2', v => { st.l = v; draw(); });
+  $('#cdA', el).oninput = e => { st.a = +e.target.value; draw(); };
+  $('#cdM', el).oninput = e => { st.M = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 7. 原子核穩定帶：中子與質子比決定衰變方式 ===== */
+const NUCS = [['¹⁴C', 6, 8, 'β⁻', '¹⁴N'], ['³H', 1, 2, 'β⁻', '³He'], ['⁹⁰Sr', 38, 52, 'β⁻', '⁹⁰Y'], ['¹³¹I', 53, 78, 'β⁻', '¹³¹Xe'], ['¹⁸F', 9, 9, 'β⁺', '¹⁸O'], ['¹¹C', 6, 5, 'β⁺', '¹¹B'], ['²²²Rn', 86, 136, 'α', '²¹⁸Po'], ['²³⁸U', 92, 146, 'α', '²³⁴Th'], ['⁶⁰Co', 27, 33, 'β⁻', '⁶⁰Ni']];
+W.nucstab = el => {
+  let cur = 6;
+  el.innerHTML = `<div class="w-row">${NUCS.map(([t], i) => `<button class="btn sm ghost" type="button" data-i="${i}">${t}</button>`).join('')}</div><div id="nsG"></div><p class="eq" id="nsF"></p><p class="note" id="nsN"></p>`;
+  function draw() {
+    const [t, Z, N, mode, prod] = NUCS[cur];
+    $('#nsG', el).innerHTML = chart({ w: 560, h: 260, x: [0, 100], y: [0, 150], xt: [0, 20, 40, 60, 80, 100], yt: [0, 50, 100, 150], xlab: '質子數 Z', ylab: '中子數 N', label: '原子核穩定帶' }, (X, Y) =>
+      `<line class="mk" x1="${X(0)}" y1="${Y(0)}" x2="${X(100)}" y2="${Y(100)}"/><path class="band" d="M${X(0)} ${Y(0)}L${X(20)} ${Y(22)}L${X(50)} ${Y(70)}L${X(83)} ${Y(126)}L${X(83)} ${Y(132)}L${X(50)} ${Y(78)}L${X(20)} ${Y(26)}L${X(0)} ${Y(2)}Z"/><text class="tk" x="${X(60)}" y="${Y(50)}">N = Z</text>`
+      + NUCS.map(([tt, z, n], i) => `<circle class="${i === cur ? 'dot' : 'pt'}" cx="${X(z)}" cy="${Y(n)}" r="${i === cur ? 7 : 4}"/>`).join('') + `<text class="tk hl" x="${X(Z) + 10}" y="${Y(N) + 4}">${t}</text>`);
+    const eq = { 'β⁻': `${t} → ${prod} + ⁰₋₁e`, 'β⁺': `${t} → ${prod} + ⁰₊₁e`, 'α': `${t} → ${prod} + ⁴₂He` }[mode];
+    $('#nsF', el).innerHTML = `${eq}　（質量數與原子序兩邊守恆）`;
+    $('#nsN', el).innerHTML = `${t}：Z = ${Z}、N = ${N}，N/Z = ${fx(N / Z, 2)}。${mode === 'β⁻' ? '中子太多（在穩定帶上方）：一個中子變成質子並放出電子（β⁻），Z + 1。' : mode === 'β⁺' ? '質子太多（在穩定帶下方）：一個質子變成中子並放出正子（β⁺）或捕獲電子，Z − 1。PET 造影用的 ¹⁸F 就是 β⁺ 衰變。' : 'Z > 83 的重原子核都不穩定，常以 α 衰變減少質量數 4、原子序 2。'} 灰色帶是穩定原子核的位置：輕原子核 N ≈ Z，越重需要越多中子。`;
+    $$('[data-i]', el).forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.i === cur)));
+  }
+  $$('[data-i]', el).forEach(b => { b.onclick = () => { cur = +b.dataset.i; draw(); }; });
+  draw();
+  return { set(s) { cur = s.i ?? cur; draw(); } };
+};
+
+/* ===== 8. 質量虧損與核能 ===== */
+W.massdefect = el => {
+  const RX = { dt: ['核融合 ²H + ³H → ⁴He + n', [['²H', 2.01410], ['³H', 3.01605]], [['⁴He', 4.00260], ['n', 1.00866]]], he: ['⁴He 的結合能（2p + 2n → ⁴He）', [['2 × p', 2 * 1.00728], ['2 × n', 2 * 1.00866]], [['⁴He 原子核', 4.00150]]] };
+  let cur = 'dt';
+  el.innerHTML = `${seg('mdS', Object.entries(RX).map(([k, v]) => [k, v[0]]), cur)}<div class="bars pk" id="mdB"></div><p class="eq" id="mdF"></p><p class="note">反應後的總質量比反應前小，少掉的質量 Δm 依 E = Δm·c² 變成能量。1 u 相當於 931.5 MeV；每莫耳反應的能量 = Δm（g/mol 換成 kg/mol）× (3.00 × 10⁸ m/s)²。核反應的能量比化學反應大約一百萬倍，太陽的能量來自氫的核融合。</p>`;
+  function draw() {
+    const [, L, R] = RX[cur], mL = L.reduce((a, x) => a + x[1], 0), mR = R.reduce((a, x) => a + x[1], 0), dm = mL - mR;
+    $('#mdB', el).innerHTML = `<div><span>反應前 ${L.map(x => x[0]).join(' + ')}</span><i class="ba" style="width:100%"></i><b class="mono">${fx(mL, 5)} u</b></div><div class="on"><span>反應後 ${R.map(x => x[0]).join(' + ')}</span><i class="ba" style="width:${mR / mL * 100}%"></i><b class="mono">${fx(mR, 5)} u</b></div>`;
+    $('#mdF', el).innerHTML = `Δm = ${fx(dm, 5)} u → E = ${fx(dm * 931.5, 1)} MeV；每莫耳 ${sci(dm / 1000 * 9e16, 2)} J = ${sci(dm / 1000 * 9e16 / 1000, 2)} kJ`;
+    pressSeg(el, 'mdS', cur);
+  }
+  bindSeg(el, 'mdS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.c || cur; draw(); } };
+};

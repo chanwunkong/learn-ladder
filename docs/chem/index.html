@@ -216,6 +216,7 @@ svg.en.clip { overflow: hidden; }
 .tline.cat { stroke: var(--good); stroke-dasharray: 6 4; }
 .mrl li { margin: 6px 0; } .mrc { display: inline-block; padding: 1px 6px; border-radius: 5px; border: 1px solid var(--line); }
 .mrc.cat { background: #DFF1E6; border-color: #23704A; color: #165236; font-weight: 700; } .mrc.int { background: #F9DEDB; border-color: #D0443C; color: #8A231C; font-weight: 700; }
+.band { fill: var(--accent); opacity: .15; }
 .tree-note { font-size: 14.5px; margin: 0 0 10px; }
 .trees { display: grid; gap: 22px; }
 .tree h3 { font-size: 15px; margin: 6px 0 8px; }
@@ -2117,31 +2118,27 @@ CH.push({
 /* ---------- 後中化學：固體、液體與核化學 ---------- */
 CH.push({
   id: 'phase', unit: 'g11', title: '固體、液體與核化學',
-  lede: '物質是固體、液體還是氣體，取決於溫度、壓力與粒子之間的吸引力。這一章用相圖讀出物質的狀態，認識晶體的排列方式，最後看原子核本身的變化：放射性衰變與它在醫學上的應用。',
+  lede: '物質是固體、液體還是氣體，取決於溫度、壓力與粒子之間的吸引力。這一章看蒸氣壓與沸點、相圖、晶體的排列與密度，最後看原子核本身的變化：衰變、半衰期與核能。',
   sections: [
-    { h: '液體的性質與相圖', w: 'phase', body: `
-<p>液體分子之間的吸引力（分子間作用力）越強：</p>
-<ul><li><b>蒸氣壓</b>越低、<b>沸點</b>越高（沸點是蒸氣壓等於外界壓力時的溫度，所以高山上水的沸點低於 100 °C）；</li><li><b>表面張力</b>、<b>黏度</b>越大。</li></ul>
-<p>蒸氣壓隨溫度的變化遵守克勞修斯–克拉佩龍方程式：ln(P₂/P₁) = (ΔH蒸發/R)(1/T₁ − 1/T₂)，和阿瑞尼斯方程式形式完全相同。</p>
-<p><b>相圖</b>把物質在各溫度、壓力下的狀態畫在一張圖上：三條線上兩相共存，<b>三相點</b>三相共存，超過<b>臨界點</b>後液體和氣體無法區分。拖動溫度與壓力，讀出水和 CO₂ 的狀態。</p>` },
-    { h: '固體：晶體的類型與排列', w: 'cell', body: `
+    { h: '沸點為什麼會隨壓力改變？', w: 'ccvap', body: `
+<p>液體分子之間的吸引力越強，<b>蒸氣壓</b>越低、<b>沸點</b>越高、表面張力與黏度越大。沸點是蒸氣壓等於外界壓力的溫度，所以高山上水的沸點低於 100 °C。蒸氣壓隨溫度的變化遵守<b>克勞修斯–克拉佩龍方程式</b>：ln P 對 1/T 是直線，斜率 −ΔH蒸發/R（和阿瑞尼斯方程式形式相同）。</p>` },
+    { h: '加熱時熱量用到哪裡去了？', w: 'heatcurve', body: `
+<p>把冰一路加熱成水蒸氣：溫度上升的部分用 q = m·c·ΔT；熔化與汽化時溫度不變，熱量 q = n·ΔH 用來克服分子間作用力。相變化的熵變化 ΔS = ΔH/T。</p>` },
+    { h: '物質在什麼條件下是固體、液體或氣體？', w: 'phase', body: `
+<p><b>相圖</b>把物質在各溫度、壓力下的狀態畫在一張圖上：三條線上兩相共存，<b>三相點</b>三相共存，超過<b>臨界點</b>後液體和氣體無法區分。分子間作用力越強，臨界溫度越高。壓力低於三相點時沒有液相，固體直接昇華：乾冰在 1 atm 下昇華；中藥與食品的<b>冷凍乾燥</b>就是先冷凍，再在三相點以下的低壓讓冰直接昇華。</p>` },
+    { h: '晶體裡的原子怎麼排列？', w: ['cell', 'celldens'], body: `
 <table class="tbl"><thead><tr><th>類型</th><th>粒子間作用力</th><th>性質</th><th>例子</th></tr></thead><tbody>
 <tr><td>離子晶體</td><td>離子鍵</td><td>熔點高、硬而脆、熔融或溶於水可導電</td><td>NaCl、MgO</td></tr>
 <tr><td>分子晶體</td><td>分子間作用力</td><td>熔點低、軟</td><td>冰、乾冰、碘、蔗糖</td></tr>
 <tr><td>共價網狀晶體</td><td>共價鍵</td><td>熔點極高、極硬</td><td>鑽石、石英（SiO₂）</td></tr>
 <tr><td>金屬晶體</td><td>金屬鍵（電子海）</td><td>導電導熱、延展性</td><td>Cu、Fe</td></tr></tbody></table>
-<p>離子晶體的<b>晶格能</b>隨離子電荷乘積變大、離子半徑變小而增大，所以 MgO（+2/−2）的熔點遠高於 NaCl（+1/−1）。</p>
-<p>金屬常見三種立方堆積，每個原子周圍緊鄰的原子數稱為<b>配位數</b>（面心立方為 12）。計算每個晶胞的原子數時要記得：角落原子被 8 個晶胞共用，面心原子被 2 個共用。</p>` },
-    { h: '核化學：放射性衰變', w: 'decay', body: `
-<p>不穩定的原子核會自發放出粒子或能量，變成另一種原子核。寫核反應式時，<b>質量數與原子序兩邊都要守恆</b>：</p>
-<table class="tbl"><thead><tr><th>衰變</th><th>放出</th><th>質量數</th><th>原子序</th><th>例子</th></tr></thead><tbody>
-<tr><td>α 衰變</td><td>⁴₂He</td><td>−4</td><td>−2</td><td>²³⁸U → ²³⁴Th</td></tr>
-<tr><td>β⁻ 衰變</td><td>電子（中子 → 質子）</td><td>不變</td><td>+1</td><td>¹⁴C → ¹⁴N</td></tr>
-<tr><td>β⁺ 衰變</td><td>正子（質子 → 中子）</td><td>不變</td><td>−1</td><td>¹⁸F → ¹⁸O（PET 造影）</td></tr>
-<tr><td>電子捕獲</td><td>吸收內層電子</td><td>不變</td><td>−1</td><td>¹²⁵I → ¹²⁵Te</td></tr>
-<tr><td>γ 射線</td><td>高能光子</td><td>不變</td><td>不變</td><td>⁹⁹ᵐTc → ⁹⁹Tc</td></tr></tbody></table>
-<p>中子太多的原子核傾向 β⁻ 衰變，質子太多的傾向 β⁺ 或電子捕獲，很重的原子核傾向 α 衰變。每經過一個<b>半衰期</b>，剩下的原子核減半，和起始量無關（一級反應）。穿透力 α &lt; β &lt; γ，但 α 粒子一旦進入體內傷害最大。</p>
-<p>原子核的質量比組成它的質子、中子加起來小，差額（質量虧損）依 E = mc² 轉成<b>結合能</b>；核分裂與核融合都是朝每個核子結合能更大（鐵附近）的方向進行。</p>` },
+<p>離子晶體的強度用<b>晶格能</b>表示（化學鍵一章）。每個原子周圍緊鄰的原子數稱為<b>配位數</b>：簡單立方 6、體心 8、面心 12。立方晶系有簡單、體心、面心三種（沒有「底心立方」）。第一張圖數每個晶胞的原子數：角落原子被 8 個晶胞共用、面心被 2 個共用。NaCl 是面心立方排列，每個晶胞有 4 個 Na⁺ 和 4 個 Cl⁻。第二張圖由邊長算出半徑與密度：d = Z·M ÷ (Nₐ·a³)。晶格的間距可以用 X 射線繞射測量：nλ = 2d sin θ（布拉格定律）。</p>` },
+    { h: '原子核為什麼會衰變？', w: ['nucstab', 'decay'], body: `
+<p>寫核反應式時，<b>質量數與原子序兩邊都要守恆</b>。α 衰變放出 ⁴₂He（質量數 −4、原子序 −2）；β⁻ 衰變是中子變成質子並放出電子（原子序 +1）；β⁺ 衰變（或電子捕獲）是質子變成中子（原子序 −1）；γ 射線是不帶電的高能光子。質量 α 粒子 &gt; 中子 &gt; 質子 &gt; β 粒子；穿透力 α &lt; β &lt; γ，但 α 粒子一旦進入體內傷害最大。</p>
+<p>第一張圖是中子對質子的穩定帶：中子太多傾向 β⁻，質子太多傾向 β⁺，Z &gt; 83 的重原子核傾向 α 衰變。醫學應用：¹⁸F 的 β⁺ 衰變用於 PET 造影；硼中子捕獲治療讓 ¹⁰B 吸收中子後放出 α 粒子，α 粒子射程很短，只破壞含硼的癌細胞。</p>
+<p>衰變是一級反應：每經過一個半衰期剩下一半，活度（每秒衰變數）A = λN，λ = 0.693/t½，由活度可以反推原子數。</p>` },
+    { h: '核反應的能量從哪裡來？', w: 'massdefect', body: `
+<p>原子核的質量比組成它的質子、中子加起來小，差額（<b>質量虧損</b>）依 E = Δm·c² 轉成<b>結合能</b>。核分裂（重原子核分裂）與核融合（輕原子核結合）都是朝每個核子結合能更大（鐵附近）的方向進行，因此都放出巨大的能量。</p>` },
   ],
   quiz: [
     { q: '在高山上煮水，水的沸點比 100 °C 低，原因是？', o: ['外界氣壓較低，蒸氣壓較低時就能沸騰', '高山上水的分子間作用力較弱', '高山溫度低', '水中溶有較多空氣'], a: 0,
@@ -2158,6 +2155,44 @@ CH.push({
       why: '1/8 = (1/2)³，經過 3 個半衰期：3 × 5730 = 17,190 年。', show: { w: 'decay', set: { i: 'c14', n: 3 } } },
     { q: '²³⁸₉₂U 經 α 衰變後的產物是？', o: ['²³⁴₉₀Th', '²³⁴₉₂U', '²³⁸₉₃Np', '²³⁴₉₁Pa'], a: 0,
       why: 'α 衰變放出 ⁴₂He：質量數 238 − 4 = 234，原子序 92 − 2 = 90（Th）。' },
+  ],
+  exam: [
+    { src: '義守 114 第 25 題', q: '某液體 20 °C 時蒸氣壓 40 torr、50 °C 時 200 torr，其 ΔH蒸發約為？', o: ['42 kJ/mol', '4.2 kJ/mol', '18 kJ/mol', '84 kJ/mol'], a: 0,
+      why: 'ln 5 = (ΔH/8.314)(1/293 − 1/323)，ΔH ≈ 1.609 × 8.314 ÷ 3.17 × 10⁻⁴ ≈ 42 kJ/mol。', show: { w: 'ccvap' } },
+    { src: '中國醫藥 113 第 30 題', q: '1.00 mol 苯在熔點熔化再於沸點汽化（ΔH熔化 10.9、ΔH汽化 31.0 kJ/mol），兩個相變化共吸熱？', o: ['41.9 kJ', '20.1 kJ', '31.0 kJ', '10.9 kJ'], a: 0,
+      why: '相變化的熱 = n·ΔH，兩者相加（中間液態升溫另外計算）。', show: { w: 'heatcurve' } },
+    { src: '慈濟 111 第 17 題', q: '2.00 mol 的水在 100 °C 汽化（ΔH蒸發 40.7 kJ/mol），系統的 ΔS 約為？', o: ['218 J/K', '109 J/K', '81.4 J/K', '407 J/K'], a: 0,
+      why: 'ΔS = nΔH/T = 2 × 40700 ÷ 373 ≈ 218 J/K。', show: { w: 'ccvap', set: { l: 'water', P: 1 } } },
+    { src: '義守 114 第 38 題', q: '冷凍乾燥是在相圖的哪一個區域進行？', o: ['三相點以下的低壓區，冰直接昇華', '臨界點以上', '高溫高壓區', '液氣共存線上'], a: 0,
+      why: '低於三相點壓力時沒有液相。', show: { w: 'phase', set: { s: 'water', C: -10, P: 0.002 } } },
+    { src: '慈濟 106 第 1 題', q: '下列何者的臨界溫度最高？', o: ['CBr₄', 'CCl₄', 'CH₄', 'H₂'], a: 0,
+      why: '分子越大、分散力越強，越難在高溫下保持液態的界線越高。' },
+    { src: '慈濟 111 第 22 題', q: '下列何者不屬於立方晶系的晶胞？', o: ['底心立方', '簡單立方', '體心立方', '面心立方'], a: 0,
+      why: '立方晶系只有簡單、體心、面心三種。' },
+    { src: '義守 110 第 8 題', q: 'CsCl 晶胞中 Cl⁻ 在角落、Cs⁺ 在體心，每個晶胞含幾個 CsCl？', o: ['1', '2', '4', '8'], a: 0,
+      why: 'Cl⁻：8 × 1/8 = 1；Cs⁺：1。', show: { w: 'cell', set: { c: 'bcc' } } },
+    { src: '中國醫藥 108 第 24 題', q: '某金屬為體心立方，邊長 400 pm，原子半徑約為？', o: ['173 pm', '141 pm', '200 pm', '283 pm'], a: 0,
+      why: '4r = √3·a：r = 1.732 × 400 ÷ 4 ≈ 173 pm。', show: { w: 'celldens', set: { l: 'bcc', a: 400 } } },
+    { src: '中國醫藥 109 第 12 題', q: '銅（63.55 g/mol）為面心立方，邊長 361 pm，密度約為？', o: ['8.97 g/cm³', '4.48 g/cm³', '2.24 g/cm³', '17.9 g/cm³'], a: 0,
+      why: 'd = 4 × 63.55 ÷ (6.022 × 10²³ × (3.61 × 10⁻⁸)³) ≈ 8.97。', show: { w: 'celldens', set: { l: 'fcc', a: 361, M: 63.55 } } },
+    { src: '中國醫藥 107 第 10 題', q: '下列堆積效率何者正確？', o: ['面心立方 74%', '體心立方 52%', '簡單立方 68%', '三者都是 74%'], a: 0,
+      why: '簡單 52%、體心 68%、面心 74%。', show: { w: 'cell', set: { c: 'fcc' } } },
+    { src: '慈濟 107 第 13 題', q: '以 λ = 1.54 Å 的 X 射線在 θ = 30° 得到第一級繞射，晶面間距為？', o: ['1.54 Å', '3.08 Å', '0.77 Å', '2.67 Å'], a: 0,
+      why: 'nλ = 2d sin θ：1.54 = 2d × 0.5，d = 1.54 Å。' },
+    { src: '義守 109 第 11 題', q: '²²²Rn 進行 α 衰變的產物是？', o: ['²¹⁸Po', '²¹⁸Ra', '²²²Fr', '²²⁶Ra'], a: 0,
+      why: '質量數 −4、原子序 −2：86 − 2 = 84（Po）。', show: { w: 'nucstab', set: { i: 6 } } },
+    { src: '慈濟 115 第 4 題', q: 'PET 造影使用 ¹⁸F，它的衰變產物與放出的粒子為？', o: ['¹⁸O 與正子', '¹⁸Ne 與電子', '¹⁴N 與 α 粒子', '¹⁸F 與 γ 射線'], a: 0,
+      why: '¹⁸F 質子偏多，β⁺ 衰變使原子序 −1。', show: { w: 'nucstab', set: { i: 4 } } },
+    { src: '慈濟 111 第 47 題', q: '下列何者不帶電？', o: ['γ 射線', 'α 粒子', 'β 粒子', '正子'], a: 0,
+      why: 'γ 是高能光子。' },
+    { src: '義守 115 第 40 題', q: '某核種的活度在 30.0 秒內由 3200 Bq 降到 100 Bq，半衰期為？', o: ['6.0 秒', '5.0 秒', '7.5 秒', '10 秒'], a: 0,
+      why: '3200 → 100 是 1/32 = (1/2)⁵，30 ÷ 5 = 6.0 秒。', show: { w: 'decay' } },
+    { src: '義守 111 第 3 題', q: '¹³¹I 的半衰期 8.0 天，衰變掉 87.5% 需要多久？', o: ['24 天', '16 天', '32 天', '8 天'], a: 0,
+      why: '剩 12.5% = 1/8，3 個半衰期。', show: { w: 'decay' } },
+    { src: '中國醫藥 109 第 19 題', q: '²H + ³H → ⁴He + n（²H 2.0141、³H 3.0161、⁴He 4.0026、n 1.0087 u），每莫耳反應放出的能量約為？', o: ['1.7 × 10⁹ kJ', '1.7 × 10⁶ kJ', '1.7 × 10¹² kJ', '5.7 × 10⁸ kJ'], a: 0,
+      why: 'Δm = 0.0189 g/mol = 1.89 × 10⁻⁵ kg，E = 1.89 × 10⁻⁵ × 9 × 10¹⁶ ≈ 1.7 × 10¹² J = 1.7 × 10⁹ kJ。', show: { w: 'massdefect', set: { c: 'dt' } } },
+    { src: '中國醫藥 108 第 2 題', q: '太陽的能量主要來自？', o: ['氫的核融合', '核分裂', '化學燃燒', '放射性衰變'], a: 0,
+      why: '氫核融合成氦，質量虧損轉成能量。', show: { w: 'massdefect', set: { c: 'dt' } } },
   ],
 });
 
@@ -2748,6 +2783,8 @@ const TERMS = {
     ['法拉第定律', '電解產生的物質量與通過的電量成正比；電子莫耳數 = It ÷ F。', { w: 'faraday', set: { m: 'Cu', I: 2, t: 30 } }],
   ],
   'phase': [
+    ['冷凍乾燥', '先冷凍，再在三相點以下的低壓讓冰直接昇華的乾燥方法。', { w: 'phase', set: { s: 'water', C: -10, P: 0.002 } }],
+    ['質量虧損', '原子核質量與組成它的質子、中子質量和的差，依 E = Δmc² 換成結合能。', { w: 'massdefect', set: { c: 'he' } }],
     ['三相點', '固、液、氣三相共存的唯一溫度與壓力。', { w: 'phase', set: { s: 'water', C: 0.01, P: 0.006 } }],
     ['臨界點', '超過此溫度與壓力，液體與氣體不再有界線（超臨界流體）。', { w: 'phase', set: { s: 'co2', C: 40, P: 100 } }],
     ['晶格能', '把離子晶體拆成氣態離子所需的能量；電荷越大、半徑越小越大。'],
@@ -5649,6 +5686,97 @@ W.decay = el => {
   $('#dyN', el).oninput = e => { st.n = +e.target.value; draw(); };
   draw();
   return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 4. 蒸氣壓與克勞修斯–克拉佩龍 =====
+   ΔH蒸發 kJ/mol、正常沸點 K（教科書常用值） */
+const VAPL = { water: ['水', 40.7, 373.15], ethanol: ['乙醇', 38.6, 351.4], ipa: ['異丙醇', 44.0, 355.5], ether: ['乙醚', 26.5, 307.6] };
+W.ccvap = el => {
+  const st = { l: 'water', P: 0.70 };
+  el.innerHTML = `${seg('cvS', Object.entries(VAPL).map(([k, v]) => [k, v[0]]), st.l)}<div class="w-row"><label class="rng">外界壓力（atm）<input type="range" id="cvP" min="0.1" max="2" step="0.01"><output class="mono" id="cvO"></output></label></div><div id="cvG"></div><p class="eq" id="cvF"></p><p class="note" id="cvN"></p>`;
+  function draw() {
+    const [nm, H, Tb] = VAPL[st.l], lnP = T => -H * 1000 / 8.314 * (1 / T - 1 / Tb), T = 1 / (1 / Tb - Math.log(st.P) * 8.314 / (H * 1000)), xs = Array.from({ length: 41 }, (_, i) => 2.5 + i * 0.025);
+    $('#cvG', el).innerHTML = chart({ w: 560, h: 240, x: [2.5, 3.5], y: [-3, 1], xt: [2.6, 2.8, 3.0, 3.2, 3.4], yt: [-3, -2, -1, 0, 1], xlab: '1000 / T（K⁻¹）', ylab: 'ln P（atm）', label: '克勞修斯–克拉佩龍' }, (X, Y) =>
+      Object.entries(VAPL).map(([k, v]) => `<path class="tline${k === st.l ? '' : ' faint'}" d="${path(xs.map(x => [X(x), Y(clamp(-v[1] * 1000 / 8.314 * (1 / (1000 / x) - 1 / v[2]), -3, 1))]))}"/>`).join('')
+      + `<line class="mk" x1="${X(2.5)}" x2="${X(3.5)}" y1="${Y(Math.log(st.P))}" y2="${Y(Math.log(st.P))}"/><circle class="dot" cx="${X(1000 / T)}" cy="${Y(Math.log(st.P))}" r="7"/>`);
+    $('#cvF', el).innerHTML = `ln(P₂/P₁) = −(ΔH蒸發/R)(1/T₂ − 1/T₁)　斜率 = −ΔH/R = ${fx(-H * 1000 / 8.314, 0)} K；${fx(st.P, 2)} atm 下的沸點 = <b>${fx(T - 273.15, 1)} °C</b>`;
+    $('#cvN', el).innerHTML = `ln P 對 1/T 是直線，斜率由蒸發熱決定（分子間作用力越強，ΔH 越大、直線越陡）。沸點是蒸氣壓等於外界壓力的溫度：把壓力調低（高山上），水平線往下移，沸點降低。已知兩個溫度的蒸氣壓，就能用上式求出 ΔH蒸發 或其他溫度的蒸氣壓。蒸發時 ΔS = ΔH蒸發 ÷ T沸點（${nm}：${fx(H * 1000 / Tb, 0)} J/(mol·K)）。`;
+    $('#cvP', el).value = st.P; $('#cvO', el).textContent = fx(st.P, 2); pressSeg(el, 'cvS', st.l);
+  }
+  bindSeg(el, 'cvS', v => { st.l = v; draw(); });
+  $('#cvP', el).oninput = e => { st.P = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 5. 加熱曲線：冰 → 水蒸氣 ===== */
+W.heatcurve = el => {
+  const st = { m: 18 };
+  el.innerHTML = `<div class="w-row"><label class="rng">水的質量（g）<input type="range" id="hcM" min="5" max="100" step="1"><output class="mono" id="hcO"></output></label></div><div id="hcG"></div><ol class="cs" id="hcC"></ol><p class="note">溫度不變的兩段是相變化：吸收的熱用來克服分子間作用力，而不是使分子跑更快。汽化熱遠大於熔化熱，因為液體變成氣體要把分子完全拉開。</p>`;
+  function draw() {
+    const n = st.m / 18.02, seg2 = [['冰 −20 → 0 °C', st.m * 2.09 * 20, -20, 0], ['熔化（0 °C）', n * 6.01e3, 0, 0], ['水 0 → 100 °C', st.m * 4.184 * 100, 0, 100], ['汽化（100 °C）', n * 40.7e3, 100, 100], ['水蒸氣 100 → 120 °C', st.m * 2.01 * 20, 100, 120]];
+    const tot = seg2.reduce((a, s) => a + s[1], 0); let q = 0; const pts = [[0, -20]]; seg2.forEach(s => { q += s[1]; pts.push([q / 1000, s[3]]); });
+    $('#hcG', el).innerHTML = chart({ w: 560, h: 230, x: [0, tot / 1000], y: [-30, 130], xt: [0, +(tot / 2000).toFixed(1), +(tot / 1000).toFixed(1)], yt: [-20, 0, 50, 100], xlab: '加入的熱（kJ）', ylab: '溫度（°C）', label: '加熱曲線' }, (X, Y) => `<path class="tline" d="${path(pts.map(([x, y]) => [X(x), Y(y)]))}"/>`);
+    $('#hcC', el).innerHTML = seg2.map(([t, v]) => `<li>${t}：${fx(v / 1000, 2)} kJ</li>`).join('') + `<li>合計 ${fx(tot / 1000, 2)} kJ（升溫用 q = mcΔT；相變化用 q = n·ΔH）</li>`;
+    $('#hcM', el).value = st.m; $('#hcO', el).textContent = st.m;
+  }
+  $('#hcM', el).oninput = e => { st.m = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 6. 晶胞的密度：d = Z·M ÷ (Nₐ·a³) ===== */
+W.celldens = el => {
+  const LAT = { sc: ['簡單立方', 1, a => a / 2, '2r = a'], bcc: ['體心立方', 2, a => Math.sqrt(3) * a / 4, '4r = √3·a'], fcc: ['面心立方', 4, a => Math.sqrt(2) * a / 4, '4r = √2·a'] };
+  const st = { l: 'bcc', a: 300, M: 95.95 };
+  el.innerHTML = `${seg('cdS2', Object.entries(LAT).map(([k, v]) => [k, v[0]]), st.l)}<div class="w-row"><label class="rng">邊長 a（pm）<input type="range" id="cdA" min="200" max="600" step="1"><output class="mono" id="cdAo"></output></label><label class="rng">莫耳質量（g/mol）<input type="range" id="cdM" min="20" max="200" step="0.05"><output class="mono" id="cdMo"></output></label></div><div class="cards" id="cdK"></div><p class="eq" id="cdF"></p>`;
+  function draw() {
+    const [nm, Z, rf, rel] = LAT[st.l], a = st.a * 1e-10, d = Z * st.M / (6.022e23 * a ** 3);
+    $('#cdK', el).innerHTML = card('z', '每個晶胞原子數 Z', Z) + card('r', `原子半徑（${rel}）`, `${fx(rf(st.a), 1)} pm`) + card('d', '密度', `${fx(d, 2)} g/cm³`);
+    $('#cdF', el).innerHTML = `d = Z·M ÷ (Nₐ·a³) = ${Z} × ${st.M} ÷ (6.022 × 10²³ × (${st.a} × 10⁻¹⁰ cm)³) = <b>${fx(d, 2)} g/cm³</b>`;
+    $('#cdA', el).value = st.a; $('#cdAo', el).textContent = st.a; $('#cdM', el).value = st.M; $('#cdMo', el).textContent = st.M; pressSeg(el, 'cdS2', st.l);
+  }
+  bindSeg(el, 'cdS2', v => { st.l = v; draw(); });
+  $('#cdA', el).oninput = e => { st.a = +e.target.value; draw(); };
+  $('#cdM', el).oninput = e => { st.M = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 7. 原子核穩定帶：中子與質子比決定衰變方式 ===== */
+const NUCS = [['¹⁴C', 6, 8, 'β⁻', '¹⁴N'], ['³H', 1, 2, 'β⁻', '³He'], ['⁹⁰Sr', 38, 52, 'β⁻', '⁹⁰Y'], ['¹³¹I', 53, 78, 'β⁻', '¹³¹Xe'], ['¹⁸F', 9, 9, 'β⁺', '¹⁸O'], ['¹¹C', 6, 5, 'β⁺', '¹¹B'], ['²²²Rn', 86, 136, 'α', '²¹⁸Po'], ['²³⁸U', 92, 146, 'α', '²³⁴Th'], ['⁶⁰Co', 27, 33, 'β⁻', '⁶⁰Ni']];
+W.nucstab = el => {
+  let cur = 6;
+  el.innerHTML = `<div class="w-row">${NUCS.map(([t], i) => `<button class="btn sm ghost" type="button" data-i="${i}">${t}</button>`).join('')}</div><div id="nsG"></div><p class="eq" id="nsF"></p><p class="note" id="nsN"></p>`;
+  function draw() {
+    const [t, Z, N, mode, prod] = NUCS[cur];
+    $('#nsG', el).innerHTML = chart({ w: 560, h: 260, x: [0, 100], y: [0, 150], xt: [0, 20, 40, 60, 80, 100], yt: [0, 50, 100, 150], xlab: '質子數 Z', ylab: '中子數 N', label: '原子核穩定帶' }, (X, Y) =>
+      `<line class="mk" x1="${X(0)}" y1="${Y(0)}" x2="${X(100)}" y2="${Y(100)}"/><path class="band" d="M${X(0)} ${Y(0)}L${X(20)} ${Y(22)}L${X(50)} ${Y(70)}L${X(83)} ${Y(126)}L${X(83)} ${Y(132)}L${X(50)} ${Y(78)}L${X(20)} ${Y(26)}L${X(0)} ${Y(2)}Z"/><text class="tk" x="${X(60)}" y="${Y(50)}">N = Z</text>`
+      + NUCS.map(([tt, z, n], i) => `<circle class="${i === cur ? 'dot' : 'pt'}" cx="${X(z)}" cy="${Y(n)}" r="${i === cur ? 7 : 4}"/>`).join('') + `<text class="tk hl" x="${X(Z) + 10}" y="${Y(N) + 4}">${t}</text>`);
+    const eq = { 'β⁻': `${t} → ${prod} + ⁰₋₁e`, 'β⁺': `${t} → ${prod} + ⁰₊₁e`, 'α': `${t} → ${prod} + ⁴₂He` }[mode];
+    $('#nsF', el).innerHTML = `${eq}　（質量數與原子序兩邊守恆）`;
+    $('#nsN', el).innerHTML = `${t}：Z = ${Z}、N = ${N}，N/Z = ${fx(N / Z, 2)}。${mode === 'β⁻' ? '中子太多（在穩定帶上方）：一個中子變成質子並放出電子（β⁻），Z + 1。' : mode === 'β⁺' ? '質子太多（在穩定帶下方）：一個質子變成中子並放出正子（β⁺）或捕獲電子，Z − 1。PET 造影用的 ¹⁸F 就是 β⁺ 衰變。' : 'Z > 83 的重原子核都不穩定，常以 α 衰變減少質量數 4、原子序 2。'} 灰色帶是穩定原子核的位置：輕原子核 N ≈ Z，越重需要越多中子。`;
+    $$('[data-i]', el).forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.i === cur)));
+  }
+  $$('[data-i]', el).forEach(b => { b.onclick = () => { cur = +b.dataset.i; draw(); }; });
+  draw();
+  return { set(s) { cur = s.i ?? cur; draw(); } };
+};
+
+/* ===== 8. 質量虧損與核能 ===== */
+W.massdefect = el => {
+  const RX = { dt: ['核融合 ²H + ³H → ⁴He + n', [['²H', 2.01410], ['³H', 3.01605]], [['⁴He', 4.00260], ['n', 1.00866]]], he: ['⁴He 的結合能（2p + 2n → ⁴He）', [['2 × p', 2 * 1.00728], ['2 × n', 2 * 1.00866]], [['⁴He 原子核', 4.00150]]] };
+  let cur = 'dt';
+  el.innerHTML = `${seg('mdS', Object.entries(RX).map(([k, v]) => [k, v[0]]), cur)}<div class="bars pk" id="mdB"></div><p class="eq" id="mdF"></p><p class="note">反應後的總質量比反應前小，少掉的質量 Δm 依 E = Δm·c² 變成能量。1 u 相當於 931.5 MeV；每莫耳反應的能量 = Δm（g/mol 換成 kg/mol）× (3.00 × 10⁸ m/s)²。核反應的能量比化學反應大約一百萬倍，太陽的能量來自氫的核融合。</p>`;
+  function draw() {
+    const [, L, R] = RX[cur], mL = L.reduce((a, x) => a + x[1], 0), mR = R.reduce((a, x) => a + x[1], 0), dm = mL - mR;
+    $('#mdB', el).innerHTML = `<div><span>反應前 ${L.map(x => x[0]).join(' + ')}</span><i class="ba" style="width:100%"></i><b class="mono">${fx(mL, 5)} u</b></div><div class="on"><span>反應後 ${R.map(x => x[0]).join(' + ')}</span><i class="ba" style="width:${mR / mL * 100}%"></i><b class="mono">${fx(mR, 5)} u</b></div>`;
+    $('#mdF', el).innerHTML = `Δm = ${fx(dm, 5)} u → E = ${fx(dm * 931.5, 1)} MeV；每莫耳 ${sci(dm / 1000 * 9e16, 2)} J = ${sci(dm / 1000 * 9e16 / 1000, 2)} kJ`;
+    pressSeg(el, 'mdS', cur);
+  }
+  bindSeg(el, 'mdS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.c || cur; draw(); } };
 };
 
 /* ---------- 後中化學：氧化數、平衡氧化還原、E° 階梯 ---------- */
