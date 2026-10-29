@@ -91,5 +91,11 @@ CH.push({
       why: '電子轉移只發生在電極表面。' },
     { src: '仿 中國醫 110 第 12 題', q: '下列哪一個反應不會放出 CO₂？', o: ['酯以 LiAlH₄ 還原', 'Cbz 保護的胺以 H₂／Pd 去保護', '醯胺的霍夫曼重排', '羧酸銀鹽與 Br₂（漢斯狄克反應）'], a: 0,
       why: 'Cbz 氫解、霍夫曼重排、漢斯狄克反應都失去 CO₂。', show: { w: 'protect', set: { c: 'cbz' } } },
+    { src: '仿 義守 113 第 30 題', q: '由溴苯合成苯甲酸甲酯的合理順序是？', o: ['① Mg, 乙醚 ② CO₂ ③ H₃O⁺ ④ CH₃OH, H⁺', '① NaOH ② CO₂ ③ CH₃OH', '① CH₃ONa ② CO₂', '① Mg ② CH₃OH ③ CO₂'], a: 0,
+      why: '格里納羧化得苯甲酸，再費雪酯化。', show: { w: 'organom', set: { r: 'mg' } } },
+    { src: '仿 中國醫 110 第 3 題', q: '下列反應何者正確？', o: ['RC≡N + DIBAL-H，再 H₂O → RCHO', 'RC≡N + NaBH₄ → RCH₂NH₂', 'RCOOH + NaBH₄ → RCH₂OH', 'RCOCl + H₂O → RCHO'], a: 0,
+      why: 'DIBAL-H 加一次 H⁻ 形成亞胺，水解成醛。' },
+    { src: '仿 中國醫 106 第 4 題', q: '下列反應何者不經過自由基？', o: ['丙烯 + HBr（無過氧化物）', '丙烯 + HBr（有過氧化物）', '羧酸銀鹽 + Br₂（漢斯狄克）', '環己烯 + NBS／光'], a: 0,
+      why: '沒有過氧化物時是離子機構（碳陽離子）。', show: { w: 'radchain', set: {} } },
   ],
 });

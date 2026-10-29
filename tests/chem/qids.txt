@@ -89,6 +89,9 @@ acyl|4t80bp	酸催化酯水解的機構中，下列何者不是中間物？
 acyl|1j6cwiv	丁二酸加熱到高溫，主產物是？
 acyl|a311n0	親核醯基取代的反應性由高到低，何者正確？
 acyl|r7y4ed	γ-丁內酯與過量 CH₃MgBr 反應再酸化，產物是？
+acyl|ynv10z	N,N-二甲基苯甲醯胺以 LiAlH₄ 還原後水解，產物是？
+acyl|swlar4	關於異丁酸 (CH₃)₂CHCOOH 的反應，何者正確？
+acyl|3jkvy2	阿斯匹靈的結構是？
 alcohol|1mn59fv	乙醇（分子量 46）的沸點遠高於二甲醚（分子量 46），主要原因是？
 alcohol|1kmxks9	下列哪一種醇與盧卡斯試劑（濃 HCl／ZnCl₂）反應最快？
 alcohol|j6z6rf	(R)-2-丁醇與 PBr₃ 反應，產物為？
@@ -116,6 +119,9 @@ alcohol|191d82w	下列醇何者最不易被 CrO₃ 氧化？
 alcohol|veo5qj	環戊醇與濃硫酸加熱，最可能的產物是？
 alcohol|1nlolko	HO–CH₂CH₂CH₂CH₂–Br 加入 NaH，主產物是？
 alcohol|b140ls	要把環己醇轉成氯環己烷，最合適的試劑是？
+alcohol|110xrbb	環氧環己烷在 CH₃O⁻／CH₃OH 中開環，產物是？
+alcohol|1d0iacm	合成苄基甲基醚 C₆H₅CH₂OCH₃ 的最佳方法是？
+alcohol|1ondjug	1-甲基環己醇以 H₃PO₄ 加熱，再以過氧酸處理，產物是？
 alkene|wt3id8	丙烯和 HBr 反應的主產物是？
 alkene|h8ys6z	馬可尼可夫規則的根本原因是？
 alkene|10depkz	3-甲基-1-丁烯和 HBr 反應，主產物是？
@@ -142,6 +148,12 @@ alkene|nw26h5	HCl 與 3-甲基-1-丁烯在 0 °C 反應得到 2-氯-2-甲基丁�
 alkene|15wq3bt	最適合把烯還原成烷的方法是？
 alkene|1z0ypzm	cis-2-丁烯與 Br₂ 加成，產物是？
 alkene|zrvep5	要把烯轉成環氧化物，應使用？
+alkene|rgu5ma	要把 2-甲基丙烯轉成 2-溴-2-甲基丙烷，應使用？
+alkene|gluo24	2-己炔以 Na／NH₃(l) 還原，產物的名稱是？
+alkene|1bauxc0	3-甲基-1-戊烯依序以 BH₃·THF、H₂O₂／OH⁻、PCC 處理，產物是
+alkene|1catyc5	1-己烯、cis-3-己烯、trans-3-己烯、2,3-二甲基-2-丁烯的氫化
+alkene|o5u8y0	由丙烯合成 1-疊氮丙烷 CH₃CH₂CH₂N₃ 的最佳方法是？
+alkene|rmwice	要把 2-丁炔完全還原成丁烷，應使用？
 alpha|d8vxv3	2-甲基環己酮在 NaOD/D₂O 中充分反應後，最多有幾個 H 被換成 D？
 alpha|1huy92y	(R)-3-甲基-2-戊酮放在稀 NaOH 中一段時間後，旋光度逐漸變成零，原因
 alpha|vudw2	2-甲基環己酮用 LDA 在 −78 °C 處理後加入 CH₃I，主要產物為？
@@ -173,6 +185,8 @@ alpha|d3hfyv	2-甲基環己酮以鹼催化在過量 D₂O 中處理，每分子�
 alpha|18uk0ru	丁酮以鹼處理得到的陰離子，下列哪些是它的共振式？
 alpha|1x9ii1n	要把環己酮轉成烯胺，最佳試劑是？
 alpha|k1eqwq	2-甲基環己酮以 LDA（−78 °C）處理再加 CH₃Br，主產物是？
+alpha|1rpnak	丙醛在 KOH 中加熱發生醛醇縮合，再以 H₂／Rh 選擇性還原 C=C，產物是
+alpha|ur9k3o	6-氧代庚醛 OHC(CH₂)₄COCH₃ 以 NaOEt 處理，分子內醛醇縮合
 amine|x3vmnh	下列化合物鹼性最強的是？
 amine|std16o	某胺類藥物 pKaH = 9.4，在 pH 7.4 的血液中，以哪一種形式為主？
 amine|1w8d5eb	弱鹼性藥物為什麼主要在小腸而不是胃吸收？
@@ -196,6 +210,10 @@ amine|1h1v80t	2,5-己二酮與 NH₃ 反應的產物是？
 amine|w0p41	欣斯貝格試驗中，二級胺的產物有什麼特徵？
 amine|g3xkfw	在水溶液中鹼性最強的是？
 amine|1azkwkp	吲哚在 0 °C 與 Br₂ 反應，主產物是？
+amine|6luolc	(CH₃)₂NH、CH₃CH₂NH₂、NH₃、C₆H₅NH₂ 的鹼性由高到低？
+amine|16gr7bl	(2-丁基)三甲基銨氫氧化物加熱（霍夫曼消去），主產物是？
+amine|tlce1p	乙醯胺、苯胺、吡啶、甲胺的鹼性由低到高？
+amine|rw1snb	某分子中有醯胺 N、苯胺 N、吡咯 N 與烷胺 N，鹼性最強的是？
 aromatic|wsicks	下列何者具有芳香性？
 aromatic|1rcj4vx	吡咯（pyrrole）的 N 為什麼幾乎沒有鹼性？
 aromatic|1ouma5u	苯和 Br₂/FeBr₃ 反應的產物是溴苯而非二溴環己二烯，主要原因是？
@@ -230,6 +248,17 @@ aromatic|1rrmnhm	苯先以 CH₃COCl／AlCl₃ 反應，再以 Cl₂／FeCl₃ �
 aromatic|948unr	要把 4-氯苯胺轉成 4-氯苯甲胺（ClC₆H₄CH₂NH₂），合理的步驟是？
 aromatic|b0lh1x	異丙苯依序以 O₂ 與 H₃O⁺ 處理，主產物是？
 aromatic|18nf9rs	三個苯環「直線」相接的多環芳香烴是？
+aromatic|13mu63i	對甲氧基苄醇、苄醇、對硝基苄醇在酸中產生碳陽離子，由難到易？
+aromatic|1rvuxd	苯甲醚、甲苯、氯苯、苯乙酮中，傅–克反應性最低的是？
+aromatic|1ogs8l9	苯與丁二酸酐在 AlCl₃ 下反應，產物是？
+aromatic|1bpsauo	苯甲酸先硝化再溴化，主產物是？
+aromatic|jfqihn	苯甲酸苯酯 C₆H₅COOC₆H₅ 溴化時，哪一個環反應？
+aromatic|leshmb	下列反應何者正確？
+aromatic|ru5nni	4-丙基甲苯與過量熱 KMnO₄ 反應再酸化，產物是？
+aromatic|1o5bh5c	親電子芳香取代比苯慢、卻在鄰對位取代的取代基是？
+aromatic|npsyqh	4-硝基聯苯溴化時，Br 主要進入？
+aromatic|1o0uv2l	酚、甲苯、苯、溴苯、硝基苯的溴化反應性由高到低？
+aromatic|1we4bcx	要由苯製備正丙苯（不重排），最合適的方法是？
 atom|8s0wal	⁵⁶Fe³⁺（Fe 的原子序 26）有幾個質子、電子、中子？
 atom|1tqa1gn	下列電磁輻射，頻率由高到低何者正確？
 atom|1blu65y	氫原子的電子從 n = 3 掉到 n = 2，放出的光是什麼顏色？
@@ -346,6 +375,16 @@ biomol|i9es8v	Millad 透明劑是山梨醇的縮醛，以酸催化水解會得�
 biomol|10dprop	色胺酸的側鏈是？
 biomol|1bgsqao	下列 R 基團與胺基酸名稱的組合，何者正確？
 biomol|1ehv9u2	哈沃斯投影中，D-葡萄糖 C2 的 OH 朝下，在費雪投影中它在？
+biomol|1dzdx1	手工皂的皂化反應是哪兩種物質之間的反應？
+biomol|oztpsq	關於 DNA，何者錯誤？
+biomol|fs6t32	關於蛋白質結構，何者正確？
+biomol|1kzf5a6	九胜肽（如催產素）的主鏈上有幾個胜肽鍵？
+biomol|1ki40n6	茚三酮與 α-胺基酸加熱反應，何者正確？
+biomol|owd1my	胜肽合成中最常用來活化羧基、促進偶合的試劑是？
+biomol|ibt6dl	胜肽鍵屬於哪一種鍵結？
+biomol|cpflxw	離胺酸在 pH 7.4 的主要形式，淨電荷為？
+biomol|100qlot	下列何者不含六碳醣？
+biomol|16u0liv	醛己糖的 D／L 由哪一個碳上 OH 的方向決定？
 bonding|1yqwyhp	一個氧原子形成 3 個鍵、有 1 對孤對電子，它的形式電荷是？
 bonding|1bpucub	碳陽離子（例如 (CH₃)₃C⁺）中心碳的混成和形狀為？
 bonding|unye9n	畫共振結構時，下列何者正確？
@@ -363,6 +402,7 @@ bonding|nkdus1	CO₂、CH₃OH、HCOOH、H₂CO 中碳的氧化程度由高到�
 bonding|1v4soiq	下列環烷中，每個 CH₂ 的燃燒熱最大的是？
 bonding|awps7j	環丙烷、環戊烷、環己烷的穩定性由高到低為？
 bonding|adgiqd	下列 C₇H₁₆ 異構物中，何者沸點最高？
+bonding|1f4grjs	盤尼西林的結構中不含下列哪一種官能基？
 carbonyl|j74scs	醛與酮最典型的反應類型是？
 carbonyl|d263hv	丙酮與 CH₃MgBr 反應後再酸處理，產物是？
 carbonyl|150v61p	NaBH₄ 還原丁醛（CH₃CH₂CH₂CHO）得到？
@@ -386,6 +426,8 @@ carbonyl|12516z5	下列哪一個反應不會得到醛或酮？
 carbonyl|1swxwxd	下列何者的產物不是苯甲醛？
 carbonyl|slq82l	丁醛與 CH₃CH₂MgBr 反應，再 H₃O⁺，產物是？
 carbonyl|1g3bley	要分辨乙醛與丙酮，除了托倫斯試劑，還可以用？
+carbonyl|ljpyu5	2-戊酮與 Ph₃P=CH₂ 反應，產物是？
+carbonyl|1xde7zr	要把苯乙酮的 C=O 還原成 CH₂（得乙苯），在鹼性條件下應使用？
 conj|trx8mh	下列何者是共軛二烯？
 conj|17le97q	下列何者的紫外光最大吸收波長最長？
 conj|152sc5y	1,3-丁二烯的 HOMO 是哪一個軌域？
@@ -409,6 +451,10 @@ conj|z3i6z6	下列分子何者的吸收波長最長？
 conj|fdou1y	1,3-丁二烯與反式肉桂酸（trans-C₆H₅CH=CHCOOH）反應，產物中
 conj|1gvcbhf	7-脫氫膽固醇照光轉成前維生素 D₃ 的第一步是？
 conj|182dfmx	下列化合物何者紫外光吸收波長最長？
+conj|1s2aa58	烯丙基苯基醚加熱後只生成一種產物，關於此產物何者正確？
+conj|10om8u0	環戊二烯與乙烯在 200 °C 反應，再經 O₃、Zn 處理，產物的兩個 CHO
+conj|1kr6dw8	4-環己烯-1-甲酸甲酯可由哪兩者以 Diels–Alder 反應製得？
+conj|8flv63	下列哪一項不適用於 Diels–Alder 反應？
 coord|1w6fhez	1 mol 的 [Co(NH₃)₅Cl]Cl₂ 溶於水後加入過量 AgNO₃，可
 coord|lbx92u	K₃[Fe(CN)₆] 中鐵的氧化數與配位數分別為？
 coord|vp3tw1	下列何者的 IUPAC 名稱正確？
@@ -814,6 +860,11 @@ org-acid|bvpblk	維生素 C 的酸性主要來自？
 org-acid|c5qd8m	酸性由強到弱：I 鄰羥基苯甲酸、II 間羥基苯甲酸、III 苯甲酸、IV 對羥基
 org-acid|um7bjq	酸性由弱到強：I 乙酸乙酯（α-H）、II 丙二酸二乙酯、III 乙醯丙酮、IV
 org-acid|bv7un5	pKa 由高到低：I 丁酸、II 2-氯丁酸、III 3-氯丁酸、IV 4-氯丁
+org-acid|12ylsxx	阿斯匹靈（乙醯水楊酸，C₉H₈O₄）中有幾個 sp² 混成的碳？
+org-acid|pw8t77	乙醇、水、酚、乙酸的 pKa 由大到小？
+org-acid|142qe19	三氟乙酸、乙酸、酚、乙醇的酸性由強到弱？
+org-acid|1p4vmjs	丙二酸 HOOC–CH₂–COOH 中，最酸的 H 是？
+org-acid|mpi6dl	HC≡C–CH₂–OH 中三種 H 的酸性由低到高？
 phase|xdi4xh	在高山上煮水，水的沸點比 100 °C 低，原因是？
 phase|gabjse	為什麼在 1 atm 下乾冰不會熔化成液體，而是直接昇華？
 phase|17jtsmc	水的固液平衡線斜率為負，代表？
@@ -883,6 +934,8 @@ radpoly|59xgd7	下列何者不是導電聚合物？
 radpoly|af8ezr	天然橡膠是哪一種單體的聚合物？
 radpoly|26eesi	齊格勒–納塔觸媒（TiCl₄／Al(C₂H₅)₃）用於製備？
 radpoly|zymck	有機玻璃（Plexiglas）是哪一種高分子？
+radpoly|d95up1	聚胺酯（polyurethane）由哪兩類單體聚合而成？
+radpoly|2n0da0	甲苯、乙苯、異丙苯在光照下與 Br₂ 反應，反應性由高到低？
 rxn|1471tai	下列何者能把醯氯 RCOCl 轉成酮 RCOR′ 而不繼續變成醇？
 rxn|9at4zt	格里納試劑與 D₂O 反應，產物是？
 rxn|s110wd	要讓分子中的酮不和格里納試劑反應，應先把它變成？
@@ -910,6 +963,9 @@ rxn|1nondfp	只有 5 毫克的固體產物，下列純化方法何者最不適�
 rxn|145f0kc	關於蒸餾操作，何者錯誤？
 rxn|2mwcrq	關於有機電化學合成，何者錯誤？
 rxn|1lu3pth	下列哪一個反應不會放出 CO₂？
+rxn|19d3bxk	由溴苯合成苯甲酸甲酯的合理順序是？
+rxn|puundn	下列反應何者正確？
+rxn|1fhz95t	下列反應何者不經過自由基？
 sn-e|1cx0q35	SN2 反應的速率式為何？
 sn-e|l4xbd3	(R)-2-溴丁烷和 NaOH 經 SN2 反應，主要產物是什麼？
 sn-e|thpg7a	下列鹵烷進行 SN2 反應，何者最快？
@@ -942,6 +998,11 @@ sn-e|u58x65	在 DMSO 中與 NaCN 取代最快的是？
 sn-e|xpkamj	下列何者在甲醇中取代反應最快？
 sn-e|wp39px	鹵烷與強鹼進行 E2 的速率式為？
 sn-e|108toer	(R)-2-溴戊烷與 NaCN 在 DMSO 中的主產物是？
+sn-e|1tguz99	下列哪一組反應會經過「Nu 與離去基分別在碳的兩側、三個基團共平面」的過渡狀態？
+sn-e|198q96k	三級溴烷在甲醇中進行溶劑解（SN1），加入哪一種溶劑最能加快反應？
+sn-e|1329ieq	能量圖只有一個峰、產物能量低於反應物，最符合？
+sn-e|1nsoqck	下列何者最傾向 SN1？
+sn-e|15554e	2-溴-2-甲基丁烷在乙醇中加熱，得到烯與乙基醚兩種產物，路徑分別是？
 spectro|ndjtag	IR 光譜在 1715 cm⁻¹ 有強而尖的吸收，在 3200–3550 cm⁻
 spectro|1pxqyl9	下列哪一個 IR 特徵最能區分羧酸與醇？
 spectro|uan3xg	乙酸乙酯的 ¹H NMR 中，δ 4.1 的訊號分裂成幾根峰？
@@ -1008,6 +1069,7 @@ stereo|q63vwv	開鏈形式的葡萄糖（2,3,4,5,6-五羥基己醛）有幾個�
 stereo|b6smt5	膽固醇有幾個掌性中心？
 stereo|jzthji	C₅H₁₂ 的構造異構物有 a 種、C₇H₁₆ 有 b 種，a + b = ？
 stereo|a0ocdp	非環狀 C₅H₁₀（含幾何異構物）有幾種？
+stereo|1lsd5v9	cis-1-第三丁基-4-甲基環己烷最穩定的構形是？
 stoich|1ns3yji	3 mol N₂ 與 6 mol H₂ 反應生成 NH₃（N₂ + 3H₂ → 
 stoich|1fm8vvy	將 50.0 mL 的 6.0 M HCl 稀釋成 1.5 M，最後體積應為？
 stoich|bwhek2	下列水溶液何者凝固點最低？
