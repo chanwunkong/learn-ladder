@@ -1037,6 +1037,42 @@ spectro|3xampz	下列何者 C=O 的 IR 頻率最大？
 spectro|8bjjsb	2-甲基戊烷的 DEPT-90 與 DEPT-135 分別有幾個正峰、幾個負峰？
 spectro|rhxefz	下列何者的質譜在 m/z 58 有明顯的峰？
 spectro|15x3tll	¹⁶O₂ 與 ¹⁸O₂ 的力常數相同，它們的振動頻率比（¹⁶O₂ : ¹⁸O₂）
+spectro|1ikhmf3	以 CDCl₃ 為溶劑的 ¹H NMR 中，7.26 ppm 常出現一個小單峰，
+spectro|ay9jdq	C₄H₈O₂ 的 ¹H NMR：3.67（s, 3H）、2.32（q, 2H）、
+spectro|1pe2cpo	關於 NMR，何者正確？
+spectro|1crpmgm	5-壬酮（M = 142）兩側各進行一次麥克拉弗蒂重排後，最終碎片的 m/z 為
+spectro|gajp05	¹H NMR：4.12（q, 2H）、2.05（s, 3H）、1.26（t, 3
+spectro|11w77b	C₆H₁₂O₂ 的 ¹H NMR：4.07（t, 2H）、2.04（s, 3H）
+spectro|13o65w3	苯甲醚苯環上的 H，化學位移最大（最低場）的是？
+spectro|ksmfrj	某溶液在 1.0 cm 樣品槽中吸光度 0.65，濃度 2.6 × 10⁻⁴ M
+spectro|19dz7yv	C₃H₆Br₂ 的 ¹H NMR 只有五重峰（2H）與三重峰（4H），它是？
+spectro|w2wd8r	質譜分析中，分子必須先發生什麼變化？
+spectro|1bzqu1r	下列何者的 ¹H NMR 只有一個單峰、一個三重峰和一個四重峰？
+spectro|uuq0fv	C₁₀H₁₂O，IR 1715 cm⁻¹；¹H NMR：1.05（t, 3H）、
+spectro|16eiee	2-丁酮的 ¹³C NMR 中，最低場（化學位移最大）的是哪一個碳？
+spectro|1f2pnjy	C₈H₁₀O 的 ¹H NMR：2.85（t, 2H）、3.85（t, 2H）、
+spectro|1wv17xp	下列何者的 IR 同時在約 1700 與 2500–3300 cm⁻¹（寬）有明
+spectro|4evipx	氫鍵不會影響下列哪一項？
+spectro|h3rpi7	IR 光譜中用來判斷苯環二取代位置（鄰、間、對）的是？
+spectro|j47wrj	¹H NMR：2.25（s, 3H）、5.20（s, 1H，加 D₂O 消失）、
+spectro|1glmww6	某化合物分子量 72，IR 1715 cm⁻¹；¹H NMR：2.14（s, 3
+spectro|15rmd47	下列官能基何者在 IR 中最難辨認？
+spectro|10imw1w	某藥物同時含 α,β-不飽和酮與飽和酯，兩個 C=O 的 IR 吸收約為？
+spectro|1wgzwuo	某化合物 IR 1715 cm⁻¹，¹H NMR 只有一組三重峰與一組四重峰，它
+spectro|14dt2w4	下列 H 的化學位移由高到低：醛基 H、苯環 H、接 O 的 CH₂、烷基 CH
+spectro|1iy5sud	C₉H₁₀O，IR 1690 cm⁻¹；¹H NMR：1.20（t, 3H）、2
+spectro|1jmvpyb	下列 C₇H₁₆ 何者的 ¹³C NMR 只有 3 個訊號？
+spectro|pd7nlp	C₄H₉Cl 的 ¹H NMR：1.04（d, 6H）、1.95（m, 1H）、
+spectro|ro6qs2	乙醇 CH₃CH₂OH 中 CH₂ 上的兩個 H 屬於？
+spectro|1l77j6o	烯類的偶合常數中，通常最小的是？
+spectro|v8obrb	要判斷分子中的共軛系統，最有用的儀器是？
+spectro|1h6nb2f	下列何者的 ¹H NMR 只有兩個單峰？
+spectro|1nwk87x	丙烷、丙烯、丙醛、1-丙醇、丙酸中，哪些在約 1700 cm⁻¹ 有明顯吸收？
+spectro|ic5bkl	某化合物 ¹H NMR 只有兩個單峰，低場 : 高場 = 2 : 3，最可能是？
+spectro|1qfst3d	2-戊酮 CH₃COCH₂CH₂CH₃ 中各 H 的化學位移，何者正確？
+spectro|u5v4jd	有機分子吸收紫外光後會？
+spectro|1yynmu6	某化合物 λmax = 600 nm（吸收橙光），它看起來是什麼顏色？
+spectro|5e1wak	IR 中判斷羧酸最有用的兩個特徵是？
 stereo|10kn7mg	下列哪一個分子有掌性中心？
 stereo|fs7h1o	依 CIP 規則，下列基團優先順序何者正確？
 stereo|19p41	最低優先的 H 在楔形（朝向你）時，看到 1 → 2 → 3 是順時針，這個掌性
@@ -1070,6 +1106,28 @@ stereo|b6smt5	膽固醇有幾個掌性中心？
 stereo|jzthji	C₅H₁₂ 的構造異構物有 a 種、C₇H₁₆ 有 b 種，a + b = ？
 stereo|a0ocdp	非環狀 C₅H₁₀（含幾何異構物）有幾種？
 stereo|1lsd5v9	cis-1-第三丁基-4-甲基環己烷最穩定的構形是？
+stereo|11f5a14	L-丙胺酸的 α 碳是哪一種組態？
+stereo|1tl56fk	L-抗壞血酸（維生素 C）有 2 個掌性中心，最多有幾個立體異構物？
+stereo|84ecrl	2,3-二溴戊烷有幾個掌性中心、最多幾個立體異構物？
+stereo|s6455a	下列何者有光學活性？
+stereo|1r8lm4v	關於 cis-1,2-二甲基環己烷，何者錯誤？
+stereo|1qw56iz	法尼醇（C₁₅H₂₆O）由幾個異戊二烯單元組成？
+stereo|1h689ai	(R)-2-氯丁烷中，若 H 指向後方，從前方看 Cl → C₂H₅ → CH₃
+stereo|1ttyhjh	費雪投影式在紙面上旋轉 180° 後，代表？
+stereo|ksdr4t	(2R,3R)-2,3-二溴戊烷的非鏡像異構物是？
+stereo|1jz6qly	依 CIP 規則，–Br、–CH₂OH、–CH(CH₃)₂、–H 的優先順序是？
+stereo|ri68kj	(2R,3S)-2,3-二羥基丁酸的鏡像異構物是？
+stereo|wx7ach	前列腺素 E₂ 有幾個立體中心？（C8、C11、C12、C15 為掌性碳，另有兩
+stereo|1v00fam	關於比旋光度 [α]，何者錯誤？
+stereo|sw1sj5	苯乙酮被 H⁻ 從 Re 面還原（優先順序 O > C₆H₅ > CH₃），產物
+stereo|1r2ze5r	可待因有幾個掌性中心？
+stereo|y3monh	天然 L-半胱胺酸的組態是？
+stereo|u9ht7h	cis-2-丁烯與 trans-2-丁烯的關係是？
+stereo|utdh8q	要畫出某費雪投影式的鏡像異構物，最簡單的方法是？
+stereo|1l37mpi	2,3-丁二醇的立體異構物中，哪一個是內消旋？
+stereo|1358c9	下列何者含有掌性中心？
+stereo|vi6609	cis- 與 trans-2-丁烯的混合物以 OsO₄ 雙羥基化，產物以掌性管柱
+stereo|980i0f	(S)-2-丁醇的比旋光度 +13.52°，某樣品為 +4.06°，S 與 R 
 stoich|1ns3yji	3 mol N₂ 與 6 mol H₂ 反應生成 NH₃（N₂ + 3H₂ → 
 stoich|1fm8vvy	將 50.0 mL 的 6.0 M HCl 稀釋成 1.5 M，最後體積應為？
 stoich|bwhek2	下列水溶液何者凝固點最低？
