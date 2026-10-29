@@ -26,18 +26,18 @@ W.disac = el => {
 
 /* ===== 2. 醣的異構關係 ===== */
 // 費雪投影 C2–C5 的 OH 方向（R 右、L 左）
-const SUGF = { glc: ['D-葡萄糖', 'RLRR'], man: ['D-甘露糖', 'LLRR'], gal: ['D-半乳糖', 'RLLR'], all: ['D-阿洛糖', 'RRRR'], lglc: ['L-葡萄糖', 'LRLL'], tal: ['D-塔羅糖', 'LLLR'] };
+const SUGF = { ery: ['D-赤藻糖', 'RR'], thr: ['D-蘇糖', 'LR'], lery: ['L-赤藻糖', 'LL'], lthr: ['L-蘇糖', 'RL'], glc: ['D-葡萄糖', 'RLRR'], man: ['D-甘露糖', 'LLRR'], gal: ['D-半乳糖', 'RLLR'], all: ['D-阿洛糖', 'RRRR'], lglc: ['L-葡萄糖', 'LRLL'], tal: ['D-塔羅糖', 'LLLR'] };
 W.sugarrel = el => {
   const st = { a: 'glc', b: 'gal' };
   const sel = (id, v) => `<select id="${id}">${Object.entries(SUGF).map(([k, x]) => `<option value="${k}"${k === v ? ' selected' : ''}>${x[0]}</option>`).join('')}</select>`;
   el.innerHTML = `<div class="w-row"><label class="sel">醣 1 ${sel('srA', st.a)}</label><label class="sel">醣 2 ${sel('srB', st.b)}</label></div><div id="srG"></div><div class="cards" id="srK"></div><p class="note">比較 C2–C5 每個掌性碳的 OH 在右（R）或左（L）：全部相反是<b>鏡像異構物</b>（D 與 L）；只有一個不同是<b>差向異構物</b>（epimer，一種非鏡像異構物）；其他是一般的非鏡像異構物。環化後 C1 的 α／β 稱為<b>變旋異構物</b>（anomer），也是非鏡像異構物。</p>`;
   function draw() {
     const [na, fa] = SUGF[st.a], [nb, fb] = SUGF[st.b];
-    const fis = (f, x, nm) => `<text x="${x}" y="22" text-anchor="middle" style="font-size:14px;fill:var(--ink)">CHO</text>${[...f].map((c, i) => { const y = 50 + i * 30; return `<line x1="${x - 30}" x2="${x + 30}" y1="${y}" y2="${y}" style="stroke:var(--ink)"/><text x="${x + (c === 'R' ? 44 : -44)}" y="${y + 5}" text-anchor="middle" style="font-size:13px;fill:var(--c2)">OH</text><text class="tk" x="${x - 8}" y="${y - 4}">C${i + 2}</text>`; }).join('')}<line x1="${x}" x2="${x}" y1="28" y2="170" style="stroke:var(--ink)"/><text x="${x}" y="188" text-anchor="middle" style="font-size:13px;fill:var(--ink)">CH₂OH</text><text class="tk" x="${x}" y="208" text-anchor="middle">${nm}</text>`;
+    const fis = (f, x, nm) => `<text x="${x}" y="22" text-anchor="middle" style="font-size:14px;fill:var(--ink)">CHO</text>${[...f].map((c, i) => { const y = 50 + i * 30; return `<line x1="${x - 30}" x2="${x + 30}" y1="${y}" y2="${y}" style="stroke:var(--ink)"/><text x="${x + (c === 'R' ? 44 : -44)}" y="${y + 5}" text-anchor="middle" style="font-size:13px;fill:var(--c2)">OH</text><text class="tk" x="${x - 8}" y="${y - 4}">C${i + 2}</text>`; }).join('')}<line x1="${x}" x2="${x}" y1="28" y2="${50 + f.length * 30 - 10}" style="stroke:var(--ink)"/><text x="${x}" y="${50 + f.length * 30 + 8}" text-anchor="middle" style="font-size:13px;fill:var(--ink)">CH₂OH</text><text class="tk" x="${x}" y="${50 + f.length * 30 + 28}" text-anchor="middle">${nm}</text>`;
     $('#srG', el).innerHTML = `<svg class="en" viewBox="0 0 460 215" style="max-width:460px;margin:auto" role="img" aria-label="費雪投影">${fis(fa, 120, na)}${fis(fb, 340, nb)}</svg>`;
-    const diff = [...fa].map((c, i) => c !== fb[i] ? i + 2 : 0).filter(Boolean);
-    const rel = st.a === st.b ? '同一個化合物' : diff.length === 4 ? '鏡像異構物' : diff.length === 1 ? `C${diff[0]} 差向異構物（非鏡像異構物）` : '非鏡像異構物';
-    $('#srK', el).innerHTML = card('d', '不同的掌性碳', diff.length ? diff.map(d => 'C' + d).join('、') : '無') + card('r', '關係', rel);
+    const same = fa.length === fb.length, diff = same ? [...fa].map((c, i) => c !== fb[i] ? i + 2 : 0).filter(Boolean) : [];
+    const rel = !same ? '碳數不同（四碳醣與六碳醣），不是異構物' : st.a === st.b ? '同一個化合物' : diff.length === fa.length ? '鏡像異構物' : diff.length === 1 ? `C${diff[0]} 差向異構物（非鏡像異構物）` : '非鏡像異構物';
+    $('#srK', el).innerHTML = card('l', 'D 或 L（看最下面的掌性碳）', `${na}：${fa.slice(-1) === 'R' ? 'D' : 'L'}；${nb}：${fb.slice(-1) === 'R' ? 'D' : 'L'}`) + card('d', '不同的掌性碳', !same ? '—' : diff.length ? diff.map(d => 'C' + d).join('、') : '無') + card('r', '關係', rel);
   }
   $('#srA', el).onchange = e => { st.a = e.target.value; draw(); };
   $('#srB', el).onchange = e => { st.b = e.target.value; draw(); };

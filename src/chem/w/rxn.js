@@ -72,3 +72,49 @@ W.named = el => {
   draw();
   return { set(s) { cat = s.c || cat; draw(); } };
 };
+
+/* ===== 4. 過渡金屬催化與卡賓 ===== */
+const TMC = {
+  suz: ['鈴木偶合（Suzuki–Miyaura）', 'Ar–B(OH)₂（有機硼）+ Ar′–X', 'Pd(0)，鹼', 'Ar–Ar′（聯芳基）', '硼試劑穩定、毒性低，最常用。'],
+  hek: ['赫克反應（Heck）', 'Ar–X 或 Ar–OTf（三氟甲磺酸酯）+ 烯', 'Pd(0)，鹼', 'Ar–CH=CH–R（取代烯，通常反式）', '芳基接到烯的末端碳上，不需要另一個有機金屬試劑。'],
+  sti: ['史蒂勒偶合（Stille）', 'R–SnBu₃（有機錫）+ R′–X', 'Pd(0)', 'R–R′', '錫試劑耐受多數官能基，但有毒。'],
+  son: ['薗頭偶合（Sonogashira）', '<b>末端炔</b> H–C≡C–R + Ar–X', 'Pd(0)，CuI，胺', 'Ar–C≡C–R', '需要末端炔的 C–H（被 Cu 活化），內炔不能用。'],
+  rcm: ['閉環烯烴複分解（RCM）', '兩端各有一個 C=C 的二烯', '格拉布斯催化劑（Ru=CHPh 錯合物）', '環烯 + CH₂=CH₂↑', '兩個 C=C「交換夥伴」：兩端的 =CH₂ 結合成乙烯離開，中間連成環上的 C=C。1,7-辛二烯 → 環己烯。'],
+  wil: ['威爾金森催化劑', '烯 + H₂', 'RhCl(PPh₃)₃（均相）', '烷', '溶在有機溶劑中的均相氫化觸媒，優先氫化取代較少、較不擠的雙鍵。'],
+  carb: ['卡賓（碳烯）', 'CHCl₃ + KOH（或 t-BuOK）；CH₂N₂ 照光', '—', ':CCl₂、:CH₂ 加到烯上得環丙烷', 'CHCl₃ 被鹼拿走 H，再失去 Cl⁻（α-脫去）得到二氯卡賓；重氮甲烷照光放出 N₂ 得 :CH₂。卡賓的碳只有 6 個價電子、不帶電，同側加到雙鍵上。西蒙斯–史密斯試劑（CH₂I₂／Zn(Cu)）是類卡賓。'],
+};
+W.tmcat = el => {
+  let cur = 'son';
+  el.innerHTML = `${seg('tmS', Object.entries(TMC).map(([k, v]) => [k, v[0].split('（')[0]]), cur)}<div class="cards" id="tmK"></div><p class="note" id="tmN"></p>`;
+  function draw() {
+    const [n, r, c, p, w] = TMC[cur];
+    $('#tmK', el).innerHTML = card('r', '反應物', r) + card('c', '催化劑', c) + card('p', '產物', p);
+    $('#tmN', el).innerHTML = `<b>${n}</b>：${w}`;
+    pressSeg(el, 'tmS', cur);
+  }
+  bindSeg(el, 'tmS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.k || cur; draw(); } };
+};
+
+/* ===== 5. 實驗室純化方法 ===== */
+const PUR = {
+  rec: ['再結晶', '溶解度隨溫度改變：熱溶劑溶解、冷卻後純物質析出，雜質留在溶液', '固體，數百毫克以上', '量太少時晶體難以析出又會損失在母液中，<b>不適合毫克級</b>。'],
+  ext: ['萃取', '兩個不互溶的溶劑中的分配係數不同；可配合酸鹼改變電荷', '任何規模', '分液漏斗振盪後要排氣；密度大的溶劑在下層（CH₂Cl₂ 在下、乙醚在上）。'],
+  dis: ['蒸餾／分餾', '沸點不同', '液體，通常數克以上', '加沸石避免突沸；溫度計水銀球放在側管口；冷凝水下進上出。乙醇與水形成共沸物，蒸餾最多只到約 95.6% 乙醇，所以釀造酒蒸餾後仍是乙醇與水的混合物。'],
+  chr: ['層析（TLC、管柱）', '在固定相（矽膠，極性）與移動相之間的分配不同', '毫克到克，<b>最適合少量</b>', '極性越大的化合物吸附越強、移動越慢、Rf 越小；Rf = 樣品移動距離 ÷ 溶劑前緣距離。'],
+  sub: ['昇華', '固體直接變成氣體再凝結', '少量揮發性固體', '如樟腦、萘、咖啡因的純化。'],
+};
+W.purify = el => {
+  let cur = 'chr';
+  el.innerHTML = `${seg('puS', Object.entries(PUR).map(([k, v]) => [k, v[0]]), cur)}<div class="cards" id="puK"></div><p class="note" id="puN"></p>`;
+  function draw() {
+    const [n, p, s, w] = PUR[cur];
+    $('#puK', el).innerHTML = card('p', '分離原理', p) + card('s', '適合的量', s);
+    $('#puN', el).innerHTML = `<b>${n}</b>：${w}`;
+    pressSeg(el, 'puS', cur);
+  }
+  bindSeg(el, 'puS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.p || cur; draw(); } };
+};
