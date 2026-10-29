@@ -31,9 +31,9 @@ W.aminetable = el => {
     ['反應', '芳香一級胺 + NaNO₂／HCl（0–5 °C）', '芳香重氮鹽 ArN₂⁺', 'N₂ 是極好的離去基：加 CuCl、CuBr、CuCN（桑德邁爾反應）換成 Cl、Br、CN；加水加熱成酚；加 H₃PO₂ 換成 H。也能和苯酚偶合成偶氮染料。'],
   ];
   let cur = 0;
-  el.innerHTML = `<div class="tscroll"><table class="tbl sel-tbl" id="atT"><thead><tr><th></th><th>試劑</th><th>產物</th></tr></thead><tbody>${R.map((r, i) => `<tr data-i="${i}" tabindex="0"><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}</tbody></table></div><p class="note" id="atN"></p>`;
-  function draw() { $$('#atT tbody tr', el).forEach((t, i) => t.classList.toggle('on', i === cur)); $('#atN', el).innerHTML = `<b>${R[cur][1]}</b>：${R[cur][3]}`; }
-  $$('#atT tbody tr', el).forEach(t => { t.onclick = t.onkeydown = e => { if (e.type === 'keydown' && e.key !== 'Enter') return; cur = +t.dataset.i; draw(); }; });
+  el.innerHTML = `<label class="sel">反應 <select id="atS">${R.map((r, i) => `<option value="${i}">${r[0]}：${r[1]}</option>`).join('')}</select></label><div class="cards" id="atK"></div><p class="note" id="atN"></p>`;
+  function draw() { $('#atS', el).value = cur; $('#atK', el).innerHTML = card('r', '試劑', R[cur][1]) + card('p', '產物', R[cur][2]); $('#atN', el).innerHTML = R[cur][3]; }
+  $('#atS', el).onchange = e => { cur = +e.target.value; draw(); };
   draw();
   return { set(s) { cur = s.i ?? cur; draw(); } };
 };
