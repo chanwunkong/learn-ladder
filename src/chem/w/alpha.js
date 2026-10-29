@@ -115,10 +115,10 @@ W.condtab = el => {
     mannich: ['曼尼希反應', '醛或酮的烯醇', '<b>亞胺離子</b>（甲醛 + 二級胺生成）', 'β-胺基羰基（曼尼希鹼）', 'CH₃COCH₃ + HCHO + (CH₃)₂NH → CH₃COCH₂CH₂N(CH₃)₂', '許多生物鹼的生物合成都經過這一步。'],
   };
   let cur = 'aldol';
-  el.innerHTML = `${seg('cdS', Object.entries(D).map(([k, v]) => [k, v[0]]), cur)}<table class="tbl" id="cdT"></table><p class="note" id="cdN"></p>`;
+  el.innerHTML = `${seg('cdS', Object.entries(D).map(([k, v]) => [k, v[0]]), cur)}<div class="cards" id="cdT"></div><p class="note" id="cdN"></p>`;
   function draw() {
     const d = D[cur];
-    $('#cdT', el).innerHTML = `<tbody><tr><th>親核基（誰當烯醇）</th><td>${d[1]}</td></tr><tr><th>親電子基（被攻擊）</th><td>${d[2]}</td></tr><tr><th>產物</th><td>${d[3]}</td></tr><tr><th>例子</th><td>${d[4]}</td></tr></tbody>`;
+    $('#cdT', el).innerHTML = card('n', '親核基（誰當烯醇）', d[1]) + card('e', '親電子基（被攻擊）', d[2]) + card('p', '產物', d[3]) + card('x', '例子', d[4]);
     $('#cdN', el).innerHTML = `<b>${d[0]}</b>：${d[5]}`;
     pressSeg(el, 'cdS', cur);
   }
