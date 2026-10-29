@@ -52,7 +52,7 @@ W.synth = el => {
     { t: '從苯合成對溴硝基苯（p-BrC₆H₄NO₂）', o: [['先溴化，再硝化', true, 'Br 是鄰對位定位基；對位較不擁擠，是主產物，再分離掉鄰位。'], ['先硝化，再溴化', false, '硝基讓 Br 進入間位。']] },
     { t: '從丙烯合成 1-丙醇', o: [['① BH₃ ② H₂O₂, NaOH', true, '硼氫化–氧化：反馬可尼可夫，OH 在末端。'], ['H₂O, H₂SO₄', false, '酸催化水合是馬可尼可夫，得到 2-丙醇。']] },
     { t: '從溴乙烷合成丙腈 CH₃CH₂CN（多一個碳）', o: [['NaCN（DMSO）', true, 'CN⁻ 對一級鹵烷做 SN2，在極性非質子性溶劑中最快。'], ['KOtBu', false, '體積大的強鹼會做 E2，得到乙烯。']] },
-    { t: '從丙酮合成 2-甲基-2-丁醇', o: [['① CH₃CH₂MgBr ② H₃O⁺', true, '格任亞試劑加到羰基碳，酮 → 三級醇，多接上一個乙基。'], ['① NaBH₄ ② H₃O⁺', false, 'NaBH₄ 只加上 H，得到 2-丙醇。']] },
+    { t: '從丙酮合成 2-甲基-2-丁醇', o: [['① CH₃CH₂MgBr ② H₃O⁺', true, '格里納試劑加到羰基碳，酮 → 三級醇，多接上一個乙基。'], ['① NaBH₄ ② H₃O⁺', false, 'NaBH₄ 只加上 H，得到 2-丙醇。']] },
   ];
   let i = 0, pick = null;
   el.innerHTML = `<div class="w-row" id="syN"></div><p class="qt" id="syT"></p><div class="opts" id="syO"></div><p class="note" id="syF"></p>`;
