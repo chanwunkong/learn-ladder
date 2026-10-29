@@ -16,11 +16,11 @@ W.polyene = el => {
       for (let k = 1; k <= n; k++) {
         const c = Math.sin(j * k * Math.PI / (n + 1)), x = 70 + (k - 1) * (300 / (n - 1 || 1)), rr = 3 + 9 * Math.abs(c), up = c >= 0;
         if (Math.abs(c) < 1e-9) { s += `<circle cx="${x}" cy="${y}" r="2" style="fill:var(--muted)"/>`; continue; }
-        s += `<ellipse cx="${x}" cy="${y - rr * 0.75}" rx="${rr * 0.55}" ry="${rr * 0.75}" style="fill:${up ? '#2F3B99' : 'none'};stroke:#2F3B99;stroke-width:1.4"/><ellipse cx="${x}" cy="${y + rr * 0.75}" rx="${rr * 0.55}" ry="${rr * 0.75}" style="fill:${up ? 'none' : '#2F3B99'};stroke:#2F3B99;stroke-width:1.4"/>`;
+        s += `<ellipse cx="${x}" cy="${y - rr * 0.75}" rx="${rr * 0.55}" ry="${rr * 0.75}" style="fill:${up ? 'var(--c1)' : 'none'};stroke:var(--c1);stroke-width:1.4"/><ellipse cx="${x}" cy="${y + rr * 0.75}" rx="${rr * 0.55}" ry="${rr * 0.75}" style="fill:${up ? 'none' : 'var(--c1)'};stroke:var(--c1);stroke-width:1.4"/>`;
       }
       const el2 = [0, 1].map(i => i < e ? `<text x="${410 + i * 14}" y="${y + 6}" style="font-size:16px;fill:var(--ink)">${i ? '↓' : '↑'}</text>` : '').join('');
       const lab = (!st.ex && j === H) || (st.ex && j === H + 1) ? 'HOMO' : (!st.ex && j === H + 1) ? 'LUMO' : '';
-      s += `<line x1="400" x2="445" y1="${y + 10}" y2="${y + 10}" style="stroke:var(--ink);stroke-width:2"/>${el2}<text class="tk" x="455" y="${y + 4}" style="fill:${lab === 'HOMO' ? '#B5326C' : '#23704A'}">${lab} ${j - 1} 個節面</text>`;
+      s += `<line x1="400" x2="445" y1="${y + 10}" y2="${y + 10}" style="stroke:var(--ink);stroke-width:2"/>${el2}<text class="tk" x="455" y="${y + 4}" style="fill:${lab === 'HOMO' ? 'var(--c2)' : 'var(--c3)'}">${lab} ${j - 1} 個節面</text>`;
       void tag;
     }
     $('#pnG', el).innerHTML = `<svg class="en" viewBox="0 0 ${W0} ${hgt}" style="max-width:${W0}px;margin:auto" role="img" aria-label="π 分子軌域">${s}</svg>`;
@@ -47,9 +47,9 @@ W.electro = el => {
   el.innerHTML = `${seg('ecS', Object.entries(ELC).map(([k, v]) => [k, v[0]]), st.s)}${seg('ecH', [['heat', '加熱 Δ'], ['light', '照光 hν']], st.h)}<div id="ecG"></div><div class="cards" id="ecK"></div><p class="note" id="ecN"></p>`;
   function draw() {
     const [nm, e, P] = ELC[st.s], mode = (e === 4) === (st.h === 'heat') ? 'con' : 'dis';
-    const arc = (x, cw) => `<path d="M${x - 22} 70 A 26 26 0 0 ${cw ? 1 : 0} ${x + 22} 70" style="fill:none;stroke:#B5326C;stroke-width:3" marker-end="url(#eca)"/>`;
-    const lobe = (x, up) => `<ellipse cx="${x}" cy="${110 - 16}" rx="11" ry="16" style="fill:${up ? '#2F3B99' : 'none'};stroke:#2F3B99;stroke-width:1.5"/><ellipse cx="${x}" cy="${110 + 16}" rx="11" ry="16" style="fill:${up ? 'none' : '#2F3B99'};stroke:#2F3B99;stroke-width:1.5"/>`;
-    $('#ecG', el).innerHTML = `<svg class="en" viewBox="0 0 440 170" style="max-width:460px;margin:auto" role="img" aria-label="電環反應"><defs><marker id="eca" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" style="fill:#B5326C"/></marker></defs>
+    const arc = (x, cw) => `<path d="M${x - 22} 70 A 26 26 0 0 ${cw ? 1 : 0} ${x + 22} 70" style="fill:none;stroke:var(--c2);stroke-width:3" marker-end="url(#eca)"/>`;
+    const lobe = (x, up) => `<ellipse cx="${x}" cy="${110 - 16}" rx="11" ry="16" style="fill:${up ? 'var(--c1)' : 'none'};stroke:var(--c1);stroke-width:1.5"/><ellipse cx="${x}" cy="${110 + 16}" rx="11" ry="16" style="fill:${up ? 'none' : 'var(--c1)'};stroke:var(--c1);stroke-width:1.5"/>`;
+    $('#ecG', el).innerHTML = `<svg class="en" viewBox="0 0 440 170" style="max-width:460px;margin:auto" role="img" aria-label="電環反應"><defs><marker id="eca" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" style="fill:var(--c2)"/></marker></defs>
 ${lobe(130, true)}${lobe(310, mode === 'dis')}<line x1="150" x2="290" y1="110" y2="110" style="stroke:var(--muted);stroke-dasharray:4 4"/>${arc(130, true)}${arc(310, mode === 'con')}
 <text class="tk" x="220" y="160" text-anchor="middle">${mode === 'con' ? '順旋：兩端同方向轉' : '對旋：兩端反方向轉'}（藍色瓣要轉到同一側成鍵）</text></svg>`;
     $('#ecK', el).innerHTML = card('e', 'π 電子數', `${e}（${e === 4 ? '4n' : '4n + 2'}）`) + card('m', '旋轉方式', mode === 'con' ? '順旋' : '對旋') + card('p', '產物', P[mode]);

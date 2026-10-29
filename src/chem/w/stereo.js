@@ -193,7 +193,7 @@ W.ee = el => {
 <circle cx="${cx}" cy="${cy}" r="${r}" style="fill:none;stroke:var(--line);stroke-width:2"/><line x1="${cx}" y1="${cy - r}" x2="${cx}" y2="${cy + r}" style="stroke:var(--muted);stroke-dasharray:4 4"/>
 <line x1="${cx - r * Math.sin(t)}" y1="${cy + r * Math.cos(t)}" x2="${cx + r * Math.sin(t)}" y2="${cy - r * Math.cos(t)}" style="stroke:var(--acid);stroke-width:4"/>
 <text class="tk" x="${cx}" y="${cy + r + 18}" text-anchor="middle">偏振面（角度放大 3 倍）</text>
-${bar(260 * x, '#2F3B99', 240)}${bar(260 * (1 - x), '#B5326C', 240 + 260 * x)}
+${bar(260 * x, 'var(--c1)', 240)}${bar(260 * (1 - x), 'var(--c2)', 240 + 260 * x)}
 <text class="tk" x="240" y="60">${p} ${st.x}%</text><text class="tk" x="500" y="60" text-anchor="end">${m} ${100 - st.x}%</text>
 <rect x="240" y="120" width="${260 * Math.abs(ee)}" height="14" style="fill:var(--acid);opacity:.8"/><text class="tk" x="240" y="152">多出來的部分 = 鏡像過量 ${fx(Math.abs(ee) * 100, 0)}%</text></svg>`;
     $('#eeK', el).innerHTML = card('a', '純右旋的比旋光度', `+${a0}°`) + card('o', '混合物的比旋光度', `${obs >= 0 ? '+' : '−'}${fx(Math.abs(obs), 2)}°`) + card('e', '光學純度（ee）', `${fx(Math.abs(ee) * 100, 0)}%`);

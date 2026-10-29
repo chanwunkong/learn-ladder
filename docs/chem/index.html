@@ -86,9 +86,9 @@ h1, h2, h3 { text-wrap: balance; line-height: 1.3; }
 .home-link:hover { color: var(--accent); }
 
 /* 後中化學：沿用學習階梯色票，主色改為實驗室的青綠；化學圖用自己的一組顏色 */
-:root { --accent: #17705F; --soft: #E1F1EC; --water: #DCEBF3; --acid: #3A5FB8; --base: #D2691E; --arrow: #C0386F; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --accent: #5CCDB6; --accent-ink: #0B231E; --soft: #15302A; --water: #1C2B33; --acid: #8EA9F2; --base: #F0A060; --arrow: #F07DB0; } }
-:root[data-theme="dark"] { --accent: #5CCDB6; --accent-ink: #0B231E; --soft: #15302A; --water: #1C2B33; --acid: #8EA9F2; --base: #F0A060; --arrow: #F07DB0; }
+:root { --accent: #17705F; --soft: #E1F1EC; --water: #DCEBF3; --acid: #3A5FB8; --base: #D2691E; --arrow: #C0386F; --c1: #2F3B99; --c2: #B5326C; --c3: #23704A; --c4: #8F5400; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --accent: #5CCDB6; --accent-ink: #0B231E; --soft: #15302A; --water: #1C2B33; --acid: #8EA9F2; --base: #F0A060; --arrow: #F07DB0; --c1: #8EA9F2; --c2: #F07DB0; --c3: #6FCF97; --c4: #F0A060; } }
+:root[data-theme="dark"] { --accent: #5CCDB6; --accent-ink: #0B231E; --soft: #15302A; --water: #1C2B33; --acid: #8EA9F2; --base: #F0A060; --arrow: #F07DB0; --c1: #8EA9F2; --c2: #F07DB0; --c3: #6FCF97; --c4: #F0A060; }
 body { margin: 0; }
 .top-in .prog { margin-left: auto; display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
 .prog .bar { width: 90px; height: 6px; background: var(--sunk); border-radius: 3px; overflow: hidden; }
@@ -478,6 +478,7 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
   .rng { flex-basis: 100%; min-width: 0; }
   .rng input { min-width: 0; }
   .rng output { min-width: 52px; }
+  .eq { white-space: normal; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
@@ -4536,7 +4537,7 @@ W.kaladder = el => {
 
 /* ===== 4. 多質子酸的物種分布 ===== */
 const POLY = { h3po4: ['H₃PO₄', [2.15, 7.20, 12.35], ['H₃PO₄', 'H₂PO₄⁻', 'HPO₄²⁻', 'PO₄³⁻']], ox: ['草酸 H₂C₂O₄', [1.25, 4.27], ['H₂C₂O₄', 'HC₂O₄⁻', 'C₂O₄²⁻']], co3: ['碳酸 H₂CO₃', [6.35, 10.33], ['H₂CO₃', 'HCO₃⁻', 'CO₃²⁻']] };
-const PCOL = ['#2F3B99', '#B5326C', '#23704A', '#8F5400'];
+const PCOL = ['var(--c1)', 'var(--c2)', 'var(--c3)', 'var(--c4)'];
 W.polyprot = el => {
   const st = { a: 'h3po4', pH: 7 };
   el.innerHTML = `${seg('ppS', Object.entries(POLY).map(([k, v]) => [k, v[0]]), st.a)}<div class="w-row"><label class="rng">pH<input type="range" id="ppH" min="0" max="14" step="0.05"><output class="mono" id="ppO"></output></label></div><div id="ppG"></div><div class="cards" id="ppK"></div><p class="note" id="ppN"></p>`;
@@ -4633,7 +4634,7 @@ W.hydro = el => {
   el.innerHTML = `<label class="sel">化合物 <select id="hyS">${HYDR.map((h, i) => `<option value="${i}">${h[0]}</option>`).join('')}</select></label><div id="hyG"></div><div class="cards" id="hyK"></div><p class="note" id="hyN"></p>`;
   function draw() {
     const [, a, b, pa, pb, why] = HYDR[cur];
-    $('#hyG', el).innerHTML = `<svg class="en" viewBox="0 0 460 90" style="max-width:480px;margin:auto" role="img" aria-label="水解切斷位置"><text x="220" y="50" text-anchor="end" style="font-size:20px;fill:#2F3B99">${a}</text><line x1="230" x2="230" y1="15" y2="75" style="stroke:#B5326C;stroke-width:3;stroke-dasharray:5 4"/><text x="240" y="50" style="font-size:20px;fill:#23704A">${b}</text><text class="tk" x="230" y="88" text-anchor="middle">H₂O 從這裡切開（醯基–雜原子鍵）</text></svg>`;
+    $('#hyG', el).innerHTML = `<svg class="en" viewBox="0 0 460 90" style="max-width:480px;margin:auto" role="img" aria-label="水解切斷位置"><text x="220" y="50" text-anchor="end" style="font-size:20px;fill:var(--c1)">${a}</text><line x1="230" x2="230" y1="15" y2="75" style="stroke:var(--c2);stroke-width:3;stroke-dasharray:5 4"/><text x="240" y="50" style="font-size:20px;fill:var(--c3)">${b}</text><text class="tk" x="230" y="88" text-anchor="middle">H₂O 從這裡切開（醯基–雜原子鍵）</text></svg>`;
     $('#hyK', el).innerHTML = card('a', '醯基 → 羧酸', pa) + card('b', '另一半', pb);
     $('#hyN', el).innerHTML = `${why} 羧酸衍生物水解一定切在<b>羰基碳與 O（或 N、Cl）之間</b>：藍色的醯基部分加上 OH 成為羧酸，綠色部分加上 H 成為醇、酚或胺。容易水解的順序：醯氯 > 酸酐 > 酯 > 醯胺。`;
   }
@@ -4678,7 +4679,7 @@ W.lactone = el => {
   function draw() {
     const [, n, why] = LACT[cur];
     let s = '';
-    if (n) { const R = 55, cx = 230, cy = 80; for (let k = 0; k < n; k++) { const a1 = (-90 + 360 * k / n) * Math.PI / 180, a2 = (-90 + 360 * (k + 1) / n) * Math.PI / 180; s += `<line x1="${cx + R * Math.cos(a1)}" y1="${cy + R * Math.sin(a1)}" x2="${cx + R * Math.cos(a2)}" y2="${cy + R * Math.sin(a2)}" style="stroke:${n <= 4 ? '#B5326C' : '#23704A'};stroke-width:3"/>`; } s += `<text class="tk" x="${cx}" y="${cy + 5}" text-anchor="middle">${n} 員環</text>`; }
+    if (n) { const R = 55, cx = 230, cy = 80; for (let k = 0; k < n; k++) { const a1 = (-90 + 360 * k / n) * Math.PI / 180, a2 = (-90 + 360 * (k + 1) / n) * Math.PI / 180; s += `<line x1="${cx + R * Math.cos(a1)}" y1="${cy + R * Math.sin(a1)}" x2="${cx + R * Math.cos(a2)}" y2="${cy + R * Math.sin(a2)}" style="stroke:${n <= 4 ? 'var(--c2)' : 'var(--c3)'};stroke-width:3"/>`; } s += `<text class="tk" x="${cx}" y="${cy + 5}" text-anchor="middle">${n} 員環</text>`; }
     else s = `<text x="230" y="80" text-anchor="middle" style="font-size:18px;fill:var(--ink)">HOOC–CH₂–COOH → CH₃COOH + CO₂↑</text>`;
     $('#laG', el).innerHTML = `<svg class="en" viewBox="0 0 460 160" style="max-width:480px;margin:auto" role="img" aria-label="環的大小">${s}</svg>`;
     $('#laN', el).innerHTML = `${why} 規律：分子內反應形成<b>五員或六員環</b>最快，因為鍵角接近理想值、兩端也容易碰到；三、四員環有很大的環張力。`;
@@ -5251,7 +5252,7 @@ const NRATE = [['酚 C₆H₅OH', 1000, 'a', '強活化（孤對電子共振推�
 W.easrate = el => {
   let cur = 1;
   el.innerHTML = `<div id="erG"></div><div class="cards" id="erK"></div><p class="note" id="erN"></p>`;
-  const COL = { a: '#23704A', n: 'var(--muted)', h: '#8F5400', d: '#B5326C' };
+  const COL = { a: 'var(--c3)', n: 'var(--muted)', h: 'var(--c4)', d: 'var(--c2)' };
   function draw() {
     $('#erG', el).innerHTML = chart({ x: [-8, 3.5], y: [0, NRATE.length], xt: [-8, -6, -4, -2, 0, 2], xlab: 'log（硝化相對速率，苯 = 0）', h: 260, label: '硝化相對速率' }, (X, Y) => NRATE.map(([n, r, k], i) => { const y = Y(NRATE.length - i - 0.5), lr = Math.log10(r); return `<g data-i="${i}" style="cursor:pointer"><rect x="${Math.min(X(0), X(lr))}" y="${y - 12}" width="${Math.max(2, Math.abs(X(lr) - X(0)))}" height="24" style="fill:${COL[k]};opacity:${i === cur ? 1 : 0.55}"/><text class="tk" x="${lr >= 0 ? X(0) - 6 : X(0) + 6}" y="${y + 4}" text-anchor="${lr >= 0 ? 'end' : 'start'}" style="fill:var(--ink)">${n}</text></g>`; }).join('') + `<line x1="${X(0)}" x2="${X(0)}" y1="${Y(0)}" y2="${Y(NRATE.length)}" style="stroke:var(--ink)"/>`);
     const [n, r, , t, pos] = NRATE[cur];
@@ -5699,7 +5700,7 @@ W.sugarrel = el => {
   el.innerHTML = `<div class="w-row"><label class="sel">醣 1 ${sel('srA', st.a)}</label><label class="sel">醣 2 ${sel('srB', st.b)}</label></div><div id="srG"></div><div class="cards" id="srK"></div><p class="note">比較 C2–C5 每個掌性碳的 OH 在右（R）或左（L）：全部相反是<b>鏡像異構物</b>（D 與 L）；只有一個不同是<b>差向異構物</b>（epimer，一種非鏡像異構物）；其他是一般的非鏡像異構物。環化後 C1 的 α／β 稱為<b>變旋異構物</b>（anomer），也是非鏡像異構物。</p>`;
   function draw() {
     const [na, fa] = SUGF[st.a], [nb, fb] = SUGF[st.b];
-    const fis = (f, x, nm) => `<text x="${x}" y="22" text-anchor="middle" style="font-size:14px;fill:var(--ink)">CHO</text>${[...f].map((c, i) => { const y = 50 + i * 30; return `<line x1="${x - 30}" x2="${x + 30}" y1="${y}" y2="${y}" style="stroke:var(--ink)"/><text x="${x + (c === 'R' ? 44 : -44)}" y="${y + 5}" text-anchor="middle" style="font-size:13px;fill:#B5326C">OH</text><text class="tk" x="${x - 8}" y="${y - 4}">C${i + 2}</text>`; }).join('')}<line x1="${x}" x2="${x}" y1="28" y2="170" style="stroke:var(--ink)"/><text x="${x}" y="188" text-anchor="middle" style="font-size:13px;fill:var(--ink)">CH₂OH</text><text class="tk" x="${x}" y="208" text-anchor="middle">${nm}</text>`;
+    const fis = (f, x, nm) => `<text x="${x}" y="22" text-anchor="middle" style="font-size:14px;fill:var(--ink)">CHO</text>${[...f].map((c, i) => { const y = 50 + i * 30; return `<line x1="${x - 30}" x2="${x + 30}" y1="${y}" y2="${y}" style="stroke:var(--ink)"/><text x="${x + (c === 'R' ? 44 : -44)}" y="${y + 5}" text-anchor="middle" style="font-size:13px;fill:var(--c2)">OH</text><text class="tk" x="${x - 8}" y="${y - 4}">C${i + 2}</text>`; }).join('')}<line x1="${x}" x2="${x}" y1="28" y2="170" style="stroke:var(--ink)"/><text x="${x}" y="188" text-anchor="middle" style="font-size:13px;fill:var(--ink)">CH₂OH</text><text class="tk" x="${x}" y="208" text-anchor="middle">${nm}</text>`;
     $('#srG', el).innerHTML = `<svg class="en" viewBox="0 0 460 215" style="max-width:460px;margin:auto" role="img" aria-label="費雪投影">${fis(fa, 120, na)}${fis(fb, 340, nb)}</svg>`;
     const diff = [...fa].map((c, i) => c !== fb[i] ? i + 2 : 0).filter(Boolean);
     const rel = st.a === st.b ? '同一個化合物' : diff.length === 4 ? '鏡像異構物' : diff.length === 1 ? `C${diff[0]} 差向異構物（非鏡像異構物）` : '非鏡像異構物';
@@ -6000,11 +6001,11 @@ W.polyene = el => {
       for (let k = 1; k <= n; k++) {
         const c = Math.sin(j * k * Math.PI / (n + 1)), x = 70 + (k - 1) * (300 / (n - 1 || 1)), rr = 3 + 9 * Math.abs(c), up = c >= 0;
         if (Math.abs(c) < 1e-9) { s += `<circle cx="${x}" cy="${y}" r="2" style="fill:var(--muted)"/>`; continue; }
-        s += `<ellipse cx="${x}" cy="${y - rr * 0.75}" rx="${rr * 0.55}" ry="${rr * 0.75}" style="fill:${up ? '#2F3B99' : 'none'};stroke:#2F3B99;stroke-width:1.4"/><ellipse cx="${x}" cy="${y + rr * 0.75}" rx="${rr * 0.55}" ry="${rr * 0.75}" style="fill:${up ? 'none' : '#2F3B99'};stroke:#2F3B99;stroke-width:1.4"/>`;
+        s += `<ellipse cx="${x}" cy="${y - rr * 0.75}" rx="${rr * 0.55}" ry="${rr * 0.75}" style="fill:${up ? 'var(--c1)' : 'none'};stroke:var(--c1);stroke-width:1.4"/><ellipse cx="${x}" cy="${y + rr * 0.75}" rx="${rr * 0.55}" ry="${rr * 0.75}" style="fill:${up ? 'none' : 'var(--c1)'};stroke:var(--c1);stroke-width:1.4"/>`;
       }
       const el2 = [0, 1].map(i => i < e ? `<text x="${410 + i * 14}" y="${y + 6}" style="font-size:16px;fill:var(--ink)">${i ? '↓' : '↑'}</text>` : '').join('');
       const lab = (!st.ex && j === H) || (st.ex && j === H + 1) ? 'HOMO' : (!st.ex && j === H + 1) ? 'LUMO' : '';
-      s += `<line x1="400" x2="445" y1="${y + 10}" y2="${y + 10}" style="stroke:var(--ink);stroke-width:2"/>${el2}<text class="tk" x="455" y="${y + 4}" style="fill:${lab === 'HOMO' ? '#B5326C' : '#23704A'}">${lab} ${j - 1} 個節面</text>`;
+      s += `<line x1="400" x2="445" y1="${y + 10}" y2="${y + 10}" style="stroke:var(--ink);stroke-width:2"/>${el2}<text class="tk" x="455" y="${y + 4}" style="fill:${lab === 'HOMO' ? 'var(--c2)' : 'var(--c3)'}">${lab} ${j - 1} 個節面</text>`;
       void tag;
     }
     $('#pnG', el).innerHTML = `<svg class="en" viewBox="0 0 ${W0} ${hgt}" style="max-width:${W0}px;margin:auto" role="img" aria-label="π 分子軌域">${s}</svg>`;
@@ -6031,9 +6032,9 @@ W.electro = el => {
   el.innerHTML = `${seg('ecS', Object.entries(ELC).map(([k, v]) => [k, v[0]]), st.s)}${seg('ecH', [['heat', '加熱 Δ'], ['light', '照光 hν']], st.h)}<div id="ecG"></div><div class="cards" id="ecK"></div><p class="note" id="ecN"></p>`;
   function draw() {
     const [nm, e, P] = ELC[st.s], mode = (e === 4) === (st.h === 'heat') ? 'con' : 'dis';
-    const arc = (x, cw) => `<path d="M${x - 22} 70 A 26 26 0 0 ${cw ? 1 : 0} ${x + 22} 70" style="fill:none;stroke:#B5326C;stroke-width:3" marker-end="url(#eca)"/>`;
-    const lobe = (x, up) => `<ellipse cx="${x}" cy="${110 - 16}" rx="11" ry="16" style="fill:${up ? '#2F3B99' : 'none'};stroke:#2F3B99;stroke-width:1.5"/><ellipse cx="${x}" cy="${110 + 16}" rx="11" ry="16" style="fill:${up ? 'none' : '#2F3B99'};stroke:#2F3B99;stroke-width:1.5"/>`;
-    $('#ecG', el).innerHTML = `<svg class="en" viewBox="0 0 440 170" style="max-width:460px;margin:auto" role="img" aria-label="電環反應"><defs><marker id="eca" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" style="fill:#B5326C"/></marker></defs>
+    const arc = (x, cw) => `<path d="M${x - 22} 70 A 26 26 0 0 ${cw ? 1 : 0} ${x + 22} 70" style="fill:none;stroke:var(--c2);stroke-width:3" marker-end="url(#eca)"/>`;
+    const lobe = (x, up) => `<ellipse cx="${x}" cy="${110 - 16}" rx="11" ry="16" style="fill:${up ? 'var(--c1)' : 'none'};stroke:var(--c1);stroke-width:1.5"/><ellipse cx="${x}" cy="${110 + 16}" rx="11" ry="16" style="fill:${up ? 'none' : 'var(--c1)'};stroke:var(--c1);stroke-width:1.5"/>`;
+    $('#ecG', el).innerHTML = `<svg class="en" viewBox="0 0 440 170" style="max-width:460px;margin:auto" role="img" aria-label="電環反應"><defs><marker id="eca" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" style="fill:var(--c2)"/></marker></defs>
 ${lobe(130, true)}${lobe(310, mode === 'dis')}<line x1="150" x2="290" y1="110" y2="110" style="stroke:var(--muted);stroke-dasharray:4 4"/>${arc(130, true)}${arc(310, mode === 'con')}
 <text class="tk" x="220" y="160" text-anchor="middle">${mode === 'con' ? '順旋：兩端同方向轉' : '對旋：兩端反方向轉'}（藍色瓣要轉到同一側成鍵）</text></svg>`;
     $('#ecK', el).innerHTML = card('e', 'π 電子數', `${e}（${e === 4 ? '4n' : '4n + 2'}）`) + card('m', '旋轉方式', mode === 'con' ? '順旋' : '對旋') + card('p', '產物', P[mode]);
@@ -6147,7 +6148,7 @@ W.cname = el => {
   el.innerHTML = `${seg('cnS', Object.entries(CPLX).map(([k, v]) => [k, v.f]), cur)}<div id="cnG"></div><div class="qeq" id="cnQ"></div><div class="cards" id="cnK"></div><p class="note" id="cnN"></p>`;
   const sg = v => (v > 0 ? `+${v}` : v < 0 ? `−${-v}` : '0');
   const chg = q => (q === 0 ? '' : `${Math.abs(q) > 1 ? Math.abs(q) : ''}${q > 0 ? '+' : '−'}`);
-  const PAL = ['#2F3B99', '#B5326C', '#23704A', '#8F5400'];
+  const PAL = ['var(--c1)', 'var(--c2)', 'var(--c3)', 'var(--c4)'];
   function draw() {
     const d = CPLX[cur], r = cplxInfo(d), cx = 230, cy = 120, R = 84;
     const ang = r.cn === 6 ? [90, 30, -30, -90, -150, 150] : r.cn === 4 ? [90, 0, -90, 180] : [180, 0];
@@ -6947,8 +6948,8 @@ W.dalton = el => {
   el.innerHTML = `<div class="w-row"><label class="rng">O₂（mol）<input type="range" id="dlA" min="0" max="0.5" step="0.01"><output class="mono" id="dlAo"></output></label><label class="rng">N₂（mol）<input type="range" id="dlB" min="0" max="0.5" step="0.01"><output class="mono" id="dlBo"></output></label></div>${seg('dlW', [['0', '乾燥容器'], ['1', '排水集氣（含 25 °C 水蒸氣）']], '0')}<p class="small mut">容器 10.0 L、25 °C</p><div id="dlG"></div><div class="cards" id="dlK"></div><p class="note" id="dlN"></p>`;
   function draw() {
     const k = RL * 298.15 / 10, pa = st.a * k, pb = st.b * k, pw = st.w ? 23.8 / 760 : 0, P = pa + pb + pw, W0 = 520, sc = W0 / Math.max(P, 1.5);
-    const seg2 = [[pa, '#2F3B99', 'O₂'], [pb, '#9AA3A0', 'N₂'], [pw, '#3D9BD6', 'H₂O']]; let x = 20;
-    $('#dlG', el).innerHTML = `<svg class="ch" viewBox="0 0 560 70" role="img" aria-label="分壓">${seg2.map(([p, c, t]) => { const w = p * sc, r = p > 0 ? `<rect x="${x}" y="14" width="${w}" height="32" fill="${c}"/>${w > 44 ? `<text class="wl" x="${x + w / 2}" y="35" text-anchor="middle">${t}</text>` : ''}` : ''; x += w; return r; }).join('')}<text class="tk" x="20" y="64">0</text><text class="tk" x="${Math.min(540, 20 + P * sc)}" y="64" text-anchor="middle">${fx(P, 3)} atm</text></svg>`;
+    const seg2 = [[pa, 'var(--c1)', 'O₂'], [pb, '#9AA3A0', 'N₂'], [pw, '#3D9BD6', 'H₂O']]; let x = 20;
+    $('#dlG', el).innerHTML = `<svg class="ch" viewBox="0 0 560 70" role="img" aria-label="分壓">${seg2.map(([p, c, t]) => { const w = p * sc, r = p > 0 ? `<rect x="${x}" y="14" width="${w}" height="32" style="fill:${c}"/>${w > 44 ? `<text class="wl" x="${x + w / 2}" y="35" text-anchor="middle">${t}</text>` : ''}` : ''; x += w; return r; }).join('')}<text class="tk" x="20" y="64">0</text><text class="tk" x="${Math.min(540, 20 + P * sc)}" y="64" text-anchor="middle">${fx(P, 3)} atm</text></svg>`;
     $('#dlK', el).innerHTML = card('a', 'P(O₂) = n·RT/V', `${fx(pa, 3)} atm`) + card('b', 'P(N₂)', `${fx(pb, 3)} atm`) + (st.w ? card('w', 'P(H₂O)', `${fx(pw, 3)} atm`, '23.8 torr') : '') + card('t', '總壓', `${fx(P, 3)} atm`) + card('x', 'O₂ 的莫耳分率', P ? fx(pa / P, 3) : '—', 'P(O₂) ÷ P總');
     $('#dlN', el).innerHTML = `每種氣體的分壓就像它單獨佔滿容器時的壓力，長條的總長度就是總壓：P總 = ΣPᵢ，Pᵢ = Xᵢ × P總。${st.w ? '用排水集氣法收集時，瓶中的氣體被水蒸氣飽和：要算收集到的氣體，必須先扣掉該溫度的水蒸氣壓。' : ''} 水蒸氣的分壓最多只能等於該溫度的飽和蒸氣壓，多出來的水會凝結成液體。`;
     $('#dlA', el).value = st.a; $('#dlB', el).value = st.b; $('#dlAo', el).textContent = fx(st.a, 2); $('#dlBo', el).textContent = fx(st.b, 2); pressSeg(el, 'dlW', String(st.w));
@@ -7441,7 +7442,7 @@ const BIC = { nb: ['降冰片烷', [2, 2, 1]], bco: ['雙環[2.2.2]辛烷', [2, 
 W.bicyclo = el => {
   let cur = 'nb';
   el.innerHTML = `${seg('bcS', Object.entries(BIC).map(([k, v]) => [k, v[0]]), cur)}<div id="bcG"></div><p class="eq" id="bcF"></p><p class="note">兩個環共用兩個以上的碳時，被共用的兩端稱為<b>橋頭碳</b>。三條連接橋頭碳的「橋」各有幾個碳，由大到小寫在方括號裡，總碳數 = 三條橋的碳數 + 2（兩個橋頭碳），字根依總碳數命名。橋上碳數為 0 表示兩個橋頭碳直接相連（兩環共用一個邊）。</p>`;
-  const COL = ['#2F3B99', '#B5326C', '#23704A'];
+  const COL = ['var(--c1)', 'var(--c2)', 'var(--c3)'];
   function draw() {
     const [nm, br] = BIC[cur], L = [90, 145], R = [430, 145];
     const hd = `<circle cx="${L[0]}" cy="${L[1]}" r="11" style="fill:var(--bg);stroke:var(--ink);stroke-width:2"/><circle cx="${R[0]}" cy="${R[1]}" r="11" style="fill:var(--bg);stroke:var(--ink);stroke-width:2"/><text class="tk" x="${L[0]}" y="${L[1] + 32}" text-anchor="middle">橋頭碳</text><text class="tk" x="${R[0]}" y="${R[1] + 32}" text-anchor="middle">橋頭碳</text>`;
@@ -7566,8 +7567,8 @@ W.deprot = el => {
     const A = DPA[ia];
     $('#dpG', el).innerHTML = chart({ x: [0, 55], y: [0, 10], xt: [0, 10, 20, 30, 40, 50], xlab: 'pKa（鹼的位置 = 共軛酸的 pKa）', h: 250, label: '去質子化' }, (X, Y) => {
       let s = `<line x1="${X(A[1])}" x2="${X(A[1])}" y1="${Y(10)}" y2="${Y(0)}" style="stroke:var(--acid);stroke-width:2"/><text class="tk" x="${X(A[1])}" y="${Y(9.4)}" text-anchor="${A[1] > 40 ? 'end' : 'start'}" dx="${A[1] > 40 ? -4 : 4}" style="fill:var(--acid)">要拿走的 H：pKa ${A[1]}</text>`;
-      s += `<rect x="${X(A[1])}" y="${Y(8.6)}" width="${X(55) - X(A[1])}" height="${Y(0) - Y(8.6)}" style="fill:var(--good, #23704A);opacity:.08"/>`;
-      DPB.forEach(([n, p], j) => { const ok = p > A[1] + 1, y = Y(1 + (j % 4) * 2); const lf = p > 45 || (p < A[1] && A[1] - p < 9); s += `<circle cx="${X(p)}" cy="${y}" r="6" style="fill:${ok ? '#23704A' : 'var(--muted)'}"/><text class="tk" x="${X(p) + (lf ? -9 : 9)}" y="${y + 4}" text-anchor="${lf ? 'end' : 'start'}" style="fill:${ok ? '#23704A' : 'var(--muted)'}">${n}</text>`; });
+      s += `<rect x="${X(A[1])}" y="${Y(8.6)}" width="${X(55) - X(A[1])}" height="${Y(0) - Y(8.6)}" style="fill:var(--good, var(--c3));opacity:.08"/>`;
+      DPB.forEach(([n, p], j) => { const ok = p > A[1] + 1, y = Y(1 + (j % 4) * 2); const lf = p > 45 || (p < A[1] && A[1] - p < 9); s += `<circle cx="${X(p)}" cy="${y}" r="6" style="fill:${ok ? 'var(--c3)' : 'var(--muted)'}"/><text class="tk" x="${X(p) + (lf ? -9 : 9)}" y="${y + 4}" text-anchor="${lf ? 'end' : 'start'}" style="fill:${ok ? 'var(--c3)' : 'var(--muted)'}">${n}</text>`; });
       return s;
     });
     const ok = DPB.filter(b => b[1] > A[1] + 1).map(b => b[0]), no = DPB.filter(b => b[1] <= A[1] + 1).map(b => b[0]);
@@ -8032,7 +8033,7 @@ const HREL = { Cl: [0, 1, 3.8, 5], Br: [0, 1, 82, 1600] };
 W.halog = el => {
   const st = { a: 'dmb', x: 'Cl' };
   el.innerHTML = `${seg('hgA', Object.entries(HALK).map(([k, v]) => [k, v[0]]), st.a)}${seg('hgX', [['Cl', 'Cl₂, 光'], ['Br', 'Br₂, 光']], st.x)}<div id="hgB"></div><p class="small mut">每個 H 的相對反應性：Cl₂ 為 1° : 2° : 3° = 1 : 3.8 : 5；Br₂ 為 1 : 82 : 1600（25 °C，OpenStax《Organic Chemistry》10.3 節）</p><p class="note" id="hgN"></p>`;
-  const COL = ['', '#2F3B99', '#B5326C', '#23704A'];
+  const COL = ['', 'var(--c1)', 'var(--c2)', 'var(--c3)'];
   function draw() {
     const [, P] = HALK[st.a], r = HREL[st.x], w = P.map(([, n, d]) => n * r[d]), T = w.reduce((a, b) => a + b, 0);
     $('#hgB', el).innerHTML = `<div class="bars pk">${P.map(([nm, n, d], i) => `<div><span>${nm.replace(/鹵/g, st.x === 'Cl' ? '氯' : '溴')}</span><i style="width:${Math.max(1, 100 * w[i] / T)}%;background:${COL[d]}"></i><b class="mono">${fx(100 * w[i] / T, 1)}%</b></div>`).join('')}</div>`;
@@ -8090,7 +8091,7 @@ W.poly = el => {
   el.innerHTML = `<label class="sel">聚合物 <select id="poS">${Object.entries(POLYM).map(([k, v]) => `<option value="${k}"${k === cur ? ' selected' : ''}>${v[0]}</option>`).join('')}</select></label><div id="poG"></div><div class="cards" id="poK"></div><p class="note" id="poN"></p>`;
   function draw() {
     const [n, m, u, t, how, use] = POLYM[cur];
-    $('#poG', el).innerHTML = `<svg class="en" viewBox="0 0 520 130" style="max-width:560px;margin:auto" role="img" aria-label="聚合"><text class="tk" x="10" y="30" style="font-size:12px">單體</text><text x="10" y="58" style="font-size:15px;fill:var(--ink)">${m}</text><text class="tk" x="10" y="92" style="font-size:12px">重複單元${t === 'cond' ? '（每接一次失去一個小分子）' : '（原子全部保留）'}</text><text x="10" y="118" style="font-size:15px;fill:${t === 'cond' ? '#B5326C' : '#2F3B99'}">${u}</text></svg>`;
+    $('#poG', el).innerHTML = `<svg class="en" viewBox="0 0 520 130" style="max-width:560px;margin:auto" role="img" aria-label="聚合"><text class="tk" x="10" y="30" style="font-size:12px">單體</text><text x="10" y="58" style="font-size:15px;fill:var(--ink)">${m}</text><text class="tk" x="10" y="92" style="font-size:12px">重複單元${t === 'cond' ? '（每接一次失去一個小分子）' : '（原子全部保留）'}</text><text x="10" y="118" style="font-size:15px;fill:${t === 'cond' ? 'var(--c2)' : 'var(--c1)'}">${u}</text></svg>`;
     $('#poK', el).innerHTML = card('t', '類型', t === 'cond' ? '縮合（逐步成長）' : '加成（連鎖成長）') + card('u', '用途', use);
     $('#poN', el).innerHTML = `<b>${n}</b>：${how}。${t === 'cond' ? '縮合聚合物的單體兩端各有一個官能基（雙官能基），彼此反應時放出 H₂O、HCl 或 CH₃OH 等小分子。' : '加成聚合物由取代乙烯（或開環）單體的 π 鍵逐一打開連接，重複單元的分子式和單體相同。'}`;
   }
@@ -8237,7 +8238,7 @@ W.fgmap = el => {
     let s = FGN.map((g, i) => `<text class="tk" x="${L - 6}" y="${T + i * c + c / 2 + 4}" text-anchor="end">${g}</text><text class="tk" x="${L + i * c + c / 2}" y="${T - 8}" text-anchor="middle" transform="rotate(-45 ${L + i * c + c / 2} ${T - 8})">${g}</text>`).join('');
     for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
       const has = FGX.find(x => x[0] === i && x[1] === j), on = i === st.f && j === st.t;
-      s += `<rect data-f="${i}" data-t="${j}" x="${L + j * c + 1}" y="${T + i * c + 1}" width="${c - 2}" height="${c - 2}" rx="4" style="cursor:${has ? 'pointer' : 'default'};fill:${i === j ? 'var(--line)' : has ? (on ? '#B5326C' : '#2F3B99') : 'var(--surface)'};opacity:${has ? (on ? 1 : 0.55) : 1};stroke:var(--line)"/>`;
+      s += `<rect data-f="${i}" data-t="${j}" x="${L + j * c + 1}" y="${T + i * c + 1}" width="${c - 2}" height="${c - 2}" rx="4" style="cursor:${has ? 'pointer' : 'default'};fill:${i === j ? 'var(--line)' : has ? (on ? 'var(--c2)' : 'var(--c1)') : 'var(--surface)'};opacity:${has ? (on ? 1 : 0.55) : 1};stroke:var(--line)"/>`;
     }
     $('#fmG', el).innerHTML = `<svg class="en" viewBox="0 0 ${L + n * c + 10} ${T + n * c + 10}" style="max-width:460px;margin:auto" role="img" aria-label="官能基互換">${s}</svg>`;
     const x = FGX.find(x => x[0] === st.f && x[1] === st.t);
@@ -8393,7 +8394,7 @@ W.cofreq = el => {
   let cur = 6;
   el.innerHTML = `<div id="cfG"></div><p class="note" id="cfN"></p>`;
   function draw() {
-    $('#cfG', el).innerHTML = chart({ x: [1620, 1840], y: [0, COF.length], xt: [1650, 1700, 1750, 1800], xlab: 'C=O 伸縮振動（cm⁻¹）', h: 300, label: '羰基 IR 頻率' }, (X, Y) => COF.map(([n, v], i) => { const y = Y(COF.length - i - 0.5); return `<g data-i="${i}" style="cursor:pointer"><line x1="${X(1620)}" x2="${X(v)}" y1="${y}" y2="${y}" style="stroke:${i === cur ? '#B5326C' : 'var(--line)'};stroke-width:2"/><circle cx="${X(v)}" cy="${y}" r="7" style="fill:${i === cur ? '#B5326C' : '#2F3B99'}"/><text class="tk" x="${X(v) - 12}" y="${y + 4}" text-anchor="end" style="fill:var(--ink)">${n} ${v}</text></g>`; }).join(''));
+    $('#cfG', el).innerHTML = chart({ x: [1620, 1840], y: [0, COF.length], xt: [1650, 1700, 1750, 1800], xlab: 'C=O 伸縮振動（cm⁻¹）', h: 300, label: '羰基 IR 頻率' }, (X, Y) => COF.map(([n, v], i) => { const y = Y(COF.length - i - 0.5); return `<g data-i="${i}" style="cursor:pointer"><line x1="${X(1620)}" x2="${X(v)}" y1="${y}" y2="${y}" style="stroke:${i === cur ? 'var(--c2)' : 'var(--line)'};stroke-width:2"/><circle cx="${X(v)}" cy="${y}" r="7" style="fill:${i === cur ? 'var(--c2)' : 'var(--c1)'}"/><text class="tk" x="${X(v) - 12}" y="${y + 4}" text-anchor="end" style="fill:var(--ink)">${n} ${v}</text></g>`; }).join(''));
     $$('#cfG [data-i]', el).forEach(g => { g.onclick = () => { cur = +g.dataset.i; draw(); }; });
     $('#cfN', el).innerHTML = `<b>${COF[cur][0]}</b>：${COF[cur][2]}。規律：C=O 鍵越強（越像雙鍵）頻率越高。接上推電子共振的原子（N、共軛的 C=C）會降低頻率；拉電子基與環張力會提高頻率，所以環丙酮 > 環丁酮 > 環戊酮 > 環己酮。`;
   }
@@ -8411,7 +8412,7 @@ W.isopat = el => {
     for (let i = 0; i < st.cl; i++) p = mul(p, [0.758, 0.242]);
     for (let i = 0; i < st.br; i++) p = mul(p, [0.507, 0.493]);
     const mx = Math.max(...p), lab = p.map((_, i) => i ? `M+${2 * i}` : 'M');
-    $('#ipG', el).innerHTML = chart({ x: [-0.6, p.length - 0.4], y: [0, 1.05], yt: [0, 0.5, 1], ylab: '相對強度', h: 220, label: '同位素峰' }, (X, Y) => p.map((v, i) => `<rect x="${X(i) - 18}" y="${Y(v / mx)}" width="36" height="${Y(0) - Y(v / mx)}" style="fill:#2F3B99"/><text class="tk" x="${X(i)}" y="${Y(0) + 16}" text-anchor="middle">${lab[i]}</text><text class="tk" x="${X(i)}" y="${Y(v / mx) - 5}" text-anchor="middle">${fx(100 * v / mx, 0)}</text>`).join(''));
+    $('#ipG', el).innerHTML = chart({ x: [-0.6, p.length - 0.4], y: [0, 1.05], yt: [0, 0.5, 1], ylab: '相對強度', h: 220, label: '同位素峰' }, (X, Y) => p.map((v, i) => `<rect x="${X(i) - 18}" y="${Y(v / mx)}" width="36" height="${Y(0) - Y(v / mx)}" style="fill:var(--c1)"/><text class="tk" x="${X(i)}" y="${Y(0) + 16}" text-anchor="middle">${lab[i]}</text><text class="tk" x="${X(i)}" y="${Y(v / mx) - 5}" text-anchor="middle">${fx(100 * v / mx, 0)}</text>`).join(''));
     $('#ipN', el).innerHTML = `³⁵Cl : ³⁷Cl ≈ 3 : 1、⁷⁹Br : ⁸¹Br ≈ 1 : 1（天然豐度）。每多一個鹵素，就多一根相隔 2 的峰，強度比是二項式展開：一個 Cl 為 3 : 1，兩個 Cl 約 9 : 6 : 1，三個 Cl 約 27 : 27 : 9 : 1；一個 Br 為 1 : 1，兩個 Br 為 1 : 2 : 1。溴乙烷的分子離子出現在 m/z 108 與 110，強度相等。`;
     pressSeg(el, 'ipC', String(st.cl)); pressSeg(el, 'ipB', String(st.br));
   }
@@ -8434,7 +8435,7 @@ W.msfrag = el => {
   el.innerHTML = `${seg('mfS', Object.entries(MSF).map(([k, v]) => [k, v[0].split(' ')[0]]), cur)}<div id="mfG"></div><p class="note" id="mfN"></p>`;
   function draw() {
     const [nm, M, F, extra] = MSF[cur], pk = [[M, '分子離子 M⁺·'], ...F];
-    $('#mfG', el).innerHTML = chart({ x: [20, 150], y: [0, 1.1], xt: [20, 40, 60, 80, 100, 120, 140], xlab: 'm/z', h: 220, label: '質譜' }, (X, Y) => pk.map(([m, t], i) => { const h = i ? 0.5 + 0.4 * ((i * 37) % 10) / 10 : 0.45; return `<line x1="${X(m)}" x2="${X(m)}" y1="${Y(0)}" y2="${Y(h)}" style="stroke:${i ? '#2F3B99' : '#B5326C'};stroke-width:4"/><text class="tk" x="${X(m)}" y="${Y(h) - 5}" text-anchor="middle">${m}</text>`; }).join(''));
+    $('#mfG', el).innerHTML = chart({ x: [20, 150], y: [0, 1.1], xt: [20, 40, 60, 80, 100, 120, 140], xlab: 'm/z', h: 220, label: '質譜' }, (X, Y) => pk.map(([m, t], i) => { const h = i ? 0.5 + 0.4 * ((i * 37) % 10) / 10 : 0.45; return `<line x1="${X(m)}" x2="${X(m)}" y1="${Y(0)}" y2="${Y(h)}" style="stroke:${i ? 'var(--c1)' : 'var(--c2)'};stroke-width:4"/><text class="tk" x="${X(m)}" y="${Y(h) - 5}" text-anchor="middle">${m}</text>`; }).join(''));
     $('#mfN', el).innerHTML = `<b>${nm}</b>（M = ${M}）。${pk.slice(1).map(([m, t]) => `m/z ${m}：${t}`).join('；')}。${extra || ''}<br>分子離子是<b>自由基陽離子</b>（失去一個電子）；α-裂解得到的醯基離子是<b>陽離子</b>，丟掉的另一半是中性自由基，偵測不到。麥克拉弗蒂重排需要羰基（或苯環）的 γ 碳上有 H，經六員環過渡狀態丟掉一個中性的烯，留下的仍是自由基陽離子。峰高為示意。`;
     pressSeg(el, 'mfS', cur);
   }
@@ -8739,7 +8740,7 @@ W.ee = el => {
 <circle cx="${cx}" cy="${cy}" r="${r}" style="fill:none;stroke:var(--line);stroke-width:2"/><line x1="${cx}" y1="${cy - r}" x2="${cx}" y2="${cy + r}" style="stroke:var(--muted);stroke-dasharray:4 4"/>
 <line x1="${cx - r * Math.sin(t)}" y1="${cy + r * Math.cos(t)}" x2="${cx + r * Math.sin(t)}" y2="${cy - r * Math.cos(t)}" style="stroke:var(--acid);stroke-width:4"/>
 <text class="tk" x="${cx}" y="${cy + r + 18}" text-anchor="middle">偏振面（角度放大 3 倍）</text>
-${bar(260 * x, '#2F3B99', 240)}${bar(260 * (1 - x), '#B5326C', 240 + 260 * x)}
+${bar(260 * x, 'var(--c1)', 240)}${bar(260 * (1 - x), 'var(--c2)', 240 + 260 * x)}
 <text class="tk" x="240" y="60">${p} ${st.x}%</text><text class="tk" x="500" y="60" text-anchor="end">${m} ${100 - st.x}%</text>
 <rect x="240" y="120" width="${260 * Math.abs(ee)}" height="14" style="fill:var(--acid);opacity:.8"/><text class="tk" x="240" y="152">多出來的部分 = 鏡像過量 ${fx(Math.abs(ee) * 100, 0)}%</text></svg>`;
     $('#eeK', el).innerHTML = card('a', '純右旋的比旋光度', `+${a0}°`) + card('o', '混合物的比旋光度', `${obs >= 0 ? '+' : '−'}${fx(Math.abs(obs), 2)}°`) + card('e', '光學純度（ee）', `${fx(Math.abs(ee) * 100, 0)}%`);
@@ -8892,7 +8893,7 @@ W.concconv = el => {
   function draw() {
     const [nm, f] = CONC[st.i], Mm = molarM(f), tot = 1000 * st.d, solute = st.M * Mm, water = tot - solute;
     const m = water > 0 ? st.M / (water / 1000) : NaN, X = water > 0 ? st.M / (st.M + water / 18.02) : NaN;
-    $('#ccB', el).innerHTML = `<div><span>1 L 溶液 = ${fx(tot, 1)} g</span><span class="stk"><i class="ba" style="width:${solute / tot * 100}%;background:#B5326C"></i><i class="ba" style="width:${Math.max(0, water) / tot * 100}%;background:#9AA3A0"></i></span><b class="mono">溶質 ${fx(solute, 1)} g</b></div>`;
+    $('#ccB', el).innerHTML = `<div><span>1 L 溶液 = ${fx(tot, 1)} g</span><span class="stk"><i class="ba" style="width:${solute / tot * 100}%;background:var(--c2)"></i><i class="ba" style="width:${Math.max(0, water) / tot * 100}%;background:#9AA3A0"></i></span><b class="mono">溶質 ${fx(solute, 1)} g</b></div>`;
     $('#ccC', el).innerHTML = `<li>取 1 L 溶液：質量 = 1000 mL × ${st.d} g/mL = ${fx(tot, 1)} g</li><li>溶質 ${st.M} mol × ${fx(Mm, 2)} g/mol = ${fx(solute, 1)} g（紅）；溶劑 ${fx(tot, 1)} − ${fx(solute, 1)} = ${fx(water, 1)} g（灰）</li><li>重量莫耳濃度 m = ${st.M} mol ÷ ${fx(water / 1000, 4)} kg</li>`;
     $('#ccK', el).innerHTML = card('M', '體積莫耳濃度', `${fx(st.M, 2)} M`, 'mol / L 溶液') + card('m', '重量莫耳濃度', water > 0 ? `${fx(m, 2)} m` : '—', 'mol / kg 溶劑') + card('x', '溶質莫耳分率', water > 0 ? fx(X, 3) : '—') + card('w', '重量百分率', `${fx(100 * solute / tot, 1)}%`);
     $('#ccM', el).value = st.M; $('#ccMo', el).textContent = fx(st.M, 2); $('#ccD', el).value = st.d; $('#ccDo', el).textContent = fx(st.d, 3);

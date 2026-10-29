@@ -104,7 +104,7 @@ W.concconv = el => {
   function draw() {
     const [nm, f] = CONC[st.i], Mm = molarM(f), tot = 1000 * st.d, solute = st.M * Mm, water = tot - solute;
     const m = water > 0 ? st.M / (water / 1000) : NaN, X = water > 0 ? st.M / (st.M + water / 18.02) : NaN;
-    $('#ccB', el).innerHTML = `<div><span>1 L 溶液 = ${fx(tot, 1)} g</span><span class="stk"><i class="ba" style="width:${solute / tot * 100}%;background:#B5326C"></i><i class="ba" style="width:${Math.max(0, water) / tot * 100}%;background:#9AA3A0"></i></span><b class="mono">溶質 ${fx(solute, 1)} g</b></div>`;
+    $('#ccB', el).innerHTML = `<div><span>1 L 溶液 = ${fx(tot, 1)} g</span><span class="stk"><i class="ba" style="width:${solute / tot * 100}%;background:var(--c2)"></i><i class="ba" style="width:${Math.max(0, water) / tot * 100}%;background:#9AA3A0"></i></span><b class="mono">溶質 ${fx(solute, 1)} g</b></div>`;
     $('#ccC', el).innerHTML = `<li>取 1 L 溶液：質量 = 1000 mL × ${st.d} g/mL = ${fx(tot, 1)} g</li><li>溶質 ${st.M} mol × ${fx(Mm, 2)} g/mol = ${fx(solute, 1)} g（紅）；溶劑 ${fx(tot, 1)} − ${fx(solute, 1)} = ${fx(water, 1)} g（灰）</li><li>重量莫耳濃度 m = ${st.M} mol ÷ ${fx(water / 1000, 4)} kg</li>`;
     $('#ccK', el).innerHTML = card('M', '體積莫耳濃度', `${fx(st.M, 2)} M`, 'mol / L 溶液') + card('m', '重量莫耳濃度', water > 0 ? `${fx(m, 2)} m` : '—', 'mol / kg 溶劑') + card('x', '溶質莫耳分率', water > 0 ? fx(X, 3) : '—') + card('w', '重量百分率', `${fx(100 * solute / tot, 1)}%`);
     $('#ccM', el).value = st.M; $('#ccMo', el).textContent = fx(st.M, 2); $('#ccD', el).value = st.d; $('#ccDo', el).textContent = fx(st.d, 3);

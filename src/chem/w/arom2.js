@@ -30,7 +30,7 @@ const NRATE = [['酚 C₆H₅OH', 1000, 'a', '強活化（孤對電子共振推�
 W.easrate = el => {
   let cur = 1;
   el.innerHTML = `<div id="erG"></div><div class="cards" id="erK"></div><p class="note" id="erN"></p>`;
-  const COL = { a: '#23704A', n: 'var(--muted)', h: '#8F5400', d: '#B5326C' };
+  const COL = { a: 'var(--c3)', n: 'var(--muted)', h: 'var(--c4)', d: 'var(--c2)' };
   function draw() {
     $('#erG', el).innerHTML = chart({ x: [-8, 3.5], y: [0, NRATE.length], xt: [-8, -6, -4, -2, 0, 2], xlab: 'log（硝化相對速率，苯 = 0）', h: 260, label: '硝化相對速率' }, (X, Y) => NRATE.map(([n, r, k], i) => { const y = Y(NRATE.length - i - 0.5), lr = Math.log10(r); return `<g data-i="${i}" style="cursor:pointer"><rect x="${Math.min(X(0), X(lr))}" y="${y - 12}" width="${Math.max(2, Math.abs(X(lr) - X(0)))}" height="24" style="fill:${COL[k]};opacity:${i === cur ? 1 : 0.55}"/><text class="tk" x="${lr >= 0 ? X(0) - 6 : X(0) + 6}" y="${y + 4}" text-anchor="${lr >= 0 ? 'end' : 'start'}" style="fill:var(--ink)">${n}</text></g>`; }).join('') + `<line x1="${X(0)}" x2="${X(0)}" y1="${Y(0)}" y2="${Y(NRATE.length)}" style="stroke:var(--ink)"/>`);
     const [n, r, , t, pos] = NRATE[cur];

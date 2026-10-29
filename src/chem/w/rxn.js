@@ -21,7 +21,7 @@ W.fgmap = el => {
     let s = FGN.map((g, i) => `<text class="tk" x="${L - 6}" y="${T + i * c + c / 2 + 4}" text-anchor="end">${g}</text><text class="tk" x="${L + i * c + c / 2}" y="${T - 8}" text-anchor="middle" transform="rotate(-45 ${L + i * c + c / 2} ${T - 8})">${g}</text>`).join('');
     for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
       const has = FGX.find(x => x[0] === i && x[1] === j), on = i === st.f && j === st.t;
-      s += `<rect data-f="${i}" data-t="${j}" x="${L + j * c + 1}" y="${T + i * c + 1}" width="${c - 2}" height="${c - 2}" rx="4" style="cursor:${has ? 'pointer' : 'default'};fill:${i === j ? 'var(--line)' : has ? (on ? '#B5326C' : '#2F3B99') : 'var(--surface)'};opacity:${has ? (on ? 1 : 0.55) : 1};stroke:var(--line)"/>`;
+      s += `<rect data-f="${i}" data-t="${j}" x="${L + j * c + 1}" y="${T + i * c + 1}" width="${c - 2}" height="${c - 2}" rx="4" style="cursor:${has ? 'pointer' : 'default'};fill:${i === j ? 'var(--line)' : has ? (on ? 'var(--c2)' : 'var(--c1)') : 'var(--surface)'};opacity:${has ? (on ? 1 : 0.55) : 1};stroke:var(--line)"/>`;
     }
     $('#fmG', el).innerHTML = `<svg class="en" viewBox="0 0 ${L + n * c + 10} ${T + n * c + 10}" style="max-width:460px;margin:auto" role="img" aria-label="官能基互換">${s}</svg>`;
     const x = FGX.find(x => x[0] === st.f && x[1] === st.t);

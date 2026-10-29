@@ -5,9 +5,9 @@
 <style>
 /*BASE*/
 /* 後中化學：沿用學習階梯色票，主色改為實驗室的青綠；化學圖用自己的一組顏色 */
-:root { --accent: #17705F; --soft: #E1F1EC; --water: #DCEBF3; --acid: #3A5FB8; --base: #D2691E; --arrow: #C0386F; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --accent: #5CCDB6; --accent-ink: #0B231E; --soft: #15302A; --water: #1C2B33; --acid: #8EA9F2; --base: #F0A060; --arrow: #F07DB0; } }
-:root[data-theme="dark"] { --accent: #5CCDB6; --accent-ink: #0B231E; --soft: #15302A; --water: #1C2B33; --acid: #8EA9F2; --base: #F0A060; --arrow: #F07DB0; }
+:root { --accent: #17705F; --soft: #E1F1EC; --water: #DCEBF3; --acid: #3A5FB8; --base: #D2691E; --arrow: #C0386F; --c1: #2F3B99; --c2: #B5326C; --c3: #23704A; --c4: #8F5400; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --accent: #5CCDB6; --accent-ink: #0B231E; --soft: #15302A; --water: #1C2B33; --acid: #8EA9F2; --base: #F0A060; --arrow: #F07DB0; --c1: #8EA9F2; --c2: #F07DB0; --c3: #6FCF97; --c4: #F0A060; } }
+:root[data-theme="dark"] { --accent: #5CCDB6; --accent-ink: #0B231E; --soft: #15302A; --water: #1C2B33; --acid: #8EA9F2; --base: #F0A060; --arrow: #F07DB0; --c1: #8EA9F2; --c2: #F07DB0; --c3: #6FCF97; --c4: #F0A060; }
 body { margin: 0; }
 .top-in .prog { margin-left: auto; display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
 .prog .bar { width: 90px; height: 6px; background: var(--sunk); border-radius: 3px; overflow: hidden; }
@@ -397,6 +397,7 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
   .rng { flex-basis: 100%; min-width: 0; }
   .rng input { min-width: 0; }
   .rng output { min-width: 52px; }
+  .eq { white-space: normal; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>

@@ -14,7 +14,7 @@ const HREL = { Cl: [0, 1, 3.8, 5], Br: [0, 1, 82, 1600] };
 W.halog = el => {
   const st = { a: 'dmb', x: 'Cl' };
   el.innerHTML = `${seg('hgA', Object.entries(HALK).map(([k, v]) => [k, v[0]]), st.a)}${seg('hgX', [['Cl', 'Cl₂, 光'], ['Br', 'Br₂, 光']], st.x)}<div id="hgB"></div><p class="small mut">每個 H 的相對反應性：Cl₂ 為 1° : 2° : 3° = 1 : 3.8 : 5；Br₂ 為 1 : 82 : 1600（25 °C，OpenStax《Organic Chemistry》10.3 節）</p><p class="note" id="hgN"></p>`;
-  const COL = ['', '#2F3B99', '#B5326C', '#23704A'];
+  const COL = ['', 'var(--c1)', 'var(--c2)', 'var(--c3)'];
   function draw() {
     const [, P] = HALK[st.a], r = HREL[st.x], w = P.map(([, n, d]) => n * r[d]), T = w.reduce((a, b) => a + b, 0);
     $('#hgB', el).innerHTML = `<div class="bars pk">${P.map(([nm, n, d], i) => `<div><span>${nm.replace(/鹵/g, st.x === 'Cl' ? '氯' : '溴')}</span><i style="width:${Math.max(1, 100 * w[i] / T)}%;background:${COL[d]}"></i><b class="mono">${fx(100 * w[i] / T, 1)}%</b></div>`).join('')}</div>`;
@@ -72,7 +72,7 @@ W.poly = el => {
   el.innerHTML = `<label class="sel">聚合物 <select id="poS">${Object.entries(POLYM).map(([k, v]) => `<option value="${k}"${k === cur ? ' selected' : ''}>${v[0]}</option>`).join('')}</select></label><div id="poG"></div><div class="cards" id="poK"></div><p class="note" id="poN"></p>`;
   function draw() {
     const [n, m, u, t, how, use] = POLYM[cur];
-    $('#poG', el).innerHTML = `<svg class="en" viewBox="0 0 520 130" style="max-width:560px;margin:auto" role="img" aria-label="聚合"><text class="tk" x="10" y="30" style="font-size:12px">單體</text><text x="10" y="58" style="font-size:15px;fill:var(--ink)">${m}</text><text class="tk" x="10" y="92" style="font-size:12px">重複單元${t === 'cond' ? '（每接一次失去一個小分子）' : '（原子全部保留）'}</text><text x="10" y="118" style="font-size:15px;fill:${t === 'cond' ? '#B5326C' : '#2F3B99'}">${u}</text></svg>`;
+    $('#poG', el).innerHTML = `<svg class="en" viewBox="0 0 520 130" style="max-width:560px;margin:auto" role="img" aria-label="聚合"><text class="tk" x="10" y="30" style="font-size:12px">單體</text><text x="10" y="58" style="font-size:15px;fill:var(--ink)">${m}</text><text class="tk" x="10" y="92" style="font-size:12px">重複單元${t === 'cond' ? '（每接一次失去一個小分子）' : '（原子全部保留）'}</text><text x="10" y="118" style="font-size:15px;fill:${t === 'cond' ? 'var(--c2)' : 'var(--c1)'}">${u}</text></svg>`;
     $('#poK', el).innerHTML = card('t', '類型', t === 'cond' ? '縮合（逐步成長）' : '加成（連鎖成長）') + card('u', '用途', use);
     $('#poN', el).innerHTML = `<b>${n}</b>：${how}。${t === 'cond' ? '縮合聚合物的單體兩端各有一個官能基（雙官能基），彼此反應時放出 H₂O、HCl 或 CH₃OH 等小分子。' : '加成聚合物由取代乙烯（或開環）單體的 π 鍵逐一打開連接，重複單元的分子式和單體相同。'}`;
   }

@@ -28,7 +28,7 @@ W.cofreq = el => {
   let cur = 6;
   el.innerHTML = `<div id="cfG"></div><p class="note" id="cfN"></p>`;
   function draw() {
-    $('#cfG', el).innerHTML = chart({ x: [1620, 1840], y: [0, COF.length], xt: [1650, 1700, 1750, 1800], xlab: 'C=O 伸縮振動（cm⁻¹）', h: 300, label: '羰基 IR 頻率' }, (X, Y) => COF.map(([n, v], i) => { const y = Y(COF.length - i - 0.5); return `<g data-i="${i}" style="cursor:pointer"><line x1="${X(1620)}" x2="${X(v)}" y1="${y}" y2="${y}" style="stroke:${i === cur ? '#B5326C' : 'var(--line)'};stroke-width:2"/><circle cx="${X(v)}" cy="${y}" r="7" style="fill:${i === cur ? '#B5326C' : '#2F3B99'}"/><text class="tk" x="${X(v) - 12}" y="${y + 4}" text-anchor="end" style="fill:var(--ink)">${n} ${v}</text></g>`; }).join(''));
+    $('#cfG', el).innerHTML = chart({ x: [1620, 1840], y: [0, COF.length], xt: [1650, 1700, 1750, 1800], xlab: 'C=O 伸縮振動（cm⁻¹）', h: 300, label: '羰基 IR 頻率' }, (X, Y) => COF.map(([n, v], i) => { const y = Y(COF.length - i - 0.5); return `<g data-i="${i}" style="cursor:pointer"><line x1="${X(1620)}" x2="${X(v)}" y1="${y}" y2="${y}" style="stroke:${i === cur ? 'var(--c2)' : 'var(--line)'};stroke-width:2"/><circle cx="${X(v)}" cy="${y}" r="7" style="fill:${i === cur ? 'var(--c2)' : 'var(--c1)'}"/><text class="tk" x="${X(v) - 12}" y="${y + 4}" text-anchor="end" style="fill:var(--ink)">${n} ${v}</text></g>`; }).join(''));
     $$('#cfG [data-i]', el).forEach(g => { g.onclick = () => { cur = +g.dataset.i; draw(); }; });
     $('#cfN', el).innerHTML = `<b>${COF[cur][0]}</b>：${COF[cur][2]}。規律：C=O 鍵越強（越像雙鍵）頻率越高。接上推電子共振的原子（N、共軛的 C=C）會降低頻率；拉電子基與環張力會提高頻率，所以環丙酮 > 環丁酮 > 環戊酮 > 環己酮。`;
   }
@@ -46,7 +46,7 @@ W.isopat = el => {
     for (let i = 0; i < st.cl; i++) p = mul(p, [0.758, 0.242]);
     for (let i = 0; i < st.br; i++) p = mul(p, [0.507, 0.493]);
     const mx = Math.max(...p), lab = p.map((_, i) => i ? `M+${2 * i}` : 'M');
-    $('#ipG', el).innerHTML = chart({ x: [-0.6, p.length - 0.4], y: [0, 1.05], yt: [0, 0.5, 1], ylab: '相對強度', h: 220, label: '同位素峰' }, (X, Y) => p.map((v, i) => `<rect x="${X(i) - 18}" y="${Y(v / mx)}" width="36" height="${Y(0) - Y(v / mx)}" style="fill:#2F3B99"/><text class="tk" x="${X(i)}" y="${Y(0) + 16}" text-anchor="middle">${lab[i]}</text><text class="tk" x="${X(i)}" y="${Y(v / mx) - 5}" text-anchor="middle">${fx(100 * v / mx, 0)}</text>`).join(''));
+    $('#ipG', el).innerHTML = chart({ x: [-0.6, p.length - 0.4], y: [0, 1.05], yt: [0, 0.5, 1], ylab: '相對強度', h: 220, label: '同位素峰' }, (X, Y) => p.map((v, i) => `<rect x="${X(i) - 18}" y="${Y(v / mx)}" width="36" height="${Y(0) - Y(v / mx)}" style="fill:var(--c1)"/><text class="tk" x="${X(i)}" y="${Y(0) + 16}" text-anchor="middle">${lab[i]}</text><text class="tk" x="${X(i)}" y="${Y(v / mx) - 5}" text-anchor="middle">${fx(100 * v / mx, 0)}</text>`).join(''));
     $('#ipN', el).innerHTML = `³⁵Cl : ³⁷Cl ≈ 3 : 1、⁷⁹Br : ⁸¹Br ≈ 1 : 1（天然豐度）。每多一個鹵素，就多一根相隔 2 的峰，強度比是二項式展開：一個 Cl 為 3 : 1，兩個 Cl 約 9 : 6 : 1，三個 Cl 約 27 : 27 : 9 : 1；一個 Br 為 1 : 1，兩個 Br 為 1 : 2 : 1。溴乙烷的分子離子出現在 m/z 108 與 110，強度相等。`;
     pressSeg(el, 'ipC', String(st.cl)); pressSeg(el, 'ipB', String(st.br));
   }
@@ -69,7 +69,7 @@ W.msfrag = el => {
   el.innerHTML = `${seg('mfS', Object.entries(MSF).map(([k, v]) => [k, v[0].split(' ')[0]]), cur)}<div id="mfG"></div><p class="note" id="mfN"></p>`;
   function draw() {
     const [nm, M, F, extra] = MSF[cur], pk = [[M, '分子離子 M⁺·'], ...F];
-    $('#mfG', el).innerHTML = chart({ x: [20, 150], y: [0, 1.1], xt: [20, 40, 60, 80, 100, 120, 140], xlab: 'm/z', h: 220, label: '質譜' }, (X, Y) => pk.map(([m, t], i) => { const h = i ? 0.5 + 0.4 * ((i * 37) % 10) / 10 : 0.45; return `<line x1="${X(m)}" x2="${X(m)}" y1="${Y(0)}" y2="${Y(h)}" style="stroke:${i ? '#2F3B99' : '#B5326C'};stroke-width:4"/><text class="tk" x="${X(m)}" y="${Y(h) - 5}" text-anchor="middle">${m}</text>`; }).join(''));
+    $('#mfG', el).innerHTML = chart({ x: [20, 150], y: [0, 1.1], xt: [20, 40, 60, 80, 100, 120, 140], xlab: 'm/z', h: 220, label: '質譜' }, (X, Y) => pk.map(([m, t], i) => { const h = i ? 0.5 + 0.4 * ((i * 37) % 10) / 10 : 0.45; return `<line x1="${X(m)}" x2="${X(m)}" y1="${Y(0)}" y2="${Y(h)}" style="stroke:${i ? 'var(--c1)' : 'var(--c2)'};stroke-width:4"/><text class="tk" x="${X(m)}" y="${Y(h) - 5}" text-anchor="middle">${m}</text>`; }).join(''));
     $('#mfN', el).innerHTML = `<b>${nm}</b>（M = ${M}）。${pk.slice(1).map(([m, t]) => `m/z ${m}：${t}`).join('；')}。${extra || ''}<br>分子離子是<b>自由基陽離子</b>（失去一個電子）；α-裂解得到的醯基離子是<b>陽離子</b>，丟掉的另一半是中性自由基，偵測不到。麥克拉弗蒂重排需要羰基（或苯環）的 γ 碳上有 H，經六員環過渡狀態丟掉一個中性的烯，留下的仍是自由基陽離子。峰高為示意。`;
     pressSeg(el, 'mfS', cur);
   }

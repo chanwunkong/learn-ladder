@@ -64,8 +64,8 @@ W.deprot = el => {
     const A = DPA[ia];
     $('#dpG', el).innerHTML = chart({ x: [0, 55], y: [0, 10], xt: [0, 10, 20, 30, 40, 50], xlab: 'pKa（鹼的位置 = 共軛酸的 pKa）', h: 250, label: '去質子化' }, (X, Y) => {
       let s = `<line x1="${X(A[1])}" x2="${X(A[1])}" y1="${Y(10)}" y2="${Y(0)}" style="stroke:var(--acid);stroke-width:2"/><text class="tk" x="${X(A[1])}" y="${Y(9.4)}" text-anchor="${A[1] > 40 ? 'end' : 'start'}" dx="${A[1] > 40 ? -4 : 4}" style="fill:var(--acid)">要拿走的 H：pKa ${A[1]}</text>`;
-      s += `<rect x="${X(A[1])}" y="${Y(8.6)}" width="${X(55) - X(A[1])}" height="${Y(0) - Y(8.6)}" style="fill:var(--good, #23704A);opacity:.08"/>`;
-      DPB.forEach(([n, p], j) => { const ok = p > A[1] + 1, y = Y(1 + (j % 4) * 2); const lf = p > 45 || (p < A[1] && A[1] - p < 9); s += `<circle cx="${X(p)}" cy="${y}" r="6" style="fill:${ok ? '#23704A' : 'var(--muted)'}"/><text class="tk" x="${X(p) + (lf ? -9 : 9)}" y="${y + 4}" text-anchor="${lf ? 'end' : 'start'}" style="fill:${ok ? '#23704A' : 'var(--muted)'}">${n}</text>`; });
+      s += `<rect x="${X(A[1])}" y="${Y(8.6)}" width="${X(55) - X(A[1])}" height="${Y(0) - Y(8.6)}" style="fill:var(--good, var(--c3));opacity:.08"/>`;
+      DPB.forEach(([n, p], j) => { const ok = p > A[1] + 1, y = Y(1 + (j % 4) * 2); const lf = p > 45 || (p < A[1] && A[1] - p < 9); s += `<circle cx="${X(p)}" cy="${y}" r="6" style="fill:${ok ? 'var(--c3)' : 'var(--muted)'}"/><text class="tk" x="${X(p) + (lf ? -9 : 9)}" y="${y + 4}" text-anchor="${lf ? 'end' : 'start'}" style="fill:${ok ? 'var(--c3)' : 'var(--muted)'}">${n}</text>`; });
       return s;
     });
     const ok = DPB.filter(b => b[1] > A[1] + 1).map(b => b[0]), no = DPB.filter(b => b[1] <= A[1] + 1).map(b => b[0]);

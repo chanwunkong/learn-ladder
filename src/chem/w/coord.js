@@ -34,7 +34,7 @@ W.cname = el => {
   el.innerHTML = `${seg('cnS', Object.entries(CPLX).map(([k, v]) => [k, v.f]), cur)}<div id="cnG"></div><div class="qeq" id="cnQ"></div><div class="cards" id="cnK"></div><p class="note" id="cnN"></p>`;
   const sg = v => (v > 0 ? `+${v}` : v < 0 ? `−${-v}` : '0');
   const chg = q => (q === 0 ? '' : `${Math.abs(q) > 1 ? Math.abs(q) : ''}${q > 0 ? '+' : '−'}`);
-  const PAL = ['#2F3B99', '#B5326C', '#23704A', '#8F5400'];
+  const PAL = ['var(--c1)', 'var(--c2)', 'var(--c3)', 'var(--c4)'];
   function draw() {
     const d = CPLX[cur], r = cplxInfo(d), cx = 230, cy = 120, R = 84;
     const ang = r.cn === 6 ? [90, 30, -30, -90, -150, 150] : r.cn === 4 ? [90, 0, -90, 180] : [180, 0];

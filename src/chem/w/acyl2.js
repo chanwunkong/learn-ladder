@@ -16,7 +16,7 @@ W.hydro = el => {
   el.innerHTML = `<label class="sel">化合物 <select id="hyS">${HYDR.map((h, i) => `<option value="${i}">${h[0]}</option>`).join('')}</select></label><div id="hyG"></div><div class="cards" id="hyK"></div><p class="note" id="hyN"></p>`;
   function draw() {
     const [, a, b, pa, pb, why] = HYDR[cur];
-    $('#hyG', el).innerHTML = `<svg class="en" viewBox="0 0 460 90" style="max-width:480px;margin:auto" role="img" aria-label="水解切斷位置"><text x="220" y="50" text-anchor="end" style="font-size:20px;fill:#2F3B99">${a}</text><line x1="230" x2="230" y1="15" y2="75" style="stroke:#B5326C;stroke-width:3;stroke-dasharray:5 4"/><text x="240" y="50" style="font-size:20px;fill:#23704A">${b}</text><text class="tk" x="230" y="88" text-anchor="middle">H₂O 從這裡切開（醯基–雜原子鍵）</text></svg>`;
+    $('#hyG', el).innerHTML = `<svg class="en" viewBox="0 0 460 90" style="max-width:480px;margin:auto" role="img" aria-label="水解切斷位置"><text x="220" y="50" text-anchor="end" style="font-size:20px;fill:var(--c1)">${a}</text><line x1="230" x2="230" y1="15" y2="75" style="stroke:var(--c2);stroke-width:3;stroke-dasharray:5 4"/><text x="240" y="50" style="font-size:20px;fill:var(--c3)">${b}</text><text class="tk" x="230" y="88" text-anchor="middle">H₂O 從這裡切開（醯基–雜原子鍵）</text></svg>`;
     $('#hyK', el).innerHTML = card('a', '醯基 → 羧酸', pa) + card('b', '另一半', pb);
     $('#hyN', el).innerHTML = `${why} 羧酸衍生物水解一定切在<b>羰基碳與 O（或 N、Cl）之間</b>：藍色的醯基部分加上 OH 成為羧酸，綠色部分加上 H 成為醇、酚或胺。容易水解的順序：醯氯 > 酸酐 > 酯 > 醯胺。`;
   }
@@ -61,7 +61,7 @@ W.lactone = el => {
   function draw() {
     const [, n, why] = LACT[cur];
     let s = '';
-    if (n) { const R = 55, cx = 230, cy = 80; for (let k = 0; k < n; k++) { const a1 = (-90 + 360 * k / n) * Math.PI / 180, a2 = (-90 + 360 * (k + 1) / n) * Math.PI / 180; s += `<line x1="${cx + R * Math.cos(a1)}" y1="${cy + R * Math.sin(a1)}" x2="${cx + R * Math.cos(a2)}" y2="${cy + R * Math.sin(a2)}" style="stroke:${n <= 4 ? '#B5326C' : '#23704A'};stroke-width:3"/>`; } s += `<text class="tk" x="${cx}" y="${cy + 5}" text-anchor="middle">${n} 員環</text>`; }
+    if (n) { const R = 55, cx = 230, cy = 80; for (let k = 0; k < n; k++) { const a1 = (-90 + 360 * k / n) * Math.PI / 180, a2 = (-90 + 360 * (k + 1) / n) * Math.PI / 180; s += `<line x1="${cx + R * Math.cos(a1)}" y1="${cy + R * Math.sin(a1)}" x2="${cx + R * Math.cos(a2)}" y2="${cy + R * Math.sin(a2)}" style="stroke:${n <= 4 ? 'var(--c2)' : 'var(--c3)'};stroke-width:3"/>`; } s += `<text class="tk" x="${cx}" y="${cy + 5}" text-anchor="middle">${n} 員環</text>`; }
     else s = `<text x="230" y="80" text-anchor="middle" style="font-size:18px;fill:var(--ink)">HOOC–CH₂–COOH → CH₃COOH + CO₂↑</text>`;
     $('#laG', el).innerHTML = `<svg class="en" viewBox="0 0 460 160" style="max-width:480px;margin:auto" role="img" aria-label="環的大小">${s}</svg>`;
     $('#laN', el).innerHTML = `${why} 規律：分子內反應形成<b>五員或六員環</b>最快，因為鍵角接近理想值、兩端也容易碰到；三、四員環有很大的環張力。`;

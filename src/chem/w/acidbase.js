@@ -84,7 +84,7 @@ W.kaladder = el => {
 
 /* ===== 4. 多質子酸的物種分布 ===== */
 const POLY = { h3po4: ['H₃PO₄', [2.15, 7.20, 12.35], ['H₃PO₄', 'H₂PO₄⁻', 'HPO₄²⁻', 'PO₄³⁻']], ox: ['草酸 H₂C₂O₄', [1.25, 4.27], ['H₂C₂O₄', 'HC₂O₄⁻', 'C₂O₄²⁻']], co3: ['碳酸 H₂CO₃', [6.35, 10.33], ['H₂CO₃', 'HCO₃⁻', 'CO₃²⁻']] };
-const PCOL = ['#2F3B99', '#B5326C', '#23704A', '#8F5400'];
+const PCOL = ['var(--c1)', 'var(--c2)', 'var(--c3)', 'var(--c4)'];
 W.polyprot = el => {
   const st = { a: 'h3po4', pH: 7 };
   el.innerHTML = `${seg('ppS', Object.entries(POLY).map(([k, v]) => [k, v[0]]), st.a)}<div class="w-row"><label class="rng">pH<input type="range" id="ppH" min="0" max="14" step="0.05"><output class="mono" id="ppO"></output></label></div><div id="ppG"></div><div class="cards" id="ppK"></div><p class="note" id="ppN"></p>`;

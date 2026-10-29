@@ -69,7 +69,7 @@ const BIC = { nb: ['降冰片烷', [2, 2, 1]], bco: ['雙環[2.2.2]辛烷', [2, 
 W.bicyclo = el => {
   let cur = 'nb';
   el.innerHTML = `${seg('bcS', Object.entries(BIC).map(([k, v]) => [k, v[0]]), cur)}<div id="bcG"></div><p class="eq" id="bcF"></p><p class="note">兩個環共用兩個以上的碳時，被共用的兩端稱為<b>橋頭碳</b>。三條連接橋頭碳的「橋」各有幾個碳，由大到小寫在方括號裡，總碳數 = 三條橋的碳數 + 2（兩個橋頭碳），字根依總碳數命名。橋上碳數為 0 表示兩個橋頭碳直接相連（兩環共用一個邊）。</p>`;
-  const COL = ['#2F3B99', '#B5326C', '#23704A'];
+  const COL = ['var(--c1)', 'var(--c2)', 'var(--c3)'];
   function draw() {
     const [nm, br] = BIC[cur], L = [90, 145], R = [430, 145];
     const hd = `<circle cx="${L[0]}" cy="${L[1]}" r="11" style="fill:var(--bg);stroke:var(--ink);stroke-width:2"/><circle cx="${R[0]}" cy="${R[1]}" r="11" style="fill:var(--bg);stroke:var(--ink);stroke-width:2"/><text class="tk" x="${L[0]}" y="${L[1] + 32}" text-anchor="middle">橋頭碳</text><text class="tk" x="${R[0]}" y="${R[1] + 32}" text-anchor="middle">橋頭碳</text>`;
