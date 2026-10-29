@@ -32,7 +32,7 @@ CH.push({
 <li>兩個優先基團在同側為 <b>Z</b>，在對側為 <b>E</b>。</li></ol>
 <p>cis/trans 只適用於兩端各有一個相同基團（通常是 H）的情形；E/Z 適用於所有雙鍵。兩者不一定對應：(Z)-2-bromobut-2-ene 的兩個甲基是 trans。</p>
 <p>分子有兩個雙鍵時，每一個都要標出組態和位置，寫在名稱最前面，例如 (3E,5Z)-octa-3,5-diene。立體中心的 R/S 也一樣寫在前面並加上位置：(4R)-2,2,4-trimethylhexane。R/S 的判斷在「構形與立體化學」一章。</p>` },
-    { h: '苯的衍生物與常見俗名', body: `
+    { h: '苯的衍生物與常見俗名', w: 'trivial', body: `
 <p>苯環上的取代基有許多保留的俗名，IUPAC 也接受，考題常直接使用：</p>
 <ul><li><b>母體名稱</b>：toluene（甲苯，C₆H₅CH₃）、phenol（酚，C₆H₅OH）、aniline（苯胺，C₆H₅NH₂）、anisole（苯甲醚，C₆H₅OCH₃）、benzaldehyde（苯甲醛，C₆H₅CHO）、benzoic acid（苯甲酸）、acetophenone（苯乙酮，C₆H₅COCH₃）。</li>
 <li>苯環當取代基時叫 <b>phenyl</b>（C₆H₅–），C₆H₅CH₂– 叫 benzyl。(C₆H₅)₂NH 是 diphenylamine，C₆H₅CH₂NH₂ 是 benzylamine。</li>

@@ -44,11 +44,7 @@ CH.push({
 <p>拖動 pH 看兩種形式的比例怎麼交換；再改變 pKa，整組曲線會左右平移。</p>` },
       { h: '滴定曲線上的關鍵點怎麼算？', w: 'calc', body: `
 <p>每個點的算法不同，但判斷方式只有一個：<b>先問燒杯裡主要是什麼</b>，再選對應的工具。</p>
-<table class="tbl"><thead><tr><th>燒杯裡主要是</th><th>用什麼算</th></tr></thead><tbody>
-<tr><td>只有弱酸 HA</td><td>弱酸解離：[H⁺] ≈ √(Ka·C)</td></tr>
-<tr><td>HA 和 A⁻ 並存</td><td>Henderson–Hasselbalch（用 mmol 比即可，體積會約掉）</td></tr>
-<tr><td>只剩 A⁻</td><td>共軛鹼水解：Kb = Kw ÷ Ka，[OH⁻] ≈ √(Kb·C)</td></tr>
-<tr><td>OH⁻ 過量</td><td>直接用過量的 OH⁻，A⁻ 的貢獻可忽略</td></tr></tbody></table>
+<ol><li><b>還沒加鹼</b>，只有弱酸 HA：[H⁺] ≈ √(Ka·C)。</li><li><b>緩衝區</b>，HA 和 A⁻ 並存：用 Henderson–Hasselbalch，mmol 比即可（體積會約掉）；半當量點 pH = pKa。</li><li><b>當量點</b>，只剩 A⁻：共軛鹼水解，Kb = Kw ÷ Ka，[OH⁻] ≈ √(Kb·C)，pH > 7。</li><li><b>過了當量點</b>，OH⁻ 過量：直接用過量的 OH⁻ 計算。</li></ol>
 <p>點選每個點，看判斷過程與計算步驟。近似公式算出的 pH 和右邊的精確解幾乎一樣；如果差很多，代表那個近似的前提（例如解離很少）不成立。</p>` },
       { h: '指示劑要怎麼選？', w: 'indicator', body: `
 <p>指示劑本身也是弱酸（HIn），酸形和鹼形顏色不同。依照 Henderson–Hasselbalch，pH 在 pKa(HIn) ± 1 之間時兩種形式都多，看起來是過渡色，這就是<b>變色範圍</b>。</p>

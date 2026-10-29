@@ -801,11 +801,7 @@ CH.push({
 <p>拖動 pH 看兩種形式的比例怎麼交換；再改變 pKa，整組曲線會左右平移。</p>` },
       { h: '滴定曲線上的關鍵點怎麼算？', w: 'calc', body: `
 <p>每個點的算法不同，但判斷方式只有一個：<b>先問燒杯裡主要是什麼</b>，再選對應的工具。</p>
-<table class="tbl"><thead><tr><th>燒杯裡主要是</th><th>用什麼算</th></tr></thead><tbody>
-<tr><td>只有弱酸 HA</td><td>弱酸解離：[H⁺] ≈ √(Ka·C)</td></tr>
-<tr><td>HA 和 A⁻ 並存</td><td>Henderson–Hasselbalch（用 mmol 比即可，體積會約掉）</td></tr>
-<tr><td>只剩 A⁻</td><td>共軛鹼水解：Kb = Kw ÷ Ka，[OH⁻] ≈ √(Kb·C)</td></tr>
-<tr><td>OH⁻ 過量</td><td>直接用過量的 OH⁻，A⁻ 的貢獻可忽略</td></tr></tbody></table>
+<ol><li><b>還沒加鹼</b>，只有弱酸 HA：[H⁺] ≈ √(Ka·C)。</li><li><b>緩衝區</b>，HA 和 A⁻ 並存：用 Henderson–Hasselbalch，mmol 比即可（體積會約掉）；半當量點 pH = pKa。</li><li><b>當量點</b>，只剩 A⁻：共軛鹼水解，Kb = Kw ÷ Ka，[OH⁻] ≈ √(Kb·C)，pH > 7。</li><li><b>過了當量點</b>，OH⁻ 過量：直接用過量的 OH⁻ 計算。</li></ol>
 <p>點選每個點，看判斷過程與計算步驟。近似公式算出的 pH 和右邊的精確解幾乎一樣；如果差很多，代表那個近似的前提（例如解離很少）不成立。</p>` },
       { h: '指示劑要怎麼選？', w: 'indicator', body: `
 <p>指示劑本身也是弱酸（HIn），酸形和鹼形顏色不同。依照 Henderson–Hasselbalch，pH 在 pKa(HIn) ± 1 之間時兩種形式都多，看起來是過渡色，這就是<b>變色範圍</b>。</p>
@@ -991,7 +987,7 @@ CH.push({
 <p><b>環氧化物</b>是三元環醚，環張力很大，很容易被親核基打開：</p>
 <ul><li><b>鹼性或強親核基</b>：SN2，進攻<b>取代較少</b>的碳。</li><li><b>酸性</b>：O 先質子化，進攻<b>取代較多</b>的碳（正電荷較穩定的那一邊）。</li></ul>
 <p>兩種情況都從背面進攻，得到反式產物。環氧化物可由烯與過氧酸（如 mCPBA）製得；許多藥物和致癌物（例如黃麴毒素的代謝物）的作用就是環氧化物被 DNA 的親核基打開。</p>` },
-    { h: '酚、硫醇與保護基有什麼特別？', body: `
+    { h: '酚、硫醇與保護基有什麼特別？', w: 'protect', body: `
 <ul><li><b>酚的檢驗</b>：FeCl₃ 溶液與酚類形成紫色錯合物，中藥分析常用來檢測酚類成分。只要有 C=C–OH 的結構都會顯色，所以烯醇含量高的乙醯乙酸乙酯也會；阿斯匹靈的酚 OH 已被乙醯化，不顯色（變質水解出水楊酸後才會）。</li>
 <li><b>硫醇</b>（R–SH）：S 比 O 大、S–H 鍵較弱，所以酸性比醇強（pKa 約 10–11）；S–H 幾乎不形成氫鍵，沸點較低、在水中溶解度較差，而且有強烈臭味。溫和氧化得到雙硫鍵 R–S–S–R（蛋白質中的雙硫鍵）。</li>
 <li><b>常見的醇</b>：外用酒精（rubbing alcohol）通常是 70% 的 2-丙醇；甲醇有毒，代謝成甲醛與甲酸。</li>
@@ -1155,7 +1151,7 @@ CH.push({
   id: 'alpha', unit: 'o9b', title: 'α-碳與羰基縮合：烯醇離子造出 C–C 鍵',
   lede: '醛酮和羧酸衍生物都有兩副面孔：羰基碳是親電子基，旁邊的 α 碳拿掉 H⁺ 後卻變成親核基。讓一個分子的 α 碳去攻擊另一個分子的羰基碳，就能接出新的 C–C 鍵。這一章把醛醇、克來森、麥可、丙二酸酯合成都看成同一件事：烯醇離子進攻親電子基。',
   sections: [
-    { h: '酮和烯醇是共振還是異構物？', body: `
+    { h: '酮和烯醇是共振還是異構物？', w: 'enolpct', body: `
 <p>醛和酮會和自己的<b>烯醇</b>（C=C–OH）互相轉換：α-H 移到羰基 O 上，C=O 變成 C=C。這種只差一個 H 位置、快速互換的異構物稱為<b>互變異構</b>，它不是共振：原子真的移動了，兩者是不同的化合物。</p>
 <p class="eq">CH₃–CO–CH₃（酮式） ⇌ CH₂=C(OH)–CH₃（烯醇式）</p>
 <ul><li>一般的醛酮幾乎全部是酮式（C=O 比 C=C 強），丙酮的烯醇含量不到百萬分之一。</li>
@@ -1390,7 +1386,7 @@ CH.push({
 <li><b>還原</b>：硝基還原成胺、醯基還原成烷基，可以改變取代基的定位效果；伯奇還原把苯環本身還原成 1,4-環己二烯。</li>
 <li><b>親核取代</b>：有鄰、對位硝基的芳基鹵化物可以被親核基取代（SNAr）；沒有拉電子基時需要極端條件，經過苯炔。</li>
 <li><b>重氮鹽</b>：芳香胺在 0 °C 與 HNO₂ 生成 ArN₂⁺，N₂ 離開後可以換成 Cl、Br、CN、OH、F、I、H，或和酚、苯胺偶合成偶氮染料。</li></ul>` },
-    { h: '多取代苯要怎麼安排合成順序？', body: `
+    { h: '多取代苯要怎麼安排合成順序？', w: 'synorder', body: `
 <p>合成多取代苯的關鍵是<b>先放誰</b>：每一步的定位都由當時環上已有的取代基決定。</p>
 <ol><li>要兩個基團互為<b>間位</b>：先放間位定位基。例如間溴乙苯：苯先做醯基化（CH₃COCl／AlCl₃，乙醯基是間位定位基）→ Br₂／FeBr₃ 溴化在間位 → Zn(Hg)／HCl 把 C=O 還原成 CH₂。若直接先接乙基，溴會進入鄰、對位。</li>
 <li>要兩個基團互為<b>鄰、對位</b>：先放鄰對位定位基。例如 2-氯-4-硝基甲苯：苯 → CH₃Cl／AlCl₃ 得甲苯 → 硝化（對位為主）→ 氯化（進入 CH₃ 的鄰位，同時是 NO₂ 的間位，兩者一致）。</li>
@@ -1615,7 +1611,7 @@ CH.push({
     { h: '藥物與天然物有哪些常見骨架？', w: ['scaffold', 'drugs'], body: `
 <p>中藥與天然物常見<b>苯并含氧雜環</b>：黃酮、異黃酮、色酮、香豆素、橙酮。第一張圖比較它們的差別。第二張圖整理常考的藥物結構特徵。</p>
 <p>天然物的反應也常用前面學過的觀念判斷：α,β-不飽和羰基的 β 碳會被親核基進攻（麥可加成）；縮醛在酸中水解成醛和醇，例如聚丙烯透明劑 Millad 是山梨醇與芳香醛形成的縮醛，酸催化水解得到醛及醇。</p>` },
-    { h: '胜肽怎麼定序？蛋白質結構靠什麼維持？', body: `
+    { h: '胜肽怎麼定序？蛋白質結構靠什麼維持？', w: 'edman', body: `
 <ul><li><b>寫法</b>：胜肽從 <b>N 端</b>（游離 –NH₃⁺）寫到 <b>C 端</b>（游離 –COO⁻），例如 Gly–Ala–Phe。催產素是含一個雙硫鍵的九胜肽。</li>
 <li><b>艾德曼降解</b>：苯基異硫氰酸酯（PITC）只和 N 端的胺基反應，切下第一個胺基酸成為苯基硫乙內醯脲（PTH）衍生物，其餘胜肽不受影響，重複即可逐一定序。</li>
 <li><b>胜肽合成</b>：用 DCC 等偶合劑活化羧基形成醯胺鍵，胺基先用 Boc 或 Fmoc 保護。</li>
@@ -1745,11 +1741,7 @@ CH.push({
     { h: '分子中哪個原子帶電？', w: 'fc', body: `
 <p>路易斯結構裡，每個原子「名義上」擁有的電子 = 自己的孤對電子 + 每個鍵分一半。和它原本的價電子比較，就得到<b>形式電荷</b>：</p>
 <p class="eq">形式電荷 = 價電子數 − 非鍵電子數 − 鍵數</p>
-<p>有機化學裡只要記住幾個常見組合，一眼就能看出電荷在哪：</p>
-<table class="tbl"><thead><tr><th>原子</th><th>中性</th><th>帶 +1</th><th>帶 −1</th></tr></thead><tbody>
-<tr><td>C</td><td>4 鍵</td><td>3 鍵、無孤對（碳陽離子）</td><td>3 鍵、1 對孤對（碳陰離子）</td></tr>
-<tr><td>N</td><td>3 鍵、1 對孤對</td><td>4 鍵（銨）</td><td>2 鍵、2 對孤對</td></tr>
-<tr><td>O</td><td>2 鍵、2 對孤對</td><td>3 鍵、1 對孤對（H₃O⁺）</td><td>1 鍵、3 對孤對（HO⁻）</td></tr></tbody></table>
+<p>用下圖切換原子、鍵數與孤對電子數，記住常見組合：C 四個鍵為中性、三個鍵帶正或負電；N 四個鍵帶正電（銨）；O 三個鍵帶正電（H₃O⁺）、一個鍵帶負電（HO⁻）。</p>
 <p>第二週期元素（C、N、O）周圍最多 8 個電子（八隅），這是判斷結構對不對的第一道檢查。</p>` },
     { h: '碳原子用什麼軌域成鍵？', w: 'hyb', body: `
 <p>先數原子周圍的<b>電子區域</b>：每個 σ 鍵算一個（雙鍵、參鍵也只算一個），每對孤對電子算一個。區域數決定混成與形狀：</p>
@@ -1912,7 +1904,7 @@ CH.push({
 <ul><li>兩端同相 → 反方向轉（<b>對旋</b>）；兩端反相 → 同方向轉（<b>順旋</b>）。</li>
 <li>照光時一個電子被送到 LUMO，HOMO 變成原本的 LUMO，相位關係反轉，旋轉方向也跟著反轉。</li></ul>
 <p>下圖切換起始物與條件，看產物的順反。cis-3,4-二甲基環丁烯加熱順旋開環得到 (2E,4Z)-2,4-己二烯；照光則對旋。</p>` },
-    { h: 'σ 遷移：克萊森與柯普重排', body: `
+    { h: 'σ 遷移：克萊森與柯普重排', w: 'sigma', body: `
 <p>第三類周環反應是 <b>σ 遷移</b>：一個 σ 鍵沿著 π 系統移到新的位置，同時 π 鍵重新排列。最常考的是 <b>[3,3] 遷移</b>，經過六員環的椅式過渡狀態：</p>
 <ul><li><b>柯普重排</b>：1,5-二烯加熱，C3–C4 的 σ 鍵斷開、C1–C6 形成新的 σ 鍵。</li>
 <li><b>克萊森重排</b>：烯丙基乙烯基醚（CH₂=CH–O–CH₂CH=CH₂）加熱，得到 γ,δ-不飽和的羰基化合物（新生成 C=O，反應因此很有利）。烯丙基苯基醚加熱時，烯丙基移到鄰位，再經互變異構得到<b>鄰烯丙基酚</b>。</li></ul>
@@ -2143,7 +2135,7 @@ CH.push({
     { h: '半導體為什麼要「摻雜」？', w: 'semi', body: `
 <p>固體中的分子軌域連成能帶：電子填滿的<b>價帶</b>與空的<b>傳導帶</b>之間有能隙。金屬沒有能隙；絕緣體的能隙很大；半導體（Si、Ge）的能隙小，加熱或照光就能導電。</p>
 <p>在矽中加入少量第 15 族元素（P、As），多出一個價電子，形成 <b>n 型半導體</b>（電子導電）；加入第 13 族元素（B、Ga、In），少一個價電子，形成 <b>p 型半導體</b>（電洞導電）。由三種以上元素組成的化合物半導體，比較第 13 族與第 15 族的莫耳分率即可判斷。</p>` },
-    { h: '碳與其他材料有哪些特別的結構？', body: `
+    { h: '碳與其他材料有哪些特別的結構？', w: 'carbon', body: `
 <ul><li><b>碳的同素異形體</b>：鑽石每個 C 是 sp³，以四個 σ 鍵形成立體網狀，極硬、不導電；石墨與石墨烯是 sp² 的平面層，有離域的 π 電子，可導電；富勒烯 C₆₀ 是由 12 個五元環與 20 個六元環組成的球形分子，每個 C 是 sp²、接三個 C（共 90 個鍵）；奈米碳管是捲起來的石墨烯，也是 sp²。</li>
 <li><b>金奈米粒子</b>：大小只有數十奈米的金粒子會吸收綠光（表面電漿共振），所以穿過的光呈紫紅色，和塊狀金的金黃色不同。</li>
 <li><b>生物中的元素</b>：牙齒與骨骼的主要成分是羥磷灰石 Ca₅(PO₄)₃OH；維生素 B₁₂ 的中心是 Co；血紅素是 Fe；葉綠素是 Mg。</li>
@@ -2154,7 +2146,7 @@ CH.push({
 <p>切換四種情況：靶心是真值，黑點是平均值。<b>準確度</b>看平均值離真值多遠，<b>精密度</b>看數據有多集中。系統誤差使平均值偏離真值；隨機誤差使數據分散。讀數時要估計到最小刻度的下一位：滴定管刻度到 0.1 mL，讀數記到 0.01 mL（例如 20.10 mL，4 位有效數字）。</p>` },
     { h: '怎麼用光測量濃度？', w: 'beer', body: `
 <p>分光光度計量測溶液吸收某一波長光的程度。吸光度 A = εbc（<b>比爾定律</b>）。雙光束儀器同時量測參考與樣品，可以抵消光源強度的變動；單光束儀器結構簡單、價格低。原子吸收光譜（AAS）量測金屬原子對特定波長的吸收，用來定量 Hg、Pb 等重金屬；譜線變寬的主要原因之一是原子的熱運動（都卜勒效應）。</p>` },
-    { h: '還有哪些常用的分析方法？', body: `
+    { h: '還有哪些常用的分析方法？', w: 'tlc', body: `
 <ul><li><b>層析法</b>：利用各成分在固定相與流動相之間分配的差異來分離。薄層層析（TLC）以 Rf = 樣品移動距離 ÷ 溶劑前緣距離 比較成分，極性大的化合物在矽膠上移動較慢；氣相層析的火焰離子化偵測器（FID）量測有機物在氫火焰中燃燒產生的離子；加入<b>內標準</b>可以抵消注射量與儀器的變動。</li>
 <li><b>重量分析</b>：把待測成分轉成純而難溶的沉澱秤重，例如以四苯硼酸鈉沉澱 K⁺ 成 KB(C₆H₅)₄，由沉澱質量換算 K 的含量。</li>
 <li><b>沉澱滴定</b>：佛哈德法（Volhard）以 SCN⁻ 滴定 Ag⁺，Ag⁺ 用完後多出的 SCN⁻ 和指示劑 Fe³⁺ 生成紅色的 FeSCN²⁺，作為終點。</li>
@@ -2610,7 +2602,7 @@ CH.push({
     { h: '加減電子，鍵會變強還是變弱？', w: 'o2series', body: `
 <p>從 O₂ 拿走電子，拿的是反鍵的 π* 電子，鍵級變大（O₂⁺ 2.5）；加電子則放進 π*，鍵級變小（O₂⁻ 1.5、O₂²⁻ 1）。N₂ 剛好相反：N₂ 的最高填滿軌域是成鍵的 σ2p，拿走電子（N₂⁺）或加到 π*（N₂⁻）鍵級都降為 2.5。</p>
 <p>鍵級越大，鍵長越短、鍵能越大。比較鍵的強弱時，先畫能階、數鍵級：例如鍵能 O₂²⁺ &gt; O₂⁺ &gt; O₂ &gt; O₂⁻ &gt; O₂²⁻。</p>` },
-    { h: '鑽石不導電，石墨烯為什麼導電？', body: `
+    { h: '鑽石不導電，石墨烯為什麼導電？', w: 'semi', body: `
 <p>分子越大，分子軌域越多、能階越密。在固體中，數量龐大的分子軌域連成一片稱為<b>能帶</b>。</p>
 <ul><li><b>鑽石</b>：每個 C 都是 sp³，四個 σ 鍵把電子固定在兩個原子之間。填滿的成鍵能帶與空的反鍵能帶之間有很大的能隙，電子無法移動，是絕緣體，而且非常堅硬。</li>
 <li><b>石墨、石墨烯</b>：每個 C 是 sp²，在平面上形成三個 σ 鍵，剩下的 p 軌域在整個平面上重疊成離域的 π 軌域。π 與 π* 能帶相接，電子可以在平面內移動，所以能導電。</li></ul>
@@ -2696,7 +2688,7 @@ CH.push({
 <li>兩個優先基團在同側為 <b>Z</b>，在對側為 <b>E</b>。</li></ol>
 <p>cis/trans 只適用於兩端各有一個相同基團（通常是 H）的情形；E/Z 適用於所有雙鍵。兩者不一定對應：(Z)-2-bromobut-2-ene 的兩個甲基是 trans。</p>
 <p>分子有兩個雙鍵時，每一個都要標出組態和位置，寫在名稱最前面，例如 (3E,5Z)-octa-3,5-diene。立體中心的 R/S 也一樣寫在前面並加上位置：(4R)-2,2,4-trimethylhexane。R/S 的判斷在「構形與立體化學」一章。</p>` },
-    { h: '苯的衍生物與常見俗名', body: `
+    { h: '苯的衍生物與常見俗名', w: 'trivial', body: `
 <p>苯環上的取代基有許多保留的俗名，IUPAC 也接受，考題常直接使用：</p>
 <ul><li><b>母體名稱</b>：toluene（甲苯，C₆H₅CH₃）、phenol（酚，C₆H₅OH）、aniline（苯胺，C₆H₅NH₂）、anisole（苯甲醚，C₆H₅OCH₃）、benzaldehyde（苯甲醛，C₆H₅CHO）、benzoic acid（苯甲酸）、acetophenone（苯乙酮，C₆H₅COCH₃）。</li>
 <li>苯環當取代基時叫 <b>phenyl</b>（C₆H₅–），C₆H₅CH₂– 叫 benzyl。(C₆H₅)₂NH 是 diphenylamine，C₆H₅CH₂NH₂ 是 benzylamine。</li>
@@ -2892,12 +2884,8 @@ CH.push({
 <p>把冰一路加熱成水蒸氣：溫度上升的部分用 q = m·c·ΔT；熔化與汽化時溫度不變，熱量 q = n·ΔH 用來克服分子間作用力。相變化的熵變化 ΔS = ΔH/T。</p>` },
     { h: '物質在什麼條件下是固體、液體或氣體？', w: 'phase', body: `
 <p><b>相圖</b>把物質在各溫度、壓力下的狀態畫在一張圖上：三條線上兩相共存，<b>三相點</b>三相共存，超過<b>臨界點</b>後液體和氣體無法區分。分子間作用力越強，臨界溫度越高。壓力低於三相點時沒有液相，固體直接昇華：乾冰在 1 atm 下昇華；中藥與食品的<b>冷凍乾燥</b>就是先冷凍，再在三相點以下的低壓讓冰直接昇華。</p>` },
-    { h: '晶體裡的原子怎麼排列？', w: ['cell', 'celldens'], body: `
-<table class="tbl"><thead><tr><th>類型</th><th>粒子間作用力</th><th>性質</th><th>例子</th></tr></thead><tbody>
-<tr><td>離子晶體</td><td>離子鍵</td><td>熔點高、硬而脆、熔融或溶於水可導電</td><td>NaCl、MgO</td></tr>
-<tr><td>分子晶體</td><td>分子間作用力</td><td>熔點低、軟</td><td>冰、乾冰、碘、蔗糖</td></tr>
-<tr><td>共價網狀晶體</td><td>共價鍵</td><td>熔點極高、極硬</td><td>鑽石、石英（SiO₂）</td></tr>
-<tr><td>金屬晶體</td><td>金屬鍵（電子海）</td><td>導電導熱、延展性</td><td>Cu、Fe</td></tr></tbody></table>
+    { h: '晶體裡的原子怎麼排列？', w: ['cell', 'xtype', 'celldens'], body: `
+<p>第二張圖切換四種晶體，比較粒子之間的作用力與性質；第三張圖由晶胞計算密度。</p>
 <p>離子晶體的強度用<b>晶格能</b>表示（化學鍵一章）。每個原子周圍緊鄰的原子數稱為<b>配位數</b>：簡單立方 6、體心 8、面心 12。立方晶系有簡單、體心、面心三種（沒有「底心立方」）。第一張圖數每個晶胞的原子數：角落原子被 8 個晶胞共用、面心被 2 個共用。NaCl 是面心立方排列，每個晶胞有 4 個 Na⁺ 和 4 個 Cl⁻。第二張圖由邊長算出半徑與密度：d = Z·M ÷ (Nₐ·a³)。晶格的間距可以用 X 射線繞射測量：nλ = 2d sin θ（布拉格定律）。</p>` },
     { h: '原子核為什麼會衰變？', w: ['nucstab', 'decay'], body: `
 <p>寫核反應式時，<b>質量數與原子序兩邊都要守恆</b>。α 衰變放出 ⁴₂He（質量數 −4、原子序 −2）；β⁻ 衰變是中子變成質子並放出電子（原子序 +1）；β⁺ 衰變（或電子捕獲）是質子變成中子（原子序 −1）；γ 射線是不帶電的高能光子。質量 α 粒子 &gt; 中子 &gt; 質子 &gt; β 粒子；穿透力 α &lt; β &lt; γ，但 α 粒子一旦進入體內傷害最大。</p>
@@ -3074,13 +3062,13 @@ CH.push({
 <ol><li><b>碳數</b>：產物比起始物多幾個碳？多一個常是 CN⁻ 或 CO₂，多兩個常是環氧乙烷，多更多要用格里納、烯醇離子或維蒂希接碳。少一個碳常是碘仿反應、霍夫曼重排。</li>
 <li><b>位置</b>：OH 要在馬可尼可夫或反馬可尼可夫位置？Br 要在三級碳（自由基溴化）還是一級碳（HBr／ROOR）？</li>
 <li><b>立體</b>：需要構型反轉就安排一次 SN2；需要順式二醇用 OsO₄、反式用環氧化再開環。</li></ol>` },
-    { h: '多步合成時，官能基互相干擾怎麼辦？', body: `
+    { h: '多步合成時，官能基互相干擾怎麼辦？', w: 'protect', body: `
 <p>分子裡有兩個官能基、只想讓其中一個反應時，先用<b>保護基</b>把另一個暫時藏起來：</p>
 <ul><li><b>醛、酮</b> → 用乙二醇／H⁺ 變成環狀縮醛；對鹼、格里納、LiAlH₄ 穩定，最後用 H₃O⁺ 移除。</li>
 <li><b>醇</b> → 變成矽醚（TMSCl 或 TBSCl／咪唑），用 F⁻ 移除；或第三丁基醚，用酸移除。</li>
 <li><b>胺</b> → 變成醯胺或胺甲酸酯（Boc），降低親核性與鹼性。</li></ul>
 <p>例子：要把 4-溴環己酮的 Br 換成 D。直接做格里納試劑會和自己的 C=O 反應，所以：① 乙二醇／H⁺ 保護酮 ② Mg, 乙醚 ③ D₂O（D 取代 MgBr）④ H₃O⁺ 移除保護基。</p>` },
-    { h: '哪些反應會把碳鏈切斷？', body: `
+    { h: '哪些反應會把碳鏈切斷？', w: 'cleave', body: `
 <p><b>氧化斷裂</b>會減少碳數，從產物可以反推原本雙鍵或二醇的位置：</p>
 <ul><li><b>O₃</b>：先 Zn／CH₃COOH 或 (CH₃)₂S 處理得到醛、酮；用 H₂O₂ 處理則醛繼續被氧化成羧酸。</li>
 <li><b>熱、濃的 KMnO₄</b>：雙鍵斷開，CH= 變成 COOH，=CH₂ 變成 CO₂，R₂C= 變成酮。冷、稀、鹼性的 KMnO₄ 只生成順式二醇。</li>
@@ -3311,7 +3299,7 @@ CH.push({
 <p>第二張圖數鹵素的同位素峰；第三張圖看兩種常見的斷裂：<b>α-裂解</b>（羰基或雜原子旁的 C–C 斷開，得到醯基離子或亞胺離子）與<b>麥克拉弗蒂重排</b>（γ-H 轉移，丟掉一個中性烯）。烷基苯常見 m/z 91 的環庚三烯陽離子。</p>` },
     { h: '¹³C 的訊號能怎麼分類？', w: 'dept', body: `
 <p>一般 ¹³C 譜只告訴我們有幾種碳；DEPT 進一步分出每個碳上接了幾個 H。切換下圖的分子比較。</p>` },
-    { h: '怎麼從光譜拼出結構？', body: `
+    { h: '怎麼從光譜拼出結構？', w: 'solve', body: `
 <p>拿到分子式與光譜時，依序做：</p>
 <ol><li><b>不飽和度</b>：(2C + 2 + N − H − X) ÷ 2。每個環或雙鍵算 1，參鍵算 2，苯環算 4。</li>
 <li><b>IR</b>：有沒有 C=O、O–H、N–H、C≡C／C≡N。</li>
@@ -9297,6 +9285,246 @@ W.vanthoff = el => {
   $('#vhT', el).oninput = e => { st.T = +e.target.value; draw(); };
   draw();
   return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ---------- 後中化學：把文字段落改成圖的補充互動圖 ---------- */
+
+/* ===== 1. 烯醇的比例（log 尺度） =====
+   平衡時烯醇所佔百分比的約略值（純液體或非極性溶劑） */
+const ENP = [['丙酮', 1e-7, '一個 C=O，沒有額外穩定'], ['環己酮', 1e-4, '烯醇的 C=C 在環內，稍有利'], ['乙醯乙酸乙酯', 8, '烯醇與酯的 C=O 共軛並形成分子內氫鍵，但酯的 C=O 接受能力較弱'], ['2,4-戊二酮（乙醯丙酮）', 76, '烯醇與另一個 C=O 共軛，並形成六員環的分子內氫鍵'], ['酚', 99.99, '「烯醇」形式是芳香環，酮式會失去芳香性']];
+W.enolpct = el => {
+  let cur = 3;
+  el.innerHTML = `<div id="enG"></div><p class="note" id="enN"></p>`;
+  function draw() {
+    $('#enG', el).innerHTML = chart({ x: [-8, 2.2], y: [0, ENP.length], xt: [-8, -6, -4, -2, 0, 2], xlab: 'log（烯醇 %）：0 = 1%、2 = 100%', h: 240, label: '烯醇比例' }, (X, Y) => ENP.map(([n, p], i) => { const y = Y(ENP.length - i - 0.5), lp = Math.log10(p); return `<g data-i="${i}" style="cursor:pointer"><rect x="${X(-8)}" y="${y - 11}" width="${X(lp) - X(-8)}" height="22" style="fill:var(--c1);opacity:${i === cur ? 1 : 0.5}"/><text class="tk" x="${X(-8) + 6}" y="${y + 4}" style="fill:#fff">${n}</text></g>`; }).join(''));
+    $$('#enG [data-i]', el).forEach(g => { g.onclick = () => { cur = +g.dataset.i; draw(); }; });
+    const [n, p, w] = ENP[cur];
+    $('#enN', el).innerHTML = `<b>${n}</b>：烯醇約 ${p < 0.01 ? p.toExponential(0) : p}%。${w}。烯醇比例取決於烯醇能不能被額外穩定：共軛、分子內氫鍵、芳香性。在極性、能形成氫鍵的溶劑（水）中，分子內氫鍵被溶劑取代，1,3-二羰基的烯醇比例會下降；在氣態或非極性溶劑中最高。（約略值）`;
+  }
+  draw();
+  return { set(s) { cur = s.i ?? cur; draw(); } };
+};
+
+/* ===== 2. 合成順序：先放誰？ ===== */
+const SYNO = {
+  mbn: ['間溴硝基苯', [['① HNO₃／H₂SO₄', '硝基苯（NO₂ 是間位定位基）'], ['② Br₂／FeBr₃', '間溴硝基苯 ✓']], [['① Br₂／FeBr₃', '溴苯（Br 是鄰對位定位基）'], ['② HNO₃／H₂SO₄', '鄰、對溴硝基苯 ✗']]],
+  pbn: ['對溴硝基苯', [['① Br₂／FeBr₃', '溴苯（鄰對位定位）'], ['② HNO₃／H₂SO₄', '對溴硝基苯（分離掉鄰位） ✓']], [['① HNO₃／H₂SO₄', '硝基苯'], ['② Br₂／FeBr₃', '間溴硝基苯 ✗']]],
+  mbe: ['間溴乙苯', [['① CH₃COCl／AlCl₃', '苯乙酮（間位定位）'], ['② Br₂／FeBr₃', '間溴苯乙酮'], ['③ Zn(Hg)／HCl', '間溴乙苯 ✓']], [['① CH₃CH₂Cl／AlCl₃', '乙苯（鄰對位）'], ['② Br₂／FeBr₃', '鄰、對溴乙苯 ✗']]],
+  mba: ['間溴苯胺', [['① HNO₃／H₂SO₄', '硝基苯'], ['② Br₂／FeBr₃', '間溴硝基苯'], ['③ Fe／HCl', '間溴苯胺 ✓']], [['① HNO₃／H₂SO₄', '硝基苯'], ['② Fe／HCl', '苯胺（強活化）'], ['③ Br₂', '2,4,6-三溴苯胺 ✗']]],
+  pnba: ['對硝基苯甲酸', [['① CH₃Cl／AlCl₃', '甲苯'], ['② HNO₃／H₂SO₄', '對硝基甲苯'], ['③ KMnO₄, 熱', '對硝基苯甲酸 ✓']], [['① CH₃Cl／AlCl₃', '甲苯'], ['② KMnO₄, 熱', '苯甲酸（間位定位）'], ['③ HNO₃／H₂SO₄', '間硝基苯甲酸 ✗']]],
+};
+W.synorder = el => {
+  const st = { t: 'mbe', r: 0 };
+  el.innerHTML = `${seg('soT', Object.entries(SYNO).map(([k, v]) => [k, v[0]]), st.t)}${seg('soR', [['0', '順序 A'], ['1', '順序 B']], '0')}<div class="oxpath" id="soP"></div><p class="note" id="soN"></p>`;
+  function draw() {
+    const [nm, a, b] = SYNO[st.t], R = st.r ? b : a, ok = R[R.length - 1][1].includes('✓');
+    $('#soP', el).innerHTML = ['苯', ...R.map(([r, p]) => `<small>${r}</small><br>${p}`)].map((x, i, arr) => `<span class="oxs${i === arr.length - 1 ? ' end' : ''}">${x}</span>`).join('<span class="oxa">→</span>');
+    $('#soN', el).innerHTML = `目標：<b>${nm}</b>。${ok ? '這個順序可以：每一步都由當時環上已有的取代基決定新基團的位置。' : '這個順序得不到目標：第一個放上去的取代基把下一個基團導到錯的位置（或讓環太活化、太鈍化）。'}原則：要間位關係就先放間位定位基；要鄰、對位就先放鄰對位定位基；需要的取代基如果定位不對，就先放一個「之後能轉換」的基團（醯基 → 烷基、硝基 → 胺基、甲基 → 羧基）。`;
+    pressSeg(el, 'soT', st.t); pressSeg(el, 'soR', String(st.r));
+  }
+  bindSeg(el, 'soT', v => { st.t = v; draw(); });
+  bindSeg(el, 'soR', v => { st.r = +v; draw(); });
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 3. [3,3] σ 遷移：哪根鍵斷、哪根鍵生成 ===== */
+W.sigma = el => {
+  const st = { k: 'claisen', p: 0 };
+  el.innerHTML = `${seg('sgK', [['claisen', '克萊森（烯丙基乙烯基醚）'], ['cope', '柯普（1,5-己二烯）']], st.k)}${seg('sgP', [['0', '反應前'], ['1', '過渡狀態'], ['2', '產物']], '0')}<div id="sgG"></div><p class="note" id="sgN"></p>`;
+  const P = [[-1.3, 0.75], [-1.3, -0.75], [0, -1.5], [1.3, -0.75], [1.3, 0.75], [0, 1.5]];   // 1..6 的位置（環狀排列）
+  function draw() {
+    const cl = st.k === 'claisen', lab = ['C1', 'C2', cl ? 'O3' : 'C3', 'C4', 'C5', 'C6'];
+    const atoms = {};
+    P.forEach(([x, y], i) => { atoms['a' + i] = { x, y, t: cl && i === 2 ? 'O' : '' }; atoms['n' + i] = { x: x * 1.45, y: y * 1.35, t: `<tspan class="cnum">${i + 1}</tspan>` }; });
+    // 鍵：1-2、2-3、3-4、4-5、5-6；新鍵 1-6；斷鍵 3-4
+    const B = st.p === 0 ? [['a0', 'a1', 'd'], ['a1', 'a2', 's'], ['a2', 'a3', 's'], ['a3', 'a4', 's'], ['a4', 'a5', 'd']]
+      : st.p === 1 ? [['a0', 'a1', 'sd'], ['a1', 'a2', 'sd'], ['a2', 'a3', 'p'], ['a3', 'a4', 'sd'], ['a4', 'a5', 'sd'], ['a5', 'a0', 'p']]
+      : [['a0', 'a1', 's'], ['a1', 'a2', 'd'], ['a3', 'a4', 'd'], ['a4', 'a5', 's'], ['a5', 'a0', 's']];
+    $('#sgG', el).innerHTML = MOL.svg({ atoms, bonds: B }, { w: 420, h: 320, s: 62, label: '[3,3] 遷移' });
+    $('#sgN', el).innerHTML = `${['六個原子排成一圈（椅式過渡狀態的投影）。原本 ' + lab[2] + '–' + lab[3] + ' 之間是 σ 鍵，C1=C2 與 C5=C6 是 π 鍵。', '一步協同：' + lab[2] + '–' + lab[3] + ' 的 σ 鍵斷裂（虛線）、C1–C6 的新 σ 鍵生成（虛線），兩個 π 鍵移到新的位置。', '新的 σ 鍵在 C1–C6；π 鍵移到 ' + lab[1] + '=' + lab[2] + ' 與 C4=C5。' + (cl ? '克萊森重排生成 C=O，得到 γ,δ-不飽和羰基化合物，因為 C=O 很強，反應幾乎不可逆。' : '柯普重排的產物仍是 1,5-二烯，平衡偏向較穩定（取代較多）的一方。')][st.p]} 「[3,3]」表示斷開的 σ 鍵兩端各算 1，新鍵分別形成在兩邊的第 3 個原子上。`;
+    pressSeg(el, 'sgK', st.k); pressSeg(el, 'sgP', String(st.p));
+  }
+  bindSeg(el, 'sgK', v => { st.k = v; draw(); });
+  bindSeg(el, 'sgP', v => { st.p = +v; draw(); });
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 4. 氧化斷裂 ===== */
+const CLV = {
+  mb: ['2-甲基-2-丁烯 (CH₃)₂C=CHCH₃', { oz: '丙酮 + 乙醛', ozp: '丙酮 + 乙酸', mn: '丙酮 + 乙酸' }],
+  mch: ['1-甲基環己烯', { oz: '6-氧代庚醛（一個酮、一個醛，在同一條鏈上）', ozp: '6-氧代庚酸', mn: '6-氧代庚酸' }],
+  sty: ['苯乙烯 C₆H₅CH=CH₂', { oz: '苯甲醛 + 甲醛', ozp: '苯甲酸 + CO₂', mn: '苯甲酸 + CO₂' }],
+  diol: ['1,2-環己二醇', { io: '己二醛 OHC(CH₂)₄CHO' }],
+  pin: ['2,3-二甲基-2,3-丁二醇', { io: '2 分子丙酮' }],
+};
+const CLR = { oz: '① O₃ ② Zn／CH₃COOH', ozp: '① O₃ ② H₂O₂', mn: 'KMnO₄（熱、濃）', io: 'NaIO₄（或 HIO₄）' };
+W.cleave = el => {
+  const st = { s: 'mch', r: 'oz' };
+  el.innerHTML = `${seg('clS', Object.entries(CLV).map(([k, v]) => [k, v[0].split(' ')[0]]), st.s)}<div class="seg" id="clR" role="group"></div><div class="oxpath" id="clP"></div><p class="note" id="clN"></p>`;
+  function draw() {
+    const [nm, P] = CLV[st.s]; if (!P[st.r]) st.r = Object.keys(P)[0];
+    $('#clR', el).innerHTML = Object.keys(P).map(k => `<button type="button" data-v="${k}" aria-pressed="${k === st.r}">${CLR[k]}</button>`).join('');
+    $$('#clR button', el).forEach(b => { b.onclick = () => { st.r = b.dataset.v; draw(); }; });
+    $('#clP', el).innerHTML = `<span class="oxs">${nm}</span><span class="oxa">→</span><span class="oxs end">${P[st.r]}</span>`;
+    $('#clN', el).innerHTML = st.r === 'io' ? 'NaIO₄ 只切開<b>鄰二醇</b>的 C–C 鍵，兩個帶 OH 的碳各變成 C=O。' : `雙鍵兩端各變成 C=O。差別在接 H 的那一端：${st.r === 'oz' ? 'Zn 還原處理停在<b>醛</b>' : '氧化處理（H₂O₂ 或 KMnO₄）把醛繼續氧化成<b>羧酸</b>，末端的 =CH₂ 變成 CO₂'}；接兩個碳的一端都是酮。環烯斷開後不會變成兩個分子，而是一條兩端都有 C=O 的鏈。`;
+    pressSeg(el, 'clS', st.s);
+  }
+  bindSeg(el, 'clS', v => { st.s = v; draw(); });
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 5. 保護基：保護 → 反應 → 移除 ===== */
+const PROT = {
+  ket: ['在有酮的分子上做格里納', '4-溴環己酮', ['HOCH₂CH₂OH, H⁺', '環狀縮醛（酮被藏起來）'], ['Mg；再加 D₂O（或醛酮）', 'C–Br 變成 C–D（或接上新碳）'], ['H₃O⁺', '酮回來'], '格里納試劑會攻擊自己的 C=O，所以先把酮變成縮醛。'],
+  alc: ['在有醇的分子上做格里納', 'HOCH₂CH₂CH₂Br', ['TBSCl, 咪唑', 'TBSO–CH₂CH₂CH₂Br（矽醚）'], ['Mg；再加 CH₃CHO', '接上新的醇'], ['TBAF（F⁻）', '移除矽醚'], 'O–H 的 H 會把格里納試劑質子化，所以先換成矽醚。'],
+  ami: ['苯胺只要單取代', '苯胺', ['(CH₃CO)₂O', '乙醯苯胺（活化變溫和）'], ['Br₂', '對溴乙醯苯胺（只取代一次）'], ['H₃O⁺, 熱', '對溴苯胺'], '–NH₂ 太活化，直接溴化會得到三溴苯胺；醯胺化後活化變弱、體積變大，只進入對位。'],
+};
+W.protect = el => {
+  let cur = 'ket';
+  el.innerHTML = `${seg('prS', Object.entries(PROT).map(([k, v]) => [k, v[0]]), cur)}<div class="oxpath" id="prP"></div><p class="note" id="prN"></p>`;
+  function draw() {
+    const [, s0, a, b, c, why] = PROT[cur];
+    $('#prP', el).innerHTML = [s0, ...[a, b, c].map(([r, p], i) => `<small>${['① 保護', '② 反應', '③ 移除'][i]}：${r}</small><br>${p}`)].map((x, i, arr) => `<span class="oxs${i === arr.length - 1 ? ' end' : ''}">${x}</span>`).join('<span class="oxa">→</span>');
+    $('#prN', el).innerHTML = `${why} 好的保護基要：容易接上、在第 ② 步的條件下完全不反應、最後能在溫和條件下移除。`;
+    pressSeg(el, 'prS', cur);
+  }
+  bindSeg(el, 'prS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.c || cur; draw(); } };
+};
+
+/* ===== 6. 光譜解題器 ===== */
+const PUZ = {
+  ea: ['C₄H₈O₂', [['不飽和度', '(2×4 + 2 − 8) ÷ 2 = 1：一個 C=O 或 C=C 或環', []], ['IR', '1740 cm⁻¹ 強峰，沒有 3300 寬峰：酯的 C=O，沒有 O–H', ['丁酸', '1,4-二氧六環']], ['¹H NMR', '4.1（q, 2H）、2.0（s, 3H）、1.3（t, 3H）：乙基接在 O 上（q 在 4.1），單峰甲基接在 C=O 上', ['丙酸甲酯', '甲酸丙酯']]], ['乙酸乙酯', '丙酸甲酯', '甲酸丙酯', '丁酸', '1,4-二氧六環']],
+  pp: ['C₉H₁₀O', [['不飽和度', '(18 + 2 − 10) ÷ 2 = 5：苯環（4）+ 一個 C=O 或 C=C', []], ['IR', '1690 cm⁻¹ 強峰、沒有 O–H：和苯環共軛的酮（未共軛的酮約 1715）', ['1-苯基-2-丙烯-1-醇', '苄基甲基酮']], ['¹H NMR', '7.4–8.0（m, 5H）單取代苯；3.0（q, 2H）、1.2（t, 3H）乙基，CH₂ 接在 C=O 旁；沒有 9–10 ppm 的醛 H', ['4-甲基苯乙酮', '3-苯基丙醛']]], ['苯丙酮 C₆H₅COCH₂CH₃', '4-甲基苯乙酮', '苄基甲基酮', '3-苯基丙醛', '1-苯基-2-丙烯-1-醇']],
+  pe: ['C₈H₁₀O', [['不飽和度', '(16 + 2 − 10) ÷ 2 = 4：一個苯環，沒有 C=O', []], ['IR', '3350 cm⁻¹ 寬峰：O–H；沒有 1700', ['苯乙醚', '苄基甲基醚']], ['¹H NMR', '7.2（m, 5H）、3.8（t, 2H）、2.8（t, 2H）、約 2（s, 1H，加 D₂O 消失）：–CH₂CH₂OH 接在苯環上', ['1-苯基乙醇', '4-乙基苯酚']]], ['2-苯基乙醇', '1-苯基乙醇', '4-乙基苯酚', '苯乙醚', '苄基甲基醚']],
+};
+W.solve = el => {
+  const st = { p: 'ea', k: 0 };
+  el.innerHTML = `${seg('svP', Object.entries(PUZ).map(([k, v]) => [k, v[0]]), st.p)}<div class="w-row"><button class="btn sm" type="button" data-m="-1">上一步</button><button class="btn sm pri" type="button" data-m="1">下一步</button></div><div class="cards" id="svC"></div><p class="note" id="svN"></p>`;
+  function draw() {
+    const [f, S, C] = PUZ[st.p], out = new Set(S.slice(0, st.k).flatMap(s => s[2]));
+    $('#svC', el).innerHTML = C.map(c => card(out.has(c) ? 'no' : 'ok', out.has(c) ? '已排除' : '候選', c)).join('');
+    $('#svN', el).innerHTML = st.k === 0 ? `分子式 ${f}。按「下一步」依序使用每一項資料，看哪些候選結構被排除。` : `第 ${st.k} 步・<b>${S[st.k - 1][0]}</b>：${S[st.k - 1][1]}${st.k === S.length ? `<br>答案：<b>${C[0]}</b>。` : ''}`;
+    $('[data-m="-1"]', el).disabled = st.k === 0; $('[data-m="1"]', el).disabled = st.k === S.length;
+    pressSeg(el, 'svP', st.p);
+  }
+  bindSeg(el, 'svP', v => { st.p = v; st.k = 0; draw(); });
+  $$('[data-m]', el).forEach(b => { b.onclick = () => { st.k = clamp(st.k + +b.dataset.m, 0, PUZ[st.p][1].length); draw(); }; });
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 7. 艾德曼降解 ===== */
+const AAN = { G: '甘胺酸 Gly', A: '丙胺酸 Ala', F: '苯丙胺酸 Phe', L: '白胺酸 Leu', K: '離胺酸 Lys', S: '絲胺酸 Ser', C: '半胱胺酸 Cys', Y: '酪胺酸 Tyr' };
+W.edman = el => {
+  const st = { seq: 'GAFLK', k: 0 };
+  el.innerHTML = `<label class="sel">胜肽（N 端 → C 端，一個字母一個胺基酸）<input id="edI" value="${st.seq}" maxlength="10" style="font-family:var(--mono);border:1px solid var(--line);border-radius:6px;padding:5px 8px;background:var(--bg);color:var(--ink)"></label><div class="w-row"><button class="btn sm" type="button" data-m="0">重來</button><button class="btn sm pri" type="button" data-m="1">做一次艾德曼循環</button></div><div id="edG"></div><p class="note" id="edN"></p>`;
+  function draw() {
+    const s = st.seq.toUpperCase().replace(/[^GAFLKSCY]/g, ''), k = Math.min(st.k, s.length);
+    const box = (ch, x, cut) => `<rect x="${x - 18}" y="40" width="36" height="30" rx="6" style="fill:${cut ? 'none' : 'var(--c1)'};stroke:var(--c1);stroke-dasharray:${cut ? '4 3' : '0'}"/><text x="${x}" y="60" text-anchor="middle" style="font-size:14px;fill:${cut ? 'var(--muted)' : '#fff'};font-family:var(--mono)">${ch}</text>`;
+    const W0 = Math.max(260, 130 + s.length * 46);
+    $('#edG', el).innerHTML = `<svg class="en" viewBox="0 0 ${W0} 110" style="max-width:${W0}px;margin:auto" role="img" aria-label="艾德曼降解"><text class="tk" x="4" y="60">H₃N⁺–</text>${[...s].map((ch, i) => box(ch, 70 + i * 46, i < k) + (i < s.length - 1 ? `<line x1="${88 + i * 46}" x2="${98 + i * 46}" y1="55" y2="55" style="stroke:var(--ink)"/>` : '')).join('')}<text class="tk" x="${70 + s.length * 46 - 10}" y="60">–COO⁻</text>${k ? `<text class="tk" x="${70 + (k - 1) * 46}" y="95" text-anchor="middle" style="fill:var(--c2)">PTH-${s[k - 1]}</text>` : ''}</svg>`;
+    $('#edN', el).innerHTML = k === 0 ? '苯基異硫氰酸酯（PITC）只和 N 端的游離 –NH₂ 反應。每做一次循環，切下 N 端的一個胺基酸成為 PTH 衍生物（用層析鑑定），其餘胜肽保持完整，可以繼續下一輪。' : `第 ${k} 輪切下 <b>${AAN[s[k - 1]]}</b>（PTH-${s[k - 1]}）。${k === s.length ? '整條胜肽定序完成：' + [...s].map(c => AAN[c].split(' ')[1]).join('–') + '（N → C）。' : '剩下的胜肽新的 N 端是 ' + AAN[s[k]] + '。'}實際上每輪產率不到 100%，所以艾德曼降解只適合約 30–50 個胺基酸以內的胜肽；更長的蛋白質先用酵素切成片段。`;
+  }
+  $('#edI', el).oninput = e => { st.seq = e.target.value; st.k = 0; draw(); };
+  $('[data-m="0"]', el).onclick = () => { st.k = 0; draw(); };
+  $('[data-m="1"]', el).onclick = () => { st.k++; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 8. 苯衍生物的俗名 ===== */
+const TRIV = {
+  tol: ['甲苯 toluene', [[0, 'CH₃']]], phe: ['酚 phenol', [[0, 'OH']]], ani: ['苯胺 aniline', [[0, 'NH₂']]], anis: ['苯甲醚 anisole', [[0, 'OCH₃']]],
+  bzh: ['苯甲醛 benzaldehyde', [[0, 'CHO']]], bza: ['苯甲酸 benzoic acid', [[0, 'COOH']]], acp: ['苯乙酮 acetophenone', [[0, 'COCH₃']]], sty: ['苯乙烯 styrene', [[0, 'CH=CH₂']]],
+  bal: ['苄醇 benzyl alcohol', [[0, 'CH₂OH']]], oxy: ['鄰二甲苯 o-xylene', [[0, 'CH₃'], [1, 'CH₃']]], pcr: ['對甲酚 p-cresol', [[0, 'OH'], [3, 'CH₃']]], sal: ['水楊酸 salicylic acid', [[0, 'COOH'], [1, 'OH']]],
+  ccm: ['4-氯-3-甲基苯甲醛', [[0, 'CHO'], [2, 'CH₃'], [3, 'Cl']]],
+};
+W.trivial = el => {
+  let cur = 'ccm';
+  el.innerHTML = `<label class="sel">名稱 <select id="tvS">${Object.entries(TRIV).map(([k, v]) => `<option value="${k}"${k === cur ? ' selected' : ''}>${v[0]}</option>`).join('')}</select></label><div id="tvG"></div><p class="note" id="tvN"></p>`;
+  function draw() {
+    const [nm, subs] = TRIV[cur], A = {}, B = [];
+    for (let k = 0; k < 6; k++) { const a = (90 - 60 * k) * Math.PI / 180; A['r' + k] = { x: Math.cos(a), y: Math.sin(a), t: '' }; A['n' + k] = { x: Math.cos(a) * 0.62, y: Math.sin(a) * 0.62, t: `<tspan class="cnum">${k + 1}</tspan>` }; B.push(['r' + k, 'r' + ((k + 1) % 6), k % 2 ? 's' : 'd']); }
+    subs.forEach(([k, t]) => { const a = (90 - 60 * k) * Math.PI / 180; A['s' + k] = { x: Math.cos(a) * 2.05, y: Math.sin(a) * 2.05, t, hl: 1 }; B.push(['r' + k, 's' + k, 's']); });
+    $('#tvG', el).innerHTML = MOL.svg({ atoms: A, bonds: B }, { w: 420, h: 280, s: 54, label: nm });
+    $('#tvN', el).innerHTML = `<b>${nm}</b>。有俗名的母體（如苯甲醛）以它的官能基碳為 1 號，其他取代基拿最小號碼並依字母排序。二取代時也可以用 o-（1,2）、m-（1,3）、p-（1,4）。`;
+  }
+  $('#tvS', el).onchange = e => { cur = e.target.value; draw(); };
+  draw();
+  return { set(s) { cur = s.c || cur; $('#tvS', el).value = cur; draw(); } };
+};
+
+/* ===== 9. 薄層層析：極性與 Rf ===== */
+const TLCC = [['萘（非極性）', 0.1], ['苯甲酸甲酯（酯）', 0.45], ['苯甲醇（醇）', 0.7], ['苯甲酸（羧酸）', 0.92]];
+W.tlc = el => {
+  let pol = 30;
+  el.innerHTML = `<div class="w-row"><label class="rng">移動相中乙酸乙酯（極性）比例 <input type="range" id="tlR" min="0" max="100" step="5" value="${pol}"><output class="mono" id="tlO"></output></label></div><div id="tlG"></div><p class="note" id="tlN"></p>`;
+  function draw() {
+    const e = pol / 100, rf = TLCC.map(([, p]) => clamp(Math.pow(1 - p, 1.6) * (0.25 + 0.85 * e) + 0.6 * e * e * (1 - p), 0.02, 0.97));
+    $('#tlO', el).textContent = `${pol}%（其餘為己烷）`;
+    const H = 220, y0 = 195, yf = 25, cols = ['var(--c1)', 'var(--c3)', 'var(--c4)', 'var(--c2)'];
+    $('#tlG', el).innerHTML = `<svg class="en" viewBox="0 0 460 ${H + 20}" style="max-width:460px;margin:auto" role="img" aria-label="TLC 片"><rect x="40" y="10" width="220" height="${H - 10}" rx="6" style="fill:var(--surface);stroke:var(--line)"/><line x1="40" x2="260" y1="${y0}" y2="${y0}" style="stroke:var(--muted);stroke-dasharray:4 4"/><line x1="40" x2="260" y1="${yf}" y2="${yf}" style="stroke:var(--c2);stroke-dasharray:4 4"/><text class="tk" x="268" y="${yf + 4}">溶劑前緣</text><text class="tk" x="268" y="${y0 + 4}">起點</text>${rf.map((r, i) => `<circle cx="${75 + i * 50}" cy="${y0 - r * (y0 - yf)}" r="9" style="fill:${cols[i]}"/><text class="tk" x="${75 + i * 50}" y="${y0 + 18}" text-anchor="middle">${i + 1}</text>`).join('')}${TLCC.map(([n], i) => `<text class="tk" x="300" y="${80 + i * 22}" style="fill:${cols[i]}">${i + 1} ${n}：Rf ${fx(rf[i], 2)}</text>`).join('')}</svg>`;
+    $('#tlN', el).innerHTML = '固定相矽膠很極性。化合物越極性，被矽膠吸得越緊，移動越慢、<b>Rf 越小</b>；移動相越極性，越能把化合物「推」上去，所有 Rf 都變大。Rf = 化合物移動距離 ÷ 溶劑前緣距離，介於 0 與 1。（示意圖，Rf 為說明趨勢用）';
+  }
+  $('#tlR', el).oninput = e => { pol = +e.target.value; draw(); };
+  draw();
+  return { set(s) { pol = s.p ?? pol; $('#tlR', el).value = pol; draw(); } };
+};
+
+/* ===== 10. 碳的同素異形體 ===== */
+const CALL = {
+  dia: ['鑽石', 'sp³', '立體網狀，每個 C 接 4 個 C（四面體）', '不導電（沒有離域電子）', '最硬的天然物質，熔點極高'],
+  gra: ['石墨', 'sp²', '平面六角層，層與層之間只有分散力', '沿層面導電（離域 π 電子）', '層間容易滑動，可當潤滑劑與鉛筆芯'],
+  gph: ['石墨烯', 'sp²', '單層石墨', '導電性極佳', '強度很高、幾乎透明'],
+  c60: ['富勒烯 C₆₀', 'sp²（略彎曲）', '12 個五元環 + 20 個六元環組成的球', '半導體', '分子晶體，可溶於某些有機溶劑'],
+  cnt: ['奈米碳管', 'sp²', '石墨烯捲成的管', '依捲法為金屬性或半導體', '強度高、可導電'],
+};
+W.carbon = el => {
+  let cur = 'dia';
+  el.innerHTML = `${seg('caS', Object.entries(CALL).map(([k, v]) => [k, v[0]]), cur)}<div class="cards" id="caK"></div><p class="note">只有鑽石全部是 sp³；其他都是 sp² 碳，所以有離域的 π 電子，能導電或呈半導體。</p>`;
+  function draw() {
+    const [, h, s, c, p] = CALL[cur];
+    $('#caK', el).innerHTML = card('h', '混成', h) + card('s', '結構', s) + card('c', '導電性', c) + card('p', '性質', p);
+    pressSeg(el, 'caS', cur);
+  }
+  bindSeg(el, 'caS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.c || cur; draw(); } };
+};
+
+/* ===== 11. 四種晶體 ===== */
+const XTY = {
+  ion: ['離子晶體', '陰陽離子以離子鍵交錯排列', '熔點高、硬而脆；固體不導電，熔融或溶於水可導電', 'NaCl、MgO（電荷越大、離子越小，熔點越高）', 'ion'],
+  mol: ['分子晶體', '分子之間只有分子間作用力（分散力、偶極、氫鍵）', '熔點低、軟、不導電', '冰、乾冰、碘、蔗糖、C₆₀', 'mol'],
+  net: ['共價網狀晶體', '原子全部以共價鍵連成立體網', '熔點極高、極硬、多數不導電', '鑽石、石英 SiO₂、碳化矽 SiC', 'net'],
+  met: ['金屬晶體', '金屬陽離子浸在自由電子海中', '導電導熱、有延展性、有光澤', 'Cu、Fe、Na', 'met'],
+};
+W.xtype = el => {
+  let cur = 'ion';
+  el.innerHTML = `${seg('xtS', Object.entries(XTY).map(([k, v]) => [k, v[0]]), cur)}<div id="xtG"></div><div class="cards" id="xtK"></div>`;
+  function draw() {
+    const [, b, p, e, k] = XTY[cur];
+    let s = '';
+    for (let i = 0; i < 5; i++) for (let j = 0; j < 3; j++) {
+      const x = 60 + i * 60, y = 40 + j * 50, alt = (i + j) % 2;
+      if (k === 'ion') s += `<circle cx="${x}" cy="${y}" r="${alt ? 13 : 20}" style="fill:${alt ? 'var(--c1)' : 'var(--c2)'}"/><text x="${x}" y="${y + 5}" text-anchor="middle" style="font-size:13px;fill:#fff">${alt ? '+' : '−'}</text>`;
+      if (k === 'mol') s += `<g transform="rotate(${(i * 37 + j * 23) % 90} ${x} ${y})"><circle cx="${x - 9}" cy="${y}" r="10" style="fill:var(--c3)"/><circle cx="${x + 9}" cy="${y}" r="10" style="fill:var(--c3)"/><line x1="${x - 9}" x2="${x + 9}" y1="${y}" y2="${y}" style="stroke:var(--ink);stroke-width:3"/></g>`;
+      if (k === 'net') { s += `<circle cx="${x}" cy="${y}" r="8" style="fill:var(--ink)"/>`; if (i < 4) s += `<line x1="${x}" x2="${x + 60}" y1="${y}" y2="${y}" style="stroke:var(--ink);stroke-width:2"/>`; if (j < 2) s += `<line x1="${x}" x2="${x}" y1="${y}" y2="${y + 50}" style="stroke:var(--ink);stroke-width:2"/>`; }
+      if (k === 'met') s += `<circle cx="${x}" cy="${y}" r="16" style="fill:var(--c4)"/><text x="${x}" y="${y + 5}" text-anchor="middle" style="font-size:13px;fill:#fff">+</text>`;
+    }
+    if (k === 'met') for (let n = 0; n < 22; n++) s += `<circle cx="${40 + (n * 53) % 270}" cy="${25 + (n * 31) % 130}" r="3" style="fill:var(--c1)"/>`;
+    $('#xtG', el).innerHTML = `<svg class="en" viewBox="0 0 340 170" style="max-width:340px;margin:auto" role="img" aria-label="晶體粒子示意">${s}</svg>`;
+    $('#xtK', el).innerHTML = card('b', '粒子之間', b) + card('p', '性質', p) + card('e', '例子', e);
+    pressSeg(el, 'xtS', cur);
+  }
+  bindSeg(el, 'xtS', v => { cur = v; draw(); });
+  draw();
+  return { set(s) { cur = s.x || cur; draw(); } };
 };
 
 /* ---------- 後中化學：化學鍵與分子形狀的互動圖 ---------- */
