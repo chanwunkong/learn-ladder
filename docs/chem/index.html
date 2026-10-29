@@ -745,10 +745,25 @@ const CH = [];  // 各章在 src/chem/ch/*.js 以 CH.push(...) 加入；顯示�
 
 /* ---------- 後中化學：acid-base ---------- */
 CH.push({
-    id: 'acid-base', unit: 'g8', title: '酸鹼滴定與緩衝溶液',
-    lede: '用一支滴管把酸鹼平衡看清楚：滴進去的每一滴鹼去了哪裡、pH 為什麼在某些地方幾乎不動，又為什麼在當量點附近突然暴衝。',
+    id: 'acid-base', unit: 'g8', title: '酸鹼平衡：pH、緩衝溶液與滴定',
+    lede: '先弄清楚什麼是酸、什麼是鹼，學會計算各種溶液的 pH；再用一支滴管把酸鹼平衡看清楚：滴進去的每一滴鹼去了哪裡、pH 為什麼在某些地方幾乎不動，又為什麼在當量點附近突然暴衝。',
     sections: [
-      { h: '一邊滴，一邊看燒杯裡發生什麼', w: 'titration', body: `
+      { h: '什麼是酸、什麼是鹼？', w: 'abdef', body: `
+<p>三種定義由窄到寬：<b>阿瑞尼斯</b>——在水中產生 H⁺ 的是酸、產生 OH⁻ 的是鹼；<b>布忍斯特–羅瑞</b>——給出 H⁺ 的是酸、接受 H⁺ 的是鹼；<b>路易斯</b>——接受電子對的是酸、提供電子對的是鹼。</p>
+<p>布忍斯特–羅瑞的酸給出 H⁺ 後變成它的<b>共軛鹼</b>，鹼接受 H⁺ 後變成<b>共軛酸</b>。同一個物種可以當酸也可以當鹼（H₂O、HCO₃⁻、H₂PO₄⁻），稱為兩性物質。切換不同反應，看每個物種扮演的角色，以及它符合哪幾種定義。</p>` },
+      { h: '各種溶液的 pH 怎麼算？', w: 'phcalc', body: `
+<p>pH = −log[H⁺]，25 °C 時 [H⁺][OH⁻] = Kw = 1.0 × 10⁻¹⁴，所以 pH + pOH = 14。</p>
+<ul><li><b>強酸、強鹼</b>：完全解離，[H⁺] 或 [OH⁻] = 濃度（乘上可解離的數目）。濃度極低時要加上水本身的解離。</li>
+<li><b>弱酸、弱鹼</b>：用 ICE 解 Ka = x²/(C − x)，x 遠小於 C 時近似 x ≈ √(Ka·C)。解離度 α = x/C 隨稀釋而變大。</li>
+<li><b>鹽類</b>：看陰、陽離子是不是弱酸或弱鹼的共軛物：F⁻、CH₃COO⁻ 使溶液偏鹼（Kb = Kw/Ka），NH₄⁺、Al³⁺ 使溶液偏酸。</li></ul>
+<p>拖動濃度、切換不同的溶液：曲線是 pH 隨濃度的變化，卡片顯示解離度。</p>` },
+      { h: '酸的強弱怎麼比？', w: 'kaladder', body: `
+<p>Ka 越大（pKa 越小）酸越強。共軛酸鹼對之間 <b>Ka × Kb = Kw</b>：酸越強，它的共軛鹼越弱。這張圖左邊是酸、右邊是它的共軛鹼，同一條橫線上的兩者互為共軛。</p>
+<p>結構上的趨勢：同族往下（HF &lt; HCl &lt; HBr &lt; HI）鍵越長越弱，酸性越強，HF 因為 H–F 鍵很強而是弱酸；含氧酸中心原子的電負度越大、接的 O 越多，酸性越強（HClO &lt; HClO₂ &lt; HClO₃ &lt; HClO₄）。H₃PO₃ 只有兩個 H 接在 O 上，是二質子酸；H₃BO₃ 是接受 OH⁻ 的路易斯酸，只算一質子。</p>` },
+      { h: '多質子酸在不同 pH 下是什麼形式？', w: 'polyprot', body: `
+<p>多質子酸分步解離，每一步都有自己的 Ka，而且 Ka₁ &gt; Ka₂ &gt; Ka₃。拖動 pH，看每一種形式所佔的比例；在 pH = pKaₙ 處，第 n 步的酸和它的共軛鹼各佔一半。由 pH 與 pKa 的差也能直接算比例：[HPO₄²⁻] ÷ [H₂PO₄⁻] = 10^(pH − 7.20)。</p>
+<p>藥物分子也一樣：pKa 4.7 的弱酸在 pH 7.4 的血液中，[A⁻]/[HA] = 10^2.7 ≈ 500，幾乎全部以帶負電的形式存在。</p>` },
+      { h: '滴定時燒杯裡發生什麼？', w: 'titration', body: `
 <p>燒杯裡是 25.0 mL、0.100 M 的醋酸（CH₃COOH，以下寫作 <b>HA</b>），滴定管裡是 0.100 M 的 NaOH。每加入一個 OH⁻，就和一個 HA 反應：</p>
 <p class="eq">HA + OH⁻ → A⁻ + H₂O　　K = Ka ÷ Kw ≈ 1.8 × 10⁹</p>
 <p>K 非常大，代表這個反應幾乎完全進行：<b>加了多少 OH⁻，就有多少 HA 變成 A⁻</b>。這是整章最重要的一句話，後面所有計算都從這裡出發。</p>
@@ -757,12 +772,12 @@ CH.push({
 <li>中段 pH 幾乎不動：HA 和 A⁻ 都很多，形成<b>緩衝溶液</b>。</li>
 <li>接近 25.0 mL（<b>當量點</b>，加入的 OH⁻ 剛好等於原本的 HA）時 pH 突然暴衝。</li></ol>
 <p>再切換到強酸 HCl 比較：沒有緩衝區，而且當量點的 pH 剛好是 7；醋酸的當量點卻在 8.7，因為那時燒杯裡剩下的 A⁻ 是鹼。</p>` },
-      { h: '為什麼中段 pH 幾乎不動：緩衝溶液', w: 'buffer', body: `
+      { h: '為什麼中段 pH 幾乎不動？', w: 'buffer', body: `
 <p>緩衝溶液同時含有大量的弱酸 HA 和它的共軛鹼 A⁻。它抵抗 pH 變化的方法很簡單：<b>把強酸強鹼「換成」弱酸弱鹼</b>。</p>
 <p class="eq">加入強酸：A⁻ + H⁺ → HA　　　加入強鹼：HA + OH⁻ → A⁻ + H₂O</p>
 <p>加進來的 H⁺ 或 OH⁻ 幾乎全被吃掉，溶液裡真正改變的只是 A⁻ 和 HA 的比例，而 pH 只跟這個比例的<b>對數</b>有關，所以變化很小。</p>
 <p>右邊兩杯各加入同樣的強酸或強鹼：純水的 pH 從 7 直接掉到 2，緩衝溶液卻只動了不到 0.1。把緩衝溶液的濃度調低再試，會發現它能吸收的酸鹼也跟著變少：這就是<b>緩衝容量</b>。當加入的 H⁺ 超過溶液裡的 A⁻，緩衝就被「打穿」了。</p>` },
-      { h: '比例決定 pH：Henderson–Hasselbalch 方程式', w: 'species', body: `
+      { h: 'pH 由什麼比例決定？', w: 'species', body: `
 <p>從酸解離常數的定義出發：</p>
 <p class="eq">Ka = [H⁺][A⁻] ÷ [HA]</p>
 <p>兩邊取 −log，把 −log[H⁺] 寫成 pH、−log Ka 寫成 pKa，整理後得到：</p>
@@ -772,7 +787,7 @@ CH.push({
 <li><b>[A⁻] = [HA] 時，pH = pKa</b>。滴定到一半（半當量點）就是這個狀態，所以可以從滴定曲線直接讀出 pKa。</li>
 <li>比例每差 10 倍，pH 才差 1。比例在 1/10 到 10 之間時，緩衝效果最好，所以有效緩衝範圍約為 <b>pKa ± 1</b>。</li></ol>
 <p>拖動 pH 看兩種形式的比例怎麼交換；再改變 pKa，整組曲線會左右平移。</p>` },
-      { h: '滴定曲線上的關鍵點怎麼算', w: 'calc', body: `
+      { h: '滴定曲線上的關鍵點怎麼算？', w: 'calc', body: `
 <p>每個點的算法不同，但判斷方式只有一個：<b>先問燒杯裡主要是什麼</b>，再選對應的工具。</p>
 <table class="tbl"><thead><tr><th>燒杯裡主要是</th><th>用什麼算</th></tr></thead><tbody>
 <tr><td>只有弱酸 HA</td><td>弱酸解離：[H⁺] ≈ √(Ka·C)</td></tr>
@@ -780,13 +795,18 @@ CH.push({
 <tr><td>只剩 A⁻</td><td>共軛鹼水解：Kb = Kw ÷ Ka，[OH⁻] ≈ √(Kb·C)</td></tr>
 <tr><td>OH⁻ 過量</td><td>直接用過量的 OH⁻，A⁻ 的貢獻可忽略</td></tr></tbody></table>
 <p>點選每個點，看判斷過程與計算步驟。近似公式算出的 pH 和右邊的精確解幾乎一樣；如果差很多，代表那個近似的前提（例如解離很少）不成立。</p>` },
-      { h: '選指示劑：顏色要在暴衝區變', w: 'indicator', body: `
+      { h: '指示劑要怎麼選？', w: 'indicator', body: `
 <p>指示劑本身也是弱酸（HIn），酸形和鹼形顏色不同。依照 Henderson–Hasselbalch，pH 在 pKa(HIn) ± 1 之間時兩種形式都多，看起來是過渡色，這就是<b>變色範圍</b>。</p>
 <p>滴定時我們看顏色判斷「到了沒」，所以指示劑必須在 <b>pH 暴衝的那一段</b>變色：那一段只差一兩滴，顏色一變就代表到了當量點。</p>
 <ul><li>醋酸 + NaOH：當量點 pH ≈ 8.7，用<b>酚酞</b>（8.2–10.0）。</li>
 <li>強酸 + 強鹼：暴衝區從 pH 約 3 到 11，酚酞、溴瑞香草酚藍都可以。</li>
 <li>甲基橙（3.1–4.4）滴醋酸會在緩衝區就慢慢變色，你會以為已經到了，其實才加了一小半。</li></ul>
 <p>換不同指示劑，看燒杯的顏色在哪裡開始變。</p>` },
+      { h: '滴定數據還能告訴我們什麼？', body: `
+<ul><li><b>幾質子酸</b>：當量點時 n(OH⁻) = 質子數 × n(酸)。由消耗的 NaOH 莫耳數除以酸的莫耳數，就知道一個分子給出幾個 H⁺；反過來也能求酸的分子量。</li>
+<li><b>多質子酸的滴定曲線</b>：pKa 相差夠大時會出現好幾個當量點。第 n 個半當量點的 pH = pKaₙ，例如 H₃PO₄ 在第二個半當量點的 pH = pKa₂ = 7.20。</li>
+<li><b>緩衝溶液的選擇</b>：選 pKa 最接近目標 pH 的弱酸，[A⁻]/[HA] 越接近 1、總濃度越高，緩衝容量越大。弱酸加入半當量的強鹼（或弱鹼加入半當量的強酸）就得到 1 : 1 的緩衝溶液。</li>
+<li><b>導電度滴定</b>：Ba(OH)₂ 滴入 CuSO₄（或 H₂SO₄）時生成 BaSO₄ 沉澱與 Cu(OH)₂（或 H₂O），溶液中的離子越來越少，燈泡變暗；過了當量點，多餘的 Ba²⁺、OH⁻ 又使燈泡變亮。</li></ul>` },
     ],
     quiz: [
       { q: '用 NaOH 滴定醋酸，滴到半當量點時，溶液的 pH 等於什麼？', o: ['醋酸的 pKa', '7', '醋酸 pKa 的一半', '14 − pKa'], a: 0,
@@ -801,6 +821,48 @@ CH.push({
         why: '原有 HA 2.00 mmol，加入 OH⁻ 1.50 mmol → 剩 HA 0.50 mmol、生成 A⁻ 1.50 mmol。pH = 4.74 + log(1.50 ÷ 0.50) = 4.74 + 0.48 = 5.22。注意：A⁻ 比 HA 多，pH 一定大於 pKa。' },
       { q: '用 NaOH 滴定醋酸，選哪一種指示劑最適合？', o: ['酚酞（變色範圍 8.2–10.0）', '甲基橙（3.1–4.4）', '甲基紅（4.4–6.2）', '都可以，指示劑不影響結果'], a: 0,
         why: '當量點 pH 約 8.7，落在暴衝區中段。酚酞在這段變色；甲基橙、甲基紅會在緩衝區就變色，造成終點提早。', show: { w: 'indicator', set: { ind: 'mo', v: 8 } } },
+    ],
+    exam: [
+      { src: '中國醫藥 115 第 31 題', q: '下列何者不是阿瑞尼斯鹼？', o: ['NH₄Cl', 'NaOH', 'BaO', 'CH₃NH₂'], a: 0,
+        why: 'NH₄Cl 溶於水呈酸性；BaO 與水生成 Ba(OH)₂；胺與水生成 OH⁻。', show: { w: 'abdef', set: { i: 1 } } },
+      { src: '中國醫藥 108 第 14 題', q: '下列何者不是酸鹼反應？', o: ['Cl₂ + H₂O → HCl + HOCl', 'BF₃ + NH₃ → F₃BNH₃', 'CaO + SiO₂ → CaSiO₃', 'PO₄³⁻ + H₂O → HPO₄²⁻ + OH⁻'], a: 0,
+        why: 'Cl₂ 與水是氧化還原；其他三個是路易斯或布忍斯特酸鹼反應。', show: { w: 'abdef', set: { i: 5 } } },
+      { src: '慈濟 114 第 38 題', q: '下列何者是路易斯酸？', o: ['(C₂H₅)₃B', 'OH⁻', 'NH₃', 'H₂O'], a: 0,
+        why: 'B 只有六個價電子，有空軌域可以接受電子對。', show: { w: 'abdef', set: { i: 3 } } },
+      { src: '慈濟 111 第 19 題', q: '2.0 × 10⁻⁸ M 的 HCl 水溶液 pH 約為？', o: ['6.96', '7.70', '7.00', '8.00'], a: 0,
+        why: '水本身的 10⁻⁷ M 不能忽略：解 x² − Cx − Kw = 0 得 [H⁺] ≈ 1.1 × 10⁻⁷ M，pH ≈ 6.96；酸溶液的 pH 不會大於 7。', show: { w: 'phcalc', set: { t: 'sa', lc: -7.7 } } },
+      { src: '慈濟 113 第 14 題', q: '0.050 M 的某弱鹼溶液 pH 為 10.0，其 Kb 約為？', o: ['2.0 × 10⁻⁷', '2.0 × 10⁻⁴', '1.0 × 10⁻⁸', '5.0 × 10⁻⁶'], a: 0,
+        why: '[OH⁻] = 10⁻⁴，Kb = (10⁻⁴)² ÷ 0.050 = 2.0 × 10⁻⁷。', show: { w: 'phcalc', set: { t: 'wb', lc: -1.3 } } },
+      { src: '義守 112 第 34 題', q: '0.020 M 的咖啡因溶液（Kb = 4.1 × 10⁻⁴），pH 約為？', o: ['11.4', '10.0', '12.3', '8.6'], a: 0,
+        why: 'x² ÷ (0.020 − x) = 4.1 × 10⁻⁴，解二次式得 x ≈ 2.7 × 10⁻³；pOH 2.57，pH ≈ 11.4。' },
+      { src: '義守 107 第 10 題', q: '0.10 M 單質子弱酸的解離度為 1.0%，則 0.40 M 時的解離度約為？', o: ['0.50%', '2.0%', '1.0%', '4.0%'], a: 0,
+        why: 'α ≈ √(Ka/C)，濃度變 4 倍，解離度變 1/2。', show: { w: 'phcalc', set: { t: 'wa' } } },
+      { src: '中國醫藥 113 第 17 題', q: 'Ka(HF) = 7.2 × 10⁻⁴、Ka(HCN) = 6.2 × 10⁻¹⁰，下列鹼性由強到弱何者正確？', o: ['CN⁻ > F⁻ > H₂O', 'F⁻ > CN⁻ > H₂O', 'H₂O > F⁻ > CN⁻', 'CN⁻ > H₂O > F⁻'], a: 0,
+        why: '酸越弱，共軛鹼越強；H₂O 是 H₃O⁺ 的共軛鹼，比 F⁻ 更弱。', show: { w: 'kaladder', set: { i: 9 } } },
+      { src: '中國醫藥 113 第 32 題', q: '0.10 M 的 NaX、NaY、NaZ 溶液 pH 分別為 7.0、9.0、11.0，HX、HY、HZ 的酸性由強到弱為？', o: ['HX > HY > HZ', 'HZ > HY > HX', 'HY > HX > HZ', '三者相同'], a: 0,
+        why: '鹽溶液越鹼，陰離子越強，對應的酸越弱；NaX 中性，HX 是強酸。', show: { w: 'kaladder' } },
+      { src: '慈濟 111 第 5 題', q: '等濃度時，下列鹽類水溶液何者 pH 最小？', o: ['AlCl₃', 'NaCl', 'KCl', 'MgCl₂'], a: 0,
+        why: 'Al(H₂O)₆³⁺ 電荷高、半徑小，最容易釋出 H⁺。', show: { w: 'abdef', set: { i: 6 } } },
+      { src: '慈濟 109 第 28 題', q: '等濃度時，下列何者的水溶液 pH 最高？', o: ['NaF', 'NH₄Cl', 'KBr', 'NaNO₃'], a: 0,
+        why: 'F⁻ 是弱酸 HF 的共軛鹼，使溶液偏鹼；KBr、NaNO₃ 中性；NH₄Cl 偏酸。', show: { w: 'phcalc', set: { t: 'naf', lc: -1 } } },
+      { src: '義守 110 第 4 題', q: 'H₃PO₄、H₃PO₃、H₃BO₃、H₂C₂O₄ 中，哪些是二質子酸？', o: ['H₃PO₃ 與 H₂C₂O₄', 'H₃PO₄ 與 H₃BO₃', 'H₃PO₄ 與 H₂C₂O₄', '只有 H₂C₂O₄'], a: 0,
+        why: 'H₃PO₃ 有一個 H 直接接在 P 上，不會解離；H₃PO₄ 是三質子；H₃BO₃ 是一質子的路易斯酸。' },
+      { src: '慈濟 109 第 23 題', q: 'H₃PO₄ 的 pKa₂ = 7.20，pH 8.20 時 [HPO₄²⁻] : [H₂PO₄⁻] 約為？', o: ['10 : 1', '1 : 10', '1 : 1', '2 : 1'], a: 0,
+        why: '比值 = 10^(8.20 − 7.20) = 10。', show: { w: 'polyprot', set: { a: 'h3po4', pH: 8.2 } } },
+      { src: '慈濟 108 第 8 題', q: '0.10 M 的 NaHCO₃ 溶液（H₂CO₃ pKa₁ 6.35、pKa₂ 10.33），pH 約為？', o: ['8.34', '6.35', '10.33', '7.00'], a: 0,
+        why: '兩性物質：pH ≈ (6.35 + 10.33) ÷ 2 = 8.34。', show: { w: 'polyprot', set: { a: 'co3', pH: 8.34 } } },
+      { src: '中國醫藥 111 第 39 題', q: '0.10 M 的二質子酸 H₂A（Ka₁ = 1.0 × 10⁻⁴、Ka₂ = 1.0 × 10⁻⁹），[A²⁻] 約為？', o: ['1.0 × 10⁻⁹ M', '1.0 × 10⁻⁴ M', '3.2 × 10⁻³ M', '0.10 M'], a: 0,
+        why: '第一步產生的 H⁺ 與 HA⁻ 約相等，代入 Ka₂ 得 [A²⁻] ≈ Ka₂。', show: { w: 'polyprot' } },
+      { src: '義守 110 第 49 題', q: 'pKa 6.4 的弱酸藥物在 pH 7.4 的血液中，約有多少比例是離子態？', o: ['91%', '50%', '9%', '99%'], a: 0,
+        why: '[A⁻]/[HA] = 10^(7.4 − 6.4) = 10，離子態 10/11 ≈ 91%。', show: { w: 'species', set: { pKa: 6.4, pH: 7.4 } } },
+      { src: '義守 109 第 34 題', q: '下列緩衝溶液何者緩衝容量最大？', o: ['0.50 M HA / 0.50 M A⁻', '0.10 M HA / 0.10 M A⁻', '0.50 M HA / 0.10 M A⁻', '0.10 M HA / 0.50 M A⁻'], a: 0,
+        why: '比例 1 : 1 且濃度最高。', show: { w: 'buffer' } },
+      { src: '中國醫藥 113 第 31 題', q: '要配製 pH 9.0 的緩衝溶液，應選用哪一個弱酸？', o: ['Ka = 6.0 × 10⁻¹⁰', 'Ka = 2.7 × 10⁻³', 'Ka = 4.4 × 10⁻⁶', 'Ka = 1.8 × 10⁻⁵'], a: 0,
+        why: 'pKa ≈ 9.2 最接近目標 pH。' },
+      { src: '慈濟 111 第 39 題', q: '0.210 g 的酸（分子量 192）以 0.100 M NaOH 滴定至終點，用去 32.8 mL，此酸為幾質子酸？', o: ['三質子', '一質子', '二質子', '四質子'], a: 0,
+        why: '酸 1.09 × 10⁻³ mol，NaOH 3.28 × 10⁻³ mol，比值 3。' },
+      { src: '慈濟 108 第 22 題', q: '以 Ba(OH)₂ 溶液慢慢滴入 CuSO₄ 溶液，導電燈泡的亮度如何變化？', o: ['逐漸變暗，過了當量點後又變亮', '一直變亮', '一直變暗', '不變'], a: 0,
+        why: '生成 BaSO₄ 與 Cu(OH)₂ 沉澱，離子減少；過量的 Ba(OH)₂ 又提供離子。' },
     ],
   });
 
@@ -2551,6 +2613,10 @@ const TERMS = {
     ['勒沙特列原理', '平衡受干擾時，系統往部分抵銷干擾的方向移動。', { w: 'lechat', set: { act: 'comp' } }],
   ],
   'acid-base': [
+    ['共軛鹼', '酸給出 H⁺ 之後剩下的物種；酸越強，共軛鹼越弱（Ka × Kb = Kw）。', { w: 'kaladder', set: { i: 3 } }],
+    ['兩性物質', '可以給出也可以接受 H⁺ 的物種，如 H₂O、HCO₃⁻、H₂PO₄⁻。', { w: 'abdef', set: { i: 2 } }],
+    ['路易斯酸', '接受電子對的物種，如 BF₃、金屬離子。', { w: 'abdef', set: { i: 3 } }],
+    ['解離度', '弱電解質解離的比例 α = x ÷ C，稀釋時變大。', { w: 'phcalc', set: { t: 'wa' } }],
     ['當量點', '加入的鹼的莫耳數剛好等於原本酸的莫耳數；弱酸滴定時 pH 大於 7。', { w: 'titration', set: { acid: 'weak', v: 25 } }],
     ['緩衝溶液', '同時含大量弱酸與其共軛鹼的溶液，加少量強酸強鹼 pH 幾乎不變。', { w: 'buffer', set: { add: 'H' } }],
     ['緩衝容量', '緩衝溶液能吸收多少強酸或強鹼而不被打穿，和濃度成正比。', { w: 'buffer', set: { add: 'H' } }],
@@ -3107,6 +3173,113 @@ W.decide = el => {
   }
   bindSeg(el, 'ds', v => { st.sub = v; draw(); }); bindSeg(el, 'dr', v => { st.reag = v; draw(); }); bindSeg(el, 'dv', v => { st.solv = v; draw(); });
   $('#dh', el).onchange = e => { st.heat = e.target.checked; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ---------- 後中化學：酸鹼定義、pH 計算、強度與多質子酸的互動圖 ---------- */
+
+/* ===== 1. 三種酸鹼定義：誰給誰什麼 ===== */
+const ABRX = [
+  ['HNO₂ + H₂O ⇌ NO₂⁻ + H₃O⁺', [['HNO₂', 'a'], ['H₂O', 'b']], [['NO₂⁻', 'cb'], ['H₃O⁺', 'ca']], 'BL', 'HNO₂ 給 H⁺ 給水：HNO₂/NO₂⁻、H₃O⁺/H₂O 是兩組共軛酸鹼對。'],
+  ['NH₃ + H₂O ⇌ NH₄⁺ + OH⁻', [['NH₃', 'b'], ['H₂O', 'a']], [['NH₄⁺', 'ca'], ['OH⁻', 'cb']], 'BL', '這裡水是酸（給 H⁺），在上一題水是鹼：水是兩性物質。NH₃ 不含 OH⁻，卻使溶液產生 OH⁻，所以也算阿瑞尼斯鹼。'],
+  ['HCO₃⁻ + OH⁻ ⇌ CO₃²⁻ + H₂O', [['HCO₃⁻', 'a'], ['OH⁻', 'b']], [['CO₃²⁻', 'cb'], ['H₂O', 'ca']], 'BL', 'HCO₃⁻ 遇到鹼時當酸；遇到酸時（HCO₃⁻ + H⁺ → H₂CO₃）當鹼，也是兩性物質。'],
+  ['BF₃ + :NH₃ → F₃B–NH₃', [['BF₃', 'la'], ['NH₃', 'lb']], [['F₃B–NH₃', '']], 'L', '沒有 H⁺ 轉移。NH₃ 提供孤對電子（路易斯鹼），B 有空軌域接受（路易斯酸），形成配位共價鍵。'],
+  ['CaO + SiO₂ → CaSiO₃', [['CaO', 'lb'], ['SiO₂', 'la']], [['CaSiO₃', '']], 'L', 'O²⁻ 提供電子對給 Si：鹼性氧化物 + 酸性氧化物，屬於路易斯酸鹼反應。'],
+  ['Cl₂ + H₂O → HCl + HOCl', [['Cl₂', ''], ['H₂O', '']], [['HCl', ''], ['HOCl', '']], 'R', 'Cl 的氧化數由 0 變成 −1 與 +1，是氧化還原（自身氧化還原），不是酸鹼反應。'],
+  ['Fe³⁺ + 6H₂O → Fe(H₂O)₆³⁺', [['Fe³⁺', 'la'], ['H₂O', 'lb']], [['Fe(H₂O)₆³⁺', '']], 'L', '金屬離子接受水分子的孤對電子；高電荷的水合金屬離子還會再釋出 H⁺，所以 FeCl₃、AlCl₃ 溶液呈酸性。'],
+];
+W.abdef = el => {
+  let cur = 0;
+  el.innerHTML = `${seg('adS', ABRX.map((r, i) => [String(i), r[0].split(' ')[0] + ' …']), '0')}<p class="eq" id="adE"></p><div class="w-row" id="adC"></div><div class="cards" id="adK"></div><p class="note" id="adN"></p>`;
+  const LAB = { a: ['酸', 'qc pos'], b: ['鹼', 'qc neg'], ca: ['共軛酸', 'qc pos'], cb: ['共軛鹼', 'qc neg'], la: ['路易斯酸', 'qc pos'], lb: ['路易斯鹼', 'qc neg'], '': ['', 'qc'] };
+  function draw() {
+    const [rx, L, R, kind, note] = ABRX[cur];
+    $('#adE', el).textContent = rx;
+    $('#adC', el).innerHTML = L.concat([['→', null]]).concat(R).map(([t, k]) => (k === null ? '<span class="marr">→</span>' : `<span class="${LAB[k][1]}">${t}${LAB[k][0] ? `<small>${LAB[k][0]}</small>` : ''}</span>`)).join('');
+    const yes = t => `<b class="${t ? 'ok' : 'bad'}">${t ? '是' : '否'}</b>`;
+    $('#adK', el).innerHTML = card('a', '阿瑞尼斯（水中產生 H⁺／OH⁻）', yes(cur < 2)) + card('b', '布忍斯特–羅瑞（H⁺ 轉移）', yes(kind === 'BL')) + card('l', '路易斯（電子對）', yes(kind !== 'R'));
+    $('#adN', el).innerHTML = `${note} 三種定義由窄到寬：所有布忍斯特–羅瑞酸鹼反應也都是路易斯酸鹼反應（鹼用孤對電子接受 H⁺）。`;
+    pressSeg(el, 'adS', String(cur));
+  }
+  bindSeg(el, 'adS', v => { cur = +v; draw(); });
+  draw();
+  return { set(s) { cur = s.i ?? cur; draw(); } };
+};
+
+/* ===== 2. pH 計算：強、弱、極稀、鹽類 ===== */
+const PHT = { sa: ['強酸 HCl', 0, 'a'], wa: ['弱酸 CH₃COOH', 4.74, 'a'], hf: ['弱酸 HF', 3.17, 'a'], sb: ['強鹼 NaOH', 0, 'b'], wb: ['弱鹼 NH₃', 4.75, 'b'], naf: ['鹽 NaF（F⁻ 是弱鹼）', 14 - 3.17, 'b'], nh4: ['鹽 NH₄Cl（NH₄⁺ 是弱酸）', 9.25, 'a'] };
+function phSolve(type, C) {   // 回傳 [H⁺]；強酸鹼含水的解離，弱者解二次式
+  const Kw = 1e-14, [, pK, ab] = PHT[type];
+  let x;
+  if (pK === 0) x = (C + Math.sqrt(C * C + 4 * Kw)) / 2;
+  else { const K = 10 ** -pK; x = (-K + Math.sqrt(K * K + 4 * K * C)) / 2; x = Math.max(x, Math.sqrt(Kw)); }
+  return ab === 'a' ? x : Kw / x;
+}
+W.phcalc = el => {
+  const st = { t: 'wa', lc: -1 };
+  el.innerHTML = `${seg('pcT', Object.entries(PHT).map(([k, v]) => [k, v[0]]), st.t)}<div class="w-row"><label class="rng">濃度 C（對數）<input type="range" id="pcC" min="-8" max="0" step="0.05"><output class="mono" id="pcCo"></output></label></div><div id="pcG"></div><ol class="cs" id="pcF"></ol><div class="cards" id="pcK"></div><p class="note" id="pcN"></p>`;
+  function draw() {
+    const [nm, pK, ab] = PHT[st.t], C = 10 ** st.lc, H = phSolve(st.t, C), pH = -Math.log10(H), xs = Array.from({ length: 81 }, (_, i) => -8 + i * 0.1);
+    $('#pcG', el).innerHTML = chart({ w: 560, h: 220, x: [-8, 0], y: [0, 14], xt: [-8, -6, -4, -2, 0], yt: [0, 7, 14], xlab: 'log C', ylab: 'pH', label: 'pH 與濃度' }, (X, Y) =>
+      `<line class="mk" x1="${X(-8)}" x2="${X(0)}" y1="${Y(7)}" y2="${Y(7)}"/><path class="tline" d="${path(xs.map(x => [X(x), Y(-Math.log10(phSolve(st.t, 10 ** x)))]))}"/><circle class="dot" cx="${X(st.lc)}" cy="${Y(pH)}" r="7"/>`);
+    const ion = ab === 'a' ? H : 1e-14 / H;
+    const K = pK ? 10 ** -pK : null;
+    $('#pcF', el).innerHTML = pK === 0
+      ? `<li>完全解離：[${ab === 'a' ? 'H⁺' : 'OH⁻'}] ≈ C = ${sci(C, 2)} M</li>${C < 1e-6 ? '<li>濃度太低時，水本身解離的 1.0 × 10⁻⁷ M 不能忽略：解 x² − Cx − Kw = 0</li>' : ''}`
+      : `<li>${ab === 'a' ? 'Ka' : 'Kb'} = ${sci(K, 2)}${st.t === 'naf' ? '（= Kw ÷ Ka(HF)）' : st.t === 'nh4' ? '（= Kw ÷ Kb(NH₃)）' : ''}</li><li>x² ÷ (C − x) = K → x = ${sci(ion, 2)} M（近似 √(KC) = ${sci(Math.sqrt(K * C), 2)}）</li>`;
+    $('#pcK', el).innerHTML = card('h', '[H⁺]', `${sci(H, 2)} M`) + card('p', 'pH', fx(pH, 2)) + card('o', 'pOH', fx(14 - pH, 2)) + card('a', '解離度 α', `${fx(100 * Math.min(1, ion / C), 1)}%`, pK ? '= x ÷ C' : '');
+    $('#pcN', el).innerHTML = pK === 0 ? `強${ab === 'a' ? '酸' : '鹼'}完全解離，pH 由濃度直接決定。但濃度低於 10⁻⁶ M 時，pH 不會跨過 7：5 × 10⁻⁸ M 的 HNO₃ pH 約 6.9，而不是 7.3。`
+      : `弱${ab === 'a' ? '酸' : '鹼'}只解離一小部分。往左拖（稀釋），解離度 α 反而<b>變大</b>（約和 √(K/C) 成正比，濃度變 4 倍 α 變一半），但 [${ab === 'a' ? 'H⁺' : 'OH⁻'}] 仍然變小。${st.t === 'naf' || st.t === 'nh4' ? ' 鹽類溶液的酸鹼性看離子：強酸強鹼生成的鹽（NaCl、KNO₃）中性；弱酸的陰離子（F⁻、CH₃COO⁻、CN⁻）使溶液偏鹼；弱鹼的陽離子（NH₄⁺）與高電荷的金屬離子（Al³⁺、Fe³⁺）使溶液偏酸。' : ''}`;
+    $('#pcC', el).value = st.lc; $('#pcCo', el).textContent = `${sci(C, 1)} M`; pressSeg(el, 'pcT', st.t);
+  }
+  bindSeg(el, 'pcT', v => { st.t = v; draw(); });
+  $('#pcC', el).oninput = e => { st.lc = +e.target.value; draw(); };
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 3. 酸的強度階梯：Ka × Kb = Kw =====
+   25 °C 的 pKa（教科書常用值） */
+const KAL = [['HSO₄⁻', 'SO₄²⁻', 1.99], ['H₃PO₄', 'H₂PO₄⁻', 2.15], ['HClO₂', 'ClO₂⁻', 1.96], ['HF', 'F⁻', 3.17], ['HNO₂', 'NO₂⁻', 3.35], ['CH₃COOH', 'CH₃COO⁻', 4.74], ['C₅H₅NH⁺', 'C₅H₅N', 5.23], ['H₂CO₃', 'HCO₃⁻', 6.35], ['H₂PO₄⁻', 'HPO₄²⁻', 7.20], ['HCN', 'CN⁻', 9.21], ['NH₄⁺', 'NH₃', 9.25], ['HCO₃⁻', 'CO₃²⁻', 10.33], ['HPO₄²⁻', 'PO₄³⁻', 12.35]];
+W.kaladder = el => {
+  let cur = 3;
+  el.innerHTML = `<div id="klG"></div><div class="cards" id="klK"></div><p class="note" id="klN"></p>`;
+  function draw() {
+    const Y = p => 20 + (p - 1.5) / 11.5 * 400;
+    let s = `<line class="axl" x1="280" x2="280" y1="10" y2="430"/><text class="tk" x="200" y="12" text-anchor="middle">酸（越上越強）</text><text class="tk" x="360" y="12" text-anchor="middle">共軛鹼（越下越強）</text>`;
+    const used = [];
+    KAL.forEach(([a, b, p], i) => { let y = Y(p); while (used.some(u => Math.abs(u - y) < 15)) y += 15; used.push(y);
+      s += `<g data-i="${i}" class="klr${i === cur ? ' on' : ''}" role="button"><line x1="270" x2="290" y1="${Y(p)}" y2="${Y(p)}" class="mk"/><text class="tk" x="262" y="${y + 4}" text-anchor="end">${a}</text><text class="tk" x="298" y="${y + 4}">${b}</text><text class="tk sm" x="150" y="${y + 4}" text-anchor="end">${p}</text></g>`; });
+    $('#klG', el).innerHTML = `<svg class="ch" style="max-width:520px;margin:auto" viewBox="100 0 380 440" role="img" aria-label="酸鹼強度">${s}</svg>`;
+    const [a, b, p] = KAL[cur];
+    $('#klK', el).innerHTML = card('ka', `${a} 的 Ka`, sci(10 ** -p, 2), `pKa ${p}`) + card('kb', `${b} 的 Kb`, sci(10 ** (p - 14), 2), `pKb ${fx(14 - p, 2)}`) + card('kw', 'Ka × Kb', '1.0 × 10⁻¹⁴', 'Kw');
+    $('#klN', el).innerHTML = `點選任一列。左邊越上面的酸越強（pKa 越小），它的共軛鹼就越弱；兩者的 Ka × Kb 永遠等於 Kw。所以 Ka(HF) &gt; Ka(HCN) 時，鹼性 CN⁻ &gt; F⁻。等濃度的鈉鹽溶液，共軛鹼越強 pH 越高；反過來，由鹽溶液的 pH 也能排出酸的強弱。`;
+    $$('[data-i]', el).forEach(g => { g.onclick = () => { cur = +g.dataset.i; draw(); }; });
+  }
+  draw();
+  return { set(s) { cur = s.i ?? cur; draw(); } };
+};
+
+/* ===== 4. 多質子酸的物種分布 ===== */
+const POLY = { h3po4: ['H₃PO₄', [2.15, 7.20, 12.35], ['H₃PO₄', 'H₂PO₄⁻', 'HPO₄²⁻', 'PO₄³⁻']], ox: ['草酸 H₂C₂O₄', [1.25, 4.27], ['H₂C₂O₄', 'HC₂O₄⁻', 'C₂O₄²⁻']], co3: ['碳酸 H₂CO₃', [6.35, 10.33], ['H₂CO₃', 'HCO₃⁻', 'CO₃²⁻']] };
+const PCOL = ['#2F3B99', '#B5326C', '#23704A', '#8F5400'];
+W.polyprot = el => {
+  const st = { a: 'h3po4', pH: 7 };
+  el.innerHTML = `${seg('ppS', Object.entries(POLY).map(([k, v]) => [k, v[0]]), st.a)}<div class="w-row"><label class="rng">pH<input type="range" id="ppH" min="0" max="14" step="0.05"><output class="mono" id="ppO"></output></label></div><div id="ppG"></div><div class="cards" id="ppK"></div><p class="note" id="ppN"></p>`;
+  const frac = (pKs, pH) => { const H = 10 ** -pH, K = pKs.map(p => 10 ** -p), terms = [1]; K.forEach((k, i) => terms.push(terms[i] * k / H)); const s = terms.reduce((a, b) => a + b, 0); return terms.map(t => t / s); };
+  function draw() {
+    const [, pKs, sp] = POLY[st.a], xs = Array.from({ length: 141 }, (_, i) => i / 10), f = frac(pKs, st.pH);
+    $('#ppG', el).innerHTML = chart({ w: 560, h: 240, x: [0, 14], y: [0, 1], xt: [0, 2, 4, 6, 8, 10, 12, 14], yt: [0, 0.5, 1], xlab: 'pH', ylab: '所佔比例', label: '多質子酸分布' }, (X, Y) =>
+      sp.map((_, j) => `<path class="tline" style="stroke:${PCOL[j]}" d="${path(xs.map(x => [X(x), Y(frac(pKs, x)[j])]))}"/>`).join('') + pKs.map(p => `<line class="mk" x1="${X(p)}" x2="${X(p)}" y1="${Y(0)}" y2="${Y(0.5)}"/>`).join('')
+      + `<line class="cur" x1="${X(st.pH)}" x2="${X(st.pH)}" y1="${Y(0)}" y2="${Y(1)}"/>`);
+    $('#ppK', el).innerHTML = sp.map((t, j) => `<div class="card"><span style="color:${PCOL[j]}">${t}</span><b>${fx(100 * f[j], 1)}%</b></div>`).join('');
+    const amph = pKs.slice(0, -1).map((p, i) => `${sp[i + 1]} 溶液 pH ≈ (${p} + ${pKs[i + 1]}) ÷ 2 = ${fx((p + pKs[i + 1]) / 2, 2)}`).join('；');
+    $('#ppN', el).innerHTML = `每兩條曲線在 pH = pKa 處交叉（虛線），此時兩種形式各半。兩個 pKa 相差很大時，任何 pH 下最多只有兩種形式同時明顯存在。兩性物質（中間形式）的溶液：${amph}。二質子酸 H₂A 溶液中 [A²⁻] ≈ Ka₂，和濃度無關。`;
+    $('#ppH', el).value = st.pH; $('#ppO', el).textContent = fx(st.pH, 2); pressSeg(el, 'ppS', st.a);
+  }
+  bindSeg(el, 'ppS', v => { st.a = v; draw(); });
+  $('#ppH', el).oninput = e => { st.pH = +e.target.value; draw(); };
   draw();
   return { set(s) { Object.assign(st, s); draw(); } };
 };
