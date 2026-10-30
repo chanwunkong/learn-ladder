@@ -16,7 +16,8 @@ function setDone(id, v) {
   if (typeof CLOUD !== 'undefined') { CLOUD.push(); CLOUD.render(); }
 }
 function renderTOC(cur) {
-  $('#toc').innerHTML = `<a href="#log" class="toc-log${cur === 'log' ? ' cur' : ''}">練習紀錄</a>` + UNITS.map(p => `<p class="toc-h">${p.part}</p><ol>${p.items.map(([u, t], i) => { const c = unitCh(u);
+  const nDue = REVIEW.book(LOG).due.length;
+  $('#toc').innerHTML = `<a href="#review" class="toc-log${cur === 'review' ? ' cur' : ''}">錯題複習${nDue ? `（今天 ${nDue} 題）` : ''}</a><a href="#log" class="toc-log${cur === 'log' ? ' cur' : ''}">練習紀錄</a>` + UNITS.map(p => `<p class="toc-h">${p.part}</p><ol>${p.items.map(([u, t], i) => { const c = unitCh(u);
     return c ? `<li><a href="#${c.id}" class="${c.id === cur ? 'cur' : ''} ${state.done[c.id] ? 'done' : ''}"${c.id === cur ? ' aria-current="page"' : ''}><span class="num">${p.key === 'g' ? '普' : '有'}${i + 1}</span><span>${c.title}</span></a></li>`
       : `<li><span class="soon"><span class="num">${p.key === 'g' ? '普' : '有'}${i + 1}</span><span>${t}</span><small>製作中</small></span></li>`; }).join('')}</ol>`).join('');
 }
@@ -27,7 +28,7 @@ function renderHome() {
 <h1 class="hero">不背反應，<br>看懂原理就推得出來。</h1>
 <p class="lede">普通化學和有機化學，每一章都從直覺和圖像開始：先動手看到現象，再推出公式與規則，最後用在題目上。普化學到的酸鹼、平衡、熱力學，會直接拿來解釋有機反應。</p>
 ${(() => { const nx = CH.find(c => !state.done[c.id]) || CH[0], any = CH.some(c => state.done[c.id]);
-  return `<div class="cta"><a class="btn pri" href="#${nx.id}">${any ? '繼續：' : '從第一章開始：'}${nx.title}</a><a class="btn" href="#map">看課程地圖</a><a class="btn" href="#log">練習紀錄</a></div>`; })()}
+  return `<div class="cta"><a class="btn pri" href="#${nx.id}">${any ? '繼續：' : '從第一章開始：'}${nx.title}</a><a class="btn" href="#map">看課程地圖</a><a class="btn" href="#review">錯題複習${(n => n ? `（今天 ${n} 題）` : '')(REVIEW.book(LOG).due.length)}</a><a class="btn" href="#log">練習紀錄</a></div>`; })()}
 <h2 id="map">課程地圖</h2>
 <p class="mut tree-note">由上往下是學習順序：最基礎的章節在最上面，下面的章節會用到上面的觀念。數字是三校歷屆試題中，<b>每份 50 題平均約考幾題</b>。點虛線框的是規劃中的章節。</p>
 <div class="seg" id="wview">${WVIEW.map((v, i) => `<button aria-pressed="${i === state.wv}" data-i="${i}">${v}</button>`).join('')}</div>
@@ -168,6 +169,31 @@ ${ss.length ? `<div class="cards">${card('n', '練習題次', ss.length)}${card(
   $('#logClr').onclick = () => { if (confirm('確定要清除這台裝置上的全部練習紀錄？')) { LOG.length = 0; store.set('log', LOG); renderLog(); } };
 }
 
+// 錯題複習：依 REVIEW 的排程，把今天到期的錯題集中起來重考（規則見 src/shared/review.js）
+function renderReview() {
+  const { open, due } = REVIEW.book(LOG), now = Date.now();
+  const items = due.map(s => ({ s, f: qfind(s.c, s.h, s.k, s.i) })).filter(x => x.f);
+  const soon = open.filter(s => s.due > now && s.due <= now + 7 * REVIEW.DAY).length;
+  $('#article').innerHTML = `<p class="eyebrow">後中化學</p><h1>錯題複習</h1>
+<p class="lede">第一次就答錯的題目會進到這裡：隔 1 天回來考；那天第一次就答對，隔 3 天再考一次；再答對就算掌握，離開錯題本。中途答錯就從頭開始。</p>
+<div class="cards">${card('d', '今天到期', `${items.length} 題`)}${card('o', '錯題本共', `${open.length} 題`)}${card('s', '7 天內到期', `${soon} 題`)}</div>
+${items.length ? items.map(({ s, f }, n) => `<div class="q" data-r="${n}"><p class="qsrc"><a href="#${f.c.id}">${f.c.title.split('：')[0]}</a>${f.k === 'x' ? '・相似題' : '・章末題'}・第 ${s.stage + 1} 輪</p><p class="qt">${n + 1}. ${f.q.q}</p><div class="opts">${order(f.q, f.i).map(j => `<button class="opt" type="button" data-o="${j}">${f.q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('')
+  : `<p class="note">${open.length ? '今天沒有到期的錯題，到期的題目會在這裡出現。' : '錯題本是空的。到各章練習時第一次答錯的題目，會自動排進這裡。'}</p>`}`;
+  items.forEach(({ s, f }, n) => {
+    const qe = $(`.q[data-r="${n}"]`), q = f.q, why = $('.why', qe);
+    let tries = 0;
+    const sts = (STEPS[f.c.id] || {})[f.k + ':' + s.h];
+    if (sts) guide(qe, sts);
+    $$('.opt', qe).forEach(b => { b.onclick = () => {
+      const ok = +b.dataset.o === q.a; b.classList.add(ok ? 'right' : 'wrong'); why.hidden = false; tries++;
+      logAnswer({ c: f.c.id, k: f.k, i: f.i, h: s.h, qt: strip(q.q).slice(0, 60), p: +b.dataset.o, ok: ok ? 1 : 0, n: tries });
+      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); const gb = $('.guide', qe); if (gb) gb.hidden = true; why.className = 'why ok';
+        why.innerHTML = `<b>答對了。</b>${q.why}<br><small>${tries > 1 ? '今天第一次沒答對，明天再考一次。' : s.stage + 1 >= 2 ? '這題已經掌握，離開錯題本。' : '3 天後再考一次。'}</small>`; renderTOC('review'); }
+      else { b.disabled = true; why.className = 'why no'; why.innerHTML = `<b>再想想。</b>${sts ? '下面拆成幾個小步驟，一步一步推回來。' : `可以回到<a href="#${f.c.id}">${f.c.title.split('：')[0]}</a>看看。`}`; if (sts) qe.openGuide(); }
+    }; });
+  });
+}
+
 const INST = {};   // 目前頁面上各互動圖的實例（練習題「在圖上看」用）
 function renderChapter(id) {
   const c = chOf(id), i = CH.indexOf(c), prev = CH[i - 1], next = CH[i + 1];
@@ -238,6 +264,7 @@ function route(h) {
   shown = c ? id : null;
   if (c) { renderChapter(id); renderTOC(id); document.title = `${c.title}｜後中化學`; }
   else if (id === 'log') { renderLog(); renderTOC('log'); document.title = '練習紀錄｜後中化學'; }
+  else if (id === 'review') { renderReview(); renderTOC('review'); document.title = '錯題複習｜後中化學'; }
   else { renderHome(); bindTree(); renderTOC(''); document.title = '後中化學｜學習階梯'; }
   $('#tocBox').classList.remove('open'); $('#tocBtn').textContent = '☰ 單元';
   const t = sec ? document.getElementById(`sec-${sec}`) : id === 'map' && document.getElementById('map');

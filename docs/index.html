@@ -104,6 +104,58 @@ a.course:hover { transform: translateY(-2px); border-color: var(--cc, var(--acce
 .course .go { font-weight: 700; color: var(--cc, var(--accent)); }
 .course.soon { opacity: .75; }
 .badge { position: absolute; top: 14px; right: 14px; font-size: 12px; border-radius: 99px; padding: 2px 10px; background: var(--warn-soft); color: var(--warn); }
+.other-h { font-family: var(--display); font-size: 22px; margin: 8px 0 4px; }
+/* 後中考試區 */
+.exam { display: grid; gap: 16px; padding: 4px 0 36px; }
+.ex-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.ex-h { font-family: var(--display); font-size: clamp(26px, 5vw, 34px); margin: 0; }
+.count { display: flex; align-items: center; gap: 10px; }
+.count b { font-family: var(--mono); font-size: 40px; line-height: 1; color: var(--eosin); font-variant-numeric: tabular-nums; }
+.count span { font-size: 14px; line-height: 1.4; }
+.count small, .dates small { color: var(--muted); font-size: 12px; }
+.next { margin: 0; font-size: 14.5px; padding: 10px 14px; background: var(--warn-soft); border-radius: 8px; }
+.chip { display: inline-block; margin-left: 8px; font-family: var(--mono); font-size: 11px; border-radius: 99px; padding: 0 8px; border: 1px solid var(--line); color: var(--muted); vertical-align: 1px; white-space: nowrap; }
+.chip.known { border-color: var(--good); color: var(--good); } .chip.goal { border-color: var(--accent); color: var(--accent); }
+.ex-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.panel h3 { margin: 0; font-size: 17px; }
+.todo { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.todo a, .todo li.soon { display: grid; grid-template-columns: 24px 1fr auto; gap: 10px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); text-decoration: none; font-size: 14.5px; }
+.todo a:hover { border-color: var(--accent); }
+.todo b { font-weight: 500; font-size: 13px; color: var(--eosin); text-align: right; }
+.todo .ok b { color: var(--good); } .todo li.soon { color: var(--muted); } .todo li.soon b { color: var(--muted); }
+.ck { width: 20px; height: 20px; border: 2px solid var(--line); border-radius: 5px; display: grid; place-items: center; font-size: 13px; color: var(--good); }
+.todo .ok .ck { border-color: var(--good); background: var(--good-soft); }
+.streak { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 14px; }
+.streak b { font-family: var(--mono); font-size: 20px; color: var(--accent); }
+.heat { display: grid; grid-template-columns: repeat(14, 1fr); gap: 4px; }
+.heat i { height: 18px; border-radius: 3px; background: var(--sunk); min-width: 0; }
+.heat i.l1 { background: color-mix(in srgb, var(--good) 30%, var(--sunk)); } .heat i.l2 { background: color-mix(in srgb, var(--good) 62%, var(--sunk)); } .heat i.l3 { background: var(--good); }
+.heat i.now { outline: 2px solid var(--accent); outline-offset: 1px; }
+.heat-cap { display: flex; justify-content: space-between; margin: -4px 0 0; font-size: 11.5px; color: var(--muted); }
+.subj { border-top: 1px solid var(--line); padding-top: 10px; }
+.subj summary { display: flex; align-items: baseline; gap: 10px; cursor: pointer; list-style: none; flex-wrap: wrap; }
+.subj summary::-webkit-details-marker { display: none; }
+.subj summary::after { content: "▾"; margin-left: auto; color: var(--muted); } .subj:not([open]) summary::after { content: "▸"; }
+.sj { font-family: var(--display); font-size: 20px; font-weight: 700; }
+.big { font-family: var(--mono); font-size: 28px; color: var(--accent); font-variant-numeric: tabular-nums; } .big small { font-size: 14px; }
+.stack { display: flex; height: 10px; border-radius: 99px; overflow: hidden; background: var(--sunk); margin-top: 10px; }
+.s-master, .t-master { background: var(--good); } .s-prac { background: var(--accent); } .s-weak { background: var(--bad); } .s-none { background: var(--sunk); }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12.5px; color: var(--muted); margin: 6px 0; }
+.legend span::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 5px; }
+.k-master::before { background: var(--good); } .k-prac::before { background: var(--accent); } .k-weak::before { background: var(--bad); } .k-none::before { background: var(--sunk); border: 1px solid var(--line); }
+.chmap { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 6px; margin: 8px 0; }
+.tile { display: grid; gap: 2px; padding: 7px 9px; border-radius: 7px; text-decoration: none; font-size: 12.5px; line-height: 1.35; border: 1px solid var(--line); color: var(--ink); min-width: 0; }
+.tile span { overflow-wrap: anywhere; } .tile small { font-size: 11px; color: var(--muted); }
+.tile.t-master { background: var(--good-soft); border-color: var(--good); } .tile.t-prac { background: var(--soft); border-color: var(--accent); }
+.tile.t-weak { background: var(--bad-soft); border-color: var(--bad); } .tile.t-none { background: var(--surface); }
+.dates { list-style: none; margin: 0; padding: 0; display: grid; }
+.dates li { display: grid; grid-template-columns: 9.5em minmax(0, 1fr) 4.5em; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 14px; align-items: baseline; }
+.dates li:last-child { border-bottom: 0; }
+.dates .when { font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.dates .left { text-align: right; font-family: var(--mono); font-size: 12.5px; color: var(--eosin); }
+.dates li.ex .what b { color: var(--eosin); } .dates li.past { opacity: .5; }
+@media (max-width: 520px) { .dates li { grid-template-columns: 7.6em minmax(0, 1fr) 3.6em; gap: 8px; font-size: 13.5px; } }
 .how { color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); padding: 20px 0 40px; }
 .how b { color: var(--ink); }
 </style>
@@ -122,6 +174,8 @@ a.course:hover { transform: translateY(-2px); border-color: var(--cc, var(--acce
     <p class="lede" id="lede">每門課都從直覺和圖像開始，再講原理與應用。不用安裝軟體，手機也能學；登入後進度在不同裝置同步。</p>
     <div id="syncSlot"></div>
   </section>
+  <section class="exam" id="exam" aria-label="後中考試"></section>
+  <h2 class="other-h" id="otherH">其他課程</h2>
   <section class="courses" id="courses" aria-label="課程"></section>
   <p class="how" id="how"></p>
 </main>
@@ -257,6 +311,167 @@ const CLOUD = (() => {
   return { start, push, pushLog, hint, render };
 })();
 
+/* ---------- 錯題排程（化學、英文與首頁共用） ----------
+   只從練習紀錄推算，不另外存狀態，所以紀錄同步到哪裡，排程就跟到哪裡。
+   紀錄每一筆：{ t 時間, c 章, k 題型, h 題目識別碼, ok, n 第幾次作答 }；n === 1 是「一次作答」的開頭。
+   規則：每題每天只算第一次作答。
+   - 第一次就答錯 → 進入錯題本，隔 1 天到期。
+   - 到期後（之後任何一天）第一次就答對 → 再隔 3 天；再答對一次 → 掌握，離開錯題本。
+   - 在錯題本中又答錯 → 從頭開始（隔 1 天）。 */
+const REVIEW = (() => {
+  const DAY = 864e5, GAPS = [1, 3];
+  const dayStart = t => { const d = new Date(t); d.setHours(0, 0, 0, 0); return d.getTime(); };
+  const dayKey = t => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+  // 每題每天的第一次作答
+  function trials(log) {
+    const seen = new Set(), out = [];
+    for (const e of log) {
+      if (e.n !== 1 || !e.h) continue;
+      const key = `${e.c}|${e.k}|${e.h}`, dk = dayKey(e.t);
+      if (seen.has(key + '@' + dk)) continue;
+      seen.add(key + '@' + dk); out.push({ key, t: e.t, ok: !!e.ok, c: e.c, k: e.k, h: e.h, i: e.i, qt: e.qt });
+    }
+    return out;
+  }
+  // 每題目前的狀態：{ key, c, k, h, i, qt, stage, due, wrongs, last }
+  function state(log) {
+    const m = new Map();
+    for (const tr of trials(log)) {
+      let s = m.get(tr.key);
+      if (!s) { s = { key: tr.key, c: tr.c, k: tr.k, h: tr.h, i: tr.i, qt: tr.qt, open: false, stage: 0, due: 0, wrongs: 0, last: 0 }; m.set(tr.key, s); }
+      s.i = tr.i; s.qt = tr.qt || s.qt;
+      if (!tr.ok) { s.open = true; s.stage = 0; s.wrongs++; s.due = dayStart(tr.t) + GAPS[0] * DAY; }
+      else if (s.open && tr.t >= s.due) {
+        s.stage++;
+        if (s.stage >= GAPS.length) s.open = false; else s.due = dayStart(tr.t) + GAPS[s.stage] * DAY;
+      }
+      s.last = tr.t;
+    }
+    return m;
+  }
+  // 錯題本：還沒掌握的題目；due 為「今天以前到期」
+  function book(log, now = Date.now()) {
+    const all = [...state(log).values()].filter(s => s.open);
+    return { open: all, due: all.filter(s => s.due <= now).sort((a, b) => a.due - b.due) };
+  }
+  return { trials, state, book, dayKey, dayStart, DAY };
+})();
+
+/* 由 tools/chem/meta.js 自動產生，請勿手改 */
+const CHEM_META = [{"id":"atom","t":"原子結構與週期性","p":"g","w":1.9,"n":69},{"id":"vsepr","t":"化學鍵、分子形狀與分子間作用力","p":"g","w":3,"n":81},{"id":"mo","t":"分子軌域理論","p":"g","w":1.2,"n":39},{"id":"stoich","t":"計量化學與溶液","p":"g","w":3.4,"n":90},{"id":"gas","t":"氣體","p":"g","w":1.2,"n":36},{"id":"thermo","t":"熱化學與熱力學","p":"g","w":2.6,"n":69},{"id":"kinetics","t":"化學動力學","p":"g","w":1.2,"n":46},{"id":"equilibrium","t":"化學平衡","p":"g","w":1.1,"n":35},{"id":"acid-base","t":"酸鹼平衡","p":"g","w":2.1,"n":66},{"id":"ksp","t":"溶解度與錯合物平衡","p":"g","w":0.8,"n":32},{"id":"coord","t":"配位化學","p":"g","w":1.9,"n":68},{"id":"electro","t":"電化學","p":"g","w":1.5,"n":51},{"id":"phase","t":"固體、液體與核化學","p":"g","w":0.6,"n":40},{"id":"desc","t":"元素、材料與分析化學","p":"g","w":1.1,"n":36},{"id":"bonding","t":"結構、鍵結與共振","p":"o","w":1.1,"n":18},{"id":"naming","t":"有機命名","p":"o","w":1,"n":33},{"id":"org-acid","t":"有機酸鹼","p":"o","w":0.8,"n":34},{"id":"stereo","t":"構形與立體化學","p":"o","w":2.5,"n":55},{"id":"sn-e","t":"取代與脫去","p":"o","w":1.3,"n":37},{"id":"alkene","t":"烯烴與炔烴","p":"o","w":1.6,"n":32},{"id":"radpoly","t":"自由基反應與聚合物","p":"o","w":1,"n":31},{"id":"conj","t":"共軛二烯與周環反應","p":"o","w":1.3,"n":27},{"id":"aromatic","t":"芳香族化合物","p":"o","w":2.1,"n":45},{"id":"alcohol","t":"醇、醚與環氧化物","p":"o","w":1.4,"n":30},{"id":"carbonyl","t":"醛與酮","p":"o","w":0.9,"n":25},{"id":"rxn","t":"有機金屬與人名反應","p":"o","w":1.2,"n":43},{"id":"acyl","t":"羧酸及其衍生物","p":"o","w":0.9,"n":28},{"id":"alpha","t":"α-碳與羰基縮合","p":"o","w":1.2,"n":33},{"id":"amine","t":"胺類","p":"o","w":1.1,"n":27},{"id":"spectro","t":"光譜分析","p":"o","w":3,"n":70},{"id":"biomol","t":"生物分子與合成策略","p":"o","w":1.9,"n":57}];
+
+/* ---------- 首頁「後中考試」區：倒數、今天、總進度、重要日期 ----------
+   化學資料來自化學課程頁存在本機的練習紀錄（chem-ladder:log）與完成表，登入後與雲端同步；
+   錯題排程規則在 src/shared/review.js；各章名稱與考試比重在 chem-meta.js（建置時產生）。 */
+
+// 116 學年度重要日期。st：known＝補習班網站已列出（仍以簡章為準）、est＝依 115 學年度同一週次推估。
+// 115 學年度實際：義守 報名 114/12/23–115/1/2、筆試 3/22、放榜 4/29；中國醫 報名 1/20–1/26、筆試 4/19、一階放榜 4/23、口試 5/3、放榜 5/8；
+// 慈濟 報名 2/2–2/6、筆試 4/11、放榜 5/11。來源：https://www.3dollars.com.tw/Hce/Brochure-hce.html（2026-10-31 查）。
+const EXAM_DATES = [
+  { s: '義守', what: '網路報名＋繳費', a: '2026-12-22', b: '2027-01-01', st: 'est' },
+  { s: '中國醫', what: '網路報名＋繳費', a: '2027-01-19', b: '2027-01-25', st: 'est' },
+  { s: '慈濟', what: '網路報名＋繳費', a: '2027-02-15', b: '2027-02-19', st: 'known' },
+  { s: '自己', what: '英文達到考試程度（四個月目標）', a: '2027-02-28', st: 'goal' },
+  { s: '義守', what: '筆試', a: '2027-03-21', st: 'est', exam: 1 },
+  { s: '慈濟', what: '筆試', a: '2027-04-10', st: 'known', exam: 1 },
+  { s: '中國醫', what: '筆試', a: '2027-04-18', st: 'est', exam: 1 },
+  { s: '中國醫', what: '第一階段放榜', a: '2027-04-22', st: 'est' },
+  { s: '義守', what: '放榜', a: '2027-04-28', st: 'est' },
+  { s: '中國醫', what: '口試', a: '2027-05-02', st: 'est' },
+  { s: '中國醫', what: '放榜', a: '2027-05-07', st: 'est' },
+  { s: '慈濟', what: '放榜', a: '2027-05-10', st: 'known' },
+];
+// 後中考四科（三校都考國文、英文、生物、化學）。live＝已上線、building＝製作中、plan＝規劃中。新增科目時在這裡加一項。
+const SUBJECTS = [
+  { id: 'chem', name: '化學', st: 'live', href: './chem/' },
+  { id: 'eng', name: '英文', st: 'building', today: '單字・長句・一篇文章', note: '計畫：每天約 60 分鐘（錯題複習 → 新單字 → 長句拆解 → 一篇克漏字或閱讀），文章難度每週往上調，2027 年 2 月底前達到考試程度。先完成三校十年英文試題分析，再依考卷實際用字產生單字表。', big: '0<small> / 17 週</small>' },
+  { id: 'bio', name: '生物', st: 'plan', note: '含生理學。之後會先做歷屆試題主題分析，再決定章節與比重，做法和化學相同。' },
+  { id: 'zh', name: '國文', st: 'plan', note: '之後會先分析歷屆試題的題型（字音字形、文意、閱讀、作文等），再決定練習方式。' },
+];
+const SUBJ_ST = { live: '已上線', building: '製作中', plan: '規劃中' };
+const ST_LABEL = { est: '推估', known: '已列出・待簡章', goal: '目標' };
+const pd = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d).getTime(); };
+const daysTo = s => Math.round((pd(s) - REVIEW.dayStart(Date.now())) / REVIEW.DAY);
+const md = s => { const d = new Date(pd(s)); return `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}（${'日一二三四五六'[d.getDay()]}）`; };
+
+const chemLog = () => local('chem-ladder', 'log', []);
+const chemDone = () => local('chem-ladder', 'done', {});
+
+// 各章狀態：未開始／練習中／待加強／已掌握
+function chemChapters(log) {
+  const tr = REVIEW.trials(log), book = REVIEW.book(log), done = chemDone();
+  return CHEM_META.map(m => {
+    const t = tr.filter(x => x.c === m.id), recent = t.slice(-20), acc = recent.length ? recent.filter(x => x.ok).length / recent.length : 0;
+    const seen = new Set(t.map(x => x.key)).size, open = book.open.filter(s => s.c === m.id).length;
+    let st = 'none';
+    if (t.length) {
+      if ((recent.length >= 3 && acc < 0.6) || open >= 3) st = 'weak';
+      else if (done[m.id] && seen >= m.n * 0.4 && acc >= 0.8 && !open) st = 'master';
+      else st = 'prac';
+    }
+    return { ...m, st, acc, seen, open };
+  });
+}
+const CH_ST = { master: '已掌握', prac: '練習中', weak: '待加強', none: '未開始' };
+
+function renderExam() {
+  const log = chemLog(), tr = REVIEW.trials(log), book = REVIEW.book(log), today = REVIEW.dayKey(Date.now());
+  const tToday = tr.filter(x => REVIEW.dayKey(x.t) === today), okToday = tToday.filter(x => x.ok).length;
+  // 今天複習了幾題：今天作答、而且在今天以前就在錯題本裡的題目
+  const before = REVIEW.book(log.filter(e => REVIEW.dayKey(e.t) !== today));
+  const openKeys = new Set(before.open.map(s => s.key)), revToday = new Set(tToday.filter(x => openKeys.has(x.key)).map(x => x.key)).size;
+  const dueLeft = book.due.length;
+  // 連續天數與最近 4 週
+  const perDay = {}; tr.forEach(x => { const k = REVIEW.dayKey(x.t); perDay[k] = (perDay[k] || 0) + 1; });
+  let streak = 0; for (let d = REVIEW.dayStart(Date.now()) - (perDay[today] ? 0 : REVIEW.DAY); perDay[REVIEW.dayKey(d)]; d -= REVIEW.DAY) streak++;
+  const days = Array.from({ length: 28 }, (_, i) => REVIEW.dayStart(Date.now()) - (27 - i) * REVIEW.DAY);
+  const lv = n => (!n ? 0 : n < 10 ? 1 : n < 30 ? 2 : 3);
+  // 倒數：最近一場還沒考的筆試，與下一個還沒到的日期
+  const nextExam = EXAM_DATES.find(e => e.exam && daysTo(e.a) >= 0), nextDate = EXAM_DATES.find(e => daysTo(e.b || e.a) >= 0);
+  // 化學總進度（依考試比重加權）
+  const chs = chemChapters(log), W = chs.reduce((s, c) => s + c.w, 0), share = st => chs.filter(c => c.st === st).reduce((s, c) => s + c.w, 0) / W * 100;
+  const pct = { master: share('master'), prac: share('prac'), weak: share('weak'), none: share('none') };
+  const cnt = st => chs.filter(c => c.st === st).length;
+
+  $('#exam').innerHTML = `
+<div class="ex-head"><div><p class="eyebrow">學士後中醫 · 116 學年度</p><h2 class="ex-h">後中考試</h2></div>
+${nextExam ? `<div class="count"><b>${daysTo(nextExam.a)}</b><span>天後${nextExam.s}筆試<br><small>${md(nextExam.a)}・${ST_LABEL[nextExam.st]}</small></span></div>` : ''}</div>
+${nextDate ? `<p class="next">下一個日期：<b>${nextDate.s}${nextDate.what}</b>${daysTo(nextDate.a) > 0 ? `，${daysTo(nextDate.a)} 天後開始（${md(nextDate.a)}）` : `，進行中，${md(nextDate.b || nextDate.a)} 截止`}<span class="chip ${nextDate.st}">${ST_LABEL[nextDate.st]}</span></p>` : ''}
+
+<div class="ex-grid">
+  <section class="panel" aria-labelledby="todayH">
+    <h3 id="todayH">今天</h3>
+    <ul class="todo">
+      <li class="${dueLeft ? '' : 'ok'}"><a href="./chem/#review"><span class="ck">${dueLeft ? '' : '✓'}</span><span>化學錯題複習</span><b>${dueLeft ? `還有 ${dueLeft} 題到期` : revToday ? `完成 ${revToday} 題` : '今天沒有到期'}</b></a></li>
+      <li class="${tToday.length ? 'ok' : ''}"><a href="./chem/"><span class="ck">${tToday.length ? '✓' : ''}</span><span>化學練習</span><b>${tToday.length ? `${tToday.length} 題，第一次答對 ${Math.round(100 * okToday / tToday.length)}%` : '今天還沒練習'}</b></a></li>
+      ${SUBJECTS.filter(x => x.st !== 'live').map(x => `<li class="soon"><span class="ck"></span><span>${x.name}${x.today ? `：${x.today}` : ''}</span><b>${SUBJ_ST[x.st]}</b></li>`).join('')}
+    </ul>
+    <div class="streak"><span><b>${streak}</b> 天連續練習</span><span class="mut">錯題本共 ${book.open.length} 題</span></div>
+    <div class="heat" aria-label="最近 4 週每天的練習題數">${days.map(d => { const n = perDay[REVIEW.dayKey(d)] || 0; return `<i class="l${lv(n)}${REVIEW.dayKey(d) === today ? ' now' : ''}" title="${REVIEW.dayKey(d)}：${n} 題"></i>`; }).join('')}</div>
+    <p class="heat-cap"><span>4 週前</span><span>每格一天，顏色越深練越多</span><span>今天</span></p>
+  </section>
+
+  <section class="panel" aria-labelledby="progH">
+    <h3 id="progH">總進度</h3>
+    <details class="subj" open>
+      <summary><span class="sj">化學</span><span class="big">${Math.round(pct.master)}<small>%</small></span><span class="mut small">考試範圍已掌握</span></summary>
+      <div class="stack" aria-hidden="true">${['master', 'prac', 'weak', 'none'].map(st => `<i class="s-${st}" style="width:${pct[st]}%"></i>`).join('')}</div>
+      <p class="legend">${['master', 'prac', 'weak', 'none'].map(st => `<span class="k-${st}">${CH_ST[st]} ${cnt(st)} 章</span>`).join('')}</p>
+      <div class="chmap">${chs.map(c => `<a class="tile t-${c.st}" href="./chem/#${c.id}" title="${c.t}：${CH_ST[c.st]}${c.seen ? `，做過 ${c.seen}/${c.n} 題，最近第一次答對 ${Math.round(100 * c.acc)}%` : ''}"><span>${c.t}</span><small>${CH_ST[c.st]}${c.open ? `・錯題 ${c.open}` : ''}</small></a>`).join('')}</div>
+      <p class="mut small">百分比依各章在三校歷屆考題的比重加權。已掌握＝標記完成、做過至少四成的題目、最近第一次答對八成以上、而且沒有待複習的錯題；待加強＝最近第一次答對不到六成，或錯題本裡有 3 題以上。</p>
+    </details>
+    ${SUBJECTS.filter(x => x.st !== 'live').map(x => `<details class="subj"><summary><span class="sj">${x.name}</span><span class="big">${x.big || '—'}</span><span class="mut small">${SUBJ_ST[x.st]}</span></summary><p class="small">${x.note}</p></details>`).join('')}
+  </section>
+</div>
+
+<section class="panel" aria-labelledby="dateH">
+  <h3 id="dateH">重要日期</h3>
+  <ol class="dates">${EXAM_DATES.map(e => { const past = daysTo(e.b || e.a) < 0, d = daysTo(e.a);
+    return `<li class="${past ? 'past' : ''}${e.exam ? ' ex' : ''}"><span class="when">${md(e.a)}${e.b ? `<br><small>至 ${md(e.b)}</small>` : ''}</span><span class="what"><b>${e.s}</b> ${e.what}<span class="chip ${e.st}">${ST_LABEL[e.st]}</span></span><span class="left">${past ? '已過' : d > 0 ? `${d} 天` : '進行中'}</span></li>`; }).join('')}</ol>
+  <p class="mut small">繳費依往年都在網路報名期間內完成。推估的日期照 115 學年度同一週次往後推一年；各校簡章通常在報名前約一個月公告，公告後會改成正式日期。日程以各校正式簡章為準。</p>
+</section>`;
+}
+
 
 /* ---------- 學習階梯首頁：課程總覽、各課程進度、登入同步（一次同步所有課程） ---------- */
 // 語言跟著生統階梯的設定（目前只有生統有英文版）
@@ -273,7 +488,7 @@ const COURSES = [
   { id: 'biostat', pre: 'biostat-ladder', doc: 'biostatLadder', total: 67, color: '#2F3B99', glyph: 'μ · p · HR',
     title: ['生統階梯', 'Biostat Ladder'], desc: ['從國中數學到可投稿論文的生物統計。', 'Biostatistics from middle-school math to a publishable paper.'],
     items: [['互動圖解每個統計概念', 'Every concept as an interactive chart'], ['一份模擬試驗資料貫穿全課程', 'One simulated trial used throughout'], ['不寫程式的分析實驗室', 'A no-code analysis lab']] },
-  { id: 'chem', pre: 'chem-ladder', doc: 'chemLadder', total: 31, color: '#17705F', glyph: 'H⁺ ⇌ A⁻',
+  { id: 'chem', exam: 1, pre: 'chem-ladder', doc: 'chemLadder', total: 31, color: '#17705F', glyph: 'H⁺ ⇌ A⁻',
     title: ['後中化學', 'Post-bacc Chemistry'], desc: ['學士後中醫入學考的普通化學與有機化學，從原理學起。', 'General and organic chemistry for Taiwan’s post-baccalaureate TCM entrance exam.'],
     items: [['滴定、平衡、反應機構都能動手操作', 'Hands-on titrations, equilibria and mechanisms'], ['看懂電子怎麼流，不用死背反應', 'Understand electron flow instead of memorizing reactions'], ['普化原理直接串到有機反應', 'General chemistry linked straight to organic reactions']] },
 ];
@@ -287,7 +502,9 @@ function render() {
   $('#eb').textContent = T('互動圖解 · 從原理學起', 'Interactive · From first principles');
   $('#h1').textContent = T('一階一階，把難的東西學懂。', 'Learn hard things, one step at a time.');
   $('#lede').textContent = T('每門課都從直覺和圖像開始，再講原理與應用。不用安裝軟體，手機也能學；登入後進度在不同裝置同步。', 'Every course starts from intuition and pictures, then principles and applications. Nothing to install, works on your phone, and progress syncs across devices when you sign in.');
-  $('#courses').innerHTML = COURSES.map(c => {
+  renderExam();
+  $('#otherH').textContent = T('其他課程', 'Courses');
+  $('#courses').innerHTML = COURSES.filter(c => !c.exam || !isZh()).map(c => {
     const n = countOf(c), t = totalOf(c), body = `<span class="glyph">${c.glyph}</span><h2>${L(c.title)}</h2><p>${L(c.desc)}</p><ul>${c.items.map(i => `<li>${L(i)}</li>`).join('')}</ul>`;
     if (c.soon) return `<div class="course soon" style="--cc:${c.color}"><span class="badge">${T('製作中', 'Coming soon')}</span>${body}</div>`;
     return `<a class="course" href="./${c.id}/" style="--cc:${c.color}">${body}<span class="meter"><span>${n} / ${t}</span><span class="bar"><i style="width:${Math.round(100 * n / t)}%"></i></span><span class="go">${n ? T('繼續', 'Continue') : T('開始', 'Start')} →</span></span></a>`;
@@ -304,6 +521,8 @@ const COURSE = {
   tracks: COURSES.filter(c => !c.soon).map(c => ({ doc: c.doc, get: () => doneOf(c), set: m => { try { localStorage.setItem(c.pre + ':done', JSON.stringify(m)); } catch (e) { /* 忽略 */ } } })),
   count: () => COURSES.filter(c => !c.soon).reduce((s, c) => s + countOf(c), 0),
   total: () => COURSES.filter(c => !c.soon).reduce((s, c) => s + totalOf(c), 0),
+  // 練習紀錄：首頁同步化學的紀錄，「今天」與「總進度」才會和其他裝置一致
+  logs: { doc: 'chemLog', get: () => local('chem-ladder', 'log', []), set: a => { try { localStorage.setItem('chem-ladder:log', JSON.stringify(a)); } catch (e) { /* 忽略 */ } } },
   refresh: render,
 };
 render();

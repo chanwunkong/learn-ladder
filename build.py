@@ -11,6 +11,7 @@
 """
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).parent
@@ -24,12 +25,12 @@ COURSES = {
         "theme": "#2F3B99",
     },
     "chem": {
-        "scripts": ["ui.js", "chem.js", "mol.js", "content.js", "ch/*.js", "st/*.js", "terms.js", "widgets.js", "w/*.js", "app.js", "@cloud.js", "start.js"],
+        "scripts": ["ui.js", "chem.js", "mol.js", "content.js", "ch/*.js", "st/*.js", "terms.js", "widgets.js", "w/*.js", "@review.js", "app.js", "@cloud.js", "start.js"],
         "desc": "學士後中醫入學考的普通化學與有機化學：用互動圖從原理學起，看懂酸鹼平衡與反應機構。",
         "theme": "#17705F",
     },
 }
-PORTAL = {"scripts": ["@cloud.js", "portal.js"], "desc": "學習階梯：用互動圖解從原理學起的線上課程。", "theme": "#2F3B99"}
+PORTAL = {"scripts": ["@cloud.js", "@review.js", "chem-meta.js", "exam.js", "portal.js"], "desc": "學習階梯：用互動圖解從原理學起的線上課程。", "theme": "#2F3B99"}
 
 HEAD = """<!doctype html>
 <html lang="zh-Hant">
@@ -149,6 +150,9 @@ def build():
         pages[cid] = full_html(page, cfg, "../")
         (docs / cid / "index.html").write_text(pages[cid], encoding="utf-8")
         print(f"docs/{cid}/index.html  {len(pages[cid].encode()) // 1024} KB")
+    # 首頁需要化學各章的名稱、考試比重與題數：每次建置從化學內容重新產生
+    meta = subprocess.run(["node", str(ROOT / "tools" / "chem" / "meta.js")], capture_output=True, text=True, check=True).stdout
+    (SRC / "portal" / "chem-meta.js").write_text(meta, encoding="utf-8")
     page = assemble(SRC / "portal", PORTAL["scripts"])
     pages[""] = full_html(page, PORTAL, "")
     (docs / "index.html").write_text(pages[""], encoding="utf-8")
