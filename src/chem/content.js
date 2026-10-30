@@ -53,3 +53,4 @@ const TREE = {
 };
 
 const CH = [];  // 各章在 src/chem/ch/*.js 以 CH.push(...) 加入；顯示順序依 UNITS
+const STEPS = {};  // 各題的拆解步驟：src/chem/st/*.js 以 STEPS[章 id] = { "q或x:識別碼": [[問題, 正解, 誤1, 誤2, 說明], ...] } 加入

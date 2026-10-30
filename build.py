@@ -24,7 +24,7 @@ COURSES = {
         "theme": "#2F3B99",
     },
     "chem": {
-        "scripts": ["ui.js", "chem.js", "mol.js", "content.js", "ch/*.js", "terms.js", "widgets.js", "w/*.js", "app.js", "@cloud.js", "start.js"],
+        "scripts": ["ui.js", "chem.js", "mol.js", "content.js", "ch/*.js", "st/*.js", "terms.js", "widgets.js", "w/*.js", "app.js", "@cloud.js", "start.js"],
         "desc": "學士後中醫入學考的普通化學與有機化學：用互動圖從原理學起，看懂酸鹼平衡與反應機構。",
         "theme": "#17705F",
     },

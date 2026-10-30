@@ -109,6 +109,27 @@ function qfind(cid, h, k, i) {
 }
 const dstr = t => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
 const tstr = t => { const d = new Date(t); return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
+// 一步一步來：把一題拆成幾個小判斷，每步答對才往下；答錯不給答案
+function guide(qe, sts) {
+  const box = document.createElement('div'); box.className = 'guide';
+  box.innerHTML = '<button class="btn sm ghost" type="button" data-g>一步一步來</button><div class="gbody" hidden></div>';
+  $('.opts', qe).after(box);
+  const body = $('.gbody', box), done = [];
+  const draw = k => {
+    const st = sts[k], ord = [1, 2, 3].map(j => [Math.random(), j]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
+    body.innerHTML = `${done.length ? `<ol class="gdone">${done.map(d => `<li>${d}</li>`).join('')}</ol>` : ''}<p class="small mut">第 ${k + 1} 步，共 ${sts.length} 步</p><p class="gq">${st[0]}</p><div class="opts">${ord.map(j => `<button class="gopt opt" type="button" data-j="${j}">${st[j]}</button>`).join('')}</div><div class="gwhy" hidden></div>`;
+    $$('.gopt', body).forEach(b => { b.onclick = () => {
+      const ok = b.dataset.j === '1', w = $('.gwhy', body); b.classList.add(ok ? 'right' : 'wrong'); b.disabled = true; w.hidden = false;
+      if (!ok) { w.className = 'gwhy why no'; w.innerHTML = '這個不對，再想想。'; return; }
+      $$('.gopt', body).forEach(x => { x.disabled = true; }); done.push(`${st[0]}<b>${st[1]}</b>`);
+      const last = k === sts.length - 1;
+      w.className = 'gwhy why ok'; w.innerHTML = `<b>對。</b>${st[4]}<button class="btn sm" type="button" data-n>${last ? '回到原題再選一次 ↑' : '下一步'}</button>`;
+      $('[data-n]', w).onclick = () => { if (last) { body.hidden = true; $('[data-g]', box).hidden = false; done.length = 0; qe.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else draw(k + 1); };
+    }; });
+  };
+  qe.openGuide = () => { if (!body.hidden) return; $('[data-g]', box).hidden = true; body.hidden = false; done.length = 0; draw(0); };
+  $('[data-g]', box).onclick = qe.openGuide;
+}
 function qblock(list, kind) {
   return list.map((q, k) => `<div class="q" data-k="${kind}" data-q="${k}">${q.src ? `<p class="qsrc">仿 ${String(q.src).replace(/^仿\s*/, '')}</p>` : ''}<p class="qt">${k + 1}. ${q.q}</p><div class="opts">${order(q, k).map(j => `<button class="opt" type="button" data-o="${j}">${q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('');
 }
@@ -162,13 +183,15 @@ ${c.exam ? `<section class="sec" id="sec-exam"><h2><span class="sn">考</span>�
   $$('.q[data-k]', $('#article')).forEach(qe => {
     const kind = qe.dataset.k, qi = +qe.dataset.q, q = (kind === 'x' ? c.exam : c.quiz)[qi], why = $('.why', qe);
     let tries = 0;
+    const sts = (STEPS[id] || {})[kind + ':' + qid(id, q, kind)];
+    if (sts) guide(qe, sts);
     $$('.opt', qe).forEach(b => { b.onclick = () => {
       const ok = +b.dataset.o === q.a; b.classList.add(ok ? 'right' : 'wrong'); why.hidden = false;
       logAnswer({ c: id, k: kind, i: qi, h: qid(id, q, kind), qt: strip(q.q).slice(0, 60), p: +b.dataset.o, ok: ok ? 1 : 0, n: ++tries });
       const demo = q.show && INST[q.show.w] ? '<button class="btn sm" type="button" data-show>在圖上看 ↑</button>' : '';
-      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}${demo}`; if (kind === 'q') right.add(qe.dataset.q);
+      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); const gb = $('.guide', qe); if (gb) gb.hidden = true; why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}${demo}`; if (kind === 'q') right.add(qe.dataset.q);
         if (right.size === c.quiz.length && !state.done[id]) { setDone(id, true); markBtn(); } }
-      else { b.disabled = true; why.className = 'why no'; why.innerHTML = `<b>再想想。</b>${demo ? '按下面的按鈕回到圖上看看。' : ''}${demo}`; }
+      else { b.disabled = true; why.className = 'why no'; why.innerHTML = `<b>再想想。</b>${sts ? '下面拆成幾個小步驟，一步一步推回來。' : demo ? '按下面的按鈕回到圖上看看。' : ''}${demo}`; if (sts) qe.openGuide(); }
       const sb = $('[data-show]', why); if (sb) sb.onclick = () => showOnChart(q.show);
     }; });
   });
