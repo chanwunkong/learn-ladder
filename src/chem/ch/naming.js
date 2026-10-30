@@ -4,7 +4,7 @@ CH.push({
   lede: '每一份考卷都有「這個結構叫什麼」或「這個名字是哪個結構」的題目。IUPAC 命名其實只有幾個步驟：選主鏈、編號、排序，再加上官能基的字尾與立體組態。這一章把步驟一個個拆開，用圖檢查每一步。',
   sections: [
     { h: '烷類的名字怎麼組成？', w: 'namealk', body: `
-<p>名稱由三部分組成：<b>取代基</b>（字首）+ <b>主鏈</b>的字根 + 官能基字尾。碳數的字根是 meth-（1）、eth-（2）、prop-（3）、but-（4）、pent-（5）、hex-（6）、hept-（7）、oct-（8）、non-（9）、dec-（10），中文依序是甲、乙、丙、丁、戊、己、庚、辛、壬、癸。</p>
+<p>名稱由三部分組成：<b>取代基</b>（字首）+ <b>主鏈</b>的字根 + 官能基字尾。碳數的字根<span class="tg must">要背</span>是 meth-（1）、eth-（2）、prop-（3）、but-（4）、pent-（5）、hex-（6）、hept-（7）、oct-（8）、non-（9）、dec-（10），中文依序是甲、乙、丙、丁、戊、己、庚、辛、壬、癸。</p>
 <p>下圖切換編號方向，比較兩個方向的位置數組。命名步驟：</p>
 <ol><li><b>選主鏈</b>：最長的連續碳鏈。有兩條一樣長時，選取代基較多的那條。主鏈不一定畫成一直線，要沿著轉折去數。</li>
 <li><b>編號</b>：從靠近取代基的一端開始。兩個方向逐一比較位置數字，第一個不同的數字較小的方向正確（2,2,4 勝過 2,4,4）。若兩個方向完全相同，讓英文字母排在前面的取代基拿較小的號碼（3-ethyl-4-methylhexane）。</li>
@@ -12,7 +12,7 @@ CH.push({
 <p>鹵素和烷基一樣是字首（fluoro、chloro、bromo、iodo），一起參加編號與排序：2-chloro-3-methylpentane。</p>` },
     { h: '取代基的名字有哪些？', w: 'alkyl', body: `
 <p>取代基是主鏈上的分支，把烷的字尾 -ane 換成 -yl：CH₃– 是 methyl，CH₃CH₂– 是 ethyl。三個碳以上的取代基，連接點不同就有不同的名字，切換下圖看連接碳的位置。</p>
-<p>連接碳是幾級碳，決定了 sec-、tert- 字首：<b>二級碳</b>連接的丁基是 sec-butyl，<b>三級碳</b>連接的是 tert-butyl。iso- 指末端有 (CH₃)₂CH– 的分支。</p>
+<p>一個碳接著幾個其他碳，就稱為幾級碳：接 1 個是一級（1°）、2 個是二級（2°）、3 個是三級（3°）、4 個是四級（4°）。連接碳是幾級碳，決定了 sec-、tert- 字首：<b>二級碳</b>連接的丁基是 sec-butyl，<b>三級碳</b>連接的是 tert-butyl。iso- 指末端有 (CH₃)₂CH– 的分支。</p>
 <p>如果分支本身還有分支，就把分支當成一條小鏈，從連接碳編為 1 號，整個名稱放進括號：–C(CH₃)₂CH₂CH(CH₃)₂ 的最長鏈是 4 個碳，1 號碳上有兩個甲基、3 號碳上有一個，名稱是 (1,1,3-trimethylbutyl)。</p>` },
     { h: '環狀化合物怎麼命名？', w: 'bicyclo', body: `
 <p><b>單環</b>：在字根前加 cyclo-，例如 cyclohexane。環上只有一個取代基時不必編號（methylcyclohexane）；有兩個以上時，讓位置數組最小，若平手則字母較前的取代基為 1 號：1-ethyl-3-methylcyclohexane。環與鏈相連時，碳數較多的當主體：環己烷接辛基叫 cyclohexyloctane（1-cyclohexyloctane），接丁基則叫 butylcyclohexane。</p>
@@ -21,6 +21,8 @@ CH.push({
 <p>要數一個分子有<b>幾個環</b>，看骨架上的鍵數與原子數：環數 = 鍵數 − 原子數 + 1（只算構成骨架的鍵和原子，不算 H）。降冰片烷有 7 個碳、8 個 C–C 鍵，所以是 2 個環；金剛烷 10 個碳、12 個 C–C 鍵，是 3 個環。</p>` },
     { h: '有好幾個官能基時，誰當字尾？', w: 'suffix', body: `
 <p>點選下圖的官能基，看它當字尾與當字首時的寫法。規則是：</p>
+<p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由規則推出；<span class="tg given">卷上會給</span>題目會提供。</p>
+<p>官能基優先順序<span class="tg must">要背</span>（由高到低）：羧酸 &gt; 酯 &gt; 醯胺 &gt; 腈 &gt; 醛 &gt; 酮 &gt; 醇 &gt; 胺 &gt; 烯、炔；鹵素、烷基、硝基只能當字首。</p>
 <ol><li>優先順序最高的官能基當<b>字尾</b>，主鏈必須包含它，並且給它最小的編號。</li>
 <li>其他官能基改成字首，和烷基一起排字母順序：HOCH₂CH₂CHO 是 3-hydroxypropanal。</li>
 <li>字尾前要寫出位置：CH₃CH(OH)CH₃ 是 propan-2-ol（舊寫法 2-propanol）。(CH₃)₂CHCH₂CH₂OH 先讓 OH 拿 1 號，名稱是 3-methylbutan-1-ol（舊寫法 3-methyl-1-butanol），俗名 isopentyl alcohol。</li></ol>
@@ -28,7 +30,7 @@ CH.push({
 <p><b>酯</b>的名稱分兩段：先寫接在 O 上的烷基，再寫酸的部分（-ic acid 改成 -ate）。CH₃COOCH(CH₃)₂ 是 isopropyl acetate（乙酸異丙酯），HCOOCH₂CH₃ 是 ethyl formate（甲酸乙酯），CH₃CH₂COOCH₂CH₃ 是 ethyl propanoate。中文剛好相反：先講酸，再講醇的部分。</p>` },
     { h: '雙鍵的 E 和 Z 怎麼判斷？', w: 'ez', body: `
 <p>雙鍵不能旋轉，所以兩端的基團可以在同側或對側。選擇下圖四個位置的基團，看組態怎麼變。判斷步驟：</p>
-<ol><li>在雙鍵的每一個碳上，用 <b>CIP 規則</b>比出兩個基團中優先的一個：先比直接相連原子的原子序（Br &gt; Cl &gt; O &gt; C &gt; H）；相同時，往外一層列出各自接的三個原子，由大到小逐一比較，第一個不同的就決定勝負（–CH₂OH 的 (O,H,H) 勝過 –CH(CH₃)₂ 的 (C,C,H)）。雙鍵視為接了兩個相同原子。</li>
+<ol><li>在雙鍵的每一個碳上，用 <b>CIP 規則</b><span class="tg must">要背</span>（以三位提出者 Cahn、Ingold、Prelog 命名）比出兩個基團中優先的一個：先比直接相連原子的原子序（Br &gt; Cl &gt; O &gt; C &gt; H）；相同時，往外一層列出各自接的三個原子，由大到小逐一比較，第一個不同的就決定勝負（–CH₂OH 的 (O,H,H) 勝過 –CH(CH₃)₂ 的 (C,C,H)）。雙鍵視為接了兩個相同原子。</li>
 <li>兩個優先基團在同側為 <b>Z</b>，在對側為 <b>E</b>。</li></ol>
 <p>cis/trans 只適用於兩端各有一個相同基團（通常是 H）的情形；E/Z 適用於所有雙鍵。兩者不一定對應：(Z)-2-bromobut-2-ene 的兩個甲基是 trans。</p>
 <p>分子有兩個雙鍵時，每一個都要標出組態和位置，寫在名稱最前面，例如 (3E,5Z)-octa-3,5-diene。立體中心的 R/S 也一樣寫在前面並加上位置：(4R)-2,2,4-trimethylhexane。R/S 的判斷在「構形與立體化學」一章。</p>` },
