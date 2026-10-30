@@ -140,8 +140,10 @@ select { font: inherit; font-size: .95rem; border: 1px solid var(--line); backgr
   <section class="part" id="p4">
     <p class="eyebrow">第四部分 · 閱讀</p>
     <h2>答案藏在文章的哪一句？</h2>
-    <p class="note">閱讀題的步驟固定：看清楚題目問什麼，回原文找到那一句，再判斷哪個選項是那一句的換句話說。</p>
+    <p class="note">閱讀題的步驟固定：看清楚題目問什麼，回原文找到那一句，再判斷哪個選項是那一句的換句話說。所以先看題目，帶著問題讀文章，讀完再作答。</p>
+    <div class="card" id="readPre"></div>
     <div class="card passage" id="readText"></div>
+    <h3 style="margin-top:.4rem">讀完了，回來作答</h3>
     <div id="read" style="display:grid;gap:1rem"></div>
     <div class="row"><button class="btn ghost" type="button" id="readZhBtn" hidden>看全文翻譯</button></div>
     <div class="zh" id="readZh" hidden></div>
@@ -326,17 +328,18 @@ const READ_TXT = [
 ];
 $('#readText').innerHTML = READ_TXT.map(p => `<p>${glossify(p).replace(/^\[(\d)\]/, '<span class="qnum">第 $1 段</span> ')}</p>`).join('');
 const READ = [
-  { id: 'q1', cat: 'para', en: true, q: 'What is the passage mainly about?', o: ['Whether the timing of walking affects blood sugar', 'How sensors measure blood sugar', 'Why people with diabetes avoid exercise', 'The best diet for type 2 diabetes'], why: '第 1 段提出問題（運動的時機），後面三段都在回答這個問題。',
+  { id: 'q1', kind: '主旨題', look: '文章整體在回答什麼問題 → 看第 1 段與最後一段', cat: 'para', en: true, q: 'What is the passage mainly about?', o: ['Whether the timing of walking affects blood sugar', 'How sensors measure blood sugar', 'Why people with diabetes avoid exercise', 'The best diet for type 2 diabetes'], why: '第 1 段提出問題（運動的時機），後面三段都在回答這個問題。',
     steps: [['主旨題通常先看哪裡？', '第 1 段提出的問題，加上最後一段的結論', '只看第 2 段的數字', '只看選項裡最長的', '第 1 段：timing of exercise has received less attention。', 'locate'], ['第 1 段提出的問題是？', '飯後短走是否比另一個時間長走更有用', '感測器準不準', '糖尿病人該吃什麼', 'asked whether a short walk after meals could be more useful…', 'locate'], ['哪個選項把這個問題換句話說，而且能涵蓋全文？', 'Whether the timing of walking affects blood sugar', 'How sensors measure blood sugar', 'The best diet for type 2 diabetes', 'sensor 只是第 2 段的一個細節；全文沒有講飲食建議。', 'para']] },
-  { id: 'q2', cat: 'para', en: true, q: 'In the trial, how did the two walking plans differ?', o: ['The same total time was divided differently.', 'After-meal walking lasted longer in total.', 'Different groups of people did each plan.', 'Morning walking was done at a faster pace.'], why: '30 分鐘一次，對照 10 分鐘 × 3 次，總量相同，只是分配不同；而且是同一批人（the same participants）。',
+  { id: 'q2', kind: '細節題', look: '兩種走路方式差在哪 → 找描述實驗做法的那一段', cat: 'para', en: true, q: 'In the trial, how did the two walking plans differ?', o: ['The same total time was divided differently.', 'After-meal walking lasted longer in total.', 'Different groups of people did each plan.', 'Morning walking was done at a faster pace.'], why: '30 分鐘一次，對照 10 分鐘 × 3 次，總量相同，只是分配不同；而且是同一批人（the same participants）。',
     steps: [['這題的答案在哪一段？', '第 2 段（描述實驗怎麼做）', '第 3 段', '第 4 段', '問的是試驗的設計。', 'locate'], ['兩種走法各走多久？', '早上一次 30 分鐘；三餐後各 10 分鐘', '早上 10 分鐘；飯後 30 分鐘', '都是 10 分鐘', '30 = 10 × 3。', 'vocab'], ['文中哪一句直接說出兩者的關係？', 'The total amount of walking was therefore identical.', 'Forty adults took part.', 'Blood sugar was recorded every five minutes.', '總量一樣，差別在怎麼切。另外 the same participants 表示是同一批人。', 'para']] },
-  { id: 'q3', cat: 'vocab', en: true, q: 'The word "identical" in paragraph 2 is closest in meaning to', o: ['the same', 'increased', 'measured', 'unusual'], why: '30 分鐘和 10 × 3 分鐘加起來一樣，identical 就是「完全相同」。',
+  { id: 'q3', kind: '字義題', look: 'identical 這個字 → 找到它，看前後在比較什麼', cat: 'vocab', en: true, q: 'The word "identical" in paragraph 2 is closest in meaning to', o: ['the same', 'increased', 'measured', 'unusual'], why: '30 分鐘和 10 × 3 分鐘加起來一樣，identical 就是「完全相同」。',
     steps: [['identical 前面算了什麼？', '一次 30 分鐘和三次 10 分鐘的總量', '血糖下降的比例', '受試者的人數', '前一句剛交代兩種走法的時間。', 'locate'], ['30 和 10 × 3 比較？', '一樣多', '前者多', '後者多', '自己算一次就知道。', 'logic'], ['therefore（因此）後面接的應該是？', '由前面算出來的結論：總量相同', '和前面相反的事', '新的話題', '看懂前後文，不認得的字也能推出意思。', 'vocab']] },
-  { id: 'q4', cat: 'locate', en: true, q: 'According to the passage, why was the benefit largest after the evening meal?', o: ['People ate the most carbohydrate then and were otherwise inactive.', 'The sensors worked better at night.', 'Participants walked longer in the evening.', 'Morning walks were often skipped.'], why: '第 3 段 when 子句：晚餐吃最多碳水化合物，而且之後通常最少活動。',
+  { id: 'q4', kind: '原因題', look: '為什麼晚餐後效果最大 → 找 evening meal', cat: 'locate', en: true, q: 'According to the passage, why was the benefit largest after the evening meal?', o: ['People ate the most carbohydrate then and were otherwise inactive.', 'The sensors worked better at night.', 'Participants walked longer in the evening.', 'Morning walks were often skipped.'], why: '第 3 段 when 子句：晚餐吃最多碳水化合物，而且之後通常最少活動。',
     steps: [['先在文章中找到 evening meal：在哪一段？', '第 3 段', '第 2 段', '第 4 段', '用題目裡的關鍵字回原文定位。', 'locate'], ['evening meal 後面的 when … 子句在說什麼？', '那時吃最多碳水化合物，而且其他時間最不活動', '那時感測器最準', '那時走得最久', 'when 子句補充說明那個時段的情況，就是原因。', 'struct'], ['哪個選項是這一句的換句話說？', 'ate the most carbohydrate … otherwise inactive', 'sensors worked better', 'walked longer', 'least active ≈ inactive。其他選項文中都沒有提到。', 'para']] },
-  { id: 'q5', cat: 'para', en: true, q: 'Which statement would the authors most likely agree with?', o: ['The results are promising, but a longer study is needed.', 'The study proves the effect lasts for years.', 'Morning exercise is harmful for people with diabetes.', 'Blood sugar sensors are unreliable.'], why: '第 4 段：研究小、只做一個月，不能證明效果持久；但仍值得照著做。',
+  { id: 'q5', kind: '作者態度題', look: '作者會同意哪一句 → 看最後一段的轉折語氣', cat: 'para', en: true, q: 'Which statement would the authors most likely agree with?', o: ['The results are promising, but a longer study is needed.', 'The study proves the effect lasts for years.', 'Morning exercise is harmful for people with diabetes.', 'Blood sugar sensors are unreliable.'], why: '第 4 段：研究小、只做一個月，不能證明效果持久；但仍值得照著做。',
     steps: [['作者的看法通常在哪一段？', '最後一段', '第 1 段', '第 2 段', '結論段會交代研究的限制與建議。', 'locate'], ['第 4 段前半句說了研究的什麼？', '樣本小、時間短，不能證明效果持久', '證明效果持久', '早上運動有害', 'cannot show whether the effect lasts。', 'locate'], ['Still 後面表示作者的態度是？', '雖然有限制，仍然推薦飯後走路', '完全否定這個研究', '建議早上運動', 'Still＝儘管如此。限制＋仍有價值，就是「有希望但需要更長的研究」。', 'logic']] },
 ];
+$('#readPre').innerHTML = `<span class="stepn">先看題目：這篇要考什麼？</span><ol class="opts" style="margin:0;padding-left:1.2rem">${READ.map(q => `<li><span class="en">${q.q}</span><br><span class="note"><span class="tag">${q.kind}</span> ${q.look}</span></li>`).join('')}</ol><p class="note">先記住要找的五件事，再往下讀全文。</p>`;
 READ.forEach((q, i) => { q.onRight = () => { if (READ.every(x => REC[x.id])) $('#readZhBtn').hidden = false; }; $('#read').appendChild(question(q, `閱讀第 ${i + 1} 題`)); });
 $('#readZh').innerHTML = ['多年來，第二型糖尿病患者一直被告知要運動，但運動的「時機」較少受到注意。最近一項試驗想知道：飯後短暫散步，是否比在一天中其他時間一次走比較久更有用。', '共有四十位第二型糖尿病成人參加。其中兩週，每位受試者每天早上走 30 分鐘；另外兩週，同一批受試者改為在三餐後各走 10 分鐘。因此走路的總量完全相同。血糖由戴在手臂上的小型感測器每五分鐘記錄一次。', '和早上走路相比，飯後走路讓血糖降低約 12%；效果在晚餐後最大，因為多數受試者晚餐吃最多碳水化合物，而且之後通常最少活動。研究人員認為，在血糖正在上升時運動，肌肉從血液中吸收糖的效率最好。', '這項研究規模小，而且只進行一個月，所以無法證明效果能否持續。儘管如此，它支持的建議簡單又不花錢：如果你只能走一點點，就在吃完飯後走。'].map(t => `<p>${t}</p>`).join('');
 $('#readZhBtn').onclick = () => { $('#readZh').hidden = !$('#readZh').hidden; };
