@@ -154,7 +154,7 @@ a.course:hover { transform: translateY(-2px); border-color: var(--cc, var(--acce
 .dates li:last-child { border-bottom: 0; }
 .dates .when { font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
 .dates .left { text-align: right; font-family: var(--mono); font-size: 12.5px; color: var(--eosin); }
-.dates li.ex .what b { color: var(--eosin); } .dates li.past { opacity: .5; }
+.dates li.ex.mine .what b { color: var(--eosin); } .dates li.other { color: var(--muted); } .dates li.other .left { color: var(--muted); } .dates li.past { opacity: .5; }
 @media (max-width: 520px) { .dates li { grid-template-columns: 7.6em minmax(0, 1fr) 3.6em; gap: 8px; font-size: 13.5px; } }
 .how { color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); padding: 20px 0 40px; }
 .how b { color: var(--ink); }
@@ -358,7 +358,7 @@ const REVIEW = (() => {
 })();
 
 /* 由 tools/chem/meta.js 自動產生，請勿手改 */
-const CHEM_META = [{"id":"atom","t":"原子結構與週期性","p":"g","w":1.9,"n":69},{"id":"vsepr","t":"化學鍵、分子形狀與分子間作用力","p":"g","w":3,"n":81},{"id":"mo","t":"分子軌域理論","p":"g","w":1.2,"n":39},{"id":"stoich","t":"計量化學與溶液","p":"g","w":3.4,"n":90},{"id":"gas","t":"氣體","p":"g","w":1.2,"n":36},{"id":"thermo","t":"熱化學與熱力學","p":"g","w":2.6,"n":69},{"id":"kinetics","t":"化學動力學","p":"g","w":1.2,"n":46},{"id":"equilibrium","t":"化學平衡","p":"g","w":1.1,"n":35},{"id":"acid-base","t":"酸鹼平衡","p":"g","w":2.1,"n":66},{"id":"ksp","t":"溶解度與錯合物平衡","p":"g","w":0.8,"n":32},{"id":"coord","t":"配位化學","p":"g","w":1.9,"n":68},{"id":"electro","t":"電化學","p":"g","w":1.5,"n":51},{"id":"phase","t":"固體、液體與核化學","p":"g","w":0.6,"n":40},{"id":"desc","t":"元素、材料與分析化學","p":"g","w":1.1,"n":36},{"id":"bonding","t":"結構、鍵結與共振","p":"o","w":1.1,"n":18},{"id":"naming","t":"有機命名","p":"o","w":1,"n":33},{"id":"org-acid","t":"有機酸鹼","p":"o","w":0.8,"n":34},{"id":"stereo","t":"構形與立體化學","p":"o","w":2.5,"n":55},{"id":"sn-e","t":"取代與脫去","p":"o","w":1.3,"n":37},{"id":"alkene","t":"烯烴與炔烴","p":"o","w":1.6,"n":32},{"id":"radpoly","t":"自由基反應與聚合物","p":"o","w":1,"n":31},{"id":"conj","t":"共軛二烯與周環反應","p":"o","w":1.3,"n":27},{"id":"aromatic","t":"芳香族化合物","p":"o","w":2.1,"n":45},{"id":"alcohol","t":"醇、醚與環氧化物","p":"o","w":1.4,"n":30},{"id":"carbonyl","t":"醛與酮","p":"o","w":0.9,"n":25},{"id":"rxn","t":"有機金屬與人名反應","p":"o","w":1.2,"n":43},{"id":"acyl","t":"羧酸及其衍生物","p":"o","w":0.9,"n":28},{"id":"alpha","t":"α-碳與羰基縮合","p":"o","w":1.2,"n":33},{"id":"amine","t":"胺類","p":"o","w":1.1,"n":27},{"id":"spectro","t":"光譜分析","p":"o","w":3,"n":70},{"id":"biomol","t":"生物分子與合成策略","p":"o","w":1.9,"n":57}];
+const CHEM_META = [{"id":"atom","t":"原子結構與週期性","p":"g","w":1.9,"n":69},{"id":"vsepr","t":"化學鍵、分子形狀與分子間作用力","p":"g","w":4.2,"n":81},{"id":"mo","t":"分子軌域理論","p":"g","w":1.5,"n":39},{"id":"stoich","t":"計量化學與溶液","p":"g","w":4,"n":90},{"id":"gas","t":"氣體","p":"g","w":0.7,"n":36},{"id":"thermo","t":"熱化學與熱力學","p":"g","w":1.8,"n":69},{"id":"kinetics","t":"化學動力學","p":"g","w":1.1,"n":46},{"id":"equilibrium","t":"化學平衡","p":"g","w":0.4,"n":35},{"id":"acid-base","t":"酸鹼平衡","p":"g","w":2.1,"n":66},{"id":"ksp","t":"溶解度與錯合物平衡","p":"g","w":1.2,"n":32},{"id":"coord","t":"配位化學","p":"g","w":2.4,"n":68},{"id":"electro","t":"電化學","p":"g","w":1.6,"n":51},{"id":"phase","t":"固體、液體與核化學","p":"g","w":0.2,"n":40},{"id":"desc","t":"元素、材料與分析化學","p":"g","w":0.8,"n":36},{"id":"bonding","t":"結構、鍵結與共振","p":"o","w":1.5,"n":18},{"id":"naming","t":"有機命名","p":"o","w":0.7,"n":33},{"id":"org-acid","t":"有機酸鹼","p":"o","w":1.1,"n":34},{"id":"stereo","t":"構形與立體化學","p":"o","w":1.9,"n":55},{"id":"sn-e","t":"取代與脫去","p":"o","w":1,"n":37},{"id":"alkene","t":"烯烴與炔烴","p":"o","w":1.5,"n":32},{"id":"radpoly","t":"自由基反應與聚合物","p":"o","w":0.4,"n":31},{"id":"conj","t":"共軛二烯與周環反應","p":"o","w":1.5,"n":27},{"id":"aromatic","t":"芳香族化合物","p":"o","w":2.2,"n":45},{"id":"alcohol","t":"醇、醚與環氧化物","p":"o","w":0.8,"n":30},{"id":"carbonyl","t":"醛與酮","p":"o","w":1.3,"n":25},{"id":"rxn","t":"有機金屬與人名反應","p":"o","w":2,"n":43},{"id":"acyl","t":"羧酸及其衍生物","p":"o","w":0.4,"n":28},{"id":"alpha","t":"α-碳與羰基縮合","p":"o","w":1.8,"n":33},{"id":"amine","t":"胺類","p":"o","w":1.3,"n":27},{"id":"spectro","t":"光譜分析","p":"o","w":1.9,"n":70},{"id":"biomol","t":"生物分子與合成策略","p":"o","w":1.8,"n":57}];
 
 /* ---------- 首頁「後中考試」區：倒數、今天、總進度、重要日期 ----------
    化學資料來自化學課程頁存在本機的練習紀錄（chem-ladder:log）與完成表，登入後與雲端同步；
@@ -389,6 +389,7 @@ const SUBJECTS = [
   { id: 'zh', name: '國文', st: 'plan', note: '之後會先分析歷屆試題的題型（字音字形、文意、閱讀、作文等），再決定練習方式。' },
 ];
 const SUBJ_ST = { live: '已上線', building: '製作中', plan: '規劃中' };
+const TARGET = '中國醫';   // 志願校：倒數、下一個日期、化學比重都以它為準
 const ST_LABEL = { est: '推估', known: '已列出・待簡章', goal: '目標' };
 const pd = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d).getTime(); };
 const daysTo = s => Math.round((pd(s) - REVIEW.dayStart(Date.now())) / REVIEW.DAY);
@@ -427,14 +428,15 @@ function renderExam() {
   const days = Array.from({ length: 28 }, (_, i) => REVIEW.dayStart(Date.now()) - (27 - i) * REVIEW.DAY);
   const lv = n => (!n ? 0 : n < 10 ? 1 : n < 30 ? 2 : 3);
   // 倒數：最近一場還沒考的筆試，與下一個還沒到的日期
-  const nextExam = EXAM_DATES.find(e => e.exam && daysTo(e.a) >= 0), nextDate = EXAM_DATES.find(e => daysTo(e.b || e.a) >= 0);
+  const mine = e => e.s === TARGET || e.st === 'goal';
+  const nextExam = EXAM_DATES.find(e => e.exam && mine(e) && daysTo(e.a) >= 0), nextDate = EXAM_DATES.find(e => mine(e) && daysTo(e.b || e.a) >= 0);
   // 化學總進度（依考試比重加權）
   const chs = chemChapters(log), W = chs.reduce((s, c) => s + c.w, 0), share = st => chs.filter(c => c.st === st).reduce((s, c) => s + c.w, 0) / W * 100;
   const pct = { master: share('master'), prac: share('prac'), weak: share('weak'), none: share('none') };
   const cnt = st => chs.filter(c => c.st === st).length;
 
   $('#exam').innerHTML = `
-<div class="ex-head"><div><p class="eyebrow">學士後中醫 · 116 學年度</p><h2 class="ex-h">後中考試</h2></div>
+<div class="ex-head"><div><p class="eyebrow">學士後中醫 · 116 學年度 · 志願 ${TARGET}</p><h2 class="ex-h">後中考試</h2></div>
 ${nextExam ? `<div class="count"><b>${daysTo(nextExam.a)}</b><span>天後${nextExam.s}筆試<br><small>${md(nextExam.a)}・${ST_LABEL[nextExam.st]}</small></span></div>` : ''}</div>
 ${nextDate ? `<p class="next">下一個日期：<b>${nextDate.s}${nextDate.what}</b>${daysTo(nextDate.a) > 0 ? `，${daysTo(nextDate.a)} 天後開始（${md(nextDate.a)}）` : `，進行中，${md(nextDate.b || nextDate.a)} 截止`}<span class="chip ${nextDate.st}">${ST_LABEL[nextDate.st]}</span></p>` : ''}
 
@@ -458,7 +460,7 @@ ${nextDate ? `<p class="next">下一個日期：<b>${nextDate.s}${nextDate.what}
       <div class="stack" aria-hidden="true">${['master', 'prac', 'weak', 'none'].map(st => `<i class="s-${st}" style="width:${pct[st]}%"></i>`).join('')}</div>
       <p class="legend">${['master', 'prac', 'weak', 'none'].map(st => `<span class="k-${st}">${CH_ST[st]} ${cnt(st)} 章</span>`).join('')}</p>
       <div class="chmap">${chs.map(c => `<a class="tile t-${c.st}" href="./chem/#${c.id}" title="${c.t}：${CH_ST[c.st]}${c.seen ? `，做過 ${c.seen}/${c.n} 題，最近第一次答對 ${Math.round(100 * c.acc)}%` : ''}"><span>${c.t}</span><small>${CH_ST[c.st]}${c.open ? `・錯題 ${c.open}` : ''}</small></a>`).join('')}</div>
-      <p class="mut small">百分比依各章在三校歷屆考題的比重加權。已掌握＝標記完成、做過至少四成的題目、最近第一次答對八成以上、而且沒有待複習的錯題；待加強＝最近第一次答對不到六成，或錯題本裡有 3 題以上。</p>
+      <p class="mut small">百分比依各章在中國醫歷屆考題的比重加權。已掌握＝標記完成、做過至少四成的題目、最近第一次答對八成以上、而且沒有待複習的錯題；待加強＝最近第一次答對不到六成，或錯題本裡有 3 題以上。</p>
     </details>
     ${SUBJECTS.filter(x => x.st !== 'live').map(x => `<details class="subj"><summary><span class="sj">${x.name}</span><span class="big">${x.big || '—'}</span><span class="mut small">${SUBJ_ST[x.st]}</span></summary><p class="small">${x.note}</p></details>`).join('')}
   </section>
@@ -467,8 +469,8 @@ ${nextDate ? `<p class="next">下一個日期：<b>${nextDate.s}${nextDate.what}
 <section class="panel" aria-labelledby="dateH">
   <h3 id="dateH">重要日期</h3>
   <ol class="dates">${EXAM_DATES.map(e => { const past = daysTo(e.b || e.a) < 0, d = daysTo(e.a);
-    return `<li class="${past ? 'past' : ''}${e.exam ? ' ex' : ''}"><span class="when">${md(e.a)}${e.b ? `<br><small>至 ${md(e.b)}</small>` : ''}</span><span class="what"><b>${e.s}</b> ${e.what}<span class="chip ${e.st}">${ST_LABEL[e.st]}</span></span><span class="left">${past ? '已過' : d > 0 ? `${d} 天` : '進行中'}</span></li>`; }).join('')}</ol>
-  <p class="mut small">繳費依往年都在網路報名期間內完成。推估的日期照 115 學年度同一週次往後推一年；各校簡章通常在報名前約一個月公告，公告後會改成正式日期。日程以各校正式簡章為準。</p>
+    return `<li class="${past ? 'past' : ''}${e.exam ? ' ex' : ''}${mine(e) ? ' mine' : ' other'}"><span class="when">${md(e.a)}${e.b ? `<br><small>至 ${md(e.b)}</small>` : ''}</span><span class="what"><b>${e.s}</b> ${e.what}<span class="chip ${e.st}">${ST_LABEL[e.st]}</span></span><span class="left">${past ? '已過' : d > 0 ? `${d} 天` : '進行中'}</span></li>`; }).join('')}</ol>
+  <p class="mut small">粗體為志願校中國醫與自己的目標；義守、慈濟列出供參考。繳費依往年都在網路報名期間內完成。推估的日期照 115 學年度同一週次往後推一年；各校簡章通常在報名前約一個月公告，公告後會改成正式日期。日程以各校正式簡章為準。</p>
 </section>`;
 }
 

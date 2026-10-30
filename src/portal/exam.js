@@ -27,6 +27,7 @@ const SUBJECTS = [
   { id: 'zh', name: '國文', st: 'plan', note: '之後會先分析歷屆試題的題型（字音字形、文意、閱讀、作文等），再決定練習方式。' },
 ];
 const SUBJ_ST = { live: '已上線', building: '製作中', plan: '規劃中' };
+const TARGET = '中國醫';   // 志願校：倒數、下一個日期、化學比重都以它為準
 const ST_LABEL = { est: '推估', known: '已列出・待簡章', goal: '目標' };
 const pd = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d).getTime(); };
 const daysTo = s => Math.round((pd(s) - REVIEW.dayStart(Date.now())) / REVIEW.DAY);
@@ -65,14 +66,15 @@ function renderExam() {
   const days = Array.from({ length: 28 }, (_, i) => REVIEW.dayStart(Date.now()) - (27 - i) * REVIEW.DAY);
   const lv = n => (!n ? 0 : n < 10 ? 1 : n < 30 ? 2 : 3);
   // 倒數：最近一場還沒考的筆試，與下一個還沒到的日期
-  const nextExam = EXAM_DATES.find(e => e.exam && daysTo(e.a) >= 0), nextDate = EXAM_DATES.find(e => daysTo(e.b || e.a) >= 0);
+  const mine = e => e.s === TARGET || e.st === 'goal';
+  const nextExam = EXAM_DATES.find(e => e.exam && mine(e) && daysTo(e.a) >= 0), nextDate = EXAM_DATES.find(e => mine(e) && daysTo(e.b || e.a) >= 0);
   // 化學總進度（依考試比重加權）
   const chs = chemChapters(log), W = chs.reduce((s, c) => s + c.w, 0), share = st => chs.filter(c => c.st === st).reduce((s, c) => s + c.w, 0) / W * 100;
   const pct = { master: share('master'), prac: share('prac'), weak: share('weak'), none: share('none') };
   const cnt = st => chs.filter(c => c.st === st).length;
 
   $('#exam').innerHTML = `
-<div class="ex-head"><div><p class="eyebrow">學士後中醫 · 116 學年度</p><h2 class="ex-h">後中考試</h2></div>
+<div class="ex-head"><div><p class="eyebrow">學士後中醫 · 116 學年度 · 志願 ${TARGET}</p><h2 class="ex-h">後中考試</h2></div>
 ${nextExam ? `<div class="count"><b>${daysTo(nextExam.a)}</b><span>天後${nextExam.s}筆試<br><small>${md(nextExam.a)}・${ST_LABEL[nextExam.st]}</small></span></div>` : ''}</div>
 ${nextDate ? `<p class="next">下一個日期：<b>${nextDate.s}${nextDate.what}</b>${daysTo(nextDate.a) > 0 ? `，${daysTo(nextDate.a)} 天後開始（${md(nextDate.a)}）` : `，進行中，${md(nextDate.b || nextDate.a)} 截止`}<span class="chip ${nextDate.st}">${ST_LABEL[nextDate.st]}</span></p>` : ''}
 
@@ -96,7 +98,7 @@ ${nextDate ? `<p class="next">下一個日期：<b>${nextDate.s}${nextDate.what}
       <div class="stack" aria-hidden="true">${['master', 'prac', 'weak', 'none'].map(st => `<i class="s-${st}" style="width:${pct[st]}%"></i>`).join('')}</div>
       <p class="legend">${['master', 'prac', 'weak', 'none'].map(st => `<span class="k-${st}">${CH_ST[st]} ${cnt(st)} 章</span>`).join('')}</p>
       <div class="chmap">${chs.map(c => `<a class="tile t-${c.st}" href="./chem/#${c.id}" title="${c.t}：${CH_ST[c.st]}${c.seen ? `，做過 ${c.seen}/${c.n} 題，最近第一次答對 ${Math.round(100 * c.acc)}%` : ''}"><span>${c.t}</span><small>${CH_ST[c.st]}${c.open ? `・錯題 ${c.open}` : ''}</small></a>`).join('')}</div>
-      <p class="mut small">百分比依各章在三校歷屆考題的比重加權。已掌握＝標記完成、做過至少四成的題目、最近第一次答對八成以上、而且沒有待複習的錯題；待加強＝最近第一次答對不到六成，或錯題本裡有 3 題以上。</p>
+      <p class="mut small">百分比依各章在中國醫歷屆考題的比重加權。已掌握＝標記完成、做過至少四成的題目、最近第一次答對八成以上、而且沒有待複習的錯題；待加強＝最近第一次答對不到六成，或錯題本裡有 3 題以上。</p>
     </details>
     ${SUBJECTS.filter(x => x.st !== 'live').map(x => `<details class="subj"><summary><span class="sj">${x.name}</span><span class="big">${x.big || '—'}</span><span class="mut small">${SUBJ_ST[x.st]}</span></summary><p class="small">${x.note}</p></details>`).join('')}
   </section>
@@ -105,7 +107,7 @@ ${nextDate ? `<p class="next">下一個日期：<b>${nextDate.s}${nextDate.what}
 <section class="panel" aria-labelledby="dateH">
   <h3 id="dateH">重要日期</h3>
   <ol class="dates">${EXAM_DATES.map(e => { const past = daysTo(e.b || e.a) < 0, d = daysTo(e.a);
-    return `<li class="${past ? 'past' : ''}${e.exam ? ' ex' : ''}"><span class="when">${md(e.a)}${e.b ? `<br><small>至 ${md(e.b)}</small>` : ''}</span><span class="what"><b>${e.s}</b> ${e.what}<span class="chip ${e.st}">${ST_LABEL[e.st]}</span></span><span class="left">${past ? '已過' : d > 0 ? `${d} 天` : '進行中'}</span></li>`; }).join('')}</ol>
-  <p class="mut small">繳費依往年都在網路報名期間內完成。推估的日期照 115 學年度同一週次往後推一年；各校簡章通常在報名前約一個月公告，公告後會改成正式日期。日程以各校正式簡章為準。</p>
+    return `<li class="${past ? 'past' : ''}${e.exam ? ' ex' : ''}${mine(e) ? ' mine' : ' other'}"><span class="when">${md(e.a)}${e.b ? `<br><small>至 ${md(e.b)}</small>` : ''}</span><span class="what"><b>${e.s}</b> ${e.what}<span class="chip ${e.st}">${ST_LABEL[e.st]}</span></span><span class="left">${past ? '已過' : d > 0 ? `${d} 天` : '進行中'}</span></li>`; }).join('')}</ol>
+  <p class="mut small">粗體為志願校中國醫與自己的目標；義守、慈濟列出供參考。繳費依往年都在網路報名期間內完成。推估的日期照 115 學年度同一週次往後推一年；各校簡章通常在報名前約一個月公告，公告後會改成正式日期。日程以各校正式簡章為準。</p>
 </section>`;
 }
