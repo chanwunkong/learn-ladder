@@ -149,6 +149,19 @@ select { font: inherit; font-size: .95rem; border: 1px solid var(--line); backgr
     <div class="zh" id="readZh" hidden></div>
   </section>
 
+  <section class="part" id="p4b">
+    <p class="eyebrow">第五部分 · 正式難度</p>
+    <h2>換成真正考試的難度，還讀得下去嗎？</h2>
+    <p class="note">這篇的長度（約 560 字）、用字程度與題型都照近兩年的真實考卷。考試時沒有字典，所以虛線字要等六題都作答完才能點開。建議 12 分鐘內完成（正式考試 50 題約 100 分鐘）。</p>
+    <div class="row"><button class="btn pri" type="button" id="hardGo">開始計時</button><span class="num" id="hardClock" style="text-align:left">00:00</span></div>
+    <div class="card" id="hardPre"></div>
+    <div class="card passage" id="hardText"></div>
+    <h3 style="margin-top:.4rem">讀完了，回來作答</h3>
+    <div id="hard" style="display:grid;gap:1rem"></div>
+    <div class="row"><button class="btn ghost" type="button" id="hardZhBtn" hidden>看全文翻譯</button></div>
+    <div class="zh" id="hardZh" hidden></div>
+  </section>
+
   <section class="part" id="p5">
     <p class="eyebrow">結果</p>
     <h2>你最常卡在哪一類步驟？</h2>
@@ -344,8 +357,52 @@ READ.forEach((q, i) => { q.onRight = () => { if (READ.every(x => REC[x.id])) $('
 $('#readZh').innerHTML = ['多年來，第二型糖尿病患者一直被告知要運動，但運動的「時機」較少受到注意。最近一項試驗想知道：飯後短暫散步，是否比在一天中其他時間一次走比較久更有用。', '共有四十位第二型糖尿病成人參加。其中兩週，每位受試者每天早上走 30 分鐘；另外兩週，同一批受試者改為在三餐後各走 10 分鐘。因此走路的總量完全相同。血糖由戴在手臂上的小型感測器每五分鐘記錄一次。', '和早上走路相比，飯後走路讓血糖降低約 12%；效果在晚餐後最大，因為多數受試者晚餐吃最多碳水化合物，而且之後通常最少活動。研究人員認為，在血糖正在上升時運動，肌肉從血液中吸收糖的效率最好。', '這項研究規模小，而且只進行一個月，所以無法證明效果能否持續。儘管如此，它支持的建議簡單又不花錢：如果你只能走一點點，就在吃完飯後走。'].map(t => `<p>${t}</p>`).join('');
 $('#readZhBtn').onclick = () => { $('#readZh').hidden = !$('#readZh').hidden; };
 
+/* ---------- 第五部分：正式難度閱讀 ---------- */
+Object.assign(GL, { indispensable: '不可或缺的', yardstick: '衡量標準', inert: '無活性的', ostensibly: '表面上', 'informed consent': '知情同意', candidly: '坦白地', Remarkably: '值得注意的是', 'irritable bowel syndrome': '大腸激躁症', 'mutually exclusive': '互斥的', salivate: '流口水', reframe: '重新看待', attenuate: '減弱', tempered: '節制、緩和', blinded: '盲性的（受試者不知道分組）', subjective: '主觀的', bloating: '腹脹', inclined: '傾向於', seldom: '很少', preclude: '排除、使不可能', complement: '補充', substitute: '替代品', fundamental: '根本的' });
+const HARD_TXT = [
+  '[1] For most of modern medicine’s history, the placebo has occupied an awkward position. It is {indispensable} as a {yardstick} in clinical trials, where a new drug must outperform an {inert} pill to earn approval, yet it has been viewed with suspicion as a treatment in its own right. The reason is {ostensibly} simple: a placebo was assumed to work only if the patient was deceived into believing it was real medicine, and deliberate deception sits uneasily with the principle of {informed consent}.',
+  '[2] Over the past fifteen years, however, a series of so-called open-label placebo trials has challenged that assumption. In these studies, patients are told {candidly} that the pills they receive contain no active ingredient. They are also given a brief explanation: placebo effects are often substantial, the body can respond automatically to the ritual of taking medicine, and a positive attitude, though helpful, is not required. {Remarkably}, patients with conditions such as {irritable bowel syndrome}, chronic low back pain and cancer-related fatigue have reported meaningful relief, typically compared with groups who continued their usual care without any pill.',
+  '[3] How could a treatment that patients know to be inert produce any benefit? Researchers have proposed two mechanisms that are not {mutually exclusive}. The first is conditioning: after years of swallowing pills that did contain active drugs, the body may have learned to associate the act itself with relief, much as Pavlov’s dogs learned to {salivate} at the sound of a bell. The second is expectation. Even when patients are skeptical, the explanation they receive may {reframe} their symptoms as something that can change, and this shift in attention can {attenuate} the perception of discomfort.',
+  '[4] Enthusiasm should nonetheless be {tempered}. Most open-label trials have been small, and because patients obviously know which group they are in, the studies cannot be {blinded}. This matters because the outcomes measured are largely {subjective}; pain, fatigue and {bloating} are reported by the patients themselves, and people who have been given something may simply be more {inclined} to describe improvement. Notably, objective markers, such as inflammation or tumor size, have {seldom} changed. Critics therefore argue that what these trials capture may be a shift in reporting rather than in the underlying disease.',
+  '[5] Even so, the findings carry practical implications. If honesty does not {preclude} benefit, physicians need not choose between being truthful and being helpful. Open-label placebos are cheap, have virtually no side effects, and could be offered to patients whose symptoms persist despite standard treatment, provided that they are presented as a {complement} to, rather than a {substitute} for, proven therapies. The more {fundamental} lesson may concern medicine as a whole: the context in which any treatment is delivered, including the clinician’s explanation and the patient’s understanding, appears to be part of the treatment itself.',
+];
+$('#hardText').innerHTML = HARD_TXT.map(p => `<p>${glossify(p).replace(/data-w=/g, 'data-h="1" data-w=').replace(/^\[(\d)\]/, '<span class="qnum">第 $1 段</span> ')}</p>`).join('');
+const HARD = [
+  { id: 'h1', kind: '主旨題', look: '整篇在討論什麼 → 第 1 段的舊看法，與第 2 段的 however', cat: 'para', en: true, q: 'What is the passage mainly about?',
+    o: ['Evidence that placebos may help even when patients know they are placebos, and the limits of that evidence', 'Why placebos must always be hidden from patients in order to work', 'How Pavlov’s experiments explain the effects of modern drugs', 'A new drug that outperforms placebo in treating chronic back pain'],
+    why: '第 1 段是舊看法（要騙病人才有效），第 2 段 however 推翻它，第 3 段解釋機制，第 4 段談限制，第 5 段談應用。正確選項同時涵蓋「有效」和「證據的限制」。',
+    steps: [['第 1 段的舊看法是？', '安慰劑要讓病人以為是真藥才有效', '安慰劑完全沒有效', '安慰劑一定比新藥好', 'was assumed to work only if the patient was deceived…', 'locate'], ['第 2 段開頭的 however 表示？', '新的研究挑戰了這個舊看法', '補充舊看法', '舉例支持舊看法', 'challenged that assumption：挑戰了上一段的假設。', 'logic'], ['第 4 段又在談什麼？', '這些研究的限制（樣本小、無法盲性、多是主觀指標）', '更多成功的例子', '巴夫洛夫的實驗', 'Enthusiasm should nonetheless be tempered：熱情要節制。所以主旨要同時有「效果」和「限制」。', 'para']] },
+  { id: 'h2', kind: '細節題', look: '病人被告知什麼 → 第 2 段 told candidly 之後', cat: 'para', en: true, q: 'According to paragraph 2, what are patients told in open-label placebo trials?',
+    o: ['That the pills contain no active ingredient but may still help', 'That the pills are a newly approved drug', 'That they must believe in the pills for them to work', 'That they should stop their usual treatment'],
+    why: 'told candidly that the pills … contain no active ingredient，並說明 placebo effects are often substantial。a positive attitude … is not required，所以「必須相信」是陷阱。',
+    steps: [['先在第 2 段找到 told：病人被告知的第一件事是？', '藥丸裡沒有任何有效成分', '藥丸是新藥', '要停止原本的治療', 'patients are told candidly that the pills … contain no active ingredient。', 'locate'], ['冒號後的說明裡，對「正面態度」怎麼說？', '有幫助，但不是必要的（not required）', '一定要有', '會讓效果變差', 'though helpful, is not required：雖然有幫助，但並非必要。', 'vocab'], ['所以哪個選項是陷阱？', '「必須相信藥丸才有效」，和 not required 相反', '「沒有有效成分」', '「可能仍有幫助」', '閱讀題常把原文的否定改成肯定來設陷阱。', 'para']] },
+  { id: 'h3', kind: '字義題', look: 'attenuate 這個字 → 第 3 段最後一句，看它對「不適感」做了什麼', cat: 'vocab', en: true, q: 'The word “attenuate” in paragraph 3 is closest in meaning to',
+    o: ['reduce', 'intensify', 'describe', 'measure'], why: '這一段在解釋安慰劑「為什麼有幫助」，所以它對不適感的作用一定是減輕。',
+    steps: [['attenuate 的受詞是什麼？', 'the perception of discomfort（不適的感覺）', 'the explanation', 'their symptoms 的名稱', '看它後面接什麼。', 'struct'], ['這一段整體在回答哪個問題？', '安慰劑為什麼會帶來好處（benefit）', '安慰劑為什麼有害', '病人為什麼懷疑', '第 3 段第一句：How could a treatment … produce any benefit?', 'locate'], ['所以「對不適感造成好處」的動詞應該是？', '減輕', '加強', '描述', '不認得的字，用段落的方向推回意思。', 'vocab']] },
+  { id: 'h4', kind: '原因題', look: '為什麼不能盲性 → 第 4 段 because … cannot be blinded', cat: 'locate', en: true, q: 'Why can open-label placebo trials NOT be blinded?',
+    o: ['Patients know whether or not they have received a pill.', 'The pills look different from real drugs.', 'Researchers measure tumor size.', 'The trials include too few patients.'],
+    why: 'because patients obviously know which group they are in, the studies cannot be blinded。「太少人」雖然也是第 4 段提到的限制，但不是「不能盲性」的原因。',
+    steps: [['在第 4 段找到 blinded，它前面的 because 子句是？', 'patients obviously know which group they are in', 'most trials have been small', 'objective markers have seldom changed', 'because 直接給出原因。', 'locate'], ['「樣本小」是不能盲性的原因嗎？', '不是，它是另一個獨立的限制', '是', '題目沒提', 'Most … have been small, and because …：and 把兩個限制並列。', 'logic'], ['哪個選項是 know which group they are in 的換句話說？', 'know whether or not they have received a pill', 'pills look different', 'too few patients', '知道自己在哪一組＝知道自己有沒有拿到藥丸。', 'para']] },
+  { id: 'h5', kind: '推論題', look: '批評者的論點 → 第 4 段最後一句 Critics argue', cat: 'logic', en: true, q: 'Which finding would most strengthen the critics’ view described in paragraph 4?',
+    o: ['Patients report less pain, but objective measures show no change.', 'Tumors shrink more in the placebo group than in the control group.', 'A large blinded trial confirms reduced inflammation.', 'Patients prefer cheaper treatments.'],
+    why: '批評者認為改變的只是「回報」而不是疾病本身；主觀變好、客觀不變，正好支持這個看法。',
+    steps: [['批評者的看法是？', '改變的可能只是病人的回報，而不是疾病本身', '安慰劑能治好疾病', '研究太貴', 'a shift in reporting rather than in the underlying disease。', 'locate'], ['主觀與客觀指標分別是什麼？', '主觀：疼痛、疲勞（病人自己說）；客觀：發炎、腫瘤大小', '都是主觀', '都是客觀', '第 4 段列出了兩者。', 'vocab'], ['什麼結果最能支持「只是回報改變」？', '主觀變好，但客觀指標沒有變', '客觀指標也變好', '病人喜歡便宜的治療', '客觀指標變好反而會削弱批評者的論點。', 'logic']] },
+  { id: 'h6', kind: '作者態度題', look: '作者的建議 → 第 5 段 provided that…', cat: 'para', en: true, q: 'The author would most likely agree that open-label placebos',
+    o: ['may be useful alongside proven treatments, although the evidence is still limited', 'should replace standard therapies for chronic conditions', 'are unethical because they still involve deception', 'have been shown to cure chronic disease'],
+    why: '第 5 段：作為已證實療法的補充（complement），而非替代（substitute）；第 4 段又承認證據有限。',
+    steps: [['第 5 段的 provided that … 提出什麼條件？', '當作已證實療法的補充，而不是替代', '取代標準療法', '只能給癌症病人', 'a complement to, rather than a substitute for, proven therapies。', 'locate'], ['作者認為開放標籤安慰劑有欺騙嗎？', '沒有，這正是它的特點：誠實告知', '有', '沒提到', 'If honesty does not preclude benefit…：誠實也可以有效。', 'logic'], ['作者對證據的強度怎麼看（第 4 段）？', '有限：樣本小、無法盲性、多為主觀指標', '已經證實能治癒', '完全無效', '所以最符合的是「有用，但證據仍有限」。', 'para']] },
+];
+let hardT0 = 0, hardTimer = null;
+const fmt = t => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(t % 60).padStart(2, '0')}`;
+$('#hardGo').onclick = () => { if (hardTimer) return; hardT0 = Date.now(); $('#hardGo').hidden = true; hardTimer = setInterval(() => { $('#hardClock').textContent = fmt(Math.floor((Date.now() - hardT0) / 1000)); }, 1000); };
+$('#hardPre').innerHTML = `<span class="stepn">先看題目：這篇要考什麼？</span><ol class="opts" style="margin:0;padding-left:1.2rem">${HARD.map(q => `<li><span class="en">${q.q}</span><br><span class="note"><span class="tag">${q.kind}</span> ${q.look}</span></li>`).join('')}</ol><p class="note">先記住要找的六件事，再往下讀全文。</p>`;
+const hardDone = () => HARD.every(x => x.solved);
+HARD.forEach((q, i) => { q.onRight = () => { q.solved = 1; if (hardDone()) { $('#hardZhBtn').hidden = false; if (hardTimer) { clearInterval(hardTimer); hardTimer = null; $('#hardClock').textContent += '（完成）'; } pop('六題都完成了，現在可以點虛線字查中文。'); } }; $('#hard').appendChild(question(q, `正式難度第 ${i + 1} 題`)); });
+$('#hardZh').innerHTML = ['在現代醫學的大部分歷史裡，安慰劑的地位很尷尬。在臨床試驗中，它是不可或缺的衡量標準：新藥必須勝過一顆無活性的藥丸才能獲准上市；但安慰劑本身作為一種治療，卻一直受到懷疑。表面上的理由很簡單：大家認為安慰劑只有在病人被騙、以為那是真藥時才有效，而刻意欺騙與知情同意的原則格格不入。', '然而在過去十五年，一系列所謂「開放標籤安慰劑」試驗挑戰了這個假設。在這些研究中，病人被坦白告知所拿到的藥丸不含任何有效成分，同時聽到一段簡短說明：安慰劑效應常常相當大，身體會自動對「吃藥」這個儀式產生反應，而正面的態度雖然有幫助，卻不是必要的。值得注意的是，大腸激躁症、慢性下背痛與癌症相關疲勞的病人都回報了有意義的緩解，比較的對象通常是繼續原本照護、沒有拿藥丸的組別。', '一個病人明知無效的治療，怎麼會帶來任何好處？研究者提出兩種並不互斥的機制。第一是制約：多年來吞下真正含藥的藥丸之後，身體可能已把「吃藥」這個動作本身和緩解連結起來，就像巴夫洛夫的狗學會聽到鈴聲就流口水。第二是預期。即使病人心存懷疑，他們聽到的說明也可能讓他們把症狀重新看成是會改變的，而這種注意力的轉移能減輕不適的感覺。', '不過，熱情仍應有所節制。大多數開放標籤試驗規模都小，而且因為病人顯然知道自己在哪一組，研究無法做到盲性。這很重要，因為測量的結果大多是主觀的：疼痛、疲勞與腹脹都由病人自己回報，而拿到東西的人可能只是更傾向於說自己改善了。值得注意的是，發炎或腫瘤大小等客觀指標很少改變。因此批評者認為，這些試驗捕捉到的可能是「回報」的改變，而不是疾病本身的改變。', '即便如此，這些發現仍有實際意義。如果誠實並不妨礙療效，醫師就不必在誠實與有幫助之間二選一。開放標籤安慰劑便宜、幾乎沒有副作用，可以提供給接受標準治療後症狀仍持續的病人，前提是把它當作已證實療法的補充，而不是替代。更根本的啟示或許關乎整個醫學：任何治療被給予時的情境，包括醫師的說明與病人的理解，似乎本身就是治療的一部分。'].map(t => `<p>${t}</p>`).join('');
+$('#hardZhBtn').onclick = () => { $('#hardZh').hidden = !$('#hardZh').hidden; };
+
 /* ---------- 點字看中文 ---------- */
-document.addEventListener('click', e => { const g = e.target.closest('.gl'); if (g) pop(`${g.dataset.w}：${GL[g.dataset.w] || ''}`); });
+document.addEventListener('click', e => { const g = e.target.closest('.gl'); if (!g) return; if (g.dataset.h && !hardDone()) { pop('考試時沒有字典：六題都作答完才能查。'); return; } pop(`${g.dataset.w}：${GL[g.dataset.w] || ''}`); });
 
 /* ---------- 診斷 ---------- */
 function diag() {
@@ -353,6 +410,7 @@ function diag() {
   const keys = Object.keys(CAT).filter(k => by[k]);
   $('#diag').innerHTML = keys.length ? keys.sort((a, b) => by[a][0] / by[a][1] - by[b][0] / by[b][1]).map(k => { const [ok, n] = by[k], pct = Math.round(100 * ok / n);
     return `<div class="bar"><span>${CAT[k]}</span><div class="track"><div class="fill${pct < 60 ? ' low' : ''}" style="width:${pct}%"></div></div><span class="num">${ok}/${n} 對</span></div>`; }).join('') + `<p class="note">排在最上面的就是最需要加強的一類。</p>`
+    + (HARD.some(x => REC[x.id]) ? `<p class="note"><b>正式難度閱讀</b>：第一次就答對 ${HARD.filter(x => REC[x.id] && REC[x.id].ok).length}／${HARD.filter(x => REC[x.id]).length} 題。</p>` : '')
     : '<p class="note">還沒有作答紀錄。從第一部分開始做，這裡會依「句子結構、單字意思、字根拆解、前後邏輯、文法形式、回原文定位、換句話說」七類統計你第一次就答對的比例。</p>';
 }
 $('#reset').onclick = () => { REC = {}; try { localStorage.removeItem('engPilotRec'); } catch (e) {} location.reload(); };
