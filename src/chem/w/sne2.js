@@ -23,7 +23,7 @@ W.nucsolv = el => {
 };
 
 /* ===== 2. 速率式與能量圖：SN1 與 SN2 ===== */
-W.ratelaw = el => {
+W.snrate = el => {
   const st = { m: 'sn2', rx: 1, nu: 1 };
   el.innerHTML = `${seg('rlM', [['sn2', 'SN2'], ['sn1', 'SN1']], st.m)}<div class="w-row"><span class="small">[RX] ×</span>${seg('rlA', [['1', '1'], ['2', '2'], ['3', '3']], '1')}<span class="small">[Nu⁻] ×</span>${seg('rlB', [['1', '1'], ['2', '2'], ['3', '3']], '1')}</div><div id="rlG"></div><div class="cards" id="rlK"></div><p class="note" id="rlN"></p>`;
   function draw() {

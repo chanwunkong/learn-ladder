@@ -5,6 +5,9 @@ cd "$(dirname "$0")/../.." || exit 1
 # 各檔案的頂層名稱共用同一個 script 範圍，重複宣告會讓整頁失效
 dup=$(grep -ho "^\(const\|let\|function\) [A-Za-z0-9_]*" src/chem/*.js src/chem/w/*.js src/chem/ch/*.js | awk '{print $2}' | sort | uniq -d)
 [ -n "$dup" ] && { echo "FAIL 重複的頂層名稱：$dup"; exit 1; }
+# 互動圖以 W.名稱 登記，同名時後載入的會蓋掉先載入的（不會報錯，只會讓某章的圖默默換成別章的）
+wdup=$(grep -ho "^W\.[A-Za-z0-9_]*" src/chem/widgets.js src/chem/w/*.js | sort | uniq -d)
+[ -n "$wdup" ] && { echo "FAIL 重複的互動圖名稱：$wdup"; exit 1; }
 CHROME="${CHROME:-/Applications/Google Chrome.app/Contents/MacOS/Google Chrome}"
 TMP=$(mktemp -d)
 cat > "$TMP/probe.js" <<'JS'
