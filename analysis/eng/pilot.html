@@ -1,0 +1,357 @@
+<title>後中英文試做單元</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* 版面：單欄閱讀講義，英文用襯線字排成「可以標註的原文」，中文說明用無襯線；句構用螢光筆式的底線與框線標出 */
+:root {
+  --bg: #F5F7F9; --surface: #FFFFFF; --fg: #1B2430; --muted: #5B6675; --line: #D5DCE4;
+  --accent: #1F4E79; --accent-soft: #E3ECF5;
+  --verb: #C98A00; --verb-soft: #FFF1C9; --subj: #0E7C7B; --subj-soft: #DDF2F1; --mod: #8A94A3;
+  --good: #2E7D4F; --good-soft: #E2F3E8; --bad: #B4413A; --bad-soft: #F8E4E2;
+  --f-en: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --f-zh: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #12171D; --surface: #1A2129; --fg: #E4E9EF; --muted: #9AA6B4; --line: #2E3843;
+  --accent: #8DB8E8; --accent-soft: #1E2E40;
+  --verb: #F2C14E; --verb-soft: #3A2F12; --subj: #5FD0CC; --subj-soft: #133331; --mod: #7D8794;
+  --good: #6FCF97; --good-soft: #17301F; --bad: #F08A80; --bad-soft: #3A1E1C; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #12171D; --surface: #1A2129; --fg: #E4E9EF; --muted: #9AA6B4; --line: #2E3843;
+  --accent: #8DB8E8; --accent-soft: #1E2E40;
+  --verb: #F2C14E; --verb-soft: #3A2F12; --subj: #5FD0CC; --subj-soft: #133331; --mod: #7D8794;
+  --good: #6FCF97; --good-soft: #17301F; --bad: #F08A80; --bad-soft: #3A1E1C; color-scheme: dark }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--f-zh); font-size: 16px; line-height: 1.7; }
+.wrap { max-width: 44rem; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; }
+h1 { font-size: 1.75rem; line-height: 1.3; margin: 0 0 .4rem; text-wrap: balance; }
+h2 { font-size: 1.3rem; line-height: 1.35; margin: 0 0 .6rem; text-wrap: balance; }
+h3 { font-size: 1.02rem; margin: 0 0 .4rem; }
+.eyebrow { font-family: var(--f-mono); font-size: .75rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+.lede { color: var(--muted); margin: 0; }
+section.part { margin-top: 2.6rem; display: grid; gap: 1rem; }
+.note { color: var(--muted); font-size: .92rem; margin: 0; }
+.en { font-family: var(--f-en); font-size: 1.12rem; line-height: 1.8; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: .75rem; min-width: 0; }
+.btn { font: inherit; font-size: .92rem; border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 8px; padding: .45rem .9rem; cursor: pointer; min-height: 40px; }
+.btn.pri { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.btn.ghost { background: transparent; }
+.btn:focus-visible, .opt:focus-visible, .gl:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.row { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.opts { display: grid; gap: .45rem; }
+.opt { font: inherit; text-align: left; border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 8px; padding: .55rem .85rem; cursor: pointer; min-height: 44px; }
+.opt.en-o { font-family: var(--f-en); font-size: 1.05rem; }
+.opt:hover:not(:disabled) { border-color: var(--accent); }
+.opt.right { border-color: var(--good); background: var(--good-soft); color: var(--good); }
+.opt.wrong { border-color: var(--bad); background: var(--bad-soft); color: var(--bad); }
+.opt:disabled { cursor: default; }
+.why { border-radius: 8px; padding: .6rem .85rem; font-size: .95rem; }
+.why.ok { background: var(--good-soft); } .why.no { background: var(--bad-soft); }
+.qt { font-weight: 500; margin: 0; }
+.qnum { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); }
+.guide { border-left: 3px solid var(--accent); padding-left: 12px; display: grid; gap: .5rem; }
+.gdone { margin: 0; padding-left: 1.2rem; font-size: .9rem; color: var(--muted); }
+.gdone b { color: var(--fg); }
+.stepn { font-family: var(--f-mono); font-size: .75rem; color: var(--muted); letter-spacing: .04em; }
+/* 長句拆解的標註 */
+.sent { font-family: var(--f-en); font-size: 1.2rem; line-height: 2.3; }
+.ch { padding: 2px 1px; border-radius: 4px; transition: background .2s, color .2s; }
+.ch.v { background: var(--verb-soft); box-shadow: inset 0 -3px 0 var(--verb); font-weight: 600; }
+.ch.s { background: var(--subj-soft); outline: 2px solid var(--subj); outline-offset: 1px; }
+.ch.m { color: var(--mod); }
+.ch.m::before { content: "["; color: var(--mod); } .ch.m::after { content: "]"; color: var(--mod); }
+.legend { display: flex; flex-wrap: wrap; gap: .4rem 1rem; font-size: .85rem; color: var(--muted); }
+.legend span::before { content: ""; display: inline-block; width: .9em; height: .9em; border-radius: 3px; margin-right: .35em; vertical-align: -.1em; }
+.legend .lv::before { background: var(--verb-soft); box-shadow: inset 0 -3px 0 var(--verb); }
+.legend .ls::before { background: var(--subj-soft); outline: 2px solid var(--subj); }
+.legend .lm::before { border: 1px dashed var(--mod); }
+.core { font-family: var(--f-en); font-size: 1.1rem; background: var(--accent-soft); border-radius: 8px; padding: .5rem .8rem; }
+.zh { font-size: .95rem; color: var(--muted); }
+/* 字根組字 */
+.builder { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+.builder label { display: grid; gap: .2rem; font-size: .82rem; color: var(--muted); }
+select { font: inherit; font-size: .95rem; border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 8px; padding: .4rem; min-width: 0; width: 100%; }
+.word { font-family: var(--f-en); font-size: 1.8rem; line-height: 1.2; overflow-wrap: anywhere; }
+.word .p1 { color: var(--accent); } .word .p2 { color: var(--subj); } .word .p3 { color: var(--verb); }
+.meaning { font-size: 1.02rem; }
+.tag { font-family: var(--f-mono); font-size: .75rem; border-radius: 999px; padding: .1rem .55rem; border: 1px solid var(--line); color: var(--muted); }
+.tag.real { border-color: var(--good); color: var(--good); }
+/* 文章 */
+.passage { font-family: var(--f-en); font-size: 1.1rem; line-height: 1.9; display: grid; gap: .8rem; }
+.passage p { margin: 0; }
+.gl { font: inherit; background: none; border: 0; padding: 0; color: inherit; border-bottom: 1px dotted var(--accent); cursor: help; }
+.blank { font-family: var(--f-mono); font-size: .9rem; color: var(--accent); border-bottom: 2px solid var(--accent); padding: 0 .3rem; white-space: nowrap; }
+.blank.filled { font-family: var(--f-en); font-size: 1.1rem; color: var(--good); border-color: var(--good); }
+.pop { position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); max-width: min(30rem, calc(100% - 32px)); background: var(--fg); color: var(--bg); border-radius: 10px; padding: .6rem 1rem; font-size: .95rem; box-shadow: 0 6px 24px rgba(0,0,0,.25); z-index: 5; }
+/* 診斷 */
+.diag { display: grid; gap: .6rem; }
+.bar { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr) 4.5rem; gap: .6rem; align-items: center; font-size: .92rem; }
+.track { height: .7rem; background: var(--line); border-radius: 999px; overflow: hidden; }
+.fill { height: 100%; background: var(--good); border-radius: 999px; }
+.fill.low { background: var(--bad); }
+.num { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+@media (max-width: 30rem) { .builder { grid-template-columns: minmax(0, 1fr); } .bar { grid-template-columns: 6rem minmax(0, 1fr) 3.8rem; } .sent { font-size: 1.1rem; } }
+@media (prefers-reduced-motion: reduce) { .ch { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">後中英文 · 試做單元</p>
+    <h1>英文也能一步一步拆開來學嗎？</h1>
+    <p class="lede">這是試做版，內容全部是自編的醫學主題短文，題型仿照中國醫、慈濟、義守近兩年的考法。分四部分：長句拆解、醫學字根、克漏字、閱讀。做完後最下面會整理你在哪一類步驟最常卡住。</p>
+  </header>
+
+  <section class="part" id="p1">
+    <p class="eyebrow">第一部分 · 長句</p>
+    <h2>這個長句的主幹是什麼？</h2>
+    <p class="note">每句都照同樣的順序拆：先找主要動詞，再找它的主詞，接著把修飾的部分框起來，最後只剩主幹。每答對一步，句子上就會標出來。</p>
+    <div class="legend"><span class="lv">主要動詞</span><span class="ls">主詞</span><span class="lm">修飾（可以先略過）</span></div>
+    <div id="sents" style="display:grid;gap:1rem"></div>
+  </section>
+
+  <section class="part" id="p2">
+    <p class="eyebrow">第二部分 · 字根</p>
+    <h2>不認得的醫學字，能不能拆開來猜？</h2>
+    <p class="note">醫學英文大多由「字首＋字根＋字尾」組成。換換看下面三格，看意思怎麼跟著組起來。</p>
+    <div class="card">
+      <div class="builder">
+        <label for="bp">字首<select id="bp"></select></label>
+        <label for="br">字根（器官）<select id="br"></select></label>
+        <label for="bs">字尾<select id="bs"></select></label>
+      </div>
+      <div class="word" id="bw"></div>
+      <div class="meaning" id="bm"></div>
+      <div class="row" id="bt"></div>
+    </div>
+    <div id="roots" style="display:grid;gap:1rem"></div>
+  </section>
+
+  <section class="part" id="p3">
+    <p class="eyebrow">第三部分 · 克漏字</p>
+    <h2>空格前後的線索告訴你什麼？</h2>
+    <p class="note">先讀一遍短文。有虛線的字可以點開看中文。做完五題後，可以打開全文翻譯。</p>
+    <div class="card passage" id="clozeText"></div>
+    <div id="cloze" style="display:grid;gap:1rem"></div>
+    <div class="row"><button class="btn ghost" type="button" id="clozeZhBtn" hidden>看全文翻譯</button></div>
+    <p class="zh" id="clozeZh" hidden></p>
+  </section>
+
+  <section class="part" id="p4">
+    <p class="eyebrow">第四部分 · 閱讀</p>
+    <h2>答案藏在文章的哪一句？</h2>
+    <p class="note">閱讀題的步驟固定：看清楚題目問什麼，回原文找到那一句，再判斷哪個選項是那一句的換句話說。</p>
+    <div class="card passage" id="readText"></div>
+    <div id="read" style="display:grid;gap:1rem"></div>
+    <div class="row"><button class="btn ghost" type="button" id="readZhBtn" hidden>看全文翻譯</button></div>
+    <div class="zh" id="readZh" hidden></div>
+  </section>
+
+  <section class="part" id="p5">
+    <p class="eyebrow">結果</p>
+    <h2>你最常卡在哪一類步驟？</h2>
+    <p class="note">只算第一次作答。綠色表示大多答對，紅色表示答對不到六成。這份結果決定正式課程先加強哪一塊。</p>
+    <div class="card diag" id="diag"></div>
+    <div class="row"><button class="btn ghost" type="button" id="reset">清除紀錄重新開始</button></div>
+  </section>
+</div>
+<div class="pop" id="pop" hidden></div>
+
+<script>
+const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const shuf = a => a.map(x => [Math.random(), x]).sort((p, q) => p[0] - q[0]).map(p => p[1]);
+const CAT = { struct: '句子結構', vocab: '單字意思', root: '字根拆解', logic: '前後邏輯', gram: '文法形式', locate: '回原文定位', para: '換句話說' };
+let REC = {};
+try { REC = JSON.parse(localStorage.getItem('engPilotRec') || '{}'); } catch (e) { REC = {}; }
+function rec(key, cat, ok) {
+  if (REC[key]) return; REC[key] = { c: cat, ok: ok ? 1 : 0 };
+  try { localStorage.setItem('engPilotRec', JSON.stringify(REC)); } catch (e) {}
+  diag();
+}
+let popT;
+function pop(t) { const p = $('#pop'); p.textContent = t; p.hidden = false; clearTimeout(popT); popT = setTimeout(() => { p.hidden = true; }, 3200); }
+
+/* ---------- 共用：一題＋拆解步驟 ---------- */
+// q = { id, cat, q, o: [正解, 誤, 誤, 誤], why, steps: [[問題, 正解, 誤, 誤, 說明, 類別]], en, onRight }
+function question(q, n) {
+  const el = document.createElement('div'); el.className = 'card';
+  const ord = shuf(q.o.map((t, i) => i));
+  el.innerHTML = `<span class="qnum">${n}</span><p class="qt">${q.q}</p><div class="opts">${ord.map(i => `<button class="opt${q.en ? ' en-o' : ''}" type="button" data-i="${i}">${q.o[i]}</button>`).join('')}</div>
+<div class="guide" hidden></div><div class="row"><button class="btn ghost" type="button" data-g>一步一步來</button></div><div class="why" hidden></div>`;
+  const why = $('.why', el), g = $('.guide', el), gb = $('[data-g]', el);
+  let tries = 0;
+  $$('.opts > .opt', el).forEach(b => b.onclick = () => {
+    const ok = b.dataset.i === '0'; tries++;
+    if (tries === 1) rec(q.id, q.cat, ok);
+    b.classList.add(ok ? 'right' : 'wrong'); b.disabled = true; why.hidden = false;
+    if (ok) { $$('.opts > .opt', el).forEach(x => x.disabled = true); why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}`; g.hidden = true; gb.hidden = true; q.onRight && q.onRight(); }
+    else { why.className = 'why no'; why.innerHTML = '<b>再想想。</b>下面拆成幾個小步驟，一步一步推回來。'; openGuide(); }
+  });
+  function openGuide() { if (!g.hidden) return; gb.hidden = true; g.hidden = false; steps(g, q.steps, q.id, () => { g.hidden = true; gb.hidden = false; why.hidden = false; why.className = 'why'; why.innerHTML = '步驟走完了，回到上面再選一次。'; el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }); }
+  gb.onclick = openGuide;
+  return el;
+}
+// 逐步出題：每步答對才往下；答錯只說再想想
+function steps(box, list, key, done, onStep) {
+  const past = [];
+  const draw = k => {
+    const s = list[k], ord = shuf([1, 2, 3]);
+    box.innerHTML = `${past.length ? `<ol class="gdone">${past.map(x => `<li>${x}</li>`).join('')}</ol>` : ''}<span class="stepn">第 ${k + 1} 步／共 ${list.length} 步</span><p class="qt">${s[0]}</p><div class="opts">${ord.map(j => `<button class="opt" type="button" data-j="${j}">${s[j]}</button>`).join('')}</div><div class="why" hidden></div>`;
+    let tries = 0;
+    $$('.opt', box).forEach(b => b.onclick = () => {
+      const ok = b.dataset.j === '1', w = $('.why', box); tries++;
+      if (tries === 1) rec(`${key}-s${k}`, s[5], ok);
+      b.classList.add(ok ? 'right' : 'wrong'); b.disabled = true; w.hidden = false;
+      if (!ok) { w.className = 'why no'; w.textContent = '這個不對，再想想。'; return; }
+      $$('.opt', box).forEach(x => x.disabled = true); past.push(`${s[0]} <b>${s[1]}</b>`);
+      onStep && onStep(k);
+      const last = k === list.length - 1;
+      w.className = 'why ok'; w.innerHTML = `<b>對。</b>${s[4]}<div class="row" style="margin-top:.5rem"><button class="btn pri" type="button">${last ? '完成' : '下一步'}</button></div>`;
+      $('button', w).onclick = () => last ? done() : draw(k + 1);
+    });
+  };
+  draw(0);
+}
+
+/* ---------- 第一部分：長句拆解 ---------- */
+const SENTS = [
+  { chunks: ['Patients', 'who sleep fewer than six hours a night,', 'according to a large study published last year,', 'are', 'more likely to develop high blood pressure', 'than those who sleep seven to eight hours.'],
+    steps: [
+      ['這句話的主要動詞是哪一個？', 'are', 'sleep', 'published', '<i>sleep</i> 在 who 引導的子句裡，<i>published</i> 是修飾 study 的分詞，都不是整句的動詞。', 'struct', { 3: 'v' }],
+      ['<i>are</i> 的主詞是誰？', 'Patients', 'a large study', 'those', '問「誰 are more likely…」：是病人。中間兩段都夾在主詞和動詞之間。', 'struct', { 0: 's' }],
+      ['<i>who sleep fewer than six hours a night</i> 在修飾誰？', 'Patients（哪一種病人）', 'study（哪一個研究）', 'blood pressure', 'who 子句緊跟在 Patients 後面，說明是「每晚睡不到六小時的」病人。', 'struct', { 1: 'm' }],
+      ['<i>according to a large study published last year</i> 是什麼作用？', '插入語：交代資料來源，拿掉不影響句意', '主詞', '主要動詞', '兩個逗號夾住的 according to…，是附帶說明的插入語。', 'struct', { 2: 'm' }],
+      ['去掉修飾後，句子的主幹是？', 'Patients are more likely to develop high blood pressure.', 'A large study was published last year.', 'Those sleep seven to eight hours.', '主幹就是「誰＋做什麼」；最後的 than… 是比較的對象。', 'struct', { 5: 'm' }],
+    ],
+    core: 'Patients are more likely to develop high blood pressure.',
+    zh: '根據去年發表的一項大型研究，每晚睡不到六小時的病人，比睡七到八小時的人更容易出現高血壓。' },
+  { chunks: ['The drug,', 'which was originally developed to treat diabetes,', 'has been shown', 'to reduce appetite', 'by acting on receptors in the brain', 'that regulate hunger.'],
+    steps: [
+      ['這句話的主要動詞是哪一個？', 'has been shown', 'was developed', 'regulate', '<i>was developed</i> 在 which 子句裡，<i>regulate</i> 在 that 子句裡；只有 has been shown 不在任何子句裡。', 'struct', { 2: 'v' }],
+      ['<i>has been shown</i> 的主詞是？', 'The drug', 'diabetes', 'receptors', '被證明「能降低食慾」的是這個藥。', 'struct', { 0: 's' }],
+      ['<i>which was originally developed to treat diabetes</i> 修飾誰？', 'The drug', 'appetite', 'the brain', 'which 前面緊接的名詞是 The drug，兩個逗號之間是補充說明。', 'struct', { 1: 'm' }],
+      ['最後的 <i>that regulate hunger</i> 修飾誰？', 'receptors（調節飢餓的受體）', 'the drug', 'appetite', '動詞 regulate 沒有加 s，主詞是複數，所以接的是 receptors。', 'gram', { 5: 'm' }],
+      ['主幹是什麼？', 'The drug has been shown to reduce appetite.', 'The drug was developed to treat diabetes.', 'Receptors regulate hunger.', 'by acting on… 說明「怎麼做到」，也是修飾。', 'struct', { 4: 'm' }],
+    ],
+    core: 'The drug has been shown to reduce appetite.',
+    zh: '這種原本為了治療糖尿病而開發的藥，已被證明能透過作用於大腦中調節飢餓的受體來降低食慾。' },
+  { chunks: ['What surprised the researchers most', 'was', 'not the size of the effect', 'but how quickly it appeared.'],
+    steps: [
+      ['這句話的主要動詞是哪一個？', 'was', 'surprised', 'appeared', '<i>surprised</i> 在 What 開頭的名詞子句裡，<i>appeared</i> 在 how 子句裡。', 'struct', { 1: 'v' }],
+      ['<i>was</i> 的主詞是什麼？', '整段 What surprised the researchers most（最讓研究人員驚訝的事）', 'the researchers', 'the effect', '一整個子句可以當主詞；What… 就是「…的事」。', 'struct', { 0: 's' }],
+      ['<i>not A but B</i> 表示什麼？', '不是 A，而是 B（重點在 B）', 'A 和 B 都是', 'A 比 B 重要', '真正的重點在 but 後面。', 'logic', { 2: 'm' }],
+      ['所以最讓人驚訝的是？', '效果出現得多快', '效果有多大', '研究人員是誰', 'how quickly it appeared：它多快出現。', 'struct', {}],
+    ],
+    core: 'What surprised the researchers most was how quickly it appeared.',
+    zh: '最讓研究人員驚訝的，不是效果有多大，而是效果出現得有多快。' },
+];
+SENTS.forEach((s, si) => {
+  const el = document.createElement('div'); el.className = 'card';
+  el.innerHTML = `<span class="qnum">句子 ${si + 1}</span><div class="sent">${s.chunks.map((c, i) => `<span class="ch" data-c="${i}">${c}</span>`).join(' ')}</div><div class="guide"></div><div class="row"><button class="btn ghost" type="button" data-r hidden>重新拆一次</button></div>`;
+  $('#sents').appendChild(el);
+  const start = () => {
+    $$('.ch', el).forEach(c => c.className = 'ch'); $('[data-r]', el).hidden = true;
+    steps($('.guide', el), s.steps, `sent${si}`, () => {
+      $('.guide', el).innerHTML = `<span class="stepn">主幹</span><div class="core">${s.core}</div><p class="zh" style="margin:0">中文：${s.zh}</p>`;
+      $('[data-r]', el).hidden = false;
+    }, k => { Object.entries(s.steps[k][6]).forEach(([i, cls]) => { $(`.ch[data-c="${i}"]`, el).classList.add(cls); }); });
+  };
+  $('[data-r]', el).onclick = start;
+  start();
+});
+
+/* ---------- 第二部分：字根 ---------- */
+const PRE = [['', '（無）', ''], ['hyper', 'hyper-', '過多、過高的'], ['hypo', 'hypo-', '過少、過低的'], ['poly', 'poly-', '多個'], ['endo', 'endo-', '內部的']];
+const ROOT = [['cardi', 'cardi(o)- 心臟', '心臟'], ['hepat', 'hepat(o)- 肝', '肝'], ['neur', 'neur(o)- 神經', '神經'], ['gastr', 'gastr(o)- 胃', '胃'], ['nephr', 'nephr(o)- 腎', '腎'], ['oste', 'oste(o)- 骨', '骨'], ['derm', 'derm(a)- 皮膚', '皮膚']];
+const SUF = [['itis', '-itis 發炎', '發炎'], ['ology', '-ology 研究的學問', '學'], ['ectomy', '-ectomy 切除', '切除術'], ['opathy', '-opathy 疾病', '病變'], ['omegaly', '-omegaly 腫大', '腫大'], ['algia', '-algia 疼痛', '痛']];
+const REAL = { 'carditis': '心臟炎', 'cardiology': '心臟科學', 'cardiopathy': '心臟病變', 'cardiomegaly': '心臟腫大', 'hepatitis': '肝炎', 'hepatology': '肝臟學', 'hepatectomy': '肝切除術', 'hepatopathy': '肝病變', 'hepatomegaly': '肝腫大', 'neuritis': '神經炎', 'neurology': '神經學', 'neuropathy': '神經病變', 'neuralgia': '神經痛', 'polyneuropathy': '多發性神經病變', 'gastritis': '胃炎', 'gastrology': '胃病學', 'gastrectomy': '胃切除術', 'gastropathy': '胃病變', 'gastralgia': '胃痛', 'nephritis': '腎炎', 'nephrology': '腎臟科學', 'nephrectomy': '腎切除術', 'nephropathy': '腎病變', 'nephromegaly': '腎腫大', 'osteitis': '骨炎', 'osteology': '骨骼學', 'osteopathy': '骨病', 'dermatitis': '皮膚炎', 'dermatology': '皮膚科學', 'endocarditis': '心內膜炎', 'polyneuritis': '多發性神經炎' };
+const fill = (id, arr) => { $(id).innerHTML = arr.map((x, i) => `<option value="${i}">${x[1]}</option>`).join(''); };
+fill('#bp', PRE); fill('#br', ROOT); fill('#bs', SUF);
+$('#br').value = 1; $('#bs').value = 0;
+function joinRoot(r, s) { // 字根後接母音開頭的字尾時去掉連接母音；derm 遇到 -itis/-ology 要補 at
+  if (r === 'derm' && (s === 'itis' || s === 'ology')) r = 'dermat';
+  return [r, s];
+}
+function build() {
+  const p = PRE[$('#bp').value], r = ROOT[$('#br').value], s = SUF[$('#bs').value];
+  const [rr, ss] = joinRoot(r[0], s[0]);
+  const w = p[0] + rr + ss;
+  $('#bw').innerHTML = `<span class="p1">${p[0]}</span><span class="p2">${rr}</span><span class="p3">${ss}</span>`;
+  $('#bm').innerHTML = `${p[2] ? `<b>${p[2]}</b>＋` : ''}<b>${r[2]}</b>＋<b>${s[2]}</b> → ${p[2]}${r[2]}${s[2]}`;
+  $('#bt').innerHTML = REAL[w] ? `<span class="tag real">真實醫學詞：${REAL[w]}</span>` : '<span class="tag">這個組合不常用，但意思一樣能拆出來</span>';
+}
+['#bp', '#br', '#bs'].forEach(id => $(id).onchange = build); build();
+const ROOTQ = [
+  { id: 'r1', cat: 'root', en: true, q: '<span class="en">nephropathy</span> 最可能是什麼意思？', o: ['腎臟的病變', '神經的發炎', '腎臟切除手術', '心臟腫大'], why: 'nephr(o) 腎＋pathy 疾病。',
+    steps: [['先拆開：這個字可以分成哪兩部分？', 'nephro ＋ pathy', 'neph ＋ ropathy', 'ne ＋ phropathy', '找認得的字根：nephr(o) 與字尾 -pathy。', 'root'], ['nephr(o) 是什麼器官？', '腎', '神經', '肝', '腎臟科就叫 nephrology。', 'root'], ['-pathy 表示？', '疾病、病變', '發炎', '切除', 'sympathy 也有 -pathy，原意是「感受」，在醫學字尾指疾病。', 'root']] },
+  { id: 'r2', cat: 'root', en: true, q: '<span class="en">hepatomegaly</span> 最可能是什麼意思？', o: ['肝臟腫大', '肝臟發炎', '胃痛', '肝臟切除'], why: 'hepat(o) 肝＋megaly 腫大。',
+    steps: [['這個字可以分成哪兩部分？', 'hepato ＋ megaly', 'hep ＋ atomegaly', 'hepatom ＋ egaly', 'mega 是「大」，-megaly 是「變大」。', 'root'], ['hepat(o) 是什麼器官？', '肝', '心臟', '胃', 'hepatitis（肝炎）也是這個字根。', 'root'], ['-megaly 表示？', '腫大', '疼痛', '疾病', 'mega- 就是「巨大」。', 'root']] },
+  { id: 'r3', cat: 'root', en: true, q: '<span class="en">polyneuritis</span> 最可能是什麼意思？', o: ['多處神經同時發炎', '單一神經疼痛', '神經切除', '多個腎臟病變'], why: 'poly 多＋neur 神經＋itis 發炎。',
+    steps: [['這個字有幾個部分？', 'poly ＋ neur ＋ itis', 'polyn ＋ euritis', 'poly ＋ neuritis 不能再拆', '字首、字根、字尾三段。', 'root'], ['poly- 表示？', '多', '少', '內部', 'polygon 是多邊形。', 'root'], ['-itis 表示？', '發炎', '疼痛', '研究', 'hepatitis、gastritis 都是「…炎」。', 'root']] },
+];
+ROOTQ.forEach((q, i) => $('#roots').appendChild(question(q, `字根練習 ${i + 1}`)));
+
+/* ---------- 第三部分：克漏字 ---------- */
+const GL = { replays: '重播、重演', storage: '儲存', volunteers: '志願受試者', 'word pairs': '成對的單字', recall: '回想起', concluded: '下結論', noise: '雜訊；無用的資訊', 'long-term': '長期的', experiment: '實驗' };
+const CLOZE_TXT = [
+  'Sleep is not simply a period of rest. During deep sleep, the brain {replays} the events of the day and <b class="blank" data-b="1">(1) ____</b> new memories into {long-term} {storage}.',
+  'In one {experiment}, {volunteers} learned a list of {word pairs} in the evening. Half of them slept normally, <b class="blank" data-b="2">(2) ____</b> the other half stayed awake all night. The next morning, the group that had slept <b class="blank" data-b="3">(3) ____</b> about 20 percent more word pairs.',
+  '<b class="blank" data-b="4">(4) ____</b>, staying awake did not simply slow learning; it also made the volunteers more likely to {recall} words that had never appeared on the list. The researchers {concluded} that sleep helps the brain <b class="blank" data-b="5">(5) ____</b> useful information from {noise}.',
+];
+const glossify = t => t.replace(/\{([^}]+)\}/g, (m, w) => `<button class="gl" type="button" data-w="${w}">${w}</button>`);
+$('#clozeText').innerHTML = CLOZE_TXT.map(p => `<p>${glossify(p)}</p>`).join('');
+const CLOZE = [
+  { id: 'c1', cat: 'gram', en: true, q: '第 (1) 格應填？', o: ['transfers', 'transfer', 'transferring', 'to transfer'], why: 'the brain replays … and transfers …：and 連接兩個動詞，形式要一致。',
+    steps: [['空格前面有哪個連接詞？', 'and', 'but', 'because', 'and 前後要放「同一種」東西。', 'gram'], ['and 前面那個動作是？', 'replays（第三人稱單數現在式）', 'sleep', 'the events', '主詞 the brain 做了兩件事：replays 和 ___。', 'struct'], ['所以空格要跟 replays 同樣的形式：', '動詞加 s', '動詞加 ing', 'to ＋ 原形', '平行結構：replays … and transfers …。', 'gram']] },
+  { id: 'c2', cat: 'logic', en: true, q: '第 (2) 格應填？', o: ['while', 'because', 'so', 'unless'], why: '一半正常睡、另一半整夜不睡：兩件事對照，用 while（而）。',
+    steps: [['空格前後各在說什麼？', '一半的人正常睡；另一半的人整夜沒睡', '睡覺的原因；睡覺的結果', '實驗的時間；實驗的地點', '把逗號前後兩句分開看。', 'logic'], ['兩句的關係是？', '對照（兩組做不同的事）', '因果', '條件', '一組做 A、另一組做 B。', 'logic'], ['表示對照的連接詞是？', 'while', 'because', 'unless', 'while 除了「當…時」，也常表示「而」。', 'logic']] },
+  { id: 'c3', cat: 'gram', en: true, q: '第 (3) 格應填？', o: ['remembered', 'remembers', 'remembering', 'to remember'], why: '主詞 the group 還缺主要動詞；整段在講過去的實驗，用過去式。',
+    steps: [['這句的主詞是？', 'the group', 'the next morning', 'word pairs', 'The next morning 是時間；that had slept 修飾 the group。', 'struct'], ['這個主詞有沒有主要動詞了？', '還沒有，had slept 是在 that 子句裡', '有，是 had slept', '有，是 morning', '子句裡的動詞不算整句的動詞。', 'struct'], ['整段實驗發生在什麼時候？', '過去（learned、slept、stayed）', '現在', '未來', '前面的動詞都是過去式，所以用 remembered。', 'gram']] },
+  { id: 'c4', cat: 'logic', en: true, q: '第 (4) 格應填？', o: ['Moreover', 'However', 'Therefore', 'Otherwise'], why: '「不只…還…」是再補充一個壞處，用 Moreover（此外）。',
+    steps: [['這一句講熬夜的什麼影響？', '不只學得慢，還會記錯沒出現過的字', '熬夜讓記憶變好', '熬夜沒有影響', 'did not simply … ; it also … 是「不只…還…」。', 'logic'], ['和上一句（睡覺組多記了兩成）的關係是？', '再補充一個熬夜的壞處', '相反的結果', '上一句的原因', '前後方向一致，是追加。', 'logic'], ['表示「追加」的連接詞是？', 'Moreover', 'However', 'Therefore', 'However 是轉折，Therefore 是結果。', 'logic']] },
+  { id: 'c5', cat: 'vocab', en: true, q: '第 (5) 格應填？', o: ['separate', 'combine', 'borrow', 'suffer'], why: 'separate A from B：把 A 和 B 分開。睡眠幫大腦把有用的資訊從雜訊中分出來。',
+    steps: [['help 後面接什麼形式？', 'help ＋ 受詞 ＋ 原形動詞', 'help ＋ ing', 'help ＋ 過去式', '四個選項都是原形，這題考的是意思。', 'gram'], ['空格後面的 from 提示什麼搭配？', 'separate A from B（把 A 從 B 分開）', 'combine A with B', 'borrow A to B', '看介系詞找固定搭配。', 'vocab'], ['上一句說熬夜會記錯沒出現過的字，所以睡眠的作用是？', '分辨真的和假的資訊', '把資訊混在一起', '借用資訊', '和上文連起來就能確定意思。', 'logic']] },
+];
+CLOZE.forEach((q, i) => { q.onRight = () => { const b = $(`.blank[data-b="${i + 1}"]`); b.textContent = q.o[0]; b.classList.add('filled'); if ($$('.blank.filled').length === 5) $('#clozeZhBtn').hidden = false; }; $('#cloze').appendChild(question(q, `第 (${i + 1}) 格`)); });
+$('#clozeZh').textContent = '睡眠不只是休息。在深層睡眠時，大腦會重播當天發生的事，並把新的記憶轉存到長期儲存區。在一項實驗中，志願者在晚上學習一串成對的單字。其中一半正常睡覺，另一半則整夜不睡。隔天早上，有睡覺的那一組多記住了約兩成的字組。此外，熬夜不只是讓學習變慢，也讓志願者更容易「想起」根本沒出現在單子上的字。研究人員的結論是：睡眠幫助大腦把有用的資訊從雜訊中分辨出來。';
+$('#clozeZhBtn').onclick = () => { $('#clozeZh').hidden = !$('#clozeZh').hidden; };
+
+/* ---------- 第四部分：閱讀 ---------- */
+Object.assign(GL, { 'type 2 diabetes': '第二型糖尿病', timing: '時機', trial: '臨床試驗', participants: '受試者', 'blood sugar': '血糖', sensor: '感測器', carbohydrate: '碳水化合物', 'take up': '吸收', effectively: '有效地', still: '儘管如此' });
+const READ_TXT = [
+  '[1] For years, people with {type 2 diabetes} have been told to exercise, but the {timing} of exercise has received less attention. A recent {trial} asked whether a short walk after meals could be more useful than a single longer walk at another time of day.',
+  '[2] Forty adults with type 2 diabetes took part. For two weeks, each participant walked for 30 minutes every morning. For another two weeks, the same {participants} instead walked for 10 minutes after each of their three main meals. The total amount of walking was therefore identical. {Blood sugar} was recorded every five minutes by a small {sensor} worn on the arm.',
+  '[3] After-meal walking lowered blood sugar by about 12 percent compared with morning walking, and the benefit was largest after the evening meal, when most participants ate the most {carbohydrate} and were otherwise least active. The researchers suggest that muscles {take up} sugar from the blood most {effectively} when exercise happens while that sugar is rising.',
+  '[4] The study was small and lasted only a month, so it cannot show whether the effect lasts. {Still}, the advice it supports is simple and cheap: if you can walk only a little, walk after you eat.',
+];
+$('#readText').innerHTML = READ_TXT.map(p => `<p>${glossify(p).replace(/^\[(\d)\]/, '<span class="qnum">第 $1 段</span> ')}</p>`).join('');
+const READ = [
+  { id: 'q1', cat: 'para', en: true, q: 'What is the passage mainly about?', o: ['Whether the timing of walking affects blood sugar', 'How sensors measure blood sugar', 'Why people with diabetes avoid exercise', 'The best diet for type 2 diabetes'], why: '第 1 段提出問題（運動的時機），後面三段都在回答這個問題。',
+    steps: [['主旨題通常先看哪裡？', '第 1 段提出的問題，加上最後一段的結論', '只看第 2 段的數字', '只看選項裡最長的', '第 1 段：timing of exercise has received less attention。', 'locate'], ['第 1 段提出的問題是？', '飯後短走是否比另一個時間長走更有用', '感測器準不準', '糖尿病人該吃什麼', 'asked whether a short walk after meals could be more useful…', 'locate'], ['哪個選項把這個問題換句話說，而且能涵蓋全文？', 'Whether the timing of walking affects blood sugar', 'How sensors measure blood sugar', 'The best diet for type 2 diabetes', 'sensor 只是第 2 段的一個細節；全文沒有講飲食建議。', 'para']] },
+  { id: 'q2', cat: 'para', en: true, q: 'In the trial, how did the two walking plans differ?', o: ['The same total time was divided differently.', 'After-meal walking lasted longer in total.', 'Different groups of people did each plan.', 'Morning walking was done at a faster pace.'], why: '30 分鐘一次，對照 10 分鐘 × 3 次，總量相同，只是分配不同；而且是同一批人（the same participants）。',
+    steps: [['這題的答案在哪一段？', '第 2 段（描述實驗怎麼做）', '第 3 段', '第 4 段', '問的是試驗的設計。', 'locate'], ['兩種走法各走多久？', '早上一次 30 分鐘；三餐後各 10 分鐘', '早上 10 分鐘；飯後 30 分鐘', '都是 10 分鐘', '30 = 10 × 3。', 'vocab'], ['文中哪一句直接說出兩者的關係？', 'The total amount of walking was therefore identical.', 'Forty adults took part.', 'Blood sugar was recorded every five minutes.', '總量一樣，差別在怎麼切。另外 the same participants 表示是同一批人。', 'para']] },
+  { id: 'q3', cat: 'vocab', en: true, q: 'The word "identical" in paragraph 2 is closest in meaning to', o: ['the same', 'increased', 'measured', 'unusual'], why: '30 分鐘和 10 × 3 分鐘加起來一樣，identical 就是「完全相同」。',
+    steps: [['identical 前面算了什麼？', '一次 30 分鐘和三次 10 分鐘的總量', '血糖下降的比例', '受試者的人數', '前一句剛交代兩種走法的時間。', 'locate'], ['30 和 10 × 3 比較？', '一樣多', '前者多', '後者多', '自己算一次就知道。', 'logic'], ['therefore（因此）後面接的應該是？', '由前面算出來的結論：總量相同', '和前面相反的事', '新的話題', '看懂前後文，不認得的字也能推出意思。', 'vocab']] },
+  { id: 'q4', cat: 'locate', en: true, q: 'According to the passage, why was the benefit largest after the evening meal?', o: ['People ate the most carbohydrate then and were otherwise inactive.', 'The sensors worked better at night.', 'Participants walked longer in the evening.', 'Morning walks were often skipped.'], why: '第 3 段 when 子句：晚餐吃最多碳水化合物，而且之後通常最少活動。',
+    steps: [['先在文章中找到 evening meal：在哪一段？', '第 3 段', '第 2 段', '第 4 段', '用題目裡的關鍵字回原文定位。', 'locate'], ['evening meal 後面的 when … 子句在說什麼？', '那時吃最多碳水化合物，而且其他時間最不活動', '那時感測器最準', '那時走得最久', 'when 子句補充說明那個時段的情況，就是原因。', 'struct'], ['哪個選項是這一句的換句話說？', 'ate the most carbohydrate … otherwise inactive', 'sensors worked better', 'walked longer', 'least active ≈ inactive。其他選項文中都沒有提到。', 'para']] },
+  { id: 'q5', cat: 'para', en: true, q: 'Which statement would the authors most likely agree with?', o: ['The results are promising, but a longer study is needed.', 'The study proves the effect lasts for years.', 'Morning exercise is harmful for people with diabetes.', 'Blood sugar sensors are unreliable.'], why: '第 4 段：研究小、只做一個月，不能證明效果持久；但仍值得照著做。',
+    steps: [['作者的看法通常在哪一段？', '最後一段', '第 1 段', '第 2 段', '結論段會交代研究的限制與建議。', 'locate'], ['第 4 段前半句說了研究的什麼？', '樣本小、時間短，不能證明效果持久', '證明效果持久', '早上運動有害', 'cannot show whether the effect lasts。', 'locate'], ['Still 後面表示作者的態度是？', '雖然有限制，仍然推薦飯後走路', '完全否定這個研究', '建議早上運動', 'Still＝儘管如此。限制＋仍有價值，就是「有希望但需要更長的研究」。', 'logic']] },
+];
+READ.forEach((q, i) => { q.onRight = () => { if (READ.every(x => REC[x.id])) $('#readZhBtn').hidden = false; }; $('#read').appendChild(question(q, `閱讀第 ${i + 1} 題`)); });
+$('#readZh').innerHTML = ['多年來，第二型糖尿病患者一直被告知要運動，但運動的「時機」較少受到注意。最近一項試驗想知道：飯後短暫散步，是否比在一天中其他時間一次走比較久更有用。', '共有四十位第二型糖尿病成人參加。其中兩週，每位受試者每天早上走 30 分鐘；另外兩週，同一批受試者改為在三餐後各走 10 分鐘。因此走路的總量完全相同。血糖由戴在手臂上的小型感測器每五分鐘記錄一次。', '和早上走路相比，飯後走路讓血糖降低約 12%；效果在晚餐後最大，因為多數受試者晚餐吃最多碳水化合物，而且之後通常最少活動。研究人員認為，在血糖正在上升時運動，肌肉從血液中吸收糖的效率最好。', '這項研究規模小，而且只進行一個月，所以無法證明效果能否持續。儘管如此，它支持的建議簡單又不花錢：如果你只能走一點點，就在吃完飯後走。'].map(t => `<p>${t}</p>`).join('');
+$('#readZhBtn').onclick = () => { $('#readZh').hidden = !$('#readZh').hidden; };
+
+/* ---------- 點字看中文 ---------- */
+document.addEventListener('click', e => { const g = e.target.closest('.gl'); if (g) pop(`${g.dataset.w}：${GL[g.dataset.w] || ''}`); });
+
+/* ---------- 診斷 ---------- */
+function diag() {
+  const by = {}; Object.values(REC).forEach(r => { (by[r.c] = by[r.c] || [0, 0]); by[r.c][0] += r.ok; by[r.c][1]++; });
+  const keys = Object.keys(CAT).filter(k => by[k]);
+  $('#diag').innerHTML = keys.length ? keys.sort((a, b) => by[a][0] / by[a][1] - by[b][0] / by[b][1]).map(k => { const [ok, n] = by[k], pct = Math.round(100 * ok / n);
+    return `<div class="bar"><span>${CAT[k]}</span><div class="track"><div class="fill${pct < 60 ? ' low' : ''}" style="width:${pct}%"></div></div><span class="num">${ok}/${n} 對</span></div>`; }).join('') + `<p class="note">排在最上面的就是最需要加強的一類。</p>`
+    : '<p class="note">還沒有作答紀錄。從第一部分開始做，這裡會依「句子結構、單字意思、字根拆解、前後邏輯、文法形式、回原文定位、換句話說」七類統計你第一次就答對的比例。</p>';
+}
+$('#reset').onclick = () => { REC = {}; try { localStorage.removeItem('engPilotRec'); } catch (e) {} location.reload(); };
+diag();
+</script>
