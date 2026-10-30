@@ -7,13 +7,20 @@ CH.push({
 <p>三種定義由窄到寬：<b>阿瑞尼斯</b>——在水中產生 H⁺ 的是酸、產生 OH⁻ 的是鹼；<b>布忍斯特–羅瑞</b>——給出 H⁺ 的是酸、接受 H⁺ 的是鹼；<b>路易斯</b>——接受電子對的是酸、提供電子對的是鹼。</p>
 <p>布忍斯特–羅瑞的酸給出 H⁺ 後變成它的<b>共軛鹼</b>，鹼接受 H⁺ 後變成<b>共軛酸</b>。同一個物種可以當酸也可以當鹼（H₂O、HCO₃⁻、H₂PO₄⁻），稱為兩性物質。切換不同反應，看每個物種扮演的角色，以及它符合哪幾種定義。</p>` },
       { h: '各種溶液的 pH 怎麼算？', w: 'phcalc', body: `
-<p>pH = −log[H⁺]，25 °C 時 [H⁺][OH⁻] = Kw = 1.0 × 10⁻¹⁴，所以 pH + pOH = 14。</p>
+<p>水溶液中 H⁺ 的濃度從 1 M 到 10⁻¹⁴ M 都有，差了十幾個 10 倍，所以改用 log（以 10 為底的對數，log 10ˣ = x）把它變成好讀的數字：</p>
+<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
+<p class="eq">pH = −log[H⁺]　　Kw = [H⁺][OH⁻] = 1.0 × 10⁻¹⁴（25 °C）　　pH + pOH = 14<span class="tg must">要背</span></p>
+<dl class="sym"><div><dt>[H⁺]</dt><dd>氫離子濃度（M）；[H⁺] = 10⁻³ M 時 pH = 3。pH 每差 1，[H⁺] 差 10 倍</dd></div><div><dt>pOH</dt><dd>= −log[OH⁻]；p 開頭的都是「取 −log」</dd></div><div><dt>Kw</dt><dd>水的離子積：水本身會少量解離成 H⁺ 與 OH⁻，兩者濃度乘積固定；溫度升高 Kw 變大</dd></div></dl>
 <ul><li><b>強酸、強鹼</b>：完全解離，[H⁺] 或 [OH⁻] = 濃度（乘上可解離的數目）。濃度極低時要加上水本身的解離。</li>
-<li><b>弱酸、弱鹼</b>：用 ICE 解 Ka = x²/(C − x)，x 遠小於 C 時近似 x ≈ √(Ka·C)。解離度 α = x/C 隨稀釋而變大。</li>
-<li><b>鹽類</b>：看陰、陽離子是不是弱酸或弱鹼的共軛物：F⁻、CH₃COO⁻ 使溶液偏鹼（Kb = Kw/Ka），NH₄⁺、Al³⁺ 使溶液偏酸。</li></ul>
+<li><b>弱酸、弱鹼</b>：只有一小部分<b>解離</b>（分開成離子）。弱酸 HA ⇌ H⁺ + A⁻ 的平衡常數稱為酸解離常數 Ka；用 ICE 表（見化學平衡一章）解 Ka = x²/(C − x)，x 遠小於 C 時近似：
+<p class="eq">[H⁺] = x ≈ √(Ka·C)<span class="tg derive">會推</span>　　解離度 α = x/C</p>
+<dl class="sym"><div><dt>Ka</dt><dd>酸解離常數，越大酸越強<span class="tg given">卷上會給</span></dd></div><div><dt>C</dt><dd>酸的起始濃度（M）</dd></div><div><dt>x</dt><dd>解離掉的量，等於 [H⁺] = [A⁻]</dd></div><div><dt>α</dt><dd>解離度：解離掉的比例，隨稀釋而變大</dd></div></dl></li>
+<li><b>鹽類</b>：看陰、陽離子是不是弱酸或弱鹼的共軛物：F⁻、CH₃COO⁻ 會從水搶 H⁺ 產生 OH⁻（稱為<b>水解</b>），使溶液偏鹼，它的鹼解離常數 Kb = Kw/Ka；NH₄⁺、Al³⁺ 使溶液偏酸。</li></ul>
 <p>拖動濃度、切換不同的溶液：曲線是 pH 隨濃度的變化，卡片顯示解離度。</p>` },
       { h: '酸的強弱怎麼比？', w: 'kaladder', body: `
-<p>Ka 越大（pKa 越小）酸越強。共軛酸鹼對之間 <b>Ka × Kb = Kw</b>：酸越強，它的共軛鹼越弱。這張圖左邊是酸、右邊是它的共軛鹼，同一條橫線上的兩者互為共軛。</p>
+<p>pKa = −log Ka。Ka 越大（pKa 越小）酸越強。共軛酸鹼對之間：</p>
+<p class="eq">Ka × Kb = Kw　　pKa + pKb = 14<span class="tg must">要背</span></p>
+<p>所以酸越強，它的共軛鹼越弱。這張圖左邊是酸、右邊是它的共軛鹼，同一條橫線上的兩者互為共軛。</p>
 <p>結構上的趨勢：同族往下（HF &lt; HCl &lt; HBr &lt; HI）鍵越長越弱，酸性越強，HF 因為 H–F 鍵很強而是弱酸；含氧酸中心原子的電負度越大、接的 O 越多，酸性越強（HClO &lt; HClO₂ &lt; HClO₃ &lt; HClO₄）。H₃PO₃ 只有兩個 H 接在 O 上，是二質子酸；H₃BO₃ 是接受 OH⁻ 的路易斯酸，只算一質子。</p>` },
       { h: '多質子酸在不同 pH 下是什麼形式？', w: 'polyprot', body: `
 <p>多質子酸分步解離，每一步都有自己的 Ka，而且 Ka₁ &gt; Ka₂ &gt; Ka₃。拖動 pH，看每一種形式所佔的比例；在 pH = pKaₙ 處，第 n 步的酸和它的共軛鹼各佔一半。由 pH 與 pKa 的差也能直接算比例：[HPO₄²⁻] ÷ [H₂PO₄⁻] = 10^(pH − 7.20)。</p>
@@ -34,9 +41,10 @@ CH.push({
 <p>右邊兩杯各加入同樣的強酸或強鹼：純水的 pH 從 7 直接掉到 2，緩衝溶液卻只動了不到 0.1。把緩衝溶液的濃度調低再試，會發現它能吸收的酸鹼也跟著變少：這就是<b>緩衝容量</b>。當加入的 H⁺ 超過溶液裡的 A⁻，緩衝就被「打穿」了。</p>` },
       { h: 'pH 由什麼比例決定？', w: 'species', body: `
 <p>從酸解離常數的定義出發：</p>
-<p class="eq">Ka = [H⁺][A⁻] ÷ [HA]</p>
+<p class="eq">Ka = [H⁺][A⁻] ÷ [HA]<span class="tg must">要背</span></p>
 <p>兩邊取 −log，把 −log[H⁺] 寫成 pH、−log Ka 寫成 pKa，整理後得到：</p>
-<p class="eq">pH = pKa + log([A⁻] ÷ [HA])</p>
+<p class="eq">pH = pKa + log([A⁻] ÷ [HA])　（韓德森–哈塞巴赫方程式）<span class="tg must">要背</span></p>
+<dl class="sym"><div><dt>[A⁻]</dt><dd>共軛鹼的濃度（或莫耳數，同一杯溶液體積會約掉）</dd></div><div><dt>[HA]</dt><dd>弱酸的濃度</dd></div><div><dt>log 1 = 0</dt><dd>兩者相等時 pH = pKa；log 10 = 1、log 2 ≈ 0.30、log 3 ≈ 0.48<span class="tg given">卷上會給</span></dd></div></dl>
 <p>這條式子告訴我們三件事：</p>
 <ol><li><b>pH 由比例決定</b>，和總量無關。同樣 1：1 的緩衝溶液，濃一點稀一點 pH 都一樣（濃度只影響緩衝容量）。</li>
 <li><b>[A⁻] = [HA] 時，pH = pKa</b>。滴定到一半（半當量點）就是這個狀態，所以可以從滴定曲線直接讀出 pKa。</li>
@@ -49,6 +57,7 @@ CH.push({
       { h: '指示劑要怎麼選？', w: 'indicator', body: `
 <p>指示劑本身也是弱酸（HIn），酸形和鹼形顏色不同。依照 Henderson–Hasselbalch，pH 在 pKa(HIn) ± 1 之間時兩種形式都多，看起來是過渡色，這就是<b>變色範圍</b>。</p>
 <p>滴定時我們看顏色判斷「到了沒」，所以指示劑必須在 <b>pH 暴衝的那一段</b>變色：那一段只差一兩滴，顏色一變就代表到了當量點。</p>
+<p>各指示劑的變色範圍<span class="tg given">卷上會給</span>，要會的是「選範圍落在暴衝區、包含當量點的那一個」。</p>
 <ul><li>醋酸 + NaOH：當量點 pH ≈ 8.7，用<b>酚酞</b>（8.2–10.0）。</li>
 <li>強酸 + 強鹼：暴衝區從 pH 約 3 到 11，酚酞、溴瑞香草酚藍都可以。</li>
 <li>甲基橙（3.1–4.4）滴醋酸會在緩衝區就慢慢變色，你會以為已經到了，其實才加了一小半。</li></ul>
