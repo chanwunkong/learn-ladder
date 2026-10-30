@@ -122,17 +122,27 @@ W.trend = el => {
 /* ===== 5. 原子的組成：質子、中子、電子 ===== */
 const SUBD = { 0: '₀', 1: '₁', 2: '₂', 3: '₃', 4: '₄', 5: '₅', 6: '₆', 7: '₇', 8: '₈', 9: '₉' };
 const supN = v => String(v).split('').map(c => SUP[c]).join(''), subN = v => String(v).split('').map(c => SUBD[c]).join('');
-const NUC = [['¹H', 'H', 1, 1, 0], ['²H（氘）', 'H', 1, 2, 0], ['¹²C', 'C', 6, 12, 0], ['¹⁴C', 'C', 6, 14, 0], ['²³Na⁺', 'Na', 11, 23, 1], ['³⁵Cl⁻', 'Cl', 17, 35, -1], ['³⁷Cl', 'Cl', 17, 37, 0], ['⁵⁶Fe³⁺', 'Fe', 26, 56, 3], ['³²S²⁻', 'S', 16, 32, -2], ['²³⁸U', 'U', 92, 238, 0]];
+// [按鈕, 元素符號, Z, A, 電荷, 各殼層電子數（K, L, M…）]
+const NUC = [['¹H', 'H', 1, 1, 0, [1]], ['²H（氘）', 'H', 1, 2, 0, [1]], ['¹²C', 'C', 6, 12, 0, [2, 4]], ['¹⁴C', 'C', 6, 14, 0, [2, 4]], ['²³Na⁺', 'Na', 11, 23, 1, [2, 8]], ['³⁵Cl⁻', 'Cl', 17, 35, -1, [2, 8, 8]], ['³⁷Cl', 'Cl', 17, 37, 0, [2, 8, 7]], ['⁵⁶Fe³⁺', 'Fe', 26, 56, 3, [2, 8, 13]], ['³²S²⁻', 'S', 16, 32, -2, [2, 8, 8]], ['²³⁸U', 'U', 92, 238, 0, [2, 8, 18, 32, 21, 9, 2]]];
 W.nuclide = el => {
   let cur = 7;
-  el.innerHTML = `<div class="w-row">${NUC.map(([t], i) => `<button class="btn sm ghost" type="button" data-i="${i}">${t}</button>`).join('')}</div><div id="nuG"></div><div class="cards" id="nuK"></div><p class="note" id="nuN"></p>`;
+  el.innerHTML = `<div class="w-row">${NUC.map(([t], i) => `<button class="btn sm ghost" type="button" data-i="${i}">${t}</button>`).join('')}</div><div id="nuG"></div><p class="small mut" id="nuC"></p><div class="cards" id="nuK"></div><p class="note" id="nuN"></p>`;
   function draw() {
-    const [, sy, Z, A, q] = NUC[cur], N = A - Z, e = Z - q, nn = Math.min(Z + N, 60), ne = Math.min(e, 30);
-    const dots = Array.from({ length: nn }, (_, i) => { const a = i * 2.4, r = 6 * Math.sqrt(i); return `<circle cx="${110 + Math.cos(a) * r}" cy="${110 + Math.sin(a) * r}" r="5" class="${i < Math.round(nn * Z / (Z + N)) ? 'nuP' : 'nuN'}"/>`; }).join('');
-    const ed = Array.from({ length: ne }, (_, i) => { const a = i / ne * Math.PI * 2; return `<circle cx="${110 + Math.cos(a) * 95}" cy="${110 + Math.sin(a) * 95}" r="4" class="nuE"/>`; }).join('');
-    $('#nuG', el).innerHTML = `<svg class="ch" style="max-width:240px;margin:auto" viewBox="0 0 220 220" role="img" aria-label="原子組成示意"><circle cx="110" cy="110" r="95" class="nuO"/>${dots}${ed}</svg>`;
+    const [, sy, Z, A, q, sh] = NUC[cur], N = A - Z, e = Z - q, tot = Z + N, nn = Math.min(tot, 60), np = Math.round(nn * Z / tot);
+    // 原子核：質子與中子依固定的打散順序交錯排在一起（同一核種每次畫出來都一樣）
+    const kind = Array.from({ length: nn }, (_, i) => i < np);
+    let sd = A * 7 + Z; const rnd = () => (sd = (sd * 9301 + 49297) % 233280) / 233280;
+    for (let i = nn - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [kind[i], kind[j]] = [kind[j], kind[i]]; }
+    const rN = nn > 30 ? 3 : 4.2, dots = kind.map((p, i) => { const a = i * 2.4, r = rN * 1.15 * Math.sqrt(i); return `<circle cx="${110 + Math.cos(a) * r}" cy="${110 + Math.sin(a) * r}" r="${rN}" class="${p ? 'nuP' : 'nuN'}"/>`; }).join('');
+    const core = rN * 1.15 * Math.sqrt(nn) + rN + 6, gap = (104 - core) / sh.length;
+    // 電子：依殼層分圈，每圈平均排開；圈上標 n 與這一層的電子數
+    const rings = sh.map((k, j) => { const R = core + gap * (j + 1), er = k > 20 ? 2.2 : k > 10 ? 2.8 : 3.6;
+      return `<circle cx="110" cy="110" r="${R}" class="nuO"/>` + Array.from({ length: k }, (_, i) => { const a = -Math.PI / 2 + (i + 0.5) / k * Math.PI * 2 + (k > 1 ? 0.35 : 0.6); return `<circle cx="${110 + Math.cos(a) * R}" cy="${110 + Math.sin(a) * R}" r="${er}" class="nuE"/>`; }).join('')
+        + (sh.length <= 4 ? `<text class="tk" x="110" y="${110 - R + 3}" text-anchor="middle" style="paint-order:stroke;stroke:var(--bg);stroke-width:3px">n=${j + 1}</text>` : ''); }).join('');
+    $('#nuG', el).innerHTML = `<svg class="ch" style="max-width:260px;margin:auto" viewBox="-10 -6 250 232" role="img" aria-label="原子組成示意：原子核與電子殼層">${rings}${dots}</svg>`;
+    $('#nuC', el).textContent = `電子殼層由內到外：${sh.join('、')}（共 ${e} 個）。${tot > 60 ? `原子核有 ${tot} 個粒子，圖上只畫 60 個，紅灰比例不變。` : ''}示意圖不按比例：實際的原子核只有原子大小的約十萬分之一；電子也不是在固定的圓形軌道上，真正的分布見第 5 節的軌域。`;
     $('#nuK', el).innerHTML = card('sym', '符號', `${supN(A)}${subN(Z)}${sy}${q ? (Math.abs(q) > 1 ? supN(Math.abs(q)) : '') + (q > 0 ? '⁺' : '⁻') : ''}`) + card('p', '質子（紅）= 原子序 Z', Z) + card('n', '中子（灰）= A − Z', `${N}`, `${A} − ${Z}`) + card('e', '電子（藍）= Z − 電荷', e, `${Z} − (${q})`);
-    $('#nuN', el).innerHTML = `質量數 A = 質子 + 中子；原子序 Z = 質子數，決定是哪一種元素。${q ? `帶 ${q > 0 ? '+' : '−'}${Math.abs(q)} 電荷表示${q > 0 ? '失去' : '得到'} ${Math.abs(q)} 個電子，質子與中子不變。` : '中性原子的電子數等於質子數。'} Z 相同、A 不同的原子互為<b>同位素</b>（例如 ³⁵Cl 與 ³⁷Cl），化學性質幾乎相同。${nn < Z + N ? '（圖中原子核只畫出一部分粒子）' : ''}`;
+    $('#nuN', el).innerHTML = `質量數 A = 質子 + 中子；原子序 Z = 質子數，決定是哪一種元素。${q ? `帶 ${q > 0 ? '+' : '−'}${Math.abs(q)} 電荷表示${q > 0 ? '失去' : '得到'} ${Math.abs(q)} 個電子，質子與中子不變。` : '中性原子的電子數等於質子數。'} Z 相同、A 不同的原子互為<b>同位素</b>（例如 ³⁵Cl 與 ³⁷Cl），化學性質幾乎相同。`;
     $$('[data-i]', el).forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.i === cur)));
   }
   $$('[data-i]', el).forEach(b => { b.onclick = () => { cur = +b.dataset.i; draw(); }; });

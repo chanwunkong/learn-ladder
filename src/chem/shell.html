@@ -178,6 +178,16 @@ svg.en.clip { overflow: hidden; }
 .sec h2 { font-family: var(--display); font-size: 25px; display: flex; gap: 12px; align-items: baseline; margin: 10px 0 8px; }
 .sn { font-family: var(--mono); font-size: 14px; color: var(--accent-ink); background: var(--accent); border-radius: 50%; width: 28px; height: 28px; display: inline-grid; place-items: center; flex: none; transform: translateY(-3px); }
 .prose p, .prose li { max-width: 72ch; }
+/* 公式的符號表與「要背／會推／卷上會給」標籤（規則見 寫作標準.md） */
+.sym { margin: -6px 0 14px; padding: 8px 14px; border: 1px solid var(--line); border-top: 0; border-radius: 0 0 6px 6px; background: var(--sunk); display: grid; gap: 4px; font-size: 14px; }
+.sym > div { display: grid; grid-template-columns: minmax(3.2em, max-content) minmax(0, 1fr); gap: 10px; align-items: baseline; }
+.sym dt { font-family: var(--mono); font-weight: 600; color: var(--accent); white-space: nowrap; }
+.sym dd { margin: 0; }
+.tg { display: inline-block; font-family: var(--body); font-size: 11.5px; font-weight: 500; line-height: 1.5; border-radius: 99px; padding: 0 8px; margin-left: 6px; border: 1px solid; vertical-align: 1px; white-space: nowrap; }
+.tg.must { color: var(--eosin); border-color: var(--eosin); background: var(--eosin-soft); }
+.tg.derive { color: var(--accent); border-color: var(--accent); background: var(--soft); }
+.tg.given { color: var(--good); border-color: var(--good); background: var(--good-soft); }
+.tglegend { font-size: 13px; color: var(--muted); }
 .eq { font-family: var(--mono); font-size: 14.5px; background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); padding: 8px 14px; border-radius: 6px; overflow-x: auto; white-space: nowrap; }
 .tbl { border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; width: 100%; }
 .tbl th, .tbl td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; }
