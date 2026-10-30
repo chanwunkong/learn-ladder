@@ -11212,7 +11212,7 @@ ${c.exam ? `<section class="sec" id="sec-exam"><h2><span class="sn">考</span>�
   for (const k in INST) delete INST[k];
   $$('.widget', $('#article')).forEach(w => { const n = w.dataset.w; try { const inst = W[n](w); if (!INST[n]) INST[n] = { inst, el: w }; } catch (e) { w.innerHTML = `<p class="note bad">互動圖載入失敗：${esc(e.message)}</p>`; console.error(e); } });
   const right = new Set();
-  $$('.q', $('#article')).forEach(qe => {
+  $$('.q[data-k]', $('#article')).forEach(qe => {
     const kind = qe.dataset.k, qi = +qe.dataset.q, q = (kind === 'x' ? c.exam : c.quiz)[qi], why = $('.why', qe);
     let tries = 0;
     $$('.opt', qe).forEach(b => { b.onclick = () => {
