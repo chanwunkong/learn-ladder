@@ -150,6 +150,53 @@ W.nuclide = el => {
   return { set(s) { cur = s.i ?? cur; draw(); } };
 };
 
+/* ===== 6a. 一道光：拖動波長，看波的疏密、顏色、頻率與光子能量 ===== */
+// 波長（nm）→ 看到的顏色；可見光以外回傳 null（畫成灰色）
+function nmRGB(nm) {
+  if (nm < 380 || nm > 750) return null;
+  let r = 0, g = 0, b = 0;
+  if (nm < 440) { r = (440 - nm) / 60; b = 1; } else if (nm < 490) { g = (nm - 440) / 50; b = 1; } else if (nm < 510) { g = 1; b = (510 - nm) / 20; }
+  else if (nm < 580) { r = (nm - 510) / 70; g = 1; } else if (nm < 645) { r = 1; g = (645 - nm) / 65; } else r = 1;
+  const f = nm < 420 ? 0.3 + 0.7 * (nm - 380) / 40 : nm > 700 ? 0.3 + 0.7 * (750 - nm) / 50 : 1;   // 兩端人眼較不敏感
+  return `rgb(${[r, g, b].map(v => Math.round(255 * Math.pow(v * f, 0.8))).join(',')})`;
+}
+const nmName = nm => nm < 380 ? '紫外光（看不見）' : nm < 450 ? '紫' : nm < 495 ? '藍' : nm < 570 ? '綠' : nm < 590 ? '黃' : nm < 620 ? '橙' : nm <= 750 ? '紅' : '紅外光（看不見）';
+W.wave = el => {
+  let nm = 550;
+  const P = [['紫外光 250 nm', 250], ['紫光 410 nm', 410], ['鈉的黃光 589 nm', 589], ['氫的紅線 656 nm', 656], ['紅外光 1200 nm', 1200]];
+  el.innerHTML = `<div class="w-row">${P.map(([t, v]) => `<button class="btn sm ghost" type="button" data-v="${v}">${t}</button>`).join('')}</div>
+<div class="w-row"><label class="rng">波長 λ<input type="range" id="wvR" min="200" max="1400" step="1"><output class="mono" id="wvO"></output></label></div>
+<div id="wvG"></div><div id="wvS"></div><div class="cards" id="wvK"></div><p class="note" id="wvN"></p>`;
+  function draw() {
+    const col = nmRGB(nm), W0 = 600, H = 150, win = 3000;   // 畫面寬度代表 3000 nm
+    let d = '';
+    for (let x = 0; x <= W0; x += 2) { const y = H / 2 - 52 * Math.sin(2 * Math.PI * (x / W0 * win) / nm); d += `${x ? 'L' : 'M'}${x},${y.toFixed(1)}`; }
+    const crests = Math.floor(win / nm), x1 = 60 + W0 * (nm / 4) / win, x2 = x1 + W0 * nm / win;
+    $('#wvG', el).innerHTML = `<svg class="ch" viewBox="0 -16 ${W0} ${H + 46}" role="img" aria-label="波長 ${nm} nm 的波">
+<line class="ax" x1="0" x2="${W0}" y1="${H / 2}" y2="${H / 2}" stroke-dasharray="3 4"/>
+<path d="${d}" fill="none" stroke="${col || 'var(--muted)'}" stroke-width="3" ${col ? '' : 'stroke-dasharray="6 4"'}/>
+${x2 < W0 ? `<line class="mk" x1="${x1}" x2="${x2}" y1="${H / 2 - 62}" y2="${H / 2 - 62}"/><text class="tk" x="${(x1 + x2) / 2}" y="${H / 2 - 68}" text-anchor="middle">λ = ${nm} nm</text>` : ''}
+<text class="tk" x="${W0 / 2}" y="${H + 22}" text-anchor="middle">同一段距離（3000 nm）裡有 ${crests} 個多波峰：波長越短，越密</text></svg>`;
+    // 可見光色帶與目前位置
+    const stops = Array.from({ length: 38 }, (_, i) => { const w = 380 + i * 10; return `<stop offset="${(i / 37 * 100).toFixed(1)}%" stop-color="${nmRGB(w)}"/>`; }).join('');
+    const sx = v => 40 + (v - 200) / 1200 * 520;
+    $('#wvS', el).innerHTML = `<svg class="ch" viewBox="0 0 600 46" role="img" aria-label="可見光範圍與目前波長"><defs><linearGradient id="wvGr">${stops}</linearGradient></defs>
+<rect x="${sx(200)}" y="8" width="${sx(380) - sx(200)}" height="16" fill="var(--sunk)"/><rect x="${sx(380)}" y="8" width="${sx(750) - sx(380)}" height="16" fill="url(#wvGr)"/><rect x="${sx(750)}" y="8" width="${sx(1400) - sx(750)}" height="16" fill="var(--sunk)"/>
+<text class="tk" x="${sx(290)}" y="40" text-anchor="middle">紫外光</text><text class="tk" x="${sx(565)}" y="40" text-anchor="middle">可見光</text><text class="tk" x="${sx(1075)}" y="40" text-anchor="middle">紅外光</text>
+<path d="M${sx(nm)},4 l-6,-6 h12 z" class="dot"/><line class="mk" x1="${sx(nm)}" x2="${sx(nm)}" y1="4" y2="28"/></svg>`;
+    const nu = 2.998e8 / (nm * 1e-9), E = 6.626e-34 * nu, Em = E * 6.022e23 / 1000;
+    $('#wvO', el).textContent = `${nm} nm`;
+    $('#wvK', el).innerHTML = card('c', '顏色', `<span style="display:inline-block;width:.9em;height:.9em;border-radius:3px;vertical-align:-.1em;margin-right:.3em;background:${col || 'transparent'};border:1px solid var(--line)"></span>${nmName(nm)}`)
+      + card('n', '頻率 ν = c ÷ λ', `${sci(nu, 3)} Hz`, '每秒通過的波峰數') + card('e', '一個光子 E = hν', `${sci(E, 3)} J`) + card('m', '一莫耳光子', `${fx(Em, 0)} kJ/mol`, `≈ 119,600 ÷ ${nm}`);
+    $('#wvN', el).innerHTML = `波長變短一半，頻率和光子能量就變成兩倍。${nm < 400 ? '紫外光的光子能量（超過約 300 kJ/mol）已經和許多化學鍵的鍵能相當，所以能打斷鍵、曬傷皮膚。' : nm > 750 ? '紅外光的光子能量太小，不能讓電子躍遷，只能讓化學鍵振動（光譜一章的 IR）。' : '可見光的光子能量剛好讓某些分子的電子躍遷，所以物質才有顏色。'}`;
+    $('#wvR', el).value = nm;
+  }
+  $('#wvR', el).oninput = e => { nm = +e.target.value; draw(); };
+  $$('[data-v]', el).forEach(b => { b.onclick = () => { nm = +b.dataset.v; draw(); }; });
+  draw();
+  return { set(s) { if (s.nm) nm = s.nm; draw(); } };
+};
+
 /* ===== 6. 電磁波譜：λ、ν、E 與每莫耳能量 ===== */
 const EMR = [['γ 射線', -14, -11, '#7a5cff', 0], ['X 射線', -11, -8, '#6a6ad8', 1], ['紫外光', -8, -6.42, '#8a4cff', 0], ['可見光', -6.42, -6.12, '#2fbf5f', 1], ['紅外光', -6.12, -3, '#e2403a', 0], ['微波', -3, 0, '#c87a3a', 1], ['無線電波', 0, 3, '#9a8a6a', 0]];
 W.emspec = el => {
