@@ -42,6 +42,7 @@ window.__errs = []; addEventListener('error', e => __errs.push(e.message)); cons
     if (/\bNaN\b|\bundefined\b|\bInfinity\b/.test(w.textContent)) __errs.push(`${w.dataset.w}: 文字中出現 NaN/undefined`);
   }
   // 名詞：每個名詞都要能打開解釋框；有「在圖上看」就按一次；記下內文沒有連結到的名詞
+  { const ids = {}; document.querySelectorAll('[id]').forEach(e => { if (!e.closest('svg')) ids[e.id] = (ids[e.id] || 0) + 1; }); const d = Object.keys(ids).filter(k => ids[k] > 1); if (d.length) __errs.push('重複的 id（會讓按鈕或文字互相覆蓋）：' + d.join(', ')); }
   rep.terms = document.querySelectorAll('.tchip').length; rep.linked = new Set([...document.querySelectorAll('.tlink')].map(b => b.dataset.t)).size;
   rep.unlinked = [...document.querySelectorAll('.tchip')].filter(c => !document.querySelector(`.tlink[data-t="${c.dataset.t}"]`)).map(c => c.textContent);
   for (const c of document.querySelectorAll('.tchip')) { c.click(); const p = document.getElementById('tpop'); if (!p || p.hidden || !p.textContent.trim()) __errs.push('名詞解釋框沒有打開：' + c.textContent); const g = p && p.querySelector('[data-go]'); if (g) { g.click(); rep.shows++; } }
