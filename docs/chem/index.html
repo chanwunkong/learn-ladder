@@ -12145,13 +12145,13 @@ W.hseries = el => {
 /* ===== 3c. 波耳軌道的大小：rₙ = 0.529 Å × n² / Z ===== */
 W.bohrr = el => {
   const st = { Z: 1, n: 2 };
-  el.innerHTML = `<div class="w-row"><label class="sel">粒子 <select id="brZ"><option value="1">H（Z = 1）</option><option value="2">He⁺（Z = 2）</option><option value="3">Li²⁺（Z = 3）</option></select></label>${seg('brN', [1, 2, 3, 4].map(n => [String(n), `n = ${n}`]), '2')}</div><div id="brG"></div><div class="cards" id="brK"></div><p class="note" id="brN"></p>`;
+  el.innerHTML = `<div class="w-row"><label class="sel">粒子 <select id="brZ"><option value="1">H（Z = 1）</option><option value="2">He⁺（Z = 2）</option><option value="3">Li²⁺（Z = 3）</option></select></label>${seg('brN', [1, 2, 3, 4].map(n => [String(n), `n = ${n}`]), '2')}</div><div id="brG"></div><div class="cards" id="brK"></div><p class="note" id="brT"></p>`;
   function draw() {
     const { Z, n } = st, r = k => 0.529 * k * k / Z, sc = 105 / r(4) * Z / 1;   // 以 H 的 n = 4 當最大圈，比例固定，換 Z 時圈會縮小
     const R = k => 0.529 * k * k / Z * (105 / (0.529 * 16));
     $('#brG', el).innerHTML = `<svg class="ch" style="max-width:300px;margin:auto" viewBox="0 0 240 240" role="img" aria-label="波耳軌道半徑">${[1, 2, 3, 4].map(k => `<circle cx="120" cy="120" r="${R(k)}" class="nuO" style="${k === n ? 'stroke:var(--accent);stroke-width:2.5;stroke-dasharray:none' : ''}"/>${R(k) > 9 ? `<text class="tk" x="${120 + R(k) * 0.7 + 2}" y="${120 - R(k) * 0.7}">n=${k}</text>` : ''}`).join('')}<circle cx="120" cy="120" r="4" class="nuP"/><circle cx="${120 + R(n)}" cy="120" r="5" class="nuE"/></svg>`;
     $('#brK', el).innerHTML = card('r', `r${['', '₁', '₂', '₃', '₄'][n]} = 0.529 × ${n}² ÷ ${Z}`, `${fx(r(n), 3)} Å`) + card('x', '是氫基態的幾倍', `${fx(n * n / Z, 2)} 倍`, 'n² ÷ Z');
-    $('#brN', el).innerHTML = `半徑和 n² 成正比：n = 2 是 n = 1 的 4 倍、n = 3 是 9 倍，所以高能階的圈越來越大、能量間距卻越來越小。Z 越大，原子核拉得越緊，同一層的圈縮成 1/Z（換成 He⁺、Li²⁺ 看看）。圖上的比例固定，以氫的 n = 4 為最外圈。`;
+    $('#brT', el).innerHTML = `半徑和 n² 成正比：n = 2 是 n = 1 的 4 倍、n = 3 是 9 倍，所以高能階的圈越來越大、能量間距卻越來越小。Z 越大，原子核拉得越緊，同一層的圈縮成 1/Z（換成 He⁺、Li²⁺ 看看）。圖上的比例固定，以氫的 n = 4 為最外圈。`;
     $('#brZ', el).value = Z; pressSeg(el, 'brN', String(n));
   }
   $('#brZ', el).onchange = e => { st.Z = +e.target.value; draw(); };
