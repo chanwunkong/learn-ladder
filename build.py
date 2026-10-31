@@ -29,6 +29,11 @@ COURSES = {
         "desc": "學士後中醫入學考的普通化學與有機化學：用互動圖從原理學起，看懂酸鹼平衡與反應機構。",
         "theme": "#17705F",
     },
+    "eng": {
+        "scripts": ["ui.js", "wk/*.js", "@review.js", "app.js", "@cloud.js", "start.js"],
+        "desc": "學士後中醫入學考英文：每天早晚兩段，單字、長句拆解、文法、克漏字與閱讀，錯題自動複習。",
+        "theme": "#1F4E79",
+    },
 }
 PORTAL = {"scripts": ["@cloud.js", "@review.js", "chem-meta.js", "exam.js", "portal.js"], "desc": "學習階梯：用互動圖解從原理學起的線上課程。", "theme": "#2F3B99"}
 

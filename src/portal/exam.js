@@ -22,7 +22,7 @@ const EXAM_DATES = [
 // 後中考四科（三校都考國文、英文、生物、化學）。live＝已上線、building＝製作中、plan＝規劃中。新增科目時在這裡加一項。
 const SUBJECTS = [
   { id: 'chem', name: '化學', st: 'live', href: './chem/' },
-  { id: 'eng', name: '英文', st: 'building', today: '單字・長句・一篇文章', note: '計畫：每天約 60 分鐘（錯題複習 → 新單字 → 長句拆解 → 一篇克漏字或閱讀），文章難度每週往上調，2027 年 2 月底前達到考試程度。先完成三校十年英文試題分析，再依考卷實際用字產生單字表。', big: '0<small> / 17 週</small>' },
+  { id: 'eng', name: '英文', st: 'live', href: './eng/' },
   { id: 'bio', name: '生物', st: 'plan', note: '含生理學。之後會先做歷屆試題主題分析，再決定章節與比重，做法和化學相同。' },
   { id: 'zh', name: '國文', st: 'plan', note: '之後會先分析歷屆試題的題型（字音字形、文意、閱讀、作文等），再決定練習方式。' },
 ];
@@ -34,6 +34,10 @@ const daysTo = s => Math.round((pd(s) - REVIEW.dayStart(Date.now())) / REVIEW.DA
 const md = s => { const d = new Date(pd(s)); return `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}（${'日一二三四五六'[d.getDay()]}）`; };
 
 const chemLog = () => local('chem-ladder', 'log', []);
+// 英文：紀錄給錯題與連續天數；每天哪一段做完由英文頁存的摘要（eng-ladder:sum）提供
+const engLog = () => local('eng-ladder', 'log', []).filter(e => ['w', 'wr', 's', 'g', 'p'].includes(e.k));
+const engSum = () => local('eng-ladder', 'sum', null);
+const ENG_WEEKS = 17;   // 2026-11 起到 2027-02 底
 const chemDone = () => local('chem-ladder', 'done', {});
 
 // 各章狀態：未開始／練習中／待加強／已掌握
@@ -61,7 +65,9 @@ function renderExam() {
   const openKeys = new Set(before.open.map(s => s.key)), revToday = new Set(tToday.filter(x => openKeys.has(x.key)).map(x => x.key)).size;
   const dueLeft = book.due.length;
   // 連續天數與最近 4 週
-  const perDay = {}; tr.forEach(x => { const k = REVIEW.dayKey(x.t); perDay[k] = (perDay[k] || 0) + 1; });
+  const elog = engLog(), etr = REVIEW.trials(elog), ebook = REVIEW.book(elog), es = engSum();
+  const eToday = etr.filter(x => REVIEW.dayKey(x.t) === today).length;
+  const perDay = {}; tr.concat(etr).forEach(x => { const k = REVIEW.dayKey(x.t); perDay[k] = (perDay[k] || 0) + 1; });
   let streak = 0; for (let d = REVIEW.dayStart(Date.now()) - (perDay[today] ? 0 : REVIEW.DAY); perDay[REVIEW.dayKey(d)]; d -= REVIEW.DAY) streak++;
   const days = Array.from({ length: 28 }, (_, i) => REVIEW.dayStart(Date.now()) - (27 - i) * REVIEW.DAY);
   const lv = n => (!n ? 0 : n < 10 ? 1 : n < 30 ? 2 : 3);
@@ -84,9 +90,11 @@ ${nextDate ? `<p class="next">下一個日期：<b>${nextDate.s}${nextDate.what}
     <ul class="todo">
       <li class="${dueLeft ? '' : 'ok'}"><a href="./chem/#review"><span class="ck">${dueLeft ? '' : '✓'}</span><span>化學錯題複習</span><b>${dueLeft ? `還有 ${dueLeft} 題到期` : revToday ? `完成 ${revToday} 題` : '今天沒有到期'}</b></a></li>
       <li class="${tToday.length ? 'ok' : ''}"><a href="./chem/"><span class="ck">${tToday.length ? '✓' : ''}</span><span>化學練習</span><b>${tToday.length ? `${tToday.length} 題，第一次答對 ${Math.round(100 * okToday / tToday.length)}%` : '今天還沒練習'}</b></a></li>
+      <li class="${ebook.due.length ? '' : 'ok'}"><a href="./eng/#review"><span class="ck">${ebook.due.length ? '' : '✓'}</span><span>英文錯題複習</span><b>${ebook.due.length ? `還有 ${ebook.due.length} 題到期` : '今天沒有到期'}</b></a></li>
+      ${engToday(es, eToday)}
       ${SUBJECTS.filter(x => x.st !== 'live').map(x => `<li class="soon"><span class="ck"></span><span>${x.name}${x.today ? `：${x.today}` : ''}</span><b>${SUBJ_ST[x.st]}</b></li>`).join('')}
     </ul>
-    <div class="streak"><span><b>${streak}</b> 天連續練習</span><span class="mut">錯題本共 ${book.open.length} 題</span></div>
+    <div class="streak"><span><b>${streak}</b> 天連續練習</span><span class="mut">錯題本：化學 ${book.open.length}・英文 ${ebook.open.length} 題</span></div>
     <div class="heat" aria-label="最近 4 週每天的練習題數">${days.map(d => { const n = perDay[REVIEW.dayKey(d)] || 0; return `<i class="l${lv(n)}${REVIEW.dayKey(d) === today ? ' now' : ''}" title="${REVIEW.dayKey(d)}：${n} 題"></i>`; }).join('')}</div>
     <p class="heat-cap"><span>4 週前</span><span>每格一天，顏色越深練越多</span><span>今天</span></p>
   </section>
@@ -100,6 +108,7 @@ ${nextDate ? `<p class="next">下一個日期：<b>${nextDate.s}${nextDate.what}
       <div class="chmap">${chs.map(c => `<a class="tile t-${c.st}" href="./chem/#${c.id}" title="${c.t}：${CH_ST[c.st]}${c.seen ? `，做過 ${c.seen}/${c.n} 題，最近第一次答對 ${Math.round(100 * c.acc)}%` : ''}"><span>${c.t}</span><small>${CH_ST[c.st]}${c.open ? `・錯題 ${c.open}` : ''}</small></a>`).join('')}</div>
       <p class="mut small">百分比依各章在中國醫歷屆考題的比重加權。已掌握＝標記完成、做過至少四成的題目、最近第一次答對八成以上、而且沒有待複習的錯題；待加強＝最近第一次答對不到六成，或錯題本裡有 3 題以上。</p>
     </details>
+    ${engProgress(es)}
     ${SUBJECTS.filter(x => x.st !== 'live').map(x => `<details class="subj"><summary><span class="sj">${x.name}</span><span class="big">${x.big || '—'}</span><span class="mut small">${SUBJ_ST[x.st]}</span></summary><p class="small">${x.note}</p></details>`).join('')}
   </section>
 </div>
@@ -110,4 +119,19 @@ ${nextDate ? `<p class="next">下一個日期：<b>${nextDate.s}${nextDate.what}
     return `<li class="${past ? 'past' : ''}${e.exam ? ' ex' : ''}${mine(e) ? ' mine' : ' other'}"><span class="when">${md(e.a)}${e.b ? `<br><small>至 ${md(e.b)}</small>` : ''}</span><span class="what"><b>${e.s}</b> ${e.what}<span class="chip ${e.st}">${ST_LABEL[e.st]}</span></span><span class="left">${past ? '已過' : d > 0 ? `${d} 天` : '進行中'}</span></li>`; }).join('')}</ol>
   <p class="mut small">粗體為志願校中國醫與自己的目標；義守、慈濟列出供參考。繳費依往年都在網路報名期間內完成。推估的日期照 115 學年度同一週次往後推一年；各校簡章通常在報名前約一個月公告，公告後會改成正式日期。日程以各校正式簡章為準。</p>
 </section>`;
+}
+
+// 英文「今天」：下一個還沒做完的段落
+function engToday(es, n) {
+  if (!es) return `<li><a href="./eng/"><span class="ck"></span><span>英文：早上單字與長句、晚上文法與文章</span><b>還沒開始</b></a></li>`;
+  if (!es.next) return `<li class="ok"><a href="./eng/#report"><span class="ck">✓</span><span>英文第 ${es.n} 週全部完成</span><b>看週報、匯出給下一週</b></a></li>`;
+  const { d, s } = es.next;
+  return `<li class="${n ? 'ok' : ''}"><a href="./eng/#d${d + 1}${s}"><span class="ck">${n ? '✓' : ''}</span><span>英文：第 ${es.n} 週第 ${d + 1} 天${s === 'am' ? '早上' : '晚上'}</span><b>${n ? `今天做了 ${n} 題` : '今天還沒練習'}</b></a></li>`;
+}
+function engProgress(es) {
+  const days = es ? es.slots.filter(x => x[0] >= 1 && x[1] >= 1).length : 0;
+  return `<details class="subj"><summary><span class="sj">英文</span><span class="big">${es ? es.n - 1 + (days === 7 ? 1 : 0) : 0}<small> / ${ENG_WEEKS} 週</small></span><span class="mut small">${es ? `第 ${es.n} 週完成 ${days} / 7 天` : '還沒開始'}</span></summary>
+${es ? `<p class="small">本週：${esc(es.theme)}</p><div class="eslots" aria-label="本週每天早晚的完成度">${es.slots.map((x, d) => `<a href="./eng/#d${d + 1}am" title="第 ${d + 1} 天：早上 ${Math.round(100 * x[0])}%、晚上 ${Math.round(100 * x[1])}%"><small>${d + 1}</small><i style="--f:${x[0]}"></i><i style="--f:${x[1]}"></i></a>`).join('')}</div>
+${es.weak.length ? `<p class="small">待加強：${es.weak.map(esc).join('、')}</p>` : ''}` : ''}
+<p class="mut small">每週 7 天、每天早晚各約 30 分鐘。週末在英文頁的「本週報告」匯出錯題與弱項，交給 AI 產生下一週的內容。</p></details>`;
 }

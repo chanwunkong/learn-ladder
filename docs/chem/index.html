@@ -17009,7 +17009,7 @@ function boot() {
      tracks: [{ doc, get() → 已完成表, set(表) }]   課程頁一條；首頁列出全部課程，一次同步
      count() / total()                             面板上顯示的完成章數
      refresh()                                     從雲端合併進新章節後重畫畫面
-     logs: { doc, get() → 紀錄陣列, set(陣列) }（選用） 練習紀錄：與雲端取聯集合併，任何一邊都不會刪掉另一邊的紀錄
+     logs: { doc, get() → 紀錄陣列, set(陣列) } 或其陣列（選用） 練習紀錄：與雲端取聯集合併，任何一邊都不會刪掉另一邊的紀錄
    介面：右上角按鈕 → 下拉面板說明「登入有什麼用」與目前同步狀態；hint() 給首頁的提示列。 */
 const CLOUD = (() => {
   const CFG = { apiKey: 'AIzaSyD8oEe02SY2PCDe3d40NtTprrApqW_DhB8', authDomain: 'test-5dbba.firebaseapp.com', projectId: 'test-5dbba' };
@@ -17072,20 +17072,24 @@ const CLOUD = (() => {
   // 練習紀錄：只增不減。上傳最近 3000 筆（Firestore 單一文件上限 1 MB）；下載時與本機取聯集
   const lkey = e => `${e.t}|${e.c}|${e.h || e.k + e.i}|${e.p}`;
   let ltimer = 0;
+  const LOGS = () => [].concat(COURSE.logs || []);
   function pushLog() {
-    if (!user || !COURSE.logs) return;
+    if (!user || !LOGS().length) return;
     clearTimeout(ltimer);
-    ltimer = setTimeout(() => ref(COURSE.logs.doc).set({ log: COURSE.logs.get().slice(-3000), updated: Date.now() }).catch(e => console.warn('log sync', e.code)), 2000);
+    ltimer = setTimeout(() => LOGS().forEach(L => ref(L.doc).set({ log: L.get().slice(-3000), updated: Date.now() }).catch(e => console.warn('log sync', e.code))), 2000);
   }
   async function pullLog() {
-    if (!COURSE.logs) return;
-    try {
-      const snap = await ref(COURSE.logs.doc).get(), remote = (snap.exists && snap.data().log) || [], local = COURSE.logs.get();
-      const seen = new Set(local.map(lkey)), add = remote.filter(e => !seen.has(lkey(e)));
-      if (add.length) COURSE.logs.set(local.concat(add).sort((a, b) => a.t - b.t));
-      const rs = new Set(remote.map(lkey));
-      if (local.some(e => !rs.has(lkey(e)))) pushLog();
-    } catch (e) { console.warn('log sync', e.code); }
+    let added = 0;
+    for (const L of LOGS()) {
+      try {
+        const snap = await ref(L.doc).get(), remote = (snap.exists && snap.data().log) || [], local = L.get();
+        const seen = new Set(local.map(lkey)), add = remote.filter(e => !seen.has(lkey(e)));
+        if (add.length) { L.set(local.concat(add).sort((a, b) => a.t - b.t)); added += add.length; }
+        const rs = new Set(remote.map(lkey));
+        if (local.some(e => !rs.has(lkey(e)))) pushLog();
+      } catch (e) { console.warn('log sync', e.code); }
+    }
+    return added;
   }
   async function pull() {
     try {
@@ -17098,7 +17102,7 @@ const CLOUD = (() => {
         if (add.length) { t.set(local); added += add.length; }
         if (Object.keys(local).some(k => !remote[k])) ahead = true;
       }
-      await pullLog();
+      if (await pullLog()) added++;
       if (added) COURSE.refresh();
       busy = false; last = Date.now(); err = '';
       if (ahead) push(); else render();

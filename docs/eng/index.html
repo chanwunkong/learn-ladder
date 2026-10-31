@@ -1,0 +1,1165 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="學士後中醫入學考英文：每天早晚兩段，單字、長句拆解、文法、克漏字與閱讀，錯題自動複習。">
+<meta name="app-site" content="pages">
+<meta name="theme-color" content="#1F4E79">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" type="image/png" href="../icon-192.png">
+<link rel="apple-touch-icon" href="../icon-192.png">
+<style>
+:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; font: 14px system-ui, sans-serif; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+<title>後中英文</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* 學習階梯共用樣式：色票、字型、頁首、按鈕、同步面板（首頁與新課程共用；生統階梯 shell 內有自己的一份） */
+:root {
+  --bg: #F3F4F0; --surface: #FFFFFF; --sunk: #E9EBE5; --ink: #1A211F; --muted: #59635E; --line: #D5D9D1;
+  --accent: #2F3B99; --accent-ink: #FFFFFF; --soft: #E6E8F5; --eosin: #B5326C; --eosin-soft: #F7E4EC;
+  --good: #23704A; --good-soft: #E1F0E6; --warn: #8F5400; --warn-soft: #FAEFD9; --bad: #B0281F; --bad-soft: #FBE6E4;
+  --c1: #3A47AE; --c2: #C0386F; --c3: #1C8270; --c4: #B07418;
+  --display: "LXGW WenKai TC", "Noto Serif TC", "Songti TC", serif;
+  --body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #101412; --surface: #171C1A; --sunk: #0C0F0E; --ink: #E3E8E5; --muted: #98A39E; --line: #2A322F;
+  --accent: #A2ACF7; --accent-ink: #12163A; --soft: #20254A; --eosin: #F08AB6; --eosin-soft: #3A1B29;
+  --good: #71CB95; --good-soft: #14301F; --warn: #E8AE55; --warn-soft: #33260F; --bad: #F28B82; --bad-soft: #3A1A18;
+  --c1: #8E9BFA; --c2: #F07DB0; --c3: #5CCDB6; --c4: #E2AE5A; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #101412; --surface: #171C1A; --sunk: #0C0F0E; --ink: #E3E8E5; --muted: #98A39E; --line: #2A322F;
+  --accent: #A2ACF7; --accent-ink: #12163A; --soft: #20254A; --eosin: #F08AB6; --eosin-soft: #3A1B29;
+  --good: #71CB95; --good-soft: #14301F; --warn: #E8AE55; --warn-soft: #33260F; --bad: #F28B82; --bad-soft: #3A1A18;
+  --c1: #8E9BFA; --c2: #F07DB0; --c3: #5CCDB6; --c4: #E2AE5A; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15.5px; line-height: 1.75; }
+a { color: var(--accent); text-underline-offset: 3px; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+h1, h2, h3 { text-wrap: balance; line-height: 1.3; }
+.mono { font-family: var(--mono); }
+.small { font-size: 13px; } .mut { color: var(--muted); }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--eosin); margin: 0 0 6px; }
+.lbl { font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; color: var(--muted); margin: 0 0 8px; display: block; }
+
+/* header */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+.top-in { max-width: 1240px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 8px 20px; flex-wrap: wrap; }
+.brand { font-family: var(--display); font-size: 23px; font-weight: 700; background: none; border: 0; padding: 0; cursor: pointer; display: flex; align-items: baseline; gap: 10px; color: var(--ink); }
+.brand small { font-family: var(--mono); font-size: 11px; font-weight: 400; color: var(--muted); letter-spacing: .04em; }
+.btn { border: 1px solid var(--line); background: var(--surface); padding: 8px 16px; border-radius: 6px; cursor: pointer; display: inline-flex; gap: 8px; align-items: center; font-size: 14.5px; text-align: left; }
+.btn:hover { border-color: var(--ink); }
+.btn.pri { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 500; }
+.btn.pri:hover { filter: brightness(1.08); }
+.btn.done { background: var(--good-soft); border-color: var(--good); color: var(--good); }
+.btn.wide { width: 100%; justify-content: center; margin-top: 12px; padding: 11px; }
+.btn, .opt, .an, .tab { min-height: 44px; }
+.btn.sm { min-height: 36px; padding: 6px 12px; font-size: 13.5px; }
+.lang select { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 6px; padding: 4px 6px; font-size: 13px; }
+.cloud { position: relative; }
+.cloud-btn { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; font-size: 13px; }
+.cb-av, .cp-av { width: 20px; height: 20px; border-radius: 50%; }
+.cb-dot { width: 8px; height: 8px; border-radius: 50%; background: #2E9E5B; }
+.cloud-panel { position: absolute; right: 0; top: calc(100% + 8px); width: min(320px, calc(100vw - 32px)); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 28px rgba(0,0,0,.14); padding: 14px 16px; z-index: 40; font-size: 13.5px; line-height: 1.6; }
+.cloud-panel p { margin: 0 0 10px; }
+.cp-t { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+.cp-t small { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
+.cp-av { width: 32px; height: 32px; }
+.cp-st { background: var(--sunk); border-radius: 6px; padding: 6px 10px; font-size: 12.5px; }
+.cp-st.ok { color: #1F7A45; }
+.cp-go { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-bottom: 10px; }
+.cp-go svg { background: #fff; border-radius: 3px; padding: 1px; }
+.cp-s { font-size: 12px; color: var(--muted); margin: 0 !important; }
+.cp-err { color: var(--eosin); font-size: 12px; margin-top: 8px !important; }
+.sync-hint { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 14px 0 0; padding: 10px 14px; border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px; background: var(--soft); font-size: 13.5px; }
+.sync-hint span { flex: 1 1 260px; }
+.home-link { font-size: 13px; color: var(--muted); text-decoration: none; margin-right: -8px; }
+.home-link:hover { color: var(--accent); }
+
+/* 後中英文：沿用學習階梯色票，主色改為墨水藍；英文用襯線字排成「可以標註的原文」，句構用螢光筆式的底線與框線 */
+:root { --accent: #1F4E79; --soft: #E3ECF5; --verb: #C98A00; --verb-soft: #FFF1C9; --subj: #0E7C7B; --subj-soft: #DDF2F1; --mod: #8A94A3;
+  --en: "Source Serif 4", Georgia, "Times New Roman", serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --accent: #8DB8E8; --accent-ink: #0E1B2A; --soft: #1E2E40; --verb: #F2C14E; --verb-soft: #3A2F12; --subj: #5FD0CC; --subj-soft: #133331; --mod: #7D8794; } }
+:root[data-theme="dark"] { --accent: #8DB8E8; --accent-ink: #0E1B2A; --soft: #1E2E40; --verb: #F2C14E; --verb-soft: #3A2F12; --subj: #5FD0CC; --subj-soft: #133331; --mod: #7D8794; }
+body { margin: 0; }
+.top-in .wk { margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.home-link { font-size: 13px; color: var(--muted); text-decoration: none; }
+#main { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 80px; }
+#main h1 { font-family: var(--display); font-size: clamp(26px, 5vw, 36px); margin: 0 0 10px; }
+#main h2 { font-size: 20px; margin: 0; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+#main h2 small { font-size: 12.5px; font-weight: 400; color: var(--muted); font-family: var(--mono); }
+#main h3 { font-size: 16px; margin: 10px 0 0; }
+.lede { font-size: 16px; color: var(--muted); }
+.note { color: var(--muted); font-size: 14.5px; margin: 0; }
+section.part { margin-top: 36px; display: grid; gap: 12px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.endrow { margin-top: 32px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; min-width: 0; }
+.ens { font-family: var(--en); font-size: 17px; line-height: 1.75; }
+.enw { font-family: var(--en); font-size: 1.2em; font-weight: 600; }
+.pos { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-left: 6px; }
+.zh { color: var(--muted); font-size: 14.5px; margin: 4px 0 0; }
+.gap { border-bottom: 2px solid var(--accent); color: var(--accent); }
+/* 首頁：7 天 × 早晚 */
+.duebar a { display: inline-block; background: var(--warn-soft); color: var(--warn); border-radius: 8px; padding: 8px 14px; text-decoration: none; }
+.days { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 14px; }
+.day h2 { font-size: 16px !important; }
+.day h2 small { font-family: var(--body) !important; }
+.day.now h2 { color: var(--accent); }
+.slots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 6px; }
+.slot { display: grid; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; color: var(--ink); text-decoration: none; font-size: 13.5px; min-width: 0; }
+.slot:hover { border-color: var(--accent); }
+.slot.cur { border: 2px solid var(--accent); }
+.slot.fin { background: var(--good-soft); border-color: var(--good); }
+.sl-h { font-weight: 700; font-size: 15px; display: flex; gap: 8px; align-items: baseline; }
+.sl-h small { font-weight: 400; color: var(--muted); font-size: 12px; }
+.sl-w { color: var(--muted); }
+.sl-st { font-size: 12.5px; color: var(--accent); min-height: 1.2em; }
+.slot.fin .sl-st { color: var(--good); }
+.pbar { display: block; height: 6px; background: var(--sunk); border-radius: 3px; overflow: hidden; }
+.pbar i { display: block; height: 100%; background: var(--accent); }
+.slot.fin .pbar i { background: var(--good); }
+.segprog { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); }
+.segprog .pbar { flex: 1; max-width: 240px; }
+.pn { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 14px; }
+.pn a { border: 1px solid var(--line); border-radius: 8px; padding: 4px 12px; text-decoration: none; color: var(--ink); background: var(--surface); font-size: 13.5px; }
+/* 單字卡 */
+.words { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 10px; }
+.wcard { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 4px; align-content: start; min-width: 0; }
+.wcard p { margin: 0; }
+.wh { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 6px; }
+.wz { font-weight: 700; margin-left: auto; }
+.root { font-size: 13px; color: var(--accent); }
+.wcard .ens { font-size: 15.5px; }
+.wcard .unsure { justify-self: start; margin-top: 4px; }
+.btn.unsure.on { background: var(--warn-soft); border-color: var(--warn); color: var(--warn); }
+.btn.ghost { background: transparent; }
+/* 選擇題 */
+.q { border-top: 1px solid var(--line); padding: 14px 0; }
+.qnum, .qsrc { font-family: var(--mono); font-size: 12px; color: var(--muted); margin: 0 0 4px; }
+.qt { font-weight: 500; margin: 0 0 8px; }
+.opts { display: grid; gap: 6px; }
+.opt { text-align: left; border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 9px 14px; cursor: pointer; font-size: 14.5px; min-height: 44px; }
+.opt.en-o { font-family: var(--en); font-size: 16px; }
+.opt:hover:not(:disabled) { border-color: var(--accent); }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--good); background: var(--good-soft); color: var(--good); }
+.opt.wrong { border-color: var(--bad); background: var(--bad-soft); color: var(--bad); }
+.why { margin-top: 8px; padding: 10px 14px; border-radius: 8px; font-size: 14.5px; }
+.why.ok { background: var(--good-soft); } .why.no { background: var(--bad-soft); }
+.why .btn { margin-left: 8px; }
+.guide { margin-top: 8px; }
+.gbody { border-left: 3px solid var(--accent); padding: 4px 0 4px 12px; margin-top: 4px; }
+.gq { font-weight: 500; margin: 2px 0 6px; }
+.gdone { font-size: 13.5px; color: var(--muted); margin: 0 0 6px; padding-left: 20px; }
+.gdone b { color: var(--ink); }
+.stepn { font-family: var(--mono); font-size: 12px; color: var(--muted); margin: 0; }
+.rv-q, .rv-sent { margin-bottom: 8px; }
+.ctx { margin: 0 0 4px; }
+/* 長句 */
+.sentc { display: grid; gap: 8px; margin-bottom: 4px; }
+.sent { font-family: var(--en); font-size: 19px; line-height: 2.3; }
+.ch { padding: 2px 1px; border-radius: 4px; transition: background .2s, color .2s; }
+.ch.v { background: var(--verb-soft); box-shadow: inset 0 -3px 0 var(--verb); font-weight: 600; }
+.ch.s { background: var(--subj-soft); outline: 2px solid var(--subj); outline-offset: 1px; }
+.ch.m { color: var(--mod); }
+.ch.m::before { content: "["; } .ch.m::after { content: "]"; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; color: var(--muted); margin: 0; }
+.legend span::before { content: ""; display: inline-block; width: .9em; height: .9em; border-radius: 3px; margin-right: .35em; vertical-align: -.1em; }
+.legend .lv::before { background: var(--verb-soft); box-shadow: inset 0 -3px 0 var(--verb); }
+.legend .ls::before { background: var(--subj-soft); outline: 2px solid var(--subj); }
+.legend .lm::before { border: 1px dashed var(--mod); }
+.core { font-family: var(--en); font-size: 17px; background: var(--soft); border-radius: 8px; padding: 8px 12px; margin: 0; }
+.core .lbl { display: inline; margin-right: 10px; }
+.sbody { display: grid; gap: 6px; }
+/* 文法與文章 */
+.lesson p { margin: 8px 0; }
+.lesson .ex { font-family: var(--en); font-size: 17px; line-height: 2.2; background: var(--sunk); border-radius: 8px; padding: 6px 12px; }
+.lesson ul { margin: 6px 0; padding-left: 22px; }
+.passage { display: grid; gap: 2px; }
+.passage p { margin: 0 0 8px; }
+.ptitle { font-family: var(--en); font-weight: 600; font-size: 19px; }
+.blank { font-family: var(--mono); font-size: 14px; color: var(--accent); background: var(--soft); border-radius: 4px; padding: 1px 6px; white-space: nowrap; }
+.blank.fill { font-family: var(--en); font-size: 16px; color: var(--good); background: var(--good-soft); }
+.pre ol { margin: 4px 0 0; padding-left: 22px; display: grid; gap: 6px; }
+.pre .ens { font-size: 15.5px; }
+details summary { cursor: pointer; color: var(--accent); font-size: 14px; }
+/* 週報 */
+.lessons { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.lessons a { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 8px; align-items: baseline; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); text-decoration: none; color: var(--ink); font-size: 14px; }
+.lessons b { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.lessons .fin a { border-color: var(--good); }
+.ck { color: var(--good); font-weight: 700; }
+.skg { display: grid; gap: 4px; }
+.skg h3 { margin-top: 12px !important; font-size: 14px !important; color: var(--muted); }
+.skr { display: grid; grid-template-columns: minmax(0, 11em) minmax(60px, 1fr) 3.5em 6.5em; gap: 10px; align-items: center; font-size: 14px; font-variant-numeric: tabular-nums; }
+.skv { font-family: var(--mono); font-size: 12.5px; text-align: right; }
+.sks { font-size: 12.5px; color: var(--muted); }
+.st-weak .sks { color: var(--bad); font-weight: 700; } .st-weak .pbar i { background: var(--bad); }
+.st-mid .sks { color: var(--warn); } .st-mid .pbar i { background: var(--warn); }
+.st-good .sks { color: var(--good); } .st-good .pbar i { background: var(--good); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0; }
+.tags li { background: var(--warn-soft); color: var(--warn); border-radius: 99px; padding: 2px 10px; font-size: 13px; }
+#exTxt { width: 100%; margin-top: 8px; font-family: var(--mono); font-size: 12px; line-height: 1.5; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding: 10px; }
+#exBox { display: grid; gap: 4px; }
+@media (max-width: 560px) {
+  .slots { grid-template-columns: minmax(0, 1fr); }
+  .skr { grid-template-columns: minmax(0, 1fr) 3.5em 5.5em; }
+  .skr .pbar { grid-column: 1 / -1; grid-row: 2; }
+  .brand small { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+
+<header class="top"><div class="top-in">
+  <a class="brand" href="#" style="text-decoration:none">後中英文<small>ENGLISH · 句構 → 閱讀</small></a>
+  <span class="wk" id="wkTag"></span>
+</div></header>
+<main id="main"></main>
+<script>
+/* ---------- 後中英文：介面小工具與能力分類 ---------- */
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('eng-ladder:' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('eng-ladder:' + k, JSON.stringify(v)); } catch (e) { /* 無法儲存時忽略 */ } },
+};
+// 固定的亂數：同一題每次打開選項順序一樣（複習時才認得出來）
+function hash(s) { let h = 2166136261; for (const ch of String(s)) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
+function shuffled(n, seed) {
+  let x = hash(seed) || 1; const a = [...Array(n).keys()];
+  for (let i = n - 1; i > 0; i--) { x = (Math.imul(x, 1103515245) + 12345) >>> 0; const j = x % (i + 1); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+// 能力分類：每一題、每一步都標其中一項；週報與匯出依此統計弱項
+const SKILL_GROUPS = [
+  ['v', '單字'], ['s', '句子結構'], ['g', '文法'], ['c', '克漏字'], ['r', '閱讀'],
+];
+const SKILLS = {
+  'v.root': '字根拆字', 'v.mean': '字義', 'v.collo': '搭配用法',
+  's.core': '找主幹（主詞＋動詞）', 's.rel': '關係子句', 's.part': '分詞修飾', 's.noun': '名詞子句', 's.pass': '被動語態', 's.para': '平行結構',
+  'g.tense': '時態與主詞動詞一致', 'g.conj': '連接詞與轉折語',
+  'c.logic': '前後文邏輯', 'c.form': '詞性與形式', 'c.collo': '固定搭配',
+  'r.main': '主旨', 'r.locate': '找細節', 'r.para': '換句話說', 'r.infer': '推論', 'r.word': '由上下文猜字義', 'r.attitude': '作者態度',
+};
+// 每週的資料檔（wk/wNNa.js、wNNb.js）把自己 push 進來
+const WEEKS = [];
+
+/* ---------- 後中英文：第 1 週（單字與長句） ----------
+   單字取自中國醫、慈濟、義守近兩年英文卷中「出現在兩份以上考卷、詞頻排名 2500–12000」的學術與醫學字（analysis/eng）。
+   單字格式：[英文, 詞性, 中文, 字根拆解, 例句, 例句中文]
+   長句格式：{ chunks: [片段…], steps: [[問題, 正解, 誤1, 誤2, 說明, 能力, {片段序號: 標記}]…], core, zh }
+     標記：v 主要動詞、s 主詞、m 修飾 */
+WEEKS.push({ n: 1, theme: '句子主幹與修飾', days: [] });
+WEEKS[0].words = [
+  // 第 1 天：臨床
+  [['clinical', 'adj.', '臨床的', 'clinic 診所 + -al 形容詞', 'The drug passed several clinical trials before approval.', '這個藥在核准前通過了幾次臨床試驗。'],
+   ['chronic', 'adj.', '慢性的、長期的', 'chron 時間 + -ic', 'Chronic pain lasts for more than three months.', '慢性疼痛持續三個月以上。'],
+   ['symptom', 'n.', '症狀', 'sym 一起 + ptom 落下：一起出現的現象', 'Fever is a common symptom of infection.', '發燒是感染常見的症狀。'],
+   ['diagnosis', 'n.', '診斷', 'dia 穿過 + gnosis 認識：看穿而認出', 'Early diagnosis makes treatment easier.', '早期診斷讓治療比較容易。'],
+   ['therapy', 'n.', '治療、療法', '', 'Physical therapy helped her walk again.', '物理治療幫助她重新走路。'],
+   ['infection', 'n.', '感染', 'in 進入 + fect 做、放 + -ion', 'Washing hands reduces the risk of infection.', '洗手能降低感染的風險。'],
+   ['immune', 'adj.', '免疫的', 'im 不 + mune 負擔：不受侵害', 'The immune system protects the body from bacteria.', '免疫系統保護身體不受細菌侵害。'],
+   ['prevalence', 'n.', '盛行率、普遍程度', 'pre 在前 + val 強 + -ence：佔上風', 'The prevalence of diabetes has doubled since 1980.', '糖尿病的盛行率自 1980 年以來加倍了。'],
+   ['intervention', 'n.', '介入、處置', 'inter 之間 + vent 來 + -ion：來到中間', 'Early intervention can prevent serious complications.', '早期介入可以預防嚴重的併發症。'],
+   ['outcome', 'n.', '結果', 'out 出 + come 來', 'Patients who exercised had better outcomes.', '有運動的病人結果比較好。']],
+  // 第 2 天：身體與心理
+  [['mechanism', 'n.', '機制、作用方式', 'mechan 機器 + -ism', 'Scientists still do not understand the mechanism of the disease.', '科學家仍不了解這個疾病的機制。'],
+   ['genetic', 'adj.', '基因的、遺傳的', 'gen 產生 + -etic', 'Some cancers have a strong genetic factor.', '有些癌症有很強的遺傳因素。'],
+   ['hormone', 'n.', '荷爾蒙、激素', '', 'Insulin is a hormone that lowers blood sugar.', '胰島素是一種降低血糖的激素。'],
+   ['nutrient', 'n.', '營養素', 'nutri 餵養 + -ent', 'Vegetables provide important nutrients such as vitamin C.', '蔬菜提供維生素 C 等重要的營養素。'],
+   ['obesity', 'n.', '肥胖', 'ob 加上 + esity 吃', 'Obesity increases the risk of heart disease.', '肥胖會增加心臟病的風險。'],
+   ['syndrome', 'n.', '症候群', 'syn 一起 + drome 跑：一起出現的一群症狀', 'Down syndrome is caused by an extra chromosome.', '唐氏症是由多一條染色體造成的。'],
+   ['cognitive', 'adj.', '認知的', 'co 一起 + gni 知道 + -tive', 'Sleep loss affects cognitive function.', '睡眠不足會影響認知功能。'],
+   ['psychological', 'adj.', '心理的', 'psycho 心 + logy 學 + -ical', 'Stress can cause both physical and psychological problems.', '壓力會造成生理與心理的問題。'],
+   ['elderly', 'adj.', '年長的', 'elder 年長的 + -ly', 'Elderly patients often take several medicines.', '年長的病人常常同時吃好幾種藥。'],
+   ['vulnerable', 'adj.', '易受傷害的', 'vulner 傷口 + -able 可以', 'Children are more vulnerable to air pollution.', '兒童比較容易受到空氣污染的傷害。']],
+  // 第 3 天：研究方法
+  [['demonstrate', 'v.', '證明、顯示', 'de 完全 + monstr 展示 + -ate', 'The study demonstrated that the vaccine is safe.', '這項研究證明疫苗是安全的。'],
+   ['conduct', 'v.', '進行、執行', 'con 一起 + duct 引導', 'The researchers conducted a survey of 500 nurses.', '研究人員對 500 位護理師進行調查。'],
+   ['participant', 'n.', '參與者、受試者', 'parti 部分 + cip 拿 + -ant：拿一份的人', 'Each participant walked for 30 minutes a day.', '每位受試者每天走 30 分鐘。'],
+   ['assessment', 'n.', '評估', 'assess 評估 + -ment', 'A full assessment takes about an hour.', '完整的評估大約需要一小時。'],
+   ['comprehensive', 'adj.', '全面的、廣泛的', 'com 完全 + prehend 抓住 + -sive', 'The report gives a comprehensive review of the evidence.', '這份報告對證據做了全面的回顧。'],
+   ['protocol', 'n.', '（實驗或治療的）標準流程', '', 'All nurses must follow the same protocol.', '所有護理師都必須遵守同一套流程。'],
+   ['procedure', 'n.', '程序、手術', 'pro 往前 + ced 走 + -ure', 'The procedure takes less than ten minutes.', '這個手術不到十分鐘。'],
+   ['limitation', 'n.', '限制', 'limit 界限 + -ation', 'One limitation of the study is its small sample.', '這項研究的一個限制是樣本小。'],
+   ['robust', 'adj.', '強而有力的、可靠的', '', 'The results were robust across all age groups.', '結果在各年齡層都很穩定可靠。'],
+   ['consistent', 'adj.', '一致的', 'con 一起 + sist 站 + -ent：站在一起', 'The findings are consistent with earlier studies.', '這些發現和早期的研究一致。']],
+  // 第 4 天：轉折與強調（副詞、連接詞）
+  [['primarily', 'adv.', '主要地', 'prim 第一 + -arily', 'The disease primarily affects older women.', '這個疾病主要影響年長女性。'],
+   ['ultimately', 'adv.', '最終', 'ultim 最後的 + -ately', 'Ultimately, the patient made a full recovery.', '最終，病人完全康復。'],
+   ['notably', 'adv.', '尤其、值得注意的是', 'note 注意 + -ably', 'Several countries, notably Japan, have aging populations.', '好幾個國家，尤其是日本，人口都在老化。'],
+   ['exclusively', 'adv.', '唯一地、專門地', 'ex 出 + clus 關 + -ively：關在外面', 'The clinic treats children exclusively.', '這間診所只治療兒童。'],
+   ['consequently', 'adv.', '因此', 'con 一起 + sequ 跟隨 + -ently', 'He smoked for years; consequently, his lungs were damaged.', '他抽菸多年，因此肺部受損。'],
+   ['nevertheless', 'adv.', '儘管如此', 'never + the + less：一點也沒有減少', 'The drug has side effects. Nevertheless, it is widely used.', '這個藥有副作用。儘管如此，它仍被廣泛使用。'],
+   ['whereas', 'conj.', '然而、而（對比兩件事）', '', 'Type 1 diabetes starts early, whereas type 2 usually starts later.', '第一型糖尿病很早發病，而第二型通常較晚。'],
+   ['moreover', 'adv.', '此外、而且', 'more + over', 'The test is cheap; moreover, it is very accurate.', '這個檢測很便宜，而且非常準確。'],
+   ['widespread', 'adj.', '廣泛的、普遍的', 'wide 寬 + spread 散開', 'The use of antibiotics is widespread in farming.', '抗生素在畜牧業中使用得很普遍。'],
+   ['crucial', 'adj.', '關鍵的', 'cruc 十字：十字路口', 'Sleep is crucial for memory.', '睡眠對記憶很關鍵。']],
+  // 第 5 天：改變與強化（動詞）
+  [['promote', 'v.', '促進', 'pro 往前 + mote 移動', 'Regular exercise promotes good health.', '規律運動促進健康。'],
+   ['enhance', 'v.', '增強、提升', 'en 使 + hance 高', 'Music may enhance memory in some patients.', '音樂可能提升某些病人的記憶。'],
+   ['strengthen', 'v.', '加強', 'strength 力量 + -en 使', 'Weight training strengthens the bones.', '重量訓練能強化骨骼。'],
+   ['foster', 'v.', '培養、促進', '', 'Good teachers foster curiosity in their students.', '好老師培養學生的好奇心。'],
+   ['decline', 'v. / n.', '下降、衰退', 'de 向下 + cline 傾斜', 'Memory tends to decline with age.', '記憶力往往隨年齡衰退。'],
+   ['preserve', 'v.', '保存、維持', 'pre 事先 + serve 保持', 'Cold temperatures preserve the samples.', '低溫能保存這些樣本。'],
+   ['implement', 'v.', '實施、執行', 'im 進入 + ple 填滿 + -ment', 'The hospital implemented a new hand-washing policy.', '醫院實施了新的洗手政策。'],
+   ['emphasize', 'v.', '強調', 'em 在內 + phas 顯示 + -ize', 'The doctor emphasized the importance of sleep.', '醫師強調睡眠的重要。'],
+   ['highlight', 'v.', '凸顯、強調', 'high 高 + light 光：打上亮光', 'The study highlights the risks of smoking.', '這項研究凸顯了抽菸的風險。'],
+   ['perceive', 'v.', '察覺、認為', 'per 完全 + ceive 拿取', 'Many patients perceive pain differently.', '很多病人對疼痛的感受不同。']],
+  // 第 6 天：觀點與影響（名詞）
+  [['framework', 'n.', '架構、框架', 'frame 框 + work', 'The theory provides a framework for new research.', '這個理論為新研究提供了架構。'],
+   ['perspective', 'n.', '觀點、角度', 'per 穿過 + spect 看 + -ive', 'From a patient’s perspective, waiting is the hardest part.', '從病人的角度看，等待是最難熬的。'],
+   ['implication', 'n.', '含意、可能的影響', 'im 進入 + plic 摺 + -ation：摺在裡面', 'The findings have important implications for treatment.', '這些發現對治療有重要的影響。'],
+   ['consequence', 'n.', '後果', 'con 一起 + sequ 跟隨 + -ence', 'Lack of sleep has serious consequences.', '睡眠不足有嚴重的後果。'],
+   ['threat', 'n.', '威脅', '', 'Drug-resistant bacteria are a growing threat.', '抗藥性細菌是日益嚴重的威脅。'],
+   ['exposure', 'n.', '暴露、接觸', 'ex 出 + pos 放 + -ure：放在外面', 'Long exposure to the sun damages the skin.', '長時間曬太陽會傷害皮膚。'],
+   ['effectiveness', 'n.', '有效性、效果', 'effect 效果 + -ive + -ness', 'They tested the effectiveness of the new drug.', '他們測試了新藥的效果。'],
+   ['regulation', 'n.', '規範、調節', 'regul 規則 + -ation', 'New regulations limit sugar in school meals.', '新的規範限制學校餐點的含糖量。'],
+   ['contemporary', 'adj.', '當代的', 'con 一起 + tempor 時間 + -ary：同一個時代', 'Contemporary medicine relies on large data sets.', '當代醫學仰賴大量的資料。'],
+   ['diverse', 'adj.', '多樣的', 'di 分開 + verse 轉', 'The study included a diverse group of patients.', '這項研究納入了多樣的病人族群。']],
+  // 第 7 天：描述程度與性質（形容詞）
+  [['excessive', 'adj.', '過度的', 'ex 超出 + cess 走 + -ive', 'Excessive salt raises blood pressure.', '過量的鹽會讓血壓升高。'],
+   ['persistent', 'adj.', '持續的', 'per 一直 + sist 站 + -ent', 'See a doctor if the cough is persistent.', '如果咳嗽一直不好，要去看醫生。'],
+   ['temporary', 'adj.', '暫時的', 'tempor 時間 + -ary', 'The side effects are usually temporary.', '副作用通常是暫時的。'],
+   ['profound', 'adj.', '深遠的、深刻的', 'pro 往前 + found 底部：深到底', 'The discovery had a profound effect on medicine.', '這個發現對醫學有深遠的影響。'],
+   ['rigid', 'adj.', '僵硬的、嚴格的', 'rig 硬', 'Patients with the disease often have rigid muscles.', '這種病的病人肌肉常常很僵硬。'],
+   ['superior', 'adj.', '較好的、優於', 'super 在上', 'The new drug was superior to the old one.', '新藥比舊藥好。'],
+   ['artificial', 'adj.', '人工的', 'art 技術 + fic 做 + -ial', 'Artificial sweeteners contain almost no calories.', '人工甜味劑幾乎沒有熱量。'],
+   ['synthetic', 'adj.', '合成的', 'syn 一起 + thet 放 + -ic', 'Aspirin is a synthetic drug.', '阿斯匹靈是合成藥物。'],
+   ['specialized', 'adj.', '專門的', 'special 特別 + -ize + -ed', 'Burn patients need specialized care.', '燒燙傷病人需要專門的照護。'],
+   ['characterize', 'v.', '以…為特徵、描述特性', 'character 特徵 + -ize', 'The disease is characterized by high fever.', '這個疾病的特徵是高燒。']],
+];
+WEEKS[0].sents = [
+  // 第 1 天：主幹
+  [{ chunks: ['Patients', 'with chronic pain', 'often', 'sleep', 'poorly.'], core: 'Patients sleep poorly.', zh: '慢性疼痛的病人常常睡不好。',
+     steps: [['這句的主要動詞是？', 'sleep', 'pain', 'with', '動詞表示「做什麼」：病人「睡」。pain 在這裡是名詞。', 's.core', { 3: 'v' }], ['誰在睡？（主詞）', 'Patients', 'chronic pain', 'often', '主詞是動作的發出者。', 's.core', { 0: 's' }], ['with chronic pain 的作用是？', '修飾 Patients：哪一種病人', '主詞', '動詞', '介系詞片語跟在名詞後面，說明是哪一種人。', 's.core', { 1: 'm', 2: 'm' }]] },
+   { chunks: ['The prevalence', 'of obesity', 'in children', 'has increased', 'rapidly', 'over the past twenty years.'], core: 'The prevalence has increased.', zh: '過去二十年來，兒童肥胖的盛行率快速上升。',
+     steps: [['主要動詞是？', 'has increased', 'children', 'past', 'has + 過去分詞是現在完成式，整組算一個動詞。', 's.core', { 3: 'v' }], ['什麼增加了？（主詞）', 'The prevalence', 'obesity', 'children', 'of obesity in children 都是在說明 prevalence。主詞是第一個名詞。', 's.core', { 0: 's' }], ['of obesity、in children 是什麼？', '修飾主詞的介系詞片語', '另外兩個主詞', '動詞', '介系詞片語可以一個接一個，全部掛在前面的名詞上。', 's.core', { 1: 'm', 2: 'm', 5: 'm' }]] }],
+  // 第 2 天：關係子句
+  [{ chunks: ['People', 'who sleep less than six hours', 'are', 'more vulnerable', 'to infection.'], core: 'People are more vulnerable to infection.', zh: '睡不到六小時的人比較容易感染。',
+     steps: [['句中有兩個動詞 sleep、are，哪一個是主要動詞？', 'are', 'sleep', '都是', 'sleep 在 who 開頭的子句裡；子句裡的動詞不是整句的動詞。', 's.rel', { 2: 'v' }], ['are 的主詞是？', 'People', 'six hours', 'infection', '去掉 who 子句，就剩 People are…。', 's.core', { 0: 's' }], ['who sleep less than six hours 修飾誰？', 'People', 'hours', 'infection', '關係代名詞 who 指人，緊接在它要修飾的名詞後面。', 's.rel', { 1: 'm' }]] },
+   { chunks: ['The hormone', 'that controls blood sugar', 'is called', 'insulin.'], core: 'The hormone is called insulin.', zh: '控制血糖的激素叫作胰島素。',
+     steps: [['主要動詞是？', 'is called', 'controls', 'blood', 'controls 在 that 子句裡。', 's.rel', { 2: 'v' }], ['主詞是？', 'The hormone', 'blood sugar', 'insulin', 'that 子句說明是哪一種激素。', 's.core', { 0: 's' }], ['that 在這裡可以換成哪一個字？', 'which（指物）', 'who', 'what', '指物用 which 或 that；指人用 who 或 that。', 's.rel', { 1: 'm' }]] }],
+  // 第 3 天：分詞修飾
+  [{ chunks: ['Participants', 'taking the new drug', 'reported', 'fewer symptoms.'], core: 'Participants reported fewer symptoms.', zh: '服用新藥的受試者回報的症狀較少。',
+     steps: [['taking 和 reported，誰是主要動詞？', 'reported', 'taking', '兩個都是', '名詞後面的 V-ing 是在修飾名詞，不是主要動詞。', 's.part', { 2: 'v' }], ['taking the new drug 修飾誰？', 'Participants', 'drug', 'symptoms', '= Participants who were taking the new drug。', 's.part', { 1: 'm', 0: 's' }], ['主幹是？', 'Participants reported fewer symptoms.', 'Participants taking the drug.', 'The new drug reported symptoms.', '去掉分詞片語，主詞＋動詞＋受詞。', 's.core', {}]] },
+   { chunks: ['The samples', 'collected from 200 patients', 'were tested', 'in a specialized laboratory.'], core: 'The samples were tested.', zh: '從 200 位病人採集的樣本在專門的實驗室中檢驗。',
+     steps: [['collected 和 were tested，誰是主要動詞？', 'were tested', 'collected', '兩個都是', 'collected 前面沒有 be 動詞或 have，又緊跟在名詞後面，是過去分詞在修飾名詞。', 's.part', { 2: 'v' }], ['collected from 200 patients 的意思是？', '被採集的（被動）', '正在採集的（主動）', '將要採集的', 'V-ed 表示被動：樣本是「被採集」的；V-ing 表示主動。', 's.part', { 1: 'm', 0: 's' }], ['in a specialized laboratory 是？', '地點，修飾動詞', '主詞', '受詞', '介系詞片語說明在哪裡檢驗。', 's.core', { 3: 'm' }]] }],
+  // 第 4 天：連接詞
+  [{ chunks: ['Although the drug is effective,', 'it', 'causes', 'severe side effects', 'in some patients.'], core: 'It causes severe side effects.', zh: '雖然這個藥有效，它在某些病人身上會造成嚴重的副作用。',
+     steps: [['Although 開頭的部分是什麼？', '附屬子句（讓步：雖然…）', '主要子句', '主詞', 'Although、because、when、if 引導的子句不能單獨成句，要接主要子句。', 'g.conj', { 0: 'm' }], ['主要子句的動詞是？', 'causes', 'is', 'effective', 'is 在 Although 子句裡。', 's.core', { 2: 'v', 1: 's' }], ['前後兩部分的關係？', '轉折：有效，但有副作用', '因果', '時間先後', 'although 表示「雖然」，後面講相反方向的事。', 'g.conj', {}]] },
+   { chunks: ['Exercise', 'lowers', 'blood pressure;', 'moreover,', 'it', 'improves', 'mood.'], core: 'Exercise lowers blood pressure; it improves mood.', zh: '運動會降低血壓；而且，它會改善心情。',
+     steps: [['分號前後各有幾個主要動詞？', '各一個：lowers、improves', '只有一個', '都沒有', '分號連接兩個完整的句子。', 's.core', { 1: 'v', 5: 'v' }], ['moreover 表示？', '補充（而且）', '轉折（但是）', '結果（因此）', 'moreover 和 in addition、furthermore 同類。', 'g.conj', { 3: 'm' }], ['it 指的是？', 'Exercise', 'blood pressure', 'mood', '代名詞通常指前面的主詞。', 'r.locate', { 0: 's', 4: 's' }]] }],
+  // 第 5 天：被動語態
+  [{ chunks: ['The vaccine', 'was developed', 'by a team of scientists', 'in less than a year.'], core: 'The vaccine was developed.', zh: '這個疫苗由一群科學家在不到一年內研發出來。',
+     steps: [['主要動詞是？', 'was developed', 'scientists', 'year', 'be 動詞 + 過去分詞＝被動語態。', 's.pass', { 1: 'v' }], ['主詞 The vaccine 是動作的發出者還是承受者？', '承受者：疫苗被研發', '發出者', '都不是', '被動句中主詞承受動作。', 's.pass', { 0: 's' }], ['真正做研發的是誰？', 'a team of scientists（by 後面）', 'The vaccine', '沒有說', '被動句用 by 帶出動作的發出者。', 's.pass', { 2: 'm', 3: 'm' }]] },
+   { chunks: ['More than 300 patients', 'were included', 'in the final analysis,', 'which', 'was conducted', 'in 2024.'], core: 'More than 300 patients were included.', zh: '超過 300 位病人被納入最後的分析，而這項分析在 2024 年進行。',
+     steps: [['主要動詞是？', 'were included', 'was conducted', 'analysis', 'was conducted 在 which 子句裡。', 's.pass', { 1: 'v', 0: 's' }], ['which 指的是？', 'the final analysis', 'patients', '2024', '逗號加 which 補充說明前面那個名詞。', 's.rel', { 2: 'm', 3: 'm', 4: 'm', 5: 'm' }], ['was conducted 是哪一種語態？', '被動：分析被進行', '主動', '進行式', 'be + 過去分詞。', 's.pass', {}]] }],
+  // 第 6 天：名詞子句
+  [{ chunks: ['What surprised the doctors', 'was', 'how quickly the patient recovered.'], core: 'What surprised the doctors was how quickly the patient recovered.', zh: '讓醫生驚訝的是病人恢復得多快。',
+     steps: [['主要動詞是？', 'was', 'surprised', 'recovered', '另外兩個動詞各在 What 子句與 how 子句裡。', 's.noun', { 1: 'v' }], ['主詞是？', '整段 What surprised the doctors（讓醫生驚訝的事）', 'the doctors', 'the patient', '一整個子句可以當主詞，What… ＝「…的事」。', 's.noun', { 0: 's' }], ['how quickly the patient recovered 在句中當什麼？', '補語（說明主詞是什麼）', '另一個主詞', '修飾 doctors', '名詞子句也能放在 be 動詞後面。', 's.noun', { 2: 'm' }]] },
+   { chunks: ['Researchers', 'do not know', 'whether the effect', 'will last', 'for more than a year.'], core: 'Researchers do not know whether…', zh: '研究人員不知道這個效果是否會持續超過一年。',
+     steps: [['主要動詞是？', 'do not know', 'will last', 'effect', 'will last 在 whether 子句裡。', 's.noun', { 1: 'v', 0: 's' }], ['whether 開頭的子句在句中當什麼？', 'know 的受詞（不知道「什麼」）', '主詞', '修飾 Researchers', '名詞子句可以當受詞。', 's.noun', { 2: 'm', 3: 'm', 4: 'm' }], ['whether 的意思？', '是否', '雖然', '當…時', 'whether = if（是否）。', 's.noun', {}]] }],
+  // 第 7 天：平行結構
+  [{ chunks: ['Regular exercise', 'lowers', 'blood pressure,', 'improves', 'sleep,', 'and', 'reduces', 'stress.'], core: 'Regular exercise lowers…, improves…, and reduces…', zh: '規律運動能降低血壓、改善睡眠，並減輕壓力。',
+     steps: [['這句的主要動詞有幾個？', '三個：lowers、improves、reduces', '一個', '兩個', '同一個主詞做了三件事。', 's.para', { 1: 'v', 3: 'v', 6: 'v' }], ['三個動詞的形式？', '相同（都是第三人稱單數現在式）', '各不相同', '只有第一個加 s', 'and 連接的東西形式要一致，稱為平行結構。', 's.para', { 0: 's' }], ['and 放在哪裡？', '最後一項之前', '每一項之間', '最前面', 'A, B, and C 的寫法。', 's.para', {}]] },
+   { chunks: ['The study', 'aimed', 'to measure the effect of sleep', 'and', 'to identify the patients', 'most at risk.'], core: 'The study aimed to measure… and to identify…', zh: '這項研究的目的是測量睡眠的影響，並找出風險最高的病人。',
+     steps: [['主要動詞是？', 'aimed', 'measure', 'identify', 'to + 原形動詞是不定詞，不是主要動詞。', 's.core', { 1: 'v', 0: 's' }], ['and 連接的是哪兩個部分？', 'to measure… 和 to identify…', 'sleep 和 patients', 'study 和 effect', '找 and 前後形式相同的東西。', 's.para', { 2: 'm', 4: 'm' }], ['most at risk 修飾誰？', 'the patients', 'the study', 'sleep', '形容詞片語放在名詞後面。', 's.part', { 5: 'm' }]] }],
+];
+
+/* ---------- 後中英文：第 1 週（文法重點與短文） ----------
+   題目格式：{ id, sk 能力, q, o: [正解, 誤…], why, st: [[問題, 正解, 誤1, 誤2, 說明, 能力]…] }
+   克漏字的空格寫成 {1}、{2}…；閱讀題另有 pre（先看題目時顯示的「題型・要找什麼」）。 */
+WEEKS[0].gram = [
+  { id: 's.core', title: '句子主幹：先找動詞，再找主詞', body: `<p>再長的句子，骨架都是「誰＋做什麼」。讀英文長句的第一步不是逐字翻譯，而是<b>先找主要動詞</b>：它不在 who／which／that 子句裡，前面也沒有 to。找到動詞，往前找做這個動作的人或物，就是主詞。其他的部分（介系詞片語、子句）都是修飾，第一遍可以先跳過。</p>
+<p class="ex"><span class="ch s">Patients</span> <span class="ch m">with chronic pain</span> often <span class="ch v">sleep</span> poorly.</p>`,
+    qs: [{ id: 'g1-1', sk: 's.core', q: 'The number of elderly patients in Taiwan ____ every year.', o: ['increases', 'increase', 'increasing', 'to increase'], why: '主詞是 The number（單數），in Taiwan、of elderly patients 都是修飾。',
+      st: [['這句缺的是什麼？', '主要動詞', '主詞', '受詞', '句子已經有主詞，後面沒有任何動詞。', 's.core'], ['主詞是哪個字？', 'The number（單數）', 'patients（複數）', 'Taiwan', 'of elderly patients 修飾 number；看第一個名詞。', 's.core'], ['單數主詞＋現在式，動詞要？', '加 s：increases', '原形 increase', 'V-ing', '第三人稱單數現在式加 s。', 'g.tense']] },
+      { id: 'g1-2', sk: 's.core', q: 'Which word is the main verb? “Doctors in rural areas often treat patients with very limited equipment.”', o: ['treat', 'areas', 'limited', 'equipment'], why: '醫生「治療」病人；limited 是形容詞，修飾 equipment。',
+      st: [['動詞表示什麼？', '主詞做的動作', '東西的名稱', '描述東西的性質', '找「做什麼」。', 's.core'], ['in rural areas 是？', '修飾 Doctors 的介系詞片語', '動詞', '主詞', '介系詞＋名詞是修飾，先跳過。', 's.core'], ['limited 在這裡是？', '形容詞（有限的）', '主要動詞', '主詞', 'limited 放在名詞 equipment 前面，描述它。', 's.core']] },
+      { id: 'g1-3', sk: 's.core', q: '“The results of the latest study on sleep and memory ____ surprising.”', o: ['were', 'was', 'being', 'to be'], why: '主詞是 The results（複數）。',
+      st: [['主詞是？', 'The results', 'the latest study', 'memory', '看最前面的名詞；of… 和 on… 都是修飾。', 's.core'], ['它是單數還是複數？', '複數', '單數', '看不出來', 'results 有 s。', 's.core'], ['複數主詞的過去式 be 動詞？', 'were', 'was', 'is', 'was 用在單數。', 'g.tense']] }] },
+  { id: 's.rel', title: '關係子句：who、which、that 補充說明前面的名詞', body: `<p>想說明「是哪一個人或東西」時，英文把說明放在名詞<b>後面</b>，用 who（人）、which（物）、that（人或物）接起來。關係子句裡有自己的動詞，但那不是整句的主要動詞。</p>
+<p class="ex"><span class="ch s">People</span> <span class="ch m">who sleep less than six hours</span> <span class="ch v">are</span> more vulnerable to infection.</p>
+<p>逗號加 which（, which…）是附帶補充，拿掉不影響句子的意思。</p>`,
+    qs: [{ id: 'g2-1', sk: 's.rel', q: 'Patients ____ take the drug for more than a year may lose bone density.', o: ['who', 'which', 'whose', 'what'], why: '先行詞是 Patients（人），後面缺主詞，用 who。',
+      st: [['空格前的名詞是人還是物？', '人：Patients', '物', '時間', '先行詞決定用哪一個關係代名詞。', 's.rel'], ['空格後面缺什麼？', '主詞（take 的主詞）', '受詞', '什麼都不缺', '___ take the drug：誰吃藥？', 's.rel'], ['人＋缺主詞，用？', 'who', 'which', 'whose', 'which 指物；whose 後面要接名詞。', 's.rel']] },
+      { id: 'g2-2', sk: 's.rel', q: 'Insulin is a hormone ____ helps cells take up sugar.', o: ['that', 'who', 'where', 'what'], why: '先行詞 hormone 是物，that／which 都可以。',
+      st: [['先行詞是？', 'a hormone（物）', 'Insulin', 'cells', '空格緊接在 hormone 後面。', 's.rel'], ['指物可以用哪些關係代名詞？', 'which 或 that', 'who', 'where', 'where 用在地點。', 's.rel'], ['what 為什麼不行？', 'what 本身已包含先行詞（＝the thing that），前面不能再有名詞', 'what 指人', '可以用', 'what 用在名詞子句。', 's.noun']] },
+      { id: 'g2-3', sk: 's.rel', q: '“The study, which was conducted in five hospitals, found no serious side effects.” 主要動詞是？', o: ['found', 'was conducted', 'hospitals', 'side effects'], why: 'which 子句是補充說明，主幹是 The study found…。',
+      st: [['兩個逗號之間是什麼？', '補充說明 The study 的 which 子句', '主要子句', '主詞', '逗號加 which 可以整段拿掉。', 's.rel'], ['拿掉後句子變成？', 'The study found no serious side effects.', 'Which was conducted…', 'The study was conducted.', '剩下主詞＋動詞＋受詞。', 's.core'], ['所以主要動詞是？', 'found', 'was conducted', 'conducted', 'was conducted 在 which 子句裡。', 's.core']] }] },
+  { id: 's.part', title: '分詞修飾：名詞後面的 V-ing 與 V-ed', body: `<p>名詞後面直接接 V-ing 或 V-ed 片語，是把「關係代名詞＋be 動詞」省略掉的關係子句：</p>
+<p class="ex"><span class="ch s">Participants</span> <span class="ch m">taking the new drug</span> <span class="ch v">reported</span> fewer symptoms.　（＝ who were taking）</p>
+<p class="ex"><span class="ch s">The samples</span> <span class="ch m">collected from 200 patients</span> <span class="ch v">were tested</span>.　（＝ that were collected）</p>
+<p><b>V-ing 是主動</b>（受試者自己在服藥），<b>V-ed 是被動</b>（樣本被採集）。看到「名詞＋V-ing／V-ed」，先別把它當成主要動詞。</p>`,
+    qs: [{ id: 'g3-1', sk: 's.part', q: 'The data ____ from the survey showed a clear pattern.', o: ['collected', 'collecting', 'collect', 'to collect'], why: '資料是「被收集」的，用過去分詞 collected。',
+      st: [['句子的主要動詞是？', 'showed', '空格', 'survey', 'showed 已經是主要動詞，空格只能是修飾。', 's.core'], ['資料和「收集」的關係是？', '被收集（被動）', '自己去收集（主動）', '沒有關係', '資料不會自己收集東西。', 's.part'], ['被動用？', '過去分詞 V-ed', '現在分詞 V-ing', '原形', 'V-ed 表被動。', 's.part']] },
+      { id: 'g3-2', sk: 's.part', q: 'Children ____ in polluted cities are more likely to develop asthma.', o: ['living', 'lived', 'live', 'are living'], why: '孩子自己住在城市，主動，用 living。',
+      st: [['主要動詞是？', 'are', '空格', 'develop', '空格後面已經有 are。', 's.core'], ['孩子和「住」的關係？', '主動：孩子自己住', '被動：被住', '沒有關係', '住是孩子自己做的事。', 's.part'], ['主動用？', 'V-ing：living', 'V-ed：lived', '原形 live', 'V-ing 表主動。', 's.part']] },
+      { id: 'g3-3', sk: 's.part', q: '“Drugs approved by the agency must be tested again every five years.” approved 的作用是？', o: ['修飾 Drugs：被核准的藥', '主要動詞', '形容 agency', '表示過去發生的動作'], why: '主要動詞是 must be tested；approved by the agency ＝ that are approved by the agency。',
+      st: [['主要動詞是？', 'must be tested', 'approved', 'agency', '助動詞 must 帶出主要動詞。', 's.core'], ['approved 前面有 be 動詞或 have 嗎？', '沒有，而且緊跟在名詞後面', '有', '前面是 must', '沒有 be／have 的 V-ed 跟在名詞後面，是分詞修飾。', 's.part'], ['它表示主動還是被動？', '被動：藥被核准', '主動', '進行中', 'V-ed 表被動。', 's.part']] }] },
+  { id: 'g.conj', title: '連接詞與轉折語：前後是什麼關係？', body: `<p>克漏字最常考空格前後的<b>邏輯關係</b>。先判斷前後兩句是同方向、相反方向，還是因果，再選字：</p>
+<ul><li><b>補充（同方向）</b>：and、moreover、in addition、furthermore</li><li><b>轉折（相反）</b>：but、however、although、whereas、nevertheless</li><li><b>因果</b>：because、since（原因）；therefore、consequently、thus（結果）</li></ul>
+<p>注意形式：although、because 後面接子句；however、therefore 是副詞，前面要用句號或分號。</p>`,
+    qs: [{ id: 'g4-1', sk: 'g.conj', q: 'The treatment is expensive. ____, many patients choose it because it works quickly.', o: ['Nevertheless', 'Therefore', 'Moreover', 'Because'], why: '「貴」和「很多人仍選」方向相反，用表示轉折的 Nevertheless。',
+      st: [['前一句說了什麼？', '治療很貴（缺點）', '治療很便宜', '治療很快', '先讀懂前句。', 'c.logic'], ['後一句說了什麼？', '很多人還是選它', '很多人不選', '它很危險', '貴卻仍然選：方向相反。', 'c.logic'], ['相反方向又放在句首、後面接逗號，用？', 'Nevertheless', 'Therefore', 'Because', 'Because 後面要接子句；Therefore 是結果。', 'g.conj']] },
+      { id: 'g4-2', sk: 'g.conj', q: 'Type 1 diabetes usually begins in childhood, ____ type 2 diabetes is more common in adults.', o: ['whereas', 'because', 'so', 'unless'], why: '兩種糖尿病的發病年齡做對比，用 whereas。',
+      st: [['前後在比較什麼？', '兩種糖尿病的發病年齡', '原因與結果', '時間先後', 'type 1 vs type 2。', 'c.logic'], ['關係是？', '對比', '因果', '條件', '一個在兒童、一個在成人。', 'c.logic'], ['表示對比、連接兩個子句的是？', 'whereas', 'because', 'unless', 'unless＝除非。', 'g.conj']] },
+      { id: 'g4-3', sk: 'g.conj', q: 'He stopped smoking; ____, his cough disappeared within a month.', o: ['consequently', 'however', 'although', 'whereas'], why: '戒菸是原因，咳嗽消失是結果。',
+      st: [['分號前後的關係？', '原因 → 結果', '相反', '並列對比', '戒菸之後咳嗽消失。', 'c.logic'], ['表示結果的副詞？', 'consequently、therefore', 'however', 'whereas', 'however 是轉折。', 'g.conj'], ['為什麼 although 不行？', 'although 是連接詞，不能放在分號後當副詞', '意思不對但形式可以', '可以', '形式也要對。', 'c.form']] }] },
+  { id: 's.pass', title: '被動語態：主詞是「被」做的那一方', body: `<p>科學文章常用被動，因為重點是「做了什麼」，而不是誰做的。形式是 <b>be 動詞＋過去分詞</b>，做動作的人用 by 帶出（常常省略）：</p>
+<p class="ex"><span class="ch s">The vaccine</span> <span class="ch v">was developed</span> <span class="ch m">by a team of scientists</span>.</p>
+<p>判斷要不要用被動：問「主詞能不能自己做這個動作」。樣本不會自己檢驗、病人不會自己被診斷，就用被動。</p>`,
+    qs: [{ id: 'g5-1', sk: 's.pass', q: 'The results ____ in a medical journal last month.', o: ['were published', 'published', 'have publish', 'publishing'], why: '結果「被發表」，而且是上個月：過去式被動 were published。',
+      st: [['結果能自己發表嗎？', '不能，是被發表', '能', '看情況', '主詞是承受動作的一方。', 's.pass'], ['被動的形式？', 'be 動詞＋過去分詞', '只有過去分詞', 'have＋原形', 'were published。', 's.pass'], ['時間 last month 用什麼時態？', '過去式：were', '現在式：are', '未來式', '時間副詞決定時態。', 'g.tense']] },
+      { id: 'g5-2', sk: 's.pass', q: 'More than 500 nurses ____ in the survey.', o: ['were included', 'included', 'were including', 'include'], why: '護理師是「被納入」調查的。',
+      st: [['誰把護理師放進調查？', '研究人員（沒寫出來）', '護理師自己', '調查', '動作的發出者不是主詞。', 's.pass'], ['所以主詞和動作的關係？', '被動', '主動', '進行', '護理師被納入。', 's.pass'], ['形式？', 'were included', 'included', 'were including', 'were including 是主動進行式。', 's.pass']] },
+      { id: 'g5-3', sk: 's.pass', q: '“The disease is characterized by high fever and a rash.” 這句的意思是？', o: ['這個疾病的特徵是高燒和疹子', '高燒造成這個疾病', '這個疾病造成高燒', '高燒和疹子很少見'], why: 'be characterized by ＝ 以…為特徵。',
+      st: [['主要動詞是？', 'is characterized', 'fever', 'rash', 'be＋過去分詞。', 's.pass'], ['by 後面是什麼？', '這個特徵的內容', '研究人員', '原因', 'characterized by：以…為特徵。', 'v.collo'], ['所以句意？', '疾病的特徵是高燒和疹子', '高燒造成疾病', '疾病很少見', '常見搭配要記：be characterized by。', 'v.collo']] }] },
+  { id: 's.noun', title: '名詞子句：整段話當主詞或受詞', body: `<p>what、that、whether、how 可以把一整個句子變成一個名詞，放在主詞或受詞的位置：</p>
+<p class="ex"><span class="ch s">What surprised the doctors</span> <span class="ch v">was</span> <span class="ch m">how quickly the patient recovered</span>.</p>
+<ul><li><b>what</b>：…的事物（本身就是名詞，前面不能再有名詞）</li><li><b>that</b>：…這件事（The study shows that…）</li><li><b>whether／if</b>：是否</li></ul>
+<p>看到句首是 What 或 Whether，先找到它結束的位置，後面才是主要動詞。</p>`,
+    qs: [{ id: 'g6-1', sk: 's.noun', q: 'The study shows ____ regular exercise improves memory.', o: ['that', 'what', 'which', 'who'], why: 'shows 的受詞是一個完整句子，用 that 帶出。',
+      st: [['空格後面是不是完整的句子？', '是：regular exercise improves memory', '不是，缺主詞', '不是，缺受詞', '主詞＋動詞＋受詞都有。', 's.noun'], ['完整句子當受詞，用？', 'that', 'what', 'which', 'what 後面的句子會缺東西。', 's.noun'], ['整句意思？', '研究顯示規律運動能改善記憶', '研究顯示什麼運動', '研究顯示哪一種記憶', 'that 本身沒有意思，只是把句子變成名詞。', 's.noun']] },
+      { id: 'g6-2', sk: 's.noun', q: '____ the drug works in children is still unknown.', o: ['Whether', 'That', 'What', 'Which'], why: '「這個藥對兒童是否有效」還不知道：用 Whether。',
+      st: [['主要動詞是？', 'is', 'works', 'unknown', 'works 在空格開頭的子句裡。', 's.core'], ['主詞是什麼？', '空格開頭到 children 的整段', 'the drug', 'children', '整段子句當主詞。', 's.noun'], ['「還不知道」的是？', '藥「是否」有效', '藥「什麼」有效', '「那個」藥', 'unknown 搭配 whether（是否）。', 's.noun']] },
+      { id: 'g6-3', sk: 's.noun', q: '____ patients need most is clear information.', o: ['What', 'That', 'Whether', 'Which'], why: 'What patients need most＝病人最需要的東西，what 子句裡 need 缺受詞。',
+      st: [['空格後的 patients need most 缺什麼？', 'need 的受詞', '主詞', '什麼都不缺', '需要「什麼」？', 's.noun'], ['子句缺受詞，用？', 'What（本身就是那個受詞）', 'That', 'Whether', 'that、whether 後面要接完整句子。', 's.noun'], ['整句意思？', '病人最需要的是清楚的資訊', '病人是否需要資訊', '那些病人需要資訊', 'What… ＝ …的東西。', 's.noun']] }] },
+  { id: 's.para', title: '平行結構：and、or 連接的東西形式要一樣', body: `<p>用 and、or、but、not only… but also… 連接兩個以上的東西時，它們的<b>詞性與形式要一致</b>：名詞配名詞、動詞配同樣時態的動詞、to V 配 to V。克漏字看到 and 後面的空格，先往前找和它對應的那一個。</p>
+<p class="ex">Regular exercise <span class="ch v">lowers</span> blood pressure, <span class="ch v">improves</span> sleep, and <span class="ch v">reduces</span> stress.</p>`,
+    qs: [{ id: 'g7-1', sk: 's.para', q: 'The program aims to reduce smoking and ____ physical activity.', o: ['to increase', 'increasing', 'increased', 'increases'], why: 'to reduce… and to increase…：平行的不定詞。',
+      st: [['and 前面是什麼形式？', 'to reduce（to＋原形）', 'reducing', 'reduced', '往前找和空格對應的部分。', 's.para'], ['and 後面要用？', '同樣的形式：to increase', 'increasing', 'increased', '平行結構。', 's.para'], ['（to 也可以省略，寫成 and increase）這兩者都對嗎？', '對，但選項中只有 to increase', '只有 increasing 對', '都不對', '選項中形式一致的只有 to increase。', 'c.form']] },
+      { id: 'g7-2', sk: 's.para', q: 'Patients were asked to rest, drink water, and ____ alcohol.', o: ['avoid', 'avoiding', 'to avoiding', 'avoided'], why: 'to rest, (to) drink, and (to) avoid：三個原形動詞平行。',
+      st: [['前兩項的形式？', 'rest、drink（原形）', 'V-ing', '過去式', 'to 後面接原形。', 's.para'], ['第三項要？', '原形：avoid', 'avoiding', 'avoided', '三項形式一致。', 's.para'], ['and 放在哪？', '最後一項之前', '每一項之間', '第一項之前', 'A, B, and C。', 's.para']] },
+      { id: 'g7-3', sk: 's.para', q: 'The new test is not only cheaper but also ____.', o: ['more accurate', 'accuracy', 'accurately', 'to be accurate'], why: 'not only cheaper but also more accurate：兩個比較級形容詞平行。',
+      st: [['not only 後面是什麼詞性？', '形容詞比較級 cheaper', '名詞', '副詞', 'not only A but also B，A 與 B 形式相同。', 's.para'], ['but also 後面要？', '形容詞比較級：more accurate', '名詞 accuracy', '副詞 accurately', '平行結構。', 's.para'], ['accurate 為什麼用 more？', '三個音節以上的形容詞用 more 表比較級', '因為後面有 than', '隨便', 'cheap → cheaper；accurate → more accurate。', 'c.form']] }] },
+];
+
+WEEKS[0].passages = [
+  // 第 1 天：克漏字
+  { type: 'cloze', title: 'Why is chronic pain so hard to treat?', text: [
+    'Chronic pain is pain that lasts for more than three months. It {1} about one in five adults worldwide. Unlike pain from a cut, which disappears when the wound heals, chronic pain often continues {2} the original injury has healed.',
+    'One reason is that the nervous system itself changes. Nerves that are exposed to pain for a long time become more sensitive, so even a light touch {3} feel painful. {4}, chronic pain is closely linked to sleep and mood. Patients who sleep poorly feel more pain, and more pain makes it harder to sleep.',
+    'For this reason, doctors now recommend treatment that combines medicine, exercise, and psychological {5}. A single drug is rarely enough.'],
+    zh: '慢性疼痛是持續三個月以上的疼痛，影響全世界約五分之一的成人。和割傷的疼痛不同（傷口好了就不痛），慢性疼痛常常在原本的傷已經癒合後仍持續。原因之一是神經系統本身改變了：長期暴露在疼痛中的神經變得更敏感，連輕輕碰一下都可能覺得痛。此外，慢性疼痛和睡眠、情緒密切相關：睡不好的病人覺得更痛，而更痛又更難入睡。因此，醫師現在建議結合藥物、運動和心理治療的療法；單一藥物很少足夠。',
+    qs: [{ id: 'p1-1', sk: 'c.form', q: '第 (1) 格', o: ['affects', 'affect', 'affecting', 'effect'], why: '主詞 It（單數），現在式動詞加 s。',
+      st: [['這一句缺什麼？', '主要動詞', '主詞', '受詞', 'It ___ about one in five adults。', 's.core'], ['主詞 It 單數還是複數？', '單數', '複數', '看不出來', 'It 指 chronic pain。', 'c.form'], ['effect 為什麼不行？', 'effect 是名詞（效果），動詞是 affect', '意思不對', '可以', 'affect（v.）影響；effect（n.）效果。', 'v.mean']] },
+      { id: 'p1-2', sk: 'c.logic', q: '第 (2) 格', o: ['after', 'before', 'because', 'unless'], why: '傷「已經癒合之後」疼痛仍持續。',
+      st: [['前面說了什麼對比？', '割傷的痛在傷口好了就消失', '割傷不會痛', '慢性疼痛會消失', 'Unlike pain from a cut…', 'c.logic'], ['所以慢性疼痛是？', '傷好了以後還在痛', '傷好之前就停', '因為傷好了才痛', '和割傷相反。', 'c.logic'], ['「…之後」用？', 'after', 'before', 'unless', 'has healed 是已經完成的事。', 'g.conj']] },
+      { id: 'p1-3', sk: 'c.form', q: '第 (3) 格', o: ['can', 'is', 'to', 'being'], why: 'even a light touch can feel painful：can＋原形動詞 feel。',
+      st: [['空格後面是什麼？', '原形動詞 feel', '名詞', '形容詞', '原形動詞前面需要助動詞。', 'c.form'], ['哪一個可以接原形動詞？', '助動詞 can', 'is', 'being', 'is feel 不合文法。', 'c.form'], ['句意？', '連輕碰都可能覺得痛', '輕碰是痛', '輕碰不痛', 'can 表可能。', 'r.para']] },
+      { id: 'p1-4', sk: 'c.logic', q: '第 (4) 格', o: ['In addition', 'However', 'Therefore', 'For example'], why: '前面說神經改變，後面再補充另一個原因（睡眠與情緒）。',
+      st: [['前一段在說什麼？', '慢性疼痛難治的原因一：神經變敏感', '治療方法', '病人的年齡', 'One reason is…', 'c.logic'], ['空格後在說什麼？', '另一個原因：和睡眠情緒有關', '相反的說法', '前面的結果', '又是一個原因。', 'c.logic'], ['補充另一點用？', 'In addition', 'However', 'Therefore', 'However 是轉折。', 'g.conj']] },
+      { id: 'p1-5', sk: 'v.collo', q: '第 (5) 格', o: ['therapy', 'symptom', 'infection', 'diagnosis'], why: 'psychological therapy（心理治療）和 medicine、exercise 並列，都是治療方式。',
+      st: [['and 前面列了什麼？', 'medicine、exercise（治療方式）', '症狀', '疾病', '平行結構：三者是同一類。', 's.para'], ['所以空格要是？', '另一種治療方式', '一種症狀', '一種疾病', 'combines medicine, exercise, and psychological ___。', 'c.logic'], ['哪一個字是「治療」？', 'therapy', 'symptom', 'diagnosis', 'symptom 症狀、diagnosis 診斷。', 'v.mean']] }] },
+  // 第 2 天：閱讀
+  { type: 'read', title: 'Sleep and memory in older adults', text: [
+    'Many older adults sleep less deeply than they did when they were young. For years, this was seen as a normal part of aging. However, a growing number of studies suggest that poor sleep may also contribute to memory decline.',
+    'In one study, 120 participants aged 65 to 80 wore a small device that measured their sleep for two weeks. They then took memory tests. Participants who spent more time in deep sleep remembered more words, even after the researchers controlled for age and education.',
+    'The researchers believe that deep sleep helps the brain move new information into long-term memory. If this is true, treating sleep problems in older adults could protect cognitive function. The authors note, however, that the study cannot prove that poor sleep causes memory loss; people with early brain changes may simply sleep worse.'],
+    zh: '很多長者睡得比年輕時淺。多年來，這被視為老化的正常現象。然而越來越多研究顯示，睡不好也可能造成記憶衰退。在一項研究中，120 位 65 到 80 歲的受試者戴著測量睡眠的小型裝置兩週，接著做記憶測驗。深層睡眠時間較長的受試者記得較多單字，即使研究人員已經把年齡和教育程度的影響排除。研究人員認為，深層睡眠幫助大腦把新資訊轉成長期記憶；如果這是真的，治療長者的睡眠問題可能可以保護認知功能。不過作者也指出，這項研究無法證明睡不好「造成」記憶衰退：有早期腦部變化的人可能本來就睡得比較差。',
+    qs: [{ id: 'p2-1', sk: 'r.main', pre: '主旨：整篇在講什麼關係', q: 'What is the passage mainly about?', o: ['A possible link between deep sleep and memory in older adults', 'How to measure sleep with a device', 'Why young people sleep more deeply', 'A new drug for memory loss'], why: '第 1 段提出問題（睡眠與記憶），第 2 段是研究，第 3 段是解釋與限制。',
+      st: [['第 1 段最後一句提出什麼？', '睡不好可能造成記憶衰退', '年輕人睡得好', '裝置很準', 'However, a growing number of studies suggest…', 'r.locate'], ['第 2、3 段在做什麼？', '用研究支持並討論這個關係', '介紹新藥', '比較年輕人', '整篇圍繞同一件事。', 'r.main'], ['哪個選項涵蓋全文？', '深層睡眠與長者記憶的可能關聯', '如何用裝置量睡眠', '新藥', '裝置只是細節。', 'r.para']] },
+      { id: 'p2-2', sk: 'r.locate', pre: '細節：受試者做了什麼', q: 'What did the participants do in the study?', o: ['They wore a sleep device for two weeks and then took memory tests.', 'They took a sleeping pill every night.', 'They slept in a hospital for two weeks.', 'They were all younger than 65.'], why: '第 2 段：wore a small device… for two weeks. They then took memory tests.',
+      st: [['答案在哪一段？', '第 2 段', '第 1 段', '第 3 段', '描述研究怎麼做的那一段。', 'r.locate'], ['受試者戴了什麼、多久？', '測量睡眠的裝置，兩週', '吃藥兩週', '住院', 'wore a small device that measured their sleep for two weeks', 'r.locate'], ['之後做了什麼？', '記憶測驗', '睡眠藥物', '問卷', 'They then took memory tests.', 'r.para']] },
+      { id: 'p2-3', sk: 'r.word', pre: '字義：controlled for 的意思', q: 'In paragraph 2, “controlled for age and education” most likely means the researchers ____.', o: ['made sure age and education did not explain the result', 'asked participants about their age', 'chose only highly educated people', 'changed the participants’ age'], why: 'control for 是研究用語：排除某因素的影響。',
+      st: [['前面的 even after 暗示什麼？', '即使排除其他可能的解釋，結果仍成立', '結果改變了', '研究失敗了', 'even after…：即使…之後仍然。', 'c.logic'], ['年齡和教育可能怎麼影響記憶？', '年紀大、教育少的人記憶測驗本來就可能較差', '沒有影響', '只影響睡眠', '所以要把它們的影響拿掉。', 'r.infer'], ['所以 controlled for 的意思？', '確保結果不是由年齡、教育造成的', '控制受試者的年齡', '只選高學歷', '研究方法的常見說法。', 'r.word']] },
+      { id: 'p2-4', sk: 'r.locate', pre: '細節：研究人員認為深層睡眠的作用', q: 'According to the researchers, deep sleep may ____.', o: ['help move new information into long-term memory', 'cause memory loss', 'make people sleep less', 'replace memory tests'], why: '第 3 段第一句。',
+      st: [['用題目關鍵字 deep sleep 找，在哪一段？', '第 3 段第一句', '第 1 段', '第 2 段最後一句', 'The researchers believe that deep sleep…', 'r.locate'], ['那一句說深層睡眠做什麼？', 'helps the brain move new information into long-term memory', 'causes memory loss', 'makes people tired', '找到原句。', 'r.locate'], ['哪個選項是同一句話？', 'help move new information into long-term memory', 'cause memory loss', 'replace tests', '換句話說的程度很低，直接對應。', 'r.para']] },
+      { id: 'p2-5', sk: 'r.attitude', pre: '作者態度：研究能不能證明因果', q: 'Which statement would the authors agree with?', o: ['The study shows a link but cannot prove that poor sleep causes memory loss.', 'The study proves that poor sleep causes memory loss.', 'Sleep has nothing to do with memory.', 'Older adults should stop taking memory tests.'], why: '第 3 段最後：cannot prove that poor sleep causes memory loss。',
+      st: [['作者的保留意見在哪？', '第 3 段最後的 however 之後', '第 1 段', '第 2 段', 'The authors note, however…', 'r.locate'], ['作者說研究不能證明什麼？', '睡不好「造成」記憶衰退', '兩者有關', '深層睡眠存在', 'cannot prove that poor sleep causes memory loss', 'r.attitude'], ['為什麼不能證明？', '可能是早期腦部變化讓人睡不好（方向相反）', '樣本太大', '沒有測驗', 'people with early brain changes may simply sleep worse', 'r.infer']] }] },
+  // 第 3 天：克漏字
+  { type: 'cloze', title: 'How is a clinical trial conducted?', text: [
+    'Before a new drug can be sold, it must be tested in clinical trials. In a typical trial, participants are divided {1} two groups at random. One group receives the new drug, {2} the other group receives a placebo, a pill that looks the same but contains no active ingredient.',
+    'Neither the participants nor the doctors know who is in which group. This design, {3} is called a double-blind trial, prevents expectations from affecting the results. At the end of the trial, the researchers compare the outcomes of the two groups.',
+    'If the drug group does much better, the drug is {4} to be effective. Even then, one trial is rarely enough; the results must be {5} by other studies before the drug is approved.'],
+    zh: '新藥上市前必須經過臨床試驗。典型的試驗把受試者隨機分成兩組：一組服用新藥，另一組服用安慰劑（外觀一樣但不含有效成分的藥丸）。受試者和醫生都不知道誰在哪一組；這種設計稱為雙盲試驗，可以避免預期心理影響結果。試驗結束時，研究人員比較兩組的結果。如果服藥組好很多，這個藥就被認為有效。即使如此，一次試驗很少足夠，結果必須被其他研究證實，藥才會核准。',
+    qs: [{ id: 'p3-1', sk: 'v.collo', q: '第 (1) 格', o: ['into', 'from', 'with', 'on'], why: 'divide A into B：把 A 分成 B。',
+      st: [['divide 的常見搭配？', 'divide … into …（分成…）', 'divide from', 'divide on', '固定搭配要記。', 'v.collo'], ['句意？', '受試者被隨機分成兩組', '從兩組來', '和兩組一起', '分成兩組。', 'r.para'], ['所以填？', 'into', 'from', 'with', 'into 表示變成。', 'v.collo']] },
+      { id: 'p3-2', sk: 'c.logic', q: '第 (2) 格', o: ['while', 'because', 'so', 'if'], why: '一組吃新藥、另一組吃安慰劑，兩者對照，用 while（而）。',
+      st: [['逗號前後在說什麼？', '一組吃藥、另一組吃安慰劑', '原因與結果', '條件', 'One group…, ___ the other group…', 'c.logic'], ['兩者的關係？', '對照', '因果', '條件', 'one… the other… 是對照。', 'c.logic'], ['表示對照、連接兩個子句的是？', 'while', 'because', 'so', 'while 也可以表示「而」。', 'g.conj']] },
+      { id: 'p3-3', sk: 's.rel', q: '第 (3) 格', o: ['which', 'what', 'who', 'it'], why: '逗號後補充說明 This design，用 which。',
+      st: [['空格前的名詞是？', 'This design（物）', 'the doctors', 'the group', '逗號前緊接的名詞。', 's.rel'], ['這段兩個逗號之間是？', '補充說明 This design 的子句', '主要子句', '主詞', '拿掉後：This design prevents…', 's.rel'], ['補充說明物，用？', 'which', 'what', 'who', '逗號後不用 that。', 's.rel']] },
+      { id: 'p3-4', sk: 's.pass', q: '第 (4) 格', o: ['considered', 'considering', 'consider', 'to consider'], why: 'the drug is considered to be effective：藥被認為有效（被動）。',
+      st: [['空格前有什麼？', 'is（be 動詞）', 'have', '沒有東西', 'the drug is ___。', 's.pass'], ['藥會自己認為嗎？', '不會，是被認為（被動）', '會', '看情況', '主詞承受動作。', 's.pass'], ['be＋過去分詞？', 'considered', 'considering', 'consider', 'be considered to be…＝被認為是…。', 'v.collo']] },
+      { id: 'p3-5', sk: 'v.mean', q: '第 (5) 格', o: ['confirmed', 'ignored', 'hidden', 'reduced'], why: '其他研究要「證實」結果，藥才會核准。',
+      st: [['前面說一次試驗怎樣？', '很少足夠（rarely enough）', '一定足夠', '沒有用', 'one trial is rarely enough', 'c.logic'], ['所以其他研究要對結果做什麼？', '再次證實', '忽略', '隱藏', '核准前要更多證據。', 'r.infer'], ['「證實」的英文？', 'confirmed', 'ignored', 'reduced', 'confirm＝證實。', 'v.mean']] }] },
+  // 第 4 天：閱讀
+  { type: 'read', title: 'Do sugar taxes reduce obesity?', text: [
+    'More than 50 countries now tax drinks that contain added sugar. The idea is simple: if sugary drinks cost more, people will buy fewer of them, and obesity rates will eventually fall.',
+    'The first part of this idea is well supported. In Mexico, sales of sugary drinks dropped by about 10 percent in the two years after a tax was introduced, and the decline was largest among poorer families. Some companies also reduced the sugar in their drinks to avoid the tax.',
+    'The second part is harder to prove. Obesity develops slowly and has many causes, so a change in one type of drink may take years to show an effect. Moreover, people may replace sugary drinks with other high-calorie foods. Most experts therefore see sugar taxes as one useful tool, not a complete solution.'],
+    zh: '目前有 50 多個國家對添加糖的飲料課稅。想法很簡單：含糖飲料變貴，人們就會少買，肥胖率最終就會下降。前半部分有充分證據：在墨西哥，開徵稅後兩年內含糖飲料的銷售量下降約一成，貧窮家庭降得最多；有些公司也降低飲料含糖量來避稅。後半部分比較難證明：肥胖發展得很慢、原因很多，單一類飲料的改變可能要好幾年才看得出效果；而且人們可能改吃其他高熱量的食物。因此多數專家認為糖稅是一項有用的工具，但不是完整的解決方案。',
+    qs: [{ id: 'p4-1', sk: 'r.main', pre: '主旨：文章對糖稅的整體評價', q: 'What is the main idea of the passage?', o: ['Sugar taxes reduce sugary drink sales, but their effect on obesity is less clear.', 'Sugar taxes have ended obesity in Mexico.', 'Sugar taxes are unfair to poor families.', 'Companies refuse to change their drinks.'], why: '第 2 段：銷量確實下降；第 3 段：對肥胖的效果較難證明。',
+      st: [['第 1 段提出的想法有幾個部分？', '兩個：少買飲料、肥胖下降', '一個', '三個', 'people will buy fewer… and obesity rates will fall', 'r.locate'], ['第 2、3 段各自在談哪一部分？', '第 2 段：銷量（有證據）；第 3 段：肥胖（難證明）', '都在談肥胖', '都在談公司', 'The first part… The second part…', 'r.main'], ['涵蓋兩段的選項？', '銷量下降，但對肥胖的效果不明確', '已經消滅肥胖', '對窮人不公平', '只講一半的選項不是主旨。', 'r.para']] },
+      { id: 'p4-2', sk: 'r.locate', pre: '細節：墨西哥的結果', q: 'What happened in Mexico after the tax was introduced?', o: ['Sales of sugary drinks fell by about 10 percent.', 'Obesity fell by 10 percent.', 'Sales rose among poorer families.', 'All companies stopped selling sugary drinks.'], why: '第 2 段：sales of sugary drinks dropped by about 10 percent。',
+      st: [['用 Mexico 找答案在哪？', '第 2 段', '第 1 段', '第 3 段', '題目的專有名詞是最好的定位線索。', 'r.locate'], ['下降的是什麼？', '含糖飲料的銷量', '肥胖率', '稅率', 'sales of sugary drinks dropped', 'r.locate'], ['為什麼「肥胖下降一成」是陷阱？', '文中下降的是銷量，不是肥胖', '數字不對', '國家不對', '換掉主詞是常見陷阱。', 'r.para']] },
+      { id: 'p4-3', sk: 'r.infer', pre: '推論：為什麼肥胖的效果難證明', q: 'Why is it hard to prove that sugar taxes reduce obesity?', o: ['Obesity has many causes and changes slowly.', 'People drink more after the tax.', 'The tax is too small to matter.', 'Experts refuse to study it.'], why: '第 3 段：Obesity develops slowly and has many causes。',
+      st: [['答案在哪一段？', '第 3 段', '第 2 段', '第 1 段', 'The second part is harder to prove.', 'r.locate'], ['文中給了哪兩個理由？', '肥胖發展慢、原因多；人們可能改吃其他高熱量食物', '稅太少', '專家不研究', '找 because 或 so、Moreover。', 'r.locate'], ['哪個選項是其中之一？', '肥胖原因多、變化慢', '稅後喝更多', '稅太小', '其他選項文中沒有。', 'r.para']] },
+      { id: 'p4-4', sk: 'r.word', pre: '字義：replace 的意思', q: 'In paragraph 3, “replace sugary drinks with other high-calorie foods” means people may ____.', o: ['eat other high-calorie foods instead of sugary drinks', 'drink more sugary drinks', 'stop eating completely', 'add sugar to their food'], why: 'replace A with B：用 B 取代 A。',
+      st: [['replace A with B 的意思？', '用 B 取代 A', '用 A 取代 B', '把 A 和 B 混合', '常見搭配。', 'v.collo'], ['A 和 B 各是什麼？', 'A 含糖飲料、B 其他高熱量食物', '相反', '都是飲料', '照順序對應。', 'r.locate'], ['為什麼這是問題？', '熱量仍然沒有減少', '飲料變好喝', '稅變高', 'Moreover 帶出的另一個困難。', 'r.infer']] },
+      { id: 'p4-5', sk: 'r.attitude', pre: '作者態度：專家怎麼看糖稅', q: 'How do most experts view sugar taxes?', o: ['As a useful tool but not a complete solution', 'As completely useless', 'As the only way to end obesity', 'As harmful to health'], why: '最後一句：one useful tool, not a complete solution。',
+      st: [['在哪一句？', '最後一句', '第一句', '第 2 段', 'Most experts therefore see…', 'r.locate'], ['專家的看法有幾個部分？', '有用，但不是完整的解決方案', '完全沒用', '唯一的方法', 'not A but B 的反向：A，not B。', 'r.attitude'], ['對應的選項？', 'useful tool but not a complete solution', 'useless', 'the only way', '兩個部分都要對上。', 'r.para']] }] },
+  // 第 5 天：克漏字
+  { type: 'cloze', title: 'Exercise and the immune system', text: [
+    'Moderate exercise, such as brisk walking for 30 minutes a day, appears to {1} the immune system. During exercise, immune cells move faster through the blood and are more likely to find and destroy germs.',
+    'Studies have shown that people who exercise regularly catch fewer colds {2} people who rarely exercise. The effect is especially important for elderly people, {3} immune systems naturally weaken with age.',
+    'However, more is not always better. Very long or intense exercise, such as running a marathon, may {4} weaken the immune system for a few hours. During this period, athletes are more {5} to infection.'],
+    zh: '適度運動，例如每天快走 30 分鐘，似乎能強化免疫系統。運動時，免疫細胞在血液中移動得更快，更容易找到並消滅病菌。研究顯示，規律運動的人比很少運動的人少感冒。這對長者特別重要，因為免疫系統會隨年齡自然變弱。不過，越多不一定越好：非常長或劇烈的運動，例如跑馬拉松，可能會暫時削弱免疫系統幾個小時；這段期間運動員比較容易感染。',
+    qs: [{ id: 'p5-1', sk: 'v.mean', q: '第 (1) 格', o: ['strengthen', 'weaken', 'replace', 'ignore'], why: '後面說免疫細胞更快找到病菌：運動「強化」免疫系統。',
+      st: [['後一句說運動時免疫細胞怎樣？', '移動更快、更容易消滅病菌', '變慢', '消失', '用後文判斷方向。', 'c.logic'], ['所以運動對免疫系統是？', '有好處', '有壞處', '沒影響', '方向是正面的。', 'c.logic'], ['「強化」的英文？', 'strengthen', 'weaken', 'ignore', 'strength＋-en＝使變強。', 'v.root']] },
+      { id: 'p5-2', sk: 'c.form', q: '第 (2) 格', o: ['than', 'as', 'to', 'from'], why: 'fewer… than…：比較級要配 than。',
+      st: [['空格前有什麼比較詞？', 'fewer（比較級）', 'same', 'most', 'catch fewer colds ___ people…', 'c.form'], ['比較級後面接？', 'than', 'as', 'to', 'as 用在 as… as。', 'c.form'], ['句意？', '規律運動的人比很少運動的人少感冒', '和很少運動的人一樣', '從很少運動的人來', 'than 帶出比較對象。', 'r.para']] },
+      { id: 'p5-3', sk: 's.rel', q: '第 (3) 格', o: ['whose', 'who', 'which', 'what'], why: '空格後是名詞 immune systems：長者「的」免疫系統，用 whose。',
+      st: [['空格後面接什麼？', '名詞 immune systems', '動詞', '形容詞', 'whose 後面一定接名詞。', 's.rel'], ['免疫系統和長者的關係？', '是長者的（所有關係）', '長者就是免疫系統', '沒有關係', 'elderly people 的免疫系統。', 's.rel'], ['表示「…的」的關係代名詞？', 'whose', 'who', 'which', 'who 後面接動詞。', 's.rel']] },
+      { id: 'p5-4', sk: 'v.mean', q: '第 (4) 格', o: ['temporarily', 'permanently', 'never', 'always'], why: '後面說 for a few hours：只是暫時。',
+      st: [['同一句後面有什麼時間線索？', 'for a few hours（幾個小時）', 'forever', '沒有', '找時間線索。', 'c.logic'], ['幾個小時表示？', '暫時的', '永久的', '從來沒有', 'temporary＝暫時的。', 'v.mean'], ['修飾動詞 weaken 要用？', '副詞 temporarily', '形容詞 temporary', '名詞', 'may temporarily weaken。', 'c.form']] },
+      { id: 'p5-5', sk: 'v.collo', q: '第 (5) 格', o: ['vulnerable', 'immune', 'resistant', 'superior'], why: 'be vulnerable to infection：容易感染。',
+      st: [['前一句說免疫系統怎樣了？', '被削弱', '被強化', '沒變', 'weaken the immune system', 'c.logic'], ['所以運動員對感染？', '比較容易被感染', '不會感染', '抵抗力較強', '方向是負面的。', 'c.logic'], ['「容易受…傷害」？', 'vulnerable to', 'immune to（免於）', 'resistant to（抵抗）', 'immune to 意思相反。', 'v.collo']] }] },
+  // 第 6 天：閱讀
+  { type: 'read', title: 'Why antibiotics are losing their power', text: [
+    'Antibiotics are drugs that kill bacteria. Since the 1940s, they have saved millions of lives. Today, however, more and more bacteria can survive antibiotics. This problem, called antibiotic resistance, is now considered one of the biggest threats to global health.',
+    'Resistance develops through natural selection. When an antibiotic is used, most bacteria die, but a few may carry genetic changes that help them survive. These survivors multiply, and soon the drug no longer works. Every unnecessary use of antibiotics, such as taking them for a cold, which is caused by a virus, gives resistant bacteria another chance to spread.',
+    'Experts recommend two main strategies: using antibiotics only when they are truly needed, and developing new drugs. The second strategy is difficult, because new antibiotics are expensive to develop and earn little money, since they are used for only a short time.'],
+    zh: '抗生素是殺死細菌的藥物，自 1940 年代以來拯救了數百萬人的性命。然而現在越來越多細菌能在抗生素下存活。這個問題稱為抗生素抗藥性，被視為全球健康最大的威脅之一。抗藥性是經由天擇產生的：使用抗生素時大部分細菌死亡，但少數可能帶有幫助它們存活的基因變化；這些存活者繁殖之後，藥很快就不再有效。每一次不必要的使用，例如為了由病毒引起的感冒吃抗生素，都給抗藥細菌另一次擴散的機會。專家建議兩個主要策略：只在真正需要時使用抗生素，以及研發新藥。第二個策略很困難，因為新的抗生素研發昂貴、賺錢很少，因為只會短期使用。',
+    qs: [{ id: 'p6-1', sk: 'r.main', pre: '主旨：抗生素抗藥性的原因與對策', q: 'What is the passage mainly about?', o: ['How antibiotic resistance develops and how to deal with it', 'The history of the first antibiotic', 'Why colds are caused by viruses', 'How to make money from new drugs'], why: '第 1 段提出問題，第 2 段原因，第 3 段對策。',
+      st: [['第 1 段提出什麼問題？', '細菌對抗生素產生抗藥性', '抗生素的歷史', '感冒', 'This problem, called antibiotic resistance…', 'r.locate'], ['第 2、3 段分別在講？', '原因、對策', '歷史、價格', '感冒、病毒', '問題 → 原因 → 對策是常見結構。', 'r.main'], ['涵蓋全文的選項？', '抗藥性如何產生與如何應對', '第一個抗生素的歷史', '如何賺錢', '只對應一句的不是主旨。', 'r.para']] },
+      { id: 'p6-2', sk: 'r.locate', pre: '細節：抗藥性怎麼產生', q: 'According to paragraph 2, how does resistance develop?', o: ['A few bacteria with helpful genetic changes survive and multiply.', 'Antibiotics change into viruses.', 'All bacteria die and are replaced by new ones.', 'Patients become allergic to the drug.'], why: '第 2 段：a few may carry genetic changes that help them survive. These survivors multiply…',
+      st: [['用 develop 找答案在哪？', '第 2 段第一句之後', '第 1 段', '第 3 段', 'Resistance develops through natural selection.', 'r.locate'], ['使用抗生素時發生什麼？', '大部分細菌死，少數帶基因變化的存活', '全部死亡', '細菌變成病毒', 'most bacteria die, but a few…', 'r.locate'], ['接下來？', '存活者繁殖，藥失效', '存活者死亡', '病人過敏', 'These survivors multiply…', 'r.para']] },
+      { id: 'p6-3', sk: 'r.infer', pre: '推論：為什麼感冒不該吃抗生素', q: 'Why is taking antibiotics for a cold an example of unnecessary use?', o: ['Colds are caused by viruses, which antibiotics do not kill.', 'Colds are too mild to treat.', 'Antibiotics cause colds.', 'Colds are caused by resistant bacteria.'], why: '文中說感冒 is caused by a virus，而抗生素是殺細菌的藥。',
+      st: [['第 1 段說抗生素殺什麼？', '細菌', '病毒', '兩者都殺', 'Antibiotics are drugs that kill bacteria.', 'r.locate'], ['第 2 段說感冒由什麼引起？', '病毒', '細菌', '抗生素', 'which is caused by a virus', 'r.locate'], ['把兩句合起來的結論？', '抗生素對感冒沒用，只會給抗藥細菌機會', '感冒太輕微', '抗生素造成感冒', '推論題要合併兩處的資訊。', 'r.infer']] },
+      { id: 'p6-4', sk: 'r.word', pre: '字義：threats 的意思', q: 'In paragraph 1, “one of the biggest threats to global health” is closest to ____.', o: ['one of the biggest dangers', 'one of the best treatments', 'one of the oldest drugs', 'one of the cheapest solutions'], why: 'threat＝威脅、危險。',
+      st: [['前文在講好事還是壞事？', '壞事：細菌能抵抗抗生素', '好事', '中性', 'This problem…', 'c.logic'], ['所以 threat 是正面還是負面？', '負面', '正面', '中性', '用前後文判斷字的方向。', 'r.word'], ['最接近的意思？', 'danger（危險）', 'treatment', 'solution', 'threat＝威脅。', 'v.mean']] },
+      { id: 'p6-5', sk: 'r.locate', pre: '細節：研發新藥為什麼困難', q: 'Why is developing new antibiotics difficult?', o: ['They are expensive to develop but earn little money.', 'Scientists do not know how bacteria work.', 'They are banned in many countries.', 'Patients use them for too long.'], why: '最後一句：expensive to develop and earn little money。',
+      st: [['在哪一句？', '最後一句（because 之後）', '第 1 段', '第 2 段', 'The second strategy is difficult, because…', 'r.locate'], ['because 後面的兩個原因？', '研發貴、賺錢少', '科學家不懂', '被禁止', 'expensive to develop and earn little money', 'r.locate'], ['為什麼賺錢少？', '只用很短的時間', '太便宜', '沒人用', 'since they are used for only a short time', 'r.infer']] }] },
+  // 第 7 天：克漏字
+  { type: 'cloze', title: 'Are artificial sweeteners a healthy choice?', text: [
+    'Artificial sweeteners are synthetic substances that taste sweet but contain almost no calories. Many people use them to lose weight or to {1} their blood sugar.',
+    'At first, they seemed to be a perfect solution. {2}, recent research has raised some concerns. Some studies suggest that sweeteners may change the bacteria living in the gut, {3} could affect how the body handles sugar.',
+    'Other studies, however, have found no clear harm. The evidence is not {4}, partly because people who use sweeteners are often already trying to lose weight. For now, most experts say that sweeteners are better than sugar, but water is the best choice {5}.'],
+    zh: '人工甜味劑是嚐起來甜、但幾乎沒有熱量的合成物質。很多人用它來減重或控制血糖。起初它們看起來是完美的解決方法。然而近年的研究提出了一些疑慮：有些研究顯示甜味劑可能改變腸道中的細菌，進而影響身體處理糖的方式。不過也有研究沒有發現明確的害處。證據並不一致，部分原因是使用甜味劑的人往往本來就在努力減重。目前多數專家認為，甜味劑比糖好，但水才是最好的選擇。',
+    qs: [{ id: 'p7-1', sk: 'v.collo', q: '第 (1) 格', o: ['control', 'increase', 'ignore', 'measure'], why: '用甜味劑減重或「控制」血糖。',
+      st: [['and 前面說用甜味劑來做什麼？', '減重', '增重', '增加熱量', 'to lose weight or to ___', 's.para'], ['所以空格也是對健康有利的目的', '控制血糖', '增加血糖', '忽視血糖', '平行的兩個目的方向一致。', 'c.logic'], ['「控制血糖」？', 'control blood sugar', 'increase', 'ignore', '常見搭配。', 'v.collo']] },
+      { id: 'p7-2', sk: 'c.logic', q: '第 (2) 格', o: ['However', 'Therefore', 'In addition', 'For example'], why: '「看似完美」和「出現疑慮」方向相反。',
+      st: [['前一句說了什麼？', '起初看起來是完美的解決方法', '有害', '沒用', 'At first, they seemed to be a perfect solution.', 'c.logic'], ['後一句說了什麼？', '近來研究提出疑慮', '更多好處', '一個例子', 'raised some concerns', 'c.logic'], ['方向相反用？', 'However', 'Therefore', 'In addition', 'At first… However… 是常見的轉折。', 'g.conj']] },
+      { id: 'p7-3', sk: 's.rel', q: '第 (3) 格', o: ['which', 'who', 'what', 'where'], why: '逗號後的 which 指前面整件事（甜味劑改變腸道細菌），這件事可能影響…。',
+      st: [['空格後缺什麼？', '主詞（could affect 的主詞）', '受詞', '什麼都不缺', '___ could affect…', 's.rel'], ['可能影響身體處理糖的是什麼？', '前面整件事：改變腸道細菌', 'the gut', 'people', '逗號＋which 可以指前面整句。', 's.rel'], ['所以用？', 'which', 'who', 'what', 'what 前面不能有先行詞；逗號後不用 that。', 's.rel']] },
+      { id: 'p7-4', sk: 'v.mean', q: '第 (4) 格', o: ['consistent', 'robust', 'artificial', 'specialized'], why: '有些研究有疑慮、有些沒發現害處：證據不一致。',
+      st: [['前兩段的研究結果？', '有的發現疑慮，有的沒發現害處', '全部發現有害', '全部發現無害', 'Some studies suggest… Other studies… found no clear harm.', 'c.logic'], ['所以證據是？', '不一致', '一致', '很強', 'not ___：不…', 'r.infer'], ['「一致的」？', 'consistent', 'robust', 'artificial', 'robust 是強而可靠的。', 'v.mean']] },
+      { id: 'p7-5', sk: 'c.form', q: '第 (5) 格', o: ['overall', 'overall of', 'at overall', 'overalls'], why: 'the best choice overall：整體而言最好的選擇。',
+      st: [['句子在空格前是否已經完整？', '是：water is the best choice', '不是，缺動詞', '不是，缺主詞', '空格只能放修飾語。', 's.core'], ['修飾整句的副詞？', 'overall（整體而言）', 'overall of', 'at overall', 'overall 本身就是副詞。', 'c.form'], ['句意？', '整體而言水是最好的選擇', '水不好', '甜味劑最好', '最後的結論。', 'r.para']] }] },
+];
+
+/* ---------- 錯題排程（化學、英文與首頁共用） ----------
+   只從練習紀錄推算，不另外存狀態，所以紀錄同步到哪裡，排程就跟到哪裡。
+   紀錄每一筆：{ t 時間, c 章, k 題型, h 題目識別碼, ok, n 第幾次作答 }；n === 1 是「一次作答」的開頭。
+   規則：每題每天只算第一次作答。
+   - 第一次就答錯 → 進入錯題本，隔 1 天到期。
+   - 到期後（之後任何一天）第一次就答對 → 再隔 3 天；再答對一次 → 掌握，離開錯題本。
+   - 在錯題本中又答錯 → 從頭開始（隔 1 天）。 */
+const REVIEW = (() => {
+  const DAY = 864e5, GAPS = [1, 3];
+  const dayStart = t => { const d = new Date(t); d.setHours(0, 0, 0, 0); return d.getTime(); };
+  const dayKey = t => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+  // 每題每天的第一次作答
+  function trials(log) {
+    const seen = new Set(), out = [];
+    for (const e of log) {
+      if (e.n !== 1 || !e.h) continue;
+      const key = `${e.c}|${e.k}|${e.h}`, dk = dayKey(e.t);
+      if (seen.has(key + '@' + dk)) continue;
+      seen.add(key + '@' + dk); out.push({ key, t: e.t, ok: !!e.ok, c: e.c, k: e.k, h: e.h, i: e.i, qt: e.qt });
+    }
+    return out;
+  }
+  // 每題目前的狀態：{ key, c, k, h, i, qt, stage, due, wrongs, last }
+  function state(log) {
+    const m = new Map();
+    for (const tr of trials(log)) {
+      let s = m.get(tr.key);
+      if (!s) { s = { key: tr.key, c: tr.c, k: tr.k, h: tr.h, i: tr.i, qt: tr.qt, open: false, stage: 0, due: 0, wrongs: 0, last: 0 }; m.set(tr.key, s); }
+      s.i = tr.i; s.qt = tr.qt || s.qt;
+      if (!tr.ok) { s.open = true; s.stage = 0; s.wrongs++; s.due = dayStart(tr.t) + GAPS[0] * DAY; }
+      else if (s.open && tr.t >= s.due) {
+        s.stage++;
+        if (s.stage >= GAPS.length) s.open = false; else s.due = dayStart(tr.t) + GAPS[s.stage] * DAY;
+      }
+      s.last = tr.t;
+    }
+    return m;
+  }
+  // 錯題本：還沒掌握的題目；due 為「今天以前到期」
+  function book(log, now = Date.now()) {
+    const all = [...state(log).values()].filter(s => s.open);
+    return { open: all, due: all.filter(s => s.due <= now).sort((a, b) => a.due - b.due) };
+  }
+  return { trials, state, book, dayKey, dayStart, DAY };
+})();
+
+/* ---------- 後中英文：每天早上／晚上兩段、錯題複習、週報、匯出 ----------
+   紀錄每一筆：{ t, c 第幾週第幾天哪一段（w1d3am）, k 種類, h 題目識別碼, sk 能力, ok, n 第幾次作答, p 選了什麼, qt 題目摘要 }
+   k：w 單字、wr 單字回想、s 長句的一步、g 文法題、p 文章題（進錯題本）；x 一步一步來的小步驟；u 標記「不熟」（p 1 標記、-1 取消）。 */
+const LOG = store.get('log', []);
+const REVIEW_KINDS = new Set(['w', 'wr', 's', 'g', 'p']);
+function logAnswer(e) {
+  LOG.push({ t: Date.now(), ...e }); if (LOG.length > 20000) LOG.splice(0, LOG.length - 20000);
+  store.set('log', LOG); if (typeof CLOUD !== 'undefined' && CLOUD.pushLog) CLOUD.pushLog();
+}
+const qlog = () => LOG.filter(e => REVIEW_KINDS.has(e.k));
+const okSet = () => new Set(LOG.filter(e => e.ok && e.h).map(e => e.h));
+const unsure = () => { const m = {}; LOG.forEach(e => { if (e.k === 'u') m[e.h] = e.p === 1 ? e : null; }); return m; };
+const DAYN = '一二三四五六日';
+
+/* ---- 題目索引：每週的每一題都有固定識別碼，錯題本靠它找回題目 ---- */
+const wkKey = w => 'w' + w.n;
+function wordQ(w, d, i) {
+  const day = w.words[d], x = day[i], others = [1, 3, 6].map(k => day[(i + k) % day.length]);
+  return { h: `w:${wkKey(w)}:${x[0]}`, k: 'w', sk: 'v.mean', c: `${wkKey(w)}d${d + 1}am`, en: 1,
+    q: `<span class="enw">${esc(x[0])}</span> <span class="pos">${esc(x[1])}</span> 的意思是？`, o: [x[2], ...others.map(y => y[2])],
+    why: `${esc(x[0])}：${esc(x[2])}。${x[3] ? `<br><span class="mut">${esc(x[3])}</span>` : ''}`, qt: x[0] };
+}
+// 晚上的回想：把早上例句裡的單字挖空
+function stemRe(word) { const s = word.length > 5 ? word.replace(/(e|y|ate|ize)$/, '') : word; return new RegExp(`\\b${s}\\w*`, 'i'); }
+function recallQ(w, d, i) {
+  const day = w.words[d], x = day[i], others = [2, 5, 7].map(k => day[(i + k) % day.length]);
+  const sent = esc(x[4]).replace(stemRe(x[0]), '<span class="gap">＿＿＿＿</span>');
+  return { h: `wr:${wkKey(w)}:${x[0]}`, k: 'wr', sk: 'v.mean', c: `${wkKey(w)}d${d + 1}pm`, en: 1,
+    q: `<span class="ens">${sent}</span><br><small class="mut">${esc(x[5])}（選項是原形，句中可能有變化）</small>`, o: [x[0], ...others.map(y => y[0])],
+    why: `${esc(x[4])}`, qt: x[0] };
+}
+const gramQ = (w, d, q) => ({ ...q, h: `g:${wkKey(w)}:${q.id}`, k: 'g', c: `${wkKey(w)}d${d + 1}pm`, en: 1, qt: q.q.replace(/<[^>]+>/g, '').slice(0, 60) });
+const passQ = (w, d, q) => ({ ...q, h: `p:${wkKey(w)}:${q.id}`, k: 'p', c: `${wkKey(w)}d${d + 1}pm`, en: 1, qt: `${w.passages[d].title}・${q.q}`.slice(0, 80) });
+const sentH = (w, d, j, i) => `s:${wkKey(w)}:${d}:${j}:${i}`;
+let QIX = null;
+function qindex() {
+  if (QIX) return QIX; QIX = {};
+  WEEKS.forEach(w => w.words.forEach((day, d) => {
+    day.forEach((x, i) => { const a = wordQ(w, d, i), b = recallQ(w, d, i); QIX[a.h] = { q: a, w, d }; QIX[b.h] = { q: b, w, d }; });
+    (w.sents[d] || []).forEach((s, j) => s.steps.forEach((st, i) => { QIX[sentH(w, d, j, i)] = { sent: s, w, d, j, i, sk: st[5] }; }));
+    if (w.gram[d]) w.gram[d].qs.forEach(q => { const g = gramQ(w, d, q); QIX[g.h] = { q: g, w, d }; });
+    if (w.passages[d]) w.passages[d].qs.forEach(q => { const p = passQ(w, d, q); QIX[p.h] = { q: p, w, d }; });
+  }));
+  return QIX;
+}
+// 每一段要完成的題目
+const amIds = (w, d) => [...w.words[d].map((x, i) => wordQ(w, d, i).h), ...(w.sents[d] || []).flatMap((s, j) => s.steps.map((st, i) => sentH(w, d, j, i)))];
+const pmIds = (w, d) => [...w.gram[d].qs.map(q => gramQ(w, d, q).h), ...w.passages[d].qs.map(q => passQ(w, d, q).h), ...w.words[d].map((x, i) => recallQ(w, d, i).h)];
+const frac = (ids, ok) => ids.filter(h => ok.has(h)).length / ids.length;
+
+/* ---- 選擇題：答錯可以再選；「一步一步來」把題目拆成小判斷 ---- */
+function mcq(q, num) {
+  const ord = shuffled(q.o.length, q.h);
+  return `<div class="q" data-h="${esc(q.h)}">${num ? `<p class="qnum">${num}</p>` : ''}<p class="qt">${q.q}</p><div class="opts">${ord.map(j => `<button class="opt${q.en ? ' en-o' : ''}" type="button" data-o="${j}">${esc(q.o[j])}</button>`).join('')}</div><div class="why" hidden></div></div>`;
+}
+function bindMcq(root, list, onDone) {
+  list.forEach(q => {
+    const qe = root.querySelector(`.q[data-h="${CSS.escape(q.h)}"]`); if (!qe) return;
+    let n = 0; const why = $('.why', qe);
+    if (q.st && q.st.length) guide(qe, q);
+    $$('.opt', qe).forEach(b => { b.onclick = () => {
+      const ok = b.dataset.o === '0'; n++;
+      logAnswer({ c: q.c, k: q.k, h: q.h, sk: q.sk, ok, n, p: q.o[+b.dataset.o], qt: q.qt });
+      b.classList.add(ok ? 'right' : 'wrong'); b.disabled = true; why.hidden = false;
+      if (ok) {
+        $$('.opt', qe).forEach(x => { x.disabled = true; }); const g = $('.guide', qe); if (g) g.hidden = true;
+        why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}`; qe.classList.add('done');
+        if (onDone) onDone(q);
+      } else {
+        why.className = 'why no'; why.innerHTML = `這個不對，再選一次。${q.st && q.st.length ? '<button class="btn sm" type="button" data-gopen>一步一步來</button>' : ''}`;
+        const go = $('[data-gopen]', why); if (go) go.onclick = () => qe.openGuide();
+      }
+    }; });
+  });
+}
+function guide(qe, q) {
+  const sts = q.st, box = document.createElement('div'); box.className = 'guide';
+  box.innerHTML = '<button class="btn sm ghost" type="button" data-g>一步一步來</button><div class="gbody" hidden></div>';
+  $('.opts', qe).after(box);
+  const body = $('.gbody', box), done = [];
+  const draw = k => {
+    const st = sts[k], ord = shuffled(3, q.h + k).map(j => j + 1);
+    body.innerHTML = `${done.length ? `<ol class="gdone">${done.map(x => `<li>${x}</li>`).join('')}</ol>` : ''}<p class="stepn">第 ${k + 1} 步，共 ${sts.length} 步</p><p class="gq">${esc(st[0])}</p><div class="opts">${ord.map(j => `<button class="gopt opt" type="button" data-j="${j}">${esc(st[j])}</button>`).join('')}</div><div class="gwhy" hidden></div>`;
+    let n = 0;
+    $$('.gopt', body).forEach(b => { b.onclick = () => {
+      const ok = b.dataset.j === '1', w = $('.gwhy', body); n++;
+      logAnswer({ c: q.c, k: 'x', h: `x:${q.h}:${k}`, sk: st[5], ok, n, p: st[+b.dataset.j], qt: st[0] });
+      b.classList.add(ok ? 'right' : 'wrong'); b.disabled = true; w.hidden = false;
+      if (!ok) { w.className = 'gwhy why no'; w.textContent = '這個不對，再想想。'; return; }
+      $$('.gopt', body).forEach(x => { x.disabled = true; }); done.push(`${esc(st[0])} <b>${esc(st[1])}</b>`);
+      const last = k === sts.length - 1;
+      w.className = 'gwhy why ok'; w.innerHTML = `<b>對。</b>${esc(st[4])} <button class="btn sm" type="button" data-n>${last ? '回到原題再選一次 ↑' : '下一步'}</button>`;
+      $('[data-n]', w).onclick = () => { if (last) { body.hidden = true; $('[data-g]', box).hidden = false; done.length = 0; qe.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else draw(k + 1); };
+    }; });
+  };
+  qe.openGuide = () => { if (!body.hidden) return; $('[data-g]', box).hidden = true; body.hidden = false; done.length = 0; draw(0); };
+  $('[data-g]', box).onclick = qe.openGuide;
+}
+// 「？還不太懂」：單字、文法、長句、文章都可以標，匯出時列出來
+function unsureBtn(key, c, label) {
+  const on = !!unsure()[key];
+  return `<button class="btn sm unsure${on ? ' on' : ''}" type="button" data-u="${esc(key)}" data-uc="${esc(c)}" data-ul="${esc(label)}" aria-pressed="${on}">${on ? '已標記：不熟' : '？還不太懂'}</button>`;
+}
+function bindUnsure(root) {
+  $$('[data-u]', root).forEach(b => { b.onclick = () => {
+    const on = b.getAttribute('aria-pressed') !== 'true';
+    logAnswer({ c: b.dataset.uc, k: 'u', h: b.dataset.u, p: on ? 1 : -1, qt: b.dataset.ul });
+    b.setAttribute('aria-pressed', on); b.classList.toggle('on', on); b.textContent = on ? '已標記：不熟' : '？還不太懂';
+  }; });
+}
+
+/* ---- 長句拆解：一步一步標出主詞、動詞、修飾 ---- */
+function sentHTML(w, d, j, s, key = `${d}:${j}`) {
+  return `<div class="card sentc" data-sent="${key}"><div class="sent">${s.chunks.map((c, i) => `<span class="ch" data-i="${i}">${esc(c)}</span> `).join('')}</div>
+<p class="legend"><span class="ls">主詞</span><span class="lv">主要動詞</span><span class="lm">修飾（第一遍可以跳過）</span></p><div class="sbody"></div></div>`;
+}
+function bindSent(root, w, d, j, s, onDone, key = `${d}:${j}`) {
+  const card = root.querySelector(`[data-sent="${key}"]`), body = $('.sbody', card), c = `${wkKey(w)}d${d + 1}am`, done = [];
+  const mark = m => Object.entries(m || {}).forEach(([i, v]) => { const e = card.querySelector(`.ch[data-i="${i}"]`); if (e) { e.classList.remove('s', 'v', 'm'); e.classList.add(v); } });
+  const finish = () => {
+    s.steps.forEach(st => mark(st[6]));
+    body.innerHTML = `${done.length ? `<ol class="gdone">${done.join('')}</ol>` : ''}<p class="core"><span class="lbl">主幹</span>${esc(s.core)}</p><p class="zh">${esc(s.zh)}</p><div class="row">${unsureBtn(`u:sent:${wkKey(w)}:${d}:${j}`, c, s.core)}</div>`;
+    bindUnsure(body); if (onDone) onDone();
+  };
+  const draw = k => {
+    if (k >= s.steps.length) return finish();
+    const st = s.steps[k], h = sentH(w, d, j, k), ord = shuffled(3, h).map(x => x + 1); let n = 0;
+    body.innerHTML = `${done.length ? `<ol class="gdone">${done.join('')}</ol>` : ''}<p class="stepn">第 ${k + 1} 步，共 ${s.steps.length} 步</p><p class="gq">${esc(st[0])}</p><div class="opts">${ord.map(x => `<button class="opt en-o" type="button" data-j="${x}">${esc(st[x])}</button>`).join('')}</div><div class="why" hidden></div>`;
+    $$('.opt', body).forEach(b => { b.onclick = () => {
+      const ok = b.dataset.j === '1', why = $('.why', body); n++;
+      logAnswer({ c, k: 's', h, sk: st[5], ok, n, p: st[+b.dataset.j], qt: `${s.core}｜${st[0]}` });
+      b.classList.add(ok ? 'right' : 'wrong'); b.disabled = true; why.hidden = false;
+      if (!ok) { why.className = 'why no'; why.textContent = '這個不對，再想想。'; return; }
+      $$('.opt', body).forEach(x => { x.disabled = true; }); mark(st[6]);
+      why.className = 'why ok'; why.innerHTML = `<b>對。</b>${esc(st[4])} <button class="btn sm" type="button" data-n>${k === s.steps.length - 1 ? '看主幹與翻譯' : '下一步'}</button>`;
+      $('[data-n]', why).onclick = () => { done.push(`<li>${esc(st[0])} <b>${esc(st[1])}</b></li>`); draw(k + 1); };
+    }; });
+  };
+  draw(0);
+}
+
+/* ---- 畫面 ---- */
+const curWeek = () => WEEKS[Math.min(store.get('week', WEEKS.length - 1), WEEKS.length - 1)];
+// 建議的今天：這週第一個還沒做完的段落
+function nextSlot(w, ok = okSet()) {
+  for (let d = 0; d < 7; d++) { if (frac(amIds(w, d), ok) < 1) return { d, s: 'am' }; if (frac(pmIds(w, d), ok) < 1) return { d, s: 'pm' }; }
+  return null;
+}
+const bar = f => `<span class="pbar"><i style="width:${Math.round(100 * f)}%"></i></span>`;
+function renderHome() {
+  const w = curWeek(), ok = okSet(), nx = nextSlot(w, ok), due = REVIEW.book(qlog()).due.length;
+  const slot = (d, s) => {
+    const f = frac(s === 'am' ? amIds(w, d) : pmIds(w, d), ok), cur = nx && nx.d === d && nx.s === s;
+    const what = s === 'am' ? '錯題複習・10 個新單字・2 個長句' : `文法：${w.gram[d].title.split('：')[0]}・${w.passages[d].type === 'cloze' ? '克漏字' : '閱讀'}・單字回想`;
+    return `<a class="slot${f >= 1 ? ' fin' : ''}${cur ? ' cur' : ''}" href="#d${d + 1}${s}"><span class="sl-h">${s === 'am' ? '早上' : '晚上'}<small>約 30 分鐘</small></span><span class="sl-w">${what}</span>${bar(f)}<span class="sl-st">${f >= 1 ? '✓ 完成' : f > 0 ? `${Math.round(100 * f)}%` : cur ? '從這裡開始 →' : ''}</span></a>`;
+  };
+  $('#main').innerHTML = `<p class="eyebrow">第 ${w.n} 週 · 每天約 60 分鐘</p><h1>${esc(w.theme)}</h1>
+<p class="lede">每天分成早上與晚上兩段。早上先複習到期的錯題，再學 10 個新單字和 2 個長句；晚上學一個文法重點，做一篇克漏字或閱讀，最後回想早上的單字。答錯的題目會自動排進之後的複習。</p>
+${due ? `<p class="duebar"><a href="#review">錯題本有 <b>${due}</b> 題今天到期 →</a></p>` : ''}
+<ol class="days">${w.words.map((x, d) => `<li class="day${nx && nx.d === d ? ' now' : ''}"><h2>第 ${d + 1} 天<small>${esc(w.gram[d].title.split('：')[0])}</small></h2><div class="slots">${slot(d, 'am')}${slot(d, 'pm')}</div></li>`).join('')}</ol>
+<div class="row endrow"><a class="btn pri" href="#report">本週報告與匯出</a><a class="btn" href="#review">錯題本</a></div>
+${WEEKS.length > 1 ? `<p class="small">其他週：${WEEKS.map((x, i) => `<button class="btn sm" type="button" data-wk="${i}">第 ${x.n} 週</button>`).join(' ')}</p>` : ''}`;
+  $$('[data-wk]').forEach(b => { b.onclick = () => { store.set('week', +b.dataset.wk); renderHome(); }; });
+}
+function dayHead(w, d, s) {
+  const prev = s === 'pm' ? `#d${d + 1}am` : d ? `#d${d}pm` : '', next = s === 'am' ? `#d${d + 1}pm` : d < 6 ? `#d${d + 2}am` : '#report';
+  return `<p class="eyebrow">第 ${w.n} 週・第 ${d + 1} 天・${s === 'am' ? '早上' : '晚上'}</p>
+<nav class="pn">${prev ? `<a href="${prev}">‹ 上一段</a>` : ''}<a href="#">本週</a><a href="${next}">${s === 'pm' && d === 6 ? '本週報告' : '下一段'} ›</a></nav>`;
+}
+function progressLine(ids) {
+  const el = $('#segProg'); if (!el) return;
+  const f = frac(ids, okSet()); el.innerHTML = `${bar(f)}<span>${f >= 1 ? '✓ 這一段完成了' : `完成 ${Math.round(100 * f)}%`}</span>`;
+}
+function renderAM(w, d) {
+  const words = w.words[d], wq = words.map((x, i) => wordQ(w, d, i)), c = `${wkKey(w)}d${d + 1}am`, rv = reviewItems(12);
+  $('#main').innerHTML = `${dayHead(w, d, 'am')}<h1>早上：單字與長句</h1><p class="segprog" id="segProg"></p>
+<section class="part"><h2>1. 錯題複習<small>約 5–10 分鐘</small></h2>${rv.length ? `<p class="note">之前答錯、今天到期的題目。第一次就答對才算過關，答錯會再排一次。</p><div id="rv">${reviewHTML(rv)}</div>` : '<p class="note">今天沒有到期的錯題。</p>'}</section>
+<section class="part"><h2>2. 新單字<small>約 10 分鐘</small></h2><p class="note">先看字根拆解和例句，大聲唸一次例句。不熟的按「？還不太懂」，匯出時會列給下一週。</p>
+<div class="words">${words.map(x => `<article class="wcard"><p class="wh"><span class="enw">${esc(x[0])}</span><span class="pos">${esc(x[1])}</span><span class="wz">${esc(x[2])}</span></p>${x[3] ? `<p class="root">${esc(x[3])}</p>` : ''}<p class="ens">${esc(x[4])}</p><p class="zh">${esc(x[5])}</p>${unsureBtn(`u:word:${wkKey(w)}:${x[0]}`, c, `${x[0]}（${x[2]}）`)}</article>`).join('')}</div>
+<h3>小測驗：選出意思</h3><div id="wq">${wq.map((q, i) => mcq(q, `${i + 1} / ${wq.length}`)).join('')}</div></section>
+<section class="part"><h2>3. 長句拆解<small>約 10 分鐘</small></h2><p class="note">先找主要動詞，再找主詞，其他部分都是修飾。每一步答對，句子上會標出來。</p>${w.sents[d].map((s, j) => sentHTML(w, d, j, s)).join('')}</section>
+<div class="row endrow"><a class="btn pri" href="#d${d + 1}pm">晚上的部分 ›</a></div>`;
+  const ids = amIds(w, d), upd = () => progressLine(ids);
+  bindReview(rv); bindUnsure($('#main')); bindMcq($('#wq'), wq, upd); w.sents[d].forEach((s, j) => bindSent($('#main'), w, d, j, s, upd)); upd();
+}
+function passageHTML(w, d, P) {
+  const blank = t => esc(t).replace(/\{(\d)\}/g, (m, n) => `<span class="blank" data-b="${n}">(${n}) ＿＿＿＿</span>`);
+  const pq = P.qs.map(q => passQ(w, d, q));
+  const text = `<div class="passage card"><p class="ptitle">${esc(P.title)}</p>${P.text.map(t => `<p class="ens">${blank(t)}</p>`).join('')}<details><summary>中文翻譯（做完再看）</summary><p class="zh">${esc(P.zh)}</p></details></div>`;
+  if (P.type === 'cloze') return `<p class="note">克漏字：每格先看前後文是什麼關係（同方向、相反、因果），再看空格要什麼詞性。</p>${text}<div id="pq">${pq.map((q, i) => mcq(q, `第 ${i + 1} 格`)).join('')}</div>`;
+  return `<p class="note">閱讀：先看題目知道要找什麼，再讀文章，最後回答。</p>
+<div class="card pre"><p class="lbl">先看題目</p><ol>${P.qs.map(q => `<li><span class="ens">${esc(q.q)}</span><br><small class="mut">${esc(q.pre || '')}</small></li>`).join('')}</ol></div>${text}<div id="pq">${pq.map((q, i) => mcq(q, `第 ${i + 1} 題`)).join('')}</div>`;
+}
+function renderPM(w, d) {
+  const G = w.gram[d], P = w.passages[d], c = `${wkKey(w)}d${d + 1}pm`;
+  const gq = G.qs.map(q => gramQ(w, d, q)), pq = P.qs.map(q => passQ(w, d, q)), rq = w.words[d].map((x, i) => recallQ(w, d, i));
+  $('#main').innerHTML = `${dayHead(w, d, 'pm')}<h1>晚上：文法與文章</h1><p class="segprog" id="segProg"></p>
+<section class="part"><h2>1. 文法重點<small>約 10 分鐘</small></h2><div class="card lesson"><h3>${esc(G.title)}</h3>${G.body}<p class="lbl">這一課練的能力：${esc(SKILLS[G.id] || G.id)}</p><div class="row">${unsureBtn(`u:gram:${wkKey(w)}:${d}`, c, G.title)}</div></div>
+<div id="gq">${gq.map((q, i) => mcq(q, `${i + 1} / ${gq.length}`)).join('')}</div></section>
+<section class="part"><h2>2. ${P.type === 'cloze' ? '克漏字' : '閱讀測驗'}<small>約 12 分鐘</small></h2>${passageHTML(w, d, P)}<div class="row">${unsureBtn(`u:pass:${wkKey(w)}:${d}`, c, P.title)}</div></section>
+<section class="part"><h2>3. 單字回想<small>約 5 分鐘</small></h2><p class="note">早上的 10 個字放回例句裡。想不起來就回去看早上的卡片。</p><div id="rq">${rq.map((q, i) => mcq(q, `${i + 1} / ${rq.length}`)).join('')}</div></section>
+<div class="row endrow"><a class="btn pri" href="${d < 6 ? `#d${d + 2}am` : '#report'}">${d < 6 ? '明天早上 ›' : '本週報告 ›'}</a><a class="btn" href="#">本週</a></div>`;
+  const ids = pmIds(w, d), upd = q => {
+    progressLine(ids);
+    if (q && P.type === 'cloze') { const n = P.qs.findIndex(x => passQ(w, d, x).h === q.h) + 1, b = $(`.blank[data-b="${n}"]`); if (b) { b.textContent = `(${n}) ${q.o[0]}`; b.classList.add('fill'); } }
+  };
+  bindUnsure($('#main')); bindMcq($('#gq'), gq, upd); bindMcq($('#pq'), pq, upd); bindMcq($('#rq'), rq, upd); upd();
+}
+
+/* ---- 錯題複習 ---- */
+function reviewItems(max = 50) {
+  const ix = qindex(), seen = new Set(), out = [];
+  for (const s of REVIEW.book(qlog()).due) {
+    const f = ix[s.h]; if (!f) continue;
+    if (f.sent) { const key = `sent:${f.w.n}:${f.d}:${f.j}`; if (seen.has(key)) continue; seen.add(key); out.push({ sent: f, s }); }
+    else out.push({ q: f.q, f, s });
+    if (out.length >= max) break;
+  }
+  return out;
+}
+function reviewHTML(items) {
+  return items.map((it, n) => {
+    if (it.sent) { const f = it.sent; return `<div class="rv-sent"><p class="qsrc">第 ${f.w.n} 週第 ${f.d + 1} 天・長句</p>${sentHTML(f.w, f.d, f.j, f.w.sents[f.d][f.j], `r${f.d}:${f.j}`)}</div>`; }
+    const q = it.q, f = it.f; let ctx = '';
+    if (q.k === 'p') {
+      const P = f.w.passages[f.d], n0 = P.qs.findIndex(x => passQ(f.w, f.d, x).h === q.h) + 1;
+      if (P.type === 'cloze') {
+        const para = P.text.find(t => t.includes(`{${n0}}`)) || '';
+        ctx = `<p class="ens ctx">${esc(para).replace(/\{(\d)\}/g, (m, k) => (+k === n0 ? `<span class="blank">(${k}) ＿＿＿＿</span>` : esc(P.qs[k - 1].o[0])))}</p>`;
+      } else ctx = `<details class="ctx"><summary>文章：${esc(P.title)}</summary>${P.text.map(t => `<p class="ens">${esc(t)}</p>`).join('')}</details>`;
+    }
+    return `<div class="rv-q"><p class="qsrc">第 ${f.w.n} 週第 ${f.d + 1} 天・${{ w: '單字', wr: '單字回想', g: '文法', p: '文章' }[q.k]}・${esc(SKILLS[q.sk] || '')}・第 ${it.s.stage + 1} 輪</p>${ctx}${mcq(q, '')}</div>`;
+  }).join('');
+}
+function bindReview(items) {
+  const root = $('#rv'); if (!root) return;
+  bindMcq(root, items.filter(it => it.q).map(it => it.q));
+  items.filter(it => it.sent).forEach(it => { const f = it.sent; bindSent(root, f.w, f.d, f.j, f.w.sents[f.d][f.j], null, `r${f.d}:${f.j}`); });
+}
+function renderReview() {
+  const items = reviewItems(), book = REVIEW.book(qlog());
+  $('#main').innerHTML = `<p class="eyebrow">錯題本</p><h1>今天到期的錯題</h1>
+<p class="lede">答錯的題目隔 1 天回來；到期後第一次就答對，再隔 3 天；再答對一次就算掌握，離開錯題本。錯題本目前共 ${book.open.length} 題，今天到期 ${book.due.length} 題。</p>
+<div id="rv">${items.length ? reviewHTML(items) : '<p class="note">今天沒有到期的錯題。</p>'}</div><div class="row endrow"><a class="btn" href="#">回到本週</a></div>`;
+  bindReview(items);
+}
+
+/* ---- 週報：依能力分類列出本週練了什麼、哪裡弱 ---- */
+function weekStats(w) {
+  const pre = wkKey(w) + 'd', tr = REVIEW.trials(qlog()).filter(x => x.c && x.c.startsWith(pre));
+  const sk = {}; Object.keys(SKILLS).forEach(k => { sk[k] = { n: 0, ok: 0 }; });
+  const skOf = {}; LOG.forEach(e => { if (e.h && e.sk) skOf[e.h] = e.sk; });
+  tr.forEach(x => { const k = skOf[x.h]; if (!sk[k]) return; sk[k].n++; if (x.ok) sk[k].ok++; });
+  return { tr, sk };
+}
+const skillState = s => (!s.n ? 'none' : s.n < 3 ? 'few' : s.ok / s.n < 0.6 ? 'weak' : s.ok / s.n < 0.8 ? 'mid' : 'good');
+const SK_ST = { none: '本週沒練到', few: '題數太少', weak: '待加強', mid: '還不穩', good: '穩定' };
+function renderReport() {
+  const w = curWeek(), ok = okSet(), { tr, sk } = weekStats(w), u = unsure();
+  const daysDone = w.words.map((x, d) => frac(amIds(w, d), ok) >= 1 && frac(pmIds(w, d), ok) >= 1).filter(Boolean).length;
+  const weak = Object.keys(SKILLS).filter(k => ['weak', 'mid'].includes(skillState(sk[k]))).sort((a, b) => sk[a].ok / sk[a].n - sk[b].ok / sk[b].n);
+  const lessons = w.gram.map((G, d) => { const ids = G.qs.map(q => gramQ(w, d, q).h), t = tr.filter(x => ids.includes(x.h)); return { G, d, n: t.length, ok: t.filter(x => x.ok).length, done: frac(ids, ok) >= 1, u: !!u[`u:gram:${wkKey(w)}:${d}`] }; });
+  const unsureList = Object.values(u).filter(e => e && e.c && e.c.startsWith(wkKey(w) + 'd'));
+  $('#main').innerHTML = `<p class="eyebrow">第 ${w.n} 週報告</p><h1>這週學了什麼、哪裡還弱？</h1>
+<p class="lede">完成 ${daysDone} / 7 天，共作答 ${tr.length} 題（每題每天只算第一次），第一次就答對 ${tr.length ? Math.round(100 * tr.filter(x => x.ok).length / tr.length) : 0}%。</p>
+<section class="part"><h2>本週的文法重點</h2><ol class="lessons">${lessons.map(l => `<li class="${l.done ? 'fin' : ''}"><a href="#d${l.d + 1}pm"><span class="ck">${l.done ? '✓' : ''}</span><span>第 ${l.d + 1} 天・${esc(l.G.title.split('：')[0])}</span><b>${l.n ? `${l.ok}/${l.n} 第一次答對` : '還沒做'}${l.u ? '・標記不熟' : ''}</b></a></li>`).join('')}</ol></section>
+<section class="part"><h2>各項能力</h2><p class="note">題目雖然混在單字、長句、文章裡，每一題都對應下面的一項能力。穩定＝至少 3 題且第一次答對八成以上；待加強＝不到六成。</p>
+${SKILL_GROUPS.map(([g, name]) => `<div class="skg"><h3>${name}</h3>${Object.keys(SKILLS).filter(k => k.startsWith(g + '.')).map(k => { const s = sk[k], st = skillState(s); return `<div class="skr st-${st}"><span class="skn">${SKILLS[k]}</span><span class="pbar"><i style="width:${s.n ? Math.round(100 * s.ok / s.n) : 0}%"></i></span><span class="skv">${s.n ? `${s.ok}/${s.n}` : '—'}</span><span class="sks">${SK_ST[st]}</span></div>`; }).join('')}</div>`).join('')}</section>
+<section class="part"><h2>需要加強</h2>${weak.length ? `<ol>${weak.map(k => `<li><b>${SKILLS[k]}</b>：第一次答對 ${sk[k].ok}/${sk[k].n}</li>`).join('')}</ol>` : '<p class="note">目前沒有低於八成的能力（或題數還不夠）。</p>'}
+${unsureList.length ? `<p class="lbl">你標記「不熟」的地方</p><ul class="tags">${unsureList.map(e => `<li>${esc(e.qt)}</li>`).join('')}</ul>` : ''}</section>
+<section class="part"><h2>匯出給下一週</h2><p class="note">匯出本週的錯題、不熟的地方和各項能力的統計，最前面附一段指示。把整段貼給 AI，它就能依你的弱項產生第 ${w.n + 1} 週的內容。</p>
+<div class="row"><button class="btn pri" type="button" id="exGo">產生匯出內容</button></div><div id="exBox" hidden><div class="row"><button class="btn" type="button" id="exCopy">複製</button><a class="btn" id="exDl" download="後中英文-第${w.n}週.md">下載 .md</a><span class="small mut" id="exMsg"></span></div><textarea id="exTxt" rows="16" readonly></textarea></div></section>`;
+  $('#exGo').onclick = () => {
+    const md = exportMD(w), ta = $('#exTxt'); ta.value = md; $('#exBox').hidden = false;
+    try { $('#exDl').href = URL.createObjectURL(new Blob([md], { type: 'text/markdown' })); } catch (e) { $('#exDl').hidden = true; }
+  };
+  $('#exCopy').onclick = () => {
+    const ta = $('#exTxt'), msg = $('#exMsg');
+    const sel = () => { ta.focus(); ta.select(); msg.textContent = '已選取全部，請按 Ctrl+C 複製'; };
+    try { navigator.clipboard.writeText(ta.value).then(() => { msg.textContent = '已複製'; }, sel); } catch (e) { sel(); }
+  };
+}
+
+/* ---- 匯出：本週紀錄＋給下一週 AI 的指示 ---- */
+function exportMD(w) {
+  const { tr, sk } = weekStats(w), ix = qindex(), u = unsure(), today = REVIEW.dayKey(Date.now());
+  const st = REVIEW.state(qlog());
+  const wrong = {}; tr.filter(x => !x.ok).forEach(x => { wrong[x.h] = (wrong[x.h] || 0) + 1; });
+  const picks = {}; LOG.forEach(e => { if (e.h && !e.ok && e.p != null && REVIEW_KINDS.has(e.k)) (picks[e.h] = picks[e.h] || new Set()).add(e.p); });
+  const strip = s => String(s).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  const line = h => {
+    const f = ix[h], s = st.get([...st.keys()].find(k => k.endsWith('|' + h)) || '') || {}, mark = s.open ? '未掌握' : '已掌握';
+    const pk = picks[h] ? `；我選過：${[...picks[h]].join('／')}` : '';
+    if (!f) return `- ${h}（${mark}）`;
+    if (f.sent) { const stp = f.sent.steps[f.i]; return `- [長句・${SKILLS[stp[5]]}] ${f.sent.chunks.join(' ')}\n  - 步驟：${stp[0]} → 正解：${stp[1]}${pk}（${mark}）`; }
+    return `- [${SKILLS[f.q.sk] || f.q.sk}] ${strip(f.q.q)}\n  - 正解：${f.q.o[0]}${pk}（${mark}，錯 ${wrong[h]} 次）`;
+  };
+  const prevOpen = REVIEW.book(qlog()).open.filter(s => !(s.c || '').startsWith(wkKey(w) + 'd'));
+  const wrongWords = Object.keys(wrong).filter(h => /^wr?:/.test(h)).map(h => h.split(':')[2]);
+  const unsureL = Object.values(u).filter(Boolean);
+  const steps = {}; LOG.filter(e => e.k === 'x' && e.c && e.c.startsWith(wkKey(w) + 'd') && !e.ok && e.n === 1).forEach(e => { steps[e.sk] = (steps[e.sk] || 0) + 1; });
+  const skLines = Object.keys(SKILLS).map(k => `| ${k} | ${SKILLS[k]} | ${sk[k].n} | ${sk[k].ok} | ${sk[k].n ? Math.round(100 * sk[k].ok / sk[k].n) + '%' : '—'} | ${SK_ST[skillState(sk[k])]} |`);
+  const allWords = WEEKS.flatMap(x => x.words.flat().map(y => y[0]));
+  return `# 後中英文 第 ${w.n} 週學習紀錄（匯出日 ${today}）
+
+## 給 AI 的指示：請產生第 ${w.n + 1} 週的訓練內容
+
+我在準備台灣學士後中醫入學考（目標：中國醫藥大學，116 學年度，2027 年 4 月筆試）的英文。英文基礎差，目標是 2027 年 2 月底前達到考試程度。考試題型：字彙、克漏字、閱讀（文章約一半是醫學與生命科學）。我不背罕見字，重點是克漏字、閱讀、文法和學術／醫學常用字。
+
+請依照下面「本週紀錄」的弱項，產生第 ${w.n + 1} 週的兩個資料檔 \`w${String(w.n + 1).padStart(2, '0')}a.js\`、\`w${String(w.n + 1).padStart(2, '0')}b.js\`，格式必須和下面的規格完全一樣（網站會直接載入，格式錯了整頁會壞）。
+
+### 內容要求
+1. 每天兩段：早上（10 個新單字＋2 個長句拆解）、晚上（1 個文法重點＋3 題、1 篇文章＋5 題、單字回想自動產生）。共 7 天。
+2. **新單字 70 個**：學術與醫學常用字（詞頻約 3000–12000 名），不可與「已學過的單字」重複。每天一個主題。
+3. **弱項優先**：「需要加強」的能力，下週至少安排兩天的文法重點或長句練它；「本週沒練到」的能力至少練一次；「穩定」的能力仍要在文章中混著出現。
+4. **錯題回收**：「答錯的單字」與「不熟的單字」要在下週的長句或文章裡再出現（當成已學過的字使用，不是新字）。
+5. **難度**：比本週稍難一點。文章 180–250 字，句子變長、修飾更多；克漏字與閱讀交替（第 1、3、5、7 天克漏字，第 2、4、6 天閱讀）。題目要有一個明確正解，三個誘答要合理但確定錯。
+6. 每一題附 2–3 步的「一步一步來」：每一步是一個小判斷，引導學生自己推出答案，不要直接給答案。
+7. 中文用台灣繁體，說明用語要白話；每個文法名詞第一次出現要解釋。
+
+### 資料格式
+\`\`\`js
+// wNNa.js
+WEEKS.push({ n: ${w.n + 1}, theme: '本週主題', days: [] });
+WEEKS[${w.n}].words = [   // 7 天 × 10 個
+  [['英文', '詞性', '中文', '字根拆解（沒有就空字串）', '例句（必須包含這個字或它的變化形）', '例句中文'], …],
+  …
+];
+WEEKS[${w.n}].sents = [   // 7 天 × 2 句
+  [{ chunks: ['片段', …], core: '主幹句', zh: '整句中文',
+     steps: [['問題', '正解', '誤1', '誤2', '說明', '能力代碼', { 片段序號: 's' | 'v' | 'm' }], …] }, …],
+  …
+];
+// wNNb.js
+WEEKS[${w.n}].gram = [    // 7 天，各 1 個文法重點
+  { id: '能力代碼', title: '標題：一句話說重點', body: \`<p>說明 HTML，可用 <span class="ch s|v|m"> 標主詞／動詞／修飾</span></p>\`,
+    qs: [{ id: 'g1-1', sk: '能力代碼', q: '題目', o: ['正解', '誤1', '誤2', '誤3'], why: '解析', st: [['問題', '正解', '誤1', '誤2', '說明', '能力代碼'], …] }, …] },
+  …
+];
+WEEKS[${w.n}].passages = [  // 7 天，各 1 篇；克漏字的空格寫 {1}…{5}，題目 q 寫「第 (1) 格」
+  { type: 'cloze' | 'read', title: '標題', text: ['段落', …], zh: '全文中文',
+    qs: [{ id: 'p1-1', sk: '能力代碼', pre: '（閱讀題才要）題型：要找什麼', q: '題目', o: ['正解', …3 個誤答], why: '解析', st: [[…同上…]] }, …] },
+  …
+];
+\`\`\`
+- o 的第一個一定是正解（網站會打亂順序）。題目 id 在同一週內不可重複。
+- 能力代碼只能用下表的代碼。
+
+## 本週紀錄
+
+完成：${w.words.map((x, d) => `第${d + 1}天 早${Math.round(100 * frac(amIds(w, d), okSet()))}% 晚${Math.round(100 * frac(pmIds(w, d), okSet()))}%`).join('、')}
+作答：${tr.length} 題（每題每天只算第一次），第一次就答對 ${tr.length ? Math.round(100 * tr.filter(x => x.ok).length / tr.length) : 0}%
+
+### 本週的文法重點
+${w.gram.map((G, d) => `- 第 ${d + 1} 天：${G.title}（${G.id}）`).join('\n')}
+
+### 各項能力（第一次作答）
+| 代碼 | 能力 | 題數 | 答對 | 正確率 | 狀態 |
+|---|---|---|---|---|---|
+${skLines.join('\n')}
+
+### 需要加強
+${Object.keys(SKILLS).filter(k => ['weak', 'mid'].includes(skillState(sk[k]))).map(k => `- ${k} ${SKILLS[k]}：${sk[k].ok}/${sk[k].n}`).join('\n') || '- （沒有低於八成的能力，或題數不足）'}
+${Object.keys(steps).length ? `\n「一步一步來」中第一次就選錯的步驟：${Object.entries(steps).map(([k, n]) => `${SKILLS[k] || k} ${n} 次`).join('、')}\n` : ''}
+### 答錯的題目
+${Object.keys(wrong).map(line).join('\n') || '- （沒有）'}
+${prevOpen.length ? `\n### 之前幾週還沒掌握的錯題\n${prevOpen.map(s => line(s.h)).join('\n')}\n` : ''}
+### 答錯的單字
+${[...new Set(wrongWords)].join(', ') || '（沒有）'}
+
+### 我標記「不熟」的地方
+${unsureL.map(e => `- ${e.qt}`).join('\n') || '- （沒有）'}
+
+### 已學過的單字（下週不要再當新字）
+${allWords.join(', ')}
+`;
+}
+
+// 給學習階梯首頁的摘要（首頁沒有英文的題目資料，只讀這份）
+function saveSummary() {
+  const w = curWeek(), ok = okSet(), nx = nextSlot(w, ok), { sk } = weekStats(w);
+  store.set('sum', { n: w.n, theme: w.theme, weeks: WEEKS.length, slots: w.words.map((x, d) => [frac(amIds(w, d), ok), frac(pmIds(w, d), ok)]),
+    next: nx, due: REVIEW.book(qlog()).due.length, weak: Object.keys(SKILLS).filter(k => skillState(sk[k]) === 'weak').map(k => SKILLS[k]), t: Date.now() });
+}
+/* ---- 路由 ---- */
+function route() {
+  const h = location.hash.slice(1), w = curWeek(), m = h.match(/^d([1-7])(am|pm)$/);
+  if (m) { const d = +m[1] - 1; if (m[2] === 'am') renderAM(w, d); else renderPM(w, d); }
+  else if (h === 'review') renderReview();
+  else if (h === 'report') renderReport();
+  else renderHome();
+  $('#wkTag').textContent = `第 ${w.n} 週`;
+  saveSummary();
+  window.scrollTo(0, 0);
+}
+function boot() { addEventListener('hashchange', route); route(); }
+
+/* ---------- 雲端同步（Firebase，各課程與首頁共用）：Google 登入後，把「已完成的章節」存到 Firestore ----------
+   只在正式網站（GitHub Pages，HEAD 帶 app-site meta）啟用；Artifact 與本機檔案不載入 SDK。
+   位置：users/{uid}/settings/<課程 doc> ＝ { done: {章節id: 1}, lang, updated }
+   使用前先定義 COURSE：
+     tracks: [{ doc, get() → 已完成表, set(表) }]   課程頁一條；首頁列出全部課程，一次同步
+     count() / total()                             面板上顯示的完成章數
+     refresh()                                     從雲端合併進新章節後重畫畫面
+     logs: { doc, get() → 紀錄陣列, set(陣列) } 或其陣列（選用） 練習紀錄：與雲端取聯集合併，任何一邊都不會刪掉另一邊的紀錄
+   介面：右上角按鈕 → 下拉面板說明「登入有什麼用」與目前同步狀態；hint() 給首頁的提示列。 */
+const CLOUD = (() => {
+  const CFG = { apiKey: 'AIzaSyD8oEe02SY2PCDe3d40NtTprrApqW_DhB8', authDomain: 'test-5dbba.firebaseapp.com', projectId: 'test-5dbba' };
+  const SDK = 'https://www.gstatic.com/firebasejs/10.12.0/firebase-';
+  let auth = null, db = null, user = null, timer = 0, ready = false, busy = false, err = '', last = 0;
+  const on = () => !!document.querySelector('meta[name="app-site"]') && /^https?:$/.test(location.protocol);
+  const load = src => new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
+  const ref = doc => db.collection('users').doc(user.uid).collection('settings').doc(doc);
+  const zh = () => (typeof isZh === 'function' ? isZh() : true), lang = () => (typeof I18N !== 'undefined' ? I18N.lang : 'zh-TW');
+  const T = (a, b) => (zh() ? a : b);
+  const nDone = () => COURSE.count();
+  const time = t => new Date(t).toLocaleTimeString(zh() ? 'zh-TW' : 'en', { hour: '2-digit', minute: '2-digit' });
+  const G = '<svg viewBox="0 0 18 18" width="16" height="16" aria-hidden="true"><path fill="#4285F4" d="M17.6 9.2c0-.6-.1-1.2-.2-1.7H9v3.3h4.8a4.1 4.1 0 0 1-1.8 2.7v2.2h2.9c1.7-1.6 2.7-3.9 2.7-6.5z"/><path fill="#34A853" d="M9 18c2.4 0 4.5-.8 5.9-2.2L12 13.6c-.8.5-1.8.9-3 .9-2.3 0-4.3-1.6-5-3.7H1v2.3A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M4 10.8a5.4 5.4 0 0 1 0-3.5V4.9H1a9 9 0 0 0 0 8.1l3-2.3z"/><path fill="#EA4335" d="M9 3.6c1.3 0 2.5.5 3.4 1.3l2.6-2.6A9 9 0 0 0 1 4.9l3 2.3c.7-2.1 2.7-3.6 5-3.6z"/></svg>';
+
+  function panelHTML() {
+    if (!ready) return `<p class="cp-t">${T('連線中…', 'Connecting…')}</p>`;
+    const n = nDone(), tot = COURSE.total(), e = err ? `<p class="cp-err">${esc(err)}</p>` : '';
+    if (!user) return `<p class="cp-t">${T('在不同裝置接著學', 'Pick up where you left off on any device')}</p>
+<p>${T('用 Google 帳號登入後，你完成的章節會存到雲端。之後在手機或其他電腦登入同一個帳號，進度會自動接上。', 'Sign in with Google and the chapters you finish are saved to the cloud. Sign in with the same account on your phone or another computer and your progress follows you.')}</p>
+<p class="cp-st">${T(`目前：進度只存在這台裝置（已完成 ${n} / ${tot} 章）`, `Now: progress is saved on this device only (${n} / ${tot} chapters done)`)}</p>
+<button class="btn pri cp-go" type="button" id="cpIn">${G}<span>${T('用 Google 登入', 'Sign in with Google')}</span></button>
+<p class="cp-s">${T('不登入也能使用全部內容。這裡只儲存「完成了哪些章節」與練習紀錄，不會讀取你的其他 Google 資料。', 'Everything works without signing in. Only the list of finished chapters is stored, nothing else from your Google account.')}</p>${e}`;
+    return `<p class="cp-t">${user.photoURL ? `<img class="cp-av" src="${esc(user.photoURL)}" alt="" referrerpolicy="no-referrer">` : ''}<span>${esc(user.displayName || T('已登入', 'Signed in'))}<small>${esc(user.email || '')}</small></span></p>
+<p class="cp-st ok">${busy ? T('同步中…', 'Syncing…') : `✓ ${T(`已同步 ${n} / ${tot} 章`, `${n} / ${tot} chapters synced`)}${last ? ` · ${time(last)}` : ''}`}</p>
+<p>${T('在其他裝置用同一個帳號登入，就會看到相同的進度；在任何一台標記完成，其他裝置也會跟著更新。', 'Sign in with the same account on another device to see the same progress. Chapters you finish anywhere show up everywhere.')}</p>
+<button class="btn" type="button" id="cpOut">${T('登出', 'Sign out')}</button>
+<p class="cp-s" style="margin-top:8px !important">${T('登出後，這台裝置上的進度仍會保留。', 'Signing out keeps your progress on this device.')}</p>${e}`;
+  }
+  function render() {
+    const b = document.getElementById('cloudBtn'), p = document.getElementById('cloudPanel');
+    if (b) {
+      b.innerHTML = user ? `${user.photoURL ? `<img class="cb-av" src="${esc(user.photoURL)}" alt="" referrerpolicy="no-referrer">` : '<span class="cb-dot"></span>'}<span>${busy ? T('同步中', 'Syncing') : T('已同步', 'Synced')}</span>` : `<span aria-hidden="true">☁</span><span>${T('同步進度', 'Sync progress')}</span>`;
+      b.title = user ? T('進度已同步到雲端，點一下看詳情', 'Progress is synced; click for details') : T('登入後可在不同裝置同步學習進度', 'Sign in to sync progress across devices');
+    }
+    if (p && !p.hidden) {
+      p.innerHTML = panelHTML();
+      const i = document.getElementById('cpIn'), o = document.getElementById('cpOut');
+      if (i) i.onclick = signIn;
+      if (o) o.onclick = () => auth.signOut();
+    }
+    const h = document.getElementById('syncHint'); if (h) h.outerHTML = hint();
+  }
+  function signIn() {
+    err = ''; if (!ready) return;
+    auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e => {
+      if (e.code !== 'auth/popup-closed-by-user' && e.code !== 'auth/cancelled-popup-request') { err = T('登入失敗：', 'Sign-in failed: ') + e.code; toggle(true); }
+    });
+  }
+  function toggle(show) {
+    const p = document.getElementById('cloudPanel'), b = document.getElementById('cloudBtn'); if (!p) return;
+    p.hidden = show === undefined ? !p.hidden : !show; b.setAttribute('aria-expanded', String(!p.hidden)); render();
+  }
+  function push() {
+    if (!user) return;
+    clearTimeout(timer); busy = true; render();
+    timer = setTimeout(() => Promise.all(COURSE.tracks.map(t => ref(t.doc).set({ done: t.get(), lang: lang(), updated: Date.now() })))
+      .then(() => { busy = false; err = ''; last = Date.now(); render(); })
+      .catch(e => { busy = false; err = T('同步失敗：', 'Sync failed: ') + e.code; render(); }), 800);
+  }
+  // 練習紀錄：只增不減。上傳最近 3000 筆（Firestore 單一文件上限 1 MB）；下載時與本機取聯集
+  const lkey = e => `${e.t}|${e.c}|${e.h || e.k + e.i}|${e.p}`;
+  let ltimer = 0;
+  const LOGS = () => [].concat(COURSE.logs || []);
+  function pushLog() {
+    if (!user || !LOGS().length) return;
+    clearTimeout(ltimer);
+    ltimer = setTimeout(() => LOGS().forEach(L => ref(L.doc).set({ log: L.get().slice(-3000), updated: Date.now() }).catch(e => console.warn('log sync', e.code))), 2000);
+  }
+  async function pullLog() {
+    let added = 0;
+    for (const L of LOGS()) {
+      try {
+        const snap = await ref(L.doc).get(), remote = (snap.exists && snap.data().log) || [], local = L.get();
+        const seen = new Set(local.map(lkey)), add = remote.filter(e => !seen.has(lkey(e)));
+        if (add.length) { L.set(local.concat(add).sort((a, b) => a.t - b.t)); added += add.length; }
+        const rs = new Set(remote.map(lkey));
+        if (local.some(e => !rs.has(lkey(e)))) pushLog();
+      } catch (e) { console.warn('log sync', e.code); }
+    }
+    return added;
+  }
+  async function pull() {
+    try {
+      busy = true; render();
+      let added = 0, ahead = false;
+      for (const t of COURSE.tracks) {
+        const snap = await ref(t.doc).get(), remote = (snap.exists && snap.data().done) || {}, local = { ...t.get() };
+        const add = Object.keys(remote).filter(k => !local[k]);
+        add.forEach(k => { local[k] = 1; });
+        if (add.length) { t.set(local); added += add.length; }
+        if (Object.keys(local).some(k => !remote[k])) ahead = true;
+      }
+      if (await pullLog()) added++;
+      if (added) COURSE.refresh();
+      busy = false; last = Date.now(); err = '';
+      if (ahead) push(); else render();
+    } catch (e) { busy = false; err = T('同步失敗：', 'Sync failed: ') + e.code; render(); }
+  }
+  // 首頁提示：有進度、還沒登入、沒按過「不用了」時才出現
+  function hint() {
+    if (!on() || user || !ready || !nDone() || store.get('syncHintOff', 0)) return '<div id="syncHint" hidden></div>';
+    return `<div id="syncHint" class="sync-hint" data-notr><span>☁ ${T(`你已完成 ${nDone()} 章，進度目前只存在這台裝置。登入 Google 帳號，換手機或電腦也能接著學。`, `You've finished ${nDone()} chapters, saved on this device only. Sign in with Google to continue on your phone or another computer.`)}</span><button class="btn sm pri" type="button" data-sync="in">${T('登入同步', 'Sign in')}</button><button class="btn sm" type="button" data-sync="off">${T('不用了', 'No thanks')}</button></div>`;
+  }
+  async function start() {
+    if (!on()) return;
+    const top = document.querySelector('.top-in');
+    if (!top) return;
+    top.insertAdjacentHTML('beforeend', '<div class="cloud" data-notr><button class="btn cloud-btn" type="button" id="cloudBtn" aria-expanded="false" aria-controls="cloudPanel"></button><div class="cloud-panel" id="cloudPanel" role="dialog" hidden></div></div>');
+    document.getElementById('cloudBtn').onclick = e => { e.stopPropagation(); toggle(); };
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.cloud')) toggle(false);
+      const s = e.target.closest('[data-sync]');
+      if (s) { if (s.dataset.sync === 'in') signIn(); else { store.set('syncHintOff', 1); render(); } }
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') toggle(false); });
+    render();
+    try {
+      await load(SDK + 'app-compat.js');
+      await Promise.all([load(SDK + 'auth-compat.js'), load(SDK + 'firestore-compat.js')]);
+    } catch (e) { document.querySelector('.cloud').remove(); return; }
+    firebase.initializeApp(CFG);
+    auth = firebase.auth(); db = firebase.firestore();
+    auth.onAuthStateChanged(u => { user = u; ready = true; err = ''; render(); if (u) pull(); });
+  }
+  return { start, push, pushLog, hint, render };
+})();
+
+
+/* ---------- 後中英文：啟動、雲端同步、PWA ---------- */
+boot();
+store.set('weeks', WEEKS.length);  // 給學習階梯首頁顯示進度
+const COURSE = {
+  tracks: [],
+  count: () => WEEKS.reduce((s, w) => s + w.words.filter((x, d) => frac(amIds(w, d), okSet()) >= 1 && frac(pmIds(w, d), okSet()) >= 1).length, 0),
+  total: () => WEEKS.length * 7,
+  refresh: route,
+  logs: { doc: 'engLog', get: () => LOG, set: a => { LOG.length = 0; LOG.push(...a); store.set('log', LOG); } },
+};
+if (document.querySelector('meta[name="app-site"]')) {
+  document.querySelector('.brand').insertAdjacentHTML('beforebegin', '<a class="home-link" href="../">‹ 學習階梯</a>');
+  if (typeof CLOUD !== 'undefined') CLOUD.start();
+  if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('../sw.js', { scope: '../' }).catch(() => {});
+}
+
+</script>
+
+</body>
+</html>

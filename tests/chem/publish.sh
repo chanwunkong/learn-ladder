@@ -8,6 +8,8 @@ node tests/chem/stereo.test.js >/dev/null
 node tests/chem/qid.test.js || exit 1
 node tests/chem/steps.test.js || exit 1
 node tests/chem/show.test.js || exit 1
+node tests/eng/data.test.js || exit 1
+eout=$(bash tests/eng/smoke.sh 2>&1) || { echo "$eout" | grep -v "^ok"; exit 1; }
 out=$(bash tests/chem/smoke.sh 2>&1) || { echo "$out" | grep -v "^ok"; exit 1; }
 echo "$out" | grep -c "^ok" | xargs echo "smoke ok:"
 git add -A
