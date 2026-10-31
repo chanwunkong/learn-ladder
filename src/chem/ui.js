@@ -24,10 +24,10 @@ function chart(o, draw) {
   return `<svg class="ch" viewBox="0 0 ${w} ${h}" role="img"${o.label ? ` aria-label="${esc(o.label)}"` : ''}>
 <g class="grid">${yt.map(v => `<line x1="${L}" x2="${w - R}" y1="${Y(v)}" y2="${Y(v)}"/>`).join('')}</g>
 <line class="ax" x1="${L}" x2="${w - R}" y1="${h - B}" y2="${h - B}"/><line class="ax" x1="${L}" x2="${L}" y1="${T}" y2="${h - B}"/>
-${xt.map(v => `<text class="tk" x="${X(v)}" y="${h - B + 16}" text-anchor="middle">${v}</text>`).join('')}
+${xt.map((v, i) => `<text class="tk" x="${X(v)}" y="${h - B + 16}" text-anchor="middle">${o.xtl ? o.xtl[i] : v}</text>`).join('')}
 ${yt.map(v => `<text class="tk" x="${L - 6}" y="${Y(v) + 4}" text-anchor="end">${v}</text>`).join('')}
 ${o.xlab ? `<text class="lab" x="${(L + w - R) / 2}" y="${h - 6}" text-anchor="middle">${o.xlab}</text>` : ''}
-${o.ylab ? `<text class="lab" transform="translate(13 ${(T + h - B) / 2}) rotate(-90)" text-anchor="middle">${o.ylab}</text>` : ''}
+${o.ylab ? `<text class="lab" transform="translate(15 ${(T + h - B) / 2}) rotate(-90)" text-anchor="middle">${o.ylab}</text>` : ''}
 ${draw(X, Y)}</svg>`;
 }
 const path = pts => pts.map((p, i) => `${i ? 'L' : 'M'}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join('');

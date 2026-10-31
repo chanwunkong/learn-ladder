@@ -36,8 +36,8 @@ CH.push({
 <p class="eq">ΔTb = i·Kb·m　　ΔTf = i·Kf·m　　π = i·M·R·T<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>ΔTb、ΔTf</dt><dd>沸點上升、凝固點下降的度數（°C 或 K）</dd></div><div><dt>Kb、Kf</dt><dd>溶劑的沸點上升常數、凝固點下降常數（水的 Kf = 1.86 °C·kg/mol）<span class="tg given">卷上會給</span></dd></div><div><dt>m</dt><dd>重量莫耳濃度（mol / 溶劑 kg）</dd></div><div><dt>i</dt><dd>凡特何夫因子：每個溶質解離出的粒子數</dd></div><div><dt>π</dt><dd>滲透壓（atm）</dd></div><div><dt>M</dt><dd>體積莫耳濃度（mol/L）</dd></div><div><dt>R</dt><dd>氣體常數 0.0821 L·atm/(mol·K)<span class="tg given">卷上會給</span></dd></div><div><dt>T</dt><dd>絕對溫度（K）= °C + 273</dd></div></dl>
 <p>凡特何夫因子 i 是每個溶質解離出的粒子數：葡萄糖 1、NaCl 2、CaCl₂ 3（理想值）。比較時比的是 i × 濃度；由測得的 ΔTf 或 π 也能反推分子量（高分子常用滲透壓，因為數值較大）。</p>
-<p>兩種液體都會揮發時（第二張圖），每種成分各自貢獻一部分壓力（<b>分壓</b>），總壓是分壓的和：</p>
-<p class="eq">P_A = X_A × P°_A　（拉午耳定律）<span class="tg must">要背</span></p>
+<p>兩種液體都會揮發時（第二張圖），每種成分各自貢獻一部分壓力（<b>分壓</b>），總壓是分壓的和；每一種成分的分壓遵守<b>拉午耳定律</b>：</p>
+<p class="eq">P_A = X_A × P°_A<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>P_A</dt><dd>A 在溶液上方的分壓</dd></div><div><dt>X_A</dt><dd>A 在溶液中的莫耳分率（A 的莫耳數 ÷ 總莫耳數）</dd></div><div><dt>P°_A</dt><dd>純 A 在同溫度的蒸氣壓</dd></div></dl>
 <p>蒸氣中較易揮發（P° 較大）的成分比例較高。</p>
 <p>溶液中離子越多、電荷越大，導電度越大；<b>離子強度</b>用來衡量溶液中離子「有多擠」：</p>
@@ -45,8 +45,8 @@ CH.push({
 <dl class="sym"><div><dt>cᵢ</dt><dd>第 i 種離子的濃度（M）</dd></div><div><dt>zᵢ</dt><dd>第 i 種離子的電荷（Mg²⁺ 為 2，平方後是 4）</dd></div><div><dt>Σ</dt><dd>溶液中每一種離子都算一次再加總</dd></div></dl>
 <p>例如 0.1 M MgSO₄ 為 ½(0.1 × 4 + 0.1 × 4) = 0.4；同濃度的 NaCl 只有 0.1。</p>` },
     { h: '氣體在水中能溶多少？', w: 'henry', body: `
-<p>溫度固定時，氣體的溶解度和它的分壓成正比：</p>
-<p class="eq">C = k·P　（亨利定律）<span class="tg must">要背</span></p>
+<p>溫度固定時，氣體的溶解度和它的分壓成正比，稱為<b>亨利定律</b>：</p>
+<p class="eq">C = k·P<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>C</dt><dd>氣體在水中的濃度（mol/L）</dd></div><div><dt>k</dt><dd>亨利常數，每種氣體與溫度各不相同<span class="tg given">卷上會給</span></dd></div><div><dt>P</dt><dd>該氣體的分壓（atm）；空氣中 O₂ 約 0.21 atm</dd></div></dl>
 <p>溫度升高，氣體溶解度降低，所以溫水中的魚比較容易缺氧。</p>
 <p>溶液之外，還有粒子大小介於 1–1000 nm 的<b>膠體</b>（牛奶、血液、豆漿）：粒子不會沉降，但會散射光（廷得耳效應）。離子溶於水時會被水分子包圍（水分子帶部分負電的 O 朝向陽離子、帶部分正電的 H 朝向陰離子），這個過程放出的能量稱為<b>水合能</b>，隨離子電荷增加、半徑減小而變大（Li⁺ &gt; Na⁺ &gt; K⁺；Mg²⁺ &gt; Na⁺）。</p>` },
