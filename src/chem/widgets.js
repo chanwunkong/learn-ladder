@@ -2,6 +2,10 @@
    W.名稱(el) 在 el 裡畫出互動圖，回傳 { set(狀態) } 給練習題的「在圖上看」使用。 */
 const W = {};
 const seg = (id, opts, cur) => `<div class="seg" id="${id}" role="group">${opts.map(([v, t]) => `<button type="button" data-v="${v}" aria-pressed="${v === cur}">${t}</button>`).join('')}</div>`;
+// 一組控制＝標籤＋它的選項，包成一個單位：標籤在上、選項在下，換行時不會被拆開（寫作標準「控制項一組一行」）
+const ctl = (label, inner) => `<div class="ctl"><span class="ctl-l">${label}</span>${inner}</div>`;
+// 選項數量固定的按鈕組：不能選的變灰（disabled），不要讓按鈕消失，否則整列會重排
+const segX = (id, opts, cur, off = () => false) => `<div class="seg" id="${id}" role="group">${opts.map(([v, t]) => `<button type="button" data-v="${v}" aria-pressed="${v === cur}"${off(v) ? ' disabled' : ''}>${t}</button>`).join('')}</div>`;
 const bindSeg = (el, id, f) => $$(`#${id} button`, el).forEach(b => { b.onclick = () => f(b.dataset.v); });
 const pressSeg = (el, id, v) => $$(`#${id} button`, el).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === v)));
 const card = (k, lab, val, sub = '') => `<div class="card" data-k="${k}"><span>${lab}</span><b>${val}</b>${sub ? `<small>${sub}</small>` : ''}</div>`;

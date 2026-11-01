@@ -3,17 +3,41 @@
 /* ===== 1. 氫原子能階與光譜 ===== */
 W.hspec = el => {
   let ni = 3, nf = 2, Z = 1;
-  el.innerHTML = `<div class="w-row"><label class="sel">粒子 <select id="hsZ"><option value="1">H</option><option value="2">He⁺</option><option value="3">Li²⁺</option></select></label><label class="sel">從 n = <select id="hsI">${[2, 3, 4, 5, 6, 7].map(n => `<option>${n}</option>`).join('')}</select></label><label class="sel">掉到 n = <select id="hsF">${[1, 2, 3].map(n => `<option>${n}</option>`).join('')}</select></label><span class="sp"></span>${[[3, 2, '紅線'], [4, 2, '藍綠線'], [2, 1, '萊曼系'], [4, 3, '帕申系']].map(([a, b, t]) => `<button class="btn sm ghost" type="button" data-t="${a},${b}">${t}</button>`).join('')}</div><div class="hsgrid"><div id="hsL"></div><div id="hsS"></div></div><div class="cards" id="hsK"></div><p class="note" id="hsN"></p>`;
+  const SER = { 1: '萊曼系', 2: '巴耳末系', 3: '帕申系' };
+  el.innerHTML = `<div class="w-row"><label class="sel">粒子 <select id="hsZ"><option value="1">H</option><option value="2">He⁺</option><option value="3">Li²⁺</option></select></label><label class="sel">從 n = <select id="hsI">${[2, 3, 4, 5, 6, 7].map(n => `<option>${n}</option>`).join('')}</select></label><label class="sel">掉到 n = <select id="hsF">${[1, 2, 3].map(n => `<option>${n}</option>`).join('')}</select></label></div>${ctl('常見的譜線', `<div class="w-row" style="margin:0">${[[3, 2, '紅線 656 nm'], [4, 2, '藍綠線 486 nm'], [2, 1, '萊曼系第一條'], [4, 3, '帕申系第一條']].map(([a, b, t]) => `<button class="btn sm ghost" type="button" data-t="${a},${b}">${t}</button>`).join('')}</div>`)}<div class="hsgrid"><div id="hsL"></div><div id="hsS"></div></div><div class="cards" id="hsK"></div><p class="note" id="hsN"></p>`;
   const E = n => -13.6 * Z * Z / (n * n), hc = 1239.84;   // eV·nm；類氫粒子 Eₙ = −13.6 Z²/n²
-  const col = l => nmRGB(l) || (l < 380 ? '#7a5cff' : '#a33');   // 和「一道光」同一套波長 → 顏色換算
+  const col = l => nmRGB(l) || (l < 380 ? '#7a5cff' : '#c0504a');   // 和「一道光」同一套波長 → 顏色換算
+  // 標籤避讓：依 y 排序，太近就往下推，再用細線連回能階
+  const spread = (items, gap) => { items.sort((a, b) => a.y - b.y); items.forEach((it, i) => { it.ly = i ? Math.max(it.y, items[i - 1].ly + gap) : it.y; }); return items; };
+  const nice = (a, b) => { const span = b - a, st = [1, 2, 5, 10, 20, 50, 100, 200, 500].map(x => x * Math.pow(10, Math.floor(Math.log10(span)) - 1)).find(s => span / s <= 6); const t = []; for (let v = Math.ceil(a / st) * st; v <= b; v += st) t.push(+v.toFixed(6)); return t; };
   function draw() {
     if (nf >= ni) nf = Math.max(1, ni - 1);
-    const dE = E(ni) - E(nf), lam = hc / dE, Y = v => 20 + (-v) / (13.6 * Z * Z) * 200;
-    $('#hsL', el).innerHTML = `<svg viewBox="0 0 400 240" class="ch" role="img" aria-label="氫原子能階">${[1, 2, 3, 4, 5, 6, 7].map(n => `<line class="lvl${n === ni || n === nf ? ' on' : ''}" x1="40" x2="200" y1="${Y(E(n))}" y2="${Y(E(n))}"/>${n <= 3 ? `<text class="tk" x="206" y="${Y(E(n)) + 4}">n=${n}（${fx(E(n), 2)} eV）</text>` : ''}`).join('')}<text class="tk" x="206" y="${Y(E(5)) - 6}">n=4、5、6…（越來越密，趨近 0）</text><line x1="120" x2="120" y1="${Y(E(ni))}" y2="${Y(E(nf)) - 6}" stroke="${col(lam)}" stroke-width="3" marker-end="url(#hm2)"/><defs><marker id="hm2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="${col(lam)}"/></marker></defs></svg>`;
-    const lines = [3, 4, 5, 6].map(n => hc / (E(n) - E(2))).filter(l => l >= 380 && l <= 750);
-    $('#hsS', el).innerHTML = chart({ x: [380, 750], y: [0, 1], xt: [400, 500, 600, 700], yt: [], xlab: '可見光波長（nm）：巴耳末系（掉到 n = 2）', h: 120 }, (X, Y) => `<defs><linearGradient id="vis" x1="0" x2="1"><stop offset="0" stop-color="#6a4cff"/><stop offset=".3" stop-color="#2f8fff"/><stop offset=".5" stop-color="#2fbf5f"/><stop offset=".65" stop-color="#e8d23a"/><stop offset=".8" stop-color="#f29a2e"/><stop offset="1" stop-color="#e2403a"/></linearGradient></defs><rect x="${X(380)}" y="${Y(1)}" width="${X(750) - X(380)}" height="${Y(0) - Y(1)}" fill="url(#vis)" opacity=".18"/>${lines.map(l => `<line x1="${X(l)}" x2="${X(l)}" y1="${Y(0)}" y2="${Y(1)}" stroke="${col(l)}" stroke-width="${Math.abs(l - lam) < 1 ? 5 : 2.5}"/>`).join('')}`);
-    $('#hsK', el).innerHTML = card('e', 'ΔE', `${fx(dE, 2)} eV`, `${fx(dE * 96.485, 0)} kJ/mol`) + card('l', '光的波長 λ = hc ÷ ΔE', `${fx(lam, 0)} nm`) + card('r', '區域', lam < 380 ? '紫外光' : lam <= 750 ? '可見光' : '紅外光') + card('ie', `游離能（從 n = 1）`, `${fx(13.6 * Z * Z, 1)} eV`, `13.6 × ${Z}²`) + card('rad', `n = ${ni} 的軌道半徑`, `${fx(0.529 * ni * ni / Z, 2)} Å`, `0.529 × ${ni}² ÷ ${Z}`);
-    $('#hsN', el).innerHTML = `電子從 n = ${ni} 掉到 n = ${nf}，放出能量 ΔE = 13.6 × ${Z}² × (1/${nf}² − 1/${ni}²) eV = ${fx(dE, 2)} eV 的光子，波長 ${fx(lam, 0)} nm。能階是<b>分立</b>的，所以光譜是一條一條的線，而不是連續的彩虹。掉到 n = 1 的（萊曼系）能量大，在紫外光；掉到 n = 2 的（巴耳末系）落在可見光。${Z > 1 ? ` ${Z === 2 ? 'He⁺' : 'Li²⁺'} 只有一個電子，和氫原子同一套公式，只是原子核電荷 Z = ${Z}：能量乘 Z²、半徑除以 Z。` : ''}`;
+    // 能階圖：真實比例（越往上越密）。掉到 n = 1 時畫全部；掉到 n ≥ 2 時放大「0 到終點能階」這一段，箭頭才看得清楚
+    const dE = E(ni) - E(nf), lam = hc / dE, zoom = nf > 1, Emin = zoom ? E(nf) * 1.3 : E(1), Y = v => 26 + v / Emin * 206;
+    const tk = nice(Emin, 0), ticks = tk.filter(v => v >= Emin), shown = [1, 2, 3, 4, 5, 6, 7].filter(n => E(n) >= Emin);
+    const labs = spread([{ y: Y(0), t: 'n = ∞（0 eV，電子離開原子）', on: 0 }, ...[1, 2, 3].concat(ni > 3 ? [ni] : []).filter(k => E(k) >= Emin).map(k => ({ y: Y(E(k)), t: `n = ${k}（${fx(E(k), 2)} eV）`, on: k === ni || k === nf })),
+      ...(ni <= 3 ? [{ y: Y(E(5)), t: 'n = 4、5、6…（越往上越密）', on: 0 }] : [])], 15);
+    $('#hsL', el).innerHTML = `<svg viewBox="0 0 420 ${zoom ? 268 : 250}" class="ch" role="img" aria-label="能階圖：從 n = ${ni} 掉到 n = ${nf}">
+<text class="tk" x="40" y="12" text-anchor="end">eV</text>${ticks.map(v => `<line x1="42" x2="47" y1="${Y(v)}" y2="${Y(v)}" class="ax"/><text class="tk" x="40" y="${Y(v) + 4}" text-anchor="end">${fx(v, 0)}</text>`).join('')}<line class="ax" x1="47" x2="47" y1="${Y(0)}" y2="${Y(Emin)}"/>${zoom ? `<text class="tk" x="56" y="${Y(Emin) + 16}">已放大 0 到 ${fx(Emin, 1)} eV；n = 1（${fx(E(1), 1)} eV）在更下方</text>` : ''}
+<line x1="56" x2="210" y1="${Y(0)}" y2="${Y(0)}" class="node"/>${shown.map(n => `<line class="lvl${n === ni || n === nf ? ' on' : ''}" x1="56" x2="210" y1="${Y(E(n))}" y2="${Y(E(n))}"${n === ni || n === nf ? '' : ' style="stroke-width:1.2"'}/>`).join('')}
+${labs.map(l => `<line x1="212" x2="222" y1="${l.y}" y2="${l.ly}" class="node"/><text class="tk${l.on ? ' hl' : ''}" x="226" y="${l.ly + 4}">${l.t}</text>`).join('')}
+<line data-cur="躍遷箭頭" x1="133" x2="133" y1="${Y(E(ni))}" y2="${Y(E(nf)) - 7}" stroke="${col(lam)}" stroke-width="3.5" marker-end="url(#hm2)"/><defs><marker id="hm2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="${col(lam)}"/></marker></defs></svg>`;
+    // 光譜：畫「掉到 n = nf」這一整個系列，範圍跟著系列走（萊曼系在紫外、帕申系在紅外）
+    const ks = Array.from({ length: 12 - nf }, (_, i) => nf + 1 + i), ls = ks.map(k => hc / (E(k) - E(nf))), lim = hc / -E(nf);
+    const x0 = lim * 0.94, x1 = ls[0] * 1.06, xt = nice(x0, x1), reg = l => (l < 380 ? '紫外光' : l <= 750 ? '可見光' : '紅外光');
+    $('#hsS', el).innerHTML = chart({ x: [x0, x1], y: [0, 1.3], xt, yt: [], xlab: `${SER[nf]}（掉到 n = ${nf}）的譜線，波長 nm；虛線是系列極限 ${fx(lim, 0)} nm`, h: 150 }, (X, Y) => {
+      const va = Math.max(380, x0), vb = Math.min(750, x1), band = [];
+      if (vb > va) { const st = []; for (let l = va; l <= vb; l += 10) st.push(`<stop offset="${((l - va) / (vb - va)).toFixed(3)}" stop-color="${nmRGB(Math.min(l, 749))}"/>`);
+        band.push(`<defs><linearGradient id="hsVis" gradientUnits="userSpaceOnUse" x1="${X(va)}" x2="${X(vb)}" y1="0" y2="0">${st.join('')}</linearGradient></defs><rect x="${X(va)}" y="${Y(1)}" width="${X(vb) - X(va)}" height="${Y(0) - Y(1)}" fill="url(#hsVis)" opacity=".25"/>`); }
+      const zones = [['紫外光', x0, Math.min(380, x1)], ['可見光', Math.max(380, x0), Math.min(750, x1)], ['紅外光', Math.max(750, x0), x1]].filter(z => X(z[2]) - X(z[1]) > 60);
+      const anc = X(lam) < 140 ? 'start' : X(lam) > 420 ? 'end' : 'middle';
+      return band.join('') + zones.map(z => `<text class="tk" x="${(X(z[1]) + X(z[2])) / 2}" y="${Y(0.12)}" text-anchor="middle">${z[0]}</text>`).join('')
+        + `<line x1="${X(lim)}" x2="${X(lim)}" y1="${Y(0)}" y2="${Y(1)}" class="node"/>`
+        + ls.map((l, i) => `<line x1="${X(l)}" x2="${X(l)}" y1="${Y(0)}" y2="${Y(1)}" stroke="${col(l)}" stroke-width="${ks[i] === ni ? 5 : 1.6}" opacity="${ks[i] === ni ? 1 : 0.75}"${ks[i] === ni ? ` data-cur="${ni}→${nf} 譜線"` : ''}/>`).join('')
+        + `<text class="tk hl" x="${X(lam)}" y="${Y(1.1)}" text-anchor="${anc}">n = ${ni} → ${nf}：${fx(lam, 0)} nm（${reg(lam)}）</text>`;
+    });
+    $('#hsK', el).innerHTML = card('e', 'ΔE（放出的光子能量）', `${fx(dE, 2)} eV`, `${fx(dE * 96.485, 0)} kJ/mol`) + card('l', '光的波長 λ = hc ÷ ΔE', `${fx(lam, 0)} nm`, `≈ 1240 ÷ ${fx(dE, 2)}`) + card('r', '區域', reg(lam), SER[nf]) + card('ie', `游離能（從 n = 1 拿走）`, `${fx(13.6 * Z * Z, 1)} eV`, `13.6 × ${Z}²`);
+    $('#hsN', el).innerHTML = `電子從 n = ${ni} 掉到 n = ${nf}，放出能量 ΔE = 13.6 × ${Z}² × (1/${nf}² − 1/${ni}²) eV = ${fx(dE, 2)} eV 的光子，波長 ${fx(lam, 0)} nm。能階是<b>分立</b>的，所以光譜是一條一條的線，而不是連續的彩虹。同一個系列的線越往短波長越密，最後收在虛線（從 n = ∞ 掉下來，就是游離的逆過程）。掉到 n = 1（萊曼系）能量大、在紫外光；掉到 n = 2（巴耳末系）落在可見光；掉到 n = 3（帕申系）在紅外光。${Z > 1 ? ` ${Z === 2 ? 'He⁺' : 'Li²⁺'} 只有一個電子，和氫原子同一套公式，只是原子核電荷 Z = ${Z}：能量乘 Z²，所以同一個系列整個移到更短的波長。` : ''}`;
     $('#hsI', el).value = ni; $('#hsF', el).value = nf; $('#hsZ', el).value = Z;
   }
   $('#hsI', el).onchange = e => { ni = +e.target.value; draw(); };
@@ -27,7 +51,7 @@ W.hspec = el => {
 /* ===== 2. 量子數與軌域 ===== */
 W.qn = el => {
   const st = { n: 2, l: 1, m: 0 }, LN = 'spdf';
-  el.innerHTML = `<div class="w-row" id="qnC"></div><div class="bgrid"><div id="qnS"></div><div class="cards" id="qnK"></div></div><p class="note" id="qnN"></p>`;
+  el.innerHTML = `<div id="qnC"></div><div class="bgrid"><div id="qnS"></div><div class="cards" id="qnK"></div></div><p class="note" id="qnN"></p>`;
   function shape() {
     const { l, m } = st;
     if (l === 0) return '<circle class="orbf" cx="110" cy="100" r="58"/>';
@@ -46,10 +70,13 @@ W.qn = el => {
   }
   function draw() {
     const { n, l, m } = st;
-    $('#qnC', el).innerHTML = `<span class="small">n</span>${[1, 2, 3, 4].map(v => `<button class="btn sm${v === n ? ' pri' : ''}" type="button" data-n="${v}">${v}</button>`).join('')}<span class="small">ℓ</span>${[0, 1, 2, 3].map(v => `<button class="btn sm${v === l ? ' pri' : ''}" type="button" data-l="${v}"${v >= n ? ' disabled' : ''}>${v}（${LN[v]}）</button>`).join('')}<span class="small">mℓ</span>${Array.from({ length: 2 * l + 1 }, (_, i) => i - l).map(v => `<button class="btn sm${v === m ? ' pri' : ''}" type="button" data-m="${v}">${v}</button>`).join('')}`;
-    $$('[data-n]', el).forEach(b => { b.onclick = () => { st.n = +b.dataset.n; st.l = Math.min(st.l, st.n - 1); st.m = clamp(st.m, -st.l, st.l); draw(); }; });
-    $$('[data-l]', el).forEach(b => { b.onclick = () => { st.l = +b.dataset.l; st.m = clamp(st.m, -st.l, st.l); draw(); }; });
-    $$('[data-m]', el).forEach(b => { b.onclick = () => { st.m = +b.dataset.m; draw(); }; });
+    // 三個量子數各一行；ℓ、mℓ 的按鈕數量固定（4 個、7 個），不合規則的變灰
+    $('#qnC', el).innerHTML = ctl('n 主量子數：第幾層', segX('qnN1', [1, 2, 3, 4].map(v => [String(v), v]), String(n)))
+      + ctl('ℓ 角量子數：形狀（0 到 n − 1）', segX('qnL', [0, 1, 2, 3].map(v => [String(v), `${v}（${LN[v]}）`]), String(l), v => +v >= n))
+      + ctl('mℓ 磁量子數：方向（−ℓ 到 +ℓ）', segX('qnM', [-3, -2, -1, 0, 1, 2, 3].map(v => [String(v), v > 0 ? '+' + v : v < 0 ? '−' + -v : '0']), String(m), v => Math.abs(+v) > l).replace('class="seg"', 'class="seg fixw"'));
+    bindSeg(el, 'qnN1', v => { st.n = +v; st.l = Math.min(st.l, st.n - 1); st.m = clamp(st.m, -st.l, st.l); draw(); });
+    bindSeg(el, 'qnL', v => { st.l = +v; st.m = clamp(st.m, -st.l, st.l); draw(); });
+    bindSeg(el, 'qnM', v => { st.m = +v; draw(); });
     $('#qnS', el).innerHTML = l === 3 ? '<p class="note">f 軌域形狀複雜，考試只需要知道有 7 個。</p>' : `<svg viewBox="0 0 220 200" class="bk" role="img" aria-label="${n}${LN[l]} 軌域">${shape()}${nodesSvg()}<line x1="10" x2="210" y1="100" y2="100" class="axl"/><line x1="110" x2="110" y1="5" y2="195" class="axl"/><text class="tk" x="205" y="94">x</text><text class="tk" x="114" y="14">z</text></svg><p class="small mut c">${n}${LN[l]} 軌域（示意，深淺兩色為波函數正負號；虛線圓是徑向節點的球面，虛線直線是角節面）</p>`;
     $('#qnK', el).innerHTML = card('o', '軌域', `${n}${LN[l]}`) + card('c', '這個副層的軌域數', 2 * l + 1) + card('e', '最多電子數', 2 * (2 * l + 1)) + card('s', `n = ${n} 殼層總軌域數`, n * n) + card('nd', '節面數（角節面 ℓ + 徑向 n−ℓ−1）', `${l} + ${n - l - 1}`);
     $('#qnN', el).innerHTML = `規則：n = 1, 2, 3…；ℓ = 0 到 n − 1；mℓ = −ℓ 到 +ℓ；每個軌域再有 ms = ±½ 兩個自旋。所以第 n 層有 n² 個軌域、最多 2n² 個電子。<b>沒有 1p、2d</b>，因為 ℓ 必須小於 n。`;
@@ -78,7 +105,7 @@ const CORES = [[86, 'Rn'], [54, 'Xe'], [36, 'Kr'], [18, 'Ar'], [10, 'Ne'], [2, '
 W.econf = el => {
   const st = { Z: 26, q: 0 };
   const PRE = [[6, 0, 'C'], [7, 0, 'N'], [24, 0, 'Cr'], [29, 0, 'Cu'], [26, 0, 'Fe'], [26, 2, 'Fe²⁺'], [26, 3, 'Fe³⁺'], [42, 0, 'Mo'], [46, 0, 'Pd'], [47, 0, 'Ag'], [74, 0, 'W'], [79, 0, 'Au'], [16, -2, 'S²⁻'], [11, 1, 'Na⁺'], [50, 0, 'Sn']];
-  el.innerHTML = `<div class="w-row">${PRE.map(([z, q, t]) => `<button class="btn sm ghost" type="button" data-p="${z},${q}">${t}</button>`).join('')}</div><div class="w-row"><label class="rng">原子序 Z <input type="range" id="ecZ" min="1" max="86" step="1"><output class="mono" id="ecO"></output></label></div>${seg('ecQ', [['-2', '−2'], ['-1', '−1'], ['0', '中性'], ['1', '+1'], ['2', '+2'], ['3', '+3']], '0')}<p class="eq" id="ecS"></p><div class="boxes" id="ecB"></div><div class="cards" id="ecK"></div><p class="note" id="ecN"></p>`;
+  el.innerHTML = `<div class="w-row">${PRE.map(([z, q, t]) => `<button class="btn sm ghost" type="button" data-p="${z},${q}">${t}</button>`).join('')}</div><div class="w-row"><label class="rng">原子序 Z <input type="range" id="ecZ" min="1" max="86" step="1"><output class="mono" id="ecO"></output></label></div>${seg('ecQ', [['-2', '−2'], ['-1', '−1'], ['0', '中性'], ['1', '+1'], ['2', '+2'], ['3', '+3']], '0')}<div class="cards" id="ecK"></div><p class="eq" id="ecS"></p><div class="boxes" id="ecB"></div><p class="note" id="ecN"></p>`;
   function draw() {
     const { Z, q } = st, cf = econf(Z, q), ne = Z - q, sup = n => String(n).split('').map(c => SUP[c]).join('');
     const core = CORES.find(([n]) => n < ne && econf(n).every(([o, k]) => (cf.find(x => x[0] === o) || [0, 0])[1] === k)), coreOrb = core ? econf(core[0]).map(x => x[0]) : [];
@@ -91,7 +118,7 @@ W.econf = el => {
     const unp = cf.reduce((s2, [o, k]) => { const nb = 2 * LN[o[1]] + 1; return s2 + (k <= nb ? k : 2 * nb - k); }, 0);
     let last = ''; { let left = Z; for (const [o, c] of AUF) { if (left <= 0) break; last = o; left -= c; } }
     const iso = CORES.find(([n]) => n === ne);
-    $('#ecK', el).innerHTML = card('n', '電子數', ne, `${Z} − (${q})`) + card('u', '未成對電子', unp, unp ? '順磁性' : '反磁性') + card('b', '週期表的區', `${last[1]} 區`, `最後填入 ${last}`) + (iso ? card('i', '等電子', iso[1], '與鈍氣電子數相同') : '');
+    $('#ecK', el).innerHTML = card('n', '電子數', ne, `${Z} − (${q})`) + card('u', '未成對電子', unp, unp ? '順磁性' : '反磁性') + card('b', '週期表的區', `${last[1]} 區`, `最後填入 ${last}`) + card('i', '等電子', iso ? iso[1] : '—', iso ? '與鈍氣電子數相同' : '不是鈍氣組態');
     const exc = q === 0 && EXC[Z];
     $('#ecN', el).innerHTML = `依構築原理的填入順序 1s 2s 2p 3s 3p 4s 3d 4p 5s 4d 5p 6s 4f 5d 6p 填電子，寫的時候依 n 由小到大排列。${exc ? `<b>${ENAME[Z - 1]}是例外</b>：半滿或全滿的 d（或 f）副層較穩定，實際組態和填入順序不同。` : ''}${q > 0 && Z > 20 ? ` 過渡金屬形成陽離子時，先失去 n 最大的 <b>s</b> 電子，再失去 (n−1)d 電子。` : ''}${q < 0 ? ` 陰離子把多的電子依同樣順序繼續填入。` : ''}`;
     pressSeg(el, 'ecQ', String(q));
@@ -237,7 +264,7 @@ W.hseries = el => {
 /* ===== 3c. 波耳軌道的大小：rₙ = 0.529 Å × n² / Z ===== */
 W.bohrr = el => {
   const st = { Z: 1, n: 2 };
-  el.innerHTML = `<div class="w-row"><label class="sel">粒子 <select id="brZ"><option value="1">H（Z = 1）</option><option value="2">He⁺（Z = 2）</option><option value="3">Li²⁺（Z = 3）</option></select></label>${seg('brN', [1, 2, 3, 4].map(n => [String(n), `n = ${n}`]), '2')}</div><div id="brG"></div><div class="cards" id="brK"></div><p class="note" id="brT"></p>`;
+  el.innerHTML = `<div class="w-row"><label class="sel">粒子 <select id="brZ"><option value="1">H（Z = 1）</option><option value="2">He⁺（Z = 2）</option><option value="3">Li²⁺（Z = 3）</option></select></label></div>${ctl('看哪一層', seg('brN', [1, 2, 3, 4].map(n => [String(n), `n = ${n}`]), '2'))}<div id="brG"></div><div class="cards" id="brK"></div><p class="note" id="brT"></p>`;
   function draw() {
     const { Z, n } = st, r = k => 0.529 * k * k / Z, sc = 105 / r(4) * Z / 1;   // 以 H 的 n = 4 當最大圈，比例固定，換 Z 時圈會縮小
     const R = k => 0.529 * k * k / Z * (105 / (0.529 * 16));
@@ -257,21 +284,21 @@ W.bohrr = el => {
 function lagu(k, a, x) { if (k === 0) return 1; let L0 = 1, L1 = 1 + a - x; for (let i = 1; i < k; i++) { const L2 = ((2 * i + 1 + a - x) * L1 - (i + a) * L0) / (i + 1); L0 = L1; L1 = L2; } return L1; }
 W.radial = el => {
   const st = { n: 3, l: 0 }, LN = 'spdf';
-  el.innerHTML = `<div class="w-row" id="rdC"></div><div id="rdG"></div><div class="cards" id="rdK"></div><p class="note" id="rdN"></p>`;
+  el.innerHTML = `<div id="rdC"></div><div id="rdG"></div><div class="cards" id="rdK"></div><p class="note" id="rdN"></p>`;
   function draw() {
     const { n, l } = st, k = n - l - 1, rmax = n * n * 2 + 6, N = 300;
     const P = Array.from({ length: N + 1 }, (_, i) => { const r = rmax * i / N, rho = 2 * r / n, R = Math.pow(rho, l) * Math.exp(-rho / 2) * lagu(k, 2 * l + 1, rho); return [r, r * r * R * R]; });
     const mx = Math.max(...P.map(p => p[1]));
     const nodes = []; for (let i = 1; i < N; i++) { const a = lagu(k, 2 * l + 1, 2 * P[i][0] / n), b = lagu(k, 2 * l + 1, 2 * P[i + 1][0] / n); if (a * b < 0) nodes.push(P[i][0] + (P[i + 1][0] - P[i][0]) * a / (a - b)); }
     const xt = Array.from({ length: Math.floor(rmax / 5) + 1 }, (_, i) => i * 5);
-    $('#rdC', el).innerHTML = `<span class="small">n</span>${[1, 2, 3, 4].map(v => `<button class="btn sm${v === n ? ' pri' : ''}" type="button" data-n="${v}">${v}</button>`).join('')}<span class="small">ℓ</span>${[0, 1, 2, 3].map(v => `<button class="btn sm${v === l ? ' pri' : ''}" type="button" data-l="${v}" ${v >= n ? 'disabled' : ''}>${LN[v]}</button>`).join('')}`;
+    $('#rdC', el).innerHTML = ctl('n 主量子數：第幾層', segX('rdN1', [1, 2, 3, 4].map(v => [String(v), v]), String(n))) + ctl('ℓ 角量子數：形狀', segX('rdL', [0, 1, 2, 3].map(v => [String(v), `${v}（${LN[v]}）`]), String(l), v => +v >= n));
     $('#rdG', el).innerHTML = chart({ w: 600, h: 250, x: [0, rmax], y: [0, 1.08], xt, yt: [], xlab: '離原子核的距離 r（單位 a₀ = 0.529 Å）', ylab: '機率', label: '徑向機率分布' }, (X, Y) =>
       `<path class="tline" d="${P.map(([r, p], i) => `${i ? 'L' : 'M'}${X(r).toFixed(1)},${Y(p / mx).toFixed(1)}`).join('')}"/>`
       + nodes.map(r => `<line class="mk" x1="${X(r)}" x2="${X(r)}" y1="${Y(0)}" y2="${Y(1.05)}"/><circle class="dot" cx="${X(r)}" cy="${Y(0)}" r="5"/><text class="tk hl" x="${X(r)}" y="${Y(1.05) - 3}" text-anchor="middle">節點 ${fx(r, 1)} a₀</text>`).join(''));
     $('#rdK', el).innerHTML = card('o', '軌域', `${n}${LN[l]}`) + card('r', '徑向節點（球面）', `${k} 個`, `n − ℓ − 1 = ${n} − ${l} − 1`) + card('a', '角節面（平面）', `${l} 個`, `= ℓ`);
     $('#rdN', el).innerHTML = `曲線是「在半徑 r 的薄球殼上找到電子」的機率。曲線碰到 0 的地方就是<b>徑向節點</b>：那個半徑的整個球面上都找不到電子。1s 沒有節點；2s 有 1 個，在 r = 2a₀；3s 有 2 個。n 越大，電子越常出現在離原子核越遠的地方，所以原子越大。同一層的 s 軌域在原子核附近有一個小峰（穿透得較深），這就是 2s 比 2p 能量低、填電子時先填 s 的原因。`;
-    $$('[data-n]', el).forEach(b => { b.onclick = () => { st.n = +b.dataset.n; st.l = Math.min(st.l, st.n - 1); draw(); }; });
-    $$('[data-l]', el).forEach(b => { b.onclick = () => { st.l = +b.dataset.l; draw(); }; });
+    bindSeg(el, 'rdN1', v => { st.n = +v; st.l = Math.min(st.l, st.n - 1); draw(); });
+    bindSeg(el, 'rdL', v => { st.l = +v; draw(); });
   }
   draw();
   return { set(s) { Object.assign(st, s); draw(); } };
@@ -342,7 +369,7 @@ W.emspec = el => {
     const ls = l >= 1 ? `${fx(l, 2)} m` : l >= 1e-3 ? `${fx(l * 100, 1)} cm` : `${sci(l * 1e9, 3)} nm`;
     $('#emO', el).textContent = ls;
     $('#emF', el).innerHTML = `E = hν = hc/λ = (6.626×10⁻³⁴)(2.998×10⁸) ÷ λ = <b>${sci(E, 3)} J</b>（一個光子）　× Nₐ ＝ <b>${sci(Em, 3)} kJ/mol</b>`;
-    $('#emK', el).innerHTML = card('l', '波長 λ', ls) + card('n', '頻率 ν = c/λ', `${sci(nu, 2)} Hz`) + card('e', '每莫耳光子能量', `${sci(Em, 3)} kJ/mol`) + card('r', '區域', reg[0]);
+    $('#emK', el).innerHTML = card('l', '波長 λ', ls) + card('n', '頻率 ν = c/λ', `${sci(nu, 2)} Hz`) + card('e', '每莫耳光子（kJ/mol）', sci(Em, 3)) + card('r', '區域', reg[0]);
     $('#emN', el).innerHTML = `波長和頻率成反比，能量和頻率成正比：<b>波長越短，能量越高</b>。由長到短：無線電波 &gt; 微波 &gt; 紅外光 &gt; 可見光（紅 → 紫）&gt; 紫外光 &gt; X 射線 &gt; γ 射線。常用換算：E（kJ/mol）≈ 119,600 ÷ λ（nm）。要打斷一莫耳 O=O 鍵需要 498 kJ，對應的光子最長波長約 240 nm（紫外光）。`;
     $('#emR', el).value = lg;
   }

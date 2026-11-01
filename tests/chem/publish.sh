@@ -10,6 +10,8 @@ node tests/chem/steps.test.js || exit 1
 node tests/chem/show.test.js || exit 1
 node tests/eng/data.test.js || exit 1
 eout=$(bash tests/eng/smoke.sh 2>&1) || { echo "$eout" | grep -v "^ok"; exit 1; }
+# 已依新標準修過的章節，另外用手機寬度再測一次
+for c in $(grep -v "^#" tests/chem/strict.txt); do pout=$(ONLY=$c SMOKE_W=390 bash tests/chem/smoke.sh 2>&1) || { echo "手機寬度："; echo "$pout" | grep -v "^ok"; exit 1; }; done
 out=$(bash tests/chem/smoke.sh 2>&1) || { echo "$out" | grep -v "^ok"; exit 1; }
 echo "$out" | grep -c "^ok" | xargs echo "smoke ok:"
 git add -A

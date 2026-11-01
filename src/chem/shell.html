@@ -207,6 +207,11 @@ svg.en.clip { overflow: hidden; }
 .w-row .sp { flex: 1; }
 .seg { display: inline-flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
 .seg button { border: 1px solid var(--line); background: var(--bg); border-radius: 6px; padding: 6px 12px; font-size: 13.5px; cursor: pointer; min-height: 36px; }
+.seg button:disabled { opacity: .35; cursor: not-allowed; }
+.ctl { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; margin-bottom: 8px; min-width: 0; }
+.ctl-l { font-size: 13px; color: var(--muted); }
+.ctl .seg { margin-bottom: 0; }
+.seg.fixw button { min-width: 44px; text-align: center; }
 .seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .rng { display: flex; align-items: center; gap: 10px; font-size: 14px; flex: 1 1 280px; }
 .rng input { flex: 1; accent-color: var(--accent); }
@@ -215,11 +220,13 @@ svg.en.clip { overflow: hidden; }
 .sel { font-size: 13.5px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
 .chk { display: inline-flex; gap: 6px; align-items: center; margin: 4px 0 10px; font-size: 14px; }
 .btn.ghost { background: none; }
-.cards { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
-.card { border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; background: var(--bg); min-width: 96px; }
-.card span { display: block; font-size: 12px; color: var(--muted); }
-.card b { font-family: var(--mono); font-size: 18px; }
-.card small { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+/* 數值卡：欄數只由畫面寬度決定、數字不換行，拖動滑桿時卡片不會換位置或改變高度 */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 8px; margin: 10px 0; }
+@media (max-width: 560px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.card { border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; background: var(--bg); min-width: 0; }
+.card span { display: block; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card b { display: block; font-family: var(--mono); font-size: clamp(14px, 3.8vw, 18px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+.card small { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--muted); overflow-wrap: anywhere; }
 .note { background: var(--soft); border-radius: 8px; padding: 10px 14px; font-size: 14.5px; margin: 10px 0 0; }
 .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--line); vertical-align: -2px; }
 .ok { color: var(--good); font-weight: 700; } .warn { color: var(--warn); font-weight: 700; } .bad { color: var(--bad); font-weight: 700; }

@@ -27,16 +27,36 @@ window.__errs = []; addEventListener('error', e => __errs.push(e.message)); cons
     } } };
   for (const w of document.querySelectorAll('.widget')) check(w, '');
   const rep = { layout: [...new Set(layout)].slice(0, 15), widgets: 0, frames: 0, quiz: 0, shows: 0, failed: [...document.querySelectorAll('.widget .note.bad')].length };
+  // 嚴格檢查（寫作標準 B、C、D）：只對已依新標準修過的章節（tests/chem/strict.txt）
+  const STRICT = __STRICT__.includes(location.hash.slice(1));
+  const lineOf = e => Math.round(e.getBoundingClientRect().top);
+  const strict = (w, tag) => { if (!STRICT) return;
+    for (const row of w.querySelectorAll('.w-row')) { const kids = [...row.children], labs = kids.filter(k => k.matches('span.small, span.lbl, span.mut'));
+      if (labs.length >= 2 && kids.some(k => k.tagName === 'BUTTON')) layout.push(`${w.dataset.w}${tag} 好幾組按鈕擠在同一列，沒有用 ctl() 分組`);
+      for (const L of labs) { const nx = L.nextElementSibling; if (nx && nx.tagName === 'BUTTON' && lineOf(L) !== lineOf(nx)) layout.push(`${w.dataset.w}${tag} 標籤「${L.textContent.trim()}」和它的按鈕被拆開`); } }
+    for (const c of w.querySelectorAll('[data-cur]')) { const sv = c.closest('svg'); if (!sv) continue; const a = c.getBoundingClientRect(), b = sv.getBoundingClientRect();
+      if (!a.width && !a.height || a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom) layout.push(`${w.dataset.w}${tag} 目前選取的「${c.dataset.cur}」不在圖上`); } };
+  const counts = w => [...w.querySelectorAll('.seg, .w-row')].map(s => s.querySelectorAll('button').length).join(',');
   for (const w of document.querySelectorAll('.widget')) {
-    rep.widgets++;
+    rep.widgets++; strict(w, ''); const c0 = counts(w);
     for (const b of [...w.querySelectorAll('.seg button')]) {
-      b.click(); await sleep(5); check(w, `［${b.textContent.trim().slice(0, 10)}］`);
+      if (b.disabled) continue;
+      b.click(); await sleep(5); check(w, `［${b.textContent.trim().slice(0, 10)}］`); strict(w, `［${b.textContent.trim().slice(0, 10)}］`);
+      if (STRICT && counts(w) !== c0) layout.push(`${w.dataset.w} 按「${b.textContent.trim().slice(0, 10)}」後選項數量改變（整列重排）`);
       for (let k = 0; k < 6; k++) { const nx = w.querySelector('.mech-ctl [data-m="1"]'); if (!nx || nx.disabled) break; nx.click(); await sleep(1300); rep.frames++; check(w, `［${b.textContent.trim().slice(0, 10)} 第${k + 2}步］`); }
     }
     for (const b of [...w.querySelectorAll('button.btn:not([data-m])')]) { b.click(); await sleep(5); check(w, `［${b.textContent.trim().slice(0, 10)}］`); }
     if (!w.querySelector('.seg button')) { const z = w.querySelector('.mech-ctl [data-m="0"]'); if (z) z.click(); for (let k = 0; k < 6; k++) { const nx = w.querySelector('.mech-ctl [data-m="1"]'); if (!nx || nx.disabled) break; nx.click(); await sleep(1300); rep.frames++; check(w, `［第${k + 2}步］`); } }
-    for (const r of w.querySelectorAll('input[type=range]')) for (const v of [r.min, r.max, (+r.min + +r.max) / 2]) { r.value = v; fire(r, 'input'); }
-    for (const s of w.querySelectorAll('select')) for (const o of [...s.options]) { s.value = o.value; fire(s, 'change'); }
+    // 版面跳動：拖滑桿時，數值卡的位置與大小不可改變；卡片裡的文字不可被截斷（strict 章節）
+    for (const r of STRICT ? w.querySelectorAll('input[type=range]') : []) {
+      const sig = () => [...w.querySelectorAll('.cards > .card')].map(c => { const b = c.getBoundingClientRect(); return `${Math.round(b.left)},${Math.round(b.top - w.getBoundingClientRect().top)},${Math.round(b.width)},${Math.round(b.height)}`; }).join(' ');
+      r.value = r.min; fire(r, 'input'); const s0 = sig();
+      for (const v of [r.max, (+r.min + +r.max) / 2, +r.min + (r.max - r.min) * 0.27, +r.min + (r.max - r.min) * 0.81]) {
+        r.value = v; fire(r, 'input'); if (sig() !== s0) layout.push(`${w.dataset.w} 拖動「${(r.closest('label') || r.parentNode).textContent.trim().slice(0, 8)}」時數值卡跳動`);
+        for (const e of w.querySelectorAll('.card b, .card span')) if (e.scrollWidth > e.clientWidth + 1) layout.push(`${w.dataset.w} 數值卡文字被截斷：${e.textContent.slice(0, 16)}`);
+      }
+    }
+    for (const s of w.querySelectorAll('select')) for (const o of [...s.options]) { s.value = o.value; fire(s, 'change'); if (STRICT) check(w, `［${o.textContent.trim()}］`); strict(w, `［${o.textContent.trim()}］`); }
     for (const c of w.querySelectorAll('input[type=checkbox]')) { c.click(); c.click(); }
     for (const b of [...w.querySelectorAll('button.btn')]) { if (!b.closest('.mech-ctl')) b.click(); }
     if (/\bNaN\b|\bundefined\b|\bInfinity\b/.test(w.textContent)) __errs.push(`${w.dataset.w}: 文字中出現 NaN/undefined`);
@@ -54,11 +74,14 @@ window.__errs = []; addEventListener('error', e => __errs.push(e.message)); cons
   rep.layout = [...new Set(layout)].slice(0, 25); const p = document.createElement('pre'); p.id = '__out'; p.textContent = JSON.stringify({ ...rep, errs: __errs }); document.body.appendChild(p);
 })();
 JS
+STRICT_JSON=$(grep -v '^#' tests/chem/strict.txt | grep . | python3 -c "import json,sys;print(json.dumps(sys.stdin.read().split()))")
+sed -i '' "s#__STRICT__#$STRICT_JSON#" "$TMP/probe.js"
 sed 's#<script>#<script src="probe.js"></script><script>#' docs/chem/index.html | sed 's#src="probe.js"></script><script>#src="probe.js" defer></script><script>#' > "$TMP/p.html"
 CHAPTERS=$(node -e "const fs=require('fs');console.log(new Function(['src/chem/content.js',...require('fs').readdirSync('src/chem/ch').map(f=>'src/chem/ch/'+f)].map(f=>fs.readFileSync(f,'utf8')).join('\n')+';return CH;')().map(c=>c.id).join(' '))")
+CHAPTERS=${ONLY:-$CHAPTERS}
 fail=0
 for c in home $CHAPTERS; do
-  "$CHROME" --headless=new --disable-gpu --user-data-dir="$TMP/prof-$c" --window-size=1100,900 --virtual-time-budget=120000 --dump-dom "file://$TMP/p.html#$c" 2>/dev/null > "$TMP/out-$c" &
+  "$CHROME" --headless=new --disable-gpu --user-data-dir="$TMP/prof-$c" --window-size=${SMOKE_W:-1100},900 --virtual-time-budget=120000 --dump-dom "file://$TMP/p.html#$c" 2>/dev/null > "$TMP/out-$c" &
   pid=$!; ( sleep 240; kill -9 $pid ) >/dev/null 2>&1 & w=$!; disown $w; wait $pid 2>/dev/null; kill $w 2>/dev/null
   r=$(python3 -c "import re,sys,html;s=open(sys.argv[1]).read();m=re.search(r'<pre id=\"__out\">(.*?)</pre>',s,re.S);print(html.unescape(m.group(1)) if m else 'NO OUTPUT')" "$TMP/out-$c")
   if echo "$r" | grep -q '"errs":\[\]' && echo "$r" | grep -q '"failed":0' && echo "$r" | grep -q '"layout":\[\]' && { [ "$c" = home ] || ! echo "$r" | grep -q '"quiz":0,'; }; then echo "ok   $c  $r"; else echo "FAIL $c  $r"; fail=1; fi

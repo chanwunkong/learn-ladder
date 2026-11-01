@@ -1,0 +1,266 @@
+diff --git a/src/chem/ch/acid-base.js b/src/chem/ch/acid-base.js
+index ff9df19..4cafaa6 100644
+--- a/src/chem/ch/acid-base.js
++++ b/src/chem/ch/acid-base.js
+@@ -9,17 +9,21 @@ CH.push({
+       { h: '各種溶液的 pH 怎麼算？', w: 'phcalc', body: `
+ <p>水溶液中 H⁺ 的濃度從 1 M 到 10⁻¹⁴ M 都有，差了十幾個 10 倍，所以改用 log（以 10 為底的對數，log 10ˣ = x）把它變成好讀的數字：</p>
+ <p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
+-<p class="eq">pH = −log[H⁺]　　Kw = [H⁺][OH⁻] = 1.0 × 10⁻¹⁴（25 °C）　　pH + pOH = 14<span class="tg must">要背</span></p>
+-<dl class="sym"><div><dt>[H⁺]</dt><dd>氫離子濃度（M）；[H⁺] = 10⁻³ M 時 pH = 3。pH 每差 1，[H⁺] 差 10 倍</dd></div><div><dt>pOH</dt><dd>= −log[OH⁻]；p 開頭的都是「取 −log」</dd></div><div><dt>Kw</dt><dd>水的離子積：水本身會少量解離成 H⁺ 與 OH⁻，兩者濃度乘積固定；溫度升高 Kw 變大</dd></div></dl>
++<p class="eq">pH = −log[H⁺]<span class="tg must">要背</span></p>
++<p class="eq">Kw = [H⁺][OH⁻] = 1.0 × 10⁻¹⁴（25 °C）<span class="tg must">要背</span></p>
++<p class="eq">pH + pOH = 14<span class="tg must">要背</span></p>
++<dl class="sym"><div><dt>[H⁺]</dt><dd>氫離子濃度（M）；[H⁺] = 10⁻³ M 時 pH = 3。pH 每差 1，[H⁺] 差 10 倍</dd></div><div><dt>pOH</dt><dd>= −log[OH⁻]；p 開頭的都是「取 −log」</dd></div><div><dt>Kw</dt><dd>水的離子積：水本身會少量解離成 H⁺ 與 OH⁻，兩者濃度乘積固定；溫度升高 Kw 變大。1.0 × 10⁻¹⁴ 是 25 °C 的實驗值（要背）；等號兩邊取 −log，就得到 pH + pOH = 14，所以 14 不是另一個要背的數字</dd></div></dl>
+ <ul><li><b>強酸、強鹼</b>：完全解離，[H⁺] 或 [OH⁻] = 濃度（乘上可解離的數目）。濃度極低時要加上水本身的解離。</li>
+ <li><b>弱酸、弱鹼</b>：只有一小部分<b>解離</b>（分開成離子）。弱酸 HA ⇌ H⁺ + A⁻ 的平衡常數稱為酸解離常數 Ka；用 ICE 表（見化學平衡一章）解 Ka = x²/(C − x)，x 遠小於 C 時近似：
+-<p class="eq">[H⁺] = x ≈ √(Ka·C)<span class="tg derive">會推</span>　　解離度 α = x/C</p>
++<p class="eq">[H⁺] = x ≈ √(Ka·C)<span class="tg derive">會推</span></p>
++<p class="eq">解離度 α = x/C<span class="tg derive">會推</span></p>
+ <dl class="sym"><div><dt>Ka</dt><dd>酸解離常數，越大酸越強<span class="tg given">卷上會給</span></dd></div><div><dt>C</dt><dd>酸的起始濃度（M）</dd></div><div><dt>x</dt><dd>解離掉的量，等於 [H⁺] = [A⁻]</dd></div><div><dt>α</dt><dd>解離度：解離掉的比例，隨稀釋而變大</dd></div></dl></li>
+ <li><b>鹽類</b>：看陰、陽離子是不是弱酸或弱鹼的共軛物：F⁻、CH₃COO⁻ 會從水搶 H⁺ 產生 OH⁻（稱為<b>水解</b>），使溶液偏鹼，它的鹼解離常數 Kb = Kw/Ka；NH₄⁺、Al³⁺ 使溶液偏酸。</li></ul>
+ <p>拖動濃度、切換不同的溶液：曲線是 pH 隨濃度的變化，卡片顯示解離度。</p>` },
+       { h: '酸的強弱怎麼比？', w: 'kaladder', body: `
+ <p>pKa = −log Ka。Ka 越大（pKa 越小）酸越強。共軛酸鹼對之間：</p>
+-<p class="eq">Ka × Kb = Kw　　pKa + pKb = 14<span class="tg must">要背</span></p>
++<p class="eq">Ka × Kb = Kw<span class="tg must">要背</span></p>
++<p class="eq">pKa + pKb = 14<span class="tg must">要背</span></p>
+ <p>所以酸越強，它的共軛鹼越弱。這張圖左邊是酸、右邊是它的共軛鹼，同一條橫線上的兩者互為共軛。</p>
+ <p>結構上的趨勢：同族往下（HF &lt; HCl &lt; HBr &lt; HI）鍵越長越弱，酸性越強，HF 因為 H–F 鍵很強而是弱酸；含氧酸中心原子的電負度越大、接的 O 越多，酸性越強（HClO &lt; HClO₂ &lt; HClO₃ &lt; HClO₄）。H₃PO₃ 只有兩個 H 接在 O 上，是二質子酸；H₃BO₃ 是接受 OH⁻ 的路易斯酸，只算一質子。</p>` },
+       { h: '多質子酸在不同 pH 下是什麼形式？', w: 'polyprot', body: `
+@@ -27,8 +31,9 @@ CH.push({
+ <p>藥物分子也一樣：pKa 4.7 的弱酸在 pH 7.4 的血液中，[A⁻]/[HA] = 10^2.7 ≈ 500，幾乎全部以帶負電的形式存在。</p>` },
+       { h: '滴定時燒杯裡發生什麼？', w: 'titration', body: `
+ <p>燒杯裡是 25.0 mL、0.100 M 的醋酸（CH₃COOH，以下寫作 <b>HA</b>），滴定管裡是 0.100 M 的 NaOH。每加入一個 OH⁻，就和一個 HA 反應：</p>
+-<p class="eq">HA + OH⁻ → A⁻ + H₂O　　K = Ka ÷ Kw ≈ 1.8 × 10⁹</p>
+-<p>K 非常大，代表這個反應幾乎完全進行：<b>加了多少 OH⁻，就有多少 HA 變成 A⁻</b>。這是整章最重要的一句話，後面所有計算都從這裡出發。</p>
++<p class="eq">HA + OH⁻ → A⁻ + H₂O</p>
++<p class="eq">K = Ka ÷ Kw ≈ 1.8 × 10⁹<span class="tg derive">會推</span></p>
++<p>這個 K 怎麼來：反應等於「HA 解離（Ka）」加上「H⁺ + OH⁻ → H₂O（1/Kw）」，所以 K = Ka ÷ Kw = 1.8 × 10⁻⁵ ÷ 1.0 × 10⁻¹⁴ = 1.8 × 10⁹（1.8 × 10⁻⁵ 是醋酸的 Ka，題目會給）。K 非常大，代表這個反應幾乎完全進行：<b>加了多少 OH⁻，就有多少 HA 變成 A⁻</b>。這是整章最重要的一句話，後面所有計算都從這裡出發。</p>
+ <p>拖動滑桿，注意三件事：</p>
+ <ol><li>一開始 pH 爬得很快：燒杯裡幾乎只有 HA，加一點 A⁻ 比例就變很多。</li>
+ <li>中段 pH 幾乎不動：HA 和 A⁻ 都很多，形成<b>緩衝溶液</b>。</li>
+@@ -36,7 +41,8 @@ CH.push({
+ <p>再切換到強酸 HCl 比較：沒有緩衝區，而且當量點的 pH 剛好是 7；醋酸的當量點卻在 8.7，因為那時燒杯裡剩下的 A⁻ 是鹼。</p>` },
+       { h: '為什麼中段 pH 幾乎不動？', w: 'buffer', body: `
+ <p>緩衝溶液同時含有大量的弱酸 HA 和它的共軛鹼 A⁻。它抵抗 pH 變化的方法很簡單：<b>把強酸強鹼「換成」弱酸弱鹼</b>。</p>
+-<p class="eq">加入強酸：A⁻ + H⁺ → HA　　　加入強鹼：HA + OH⁻ → A⁻ + H₂O</p>
++<p class="eq">加入強酸：A⁻ + H⁺ → HA</p>
++<p class="eq">加入強鹼：HA + OH⁻ → A⁻ + H₂O</p>
+ <p>加進來的 H⁺ 或 OH⁻ 幾乎全被吃掉，溶液裡真正改變的只是 A⁻ 和 HA 的比例，而 pH 只跟這個比例的<b>對數</b>有關，所以變化很小。</p>
+ <p>右邊兩杯各加入同樣的強酸或強鹼：純水的 pH 從 7 直接掉到 2，緩衝溶液卻只動了不到 0.1。把緩衝溶液的濃度調低再試，會發現它能吸收的酸鹼也跟著變少：這就是<b>緩衝容量</b>。當加入的 H⁺ 超過溶液裡的 A⁻，緩衝就被「打穿」了。</p>` },
+       { h: 'pH 由什麼比例決定？', w: 'species', body: `
+diff --git a/src/chem/ch/electro.js b/src/chem/ch/electro.js
+index be1a8ec..7576969 100644
+--- a/src/chem/ch/electro.js
++++ b/src/chem/ch/electro.js
+@@ -16,7 +16,9 @@ CH.push({
+ <ul><li><b>陽極</b>：發生氧化，電子從這裡流出（電池的負極）。</li><li><b>陰極</b>：發生還原，電子流入（正極）。</li><li><b>鹽橋</b>：讓離子移動，維持兩杯電中性。</li></ul>
+ <p>每個半反應寫成還原式，有一個<b>標準還原電位 E°</b>：在標準狀態（1 M、1 atm、25 °C）下，和<b>標準氫電極</b>（2H⁺ + 2e⁻ → H₂，人為訂為 0 V）比較時的電壓，單位是伏特（V）。E° 越大越容易被還原（是越強的氧化劑）；E° 越小越容易被氧化（是越強的還原劑）。</p>
+ <p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
+-<p class="eq">E°電池 = E°陰極 − E°陽極　　ΔG° = −nFE°　　E° = (0.0592/n) log K（25 °C）<span class="tg must">要背</span></p>
++<p class="eq">E°電池 = E°陰極 − E°陽極<span class="tg must">要背</span></p>
++<p class="eq">ΔG° = −nFE°<span class="tg must">要背</span></p>
++<p class="eq">E° = (0.0592/n) log K（25 °C）<span class="tg must">要背</span></p>
+ <dl class="sym"><div><dt>E°陰極、E°陽極</dt><dd>兩個半反應各自的標準還原電位（都用還原式的數值，不要變號）<span class="tg given">卷上會給</span></dd></div><div><dt>n</dt><dd>反應中轉移的電子數（平衡後的總數）</dd></div><div><dt>F</dt><dd>法拉第常數：1 mol 電子的電量，96485 C/mol<span class="tg given">卷上會給</span></dd></div><div><dt>0.0592</dt><dd>= 2.303RT/F 在 25 °C 的值<span class="tg derive">會推</span></dd></div><div><dt>K</dt><dd>反應的平衡常數</dd></div></dl>
+ <p>半反應的係數乘 2 時，E° 不變（電壓是每個電子的能量，和反應的量無關），但 n 和 ΔG° 會跟著變。</p>
+ <p>E° &gt; 0、ΔG° &lt; 0、K &gt; 1 三件事是同一件事的三種說法。</p>
+diff --git a/src/chem/ch/equilibrium.js b/src/chem/ch/equilibrium.js
+index 683a1b9..fc5ae35 100644
+--- a/src/chem/ch/equilibrium.js
++++ b/src/chem/ch/equilibrium.js
+@@ -38,7 +38,9 @@ CH.push({
+ <p>N₂O₄（無色）⇌ 2NO₂（紅棕色）的正反應吸熱。試試各種干擾：先看干擾後 Q 和 K 的關係，再讓系統回到平衡。注意加壓時顏色先變深（濃度加倍）、再稍微變淡（反應向左），這是經典的課堂示範。</p>` },
+     { h: 'K 由什麼決定？', w: 'kdg', body: `
+ <p>平衡常數和標準自由能變化有一條直接的關係：</p>
+-<p class="eq">ΔG° = −RT ln K　　⇔　　K = e<sup>−ΔG°/RT</sup><span class="tg must">要背</span></p>
++<p class="eq">ΔG° = −RT ln K<span class="tg must">要背</span></p>
++<p class="eq">⇔<span class="tg must">要背</span></p>
++<p class="eq">K = e<sup>−ΔG°/RT</sup><span class="tg must">要背</span></p>
+ <dl class="sym"><div><dt>ΔG°</dt><dd>標準自由能變化（J/mol），見熱力學一章</dd></div><div><dt>e</dt><dd>自然對數的底，約 2.718；e^x 和 ln x 互為反運算</dd></div></dl>
+ <ul><li>ΔG° &lt; 0 → K &gt; 1，產物有利；ΔG° &gt; 0 → K &lt; 1，反應物有利。</li>
+ <li>這是<b>指數</b>關係：25 °C 時 ΔG° 每差 5.7 kJ/mol，K 就差 10 倍。所以 ΔG° 只要幾十 kJ/mol，平衡就幾乎完全偏向一邊。</li>
+diff --git a/src/chem/ch/gas.js b/src/chem/ch/gas.js
+index 2c6aff8..5929367 100644
+--- a/src/chem/ch/gas.js
++++ b/src/chem/ch/gas.js
+@@ -18,12 +18,14 @@ CH.push({
+ <p>定壓下加熱，氣體膨脹，密度變小（熱氣球上升的原因）。</p>` },
+     { h: '混合氣體的壓力怎麼算？', w: 'dalton', body: `
+ <p>混合氣體中，每一種氣體的<b>分壓</b>就像它單獨佔滿整個容器時的壓力，總壓是分壓的和（道耳頓分壓定律）：</p>
+-<p class="eq">P總 = P_A + P_B + …　　P_A = X_A × P總<span class="tg must">要背</span></p>
++<p class="eq">P總 = P_A + P_B + …<span class="tg must">要背</span></p>
++<p class="eq">P_A = X_A × P總<span class="tg must">要背</span></p>
+ <dl class="sym"><div><dt>P_A</dt><dd>氣體 A 的分壓</dd></div><div><dt>X_A</dt><dd>A 的莫耳分率 = A 的莫耳數 ÷ 總莫耳數；空氣中 N₂ 約 0.78、O₂ 約 0.21</dd></div></dl>
+ <p>排水集氣法收集的氣體含有水蒸氣，要扣掉當時溫度的水蒸氣壓：P氣體 = P大氣 − P水。水蒸氣的分壓不能超過飽和蒸氣壓，多的水會凝結；所以容器變大時，原本凝結的水可能全部蒸發。潛水時吸入的高壓空氣使 N₂ 分壓變大，溶入血液的 N₂ 變多，上升太快會在血液中形成氣泡（減壓病）。</p>` },
+     { h: '溫度和分子速率有什麼關係？', w: 'maxwell', body: `
+ <p>分子運動論的假設：分子本身不佔體積、分子間沒有吸引力、碰撞完全彈性、<b>平均動能只和絕對溫度成正比</b>。由此推出方均根速率：</p>
+-<p class="eq">u_rms = √(3RT ÷ M)<span class="tg must">要背</span>　　速率比 = √(M₂ ÷ M₁)<span class="tg derive">會推</span></p>
++<p class="eq">u_rms = √(3RT ÷ M)<span class="tg must">要背</span></p>
++<p class="eq">速率比 = √(M₂ ÷ M₁)<span class="tg derive">會推</span></p>
+ <dl class="sym"><div><dt>u_rms</dt><dd>方均根速率：把每個分子速率平方、取平均、再開根號，代表分子的典型速率（m/s）</dd></div><div><dt>R</dt><dd>這裡要用 8.314 J/(mol·K)</dd></div><div><dt>M</dt><dd>莫耳質量，這裡要換成 kg/mol（32 g/mol = 0.032 kg/mol）</dd></div></dl>
+ <p>考試大多只考比例：同溫時速率和 √M 成反比，所以 H₂（M = 2）比 O₂（M = 32）快 √16 = 4 倍。同溫度下所有氣體的平均動能相同，輕的分子跑得快；同一種氣體溫度越高，分布越往右、越平坦。格雷姆定律：<b>擴散</b>（氣體在另一種氣體中散開）或<b>逸散</b>（氣體從小孔跑出去）的速率 ∝ 1/√M，分子量相差越大越容易分離。密閉容器加熱時，分子數密度不變，但平均速率、碰撞頻率、每次碰撞的力道都增加，所以壓力上升。</p>` },
+     { h: '真實氣體什麼時候不理想？', w: 'realgas', body: `
+diff --git a/src/chem/ch/kinetics.js b/src/chem/ch/kinetics.js
+index fe0d6b6..5e04a04 100644
+--- a/src/chem/ch/kinetics.js
++++ b/src/chem/ch/kinetics.js
+@@ -16,14 +16,17 @@ CH.push({
+ <p><b>初速率法</b>：每次只改變一種反應物的濃度。濃度變 2 倍時速率變 2 倍 → 一級；變 4 倍 → 二級；不變 → 零級；也可能出現分數級數。由任一組數據代回速率式就能算出 k。</p>
+ <p>其他情況：某反應物大量過量時，它的濃度幾乎不變，可併入 k，稱為<b>準一級反應</b>。定溫下把氣體體積壓縮成一半，所有濃度加倍，速率變為 2^(總級數) 倍。</p>` },
+     { h: '濃度隨時間怎麼變？', w: 'order', body: `
+-<p>把速率式積分，就得到濃度和時間的關係（積分速率式）<span class="tg must">要背</span>：</p>
+-<p class="eq">零級 [A] = [A]₀ − kt　　一級 ln[A] = ln[A]₀ − kt　　二級 1/[A] = 1/[A]₀ + kt</p>
++<p>把速率式積分，就得到濃度和時間的關係（積分速率式）：</p>
++<p class="eq">零級：[A] = [A]₀ − kt<span class="tg must">要背</span></p>
++<p class="eq">一級：ln[A] = ln[A]₀ − kt<span class="tg must">要背</span></p>
++<p class="eq">二級：1/[A] = 1/[A]₀ + kt<span class="tg must">要背</span></p>
+ <dl class="sym"><div><dt>[A]₀</dt><dd>一開始（t = 0）的濃度</dd></div><div><dt>[A]</dt><dd>經過時間 t 後的濃度</dd></div><div><dt>ln</dt><dd>自然對數；ln 2 ≈ 0.693</dd></div></dl>
+ <p>切換三種級數：只有一種作圖會是直線（零級 [A] 對 t、一級 ln[A] 對 t、二級 1/[A] 對 t），斜率都和 k 有關（一級的斜率是 −k）。</p>
+ <p>濃度降到一半所需的時間稱為<b>半生期</b> t½<span class="tg must">要背</span>：零級 [A]₀/2k，一級 <b>0.693/k</b>（和濃度無關，k·t½ = ln 2），二級 1/(k[A]₀)。一級反應經過 n 個半生期剩下 (1/2)ⁿ：16 atm 降到 1 atm 需要 4 個半生期。放射性衰變與多數藥物的排除都是一級反應。</p>` },
+     { h: '為什麼加熱會變快？', w: ['arrh', 'eadiag'], body: `
+ <p>分子必須互相碰撞才會反應，而且碰撞的能量要夠大，才能越過舊鍵斷開、新鍵還沒形成時的能量高峰。這個最小能量稱為<b>活化能</b> Ea。速率常數和溫度的關係是<b>阿瑞尼斯方程式</b>：</p>
+-<p class="eq">k = A·e^(−Ea/RT)　　ln(k₂/k₁) = (Ea/R)(1/T₁ − 1/T₂)<span class="tg must">要背</span></p>
++<p class="eq">k = A·e^(−Ea/RT)<span class="tg must">要背</span></p>
++<p class="eq">ln(k₂/k₁) = (Ea/R)(1/T₁ − 1/T₂)<span class="tg must">要背</span></p>
+ <dl class="sym"><div><dt>A</dt><dd>頻率因子：分子碰撞的頻率與方向是否正確，和溫度關係不大</dd></div><div><dt>e^(−Ea/RT)</dt><dd>能量超過 Ea 的分子所佔的比例；Ea 越大、T 越低，這個比例越小</dd></div><div><dt>Ea</dt><dd>活化能（J/mol）</dd></div><div><dt>R</dt><dd>8.314 J/(mol·K)<span class="tg given">卷上會給</span></dd></div><div><dt>k₁、k₂</dt><dd>溫度 T₁、T₂（K）時的速率常數</dd></div></dl>
+ <p>溫度稍微升高，分子能量分布的尾巴抬高很多，所以速率大增。同樣的升溫下，速率常數增加越多的反應活化能越大：變 4 倍的活化能是變 2 倍的 2 倍（ln 4 = 2 ln 2）。</p>
+ <p>第二張是能量圖：正反應與逆反應的活化能相差 ΔH。<b>催化劑</b>是參與反應、但最後原封不動回來的物質；它提供活化能較低的路徑，同時加快正逆反應，不改變 ΔH 與平衡常數。自由基和自由基結合幾乎不需要活化能，所以這類步驟極快。</p>` },
+diff --git a/src/chem/ch/ksp.js b/src/chem/ch/ksp.js
+index 9c9e964..36d351c 100644
+--- a/src/chem/ch/ksp.js
++++ b/src/chem/ch/ksp.js
+@@ -6,7 +6,8 @@ CH.push({
+     { h: '難溶的鹽到底溶了多少？', w: 'ksp', body: `
+ <p>一定量的水最多能溶解多少溶質，稱為<b>溶解度</b>；溶到不能再溶、杯底還留有固體時稱為<b>飽和</b>。難溶鹽（例如 AgCl）在飽和溶液中，固體不斷溶出、離子也不斷結合回固體，兩者速率相等而達成平衡。這個平衡常數叫<b>溶度積 Ksp</b>（固體不寫入）：</p>
+ <p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
+-<p class="eq">AₓBᵧ(s) ⇌ x A + y B　　Ksp = [A]ˣ[B]ʸ<span class="tg must">要背</span></p>
++<p class="eq">AₓBᵧ(s) ⇌ x A + y B<span class="tg must">要背</span></p>
++<p class="eq">Ksp = [A]ˣ[B]ʸ<span class="tg must">要背</span></p>
+ <dl class="sym"><div><dt>(s)</dt><dd>固體（solid）；(aq) 是溶於水、(l) 液體、(g) 氣體</dd></div><div><dt>[A]、[B]</dt><dd>飽和溶液中各離子的濃度（M）</dd></div><div><dt>Ksp</dt><dd>溶度積，各鹽的數值<span class="tg given">卷上會給</span></dd></div><div><dt>s</dt><dd>莫耳溶解度：每公升溶了幾莫耳的鹽（M）</dd></div></dl>
+ <p>用 ICE 的方式設溶解度為 s，代入就能互相換算<span class="tg derive">會推</span>（AB 型 Ksp = s²；AB₂ 型 Ksp = 4s³；AB₃ 型 Ksp = 27s⁴）。兩個常見陷阱：</p>
+ <ul><li>係數要變成次方，濃度也要乘上係數：CaF₂ 的 [F⁻] = 2s，Ksp = s(2s)² = 4s³。</li>
+@@ -28,7 +29,8 @@ CH.push({
+ <p>log s 對 pH 是斜率 −n 的直線。</p>` },
+     { h: '錯合物為什麼能溶解沉澱？', w: 'complexsol', body: `
+ <p>金屬離子可以和帶孤對電子的分子或離子（稱為<b>配位基</b>，例如 NH₃、CN⁻，或一次用六個位置抓住金屬的 EDTA；能用兩個以上位置同時抓住金屬的配位基稱為螯合劑）結合成<b>錯離子</b>，例如 Ag(NH₃)₂⁺。錯離子生成反應的平衡常數稱為生成常數 Kf，通常很大，會大量消耗游離的金屬離子。總反應是溶解與錯合兩式相加，方程式相加時 K 相乘：</p>
+-<p class="eq">AgCl(s) + 2NH₃ ⇌ Ag(NH₃)₂⁺ + Cl⁻　　K = Ksp × Kf<span class="tg derive">會推</span></p>
++<p class="eq">AgCl(s) + 2NH₃ ⇌ Ag(NH₃)₂⁺ + Cl⁻<span class="tg derive">會推</span></p>
++<p class="eq">K = Ksp × Kf<span class="tg derive">會推</span></p>
+ <p>拖動配位基濃度、換不同的鹽：AgCl 溶於氨水，AgBr 只溶一點，AgI 幾乎不溶，要用 Kf 更大的 CN⁻ 才能溶解。氨水滴入 Cu²⁺ 溶液時，先生成 Cu(OH)₂ 沉澱（氨水提供 OH⁻），過量後沉澱溶解成深藍色的 [Cu(NH₃)₄]²⁺。</p>
+ <p>錯合物的結構、命名與顏色在<a href="#coord">配位化學</a>一章詳細介紹。</p>` },
+   ],
+diff --git a/src/chem/ch/phase.js b/src/chem/ch/phase.js
+index 01d9d8e..98426c0 100644
+--- a/src/chem/ch/phase.js
++++ b/src/chem/ch/phase.js
+@@ -11,7 +11,9 @@ CH.push({
+ <p>ln P 對 1/T 作圖是一條直線，斜率是 −ΔH蒸發/R；形式和動力學的阿瑞尼斯方程式相同。</p>` },
+     { h: '加熱時熱量用到哪裡去了？', w: 'heatcurve', body: `
+ <p>把冰一路加熱成水蒸氣，熱量分兩種用途：</p>
+-<p class="eq">溫度上升：q = m·c·ΔT　　相變化：q = n·ΔH　　ΔS = ΔH/T<span class="tg must">要背</span></p>
++<p class="eq">溫度上升：q = m·c·ΔT<span class="tg must">要背</span></p>
++<p class="eq">相變化：q = n·ΔH<span class="tg must">要背</span></p>
++<p class="eq">ΔS = ΔH/T<span class="tg must">要背</span></p>
+ <dl class="sym"><div><dt>q</dt><dd>吸收的熱量（J）</dd></div><div><dt>m</dt><dd>質量（g）</dd></div><div><dt>c</dt><dd>比熱：1 g 物質升高 1 °C 需要的熱（水 4.18 J/(g·°C)）<span class="tg given">卷上會給</span></dd></div><div><dt>ΔT</dt><dd>溫度變化（°C 或 K，差值相同）</dd></div><div><dt>ΔH</dt><dd>莫耳熔化熱或汽化熱（J/mol）；熔化、汽化時溫度不變，熱量全用來拉開分子</dd></div><div><dt>ΔS</dt><dd>熵變化：衡量分子排列方式變多少（越混亂越大，見熱力學一章）；相變化在定溫下進行，所以可以直接用 ΔH ÷ T</dd></div></dl>` },
+     { h: '物質在什麼條件下是固體、液體或氣體？', w: 'phase', body: `
+ <p><b>相圖</b>把物質在各溫度、壓力下的狀態畫在一張圖上：三條線上兩相共存，<b>三相點</b>三相共存，超過<b>臨界點</b>後液體和氣體無法區分。分子間作用力越強，臨界溫度越高。壓力低於三相點時沒有液相，固體直接變成氣體，稱為<b>昇華</b>：乾冰在 1 atm 下昇華；中藥與食品的<b>冷凍乾燥</b>就是先冷凍，再在三相點以下的低壓讓冰直接昇華。</p>` },
+@@ -27,7 +29,9 @@ CH.push({
+ <p>寫核反應式時，<b>質量數與原子序兩邊都要守恆</b>。α 衰變放出 ⁴₂He（質量數 −4、原子序 −2）；β⁻ 衰變是中子變成質子並放出電子（原子序 +1）；β⁺ 衰變（放出帶正電的電子，稱為正子）或<b>電子捕獲</b>（原子核抓進一個內層電子）都是質子變成中子（原子序 −1）；γ 射線是不帶電的高能光子。質量 α 粒子 &gt; 中子 &gt; 質子 &gt; β 粒子；穿透力 α &lt; β &lt; γ，但 α 粒子一旦進入體內傷害最大。</p>
+ <p>第一張圖是中子對質子的穩定帶：中子太多傾向 β⁻，質子太多傾向 β⁺，Z &gt; 83 的重原子核傾向 α 衰變。醫學應用：¹⁸F 的 β⁺ 衰變用於 PET 造影；硼中子捕獲治療讓 ¹⁰B 吸收中子後放出 α 粒子，α 粒子射程很短，只破壞含硼的癌細胞。</p>
+ <p>衰變是一級反應：剩下一半所需的時間稱為<b>半衰期</b> t½，每經過一個半衰期剩下一半（1/2、1/4、1/8…）。</p>
+-<p class="eq">A = λN　　λ = 0.693 / t½　　N = N₀ × (1/2)^(t / t½)<span class="tg must">要背</span></p>
++<p class="eq">A = λN<span class="tg must">要背</span></p>
++<p class="eq">λ = 0.693 / t½<span class="tg must">要背</span></p>
++<p class="eq">N = N₀ × (1/2)^(t / t½)<span class="tg must">要背</span></p>
+ <dl class="sym"><div><dt>A</dt><dd>活度：每秒衰變幾次（Bq）</dd></div><div><dt>λ</dt><dd>衰變常數（不是波長，只是借用同一個符號），單位是時間的倒數</dd></div><div><dt>N</dt><dd>目前還沒衰變的原子數；N₀ 是一開始的原子數</dd></div><div><dt>0.693</dt><dd>就是 ln 2</dd></div></dl>
+ <p>由活度可以反推原子數；考題大多只要數「經過幾個半衰期」。</p>` },
+     { h: '核反應的能量從哪裡來？', w: 'massdefect', body: `
+diff --git a/src/chem/ch/stoich.js b/src/chem/ch/stoich.js
+index 30b3468..7e19cf2 100644
+--- a/src/chem/ch/stoich.js
++++ b/src/chem/ch/stoich.js
+@@ -9,7 +9,9 @@ CH.push({
+ <p>單位換算<span class="tg must">要背</span>：1 kg = 10³ g、1 g = 10² cg = 10³ mg = 10⁶ μg = 10⁹ ng。稀薄水溶液中 1 ppm ≈ 1 mg/L，1 ppb ≈ 1 μg/L。</p>` },
+     { h: '質量、粒子數、體積怎麼互換？', w: 'molemap', body: `
+ <p>原子太小，化學用「一打」的概念來數：1 <b>莫耳</b>（mol）就是 6.022 × 10²³ 個粒子，這個數稱為<b>亞佛加厥數</b> Nₐ。一莫耳物質的質量稱為<b>莫耳質量</b>（g/mol），數值等於分子量或式量（把化學式中所有原子量加起來；離子化合物沒有獨立的分子，所以叫式量）。所有換算都經過中間的莫耳數：</p>
+-<p class="eq">莫耳數 n = 質量 ÷ 莫耳質量　　粒子數 = n × Nₐ　　氣體體積 = n × 莫耳體積<span class="tg must">要背</span></p>
++<p class="eq">莫耳數 n = 質量 ÷ 莫耳質量<span class="tg must">要背</span></p>
++<p class="eq">粒子數 = n × Nₐ<span class="tg must">要背</span></p>
++<p class="eq">氣體體積 = n × 莫耳體積<span class="tg must">要背</span></p>
+ <dl class="sym"><div><dt>Nₐ</dt><dd>亞佛加厥數 6.02 × 10²³ mol⁻¹<span class="tg given">卷上會給</span></dd></div><div><dt>22.4 L</dt><dd>0 °C、1 atm 時 1 莫耳氣體的體積（任何氣體都一樣）<span class="tg must">要背</span></dd></div><div><dt>24.5 L</dt><dd>25 °C、1 atm 時的莫耳體積；由 22.4 × 298 ÷ 273 算出<span class="tg derive">會推</span></dd></div></dl>
+ <p>選擇不同化合物、拖動質量，箭頭上的運算就是要用的公式。</p>` },
+     { h: '怎麼由百分組成求出化學式？', w: 'empform', body: `
+@@ -33,7 +35,9 @@ CH.push({
+ <p>液面上方由液體揮發出來的氣體所產生的壓力稱為<b>蒸氣壓</b>；蒸氣壓等於外界壓力時，液體就沸騰。加入不揮發的溶質後，液面有一部分被溶質佔據，跑出去的溶劑分子變少，蒸氣壓下降，所以要更高溫才沸騰、更低溫才結冰。</p>
+ <p><b>半透膜</b>只讓水分子通過、不讓溶質通過。膜兩側濃度不同時，水會從稀的一側流向濃的一側，這稱為<b>滲透</b>；要在濃溶液那一側加多少壓力才能剛好擋住水流，就是<b>滲透壓</b> π。</p>
+ <p>這四個性質只和溶質<b>粒子的數目</b>有關，和溶質是什麼無關，稱為<b>依數性質</b>：</p>
+-<p class="eq">ΔTb = i·Kb·m　　ΔTf = i·Kf·m　　π = i·M·R·T<span class="tg must">要背</span></p>
++<p class="eq">ΔTb = i·Kb·m<span class="tg must">要背</span></p>
++<p class="eq">ΔTf = i·Kf·m<span class="tg must">要背</span></p>
++<p class="eq">π = i·M·R·T<span class="tg must">要背</span></p>
+ <dl class="sym"><div><dt>ΔTb、ΔTf</dt><dd>沸點上升、凝固點下降的度數（°C 或 K）</dd></div><div><dt>Kb、Kf</dt><dd>溶劑的沸點上升常數、凝固點下降常數（水的 Kf = 1.86 °C·kg/mol）<span class="tg given">卷上會給</span></dd></div><div><dt>m</dt><dd>重量莫耳濃度（mol / 溶劑 kg）</dd></div><div><dt>i</dt><dd>凡特何夫因子：每個溶質解離出的粒子數</dd></div><div><dt>π</dt><dd>滲透壓（atm）</dd></div><div><dt>M</dt><dd>體積莫耳濃度（mol/L）</dd></div><div><dt>R</dt><dd>氣體常數 0.0821 L·atm/(mol·K)<span class="tg given">卷上會給</span></dd></div><div><dt>T</dt><dd>絕對溫度（K）= °C + 273</dd></div></dl>
+ <p>凡特何夫因子 i 是每個溶質解離出的粒子數：葡萄糖 1、NaCl 2、CaCl₂ 3（理想值）。比較時比的是 i × 濃度；由測得的 ΔTf 或 π 也能反推分子量（高分子常用滲透壓，因為數值較大）。</p>
+ <p>兩種液體都會揮發時（第二張圖），每種成分各自貢獻一部分壓力（<b>分壓</b>），總壓是分壓的和；每一種成分的分壓遵守<b>拉午耳定律</b>：</p>
+diff --git a/src/chem/ch/thermo.js b/src/chem/ch/thermo.js
+index 4db2931..68e94c2 100644
+--- a/src/chem/ch/thermo.js
++++ b/src/chem/ch/thermo.js
+@@ -10,16 +10,20 @@ CH.push({
+ <dl class="sym"><div><dt>q</dt><dd>熱量（J）；吸熱為正、放熱為負</dd></div><div><dt>m</dt><dd>質量（g）</dd></div><div><dt>c</dt><dd>比熱：1 g 物質升高 1 °C 需要的熱，J/(g·°C)；水 4.18<span class="tg given">卷上會給</span></dd></div><div><dt>ΔT</dt><dd>溫度變化 = 最後溫度 − 起始溫度</dd></div></dl>
+ <p>兩個物體接觸到溫度相同時，一方放出的熱等於另一方吸收的熱，這就是<b>卡計</b>（測量反應熱的容器）的原理。拖動質量、換不同的金屬，看最後溫度落在哪裡。</p>
+ <p>系統內所有粒子的動能與位能總和稱為<b>內能</b> E；在定壓下測到的熱稱為<b>焓變化</b> ΔH（化學反應大多在大氣壓力下進行，所以最常用 ΔH）。咖啡杯卡計開口、在<b>定壓</b>下測量，量到的熱是 ΔH；彈卡計是<b>定容</b>的密閉鋼瓶，量到的是 ΔE：</p>
+-<p class="eq">q = C卡計 × ΔT　　ΔH = ΔE + Δn(氣體)·RT<span class="tg derive">會推</span></p>
++<p class="eq">q = C卡計 × ΔT<span class="tg derive">會推</span></p>
++<p class="eq">ΔH = ΔE + Δn(氣體)·RT<span class="tg derive">會推</span></p>
+ <dl class="sym"><div><dt>C卡計</dt><dd>熱容量：整個卡計升高 1 °C 需要的熱（J/°C），已包含裡面的水</dd></div><div><dt>Δn(氣體)</dt><dd>產物氣體莫耳數 − 反應物氣體莫耳數；沒有氣體變化時 ΔH ≈ ΔE</dd></div></dl>
+ <p>單位：1 cal = 4.184 J<span class="tg must">要背</span>；功率 1 W = 1 J/s。</p>` },
+     { h: '熱和功如何改變系統的能量？', w: 'firstlaw', body: `
+ <p><b>熱力學第一定律</b>：能量守恆，系統內能的變化等於它吸收的熱加上外界對它做的功：</p>
+-<p class="eq">ΔE = q + w　　w = −PΔV<span class="tg must">要背</span></p>
++<p class="eq">ΔE = q + w<span class="tg must">要背</span></p>
++<p class="eq">w = −PΔV<span class="tg must">要背</span></p>
+ <dl class="sym"><div><dt>q</dt><dd>系統吸熱為正、放熱為負</dd></div><div><dt>w</dt><dd>功：環境對系統做功（被壓縮）為正；系統膨脹、對外做功為負</dd></div><div><dt>PΔV</dt><dd>定壓下體積改變 ΔV 時做的功；單位 L·atm，1 L·atm = 101.3 J<span class="tg given">卷上會給</span></dd></div></dl>
+ <p>切換三種過程，三條長條就是這個公式。</p>
+ <p>理想氣體的內能只和溫度有關，所以等溫過程 ΔE = 0。q、w 和走哪一條路徑有關；ΔE、ΔH、ΔS、ΔG 只和起點終點有關，稱為<b>狀態函數</b>。1 mol 氣體升高 1 K 需要的熱稱為莫耳熱容量：定容時是 Cᵥ，定壓時是 Cₚ（定壓時還要多付膨脹做功，所以 Cₚ 較大）。</p>
+-<p class="eq">ΔE = nCᵥΔT　　Cₚ − Cᵥ = R　　單原子氣體 Cᵥ = 3/2 R<span class="tg must">要背</span></p>
++<p class="eq">ΔE = nCᵥΔT<span class="tg must">要背</span></p>
++<p class="eq">Cₚ − Cᵥ = R<span class="tg must">要背</span></p>
++<p class="eq">單原子氣體 Cᵥ = 3/2 R<span class="tg must">要背</span></p>
+ <p>ΔE = nCᵥΔT 對所有理想氣體成立，但 Cᵥ = 3/2 R 只適用單原子氣體（He、Ar）；雙原子分子還會轉動，Cᵥ 較大。</p>` },
+     { h: '為什麼反應熱可以相加？', w: ['hess', 'bornhaber'], body: `
+ <p>ΔH 是狀態函數：反應可以拆成幾步，ΔH 相加不變（<b>赫斯定律</b>）。方程式倒過來 ΔH 變號，係數乘 n、ΔH 也乘 n。右上的 ° 表示<b>標準狀態</b>：1 atm（或 1 bar）、溶液 1 M，通常指 25 °C。常用的算法<span class="tg must">要背</span>：</p>
+@@ -29,7 +33,9 @@ CH.push({
+ <p>第二張圖是離子晶體的<b>波恩–哈柏循環</b>：用昇華熱、鍵能、游離能、電子親和力與生成焓反推晶格能。</p>` },
+     { h: '熵是什麼？', w: 'entropy', body: `
+ <p><b>熵</b> S 量度能量和粒子能以多少種方式分散；排列方式越多，熵越大，通常也就是越「亂」。拖動分子數：分子越多，「全部擠在一邊」的機率越小，自然變化往排法數多的方向走。ΔS &gt; 0 的常見情況：固 → 液 → 氣、氣體分子數增加、溶解與混合、升溫。少數溶解反而 ΔS &lt; 0：小而高電荷的離子（Ca²⁺、SO₄²⁻）使周圍水分子排列得很有秩序。</p>
+-<p class="eq">相變化 ΔS = ΔH/T　　等溫膨脹 ΔS = nR ln(V₂/V₁)　　定壓加熱 ΔS = nCₚ ln(T₂/T₁)<span class="tg must">要背</span></p>
++<p class="eq">相變化 ΔS = ΔH/T<span class="tg must">要背</span></p>
++<p class="eq">等溫膨脹 ΔS = nR ln(V₂/V₁)<span class="tg must">要背</span></p>
++<p class="eq">定壓加熱 ΔS = nCₚ ln(T₂/T₁)<span class="tg must">要背</span></p>
+ <dl class="sym"><div><dt>V₁、V₂</dt><dd>膨脹前、後的體積；體積變大，分子可去的位置變多，熵增加</dd></div><div><dt>T₁、T₂</dt><dd>加熱前、後的絕對溫度</dd></div><div><dt>ΔS環境</dt><dd>= −ΔH/T：系統放熱（ΔH &lt; 0）時，熱跑到環境，環境的熵增加</dd></div></dl>
+ <p><b>自發</b>是指不需要外界持續推動就會自己發生的變化。<b>熱力學第二定律</b>：自發過程使宇宙（系統＋環境）的總熵增加。</p>` },
+     { h: '反應會不會自己發生？', w: 'gibbs', body: `
+@@ -40,7 +46,8 @@ CH.push({
+ <p>由此可以判斷：ΔH &lt; 0、ΔS &gt; 0 任何溫度都自發；ΔH &gt; 0、ΔS &lt; 0 永不自發；兩者同號時，放熱的（如結冰、原子結合成分子）低溫自發，吸熱的（如熔化、蛋白質變性）高溫自發。熔點、沸點正是 ΔG = 0 的溫度：T = ΔH/ΔS。「自發」不代表快，快慢是動力學的問題。</p>` },
+     { h: 'ΔG 和平衡常數有什麼關係？', w: 'vanthoff', body: `
+ <p>平衡常數 K（見化學平衡一章）越大，平衡時產物越多。它和標準自由能變化的關係：</p>
+-<p class="eq">ΔG° = −RT ln K　　ΔG = ΔG° + RT ln Q<span class="tg must">要背</span></p>
++<p class="eq">ΔG° = −RT ln K<span class="tg must">要背</span></p>
++<p class="eq">ΔG = ΔG° + RT ln Q<span class="tg must">要背</span></p>
+ <dl class="sym"><div><dt>K</dt><dd>平衡常數</dd></div><div><dt>Q</dt><dd>反應商：寫法和 K 一樣，但代入「現在」的濃度；Q = K 時正好平衡</dd></div><div><dt>R</dt><dd>8.314 J/(mol·K)<span class="tg given">卷上會給</span></dd></div></dl>
+ <p>ΔG° &lt; 0 時 K &gt; 1，ΔG° = 0 時 K = 1。代入 ΔG° = ΔH° − TΔS° 得到 ln K 對 1/T 的直線，斜率 −ΔH°/R：放熱反應升溫 K 變小，吸熱反應升溫 K 變大。</p>
+ <p>Q = K 時 ΔG = 0。兩個反應相加時 ΔG° 相加（K 相乘），不自發的反應可以和強烈自發的反應偶合：例如 ZnS → Zn + S 不自發，但和 S + H₂ → H₂S 相加後總 ΔG 仍可判斷；生物體用 ATP 水解（約 −30.5 kJ/mol）推動合成反應。電化學中 ΔG° = −nFE°<span class="tg must">要背</span>（n 是轉移的電子莫耳數，F 是法拉第常數 96485 C/mol，E° 是標準電池電位，見電化學一章）。</p>` },
+diff --git a/src/chem/w/stoich.js b/src/chem/w/stoich.js
+index 0598ed2..bf076ed 100644
+--- a/src/chem/w/stoich.js
++++ b/src/chem/w/stoich.js
+@@ -100,7 +100,7 @@ W.combust = el => {
+ const CONC = [['甲醇', 'CH4O', 2.45, 0.976], ['硫酸', 'H2SO4', 1.0, 1.07], ['蔗糖', 'C12H22O11', 0.5, 1.06], ['乙醇', 'C2H6O', 3.0, 0.976]];
+ W.concconv = el => {
+   const st = { i: 0, M: 2.45, d: 0.976 };
+-  el.innerHTML = `${seg('ccS', CONC.map((v, i) => [String(i), v[0]]), '0')}<div class="w-row"><label class="rng">體積莫耳濃度 M<input type="range" id="ccM" min="0.1" max="5" step="0.05"><output class="mono" id="ccMo"></output></label><label class="rng">溶液密度（g/mL）<input type="range" id="ccD" min="0.8" max="1.4" step="0.002"><output class="mono" id="ccDo"></output></label></div><div class="bars pk" id="ccB"></div><ol class="cs" id="ccC"></ol><div class="cards" id="ccK"></div>`;
++  el.innerHTML = `${seg('ccS', CONC.map((v, i) => [String(i), v[0]]), '0')}<div class="w-row"><label class="rng">體積莫耳濃度 M<input type="range" id="ccM" min="0.1" max="5" step="0.05"><output class="mono" id="ccMo"></output></label><label class="rng">溶液密度（g/mL）<input type="range" id="ccD" min="0.8" max="1.4" step="0.002"><output class="mono" id="ccDo"></output></label></div><div class="cards" id="ccK"></div><div class="bars pk" id="ccB"></div><ol class="cs" id="ccC"></ol>`;
+   function draw() {
+     const [nm, f] = CONC[st.i], Mm = molarM(f), tot = 1000 * st.d, solute = st.M * Mm, water = tot - solute;
+     const m = water > 0 ? st.M / (water / 1000) : NaN, X = water > 0 ? st.M / (st.M + water / 18.02) : NaN;
