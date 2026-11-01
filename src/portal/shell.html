@@ -67,6 +67,15 @@ a.course:hover { transform: translateY(-2px); border-color: var(--cc, var(--acce
 .legend span::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 5px; }
 .k-master::before { background: var(--good); } .k-prac::before { background: var(--accent); } .k-weak::before { background: var(--bad); } .k-none::before { background: var(--sunk); border: 1px solid var(--line); }
 .chmap { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 6px; margin: 8px 0; }
+.enter { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 10px; margin: 14px 0 18px; }
+.ent { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 4px 14px; padding: 14px 16px; border-radius: 12px; background: var(--sc); color: #fff; text-decoration: none; min-height: 64px; }
+.ent b { font-family: var(--display); font-size: 22px; } .ent span { font-size: 14px; opacity: .92; } .ent i { font-style: normal; font-size: 22px; }
+.ent:active { filter: brightness(1.15); }
+.subj summary a.sj { color: inherit; text-decoration: none; }
+.tile i { font-style: normal; color: var(--accent); }
+.navwait { position: fixed; left: 50%; top: calc(14px + env(safe-area-inset-top, 0px)); transform: translateX(-50%); z-index: 50; background: var(--ink); color: var(--bg); padding: 8px 18px; border-radius: 99px; font-size: 14px; box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+.navwait::before { content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 8px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; vertical-align: -1px; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 .tile { display: grid; gap: 2px; padding: 7px 9px; border-radius: 7px; text-decoration: none; font-size: 12.5px; line-height: 1.35; border: 1px solid var(--line); color: var(--ink); min-width: 0; }
 .tile span { overflow-wrap: anywhere; } .tile small { font-size: 11px; color: var(--muted); }
 .tile.t-master { background: var(--good-soft); border-color: var(--good); } .tile.t-prac { background: var(--soft); border-color: var(--accent); }

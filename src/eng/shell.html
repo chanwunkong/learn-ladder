@@ -130,9 +130,20 @@ details summary { cursor: pointer; color: var(--accent); font-size: 14px; }
 .tags li { background: var(--warn-soft); color: var(--warn); border-radius: 99px; padding: 2px 10px; font-size: 13px; }
 #exTxt { width: 100%; margin-top: 8px; font-family: var(--mono); font-size: 12px; line-height: 1.5; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding: 10px; }
 #exBox { display: grid; gap: 4px; }
-/* 發音 */
-.spk { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
-.spk label { display: flex; align-items: center; gap: 6px; }
+/* 發音：頁首只放一個按鈕，設定在下拉面板 */
+.spk { position: relative; font-size: 13px; color: var(--muted); }
+.spk-b { font-family: var(--mono); }
+.spk-pop { position: absolute; right: 0; top: calc(100% + 8px); z-index: 40; width: min(280px, calc(100vw - 32px)); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 28px rgba(0,0,0,.14); padding: 12px 14px; display: grid; gap: 10px; }
+.spk label { display: flex; align-items: center; gap: 8px; }
+.spk-pop input { flex: 1; width: auto !important; }
+.spk-pop select { flex: 1; max-width: none !important; }
+/* 回想題的提示、早上單字面板 */
+.hintrow { margin: 0 0 8px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.hintz { color: var(--warn); font-size: 14px; }
+.peekbtn { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 30; box-shadow: 0 6px 20px rgba(0,0,0,.22); }
+.sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 35; max-height: 72vh; overflow: auto; background: var(--bg); border-top: 1px solid var(--line); box-shadow: 0 -10px 30px rgba(0,0,0,.18); padding: 0 16px calc(16px + env(safe-area-inset-bottom, 0px)); border-radius: 14px 14px 0 0; }
+.sheet-h { position: sticky; top: 0; background: var(--bg); display: flex; justify-content: space-between; align-items: center; padding: 12px 0; z-index: 1; }
+.q.done .qnum::after { content: " ✓"; color: var(--good); }
 .spk input { width: 90px; accent-color: var(--accent); }
 .spk output { font-family: var(--mono); font-size: 12px; min-width: 3.2em; }
 .spk select { max-width: 170px; font-size: 12.5px; border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 3px 4px; }
@@ -145,6 +156,7 @@ details summary { cursor: pointer; color: var(--accent); font-size: 14px; }
   --stop-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='6' y='6' width='12' height='12' rx='1.5'/%3E%3C/svg%3E"); }
 .no-tts .say { display: none; }
 .top-in .wk { margin-left: auto; }
+@media (max-width: 480px) { .top-in .wk { display: none; } .top-in #spkSlot { margin-left: auto; } }
 @media (max-width: 560px) {
   .spk { width: 100%; }
   .slots { grid-template-columns: minmax(0, 1fr); }

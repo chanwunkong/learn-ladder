@@ -52,4 +52,10 @@ const COURSE = {
 };
 render();
 CLOUD.start();
+// 點進課程：檔案較大，第一次下載時先顯示「開啟中」，避免以為沒點到
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="./"]'); if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey) return;
+  if (!document.querySelector('.navwait')) document.body.insertAdjacentHTML('beforeend', '<div class="navwait" role="status">開啟中…</div>');
+});
+addEventListener('pageshow', () => { const w = document.querySelector('.navwait'); if (w) w.remove(); });
 if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('./sw.js').catch(() => {});

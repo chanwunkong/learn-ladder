@@ -52,14 +52,17 @@ const SPEECH = (() => {
   // 頁首的語速與聲音
   function controls() {
     if (!ok) return '';
-    return `<div class="spk"><label><span aria-hidden="true">🔊</span> 語速 <input type="range" id="spRate" min="0.5" max="1.3" step="0.1" value="${rate}" aria-label="發音語速"><output id="spRateV">${rate.toFixed(1)}×</output></label><select id="spVoice" aria-label="發音的聲音" hidden></select></div>`;
+    return `<div class="spk"><button class="btn sm spk-b" type="button" id="spBtn" aria-expanded="false" aria-controls="spPop">🔊 <span id="spBtnV">${rate.toFixed(1)}×</span></button><div class="spk-pop" id="spPop" hidden><label>語速 <input type="range" id="spRate" min="0.5" max="1.3" step="0.1" value="${rate}" aria-label="發音語速"><output id="spRateV">${rate.toFixed(1)}×</output></label><label>聲音 <select id="spVoice" aria-label="發音的聲音"><option>系統預設</option></select></label></div></div>`;
   }
   function bind() {
     if (!ok) { document.documentElement.classList.add('no-tts'); return; }
     const r = document.getElementById('spRate'), sel = document.getElementById('spVoice');
-    if (r) r.oninput = () => { rate = +r.value; store.set('rate', rate); document.getElementById('spRateV').textContent = rate.toFixed(1) + '×'; };
-    const fill = () => { const vs = voices(); if (!sel || vs.length < 2) return; const p = pick();
-      sel.innerHTML = vs.map(v => `<option value="${esc(v.name)}"${p && v.name === p.name ? ' selected' : ''}>${esc(v.name.replace(/\s*\(.*\)/, ''))}（${esc(v.lang)}）</option>`).join(''); sel.hidden = false; };
+    if (r) r.oninput = () => { rate = +r.value; store.set('rate', rate); document.getElementById('spRateV').textContent = document.getElementById('spBtnV').textContent = rate.toFixed(1) + '×'; };
+    const btn = document.getElementById('spBtn'), pop = document.getElementById('spPop');
+    if (btn) { btn.onclick = e => { e.stopPropagation(); pop.hidden = !pop.hidden; btn.setAttribute('aria-expanded', String(!pop.hidden)); };
+      document.addEventListener('click', e => { if (!e.target.closest('.spk')) { pop.hidden = true; btn.setAttribute('aria-expanded', 'false'); } }); }
+    const fill = () => { const vs = voices(); if (!sel || !vs.length) return; const p = pick();
+      sel.innerHTML = vs.map(v => `<option value="${esc(v.name)}"${p && v.name === p.name ? ' selected' : ''}>${esc(v.name.replace(/\s*\(.*\)/, ''))}（${esc(v.lang)}）</option>`).join(''); };
     fill(); speechSynthesis.onvoiceschanged = fill;
     if (sel) sel.onchange = () => { voiceName = sel.value; store.set('voice', voiceName); };
     document.addEventListener('click', e => {

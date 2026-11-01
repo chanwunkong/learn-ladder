@@ -257,6 +257,25 @@ svg.en.clip { overflow: hidden; }
 .secnav a { font-size: 13px; padding: 4px 10px; border: 1px solid var(--line); border-radius: 99px; text-decoration: none; color: var(--ink); background: var(--surface); }
 .secnav a.r-ok { border-color: var(--good); background: var(--good-soft); color: var(--good); } .secnav a.r-ok::before { content: "✓ "; }
 .secnav a.r-unsure { border-color: var(--warn); background: var(--warn-soft); color: var(--warn); } .secnav a.r-unsure::before { content: "？ "; }
+/* 一節一頁：章內導覽、小節清單、練習區 */
+.chbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 10px 0; border-bottom: 1px solid var(--line); margin-bottom: 4px; font-size: 14px; }
+.chb-t { font-weight: 700; text-decoration: none; color: var(--ink); flex: 1 1 auto; min-width: 0; }
+.chb-n { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+.chb-pn { display: flex; gap: 6px; }
+.chb-pn .btn { min-width: 44px; justify-content: center; text-decoration: none; font-size: 18px; }
+.chb-j { flex: 1 1 100%; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+.chb-j select { flex: 1; min-width: 0; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 6px; padding: 6px; font-size: 14px; }
+.seclist { list-style: none; margin: 18px 0; padding: 0; display: grid; gap: 8px; }
+.seclist a { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; grid-template-areas: "n h go" "n s go"; gap: 2px 12px; align-items: center; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); text-decoration: none; }
+.seclist a:hover { border-color: var(--accent); }
+.seclist .sn { grid-area: n; } .seclist .sl-h { grid-area: h; font-weight: 500; } .seclist small { grid-area: s; color: var(--muted); font-size: 12.5px; } .seclist .go { grid-area: go; color: var(--accent); font-size: 18px; }
+.seclist a.r-ok { border-color: var(--good); } .seclist a.r-ok .sl-h::after { content: " ✓"; color: var(--good); }
+.seclist a.r-unsure { border-color: var(--warn); } .seclist a.r-unsure .sl-h::after { content: " ？"; color: var(--warn); }
+.practice { margin-top: 26px; border-top: 2px solid var(--line); }
+details.more { margin-top: 10px; } details.more > summary { cursor: pointer; color: var(--accent); padding: 10px 0; font-size: 14.5px; }
+.nextsec { margin: 28px 0 40px; }
+.nextsec .btn, .foot .btn.wide { text-decoration: none; }
+.backq { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 30; box-shadow: 0 4px 16px rgba(0,0,0,.2); }
 .readbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 18px; padding-top: 12px; border-top: 1px dashed var(--line); }
 .readbar > span { flex: 1 1 100%; }
 .btn.unsure { background: var(--warn-soft); border-color: var(--warn); color: var(--warn); }
@@ -1758,13 +1777,13 @@ CH.push({
   exam: [
     { src: '中國醫藥 108 第 1 題', q: '³²S²⁻（S 的原子序 16）有幾個質子、電子、中子？', o: ['16、18、16', '16、14、16', '18、16、16', '16、16、18'], a: 0,
       why: '質子 16；電子 16 + 2 = 18；中子 32 − 16 = 16。', show: { w: 'nuclide', set: { i: 8 } } },
-    { src: '中國醫藥 114 第 40 題', q: '道耳頓原子說中，討論到下列哪一個概念？', o: ['原子', '同位素', '質子', '電子'], a: 0,
+    { src: '中國醫藥 114 第 40 題', s: 1, q: '道耳頓原子說中，討論到下列哪一個概念？', o: ['原子', '同位素', '質子', '電子'], a: 0,
       why: '道耳頓原子說只有「原子」；電子、原子核（質子）、中子與同位素都是後來才發現的。' },
     { src: '義守 115 第 5 題', q: 'Cl–Cl 鍵能為 243 kJ/mol，能使 Cl₂ 解離的光，最長波長約為？', o: ['492 nm', '243 nm', '820 nm', '330 nm'], a: 0,
       why: 'λ ≈ 119,600 ÷ 243 ≈ 492 nm；波長再長，光子能量就不夠了。', show: { w: 'emspec', set: { l: 492e-9 } } },
     { src: '慈濟 109 第 46 題', q: '下列電磁波依波長由長到短排列，何者正確？', o: ['無線電波 > 微波 > 紅外光 > 紫外光 > X 射線', 'X 射線 > 紫外光 > 紅外光 > 微波 > 無線電波', '微波 > 無線電波 > 紅外光 > X 射線 > 紫外光', '紅外光 > 無線電波 > 微波 > 紫外光 > X 射線'], a: 0,
       why: '波長由長到短：無線電波、微波、紅外光、可見光、紫外光、X 射線、γ 射線。', show: { w: 'emspec', set: { l: 3 } } },
-    { src: '中國醫藥 109 第 14 題', q: '燃燒含鈉化合物時火焰呈黃色，這是因為鈉原子？', o: ['電子由激發態掉回低能階時放出黃光', '吸收了黃光', '反射了黃光', '吸收了藍光'], a: 0,
+    { src: '中國醫藥 109 第 14 題', s: 3, q: '燃燒含鈉化合物時火焰呈黃色，這是因為鈉原子？', o: ['電子由激發態掉回低能階時放出黃光', '吸收了黃光', '反射了黃光', '吸收了藍光'], a: 0,
       why: '焰色是放射光譜：被加熱激發的電子回到低能階，放出能量等於能階差的光。' },
     { src: '中國醫藥 110 第 21 題', q: '氫原子中電子由 n = 4 掉到 n = 2，放出的光波長約為？', o: ['486 nm', '656 nm', '434 nm', '122 nm'], a: 0,
       why: 'ΔE = 13.6 × (1/4 − 1/16) = 2.55 eV，λ = 1240 ÷ 2.55 ≈ 486 nm（巴耳末系藍綠線）。', show: { w: 'hspec', set: { ni: 4, nf: 2, Z: 1 } } },
@@ -1778,13 +1797,13 @@ CH.push({
       why: 'n、ℓ 確定的是 5p 副層：3 個軌域 × 2 = 6 個電子。', show: { w: 'qn', set: { n: 4, l: 1, m: 0 } } },
     { src: '中國醫藥 114 第 31 題', q: '一個 3p 軌域有幾個節面（平面）與幾個球面節點？', o: ['1 個節面、1 個球面節點', '0 個節面、2 個球面節點', '2 個節面、0 個球面節點', '1 個節面、2 個球面節點'], a: 0,
       why: '角節面 = ℓ = 1；徑向節點 = n − ℓ − 1 = 1。', show: { w: 'qn', set: { n: 3, l: 1, m: 0 } } },
-    { src: '慈濟 107 第 4 題', q: '下列軌域名稱中，哪一個不存在？', o: ['2d', '4f', '3d', '5s'], a: 0,
+    { src: '慈濟 107 第 4 題', s: 5, q: '下列軌域名稱中，哪一個不存在？', o: ['2d', '4f', '3d', '5s'], a: 0,
       why: 'n = 2 時 ℓ 只能是 0、1，沒有 d 軌域。' },
-    { src: '慈濟 113 第 25 題', q: '鉬（Mo，Z = 42，與 Cr 同族）的基態電子組態為？', o: ['[Kr] 5s¹4d⁵', '[Kr] 5s²4d⁴', '[Kr] 5s²4d⁵', '[Ar] 4s¹3d⁵'], a: 0,
+    { src: '慈濟 113 第 25 題', s: 6, q: '鉬（Mo，Z = 42，與 Cr 同族）的基態電子組態為？', o: ['[Kr] 5s¹4d⁵', '[Kr] 5s²4d⁴', '[Kr] 5s²4d⁵', '[Ar] 4s¹3d⁵'], a: 0,
       why: 'Mo 和 Cr 同一族，5s 與 4d 能量也很接近：搬一個 5s 電子到 4d 變成半滿 4d⁵，5 個同自旋電子的交換能讓能量下降得比搬電子的代價多，所以是 5s¹4d⁵。' },
-    { src: '義守 108 第 29 題', q: '下列哪一組粒子的電子組態都相同？', o: ['S²⁻、Ar、Ca²⁺', 'F⁻、Ar、Mg²⁺', 'O²⁻、Ne、K⁺', 'Cl⁻、Ne、Na⁺'], a: 0,
+    { src: '義守 108 第 29 題', s: 6, q: '下列哪一組粒子的電子組態都相同？', o: ['S²⁻、Ar、Ca²⁺', 'F⁻、Ar、Mg²⁺', 'O²⁻、Ne、K⁺', 'Cl⁻、Ne、Na⁺'], a: 0,
       why: 'S²⁻、Ar、Ca²⁺ 都有 18 個電子，組態 [Ne]3s²3p⁶。' },
-    { src: '慈濟 106 第 4 題', q: '下列何者代表激發態的氮原子？', o: ['1s²2s²2p²3s¹', '1s²2s²2p³', '1s²2s²2p⁶', '1s²2s¹'], a: 0,
+    { src: '慈濟 106 第 4 題', s: 6, q: '下列何者代表激發態的氮原子？', o: ['1s²2s²2p²3s¹', '1s²2s²2p³', '1s²2s²2p⁶', '1s²2s¹'], a: 0,
       why: '7 個電子，但有一個不在能量最低的 2p 而在 3s。' },
     { src: '中國醫藥 113 第 47 題', q: '下列等電子粒子半徑由大到小，何者正確？', o: ['S²⁻ > Cl⁻ > K⁺ > Ca²⁺', 'Ca²⁺ > K⁺ > Cl⁻ > S²⁻', 'Cl⁻ > S²⁻ > Ca²⁺ > K⁺', 'K⁺ > Ca²⁺ > S²⁻ > Cl⁻'], a: 0,
       why: '都是 18 個電子，質子數 16 < 17 < 19 < 20，質子越多半徑越小。', show: { w: 'ionrad', set: { c: 'ar' } } },
@@ -1794,39 +1813,39 @@ CH.push({
       why: 'Na 只有 1 個價電子，第二個電子要從內層（鈍氣組態）拿。', show: { w: 'succie', set: { e: 'Na' } } },
     { src: '中國醫藥 107 第 5 題', q: '下列元素第一游離能由小到大，何者正確？', o: ['B < Be < C < O < N', 'Be < B < C < N < O', 'B < C < Be < N < O', 'O < N < C < Be < B'], a: 0,
       why: '大致由左到右變大，但 Be > B（2p 較易拿走）、N > O（成對排斥）。', show: { w: 'trend', set: { p: 'ie' } } },
-    { src: '義守 107 第 7 題', q: '下列變化何者放熱（ΔH < 0）？', o: ['Cl(g) + e⁻ → Cl⁻(g)', 'Na(g) → Na⁺(g) + e⁻', 'O⁻(g) + e⁻ → O²⁻(g)', 'Mg⁺(g) → Mg²⁺(g) + e⁻'], a: 0,
+    { src: '義守 107 第 7 題', s: 9, q: '下列變化何者放熱（ΔH < 0）？', o: ['Cl(g) + e⁻ → Cl⁻(g)', 'Na(g) → Na⁺(g) + e⁻', 'O⁻(g) + e⁻ → O²⁻(g)', 'Mg⁺(g) → Mg²⁺(g) + e⁻'], a: 0,
       why: '游離一定吸熱；加第二個電子到陰離子也吸熱；Cl 得到第一個電子放熱。' },
-    { src: '慈濟 108 第 36 題', q: '若原子序 119 的元素可以穩定存在，最可能的性質是？', o: ['與水反應放出氫氣，形成 +1 價離子', '是非金屬', '形成 +3 價離子', '是惰性氣體'], a: 0,
+    { src: '慈濟 108 第 36 題', s: 7, q: '若原子序 119 的元素可以穩定存在，最可能的性質是？', o: ['與水反應放出氫氣，形成 +1 價離子', '是非金屬', '形成 +3 價離子', '是惰性氣體'], a: 0,
       why: '第 8 週期第 1 族，屬鹼金屬。' },
     { src: '慈濟 110 第 26 題', q: '下列元素電負度由小到大何者正確？', o: ['Cs < Na < Cl < F', 'F < Cl < Na < Cs', 'Na < Cs < F < Cl', 'Cl < F < Cs < Na'], a: 0,
       why: '電負度同族往上、同週期往右變大；F 最大，Cs 最小。', show: { w: 'trend', set: { p: 'en' } } },
     { src: '仿 慈濟 115 第 23 題', q: 'Se²⁻、Br⁻、Rb⁺、Sr²⁺ 的半徑由小到大？', o: ['Sr²⁺ < Rb⁺ < Br⁻ < Se²⁻', 'Rb⁺ < Sr²⁺ < Br⁻ < Se²⁻', 'Se²⁻ < Br⁻ < Rb⁺ < Sr²⁺', 'Sr²⁺ < Rb⁺ < Se²⁻ < Br⁻'], a: 0,
       why: '四者等電子（36 個電子），質子越多半徑越小。', show: { w: 'ionrad', set: {} } },
-    { src: '仿 中國醫 114 第 38 題', q: 'B、Be、N、O 中，第一游離能最小的是？', o: ['B', 'Be', 'N', 'O'], a: 0,
+    { src: '仿 中國醫 114 第 38 題', s: 7, q: 'B、Be、N、O 中，第一游離能最小的是？', o: ['B', 'Be', 'N', 'O'], a: 0,
       why: 'B 拿走的是 2p 電子；2s 會穿透到原子核附近、被抓得較緊，所以同一層的 2p 能量較高、較易移走。Be、N、O 都比 B 難游離。' },
     { src: '仿 中國醫 114 第 42 題', q: '硒（Se，Z = 34）的價電子組態是？', o: ['4s²4p⁴', '3d¹⁰4s²4p⁴', '4s²4p⁶', '3s²3p⁴'], a: 0,
       why: '價電子是最外層（n = 4）的電子。', show: { w: 'econf', set: {} } },
-    { src: '仿 義守 114 第 34 題', q: 'O、Cl、N、S 中電負度最高的是？', o: ['O', 'Cl', 'N', 'S'], a: 0,
+    { src: '仿 義守 114 第 34 題', s: 7, q: 'O、Cl、N、S 中電負度最高的是？', o: ['O', 'Cl', 'N', 'S'], a: 0,
       why: '電負度約 3.44、3.16、3.04、2.58。' },
     { src: '仿 慈濟 114 第 2 題', q: 'Na⁺、Mg²⁺、F⁻、O²⁻ 的半徑由大到小？', o: ['O²⁻ > F⁻ > Na⁺ > Mg²⁺', 'Mg²⁺ > Na⁺ > F⁻ > O²⁻', 'Na⁺ > Mg²⁺ > O²⁻ > F⁻', 'F⁻ > O²⁻ > Na⁺ > Mg²⁺'], a: 0,
       why: '等電子（10 個電子），核電荷越大越小。', show: { w: 'ionrad', set: {} } },
-    { src: '仿 慈濟 114 第 19 題', q: '下列量子數組合 (n, l, mₗ, mₛ) 何者合理？', o: ['(3, 2, −2, +1/2)', '(2, 2, 0, +1/2)', '(3, 1, 2, −1/2)', '(1, 0, 0, +1)'], a: 0,
+    { src: '仿 慈濟 114 第 19 題', s: 5, q: '下列量子數組合 (n, l, mₗ, mₛ) 何者合理？', o: ['(3, 2, −2, +1/2)', '(2, 2, 0, +1/2)', '(3, 1, 2, −1/2)', '(1, 0, 0, +1)'], a: 0,
       why: 'l < n、|mₗ| ≤ l、mₛ = ±1/2。' },
     { src: '仿 慈濟 113 第 7 題', q: '氫原子下列躍遷中，吸收光子的波長最長的是？', o: ['n = 3 → 4', 'n = 1 → 2', 'n = 2 → 3', 'n = 1 → 3'], a: 0,
       why: '能階差越小，波長越長；高能階之間的間距越來越小。', show: { w: 'hspec', set: {} } },
-    { src: '仿 中國醫 112 第 38 題', q: '電子組態 [Xe]4f¹⁴5d¹⁰6s²6p² 的元素是？', o: ['主族金屬（Pb）', '非金屬', '過渡金屬', '鑭系元素'], a: 0,
+    { src: '仿 中國醫 112 第 38 題', s: 6, q: '電子組態 [Xe]4f¹⁴5d¹⁰6s²6p² 的元素是？', o: ['主族金屬（Pb）', '非金屬', '過渡金屬', '鑭系元素'], a: 0,
       why: '第 14 族、第 6 週期是鉛。' },
-    { src: '仿 義守 112 第 12 題', q: '下列何者是合理的量子數組合？', o: ['n = 4, l = 3, mₗ = −3, mₛ = −1/2', 'n = 3, l = 3, mₗ = 1, mₛ = +1/2', 'n = 4, l = 2, mₗ = 3, mₛ = +1/2', 'n = 2, l = 1, mₗ = 0, mₛ = 1'], a: 0,
+    { src: '仿 義守 112 第 12 題', s: 5, q: '下列何者是合理的量子數組合？', o: ['n = 4, l = 3, mₗ = −3, mₛ = −1/2', 'n = 3, l = 3, mₗ = 1, mₛ = +1/2', 'n = 4, l = 2, mₗ = 3, mₛ = +1/2', 'n = 2, l = 1, mₗ = 0, mₛ = 1'], a: 0,
       why: 'l 最大 n − 1，mₗ 從 −l 到 +l。' },
     { src: '仿 義守 112 第 24 題', q: '下列基態電子組態有幾個正確？ (i) K [Ar]4s¹ (ii) Al 1s²2s²2p⁶3s²3p¹ (iii) Cr [Ar]4s²3d⁴ (iv) Se [Ar]3d¹⁰4s²4p⁴ (v) Cl 1s²2s²2p⁶3s²3p⁶', o: ['3 個', '2 個', '4 個', '5 個'], a: 0,
       why: 'Cr 是 [Ar]4s¹3d⁵；Cl 是 3s²3p⁵。', show: { w: 'econf', set: {} } },
-    { src: '仿 中國醫 111 第 6 題', q: '可以用 n = 4、l = 1 描述的電子最多有幾個？', o: ['6', '2', '10', '14'], a: 0,
+    { src: '仿 中國醫 111 第 6 題', s: 5, q: '可以用 n = 4、l = 1 描述的電子最多有幾個？', o: ['6', '2', '10', '14'], a: 0,
       why: '4p 有 3 個軌域，每個 2 個電子。' },
     { src: '仿 義守 111 第 24 題', q: '⁵⁶Fe³⁺ 有幾個電子、質子、中子？', o: ['23、26、30', '26、23、30', '26、26、30', '29、26、30'], a: 0,
       why: 'Z = 26，失去 3 個電子；中子 = 56 − 26。', show: { w: 'nuclide', set: {} } },
-    { src: '仿 慈濟 111 第 42 題', q: 'Ar、K⁺、Cl⁻、Ca²⁺ 中半徑最小的是？', o: ['Ca²⁺', 'K⁺', 'Cl⁻', 'Ar'], a: 0,
+    { src: '仿 慈濟 111 第 42 題', s: 8, q: 'Ar、K⁺、Cl⁻、Ca²⁺ 中半徑最小的是？', o: ['Ca²⁺', 'K⁺', 'Cl⁻', 'Ar'], a: 0,
       why: '等電子，核電荷最大者最小。' },
-    { src: '仿 慈濟 111 第 43 題', q: 'K、Br、F 的電負度由小到大？', o: ['K < Br < F', 'Br < K < F', 'F < Br < K', 'K < F < Br'], a: 0,
+    { src: '仿 慈濟 111 第 43 題', s: 7, q: 'K、Br、F 的電負度由小到大？', o: ['K < Br < F', 'Br < K < F', 'F < Br < K', 'K < F < Br'], a: 0,
       why: '同族往上、同週期往右電負度增加。' },
     { src: '仿 中國醫 110 第 25 題', q: '氫原子的游離能為 1.31 × 10⁶ J/mol，Li²⁺ 的游離能約為？', o: ['1.18 × 10⁷ J/mol', '3.93 × 10⁶ J/mol', '1.31 × 10⁶ J/mol', '5.24 × 10⁶ J/mol'], a: 0,
       why: '單電子離子 E ∝ Z²，Li²⁺ 的 Z = 3，為 9 倍。', show: { w: 'hspec', set: {} } },
@@ -1836,41 +1855,41 @@ CH.push({
       why: '落到 n = 2 的巴耳末系在可見光區，3 → 2 能量最小、波長最長（紅）。', show: { w: 'hspec', set: {} } },
     { src: '仿 慈濟 110 第 20 題', q: '煙火的各種顏色主要來自？', o: ['金屬離子的電子被激發後回到低能階放出特定波長的光', '有機染料燃燒', '氖、氬等氣體游離', '火藥本身的燃燒'], a: 0,
       why: '焰色：Na 黃、Sr 紅、Ba 綠、Cu 藍綠。', show: { w: 'emspec', set: {} } },
-    { src: '仿 中國醫 109 第 7 題', q: 'K⁺、Ca²⁺、Cl⁻、Ar 中，移走最外層一個電子所需能量最大的是？', o: ['Ca²⁺', 'K⁺', 'Cl⁻', 'Ar'], a: 0,
+    { src: '仿 中國醫 109 第 7 題', s: 8, q: 'K⁺、Ca²⁺、Cl⁻、Ar 中，移走最外層一個電子所需能量最大的是？', o: ['Ca²⁺', 'K⁺', 'Cl⁻', 'Ar'], a: 0,
       why: '四者等電子，核電荷最大者最難移走電子。' },
-    { src: '仿 中國醫 109 第 11 題', q: '下列哪一組量子數 (n, l, mₗ, mₛ) 不存在？', o: ['(3, 3, 0, +1/2)', '(4, 2, −2, −1/2)', '(2, 1, 1, +1/2)', '(1, 0, 0, −1/2)'], a: 0,
+    { src: '仿 中國醫 109 第 11 題', s: 5, q: '下列哪一組量子數 (n, l, mₗ, mₛ) 不存在？', o: ['(3, 3, 0, +1/2)', '(4, 2, −2, −1/2)', '(2, 1, 1, +1/2)', '(1, 0, 0, −1/2)'], a: 0,
       why: 'l 必須小於 n。' },
-    { src: '仿 中國醫 109 第 21 題', q: '一個 4f 軌域有幾個節面（角節點）？', o: ['3', '0', '1', '4'], a: 0,
+    { src: '仿 中國醫 109 第 21 題', s: 5, q: '一個 4f 軌域有幾個節面（角節點）？', o: ['3', '0', '1', '4'], a: 0,
       why: '角節點數 = l。' },
     { src: '仿 義守 109 第 1 題', q: '下列第一游離能排序何者正確？', o: ['Na < Mg < Si < P', 'N < O < F', 'Cs > Rb > K', 'Mg < Al < Si'], a: 0,
       why: 'O 比 N 小（N 半滿）；Al 比 Mg 小；同族往下變小。', show: { w: 'succie', set: {} } },
-    { src: '仿 義守 109 第 29 題', q: '位於 4d 軌域的電子，正確的量子數是？', o: ['n = 4, l = 2, mₗ = −2', 'n = 4, l = 3, mₗ = 0', 'n = 3, l = 2, mₗ = 1', 'n = 4, l = 2, mₗ = 3'], a: 0,
+    { src: '仿 義守 109 第 29 題', s: 5, q: '位於 4d 軌域的電子，正確的量子數是？', o: ['n = 4, l = 2, mₗ = −2', 'n = 4, l = 3, mₗ = 0', 'n = 3, l = 2, mₗ = 1', 'n = 4, l = 2, mₗ = 3'], a: 0,
       why: 'd 軌域 l = 2，mₗ 為 −2 到 +2。' },
     { src: '仿 慈濟 109 第 25 題', q: '某元素 I₁ = 738、I₂ = 1451、I₃ = 7733 kJ/mol，它最可能是？', o: ['Mg', 'Na', 'Al', 'Si'], a: 0,
       why: 'I₂ 到 I₃ 大跳，有 2 個價電子。', show: { w: 'succie', set: {} } },
-    { src: '仿 義守 108 第 35 題', q: '打斷某鍵需吸收波長 250 nm 的光，每莫耳能量約為？', o: ['479 kJ/mol', '240 kJ/mol', '120 kJ/mol', '958 kJ/mol'], a: 0,
+    { src: '仿 義守 108 第 35 題', s: 2, q: '打斷某鍵需吸收波長 250 nm 的光，每莫耳能量約為？', o: ['479 kJ/mol', '240 kJ/mol', '120 kJ/mol', '958 kJ/mol'], a: 0,
       why: 'E = hcN_A ÷ λ = 0.1197 J·m/mol ÷ 2.5 × 10⁻⁷ m。' },
     { src: '仿 慈濟 108 第 46 題', q: '某元素 E₁ = 900、E₂ = 1757、E₃ = 14849 kJ/mol，價電子組態最可能為？', o: ['ns²', 'ns²np¹', 'ns¹', 'ns²np²'], a: 0,
       why: '第 3 個電子要從內層移走。', show: { w: 'succie', set: {} } },
-    { src: '仿 慈濟 108 第 47 題', q: '關於電負度，何者正確？', o: ['同週期由左到右大致增加', '同族由上到下大致增加', 'F 電負度最大是因為最容易失去電子', '電負度越大金屬性越強'], a: 0,
+    { src: '仿 慈濟 108 第 47 題', s: 7, q: '關於電負度，何者正確？', o: ['同週期由左到右大致增加', '同族由上到下大致增加', 'F 電負度最大是因為最容易失去電子', '電負度越大金屬性越強'], a: 0,
       why: 'F 最容易吸引鍵結電子；金屬電負度小。' },
     { src: '仿 中國醫 107 第 4 題', q: '下列電子組態何者正確？', o: ['Cr：[Ar]4s¹3d⁵', 'Cu：[Ar]4s²3d⁹', 'Ag：[Kr]5s²4d⁹', 'Fe：[Ar]3d⁸'], a: 0,
       why: 'Cu 與 Ag 都是 ns¹(n−1)d¹⁰；Fe 是 [Ar]4s²3d⁶。', show: { w: 'econf', set: {} } },
     { src: '仿 中國醫 107 第 6 題', q: '下列電磁波依波長由長到短？', o: ['無線電波 > 微波 > 紅外光 > 可見光 > 紫外光 > X 射線', 'X 射線 > 紫外光 > 可見光 > 紅外光 > 微波 > 無線電波', '微波 > 無線電波 > 紅外光 > 可見光 > X 射線 > 紫外光', '可見光 > 紅外光 > 紫外光 > 微波 > 無線電波 > X 射線'], a: 0,
       why: '能量越低波長越長。', show: { w: 'emspec', set: {} } },
-    { src: '仿 中國醫 107 第 19 題', q: 'F、Cl、S、P、Na 的電負度由大到小？', o: ['F > Cl > S > P > Na', 'F > S > Cl > P > Na', 'Cl > F > S > P > Na', 'F > Cl > P > S > Na'], a: 0,
+    { src: '仿 中國醫 107 第 19 題', s: 7, q: 'F、Cl、S、P、Na 的電負度由大到小？', o: ['F > Cl > S > P > Na', 'F > S > Cl > P > Na', 'Cl > F > S > P > Na', 'F > Cl > P > S > Na'], a: 0,
       why: '同週期往右增加；F 最大。' },
-    { src: '仿 義守 107 第 39 題', q: '下列哪一個軌域不存在？', o: ['2d', '4f', '5p', '6s'], a: 0,
+    { src: '仿 義守 107 第 39 題', s: 5, q: '下列哪一個軌域不存在？', o: ['2d', '4f', '5p', '6s'], a: 0,
       why: 'n = 2 時 l 只能是 0 或 1。' },
-    { src: '仿 慈濟 107 第 21 題', q: 'He⁺ 的 2s 波函數含 (2 − Zr/a₀) 項（Z = 2，a₀ = 5.29 × 10⁻¹¹ m），徑向節點在距核多遠？', o: ['5.29 × 10⁻¹¹ m', '1.06 × 10⁻¹⁰ m', '2.65 × 10⁻¹¹ m', '7.92 × 10⁻¹¹ m'], a: 0,
+    { src: '仿 慈濟 107 第 21 題', s: 5, q: 'He⁺ 的 2s 波函數含 (2 − Zr/a₀) 項（Z = 2，a₀ = 5.29 × 10⁻¹¹ m），徑向節點在距核多遠？', o: ['5.29 × 10⁻¹¹ m', '1.06 × 10⁻¹⁰ m', '2.65 × 10⁻¹¹ m', '7.92 × 10⁻¹¹ m'], a: 0,
       why: '2 − 2r/a₀ = 0 → r = a₀。氫原子則在 2a₀。' },
-    { src: '仿 義守 106 第 2 題', q: '下列哪一組是等電子？', o: ['Na⁺ 和 F⁻', 'Na⁺ 和 K⁺', 'Cl⁻ 和 Br⁻', 'Fe²⁺ 和 Fe³⁺'], a: 0,
+    { src: '仿 義守 106 第 2 題', s: 6, q: '下列哪一組是等電子？', o: ['Na⁺ 和 F⁻', 'Na⁺ 和 K⁺', 'Cl⁻ 和 Br⁻', 'Fe²⁺ 和 Fe³⁺'], a: 0,
       why: '兩者都是 10 個電子。' },
-    { src: '仿 義守 106 第 11 題', q: '具有 n = 4、l = 3、mₗ = −1 的軌域有幾個？', o: ['1', '3', '7', '14'], a: 0,
+    { src: '仿 義守 106 第 11 題', s: 5, q: '具有 n = 4、l = 3、mₗ = −1 的軌域有幾個？', o: ['1', '3', '7', '14'], a: 0,
       why: '三個量子數都確定，只對應一個軌域。' },
     { src: '仿 義守 106 第 12 題', q: '鐵（Z = 26）的基態電子組態是？', o: ['[Ar]4s²3d⁶', '[Ar]4s⁰3d⁸', '[Ar]4s²3d⁴', '[Ar]4s¹3d⁷'], a: 0,
       why: '依序填入 4s 再 3d。', show: { w: 'econf', set: {} } },
-    { src: '仿 慈濟 106 第 6 題', q: 'Cl、S、Si、Al、Na 的原子半徑由小到大？', o: ['Cl < S < Si < Al < Na', 'Na < Al < Si < S < Cl', 'S < Cl < Si < Al < Na', 'Cl < Si < S < Al < Na'], a: 0,
+    { src: '仿 慈濟 106 第 6 題', s: 7, q: 'Cl、S、Si、Al、Na 的原子半徑由小到大？', o: ['Cl < S < Si < Al < Na', 'Na < Al < Si < S < Cl', 'S < Cl < Si < Al < Na', 'Cl < Si < S < Al < Na'], a: 0,
       why: '同週期由左到右核電荷增加，半徑變小。' },
   ],
 });
@@ -16782,8 +16801,9 @@ function renderHome() {
 <p class="eyebrow">學士後中醫入學考 · 化學</p>
 <h1 class="hero">不背反應，<br>看懂原理就推得出來。</h1>
 <p class="lede">普通化學和有機化學，每一章都從直覺和圖像開始：先動手看到現象，再推出公式與規則，最後用在題目上。普化學到的酸鹼、平衡、熱力學，會直接拿來解釋有機反應。</p>
-${(() => { const nx = CH.find(c => !state.done[c.id]) || CH[0], any = CH.some(c => state.done[c.id]);
-  return `<div class="cta"><a class="btn pri" href="#${nx.id}">${any ? '繼續：' : '從第一章開始：'}${nx.title}</a><a class="btn" href="#map">看課程地圖</a><a class="btn" href="#review">錯題複習${(n => n ? `（今天 ${n} 題）` : '')(REVIEW.book(LOG).due.length)}</a><a class="btn" href="#log">練習紀錄</a></div>`; })()}
+${(() => { const nx = CH.find(c => !state.done[c.id]) || CH[0], any = CH.some(c => state.done[c.id]), last = store.get('last', null), lc = last && chOf(last.id);
+  const go = lc ? `<a class="btn pri" href="#${lc.id}${last.sec ? '/' + last.sec : ''}">繼續上次：${lc.title}${last.sh ? `・${last.sh}` : ''} →</a>` : `<a class="btn pri" href="#${nx.id}">${any ? '繼續：' : '從第一章開始：'}${nx.title} →</a>`;
+  return `<div class="cta">${go}<a class="btn" href="#map">看課程地圖</a><a class="btn" href="#review">錯題複習${(n => n ? `（今天 ${n} 題）` : '')(REVIEW.book(LOG).due.length)}</a><a class="btn" href="#log">練習紀錄</a></div>`; })()}
 <h2 id="map">課程地圖</h2>
 <p class="mut tree-note">由上往下是學習順序：最基礎的章節在最上面，下面的章節會用到上面的觀念。數字是三校歷屆試題中，<b>每份 50 題平均約考幾題</b>。點虛線框的是規劃中的章節。</p>
 <div class="seg" id="wview">${WVIEW.map((v, i) => `<button aria-pressed="${i === state.wv}" data-i="${i}">${v}</button>`).join('')}</div>
@@ -16959,7 +16979,7 @@ function drawRead(id) {
     bar.innerHTML = `<span class="small mut">${e && e.p >= 0 ? `${e.p ? '已看懂' : '標記為還不太懂'}（${dstr(e.t)}）` : '讀完這一段了嗎？'}</span><button class="btn sm${ok(k) ? ' done' : ''}" type="button" data-r="1">✓ 看懂了</button><button class="btn sm${unsure(k) ? ' unsure' : ''}" type="button" data-r="0">？還不太懂</button>`;
     $$('[data-r]', bar).forEach(b => { b.onclick = () => { const v = +b.dataset.r, cur = m[k] && m[k].p; logAnswer({ c: id, k: 'r', i: k, h: 'read-' + k, qt: c.sections[k - 1].h, p: cur === v ? -1 : v }); drawRead(id); }; });
   });
-  for (let k = 1; k <= n; k++) { const a = $(`.secnav a[href="#${id}/${k}"]`); if (a) { a.classList.toggle('r-ok', ok(k)); a.classList.toggle('r-unsure', unsure(k)); } }
+  for (let k = 1; k <= n; k++) { const a = $(`.secnav a[href="#${id}/${k}"], .seclist a[href="#${id}/${k}"]`); if (a) { a.classList.toggle('r-ok', ok(k)); a.classList.toggle('r-unsure', unsure(k)); } }
   const done = Array.from({ length: n }, (_, i) => i + 1).filter(ok).length, nx = Array.from({ length: n }, (_, i) => i + 1).find(k => !ok(k)), uns = Array.from({ length: n }, (_, i) => i + 1).filter(unsure);
   const box = $('#readProg');
   if (box) box.innerHTML = `<div class="rp-bar"><i style="width:${100 * done / n}%"></i></div><span>已看懂 <b>${done} / ${n}</b> 段${uns.length ? `，還不太懂：${uns.map(k => `<a href="#${id}/${k}">第 ${k} 段</a>`).join('、')}` : ''}</span>${nx ? `<a class="btn sm pri" href="#${id}/${nx}">${done ? '從' : '從'}第 ${nx} 段${done ? '繼續' : '開始'}：${c.sections[nx - 1].h}</a>` : '<span class="ok">這一章每一段都看懂了 ✓</span>'}`;
@@ -16974,9 +16994,24 @@ ${c.sections.map((s, k) => `<section class="sec" id="sec-${k + 1}"><h2><span cla
 <section class="sec" id="sec-quiz"><h2><span class="sn">✓</span>確認理解</h2><p class="mut small">答錯了沒關係：按「在圖上看」回到對應的圖，找出哪裡想錯。${lastSeen(id)}</p>${qblock(c.quiz, 'q')}</section>
 ${c.exam ? `<section class="sec" id="sec-exam"><h2><span class="sn">考</span>歷屆考題相似題</h2><p class="mut small">依照中國醫藥、義守、慈濟大學歷屆試題的考法另外出的題目（化合物與數字已更換），每題標出參考的原題。</p>${qblock(c.exam, 'x')}</section>` : ''}
 <div class="foot"><button class="btn ${state.done[id] ? 'done' : ''}" type="button" id="doneBtn">${state.done[id] ? '已完成 ✓' : '標記為完成'}</button><nav class="pn">${prev ? `<a href="#${prev.id}"><small>上一章</small>${prev.title}</a>` : '<span></span>'}${next ? `<a href="#${next.id}" class="nx"><small>下一章</small>${next.title}</a>` : ''}</nav></div>`;
+  mountWidgets(); bindQuiz(id);
+  bindTerms(id);
+  if (READ_ON.includes(id)) drawRead(id);
+  bindDone(id);
+}
+function mountWidgets() {
   for (const k in INST) delete INST[k];
   $$('.widget', $('#article')).forEach(w => { const n = w.dataset.w; try { const inst = W[n](w); if (!INST[n]) INST[n] = { inst, el: w }; } catch (e) { w.innerHTML = `<p class="note bad">互動圖載入失敗：${esc(e.message)}</p>`; console.error(e); } });
-  const right = new Set();
+}
+// 章末小題全部答對過 → 自動標記本章完成（看紀錄，題目分散在不同頁也算得到）
+const quizAllRight = id => { const c = chOf(id), ok = new Set(LOG.filter(e => e.ok && e.c === id && e.k === 'q').map(e => e.h)); return c.quiz.every(q => ok.has(qid(id, q, 'q'))); };
+function bindDone(id) {
+  const b = $('#doneBtn'); if (!b) return;
+  const mark = () => { const d = !!state.done[id]; b.textContent = d ? '已完成 ✓' : '標記為完成'; b.classList.toggle('done', d); };
+  b.onclick = () => { setDone(id, !state.done[id]); mark(); }; mark();
+}
+function bindQuiz(id) {
+  const c = chOf(id);
   $$('.q[data-k]', $('#article')).forEach(qe => {
     const kind = qe.dataset.k, qi = +qe.dataset.q, q = (kind === 'x' ? c.exam : c.quiz)[qi], why = $('.why', qe);
     let tries = 0;
@@ -16986,23 +17021,68 @@ ${c.exam ? `<section class="sec" id="sec-exam"><h2><span class="sn">考</span>�
       const ok = +b.dataset.o === q.a; b.classList.add(ok ? 'right' : 'wrong'); why.hidden = false;
       logAnswer({ c: id, k: kind, i: qi, h: qid(id, q, kind), qt: strip(q.q).slice(0, 60), p: +b.dataset.o, ok: ok ? 1 : 0, n: ++tries });
       const demo = q.show && INST[q.show.w] ? '<button class="btn sm" type="button" data-show>在圖上看 ↑</button>' : '';
-      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); const gb = $('.guide', qe); if (gb) gb.hidden = true; why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}${demo}`; if (kind === 'q') right.add(qe.dataset.q);
-        if (right.size === c.quiz.length && !state.done[id]) { setDone(id, true); markBtn(); } }
+      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); const gb = $('.guide', qe); if (gb) gb.hidden = true; why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}${demo}`;
+        if (kind === 'q' && !state.done[id] && quizAllRight(id)) { setDone(id, true); bindDone(id); } }
       else { b.disabled = true; why.className = 'why no'; why.innerHTML = `<b>再想想。</b>${sts ? '下面拆成幾個小步驟，一步一步推回來。' : demo ? '按下面的按鈕回到圖上看看。' : ''}${demo}`; if (sts) qe.openGuide(); }
-      const sb = $('[data-show]', why); if (sb) sb.onclick = () => showOnChart(q.show);
+      const sb = $('[data-show]', why); if (sb) sb.onclick = () => showOnChart(q.show, qe);
     }; });
   });
-  bindTerms(id);
+}
+
+/* ---- 一節一頁（2026-11-01 使用者要求，先在第一章）：概覽頁 → 每節一頁（說明、互動圖、看懂了、這一節的練習）→ 綜合練習 ----
+   題目屬於哪一節：題目的 s（第幾節），沒有的話看「在圖上看」連到哪一節的互動圖；都沒有就放綜合練習。 */
+const PAGED = ['atom'];
+const secOf = (c, q) => { if (q.s) return q.s; const k = q.show ? c.sections.findIndex(s => [].concat(s.w || []).includes(q.show.w)) : -1; return k + 1; };
+const practiceOf = (c, sec) => [...c.quiz.map((q, i) => ({ kind: 'q', i, q })), ...(c.exam || []).map((q, i) => ({ kind: 'x', i, q }))].filter(x => secOf(c, x.q) === sec);
+const qitem = ({ kind, i, q }, num) => `<div class="q" data-k="${kind}" data-q="${i}">${q.src ? `<p class="qsrc">仿 ${String(q.src).replace(/^仿\s*/, '')}</p>` : ''}<p class="qt">${num}. ${q.q}</p><div class="opts">${order(q, i).map(j => `<button class="opt" type="button" data-o="${j}">${q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`;
+function practiceHTML(items, head) {
+  if (!items.length) return '';
+  const first = items.slice(0, 3), more = items.slice(3);
+  return `<section class="sec practice" id="sec-prac"><h2><span class="sn">練</span>${head}</h2><p class="mut small">讀完上面的說明就做。答錯了按「一步一步來」或「在圖上看」，錯題會排進錯題複習。</p>${first.map((x, k) => qitem(x, k + 1)).join('')}${more.length ? `<details class="more"><summary>這一節還有 ${more.length} 題歷屆考題相似題</summary>${more.map((x, k) => qitem(x, k + 4)).join('')}</details>` : ''}</section>`;
+}
+// 頁首的章內導覽：回概覽、第幾節、上一節／下一節、換章
+function chbar(id, sec) {
+  const c = chOf(id), n = c.sections.length, k = sec === 'mix' ? n + 1 : +sec;
+  const href = j => (j < 1 ? `#${id}` : j <= n ? `#${id}/${j}` : `#${id}/mix`);
+  return `<nav class="chbar" aria-label="章內導覽"><a class="chb-t" href="#${id}">‹ ${c.title}</a><span class="chb-n">${sec === 'mix' ? '綜合練習' : `第 ${k} / ${n} 節`}</span>
+<span class="chb-pn"><a class="btn sm" href="${href(k - 1)}" aria-label="上一節">‹</a><a class="btn sm" href="${href(k + 1)}" aria-label="下一節"${k > n || (k === n && !practiceOf(c, 0).length) ? ' hidden' : ''}>›</a></span>
+<label class="chb-j">換章 <select id="chJump">${CH.map(x => `<option value="${x.id}"${x.id === id ? ' selected' : ''}>${x.title}</option>`).join('')}</select></label></nav>`;
+}
+function renderPaged(id, sec) {
+  const c = chOf(id), n = c.sections.length, i = CH.indexOf(c), prev = CH[i - 1], next = CH[i + 1];
+  if (sec === 'quiz' || sec === 'exam') sec = 'mix';
+  const mix = practiceOf(c, 0), okH = new Set(LOG.filter(e => e.ok && e.c === id).map(e => e.h));
+  const cnt = items => `${items.filter(x => okH.has(qid(id, x.q, x.kind))).length} / ${items.length} 題`;
+  const nextBtn = j => (j <= n ? `<a class="btn pri wide" href="#${id}/${j}">下一節：${c.sections[j - 1].h} →</a>` : mix.length && sec !== 'mix' ? `<a class="btn pri wide" href="#${id}/mix">綜合練習（${mix.length} 題）→</a>` : next ? `<a class="btn pri wide" href="#${next.id}">下一章：${next.title} →</a>` : '');
+  let html;
+  if (!sec) {
+    html = `<p class="eyebrow">${UNITS.find(p => p.items.some(x => x[0] === c.unit)).part} · ${unitName(c.unit)}</p><h1>${c.title}</h1><p class="lede">${c.lede}</p>${READ_ON.includes(id) ? '<div class="readprog" id="readProg"></div>' : ''}
+<ol class="seclist">${c.sections.map((s, k) => `<li><a href="#${id}/${k + 1}"><span class="sn">${k + 1}</span><span class="sl-h">${s.h}</span><small>練習 ${cnt(practiceOf(c, k + 1))}</small><span class="go" aria-hidden="true">→</span></a></li>`).join('')}${mix.length ? `<li><a href="#${id}/mix"><span class="sn">綜</span><span class="sl-h">綜合練習（跨好幾節的題目）</span><small>${cnt(mix)}</small><span class="go" aria-hidden="true">→</span></a></li>` : ''}</ol>
+${(TERMS[id] || []).length ? `<div class="tchips" aria-label="本章名詞"><span class="lbl">本章名詞</span>${TERMS[id].map((t, k) => `<button type="button" class="tchip" data-t="${k}">${t[0]}</button>`).join('')}</div>` : ''}
+<div class="foot"><button class="btn" type="button" id="doneBtn">標記為完成</button><nav class="pn">${prev ? `<a href="#${prev.id}"><small>上一章</small>${prev.title}</a>` : '<span></span>'}${next ? `<a href="#${next.id}" class="nx"><small>下一章</small>${next.title}</a>` : ''}</nav></div>`;
+  } else if (sec === 'mix') {
+    html = `${chbar(id, 'mix')}<h1>綜合練習</h1><p class="lede">這些題目同時用到好幾節的觀念。${lastSeen(id)}</p>${mix.map((x, k) => qitem(x, k + 1)).join('')}<div class="foot"><button class="btn" type="button" id="doneBtn">標記為完成</button>${nextBtn(n + 2)}</div>`;
+  } else {
+    const k = +sec, s = c.sections[k - 1];
+    html = `${chbar(id, k)}<section class="sec" id="sec-${k}"><h2><span class="sn">${k}</span>${s.h}</h2><div class="prose">${s.body}</div>${[].concat(s.w || []).map(w => `<div class="widget" data-w="${w}"></div>`).join('')}${READ_ON.includes(id) ? `<div class="readbar" data-s="${k}"></div>` : ''}</section>
+${practiceHTML(practiceOf(c, k), '這一節的練習')}<div class="nextsec">${nextBtn(k + 1)}</div>`;
+  }
+  $('#article').innerHTML = html;
+  mountWidgets(); bindQuiz(id); bindTerms(id);
   if (READ_ON.includes(id)) drawRead(id);
-  const markBtn = () => { const d = !!state.done[id]; $('#doneBtn').textContent = d ? '已完成 ✓' : '標記為完成'; $('#doneBtn').classList.toggle('done', d); };
-  $('#doneBtn').onclick = () => { setDone(id, !state.done[id]); markBtn(); };
+  bindDone(id);
+  const j = $('#chJump'); if (j) j.onchange = () => { location.hash = j.value; };
+  store.set('last', { id, sec: sec || '', sh: sec === 'mix' ? '綜合練習' : sec ? `第 ${sec} 節` : '', t: Date.now() });
 }
 // 選項順序：依題號固定打散，避免正解永遠在第一個（不用亂數，重新整理後順序不變）
 // 名詞：內文第一次出現時變成連結，點了跳出解釋框；有對應互動圖時可以「在圖上看」
-function showOnChart(show) {
+function showOnChart(show, from) {
   const it = INST[show.w]; if (!it) return;
   if (show.set) it.inst.set(show.set);
   it.el.scrollIntoView({ behavior: 'smooth', block: 'center' }); it.el.classList.add('flash'); setTimeout(() => it.el.classList.remove('flash'), 1200);
+  // 看完圖可以一鍵回到剛才的題目（避免找不到原來的位置）
+  $$('.backq').forEach(b => b.remove());
+  if (from) { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn sm pri backq'; b.textContent = '↓ 回到剛才的題目'; b.onclick = () => { b.remove(); from.scrollIntoView({ behavior: 'smooth', block: 'center' }); }; document.body.appendChild(b); setTimeout(() => b.remove(), 20000); }
 }
 function bindTerms(id) {
   const T = TERMS[id] || [], art = $('#article');
@@ -17032,6 +17112,10 @@ let shown = null;
 function route(h) {
   const [id, sec] = (h || '').split('/');
   const c = chOf(id);
+  if (c && PAGED.includes(id)) {
+    shown = id; renderPaged(id, sec); renderTOC(id); document.title = `${c.title}｜後中化學`;
+    $('#tocBox').classList.remove('open'); $('#tocBtn').textContent = '☰ 單元'; window.scrollTo(0, 0); return;
+  }
   if (c && shown === id && sec) { const t = document.getElementById(`sec-${sec}`); if (t) t.scrollIntoView({ block: 'start' }); return; }  // 同一章只捲動，保留互動圖狀態
   shown = c ? id : null;
   if (c) { renderChapter(id); renderTOC(id); document.title = `${c.title}｜後中化學`; }

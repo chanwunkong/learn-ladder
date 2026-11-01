@@ -84,12 +84,13 @@ function renderExam() {
 ${nextExam ? `<div class="count"><b>${daysTo(nextExam.a)}</b><span>天後${nextExam.s}筆試<br><small>${md(nextExam.a)}・${ST_LABEL[nextExam.st]}</small></span></div>` : ''}</div>
 ${nextDate ? `<p class="next">下一個日期：<b>${nextDate.s}${nextDate.what}</b>${daysTo(nextDate.a) > 0 ? `，${daysTo(nextDate.a)} 天後開始（${md(nextDate.a)}）` : `，進行中，${md(nextDate.b || nextDate.a)} 截止`}<span class="chip ${nextDate.st}">${ST_LABEL[nextDate.st]}</span></p>` : ''}
 
+${enterHTML(es)}
 <div class="ex-grid">
   <section class="panel" aria-labelledby="todayH">
     <h3 id="todayH">今天</h3>
     <ul class="todo">
       <li class="${dueLeft ? '' : 'ok'}"><a href="./chem/#review"><span class="ck">${dueLeft ? '' : '✓'}</span><span>化學錯題複習</span><b>${dueLeft ? `還有 ${dueLeft} 題到期` : revToday ? `完成 ${revToday} 題` : '今天沒有到期'}</b></a></li>
-      <li class="${tToday.length ? 'ok' : ''}"><a href="./chem/"><span class="ck">${tToday.length ? '✓' : ''}</span><span>化學練習</span><b>${tToday.length ? `${tToday.length} 題，第一次答對 ${Math.round(100 * okToday / tToday.length)}%` : '今天還沒練習'}</b></a></li>
+      <li class="${tToday.length ? 'ok' : ''}"><a href="${chemResume().href}"><span class="ck">${tToday.length ? '✓' : ''}</span><span>化學練習</span><b>${tToday.length ? `${tToday.length} 題，第一次答對 ${Math.round(100 * okToday / tToday.length)}%` : '今天還沒練習'}</b></a></li>
       <li class="${ebook.due.length ? '' : 'ok'}"><a href="./eng/#review"><span class="ck">${ebook.due.length ? '' : '✓'}</span><span>英文錯題複習</span><b>${ebook.due.length ? `還有 ${ebook.due.length} 題到期` : '今天沒有到期'}</b></a></li>
       ${engToday(es, eToday)}
       ${SUBJECTS.filter(x => x.st !== 'live').map(x => `<li class="soon"><span class="ck"></span><span>${x.name}${x.today ? `：${x.today}` : ''}</span><b>${SUBJ_ST[x.st]}</b></li>`).join('')}
@@ -102,10 +103,10 @@ ${nextDate ? `<p class="next">下一個日期：<b>${nextDate.s}${nextDate.what}
   <section class="panel" aria-labelledby="progH">
     <h3 id="progH">總進度</h3>
     <details class="subj" open>
-      <summary><span class="sj">化學</span><span class="big">${Math.round(pct.master)}<small>%</small></span><span class="mut small">考試範圍已掌握</span></summary>
+      <summary><a class="sj" href="${chemResume().href}">化學 →</a><span class="big">${Math.round(pct.master)}<small>%</small></span><span class="mut small">考試範圍已掌握</span></summary>
       <div class="stack" aria-hidden="true">${['master', 'prac', 'weak', 'none'].map(st => `<i class="s-${st}" style="width:${pct[st]}%"></i>`).join('')}</div>
       <p class="legend">${['master', 'prac', 'weak', 'none'].map(st => `<span class="k-${st}">${CH_ST[st]} ${cnt(st)} 章</span>`).join('')}</p>
-      <div class="chmap">${chs.map(c => `<a class="tile t-${c.st}" href="./chem/#${c.id}" title="${c.t}：${CH_ST[c.st]}${c.seen ? `，做過 ${c.seen}/${c.n} 題，最近第一次答對 ${Math.round(100 * c.acc)}%` : ''}"><span>${c.t}</span><small>${CH_ST[c.st]}${c.open ? `・錯題 ${c.open}` : ''}</small></a>`).join('')}</div>
+      <div class="chmap">${chs.map(c => `<a class="tile t-${c.st}" href="./chem/#${c.id}" title="${c.t}：${CH_ST[c.st]}${c.seen ? `，做過 ${c.seen}/${c.n} 題，最近第一次答對 ${Math.round(100 * c.acc)}%` : ''}"><span>${c.t} <i aria-hidden="true">→</i></span><small>${CH_ST[c.st]}${c.open ? `・錯題 ${c.open}` : ''}</small></a>`).join('')}</div>
       <p class="mut small">百分比依各章在中國醫歷屆考題的比重加權。已掌握＝標記完成、做過至少四成的題目、最近第一次答對八成以上、而且沒有待複習的錯題；待加強＝最近第一次答對不到六成，或錯題本裡有 3 題以上。</p>
     </details>
     ${engProgress(es)}
@@ -130,8 +131,23 @@ function engToday(es, n) {
 }
 function engProgress(es) {
   const days = es ? es.slots.filter(x => x[0] >= 1 && x[1] >= 1).length : 0;
-  return `<details class="subj"><summary><span class="sj">英文</span><span class="big">${es ? es.n - 1 + (days === 7 ? 1 : 0) : 0}<small> / ${ENG_WEEKS} 週</small></span><span class="mut small">${es ? `第 ${es.n} 週完成 ${days} / 7 天` : '還沒開始'}</span></summary>
+  return `<details class="subj"><summary><a class="sj" href="${engResume(es).href}">英文 →</a><span class="big">${es ? es.n - 1 + (days === 7 ? 1 : 0) : 0}<small> / ${ENG_WEEKS} 週</small></span><span class="mut small">${es ? `第 ${es.n} 週完成 ${days} / 7 天` : '還沒開始'}</span></summary>
 ${es ? `<p class="small">本週：${esc(es.theme)}</p><div class="eslots" aria-label="本週每天早晚的完成度">${es.slots.map((x, d) => `<a href="./eng/#d${d + 1}am" title="第 ${d + 1} 天：早上 ${Math.round(100 * x[0])}%、晚上 ${Math.round(100 * x[1])}%"><small>${d + 1}</small><i style="--f:${x[0]}"></i><i style="--f:${x[1]}"></i></a>`).join('')}</div>
 ${es.weak.length ? `<p class="small">待加強：${es.weak.map(esc).join('、')}</p>` : ''}` : ''}
 <p class="mut small">每週 7 天、每天早晚各約 30 分鐘。週末在英文頁的「本週報告」匯出錯題與弱項，交給 AI 產生下一週的內容。</p></details>`;
+}
+
+// 進入各科：回到上次的位置（化學：chem-ladder:last；英文：下一個沒做完的段落）
+function chemResume() {
+  const l = local('chem-ladder', 'last', null), m = l && CHEM_META.find(x => x.id === l.id);
+  return m ? { href: `./chem/#${m.id}${l.sec ? '/' + l.sec : ''}`, t: `繼續：${m.t}${l.sh ? `・${l.sh}` : ''}` } : { href: './chem/', t: '從第一章開始' };
+}
+function engResume(es) {
+  if (!es) return { href: './eng/', t: '從第 1 週第 1 天開始' };
+  if (!es.next) return { href: './eng/#report', t: `第 ${es.n} 週完成：看週報` };
+  const { d, s } = es.next; return { href: `./eng/#d${d + 1}${s}`, t: `繼續：第 ${es.n} 週第 ${d + 1} 天${s === 'am' ? '早上' : '晚上'}` };
+}
+function enterHTML(es) {
+  const c = chemResume(), e = engResume(es);
+  return `<nav class="enter" aria-label="進入科目"><a class="ent" href="${c.href}" style="--sc:#17705F"><b>化學</b><span>${c.t}</span><i aria-hidden="true">→</i></a><a class="ent" href="${e.href}" style="--sc:#1F4E79"><b>英文</b><span>${e.t}</span><i aria-hidden="true">→</i></a></nav>`;
 }

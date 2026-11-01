@@ -176,6 +176,25 @@ svg.en.clip { overflow: hidden; }
 .secnav a { font-size: 13px; padding: 4px 10px; border: 1px solid var(--line); border-radius: 99px; text-decoration: none; color: var(--ink); background: var(--surface); }
 .secnav a.r-ok { border-color: var(--good); background: var(--good-soft); color: var(--good); } .secnav a.r-ok::before { content: "✓ "; }
 .secnav a.r-unsure { border-color: var(--warn); background: var(--warn-soft); color: var(--warn); } .secnav a.r-unsure::before { content: "？ "; }
+/* 一節一頁：章內導覽、小節清單、練習區 */
+.chbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 10px 0; border-bottom: 1px solid var(--line); margin-bottom: 4px; font-size: 14px; }
+.chb-t { font-weight: 700; text-decoration: none; color: var(--ink); flex: 1 1 auto; min-width: 0; }
+.chb-n { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+.chb-pn { display: flex; gap: 6px; }
+.chb-pn .btn { min-width: 44px; justify-content: center; text-decoration: none; font-size: 18px; }
+.chb-j { flex: 1 1 100%; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+.chb-j select { flex: 1; min-width: 0; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 6px; padding: 6px; font-size: 14px; }
+.seclist { list-style: none; margin: 18px 0; padding: 0; display: grid; gap: 8px; }
+.seclist a { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; grid-template-areas: "n h go" "n s go"; gap: 2px 12px; align-items: center; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); text-decoration: none; }
+.seclist a:hover { border-color: var(--accent); }
+.seclist .sn { grid-area: n; } .seclist .sl-h { grid-area: h; font-weight: 500; } .seclist small { grid-area: s; color: var(--muted); font-size: 12.5px; } .seclist .go { grid-area: go; color: var(--accent); font-size: 18px; }
+.seclist a.r-ok { border-color: var(--good); } .seclist a.r-ok .sl-h::after { content: " ✓"; color: var(--good); }
+.seclist a.r-unsure { border-color: var(--warn); } .seclist a.r-unsure .sl-h::after { content: " ？"; color: var(--warn); }
+.practice { margin-top: 26px; border-top: 2px solid var(--line); }
+details.more { margin-top: 10px; } details.more > summary { cursor: pointer; color: var(--accent); padding: 10px 0; font-size: 14.5px; }
+.nextsec { margin: 28px 0 40px; }
+.nextsec .btn, .foot .btn.wide { text-decoration: none; }
+.backq { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 30; box-shadow: 0 4px 16px rgba(0,0,0,.2); }
 .readbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 18px; padding-top: 12px; border-top: 1px dashed var(--line); }
 .readbar > span { flex: 1 1 100%; }
 .btn.unsure { background: var(--warn-soft); border-color: var(--warn); color: var(--warn); }

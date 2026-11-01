@@ -28,7 +28,7 @@ window.__errs = []; addEventListener('error', e => __errs.push(e.message)); cons
   for (const w of document.querySelectorAll('.widget')) check(w, '');
   const rep = { layout: [...new Set(layout)].slice(0, 15), widgets: 0, frames: 0, quiz: 0, shows: 0, failed: [...document.querySelectorAll('.widget .note.bad')].length };
   // 嚴格檢查（寫作標準 B、C、D）：只對已依新標準修過的章節（tests/chem/strict.txt）
-  const STRICT = __STRICT__.includes(location.hash.slice(1));
+  const STRICT = __STRICT__.includes(location.hash.slice(1).split('/')[0]);
   const lineOf = e => Math.round(e.getBoundingClientRect().top);
   const strict = (w, tag) => { if (!STRICT) return;
     for (const row of w.querySelectorAll('.w-row')) { const kids = [...row.children], labs = kids.filter(k => k.matches('span.small, span.lbl, span.mut'));
@@ -79,11 +79,14 @@ sed -i '' "s#__STRICT__#$STRICT_JSON#" "$TMP/probe.js"
 sed 's#<script>#<script src="probe.js"></script><script>#' docs/chem/index.html | sed 's#src="probe.js"></script><script>#src="probe.js" defer></script><script>#' > "$TMP/p.html"
 CHAPTERS=$(node -e "const fs=require('fs');console.log(new Function(['src/chem/content.js',...require('fs').readdirSync('src/chem/ch').map(f=>'src/chem/ch/'+f)].map(f=>fs.readFileSync(f,'utf8')).join('\n')+';return CH;')().map(c=>c.id).join(' '))")
 CHAPTERS=${ONLY:-$CHAPTERS}
+# 一節一頁的章節（app.js 的 PAGED）：概覽頁、每一節、綜合練習都要各測一次
+PAGED=$(grep -o "^const PAGED = \[[^]]*\]" src/chem/app.js | grep -o "'[a-z-]*'" | tr -d "'")
+CHAPTERS=$(for c in $CHAPTERS; do if echo " $PAGED " | grep -q " $c "; then n=$(node -e "const fs=require('fs');const CH=new Function(['src/chem/content.js',...fs.readdirSync('src/chem/ch').map(f=>'src/chem/ch/'+f)].map(f=>fs.readFileSync(f,'utf8')).join('\\n')+';return CH;')();console.log(CH.find(x=>x.id==='$c').sections.length)"); echo "$c"; for k in $(seq 1 $n); do echo "$c/$k"; done; [ "$(node -e "const fs=require('fs');const CH=new Function(['src/chem/content.js',...fs.readdirSync('src/chem/ch').map(f=>'src/chem/ch/'+f)].map(f=>fs.readFileSync(f,'utf8')).join('\\n')+';return CH;')();const c=CH.find(x=>x.id==='$c'),W=s=>[].concat(s.w||[]);console.log([...c.quiz,...(c.exam||[])].some(q=>!q.s&&!(q.show&&c.sections.some(x=>W(x).includes(q.show.w))))?1:0)")" = 1 ] && echo "$c/mix"; else echo "$c"; fi; done)
 fail=0
 for c in home $CHAPTERS; do
-  "$CHROME" --headless=new --disable-gpu --user-data-dir="$TMP/prof-$c" --window-size=${SMOKE_W:-1100},900 --virtual-time-budget=120000 --dump-dom "file://$TMP/p.html#$c" 2>/dev/null > "$TMP/out-$c" &
+  "$CHROME" --headless=new --disable-gpu --user-data-dir="$TMP/prof-${c//\//-}" --window-size=${SMOKE_W:-1100},900 --virtual-time-budget=120000 --dump-dom "file://$TMP/p.html#$c" 2>/dev/null > "$TMP/out-${c//\//-}" &
   pid=$!; ( sleep 240; kill -9 $pid ) >/dev/null 2>&1 & w=$!; disown $w; wait $pid 2>/dev/null; kill $w 2>/dev/null
-  r=$(python3 -c "import re,sys,html;s=open(sys.argv[1]).read();m=re.search(r'<pre id=\"__out\">(.*?)</pre>',s,re.S);print(html.unescape(m.group(1)) if m else 'NO OUTPUT')" "$TMP/out-$c")
-  if echo "$r" | grep -q '"errs":\[\]' && echo "$r" | grep -q '"failed":0' && echo "$r" | grep -q '"layout":\[\]' && { [ "$c" = home ] || ! echo "$r" | grep -q '"quiz":0,'; }; then echo "ok   $c  $r"; else echo "FAIL $c  $r"; fail=1; fi
+  r=$(python3 -c "import re,sys,html;s=open(sys.argv[1]).read();m=re.search(r'<pre id=\"__out\">(.*?)</pre>',s,re.S);print(html.unescape(m.group(1)) if m else 'NO OUTPUT')" "$TMP/out-${c//\//-}")
+  if echo "$r" | grep -q '"errs":\[\]' && echo "$r" | grep -q '"failed":0' && echo "$r" | grep -q '"layout":\[\]' && { [ "$c" = home ] || echo " $PAGED " | grep -q " $c " || ! echo "$r" | grep -q '"quiz":0,'; }; then echo "ok   $c  $r"; else echo "FAIL $c  $r"; fail=1; fi
 done
 rm -rf "$TMP"; exit $fail
