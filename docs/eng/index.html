@@ -211,7 +211,23 @@ details summary { cursor: pointer; color: var(--accent); font-size: 14px; }
 .tags li { background: var(--warn-soft); color: var(--warn); border-radius: 99px; padding: 2px 10px; font-size: 13px; }
 #exTxt { width: 100%; margin-top: 8px; font-family: var(--mono); font-size: 12px; line-height: 1.5; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding: 10px; }
 #exBox { display: grid; gap: 4px; }
+/* 發音 */
+.spk { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+.spk label { display: flex; align-items: center; gap: 6px; }
+.spk input { width: 90px; accent-color: var(--accent); }
+.spk output { font-family: var(--mono); font-size: 12px; min-width: 3.2em; }
+.spk select { max-width: 170px; font-size: 12.5px; border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 3px 4px; }
+.say { display: inline-grid; place-items: center; width: 30px; height: 30px; margin: 0 2px; vertical-align: middle; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--accent); cursor: pointer; padding: 0; font-size: 0; line-height: 1; }
+.say::before { content: ""; width: 14px; height: 14px; background: currentColor; -webkit-mask: var(--spk-ic) center / contain no-repeat; mask: var(--spk-ic) center / contain no-repeat; }
+.say:hover { border-color: var(--accent); }
+.say.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.say.on::before { -webkit-mask-image: var(--stop-ic); mask-image: var(--stop-ic); }
+:root { --spk-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z'/%3E%3C/svg%3E");
+  --stop-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='6' y='6' width='12' height='12' rx='1.5'/%3E%3C/svg%3E"); }
+.no-tts .say { display: none; }
+.top-in .wk { margin-left: auto; }
 @media (max-width: 560px) {
+  .spk { width: 100%; }
   .slots { grid-template-columns: minmax(0, 1fr); }
   .skr { grid-template-columns: minmax(0, 1fr) 3.5em 5.5em; }
   .skr .pbar { grid-column: 1 / -1; grid-row: 2; }
@@ -225,7 +241,7 @@ details summary { cursor: pointer; color: var(--accent); font-size: 14px; }
 
 <header class="top"><div class="top-in">
   <a class="brand" href="#" style="text-decoration:none">後中英文<small>ENGLISH · 句構 → 閱讀</small></a>
-  <span class="wk" id="wkTag"></span>
+  <span class="wk" id="wkTag"></span><span id="spkSlot"></span>
 </div></header>
 <main id="main"></main>
 <script>
@@ -256,6 +272,54 @@ const SKILLS = {
 };
 // 每週的資料檔（wk/wNNa.js、wNNb.js）把自己 push 進來
 const WEEKS = [];
+
+/* ---------- 發音：瀏覽器內建的語音合成（不需網路）；語速與聲音存在本機 ----------
+   按鈕寫成 <button class="say" data-say="要唸的英文">；data-say-el 表示唸「所在段落」的文字（克漏字：沒填的格子唸 blank）。 */
+const SPEECH = (() => {
+  const ok = typeof speechSynthesis !== 'undefined' && typeof SpeechSynthesisUtterance !== 'undefined';
+  let rate = store.get('rate', 0.9), voiceName = store.get('voice', ''), cur = null;
+  const voices = () => (ok ? speechSynthesis.getVoices().filter(v => /^en[-_]/i.test(v.lang)) : []);
+  const pick = () => { const vs = voices(); return vs.find(v => v.name === voiceName) || vs.find(v => /en[-_]US/i.test(v.lang) && /Samantha|Google US|Aria|Jenny/i.test(v.name)) || vs.find(v => /en[-_]US/i.test(v.lang)) || vs[0] || null; };
+  function stop() { if (ok) speechSynthesis.cancel(); if (cur) cur.classList.remove('on'); cur = null; }
+  function say(text, btn) {
+    if (!ok || !text) return;
+    const again = btn && btn === cur; stop(); if (again) return;   // 再按一次＝停止
+    const u = new SpeechSynthesisUtterance(text), v = pick();
+    u.lang = v ? v.lang : 'en-US'; if (v) u.voice = v; u.rate = rate;
+    if (btn) { cur = btn; btn.classList.add('on'); u.onend = u.onerror = () => { if (cur === btn) { btn.classList.remove('on'); cur = null; } }; }
+    speechSynthesis.speak(u);
+  }
+  function elText(el) {
+    const c = el.cloneNode(true);
+    c.querySelectorAll('.say').forEach(b => b.remove());
+    c.querySelectorAll('.blank').forEach(b => { b.textContent = b.classList.contains('fill') ? b.textContent.replace(/^\(\d\)\s*/, '') : ' blank '; });
+    c.querySelectorAll('.gap').forEach(b => { b.textContent = ' blank '; });
+    return c.textContent.replace(/\s+/g, ' ').trim();
+  }
+  // 頁首的語速與聲音
+  function controls() {
+    if (!ok) return '';
+    return `<div class="spk"><label><span aria-hidden="true">🔊</span> 語速 <input type="range" id="spRate" min="0.5" max="1.3" step="0.1" value="${rate}" aria-label="發音語速"><output id="spRateV">${rate.toFixed(1)}×</output></label><select id="spVoice" aria-label="發音的聲音" hidden></select></div>`;
+  }
+  function bind() {
+    if (!ok) { document.documentElement.classList.add('no-tts'); return; }
+    const r = document.getElementById('spRate'), sel = document.getElementById('spVoice');
+    if (r) r.oninput = () => { rate = +r.value; store.set('rate', rate); document.getElementById('spRateV').textContent = rate.toFixed(1) + '×'; };
+    const fill = () => { const vs = voices(); if (!sel || vs.length < 2) return; const p = pick();
+      sel.innerHTML = vs.map(v => `<option value="${esc(v.name)}"${p && v.name === p.name ? ' selected' : ''}>${esc(v.name.replace(/\s*\(.*\)/, ''))}（${esc(v.lang)}）</option>`).join(''); sel.hidden = false; };
+    fill(); speechSynthesis.onvoiceschanged = fill;
+    if (sel) sel.onchange = () => { voiceName = sel.value; store.set('voice', voiceName); };
+    document.addEventListener('click', e => {
+      const b = e.target.closest('.say'); if (!b) return;
+      e.preventDefault(); e.stopPropagation();
+      say(b.dataset.sayEl != null ? elText(b.closest(b.dataset.sayEl || 'p')) : b.dataset.say, b);
+    }, true);
+    addEventListener('hashchange', stop);
+  }
+  return { ok, say, stop, controls, bind };
+})();
+const sayBtn = (text, label = '發音') => `<button class="say" type="button" data-say="${esc(text)}" aria-label="${label}：${esc(text)}" title="${label}"></button>`;
+const sayEl = (sel, label = '朗讀這段') => `<button class="say" type="button" data-say-el="${sel}" aria-label="${label}" title="${label}"></button>`;
 
 /* ---------- 後中英文：第 1 週（單字與長句） ----------
    單字取自中國醫、慈濟、義守近兩年英文卷中「出現在兩份以上考卷、詞頻排名 2500–12000」的學術與醫學字（analysis/eng）。
@@ -629,7 +693,7 @@ const wkKey = w => 'w' + w.n;
 function wordQ(w, d, i) {
   const day = w.words[d], x = day[i], others = [1, 3, 6].map(k => day[(i + k) % day.length]);
   return { h: `w:${wkKey(w)}:${x[0]}`, k: 'w', sk: 'v.mean', c: `${wkKey(w)}d${d + 1}am`, en: 1,
-    q: `<span class="enw">${esc(x[0])}</span> <span class="pos">${esc(x[1])}</span> 的意思是？`, o: [x[2], ...others.map(y => y[2])],
+    q: `<span class="enw">${esc(x[0])}</span>${sayBtn(x[0])} <span class="pos">${esc(x[1])}</span> 的意思是？`, o: [x[2], ...others.map(y => y[2])],
     why: `${esc(x[0])}：${esc(x[2])}。${x[3] ? `<br><span class="mut">${esc(x[3])}</span>` : ''}`, qt: x[0] };
 }
 // 晚上的回想：把早上例句裡的單字挖空
@@ -639,7 +703,7 @@ function recallQ(w, d, i) {
   const sent = esc(x[4]).replace(stemRe(x[0]), '<span class="gap">＿＿＿＿</span>');
   return { h: `wr:${wkKey(w)}:${x[0]}`, k: 'wr', sk: 'v.mean', c: `${wkKey(w)}d${d + 1}pm`, en: 1,
     q: `<span class="ens">${sent}</span><br><small class="mut">${esc(x[5])}（選項是原形，句中可能有變化）</small>`, o: [x[0], ...others.map(y => y[0])],
-    why: `${esc(x[4])}`, qt: x[0] };
+    why: `${esc(x[4])} ${sayBtn(x[4], '朗讀例句')}`, qt: x[0] };
 }
 const gramQ = (w, d, q) => ({ ...q, h: `g:${wkKey(w)}:${q.id}`, k: 'g', c: `${wkKey(w)}d${d + 1}pm`, en: 1, qt: q.q.replace(/<[^>]+>/g, '').slice(0, 60) });
 const passQ = (w, d, q) => ({ ...q, h: `p:${wkKey(w)}:${q.id}`, k: 'p', c: `${wkKey(w)}d${d + 1}pm`, en: 1, qt: `${w.passages[d].title}・${q.q}`.slice(0, 80) });
@@ -723,7 +787,7 @@ function bindUnsure(root) {
 
 /* ---- 長句拆解：一步一步標出主詞、動詞、修飾 ---- */
 function sentHTML(w, d, j, s, key = `${d}:${j}`) {
-  return `<div class="card sentc" data-sent="${key}"><div class="sent">${s.chunks.map((c, i) => `<span class="ch" data-i="${i}">${esc(c)}</span> `).join('')}</div>
+  return `<div class="card sentc" data-sent="${key}"><div class="sent">${s.chunks.map((c, i) => `<span class="ch" data-i="${i}">${esc(c)}</span> `).join('')}${sayBtn(s.chunks.join(' '), '朗讀句子')}</div>
 <p class="legend"><span class="ls">主詞</span><span class="lv">主要動詞</span><span class="lm">修飾（第一遍可以跳過）</span></p><div class="sbody"></div></div>`;
 }
 function bindSent(root, w, d, j, s, onDone, key = `${d}:${j}`) {
@@ -731,7 +795,7 @@ function bindSent(root, w, d, j, s, onDone, key = `${d}:${j}`) {
   const mark = m => Object.entries(m || {}).forEach(([i, v]) => { const e = card.querySelector(`.ch[data-i="${i}"]`); if (e) { e.classList.remove('s', 'v', 'm'); e.classList.add(v); } });
   const finish = () => {
     s.steps.forEach(st => mark(st[6]));
-    body.innerHTML = `${done.length ? `<ol class="gdone">${done.join('')}</ol>` : ''}<p class="core"><span class="lbl">主幹</span>${esc(s.core)}</p><p class="zh">${esc(s.zh)}</p><div class="row">${unsureBtn(`u:sent:${wkKey(w)}:${d}:${j}`, c, s.core)}</div>`;
+    body.innerHTML = `${done.length ? `<ol class="gdone">${done.join('')}</ol>` : ''}<p class="core"><span class="lbl">主幹</span>${esc(s.core)} ${sayBtn(s.core)}</p><p class="zh">${esc(s.zh)}</p><div class="row">${unsureBtn(`u:sent:${wkKey(w)}:${d}:${j}`, c, s.core)}</div>`;
     bindUnsure(body); if (onDone) onDone();
   };
   const draw = k => {
@@ -788,7 +852,7 @@ function renderAM(w, d) {
   $('#main').innerHTML = `${dayHead(w, d, 'am')}<h1>早上：單字與長句</h1><p class="segprog" id="segProg"></p>
 <section class="part"><h2>1. 錯題複習<small>約 5–10 分鐘</small></h2>${rv.length ? `<p class="note">之前答錯、今天到期的題目。第一次就答對才算過關，答錯會再排一次。</p><div id="rv">${reviewHTML(rv)}</div>` : '<p class="note">今天沒有到期的錯題。</p>'}</section>
 <section class="part"><h2>2. 新單字<small>約 10 分鐘</small></h2><p class="note">先看字根拆解和例句，大聲唸一次例句。不熟的按「？還不太懂」，匯出時會列給下一週。</p>
-<div class="words">${words.map(x => `<article class="wcard"><p class="wh"><span class="enw">${esc(x[0])}</span><span class="pos">${esc(x[1])}</span><span class="wz">${esc(x[2])}</span></p>${x[3] ? `<p class="root">${esc(x[3])}</p>` : ''}<p class="ens">${esc(x[4])}</p><p class="zh">${esc(x[5])}</p>${unsureBtn(`u:word:${wkKey(w)}:${x[0]}`, c, `${x[0]}（${x[2]}）`)}</article>`).join('')}</div>
+<div class="words">${words.map(x => `<article class="wcard"><p class="wh"><span class="enw">${esc(x[0])}</span>${sayBtn(x[0])}<span class="pos">${esc(x[1])}</span><span class="wz">${esc(x[2])}</span></p>${x[3] ? `<p class="root">${esc(x[3])}</p>` : ''}<p class="ens">${esc(x[4])} ${sayBtn(x[4], '朗讀例句')}</p><p class="zh">${esc(x[5])}</p>${unsureBtn(`u:word:${wkKey(w)}:${x[0]}`, c, `${x[0]}（${x[2]}）`)}</article>`).join('')}</div>
 <h3>小測驗：選出意思</h3><div id="wq">${wq.map((q, i) => mcq(q, `${i + 1} / ${wq.length}`)).join('')}</div></section>
 <section class="part"><h2>3. 長句拆解<small>約 10 分鐘</small></h2><p class="note">先找主要動詞，再找主詞，其他部分都是修飾。每一步答對，句子上會標出來。</p>${w.sents[d].map((s, j) => sentHTML(w, d, j, s)).join('')}</section>
 <div class="row endrow"><a class="btn pri" href="#d${d + 1}pm">晚上的部分 ›</a></div>`;
@@ -798,10 +862,10 @@ function renderAM(w, d) {
 function passageHTML(w, d, P) {
   const blank = t => esc(t).replace(/\{(\d)\}/g, (m, n) => `<span class="blank" data-b="${n}">(${n}) ＿＿＿＿</span>`);
   const pq = P.qs.map(q => passQ(w, d, q));
-  const text = `<div class="passage card"><p class="ptitle">${esc(P.title)}</p>${P.text.map(t => `<p class="ens">${blank(t)}</p>`).join('')}<details><summary>中文翻譯（做完再看）</summary><p class="zh">${esc(P.zh)}</p></details></div>`;
+  const text = `<div class="passage card"><p class="ptitle">${esc(P.title)}</p>${P.text.map(t => `<p class="ens">${blank(t)} ${sayEl('p')}</p>`).join('')}<details><summary>中文翻譯（做完再看）</summary><p class="zh">${esc(P.zh)}</p></details></div>`;
   if (P.type === 'cloze') return `<p class="note">克漏字：每格先看前後文是什麼關係（同方向、相反、因果），再看空格要什麼詞性。</p>${text}<div id="pq">${pq.map((q, i) => mcq(q, `第 ${i + 1} 格`)).join('')}</div>`;
   return `<p class="note">閱讀：先看題目知道要找什麼，再讀文章，最後回答。</p>
-<div class="card pre"><p class="lbl">先看題目</p><ol>${P.qs.map(q => `<li><span class="ens">${esc(q.q)}</span><br><small class="mut">${esc(q.pre || '')}</small></li>`).join('')}</ol></div>${text}<div id="pq">${pq.map((q, i) => mcq(q, `第 ${i + 1} 題`)).join('')}</div>`;
+<div class="card pre"><p class="lbl">先看題目</p><ol>${P.qs.map(q => `<li><span class="ens">${esc(q.q)}</span>${sayBtn(q.q.replace(/_+/g, ' blank '), '朗讀題目')}<br><small class="mut">${esc(q.pre || '')}</small></li>`).join('')}</ol></div>${text}<div id="pq">${pq.map((q, i) => mcq(q, `第 ${i + 1} 題`)).join('')}</div>`;
 }
 function renderPM(w, d) {
   const G = w.gram[d], P = w.passages[d], c = `${wkKey(w)}d${d + 1}pm`;
@@ -839,7 +903,7 @@ function reviewHTML(items) {
       if (P.type === 'cloze') {
         const para = P.text.find(t => t.includes(`{${n0}}`)) || '';
         ctx = `<p class="ens ctx">${esc(para).replace(/\{(\d)\}/g, (m, k) => (+k === n0 ? `<span class="blank">(${k}) ＿＿＿＿</span>` : esc(P.qs[k - 1].o[0])))}</p>`;
-      } else ctx = `<details class="ctx"><summary>文章：${esc(P.title)}</summary>${P.text.map(t => `<p class="ens">${esc(t)}</p>`).join('')}</details>`;
+      } else ctx = `<details class="ctx"><summary>文章：${esc(P.title)}</summary>${P.text.map(t => `<p class="ens">${esc(t)} ${sayBtn(t)}</p>`).join('')}</details>`;
     }
     return `<div class="rv-q"><p class="qsrc">第 ${f.w.n} 週第 ${f.d + 1} 天・${{ w: '單字', wr: '單字回想', g: '文法', p: '文章' }[q.k]}・${esc(SKILLS[q.sk] || '')}・第 ${it.s.stage + 1} 輪</p>${ctx}${mcq(q, '')}</div>`;
   }).join('');
@@ -1005,7 +1069,7 @@ function route() {
   saveSummary();
   window.scrollTo(0, 0);
 }
-function boot() { addEventListener('hashchange', route); route(); }
+function boot() { $('#spkSlot').innerHTML = SPEECH.controls(); SPEECH.bind(); addEventListener('hashchange', route); route(); }
 
 /* ---------- 雲端同步（Firebase，各課程與首頁共用）：Google 登入後，把「已完成的章節」存到 Firestore ----------
    只在正式網站（GitHub Pages，HEAD 帶 app-site meta）啟用；Artifact 與本機檔案不載入 SDK。

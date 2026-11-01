@@ -25,3 +25,51 @@ const SKILLS = {
 };
 // 每週的資料檔（wk/wNNa.js、wNNb.js）把自己 push 進來
 const WEEKS = [];
+
+/* ---------- 發音：瀏覽器內建的語音合成（不需網路）；語速與聲音存在本機 ----------
+   按鈕寫成 <button class="say" data-say="要唸的英文">；data-say-el 表示唸「所在段落」的文字（克漏字：沒填的格子唸 blank）。 */
+const SPEECH = (() => {
+  const ok = typeof speechSynthesis !== 'undefined' && typeof SpeechSynthesisUtterance !== 'undefined';
+  let rate = store.get('rate', 0.9), voiceName = store.get('voice', ''), cur = null;
+  const voices = () => (ok ? speechSynthesis.getVoices().filter(v => /^en[-_]/i.test(v.lang)) : []);
+  const pick = () => { const vs = voices(); return vs.find(v => v.name === voiceName) || vs.find(v => /en[-_]US/i.test(v.lang) && /Samantha|Google US|Aria|Jenny/i.test(v.name)) || vs.find(v => /en[-_]US/i.test(v.lang)) || vs[0] || null; };
+  function stop() { if (ok) speechSynthesis.cancel(); if (cur) cur.classList.remove('on'); cur = null; }
+  function say(text, btn) {
+    if (!ok || !text) return;
+    const again = btn && btn === cur; stop(); if (again) return;   // 再按一次＝停止
+    const u = new SpeechSynthesisUtterance(text), v = pick();
+    u.lang = v ? v.lang : 'en-US'; if (v) u.voice = v; u.rate = rate;
+    if (btn) { cur = btn; btn.classList.add('on'); u.onend = u.onerror = () => { if (cur === btn) { btn.classList.remove('on'); cur = null; } }; }
+    speechSynthesis.speak(u);
+  }
+  function elText(el) {
+    const c = el.cloneNode(true);
+    c.querySelectorAll('.say').forEach(b => b.remove());
+    c.querySelectorAll('.blank').forEach(b => { b.textContent = b.classList.contains('fill') ? b.textContent.replace(/^\(\d\)\s*/, '') : ' blank '; });
+    c.querySelectorAll('.gap').forEach(b => { b.textContent = ' blank '; });
+    return c.textContent.replace(/\s+/g, ' ').trim();
+  }
+  // 頁首的語速與聲音
+  function controls() {
+    if (!ok) return '';
+    return `<div class="spk"><label><span aria-hidden="true">🔊</span> 語速 <input type="range" id="spRate" min="0.5" max="1.3" step="0.1" value="${rate}" aria-label="發音語速"><output id="spRateV">${rate.toFixed(1)}×</output></label><select id="spVoice" aria-label="發音的聲音" hidden></select></div>`;
+  }
+  function bind() {
+    if (!ok) { document.documentElement.classList.add('no-tts'); return; }
+    const r = document.getElementById('spRate'), sel = document.getElementById('spVoice');
+    if (r) r.oninput = () => { rate = +r.value; store.set('rate', rate); document.getElementById('spRateV').textContent = rate.toFixed(1) + '×'; };
+    const fill = () => { const vs = voices(); if (!sel || vs.length < 2) return; const p = pick();
+      sel.innerHTML = vs.map(v => `<option value="${esc(v.name)}"${p && v.name === p.name ? ' selected' : ''}>${esc(v.name.replace(/\s*\(.*\)/, ''))}（${esc(v.lang)}）</option>`).join(''); sel.hidden = false; };
+    fill(); speechSynthesis.onvoiceschanged = fill;
+    if (sel) sel.onchange = () => { voiceName = sel.value; store.set('voice', voiceName); };
+    document.addEventListener('click', e => {
+      const b = e.target.closest('.say'); if (!b) return;
+      e.preventDefault(); e.stopPropagation();
+      say(b.dataset.sayEl != null ? elText(b.closest(b.dataset.sayEl || 'p')) : b.dataset.say, b);
+    }, true);
+    addEventListener('hashchange', stop);
+  }
+  return { ok, say, stop, controls, bind };
+})();
+const sayBtn = (text, label = '發音') => `<button class="say" type="button" data-say="${esc(text)}" aria-label="${label}：${esc(text)}" title="${label}"></button>`;
+const sayEl = (sel, label = '朗讀這段') => `<button class="say" type="button" data-say-el="${sel}" aria-label="${label}" title="${label}"></button>`;

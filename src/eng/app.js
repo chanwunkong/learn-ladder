@@ -17,7 +17,7 @@ const wkKey = w => 'w' + w.n;
 function wordQ(w, d, i) {
   const day = w.words[d], x = day[i], others = [1, 3, 6].map(k => day[(i + k) % day.length]);
   return { h: `w:${wkKey(w)}:${x[0]}`, k: 'w', sk: 'v.mean', c: `${wkKey(w)}d${d + 1}am`, en: 1,
-    q: `<span class="enw">${esc(x[0])}</span> <span class="pos">${esc(x[1])}</span> 的意思是？`, o: [x[2], ...others.map(y => y[2])],
+    q: `<span class="enw">${esc(x[0])}</span>${sayBtn(x[0])} <span class="pos">${esc(x[1])}</span> 的意思是？`, o: [x[2], ...others.map(y => y[2])],
     why: `${esc(x[0])}：${esc(x[2])}。${x[3] ? `<br><span class="mut">${esc(x[3])}</span>` : ''}`, qt: x[0] };
 }
 // 晚上的回想：把早上例句裡的單字挖空
@@ -27,7 +27,7 @@ function recallQ(w, d, i) {
   const sent = esc(x[4]).replace(stemRe(x[0]), '<span class="gap">＿＿＿＿</span>');
   return { h: `wr:${wkKey(w)}:${x[0]}`, k: 'wr', sk: 'v.mean', c: `${wkKey(w)}d${d + 1}pm`, en: 1,
     q: `<span class="ens">${sent}</span><br><small class="mut">${esc(x[5])}（選項是原形，句中可能有變化）</small>`, o: [x[0], ...others.map(y => y[0])],
-    why: `${esc(x[4])}`, qt: x[0] };
+    why: `${esc(x[4])} ${sayBtn(x[4], '朗讀例句')}`, qt: x[0] };
 }
 const gramQ = (w, d, q) => ({ ...q, h: `g:${wkKey(w)}:${q.id}`, k: 'g', c: `${wkKey(w)}d${d + 1}pm`, en: 1, qt: q.q.replace(/<[^>]+>/g, '').slice(0, 60) });
 const passQ = (w, d, q) => ({ ...q, h: `p:${wkKey(w)}:${q.id}`, k: 'p', c: `${wkKey(w)}d${d + 1}pm`, en: 1, qt: `${w.passages[d].title}・${q.q}`.slice(0, 80) });
@@ -111,7 +111,7 @@ function bindUnsure(root) {
 
 /* ---- 長句拆解：一步一步標出主詞、動詞、修飾 ---- */
 function sentHTML(w, d, j, s, key = `${d}:${j}`) {
-  return `<div class="card sentc" data-sent="${key}"><div class="sent">${s.chunks.map((c, i) => `<span class="ch" data-i="${i}">${esc(c)}</span> `).join('')}</div>
+  return `<div class="card sentc" data-sent="${key}"><div class="sent">${s.chunks.map((c, i) => `<span class="ch" data-i="${i}">${esc(c)}</span> `).join('')}${sayBtn(s.chunks.join(' '), '朗讀句子')}</div>
 <p class="legend"><span class="ls">主詞</span><span class="lv">主要動詞</span><span class="lm">修飾（第一遍可以跳過）</span></p><div class="sbody"></div></div>`;
 }
 function bindSent(root, w, d, j, s, onDone, key = `${d}:${j}`) {
@@ -119,7 +119,7 @@ function bindSent(root, w, d, j, s, onDone, key = `${d}:${j}`) {
   const mark = m => Object.entries(m || {}).forEach(([i, v]) => { const e = card.querySelector(`.ch[data-i="${i}"]`); if (e) { e.classList.remove('s', 'v', 'm'); e.classList.add(v); } });
   const finish = () => {
     s.steps.forEach(st => mark(st[6]));
-    body.innerHTML = `${done.length ? `<ol class="gdone">${done.join('')}</ol>` : ''}<p class="core"><span class="lbl">主幹</span>${esc(s.core)}</p><p class="zh">${esc(s.zh)}</p><div class="row">${unsureBtn(`u:sent:${wkKey(w)}:${d}:${j}`, c, s.core)}</div>`;
+    body.innerHTML = `${done.length ? `<ol class="gdone">${done.join('')}</ol>` : ''}<p class="core"><span class="lbl">主幹</span>${esc(s.core)} ${sayBtn(s.core)}</p><p class="zh">${esc(s.zh)}</p><div class="row">${unsureBtn(`u:sent:${wkKey(w)}:${d}:${j}`, c, s.core)}</div>`;
     bindUnsure(body); if (onDone) onDone();
   };
   const draw = k => {
@@ -176,7 +176,7 @@ function renderAM(w, d) {
   $('#main').innerHTML = `${dayHead(w, d, 'am')}<h1>早上：單字與長句</h1><p class="segprog" id="segProg"></p>
 <section class="part"><h2>1. 錯題複習<small>約 5–10 分鐘</small></h2>${rv.length ? `<p class="note">之前答錯、今天到期的題目。第一次就答對才算過關，答錯會再排一次。</p><div id="rv">${reviewHTML(rv)}</div>` : '<p class="note">今天沒有到期的錯題。</p>'}</section>
 <section class="part"><h2>2. 新單字<small>約 10 分鐘</small></h2><p class="note">先看字根拆解和例句，大聲唸一次例句。不熟的按「？還不太懂」，匯出時會列給下一週。</p>
-<div class="words">${words.map(x => `<article class="wcard"><p class="wh"><span class="enw">${esc(x[0])}</span><span class="pos">${esc(x[1])}</span><span class="wz">${esc(x[2])}</span></p>${x[3] ? `<p class="root">${esc(x[3])}</p>` : ''}<p class="ens">${esc(x[4])}</p><p class="zh">${esc(x[5])}</p>${unsureBtn(`u:word:${wkKey(w)}:${x[0]}`, c, `${x[0]}（${x[2]}）`)}</article>`).join('')}</div>
+<div class="words">${words.map(x => `<article class="wcard"><p class="wh"><span class="enw">${esc(x[0])}</span>${sayBtn(x[0])}<span class="pos">${esc(x[1])}</span><span class="wz">${esc(x[2])}</span></p>${x[3] ? `<p class="root">${esc(x[3])}</p>` : ''}<p class="ens">${esc(x[4])} ${sayBtn(x[4], '朗讀例句')}</p><p class="zh">${esc(x[5])}</p>${unsureBtn(`u:word:${wkKey(w)}:${x[0]}`, c, `${x[0]}（${x[2]}）`)}</article>`).join('')}</div>
 <h3>小測驗：選出意思</h3><div id="wq">${wq.map((q, i) => mcq(q, `${i + 1} / ${wq.length}`)).join('')}</div></section>
 <section class="part"><h2>3. 長句拆解<small>約 10 分鐘</small></h2><p class="note">先找主要動詞，再找主詞，其他部分都是修飾。每一步答對，句子上會標出來。</p>${w.sents[d].map((s, j) => sentHTML(w, d, j, s)).join('')}</section>
 <div class="row endrow"><a class="btn pri" href="#d${d + 1}pm">晚上的部分 ›</a></div>`;
@@ -186,10 +186,10 @@ function renderAM(w, d) {
 function passageHTML(w, d, P) {
   const blank = t => esc(t).replace(/\{(\d)\}/g, (m, n) => `<span class="blank" data-b="${n}">(${n}) ＿＿＿＿</span>`);
   const pq = P.qs.map(q => passQ(w, d, q));
-  const text = `<div class="passage card"><p class="ptitle">${esc(P.title)}</p>${P.text.map(t => `<p class="ens">${blank(t)}</p>`).join('')}<details><summary>中文翻譯（做完再看）</summary><p class="zh">${esc(P.zh)}</p></details></div>`;
+  const text = `<div class="passage card"><p class="ptitle">${esc(P.title)}</p>${P.text.map(t => `<p class="ens">${blank(t)} ${sayEl('p')}</p>`).join('')}<details><summary>中文翻譯（做完再看）</summary><p class="zh">${esc(P.zh)}</p></details></div>`;
   if (P.type === 'cloze') return `<p class="note">克漏字：每格先看前後文是什麼關係（同方向、相反、因果），再看空格要什麼詞性。</p>${text}<div id="pq">${pq.map((q, i) => mcq(q, `第 ${i + 1} 格`)).join('')}</div>`;
   return `<p class="note">閱讀：先看題目知道要找什麼，再讀文章，最後回答。</p>
-<div class="card pre"><p class="lbl">先看題目</p><ol>${P.qs.map(q => `<li><span class="ens">${esc(q.q)}</span><br><small class="mut">${esc(q.pre || '')}</small></li>`).join('')}</ol></div>${text}<div id="pq">${pq.map((q, i) => mcq(q, `第 ${i + 1} 題`)).join('')}</div>`;
+<div class="card pre"><p class="lbl">先看題目</p><ol>${P.qs.map(q => `<li><span class="ens">${esc(q.q)}</span>${sayBtn(q.q.replace(/_+/g, ' blank '), '朗讀題目')}<br><small class="mut">${esc(q.pre || '')}</small></li>`).join('')}</ol></div>${text}<div id="pq">${pq.map((q, i) => mcq(q, `第 ${i + 1} 題`)).join('')}</div>`;
 }
 function renderPM(w, d) {
   const G = w.gram[d], P = w.passages[d], c = `${wkKey(w)}d${d + 1}pm`;
@@ -227,7 +227,7 @@ function reviewHTML(items) {
       if (P.type === 'cloze') {
         const para = P.text.find(t => t.includes(`{${n0}}`)) || '';
         ctx = `<p class="ens ctx">${esc(para).replace(/\{(\d)\}/g, (m, k) => (+k === n0 ? `<span class="blank">(${k}) ＿＿＿＿</span>` : esc(P.qs[k - 1].o[0])))}</p>`;
-      } else ctx = `<details class="ctx"><summary>文章：${esc(P.title)}</summary>${P.text.map(t => `<p class="ens">${esc(t)}</p>`).join('')}</details>`;
+      } else ctx = `<details class="ctx"><summary>文章：${esc(P.title)}</summary>${P.text.map(t => `<p class="ens">${esc(t)} ${sayBtn(t)}</p>`).join('')}</details>`;
     }
     return `<div class="rv-q"><p class="qsrc">第 ${f.w.n} 週第 ${f.d + 1} 天・${{ w: '單字', wr: '單字回想', g: '文法', p: '文章' }[q.k]}・${esc(SKILLS[q.sk] || '')}・第 ${it.s.stage + 1} 輪</p>${ctx}${mcq(q, '')}</div>`;
   }).join('');
@@ -393,4 +393,4 @@ function route() {
   saveSummary();
   window.scrollTo(0, 0);
 }
-function boot() { addEventListener('hashchange', route); route(); }
+function boot() { $('#spkSlot').innerHTML = SPEECH.controls(); SPEECH.bind(); addEventListener('hashchange', route); route(); }
