@@ -8,6 +8,7 @@ node tests/chem/stereo.test.js >/dev/null
 node tests/chem/qid.test.js || exit 1
 node tests/chem/steps.test.js || exit 1
 node tests/chem/show.test.js || exit 1
+node tests/review.test.js || exit 1
 node tests/eng/data.test.js || exit 1
 eout=$(bash tests/eng/smoke.sh 2>&1) || { echo "$eout" | grep -v "^ok"; exit 1; }
 # 已依新標準修過的章節，另外用手機寬度再測一次

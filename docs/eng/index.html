@@ -219,6 +219,7 @@ details summary { cursor: pointer; color: var(--accent); font-size: 14px; }
 .spk-pop input { flex: 1; width: auto !important; }
 .spk-pop select { flex: 1; max-width: none !important; }
 /* 回想題的提示、早上單字面板 */
+.redo { margin: 0 0 6px; font-size: 13.5px; color: var(--warn); background: var(--warn-soft); border-radius: 6px; padding: 4px 10px; display: inline-block; }
 .hintrow { margin: 0 0 8px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .hintz { color: var(--warn); font-size: 14px; }
 .peekbtn { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 30; box-shadow: 0 6px 20px rgba(0,0,0,.22); }
@@ -646,14 +647,16 @@ WEEKS[0].passages = [
 /* ---------- 錯題排程（化學、英文與首頁共用） ----------
    只從練習紀錄推算，不另外存狀態，所以紀錄同步到哪裡，排程就跟到哪裡。
    紀錄每一筆：{ t 時間, c 章, k 題型, h 題目識別碼, ok, n 第幾次作答 }；n === 1 是「一次作答」的開頭。
-   規則：每題每天只算第一次作答。
-   - 第一次就答錯 → 進入錯題本，隔 1 天到期。
-   - 到期後（之後任何一天）第一次就答對 → 再隔 3 天；再答對一次 → 掌握，離開錯題本。
-   - 在錯題本中又答錯 → 從頭開始（隔 1 天）。 */
+   規則（2026-11-02 使用者要求加長）：每題每天只算第一次作答。
+   - 第一次就答錯 → 進入錯題本，隔 1 天到期（第 1 格）。
+   - 到期後（之後任何一天）第一次就答對 → 進到下一格，依序再隔 3、7、14、30 天；五格都過才算掌握，離開錯題本。
+   - 在錯題本中又答錯 → 從第 1 格重新開始（隔 1 天）。
+   - 考前總複習：FINAL 那天起，所有曾經答錯、已經掌握的題目再到期一次；答對就完成，答錯就重新進錯題本。 */
 const REVIEW = (() => {
-  const DAY = 864e5, GAPS = [1, 3];
+  const DAY = 864e5, GAPS = [1, 3, 7, 14, 30], FINAL = new Date(2027, 2, 1).getTime();   // 2027-03-01
   const dayStart = t => { const d = new Date(t); d.setHours(0, 0, 0, 0); return d.getTime(); };
   const dayKey = t => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+  const RULE = `第一次就答錯的題目會進錯題本，依序在隔 ${GAPS.join('、')} 天回來（共 ${GAPS.length} 格）。每次都要當天第一次就答對才往下一格；中途答錯就從第 1 格重新開始。五格都過才算掌握。2027 年 3 月 1 日起，所有曾經錯過的題目會再出現一次（考前總複習）。`;
   // 每題每天的第一次作答
   function trials(log) {
     const seen = new Set(), out = [];
@@ -665,12 +668,12 @@ const REVIEW = (() => {
     }
     return out;
   }
-  // 每題目前的狀態：{ key, c, k, h, i, qt, stage, due, wrongs, last }
+  // 每題目前的狀態：{ key, c, k, h, i, qt, open, stage（0 起算的格數）, due, wrongs, last, first（第一次作答是否答對） }
   function state(log) {
     const m = new Map();
     for (const tr of trials(log)) {
       let s = m.get(tr.key);
-      if (!s) { s = { key: tr.key, c: tr.c, k: tr.k, h: tr.h, i: tr.i, qt: tr.qt, open: false, stage: 0, due: 0, wrongs: 0, last: 0 }; m.set(tr.key, s); }
+      if (!s) { s = { key: tr.key, c: tr.c, k: tr.k, h: tr.h, i: tr.i, qt: tr.qt, open: false, stage: 0, due: 0, wrongs: 0, last: 0, first: tr.ok }; m.set(tr.key, s); }
       s.i = tr.i; s.qt = tr.qt || s.qt;
       if (!tr.ok) { s.open = true; s.stage = 0; s.wrongs++; s.due = dayStart(tr.t) + GAPS[0] * DAY; }
       else if (s.open && tr.t >= s.due) {
@@ -681,12 +684,27 @@ const REVIEW = (() => {
     }
     return m;
   }
-  // 錯題本：還沒掌握的題目；due 為「今天以前到期」
+  // 錯題本：還沒掌握的題目；due 為「今天以前到期」，加上考前總複習（final: true）
   function book(log, now = Date.now()) {
-    const all = [...state(log).values()].filter(s => s.open);
-    return { open: all, due: all.filter(s => s.due <= now).sort((a, b) => a.due - b.due) };
+    const st = [...state(log).values()], all = st.filter(s => s.open);
+    const fin = now >= FINAL ? st.filter(s => !s.open && s.wrongs > 0 && s.last < FINAL).map(s => ({ ...s, final: true, due: FINAL })) : [];
+    return { open: all, due: all.filter(s => s.due <= now).concat(fin).sort((a, b) => a.due - b.due) };
   }
-  return { trials, state, book, dayKey, dayStart, DAY };
+  // 答對之後的說明：下一次什麼時候回來
+  function after(s, firstTry) {
+    if (!firstTry) return '今天第一次沒答對，從第 1 格重新開始，明天再考一次。';
+    if (s.final) return '考前總複習完成。';
+    if (s.stage + 1 >= GAPS.length) return `五格都過了，這題已經掌握，離開錯題本（2027 年 3 月起的考前總複習還會再出現一次）。`;
+    return `${GAPS[s.stage + 1]} 天後再考一次（進到第 ${s.stage + 2} / ${GAPS.length} 格）。`;
+  }
+  const label = s => (s.final ? '考前總複習' : `第 ${s.stage + 1} / ${GAPS.length} 格`);
+  // 接下來 14 天每天到期幾題：[[dayKey, 題數]]
+  function upcoming(open, now = Date.now(), days = 14) {
+    const m = new Map();
+    open.filter(s => s.due > now && s.due <= now + days * DAY).forEach(s => { const k = dayKey(s.due); m.set(k, (m.get(k) || 0) + 1); });
+    return [...m.entries()].sort();
+  }
+  return { trials, state, book, after, label, upcoming, dayKey, dayStart, DAY, GAPS, RULE, FINAL };
 })();
 
 /* ---------- 後中英文：每天早上／晚上兩段、錯題複習、週報、匯出 ----------
@@ -700,6 +718,8 @@ function logAnswer(e) {
 }
 const qlog = () => LOG.filter(e => REVIEW_KINDS.has(e.k));
 const okSet = () => new Set(LOG.filter(e => e.ok && e.h).map(e => e.h));
+// 每題「第一次作答」是否答對（只看最早的 n === 1）：回到頁面時決定顯示「已答對」還是「第一次答錯，再做一次」
+const firstOk = () => { const m = new Map(); LOG.forEach(e => { if (e.n === 1 && e.h && !m.has(e.h)) m.set(e.h, !!e.ok); }); return m; };
 const unsure = () => { const m = {}; LOG.forEach(e => { if (e.k === 'u') m[e.h] = e.p === 1 ? e : null; }); return m; };
 const DAYN = '一二三四五六日';
 
@@ -747,13 +767,15 @@ function mcq(q, num) {
 // 晚上的回想題：打開「早上的 10 個字」之後作答，記成 pk（看過卡片）
 let PEEKED = false;
 function bindMcq(root, list, onDone, restore = true) {
-  const done0 = restore ? okSet() : new Set();
+  const done0 = restore ? okSet() : new Set(), f1 = restore ? firstOk() : new Map();
   list.forEach(q => {
     const qe = root.querySelector(`.q[data-h="${CSS.escape(q.h)}"]`); if (!qe) return;
     let n = 0; const why = $('.why', qe);
     const hb = $('[data-hint]', qe);
     if (hb) hb.onclick = () => { hb.hidden = true; $('.hintz', qe).hidden = false; logAnswer({ c: q.c, k: 'hint', h: q.h, qt: q.qt }); };
-    if (done0.has(q.h)) {   // 之前已答對：顯示結果，不用再做；答錯的部分在錯題複習裡練
+    if (f1.get(q.h) === false) {   // 第一次答錯：只提醒，不標出上次選的選項，可以重新作答（同一天重做不影響紀錄與錯題排程）
+      qe.insertAdjacentHTML('afterbegin', '<p class="redo">這題第一次答錯（已排進錯題本），再做一次。</p>');
+    } else if (done0.has(q.h)) {   // 第一次就答對：直接顯示結果
       $$('.opt', qe).forEach(x => { x.disabled = true; if (x.dataset.o === '0') x.classList.add('right'); });
       if (hb) hb.parentNode.hidden = true;
       why.hidden = false; why.className = 'why ok'; why.innerHTML = `<b>已完成。</b>${q.why}`; qe.classList.add('done');
@@ -766,7 +788,7 @@ function bindMcq(root, list, onDone, restore = true) {
       b.classList.add(ok ? 'right' : 'wrong'); b.disabled = true; why.hidden = false;
       if (ok) {
         $$('.opt', qe).forEach(x => { x.disabled = true; }); const g = $('.guide', qe); if (g) g.hidden = true;
-        why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}`; qe.classList.add('done');
+        why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}${q.rv ? `<br><small>${REVIEW.after(q.rv, n === 1)}</small>` : ''}`; qe.classList.add('done');
         if (onDone) onDone(q);
       } else {
         why.className = 'why no'; why.innerHTML = `這個不對，再選一次。${q.st && q.st.length ? '<button class="btn sm" type="button" data-gopen>一步一步來</button>' : ''}`;
@@ -838,7 +860,14 @@ function bindSent(root, w, d, j, s, onDone, key = `${d}:${j}`, restore = true) {
       $('[data-n]', why).onclick = () => { done.push(`<li>${esc(st[0])} <b>${esc(st[1])}</b></li>`); draw(k + 1); };
     }; });
   };
-  if (restore) { const ok = okSet(); if (s.steps.every((st, i) => ok.has(sentH(w, d, j, i)))) return finish(); }
+  if (restore) {
+    const ok = okSet(), f1 = firstOk(), hs = s.steps.map((st, i) => sentH(w, d, j, i));
+    if (hs.every(h => ok.has(h))) {
+      const bad = hs.map((h, i) => (f1.get(h) === false ? i + 1 : 0)).filter(Boolean);
+      if (!bad.length) return finish();
+      card.insertAdjacentHTML('afterbegin', `<p class="redo">這句的第 ${bad.join('、')} 步第一次答錯（已排進錯題本），再拆一次。</p>`);
+    }
+  }
   draw(0);
 }
 
@@ -927,14 +956,14 @@ function reviewItems(max = 50) {
   for (const s of REVIEW.book(qlog()).due) {
     const f = ix[s.h]; if (!f) continue;
     if (f.sent) { const key = `sent:${f.w.n}:${f.d}:${f.j}`; if (seen.has(key)) continue; seen.add(key); out.push({ sent: f, s }); }
-    else out.push({ q: f.q, f, s });
+    else out.push({ q: { ...f.q, rv: s }, f, s });
     if (out.length >= max) break;
   }
   return out;
 }
 function reviewHTML(items) {
   return items.map((it, n) => {
-    if (it.sent) { const f = it.sent; return `<div class="rv-sent"><p class="qsrc">第 ${f.w.n} 週第 ${f.d + 1} 天・長句</p>${sentHTML(f.w, f.d, f.j, f.w.sents[f.d][f.j], `r${f.d}:${f.j}`)}</div>`; }
+    if (it.sent) { const f = it.sent; return `<div class="rv-sent"><p class="qsrc">第 ${f.w.n} 週第 ${f.d + 1} 天・長句・${REVIEW.label(it.s)}</p>${sentHTML(f.w, f.d, f.j, f.w.sents[f.d][f.j], `r${f.d}:${f.j}`)}</div>`; }
     const q = it.q, f = it.f; let ctx = '';
     if (q.k === 'p') {
       const P = f.w.passages[f.d], n0 = P.qs.findIndex(x => passQ(f.w, f.d, x).h === q.h) + 1;
@@ -943,7 +972,7 @@ function reviewHTML(items) {
         ctx = `<p class="ens ctx">${esc(para).replace(/\{(\d)\}/g, (m, k) => (+k === n0 ? `<span class="blank">(${k}) ＿＿＿＿</span>` : esc(P.qs[k - 1].o[0])))}</p>`;
       } else ctx = `<details class="ctx"><summary>文章：${esc(P.title)}</summary>${P.text.map(t => `<p class="ens">${esc(t)} ${sayBtn(t)}</p>`).join('')}</details>`;
     }
-    return `<div class="rv-q"><p class="qsrc">第 ${f.w.n} 週第 ${f.d + 1} 天・${{ w: '單字', wr: '單字回想', g: '文法', p: '文章' }[q.k]}・${esc(SKILLS[q.sk] || '')}・第 ${it.s.stage + 1} 輪</p>${ctx}${mcq(q, '')}</div>`;
+    return `<div class="rv-q"><p class="qsrc">第 ${f.w.n} 週第 ${f.d + 1} 天・${{ w: '單字', wr: '單字回想', g: '文法', p: '文章' }[q.k]}・${esc(SKILLS[q.sk] || '')}・${REVIEW.label(it.s)}</p>${ctx}${mcq(q, '')}</div>`;
   }).join('');
 }
 function bindReview(items) {
@@ -954,7 +983,7 @@ function bindReview(items) {
 function renderReview() {
   const items = reviewItems(), book = REVIEW.book(qlog());
   $('#main').innerHTML = `<p class="eyebrow">錯題本</p><h1>今天到期的錯題</h1>
-<p class="lede">答錯的題目隔 1 天回來；到期後第一次就答對，再隔 3 天；再答對一次就算掌握，離開錯題本。錯題本目前共 ${book.open.length} 題，今天到期 ${book.due.length} 題。</p>
+<p class="lede">${REVIEW.RULE}</p><p>錯題本目前共 <b>${book.open.length}</b> 題，今天到期 <b>${book.due.length}</b> 題。</p>${(up => up.length ? `<p class="small mut">接下來 14 天：${up.map(([d, n]) => `${+d.slice(5, 7)}/${+d.slice(8)} ${n} 題`).join('、')}</p>` : '')(REVIEW.upcoming(book.open))}
 <div id="rv">${items.length ? reviewHTML(items) : '<p class="note">今天沒有到期的錯題。</p>'}</div><div class="row endrow"><a class="btn" href="#">回到本週</a></div>`;
   bindReview(items);
 }

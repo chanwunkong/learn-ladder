@@ -9,6 +9,8 @@ function logAnswer(e) {
 }
 const qlog = () => LOG.filter(e => REVIEW_KINDS.has(e.k));
 const okSet = () => new Set(LOG.filter(e => e.ok && e.h).map(e => e.h));
+// 每題「第一次作答」是否答對（只看最早的 n === 1）：回到頁面時決定顯示「已答對」還是「第一次答錯，再做一次」
+const firstOk = () => { const m = new Map(); LOG.forEach(e => { if (e.n === 1 && e.h && !m.has(e.h)) m.set(e.h, !!e.ok); }); return m; };
 const unsure = () => { const m = {}; LOG.forEach(e => { if (e.k === 'u') m[e.h] = e.p === 1 ? e : null; }); return m; };
 const DAYN = '一二三四五六日';
 
@@ -56,13 +58,15 @@ function mcq(q, num) {
 // 晚上的回想題：打開「早上的 10 個字」之後作答，記成 pk（看過卡片）
 let PEEKED = false;
 function bindMcq(root, list, onDone, restore = true) {
-  const done0 = restore ? okSet() : new Set();
+  const done0 = restore ? okSet() : new Set(), f1 = restore ? firstOk() : new Map();
   list.forEach(q => {
     const qe = root.querySelector(`.q[data-h="${CSS.escape(q.h)}"]`); if (!qe) return;
     let n = 0; const why = $('.why', qe);
     const hb = $('[data-hint]', qe);
     if (hb) hb.onclick = () => { hb.hidden = true; $('.hintz', qe).hidden = false; logAnswer({ c: q.c, k: 'hint', h: q.h, qt: q.qt }); };
-    if (done0.has(q.h)) {   // 之前已答對：顯示結果，不用再做；答錯的部分在錯題複習裡練
+    if (f1.get(q.h) === false) {   // 第一次答錯：只提醒，不標出上次選的選項，可以重新作答（同一天重做不影響紀錄與錯題排程）
+      qe.insertAdjacentHTML('afterbegin', '<p class="redo">這題第一次答錯（已排進錯題本），再做一次。</p>');
+    } else if (done0.has(q.h)) {   // 第一次就答對：直接顯示結果
       $$('.opt', qe).forEach(x => { x.disabled = true; if (x.dataset.o === '0') x.classList.add('right'); });
       if (hb) hb.parentNode.hidden = true;
       why.hidden = false; why.className = 'why ok'; why.innerHTML = `<b>已完成。</b>${q.why}`; qe.classList.add('done');
@@ -75,7 +79,7 @@ function bindMcq(root, list, onDone, restore = true) {
       b.classList.add(ok ? 'right' : 'wrong'); b.disabled = true; why.hidden = false;
       if (ok) {
         $$('.opt', qe).forEach(x => { x.disabled = true; }); const g = $('.guide', qe); if (g) g.hidden = true;
-        why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}`; qe.classList.add('done');
+        why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}${q.rv ? `<br><small>${REVIEW.after(q.rv, n === 1)}</small>` : ''}`; qe.classList.add('done');
         if (onDone) onDone(q);
       } else {
         why.className = 'why no'; why.innerHTML = `這個不對，再選一次。${q.st && q.st.length ? '<button class="btn sm" type="button" data-gopen>一步一步來</button>' : ''}`;
@@ -147,7 +151,14 @@ function bindSent(root, w, d, j, s, onDone, key = `${d}:${j}`, restore = true) {
       $('[data-n]', why).onclick = () => { done.push(`<li>${esc(st[0])} <b>${esc(st[1])}</b></li>`); draw(k + 1); };
     }; });
   };
-  if (restore) { const ok = okSet(); if (s.steps.every((st, i) => ok.has(sentH(w, d, j, i)))) return finish(); }
+  if (restore) {
+    const ok = okSet(), f1 = firstOk(), hs = s.steps.map((st, i) => sentH(w, d, j, i));
+    if (hs.every(h => ok.has(h))) {
+      const bad = hs.map((h, i) => (f1.get(h) === false ? i + 1 : 0)).filter(Boolean);
+      if (!bad.length) return finish();
+      card.insertAdjacentHTML('afterbegin', `<p class="redo">這句的第 ${bad.join('、')} 步第一次答錯（已排進錯題本），再拆一次。</p>`);
+    }
+  }
   draw(0);
 }
 
@@ -236,14 +247,14 @@ function reviewItems(max = 50) {
   for (const s of REVIEW.book(qlog()).due) {
     const f = ix[s.h]; if (!f) continue;
     if (f.sent) { const key = `sent:${f.w.n}:${f.d}:${f.j}`; if (seen.has(key)) continue; seen.add(key); out.push({ sent: f, s }); }
-    else out.push({ q: f.q, f, s });
+    else out.push({ q: { ...f.q, rv: s }, f, s });
     if (out.length >= max) break;
   }
   return out;
 }
 function reviewHTML(items) {
   return items.map((it, n) => {
-    if (it.sent) { const f = it.sent; return `<div class="rv-sent"><p class="qsrc">第 ${f.w.n} 週第 ${f.d + 1} 天・長句</p>${sentHTML(f.w, f.d, f.j, f.w.sents[f.d][f.j], `r${f.d}:${f.j}`)}</div>`; }
+    if (it.sent) { const f = it.sent; return `<div class="rv-sent"><p class="qsrc">第 ${f.w.n} 週第 ${f.d + 1} 天・長句・${REVIEW.label(it.s)}</p>${sentHTML(f.w, f.d, f.j, f.w.sents[f.d][f.j], `r${f.d}:${f.j}`)}</div>`; }
     const q = it.q, f = it.f; let ctx = '';
     if (q.k === 'p') {
       const P = f.w.passages[f.d], n0 = P.qs.findIndex(x => passQ(f.w, f.d, x).h === q.h) + 1;
@@ -252,7 +263,7 @@ function reviewHTML(items) {
         ctx = `<p class="ens ctx">${esc(para).replace(/\{(\d)\}/g, (m, k) => (+k === n0 ? `<span class="blank">(${k}) ＿＿＿＿</span>` : esc(P.qs[k - 1].o[0])))}</p>`;
       } else ctx = `<details class="ctx"><summary>文章：${esc(P.title)}</summary>${P.text.map(t => `<p class="ens">${esc(t)} ${sayBtn(t)}</p>`).join('')}</details>`;
     }
-    return `<div class="rv-q"><p class="qsrc">第 ${f.w.n} 週第 ${f.d + 1} 天・${{ w: '單字', wr: '單字回想', g: '文法', p: '文章' }[q.k]}・${esc(SKILLS[q.sk] || '')}・第 ${it.s.stage + 1} 輪</p>${ctx}${mcq(q, '')}</div>`;
+    return `<div class="rv-q"><p class="qsrc">第 ${f.w.n} 週第 ${f.d + 1} 天・${{ w: '單字', wr: '單字回想', g: '文法', p: '文章' }[q.k]}・${esc(SKILLS[q.sk] || '')}・${REVIEW.label(it.s)}</p>${ctx}${mcq(q, '')}</div>`;
   }).join('');
 }
 function bindReview(items) {
@@ -263,7 +274,7 @@ function bindReview(items) {
 function renderReview() {
   const items = reviewItems(), book = REVIEW.book(qlog());
   $('#main').innerHTML = `<p class="eyebrow">錯題本</p><h1>今天到期的錯題</h1>
-<p class="lede">答錯的題目隔 1 天回來；到期後第一次就答對，再隔 3 天；再答對一次就算掌握，離開錯題本。錯題本目前共 ${book.open.length} 題，今天到期 ${book.due.length} 題。</p>
+<p class="lede">${REVIEW.RULE}</p><p>錯題本目前共 <b>${book.open.length}</b> 題，今天到期 <b>${book.due.length}</b> 題。</p>${(up => up.length ? `<p class="small mut">接下來 14 天：${up.map(([d, n]) => `${+d.slice(5, 7)}/${+d.slice(8)} ${n} 題`).join('、')}</p>` : '')(REVIEW.upcoming(book.open))}
 <div id="rv">${items.length ? reviewHTML(items) : '<p class="note">今天沒有到期的錯題。</p>'}</div><div class="row endrow"><a class="btn" href="#">回到本週</a></div>`;
   bindReview(items);
 }

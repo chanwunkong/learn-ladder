@@ -176,9 +176,10 @@ function renderReview() {
   const items = due.map(s => ({ s, f: qfind(s.c, s.h, s.k, s.i) })).filter(x => x.f);
   const soon = open.filter(s => s.due > now && s.due <= now + 7 * REVIEW.DAY).length;
   $('#article').innerHTML = `<p class="eyebrow">後中化學</p><h1>錯題複習</h1>
-<p class="lede">第一次就答錯的題目會進到這裡：隔 1 天回來考；那天第一次就答對，隔 3 天再考一次；再答對就算掌握，離開錯題本。中途答錯就從頭開始。</p>
+<p class="lede">${REVIEW.RULE}</p>
 <div class="cards">${card('d', '今天到期', `${items.length} 題`)}${card('o', '錯題本共', `${open.length} 題`)}${card('s', '7 天內到期', `${soon} 題`)}</div>
-${items.length ? items.map(({ s, f }, n) => `<div class="q" data-r="${n}"><p class="qsrc"><a href="#${f.c.id}">${f.c.title.split('：')[0]}</a>${f.k === 'x' ? '・相似題' : '・章末題'}・第 ${s.stage + 1} 輪</p><p class="qt">${n + 1}. ${f.q.q}</p><div class="opts">${order(f.q, f.i).map(j => `<button class="opt" type="button" data-o="${j}">${f.q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('')
+${(up => up.length ? `<p class="small mut">接下來 14 天：${up.map(([d, n]) => `${+d.slice(5, 7)}/${+d.slice(8)} ${n} 題`).join('、')}</p>` : '')(REVIEW.upcoming(open))}
+${items.length ? items.map(({ s, f }, n) => `<div class="q" data-r="${n}"><p class="qsrc"><a href="#${f.c.id}">${f.c.title.split('：')[0]}</a>${f.k === 'x' ? '・相似題' : '・章末題'}・${REVIEW.label(s)}</p><p class="qt">${n + 1}. ${f.q.q}</p><div class="opts">${order(f.q, f.i).map(j => `<button class="opt" type="button" data-o="${j}">${f.q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('')
   : `<p class="note">${open.length ? '今天沒有到期的錯題，到期的題目會在這裡出現。' : '錯題本是空的。到各章練習時第一次答錯的題目，會自動排進這裡。'}</p>`}`;
   items.forEach(({ s, f }, n) => {
     const qe = $(`.q[data-r="${n}"]`), q = f.q, why = $('.why', qe);
@@ -189,7 +190,7 @@ ${items.length ? items.map(({ s, f }, n) => `<div class="q" data-r="${n}"><p cla
       const ok = +b.dataset.o === q.a; b.classList.add(ok ? 'right' : 'wrong'); why.hidden = false; tries++;
       logAnswer({ c: f.c.id, k: f.k, i: f.i, h: s.h, qt: strip(q.q).slice(0, 60), p: +b.dataset.o, ok: ok ? 1 : 0, n: tries });
       if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); const gb = $('.guide', qe); if (gb) gb.hidden = true; why.className = 'why ok';
-        why.innerHTML = `<b>答對了。</b>${q.why}<br><small>${tries > 1 ? '今天第一次沒答對，明天再考一次。' : s.stage + 1 >= 2 ? '這題已經掌握，離開錯題本。' : '3 天後再考一次。'}</small>`; renderTOC('review'); }
+        why.innerHTML = `<b>答對了。</b>${q.why}<br><small>${REVIEW.after(s, tries === 1)}</small>`; renderTOC('review'); }
       else { b.disabled = true; why.className = 'why no'; why.innerHTML = `<b>再想想。</b>${sts ? '下面拆成幾個小步驟，一步一步推回來。' : `可以回到<a href="#${f.c.id}">${f.c.title.split('：')[0]}</a>看看。`}`; if (sts) qe.openGuide(); }
     }; });
   });
