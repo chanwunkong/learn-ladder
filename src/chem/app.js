@@ -138,7 +138,7 @@ function qblock(list, kind) {
 // 把連續的作答併成「一題一次」：同一章、同一題、同一頁面瀏覽中，從第 1 次作答到答對為止
 function sessions(log = LOG) {
   const out = [];
-  log.filter(e => e.k !== 'r').forEach(e => { const key = e.h || e.k + e.i, last = out.length && [...out].reverse().find(s => s.c === e.c && s.key === key && !s.closed);
+  log.filter(e => e.k !== 'r' && e.k !== 'fu').forEach(e => { const key = e.h || e.k + e.i, last = out.length && [...out].reverse().find(s => s.c === e.c && s.key === key && !s.closed);
     if (e.n === 1 || !last) out.push({ t: e.t, c: e.c, k: e.k, i: e.i, h: e.h, qt: e.qt, key, tries: 1, ok: e.ok, first: e.ok, closed: !!e.ok, end: e.t });
     else { last.tries++; last.end = e.t; if (e.ok) { last.ok = 1; last.closed = true; } } });
   return out;
@@ -172,13 +172,13 @@ ${ss.length ? `<div class="cards">${card('n', '練習題次', ss.length)}${card(
 
 // 錯題複習：依 REVIEW 的排程，把今天到期的錯題集中起來重考（規則見 src/shared/review.js）
 function renderReview() {
-  const { open, due } = REVIEW.book(LOG), now = Date.now();
+  const { open, checks, due } = REVIEW.book(LOG), now = Date.now();
   const items = due.map(s => ({ s, f: qfind(s.c, s.h, s.k, s.i) })).filter(x => x.f);
   const soon = open.filter(s => s.due > now && s.due <= now + 7 * REVIEW.DAY).length;
   $('#article').innerHTML = `<p class="eyebrow">後中化學</p><h1>錯題複習</h1>
 <p class="lede">${REVIEW.RULE}</p>
-<div class="cards">${card('d', '今天到期', `${items.length} 題`)}${card('o', '錯題本共', `${open.length} 題`)}${card('s', '7 天內到期', `${soon} 題`)}</div>
-${(up => up.length ? `<p class="small mut">接下來 14 天：${up.map(([d, n]) => `${+d.slice(5, 7)}/${+d.slice(8)} ${n} 題`).join('、')}</p>` : '')(REVIEW.upcoming(open))}
+<div class="cards">${card('d', '今天到期', `${items.length} 題`)}${card('o', '錯題本共', `${open.length} 題`)}${card('s', '7 天內到期', `${soon} 題`)}${card('c', '待確認（答對過的新題）', `${checks.length} 題`)}</div>
+${(up => up.length ? `<p class="small mut">接下來 14 天：${up.map(([d, n]) => `${+d.slice(5, 7)}/${+d.slice(8)} ${n} 題`).join('、')}</p>` : '')(REVIEW.upcoming(open.concat(checks)))}
 ${items.length ? items.map(({ s, f }, n) => `<div class="q" data-r="${n}"><p class="qsrc"><a href="#${f.c.id}">${f.c.title.split('：')[0]}</a>${f.k === 'x' ? '・相似題' : '・章末題'}・${REVIEW.label(s)}</p><p class="qt">${n + 1}. ${f.q.q}</p><div class="opts">${order(f.q, f.i).map(j => `<button class="opt" type="button" data-o="${j}">${f.q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('')
   : `<p class="note">${open.length ? '今天沒有到期的錯題，到期的題目會在這裡出現。' : '錯題本是空的。到各章練習時第一次答錯的題目，會自動排進這裡。'}</p>`}`;
   items.forEach(({ s, f }, n) => {
@@ -189,8 +189,10 @@ ${items.length ? items.map(({ s, f }, n) => `<div class="q" data-r="${n}"><p cla
     $$('.opt', qe).forEach(b => { b.onclick = () => {
       const ok = +b.dataset.o === q.a; b.classList.add(ok ? 'right' : 'wrong'); why.hidden = false; tries++;
       logAnswer({ c: f.c.id, k: f.k, i: f.i, h: s.h, qt: strip(q.q).slice(0, 60), p: +b.dataset.o, ok: ok ? 1 : 0, n: tries });
-      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); const gb = $('.guide', qe); if (gb) gb.hidden = true; why.className = 'why ok';
-        why.innerHTML = `<b>答對了。</b>${q.why}<br><small>${REVIEW.after(s, tries === 1)}</small>`; renderTOC('review'); }
+      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); const gb = $('.guide', qe); if (gb) gb.hidden = true;
+        const fin = (fok, st) => { why.className = 'why ok'; why.innerHTML = `${st && !fok ? `<b>這次先當成猜對</b>：理由是「${st[1]}」，${st[4]}<br>` : '<b>答對了。</b>'}${q.why}<br><small>${REVIEW.after(s, tries === 1 && fok !== false)}</small>`; renderTOC('review'); };
+        if (tries === 1 && sts) { why.className = 'why fu'; FOLLOW.ask(why, sts, x => x, (fok, st) => { logAnswer({ c: f.c.id, k: 'fu', fk: f.k, i: f.i, h: s.h, qt: strip(q.q).slice(0, 60), ok: fok ? 1 : 0, n: 1 }); fin(fok, st); }); }
+        else fin(); }
       else { b.disabled = true; why.className = 'why no'; why.innerHTML = `<b>再想想。</b>${sts ? '下面拆成幾個小步驟，一步一步推回來。' : `可以回到<a href="#${f.c.id}">${f.c.title.split('：')[0]}</a>看看。`}`; if (sts) qe.openGuide(); }
     }; });
   });
@@ -248,8 +250,15 @@ function bindQuiz(id) {
       const ok = +b.dataset.o === q.a; b.classList.add(ok ? 'right' : 'wrong'); why.hidden = false;
       logAnswer({ c: id, k: kind, i: qi, h: qid(id, q, kind), qt: strip(q.q).slice(0, 60), p: +b.dataset.o, ok: ok ? 1 : 0, n: ++tries });
       const demo = q.show && INST[q.show.w] ? '<button class="btn sm" type="button" data-show>在圖上看 ↑</button>' : '';
-      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); const gb = $('.guide', qe); if (gb) gb.hidden = true; why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}${demo}`;
-        if (kind === 'q' && !state.done[id] && quizAllRight(id)) { setDone(id, true); bindDone(id); } }
+      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); const gb = $('.guide', qe); if (gb) gb.hidden = true;
+        const fin = (fok, st) => {
+          why.className = 'why ok'; why.innerHTML = `${!st ? '<b>答對了。</b>' : fok ? '<b>理由也對，這題算會了。</b>' : `<b>這題先當成猜對</b>：理由是「${st[1]}」，${st[4]} 已排進錯題本，明天再考。<br>`}${q.why}${demo}`;
+          const sb = $('[data-show]', why); if (sb) sb.onclick = () => showOnChart(q.show, qe);
+          if (kind === 'q' && !state.done[id] && quizAllRight(id)) { setDone(id, true); bindDone(id); }
+        };
+        // 第一次就答對 → 追問理由（排除猜對）
+        if (tries === 1 && sts) { why.className = 'why fu'; FOLLOW.ask(why, sts, x => x, (fok, st) => { logAnswer({ c: id, k: 'fu', fk: kind, i: qi, h: qid(id, q, kind), qt: strip(q.q).slice(0, 60), ok: fok ? 1 : 0, n: 1 }); fin(fok, st); }); }
+        else fin(); }
       else { b.disabled = true; why.className = 'why no'; why.innerHTML = `<b>再想想。</b>${sts ? '下面拆成幾個小步驟，一步一步推回來。' : demo ? '按下面的按鈕回到圖上看看。' : ''}${demo}`; if (sts) qe.openGuide(); }
       const sb = $('[data-show]', why); if (sb) sb.onclick = () => showOnChart(q.show, qe);
     }; });
@@ -301,7 +310,6 @@ ${practiceHTML(practiceOf(c, k), '這一節的練習')}<div class="nextsec">${ne
   const j = $('#chJump'); if (j) j.onchange = () => { location.hash = j.value; };
   store.set('last', { id, sec: sec || '', sh: sec === 'mix' ? '綜合練習' : sec ? `第 ${sec} 節` : '', t: Date.now() });
 }
-// 選項順序：依題號固定打散，避免正解永遠在第一個（不用亂數，重新整理後順序不變）
 // 名詞：內文第一次出現時變成連結，點了跳出解釋框；有對應互動圖時可以「在圖上看」
 function showOnChart(show, from) {
   const it = INST[show.w]; if (!it) return;
@@ -333,7 +341,8 @@ function bindTerms(id) {
     document.addEventListener('keydown', e => { const p = $('#tpop'); if (p && e.key === 'Escape') p.hidden = true; });
   }
 }
-function order(q, k) { const n = q.o.length, s = (k * 7 + q.q.length) % n; return Array.from({ length: n }, (_, i) => (i + s) % n); }
+// 選項順序每次打開都重新打亂（2026-11-02：避免複習時記住「上次選第幾個」）
+function order(q) { return q.o.map((x, i) => [Math.random(), i]).sort((a, b) => a[0] - b[0]).map(x => x[1]); }
 
 let shown = null;
 function route(h) {

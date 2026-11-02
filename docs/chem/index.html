@@ -503,6 +503,7 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 .opt.wrong { border-color: var(--bad); background: var(--bad-soft); color: var(--bad); }
 .why { margin-top: 8px; padding: 10px 14px; border-radius: 8px; font-size: 14.5px; }
 .why.ok { background: var(--good-soft); } .why.no { background: var(--bad-soft); }
+.why.fu { background: var(--soft); border-left: 3px solid var(--accent); } .fu-h { margin: 0 0 4px; } .fu-no { color: var(--bad); font-size: 13.5px; margin: 6px 0 0; }
 .why .btn { margin-left: 8px; }
 .guide { margin-top: 8px; }
 .gbody { border-left: 3px solid var(--accent); padding: 4px 0 4px 12px; margin-top: 4px; }
@@ -16733,20 +16734,25 @@ W.bpcompare = el => {
    - 第一次就答錯 → 進入錯題本，隔 1 天到期（第 1 格）。
    - 到期後（之後任何一天）第一次就答對 → 進到下一格，依序再隔 3、7、14、30 天；五格都過才算掌握，離開錯題本。
    - 在錯題本中又答錯 → 從第 1 格重新開始（隔 1 天）。
-   - 考前總複習：FINAL 那天起，所有曾經答錯、已經掌握的題目再到期一次；答對就完成，答錯就重新進錯題本。 */
+   - 考前總複習：FINAL 那天起，所有曾經答錯、已經掌握的題目再到期一次；答對就完成，答錯就重新進錯題本。
+   防止「猜對」（2026-11-02 使用者要求，兩個方法一起用）：
+   - 追問：第一次就答對時，接著追問這題的一個推理步驟（k: 'fu'，fk 為原題型）。追問第一次就答錯 → 這次作答當成答錯（猜對）。
+   - 確認題：第一次就答對的新題目，CHECK 天後再出一次（chk）；答對才算會，答錯就進五格複習。 */
 const REVIEW = (() => {
-  const DAY = 864e5, GAPS = [1, 3, 7, 14, 30], FINAL = new Date(2027, 2, 1).getTime();   // 2027-03-01
+  const DAY = 864e5, GAPS = [1, 3, 7, 14, 30], CHECK = 3, FINAL = new Date(2027, 2, 1).getTime();   // 2027-03-01
   const dayStart = t => { const d = new Date(t); d.setHours(0, 0, 0, 0); return d.getTime(); };
   const dayKey = t => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
-  const RULE = `第一次就答錯的題目會進錯題本，依序在隔 ${GAPS.join('、')} 天回來（共 ${GAPS.length} 格）。每次都要當天第一次就答對才往下一格；中途答錯就從第 1 格重新開始。五格都過才算掌握。2027 年 3 月 1 日起，所有曾經錯過的題目會再出現一次（考前總複習）。`;
+  const RULE = `第一次就答錯的題目會進錯題本，依序在隔 ${GAPS.join('、')} 天回來（共 ${GAPS.length} 格）。每次都要當天第一次就答對才往下一格；中途答錯就從第 1 格重新開始。五格都過才算掌握。為了排除猜對：答對後會追問一個理由，理由答錯就當成猜對、進錯題本；第一次就答對的題目，${CHECK} 天後還會出一次確認題。2027 年 3 月 1 日起，所有曾經錯過的題目會再出現一次（考前總複習）。`;
   // 每題每天的第一次作答
   function trials(log) {
-    const seen = new Set(), out = [];
+    const seen = new Set(), out = [], guess = new Set();
+    for (const e of log) if (e.k === 'fu' && e.n === 1 && !e.ok) guess.add(`${e.c}|${e.fk}|${e.h}@${dayKey(e.t)}`);   // 追問答錯 → 那天的作答算猜對
     for (const e of log) {
-      if (e.n !== 1 || !e.h) continue;
+      if (e.n !== 1 || !e.h || e.k === 'fu') continue;
       const key = `${e.c}|${e.k}|${e.h}`, dk = dayKey(e.t);
       if (seen.has(key + '@' + dk)) continue;
-      seen.add(key + '@' + dk); out.push({ key, t: e.t, ok: !!e.ok, c: e.c, k: e.k, h: e.h, i: e.i, qt: e.qt });
+      const g = !!e.ok && guess.has(key + '@' + dk);
+      seen.add(key + '@' + dk); out.push({ key, t: e.t, ok: !!e.ok && !g, guess: g, c: e.c, k: e.k, h: e.h, i: e.i, qt: e.qt });
     }
     return out;
   }
@@ -16755,9 +16761,12 @@ const REVIEW = (() => {
     const m = new Map();
     for (const tr of trials(log)) {
       let s = m.get(tr.key);
-      if (!s) { s = { key: tr.key, c: tr.c, k: tr.k, h: tr.h, i: tr.i, qt: tr.qt, open: false, stage: 0, due: 0, wrongs: 0, last: 0, first: tr.ok }; m.set(tr.key, s); }
-      s.i = tr.i; s.qt = tr.qt || s.qt;
-      if (!tr.ok) { s.open = true; s.stage = 0; s.wrongs++; s.due = dayStart(tr.t) + GAPS[0] * DAY; }
+      const fresh = !s;
+      if (!s) { s = { key: tr.key, c: tr.c, k: tr.k, h: tr.h, i: tr.i, qt: tr.qt, open: false, chk: false, stage: 0, due: 0, wrongs: 0, guesses: 0, last: 0, first: tr.ok }; m.set(tr.key, s); }
+      s.i = tr.i; s.qt = tr.qt || s.qt; if (tr.guess) s.guesses++;
+      if (!tr.ok) { s.open = true; s.chk = false; s.stage = 0; s.wrongs++; s.due = dayStart(tr.t) + GAPS[0] * DAY; }
+      else if (fresh) { s.open = true; s.chk = true; s.due = dayStart(tr.t) + CHECK * DAY; }   // 新題目第一次就答對 → 確認題
+      else if (s.open && s.chk && tr.t >= s.due) { s.open = false; s.chk = false; }
       else if (s.open && tr.t >= s.due) {
         s.stage++;
         if (s.stage >= GAPS.length) s.open = false; else s.due = dayStart(tr.t) + GAPS[s.stage] * DAY;
@@ -16768,26 +16777,47 @@ const REVIEW = (() => {
   }
   // 錯題本：還沒掌握的題目；due 為「今天以前到期」，加上考前總複習（final: true）
   function book(log, now = Date.now()) {
-    const st = [...state(log).values()], all = st.filter(s => s.open);
+    const st = [...state(log).values()], all = st.filter(s => s.open && !s.chk), checks = st.filter(s => s.open && s.chk);
     const fin = now >= FINAL ? st.filter(s => !s.open && s.wrongs > 0 && s.last < FINAL).map(s => ({ ...s, final: true, due: FINAL })) : [];
-    return { open: all, due: all.filter(s => s.due <= now).concat(fin).sort((a, b) => a.due - b.due) };
+    return { open: all, checks, due: all.concat(checks).filter(s => s.due <= now).concat(fin).sort((a, b) => a.due - b.due) };
   }
   // 答對之後的說明：下一次什麼時候回來
   function after(s, firstTry) {
-    if (!firstTry) return '今天第一次沒答對，從第 1 格重新開始，明天再考一次。';
+    if (!firstTry) return '今天第一次沒答對（或理由沒答對），從第 1 格重新開始，明天再考一次。';
     if (s.final) return '考前總複習完成。';
+    if (s.chk) return '確認完成：這題真的會了。';
     if (s.stage + 1 >= GAPS.length) return `五格都過了，這題已經掌握，離開錯題本（2027 年 3 月起的考前總複習還會再出現一次）。`;
     return `${GAPS[s.stage + 1]} 天後再考一次（進到第 ${s.stage + 2} / ${GAPS.length} 格）。`;
   }
-  const label = s => (s.final ? '考前總複習' : `第 ${s.stage + 1} / ${GAPS.length} 格`);
+  const label = s => (s.final ? '考前總複習' : s.chk ? '確認題（之前第一次就答對）' : `第 ${s.stage + 1} / ${GAPS.length} 格`);
   // 接下來 14 天每天到期幾題：[[dayKey, 題數]]
   function upcoming(open, now = Date.now(), days = 14) {
     const m = new Map();
-    open.filter(s => s.due > now && s.due <= now + days * DAY).forEach(s => { const k = dayKey(s.due); m.set(k, (m.get(k) || 0) + 1); });
+    [].concat(open).filter(s => s.due > now && s.due <= now + days * DAY).forEach(s => { const k = dayKey(s.due); m.set(k, (m.get(k) || 0) + 1); });
     return [...m.entries()].sort();
   }
-  return { trials, state, book, after, label, upcoming, dayKey, dayStart, DAY, GAPS, RULE, FINAL };
+  return { trials, state, book, after, label, upcoming, dayKey, dayStart, DAY, GAPS, CHECK, RULE, FINAL };
 })();
+
+/* ---------- 答對後追問理由（化學、英文共用；2026-11-02 使用者要求，用來排除「猜對」） ----------
+   第一次就答對、而且這題有拆解步驟時，從步驟中挑一步（不挑最後一步，那通常只是重述答案）來問。
+   步驟格式：[問題, 正解, 誤1, 誤2, 說明, …]；選項每次重新打亂。
+   ask(box, 步驟, 格式化函式, done(第一次就答對追問, 步驟))：追問答錯可以再選，直到選對才呼叫 done。 */
+const FOLLOW = {
+  ask(box, sts, fmt, done) {
+    const n = sts.length, st = sts[n >= 3 ? Math.floor(Math.random() * (n - 1)) : 0];
+    const ord = [1, 2, 3].map(j => [Math.random(), j]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
+    box.innerHTML = `<p class="fu-h"><b>答對了。</b>再確認一下理由（猜對的題目會在這裡被找出來）：</p><p class="gq">${fmt(st[0])}</p><div class="opts">${ord.map(j => `<button class="opt fu-o" type="button" data-j="${j}">${fmt(st[j])}</button>`).join('')}</div><p class="fu-no" hidden></p>`;
+    let tries = 0;
+    box.querySelectorAll('.fu-o').forEach(b => { b.onclick = () => {
+      tries++; const ok = b.dataset.j === '1';
+      b.classList.add(ok ? 'right' : 'wrong'); b.disabled = true;
+      if (!ok) { const m = box.querySelector('.fu-no'); m.hidden = false; m.textContent = '理由不對，再選一次。這題會先當成猜對，排進錯題本。'; return; }
+      box.querySelectorAll('.fu-o').forEach(x => { x.disabled = true; });
+      done(tries === 1, st);
+    }; });
+  },
+};
 
 /* ---------- 後中化學：頁面框架（首頁、單元目錄、章節、練習題、進度） ---------- */
 const state = { done: store.get('done', {}) };
@@ -16929,7 +16959,7 @@ function qblock(list, kind) {
 // 把連續的作答併成「一題一次」：同一章、同一題、同一頁面瀏覽中，從第 1 次作答到答對為止
 function sessions(log = LOG) {
   const out = [];
-  log.filter(e => e.k !== 'r').forEach(e => { const key = e.h || e.k + e.i, last = out.length && [...out].reverse().find(s => s.c === e.c && s.key === key && !s.closed);
+  log.filter(e => e.k !== 'r' && e.k !== 'fu').forEach(e => { const key = e.h || e.k + e.i, last = out.length && [...out].reverse().find(s => s.c === e.c && s.key === key && !s.closed);
     if (e.n === 1 || !last) out.push({ t: e.t, c: e.c, k: e.k, i: e.i, h: e.h, qt: e.qt, key, tries: 1, ok: e.ok, first: e.ok, closed: !!e.ok, end: e.t });
     else { last.tries++; last.end = e.t; if (e.ok) { last.ok = 1; last.closed = true; } } });
   return out;
@@ -16963,13 +16993,13 @@ ${ss.length ? `<div class="cards">${card('n', '練習題次', ss.length)}${card(
 
 // 錯題複習：依 REVIEW 的排程，把今天到期的錯題集中起來重考（規則見 src/shared/review.js）
 function renderReview() {
-  const { open, due } = REVIEW.book(LOG), now = Date.now();
+  const { open, checks, due } = REVIEW.book(LOG), now = Date.now();
   const items = due.map(s => ({ s, f: qfind(s.c, s.h, s.k, s.i) })).filter(x => x.f);
   const soon = open.filter(s => s.due > now && s.due <= now + 7 * REVIEW.DAY).length;
   $('#article').innerHTML = `<p class="eyebrow">後中化學</p><h1>錯題複習</h1>
 <p class="lede">${REVIEW.RULE}</p>
-<div class="cards">${card('d', '今天到期', `${items.length} 題`)}${card('o', '錯題本共', `${open.length} 題`)}${card('s', '7 天內到期', `${soon} 題`)}</div>
-${(up => up.length ? `<p class="small mut">接下來 14 天：${up.map(([d, n]) => `${+d.slice(5, 7)}/${+d.slice(8)} ${n} 題`).join('、')}</p>` : '')(REVIEW.upcoming(open))}
+<div class="cards">${card('d', '今天到期', `${items.length} 題`)}${card('o', '錯題本共', `${open.length} 題`)}${card('s', '7 天內到期', `${soon} 題`)}${card('c', '待確認（答對過的新題）', `${checks.length} 題`)}</div>
+${(up => up.length ? `<p class="small mut">接下來 14 天：${up.map(([d, n]) => `${+d.slice(5, 7)}/${+d.slice(8)} ${n} 題`).join('、')}</p>` : '')(REVIEW.upcoming(open.concat(checks)))}
 ${items.length ? items.map(({ s, f }, n) => `<div class="q" data-r="${n}"><p class="qsrc"><a href="#${f.c.id}">${f.c.title.split('：')[0]}</a>${f.k === 'x' ? '・相似題' : '・章末題'}・${REVIEW.label(s)}</p><p class="qt">${n + 1}. ${f.q.q}</p><div class="opts">${order(f.q, f.i).map(j => `<button class="opt" type="button" data-o="${j}">${f.q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('')
   : `<p class="note">${open.length ? '今天沒有到期的錯題，到期的題目會在這裡出現。' : '錯題本是空的。到各章練習時第一次答錯的題目，會自動排進這裡。'}</p>`}`;
   items.forEach(({ s, f }, n) => {
@@ -16980,8 +17010,10 @@ ${items.length ? items.map(({ s, f }, n) => `<div class="q" data-r="${n}"><p cla
     $$('.opt', qe).forEach(b => { b.onclick = () => {
       const ok = +b.dataset.o === q.a; b.classList.add(ok ? 'right' : 'wrong'); why.hidden = false; tries++;
       logAnswer({ c: f.c.id, k: f.k, i: f.i, h: s.h, qt: strip(q.q).slice(0, 60), p: +b.dataset.o, ok: ok ? 1 : 0, n: tries });
-      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); const gb = $('.guide', qe); if (gb) gb.hidden = true; why.className = 'why ok';
-        why.innerHTML = `<b>答對了。</b>${q.why}<br><small>${REVIEW.after(s, tries === 1)}</small>`; renderTOC('review'); }
+      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); const gb = $('.guide', qe); if (gb) gb.hidden = true;
+        const fin = (fok, st) => { why.className = 'why ok'; why.innerHTML = `${st && !fok ? `<b>這次先當成猜對</b>：理由是「${st[1]}」，${st[4]}<br>` : '<b>答對了。</b>'}${q.why}<br><small>${REVIEW.after(s, tries === 1 && fok !== false)}</small>`; renderTOC('review'); };
+        if (tries === 1 && sts) { why.className = 'why fu'; FOLLOW.ask(why, sts, x => x, (fok, st) => { logAnswer({ c: f.c.id, k: 'fu', fk: f.k, i: f.i, h: s.h, qt: strip(q.q).slice(0, 60), ok: fok ? 1 : 0, n: 1 }); fin(fok, st); }); }
+        else fin(); }
       else { b.disabled = true; why.className = 'why no'; why.innerHTML = `<b>再想想。</b>${sts ? '下面拆成幾個小步驟，一步一步推回來。' : `可以回到<a href="#${f.c.id}">${f.c.title.split('：')[0]}</a>看看。`}`; if (sts) qe.openGuide(); }
     }; });
   });
@@ -17039,8 +17071,15 @@ function bindQuiz(id) {
       const ok = +b.dataset.o === q.a; b.classList.add(ok ? 'right' : 'wrong'); why.hidden = false;
       logAnswer({ c: id, k: kind, i: qi, h: qid(id, q, kind), qt: strip(q.q).slice(0, 60), p: +b.dataset.o, ok: ok ? 1 : 0, n: ++tries });
       const demo = q.show && INST[q.show.w] ? '<button class="btn sm" type="button" data-show>在圖上看 ↑</button>' : '';
-      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); const gb = $('.guide', qe); if (gb) gb.hidden = true; why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}${demo}`;
-        if (kind === 'q' && !state.done[id] && quizAllRight(id)) { setDone(id, true); bindDone(id); } }
+      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); const gb = $('.guide', qe); if (gb) gb.hidden = true;
+        const fin = (fok, st) => {
+          why.className = 'why ok'; why.innerHTML = `${!st ? '<b>答對了。</b>' : fok ? '<b>理由也對，這題算會了。</b>' : `<b>這題先當成猜對</b>：理由是「${st[1]}」，${st[4]} 已排進錯題本，明天再考。<br>`}${q.why}${demo}`;
+          const sb = $('[data-show]', why); if (sb) sb.onclick = () => showOnChart(q.show, qe);
+          if (kind === 'q' && !state.done[id] && quizAllRight(id)) { setDone(id, true); bindDone(id); }
+        };
+        // 第一次就答對 → 追問理由（排除猜對）
+        if (tries === 1 && sts) { why.className = 'why fu'; FOLLOW.ask(why, sts, x => x, (fok, st) => { logAnswer({ c: id, k: 'fu', fk: kind, i: qi, h: qid(id, q, kind), qt: strip(q.q).slice(0, 60), ok: fok ? 1 : 0, n: 1 }); fin(fok, st); }); }
+        else fin(); }
       else { b.disabled = true; why.className = 'why no'; why.innerHTML = `<b>再想想。</b>${sts ? '下面拆成幾個小步驟，一步一步推回來。' : demo ? '按下面的按鈕回到圖上看看。' : ''}${demo}`; if (sts) qe.openGuide(); }
       const sb = $('[data-show]', why); if (sb) sb.onclick = () => showOnChart(q.show, qe);
     }; });
@@ -17092,7 +17131,6 @@ ${practiceHTML(practiceOf(c, k), '這一節的練習')}<div class="nextsec">${ne
   const j = $('#chJump'); if (j) j.onchange = () => { location.hash = j.value; };
   store.set('last', { id, sec: sec || '', sh: sec === 'mix' ? '綜合練習' : sec ? `第 ${sec} 節` : '', t: Date.now() });
 }
-// 選項順序：依題號固定打散，避免正解永遠在第一個（不用亂數，重新整理後順序不變）
 // 名詞：內文第一次出現時變成連結，點了跳出解釋框；有對應互動圖時可以「在圖上看」
 function showOnChart(show, from) {
   const it = INST[show.w]; if (!it) return;
@@ -17124,7 +17162,8 @@ function bindTerms(id) {
     document.addEventListener('keydown', e => { const p = $('#tpop'); if (p && e.key === 'Escape') p.hidden = true; });
   }
 }
-function order(q, k) { const n = q.o.length, s = (k * 7 + q.q.length) % n; return Array.from({ length: n }, (_, i) => (i + s) % n); }
+// 選項順序每次打開都重新打亂（2026-11-02：避免複習時記住「上次選第幾個」）
+function order(q) { return q.o.map((x, i) => [Math.random(), i]).sort((a, b) => a[0] - b[0]).map(x => x[1]); }
 
 let shown = null;
 function route(h) {

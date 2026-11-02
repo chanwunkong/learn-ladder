@@ -7,10 +7,11 @@ function logAnswer(e) {
   LOG.push({ t: Date.now(), ...e }); if (LOG.length > 20000) LOG.splice(0, LOG.length - 20000);
   store.set('log', LOG); if (typeof CLOUD !== 'undefined' && CLOUD.pushLog) CLOUD.pushLog();
 }
-const qlog = () => LOG.filter(e => REVIEW_KINDS.has(e.k));
+const qlog = () => LOG.filter(e => REVIEW_KINDS.has(e.k) || e.k === 'fu');   // fu：答對後的追問（追問答錯 → 那次算猜對）
 const okSet = () => new Set(LOG.filter(e => e.ok && e.h).map(e => e.h));
 // 每題「第一次作答」是否答對（只看最早的 n === 1）：回到頁面時決定顯示「已答對」還是「第一次答錯，再做一次」
-const firstOk = () => { const m = new Map(); LOG.forEach(e => { if (e.n === 1 && e.h && !m.has(e.h)) m.set(e.h, !!e.ok); }); return m; };
+// 用錯題排程的「每天第一次作答」（已把追問答錯的猜對算成答錯），取每題最早的一次
+const firstOk = () => { const m = new Map(); REVIEW.trials(qlog()).forEach(t => { if (!m.has(t.h)) m.set(t.h, t.ok); }); return m; };
 const unsure = () => { const m = {}; LOG.forEach(e => { if (e.k === 'u') m[e.h] = e.p === 1 ? e : null; }); return m; };
 const DAYN = '一二三四五六日';
 
@@ -52,7 +53,7 @@ const frac = (ids, ok) => ids.filter(h => ok.has(h)).length / ids.length;
 
 /* ---- 選擇題：答錯可以再選；「一步一步來」把題目拆成小判斷 ---- */
 function mcq(q, num) {
-  const ord = shuffled(q.o.length, q.h);
+  const ord = shuffled(q.o.length, q.h + Math.random());   // 每次打開都重新打亂，複習時不能靠記位置
   return `<div class="q" data-h="${esc(q.h)}">${num ? `<p class="qnum">${num}</p>` : ''}<p class="qt">${q.q}</p>${q.hint ? `<p class="hintrow"><button class="btn sm ghost" type="button" data-hint>看中文提示</button><span class="hintz" hidden>${esc(q.hint)}</span></p>` : ''}<div class="opts">${ord.map(j => `<button class="opt${q.en ? ' en-o' : ''}" type="button" data-o="${j}">${esc(q.o[j])}</button>`).join('')}</div><div class="why" hidden></div></div>`;
 }
 // 晚上的回想題：打開「早上的 10 個字」之後作答，記成 pk（看過卡片）
@@ -79,7 +80,11 @@ function bindMcq(root, list, onDone, restore = true) {
       b.classList.add(ok ? 'right' : 'wrong'); b.disabled = true; why.hidden = false;
       if (ok) {
         $$('.opt', qe).forEach(x => { x.disabled = true; }); const g = $('.guide', qe); if (g) g.hidden = true;
-        why.className = 'why ok'; why.innerHTML = `<b>答對了。</b>${q.why}${q.rv ? `<br><small>${REVIEW.after(q.rv, n === 1)}</small>` : ''}`; qe.classList.add('done');
+        const fin = (fok, st) => { why.className = 'why ok'; why.innerHTML = `${st && !fok ? `<b>這次先當成猜對</b>：理由是「${esc(st[1])}」，${esc(st[4])} 已排進錯題本。<br>` : st ? '<b>理由也對，這題算會了。</b>' : '<b>答對了。</b>'}${q.why}${q.rv ? `<br><small>${REVIEW.after(q.rv, n === 1 && fok !== false)}</small>` : ''}`; };
+        qe.classList.add('done');
+        // 第一次就答對、有拆解步驟 → 追問理由（排除猜對）
+        if (n === 1 && q.st && q.st.length) { why.className = 'why fu'; FOLLOW.ask(why, q.st, esc, (fok, st) => { logAnswer({ c: q.c, k: 'fu', fk: q.k, h: q.h, ok: fok ? 1 : 0, n: 1, qt: q.qt }); fin(fok, st); }); }
+        else fin();
         if (onDone) onDone(q);
       } else {
         why.className = 'why no'; why.innerHTML = `這個不對，再選一次。${q.st && q.st.length ? '<button class="btn sm" type="button" data-gopen>一步一步來</button>' : ''}`;
@@ -274,7 +279,7 @@ function bindReview(items) {
 function renderReview() {
   const items = reviewItems(), book = REVIEW.book(qlog());
   $('#main').innerHTML = `<p class="eyebrow">錯題本</p><h1>今天到期的錯題</h1>
-<p class="lede">${REVIEW.RULE}</p><p>錯題本目前共 <b>${book.open.length}</b> 題，今天到期 <b>${book.due.length}</b> 題。</p>${(up => up.length ? `<p class="small mut">接下來 14 天：${up.map(([d, n]) => `${+d.slice(5, 7)}/${+d.slice(8)} ${n} 題`).join('、')}</p>` : '')(REVIEW.upcoming(book.open))}
+<p class="lede">${REVIEW.RULE}</p><p>錯題本目前共 <b>${book.open.length}</b> 題，待確認（答對過的新題）<b>${book.checks.length}</b> 題；今天到期 <b>${book.due.length}</b> 題。</p>${(up => up.length ? `<p class="small mut">接下來 14 天：${up.map(([d, n]) => `${+d.slice(5, 7)}/${+d.slice(8)} ${n} 題`).join('、')}</p>` : '')(REVIEW.upcoming(book.open.concat(book.checks)))}
 <div id="rv">${items.length ? reviewHTML(items) : '<p class="note">今天沒有到期的錯題。</p>'}</div><div class="row endrow"><a class="btn" href="#">回到本週</a></div>`;
   bindReview(items);
 }

@@ -19,4 +19,14 @@ log = [ev(0, false), { ...ev(0, true), t: t0 + 3600e3 }]; eq(st(log).open, true,
 log = [ev(0, false), ev(1, true), ev(4, true), ev(11, true), ev(25, true), ev(55, true)];
 eq(REVIEW.book(log, REVIEW.FINAL - D).due.length, 0, '總複習前沒有到期'); eq(REVIEW.book(log, REVIEW.FINAL + D).due.length, 1, '總複習時到期一次');
 log.push({ ...ev(0, true), t: REVIEW.FINAL + D }); eq(REVIEW.book(log, REVIEW.FINAL + 2 * D).due.length, 0, '總複習答對後完成');
+// 新題目第一次就答對 → 3 天後確認題；確認答對 → 會了；確認答錯 → 進五格
+log = [ev(0, true)]; eq(st(log).chk, true, '答對的新題變成確認題'); eq(REVIEW.book(log, t0 + 2 * D).due.length, 0, '確認題 3 天內不到期'); eq(REVIEW.book(log, t0 + 3 * D).due.length, 1, '第 3 天到期');
+eq(REVIEW.book(log, t0).open.length, 0, '確認題不算在錯題本');
+eq(st([ev(0, true), ev(3, true)]).open, false, '確認答對 → 會了');
+eq(st([ev(0, true), ev(3, false)]).stage, 0, '確認答錯 → 第 1 格'); eq(st([ev(0, true), ev(3, false)]).chk, false, '確認答錯不再是確認題');
+// 追問答錯 → 那次算猜對（答錯）
+const fu = (day, ok) => ({ t: t0 + day * D + 1000, c: 'x', k: 'fu', fk: 'q', h: 'h1', ok, n: 1 });
+log = [ev(0, true), fu(0, false)]; eq(st(log).open && !st(log).chk, true, '追問答錯 → 進錯題本'); eq(REVIEW.trials(log).length, 1, '追問不算一題'); eq(REVIEW.trials(log)[0].guess, true, '標記為猜對');
+log = [ev(0, true), fu(0, true)]; eq(st(log).chk, true, '追問答對 → 確認題');
+log = [ev(0, false), ev(1, true), fu(1, false)]; eq(st(log).stage, 0, '複習時理由答錯不前進');
 if (fail) process.exit(1); console.log('錯題排程 OK');
