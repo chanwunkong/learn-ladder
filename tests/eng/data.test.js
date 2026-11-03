@@ -20,9 +20,25 @@ WEEKS.forEach((w, wi) => {
   const ids = new Set(), seenW = new Set();
   w.words.forEach((day, d) => {
     if (day.length !== 10) E(w, `第${d + 1}天單字不是 10 個`);
-    day.forEach(x => { if (x.length !== 6) E(w, `${x[0]} 欄位數不對`); if (seenW.has(x[0])) E(w, `單字重複：${x[0]}`); seenW.add(x[0]); if (!stemRe(x[0]).test(x[4])) E(w, `例句沒有包含 ${x[0]}`); });
+    day.forEach(x => {
+      if (x.length !== 7) E(w, `${x[0]} 欄位數不對`);
+      if (seenW.has(x[0])) E(w, `單字重複：${x[0]}`); seenW.add(x[0]);
+      if (!stemRe(x[0]).test(x[4])) E(w, `例句沒有包含 ${x[0]}`);
+      if (!Array.isArray(x[6]) || x[6].length !== 3 || x[6].some(p => !Array.isArray(p) || p.length !== 2 || p.some(s => typeof s !== 'string' || !s.trim()))) E(w, `${x[0]} 更多例句格式錯`);
+      const all = [x[4], ...(Array.isArray(x[6]) ? x[6].map(p => p[0]) : [])];
+      if (new Set(all).size !== 4) E(w, `${x[0]} 例句重複`);
+      (x[6] || []).forEach(([en]) => {
+        if (!stemRe(x[0]).test(en)) E(w, `更多例句沒有包含 ${x[0]}`);
+        const wc = en.trim().split(/\s+/).length; if (wc < 8 || wc > 22) E(w, `${x[0]} 更多例句字數 ${wc} 不在 8–22`);
+      });
+    });
     if (new Set(day.map(x => x[2])).size !== day.length) E(w, `第${d + 1}天有中文意思相同的字（選項會重複）`);
   });
+  const extraOwners = new Map();
+  w.words.flat().forEach(x => (x[6] || []).forEach(([en]) => {
+    if (extraOwners.has(en) && extraOwners.get(en) !== x[0]) E(w, `更多例句跨單字重複：${en}`);
+    extraOwners.set(en, x[0]);
+  }));
   w.sents.forEach((day, d) => day.forEach((s, j) => {
     if (!s.core || !s.zh || !s.chunks.length) E(w, `第${d + 1}天長句${j + 1} 缺欄位`);
     s.steps.forEach((st, i) => { step(w, st, `第${d + 1}天長句${j + 1}第${i + 1}步`); Object.keys(st[6] || {}).forEach(k => { if (!s.chunks[k]) E(w, `第${d + 1}天長句${j + 1} 標記片段 ${k} 不存在`); }); });

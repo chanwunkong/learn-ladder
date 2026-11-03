@@ -27,10 +27,12 @@ function wordQ(w, d, i) {
 function stemRe(word) { const s = word.length > 5 ? word.replace(/(e|y|ate|ize)$/, '') : word; return new RegExp(`\\b${s}\\w*`, 'i'); }
 function recallQ(w, d, i) {
   const day = w.words[d], x = day[i], others = [2, 5, 7].map(k => day[(i + k) % day.length]);
-  const sent = esc(x[4]).replace(stemRe(x[0]), '<span class="gap">＿＿＿＿</span>');
+  const examples = Array.isArray(x[6]) && x[6].length ? x[6] : [[x[4], x[5]]];
+  const example = examples[Math.floor(Math.random() * examples.length)];
+  const sent = esc(example[0]).replace(stemRe(x[0]), '<span class="gap">＿＿＿＿</span>');
   return { h: `wr:${wkKey(w)}:${x[0]}`, k: 'wr', sk: 'v.mean', c: `${wkKey(w)}d${d + 1}pm`, en: 1,
-    q: `<span class="ens">${sent}</span><br><small class="mut">選項是原形，句中可能有變化。</small>`, o: [x[0], ...others.map(y => y[0])], hint: x[5],
-    why: `${esc(x[4])} ${sayBtn(x[4], '朗讀例句')}<br><span class="mut">${esc(x[5])}</span>`, qt: x[0] };
+    q: `<span class="ens">${sent}</span><br><small class="mut">選項是原形，句中可能有變化。</small>`, o: [x[0], ...others.map(y => y[0])], hint: example[1],
+    why: `${esc(example[0])} ${sayBtn(example[0], '朗讀例句')}<br><span class="mut">${esc(example[1])}</span>`, qt: x[0] };
 }
 const gramQ = (w, d, q) => ({ ...q, h: `g:${wkKey(w)}:${q.id}`, k: 'g', c: `${wkKey(w)}d${d + 1}pm`, en: 1, qt: q.q.replace(/<[^>]+>/g, '').slice(0, 60) });
 const passQ = (w, d, q) => ({ ...q, h: `p:${wkKey(w)}:${q.id}`, k: 'p', c: `${wkKey(w)}d${d + 1}pm`, en: 1, qt: `${w.passages[d].title}・${q.q}`.slice(0, 80) });
@@ -358,7 +360,7 @@ function exportMD(w) {
 
 ### 內容要求
 1. 每天兩段：早上（10 個新單字＋2 個長句拆解）、晚上（1 個文法重點＋3 題、1 篇文章＋5 題、單字回想自動產生）。共 7 天。
-2. **新單字 70 個**：學術與醫學常用字（詞頻約 3000–12000 名），不可與「已學過的單字」重複。每天一個主題。
+2. **新單字 70 個**：學術與醫學常用字（詞頻約 3000–12000 名），不可與「已學過的單字」重複。每天一個主題。每個字需有 3 個不同情境、不同句型的額外例句（晚上回想與錯題複習會使用，讓學習者不能只靠背熟單一句子）。
 3. **弱項優先**：「需要加強」的能力，下週至少安排兩天的文法重點或長句練它；「本週沒練到」的能力至少練一次；「穩定」的能力仍要在文章中混著出現。
 4. **錯題回收**：「答錯的單字」、「不熟的單字」與「回想時需要幫忙的字」要在下週的長句或文章裡再出現（當成已學過的字使用，不是新字）。
 5. **難度**：比本週稍難一點。文章 180–250 字，句子變長、修飾更多；克漏字與閱讀交替（第 1、3、5、7 天克漏字，第 2、4、6 天閱讀）。題目要有一個明確正解，三個誘答要合理但確定錯。
@@ -370,7 +372,7 @@ function exportMD(w) {
 // wNNa.js
 WEEKS.push({ n: ${w.n + 1}, theme: '本週主題', days: [] });
 WEEKS[${w.n}].words = [   // 7 天 × 10 個
-  [['英文', '詞性', '中文', '字根拆解（沒有就空字串）', '例句（必須包含這個字或它的變化形）', '例句中文'], …],
+  [['英文', '詞性', '中文', '字根拆解（沒有就空字串）', '例句（必須包含這個字或它的變化形）', '例句中文', [['更多例句1', '中文'], ['更多例句2', '中文'], ['更多例句3', '中文']]], …],
   …
 ];
 WEEKS[${w.n}].sents = [   // 7 天 × 2 句
