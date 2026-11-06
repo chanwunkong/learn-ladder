@@ -18,6 +18,7 @@ const DAYN = '一二三四五六日';
 
 /* ---- 題目索引：每週的每一題都有固定識別碼，錯題本靠它找回題目 ---- */
 const wkKey = w => 'w' + w.n;
+const dayPass = (w, d) => [].concat(w.passages[d] || []);
 function wordQ(w, d, i) {
   const day = w.words[d], x = day[i], others = [1, 3, 6].map(k => day[(i + k) % day.length]);
   return { h: `w:${wkKey(w)}:${x[0]}`, k: 'w', sk: 'v.mean', c: `${wkKey(w)}d${d + 1}am`, en: 1,
@@ -33,10 +34,10 @@ function recallQ(w, d, i) {
   const sent = esc(example[0]).replace(stemRe(x[0]), '<span class="gap">＿＿＿＿</span>');
   return { h: `wr:${wkKey(w)}:${x[0]}`, k: 'wr', sk: 'v.mean', c: `${wkKey(w)}d${d + 1}pm`, en: 1,
     q: `<span class="ens">${sent}</span><br><small class="mut">選項是原形，句中可能有變化。</small>`, o: [x[0], ...others.map(y => y[0])], hint: example[1],
-    why: `${esc(example[0])} ${sayBtn(example[0], '朗讀例句')}<br><span class="mut">${esc(example[1])}</span>`, qt: x[0] };
+    why: `${esc(example[0])} ${sayBtn(example[0], '朗讀例句')}<br><span class="mut">${esc(example[1])}</span><br><b>${esc(x[0])}</b> ${esc(x[1])}：${esc(x[2])}${x[3] ? `<br><span class="mut">${esc(x[3])}</span>` : ''}`, qt: x[0] };
 }
 const gramQ = (w, d, q) => ({ ...q, h: `g:${wkKey(w)}:${q.id}`, k: 'g', c: `${wkKey(w)}d${d + 1}pm`, en: 1, qt: q.q.replace(/<[^>]+>/g, '').slice(0, 60) });
-const passQ = (w, d, q) => ({ ...q, h: `p:${wkKey(w)}:${q.id}`, k: 'p', c: `${wkKey(w)}d${d + 1}pm`, en: 1, qt: `${w.passages[d].title}・${q.q}`.slice(0, 80) });
+const passQ = (w, d, q, P = dayPass(w, d).find(p => p.qs.includes(q))) => ({ ...q, h: `p:${wkKey(w)}:${q.id}`, k: 'p', c: `${wkKey(w)}d${d + 1}pm`, en: 1, qt: `${P.title}・${q.q}`.slice(0, 80) });
 const sentH = (w, d, j, i) => `s:${wkKey(w)}:${d}:${j}:${i}`;
 let QIX = null;
 function qindex() {
@@ -45,13 +46,13 @@ function qindex() {
     day.forEach((x, i) => { const a = wordQ(w, d, i), b = recallQ(w, d, i); QIX[a.h] = { q: a, w, d }; QIX[b.h] = { q: b, w, d }; });
     (w.sents[d] || []).forEach((s, j) => s.steps.forEach((st, i) => { QIX[sentH(w, d, j, i)] = { sent: s, w, d, j, i, sk: st[5] }; }));
     if (w.gram[d]) w.gram[d].qs.forEach(q => { const g = gramQ(w, d, q); QIX[g.h] = { q: g, w, d }; });
-    if (w.passages[d]) w.passages[d].qs.forEach(q => { const p = passQ(w, d, q); QIX[p.h] = { q: p, w, d }; });
+    dayPass(w, d).forEach(P => P.qs.forEach(q => { const p = passQ(w, d, q, P); QIX[p.h] = { q: p, w, d }; }));
   }));
   return QIX;
 }
 // 每一段要完成的題目
 const amIds = (w, d) => [...w.words[d].map((x, i) => wordQ(w, d, i).h), ...(w.sents[d] || []).flatMap((s, j) => s.steps.map((st, i) => sentH(w, d, j, i)))];
-const pmIds = (w, d) => [...w.gram[d].qs.map(q => gramQ(w, d, q).h), ...w.passages[d].qs.map(q => passQ(w, d, q).h), ...w.words[d].map((x, i) => recallQ(w, d, i).h)];
+const pmIds = (w, d) => [...w.gram[d].qs.map(q => gramQ(w, d, q).h), ...dayPass(w, d).flatMap(P => P.qs.map(q => passQ(w, d, q, P).h)), ...w.words[d].map((x, i) => recallQ(w, d, i).h)];
 const frac = (ids, ok) => ids.filter(h => ok.has(h)).length / ids.length;
 
 /* ---- 選擇題：答錯可以再選；「一步一步來」把題目拆成小判斷 ---- */
@@ -74,7 +75,7 @@ function collapse(box, first, text) {
   b.onclick = () => box.classList.toggle('collapsed'); box.prepend(b);
 }
 const plain = h => String(h).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 48);
-// 晚上的回想題：打開「早上的 10 個字」之後作答，記成 pk（看過卡片）
+// 晚上的回想題：打開早上的單字卡後作答，記成 pk（看過卡片）
 let PEEKED = false;
 function bindMcq(root, list, onDone, restore = true) {
   const views = {}, V = c => views[c] || (views[c] = viewOf(c));
@@ -199,11 +200,14 @@ function renderHome() {
   const w = curWeek(), ok = okSet(), nx = nextSlot(w, ok), due = REVIEW.book(qlog()).due.length;
   const slot = (d, s) => {
     const f = frac(s === 'am' ? amIds(w, d) : pmIds(w, d), ok), cur = nx && nx.d === d && nx.s === s;
-    const what = s === 'am' ? '錯題複習・10 個新單字・2 個長句' : `文法：${w.gram[d].title.split('：')[0]}・${w.passages[d].type === 'cloze' ? '克漏字' : '閱讀'}・單字回想`;
-    return `<a class="slot${f >= 1 ? ' fin' : ''}${cur ? ' cur' : ''}" href="#d${d + 1}${s}"><span class="sl-h">${s === 'am' ? '早上' : '晚上'}<small>約 30 分鐘</small></span><span class="sl-w">${what}</span>${bar(f)}<span class="sl-st">${f >= 1 ? '✓ 完成' : f > 0 ? `${Math.round(100 * f)}%` : cur ? '從這裡開始 →' : ''}</span></a>`;
+    const n = w.words[d].length, ps = dayPass(w, d), kinds = [...new Set(ps.map(P => P.type === 'cloze' ? '克漏字' : '閱讀'))];
+    const what = s === 'am' ? `錯題複習・${n} 個新單字・2 個長句` : `文法：${w.gram[d].title.split('：')[0]}・${kinds.join('＋')}・單字回想`;
+    const mins = s === 'am' ? Math.round(15 + n * 1.5) : ps.length > 1 ? 45 : 30;
+    return `<a class="slot${f >= 1 ? ' fin' : ''}${cur ? ' cur' : ''}" href="#d${d + 1}${s}"><span class="sl-h">${s === 'am' ? '早上' : '晚上'}<small>約 ${mins} 分鐘</small></span><span class="sl-w">${what}</span>${bar(f)}<span class="sl-st">${f >= 1 ? '✓ 完成' : f > 0 ? `${Math.round(100 * f)}%` : cur ? '從這裡開始 →' : ''}</span></a>`;
   };
-  $('#main').innerHTML = `<p class="eyebrow">第 ${w.n} 週 · 每天約 60 分鐘</p><h1>${esc(w.theme)}</h1>
-<p class="lede">每天分成早上與晚上兩段。早上先複習到期的錯題，再學 10 個新單字和 2 個長句；晚上學一個文法重點，做一篇克漏字或閱讀，最後回想早上的單字。答錯的題目會自動排進之後的複習。</p>
+  const n = w.words[0].length, pm = dayPass(w, 0).length > 1 ? 45 : 30, am = Math.round(15 + n * 1.5);
+  $('#main').innerHTML = `<p class="eyebrow">第 ${w.n} 週 · 每天約 ${am + pm} 分鐘</p><h1>${esc(w.theme)}</h1>
+<p class="lede">每天分成早上與晚上兩段。早上先複習到期的錯題，再學 ${n} 個新單字和 2 個長句；晚上學一個文法重點，完成當天的${[...new Set(dayPass(w, 0).map(P => P.type === 'cloze' ? '克漏字' : '閱讀'))].join('＋')}，最後回想早上的單字。答錯的題目會自動排進之後的複習。</p>
 ${due ? `<p class="duebar"><a href="#review">錯題本有 <b>${due}</b> 題今天到期 →</a></p>` : ''}
 <ol class="days">${w.words.map((x, d) => `<li class="day${nx && nx.d === d ? ' now' : ''}"><h2>第 ${d + 1} 天<small>${esc(w.gram[d].title.split('：')[0])}</small></h2><div class="slots">${slot(d, 'am')}${slot(d, 'pm')}</div></li>`).join('')}</ol>
 <div class="row endrow"><a class="btn pri" href="#report">本週報告與匯出</a><a class="btn" href="#review">錯題本</a></div>
@@ -259,28 +263,28 @@ function renderAM(w, d) {
   $$('.rvgo').forEach(a => { a.onclick = () => store.set('rvBack', a.dataset.back); });
   bindUnsure($('#main')); bindMcq($('#wq'), wq, upd); w.sents[d].forEach((s, j) => bindSent($('#main'), w, d, j, s, upd)); upd(); resetBox(c);
 }
-function passageHTML(w, d, P) {
+function passageHTML(w, d, P, k = 0) {
   const blank = t => esc(t).replace(/\{(\d)\}/g, (m, n) => `<span class="blank" data-b="${n}">(${n}) ＿＿＿＿</span>`);
-  const pq = P.qs.map(q => passQ(w, d, q));
+  const pq = P.qs.map(q => passQ(w, d, q, P)), pid = `pq${k}`;
   const text = `<div class="passage card"><p class="ptitle">${esc(P.title)}</p>${P.text.map(t => `<p class="ens">${blank(t)} ${sayEl('p')}</p>`).join('')}<details><summary>中文翻譯（做完再看）</summary><p class="zh">${esc(P.zh)}</p></details></div>`;
-  if (P.type === 'cloze') return `<p class="note">克漏字：每格先看前後文是什麼關係（同方向、相反、因果），再看空格要什麼詞性。</p>${text}<div id="pq">${pq.map((q, i) => mcq(q, `第 ${i + 1} 格`)).join('')}</div>`;
+  if (P.type === 'cloze') return `<div class="passage-part" data-passage="${k}"><p class="note">克漏字：每格先看前後文是什麼關係（同方向、相反、因果），再看空格要什麼詞性。</p>${text}<div id="${pid}">${pq.map((q, i) => mcq(q, `第 ${i + 1} 格`)).join('')}</div></div>`;
   return `<p class="note">閱讀：先看題目知道要找什麼，再讀文章，最後回答。</p>
-<div class="card pre"><p class="lbl">先看題目</p><ol>${P.qs.map(q => `<li><span class="ens">${esc(q.q)}</span>${sayBtn(q.q.replace(/_+/g, ' blank '), '朗讀題目')}</li>`).join('')}</ol></div>${text}<div id="pq">${pq.map((q, i) => mcq(q, `第 ${i + 1} 題`)).join('')}</div>`;
+<div class="passage-part" data-passage="${k}"><div class="card pre"><p class="lbl">先看題目</p><ol>${P.qs.map(q => `<li><span class="ens">${esc(q.q)}</span>${sayBtn(q.q.replace(/_+/g, ' blank '), '朗讀題目')}</li>`).join('')}</ol></div>${text}<div id="${pid}">${pq.map((q, i) => mcq(q, `第 ${i + 1} 題`)).join('')}</div></div>`;
 }
 function renderPM(w, d) {
-  const G = w.gram[d], P = w.passages[d], c = `${wkKey(w)}d${d + 1}pm`;
-  const gq = G.qs.map(q => gramQ(w, d, q)), pq = P.qs.map(q => passQ(w, d, q)), rq = w.words[d].map((x, i) => recallQ(w, d, i));
+  const G = w.gram[d], Ps = dayPass(w, d), c = `${wkKey(w)}d${d + 1}pm`, n = w.words[d].length;
+  const gq = G.qs.map(q => gramQ(w, d, q)), pqs = Ps.map((P, k) => P.qs.map(q => passQ(w, d, q, P))), rq = w.words[d].map((x, i) => recallQ(w, d, i));
   $('#main').innerHTML = `${dayHead(w, d, 'pm')}<h1>晚上：文法與文章</h1><p class="segprog" id="segProg"></p><div class="resetbox" id="rsBox"></div>
 <section class="part" data-part="文法"><h2>1. 文法重點<small>約 10 分鐘</small><span class="pcnt"></span></h2><div class="card lesson"><h3>${esc(G.title)}</h3>${G.body}<p class="lbl">這一課練的能力：${esc(SKILLS[G.id] || G.id)}</p><div class="row">${unsureBtn(`u:gram:${wkKey(w)}:${d}`, c, G.title)}</div></div>
 <div id="gq">${gq.map((q, i) => mcq(q, `${i + 1} / ${gq.length}`)).join('')}</div></section>
-<section class="part" data-part="${P.type === 'cloze' ? '克漏字' : '閱讀'}"><h2>2. ${P.type === 'cloze' ? '克漏字' : '閱讀測驗'}<small>約 12 分鐘</small><span class="pcnt"></span></h2>${passageHTML(w, d, P)}<div class="row">${unsureBtn(`u:pass:${wkKey(w)}:${d}`, c, P.title)}</div></section>
-<section class="part" data-part="回想" id="rqPart"><h2>3. 單字回想<small>約 5 分鐘</small><span class="pcnt"></span></h2><p class="note">早上的 10 個字放回例句裡。先自己想；真的想不起來，按畫面下方的「早上的 10 個字」打開卡片（會記錄，週報會把這些字列為還不熟）。</p><div id="rq">${rq.map((q, i) => mcq(q, `${i + 1} / ${rq.length}`)).join('')}</div></section>
-<button class="btn pri peekbtn" type="button" id="peekBtn" hidden>早上的 10 個字</button>
-<div class="sheet" id="peek" hidden role="dialog" aria-label="早上的 10 個字"><div class="sheet-h"><b>早上的 10 個字</b><button class="btn sm" type="button" id="peekX">關閉</button></div><div class="words">${wordCards(w, d, false)}</div></div>
+${Ps.map((P, k) => `<section class="part" data-part="${P.type === 'cloze' ? '克漏字' : '閱讀'}"><h2>${k + 2}. ${P.type === 'cloze' ? '克漏字' : '閱讀測驗'}<small>約 ${Ps.length > 1 ? 15 : 12} 分鐘</small><span class="pcnt"></span></h2>${passageHTML(w, d, P, k)}<div class="row">${unsureBtn(k === 0 ? `u:pass:${wkKey(w)}:${d}` : `u:pass:${wkKey(w)}:${d}:${k}`, c, P.title)}</div></section>`).join('')}
+<section class="part" data-part="回想" id="rqPart"><h2>${Ps.length + 2}. 單字回想<small>約 5 分鐘</small><span class="pcnt"></span></h2><p class="note">早上的 ${n} 個字放回例句裡。先自己想；真的想不起來，按畫面下方的「早上的 ${n} 個字」打開卡片（會記錄，週報會把這些字列為還不熟）。</p><div id="rq">${rq.map((q, i) => mcq(q, `${i + 1} / ${rq.length}`)).join('')}</div></section>
+<button class="btn pri peekbtn" type="button" id="peekBtn" hidden>早上的 ${n} 個字</button>
+<div class="sheet" id="peek" hidden role="dialog" aria-label="早上的 ${n} 個字"><div class="sheet-h"><b>早上的 ${n} 個字</b><button class="btn sm" type="button" id="peekX">關閉</button></div><div class="words">${wordCards(w, d, false)}</div></div>
 <div class="row endrow"><a class="btn pri" href="${d < 6 ? `#d${d + 2}am` : '#report'}">${d < 6 ? '明天早上 ›' : '本週報告 ›'}</a><a class="btn" href="#">本週</a></div>`;
   const upd = q => {
     refreshParts();
-    if (q && P.type === 'cloze') { const n = P.qs.findIndex(x => passQ(w, d, x).h === q.h) + 1, b = $(`.blank[data-b="${n}"]`); if (b) { b.textContent = `(${n}) ${q.o[0]}`; b.classList.add('fill'); } }
+    if (q) Ps.forEach((P, k) => { if (P.type !== 'cloze') return; const n0 = P.qs.findIndex(x => passQ(w, d, x, P).h === q.h) + 1, b = $(`.blank[data-b="${n0}"]`, $(`[data-passage="${k}"]`)); if (n0 && b) { b.textContent = `(${n0}) ${q.o[0]}`; b.classList.add('fill'); } });
   };
   PEEKED = false;
   $('#peekBtn').onclick = () => { $('#peek').hidden = false; $('#peekBtn').hidden = true; if (!PEEKED) { PEEKED = true; logAnswer({ c, k: 'peek', h: `peek:${c}`, qt: '回想時打開早上的單字卡' }); } };
@@ -288,7 +292,7 @@ function renderPM(w, d) {
   let inRq = false;
   $('#peekX').onclick = () => { $('#peek').hidden = true; $('#peekBtn').hidden = !inRq; };
   if ('IntersectionObserver' in window) new IntersectionObserver(es => { inRq = es[0].isIntersecting; if ($('#peek').hidden) $('#peekBtn').hidden = !inRq; }).observe($('#rqPart'));
-  bindUnsure($('#main')); bindMcq($('#gq'), gq, upd); bindMcq($('#pq'), pq, upd); bindMcq($('#rq'), rq, upd); upd(); resetBox(c);
+  bindUnsure($('#main')); bindMcq($('#gq'), gq, upd); Ps.forEach((P, k) => bindMcq($(`#pq${k}`), pqs[k], upd)); bindMcq($('#rq'), rq, upd); upd(); resetBox(c);
 }
 
 /* ---- 錯題複習 ---- */
@@ -307,7 +311,7 @@ function reviewHTML(items) {
     if (it.sent) { const f = it.sent; return `<div class="rv-sent"><p class="qsrc">第 ${f.w.n} 週第 ${f.d + 1} 天・長句・${REVIEW.label(it.s)}</p>${sentHTML(f.w, f.d, f.j, f.w.sents[f.d][f.j], `r${f.d}:${f.j}`)}</div>`; }
     const q = it.q, f = it.f; let ctx = '';
     if (q.k === 'p') {
-      const P = f.w.passages[f.d], n0 = P.qs.findIndex(x => passQ(f.w, f.d, x).h === q.h) + 1;
+      const P = dayPass(f.w, f.d).find(p => p.qs.some(x => passQ(f.w, f.d, x, p).h === q.h)), n0 = P.qs.findIndex(x => passQ(f.w, f.d, x, P).h === q.h) + 1;
       if (P.type === 'cloze') {
         const para = P.text.find(t => t.includes(`{${n0}}`)) || '';
         ctx = `<p class="ens ctx">${esc(para).replace(/\{(\d)\}/g, (m, k) => (+k === n0 ? `<span class="blank">(${k}) ＿＿＿＿</span>` : esc(P.qs[k - 1].o[0])))}</p>`;
@@ -393,6 +397,7 @@ function exportMD(w) {
   const steps = {}; LOG.filter(e => e.k === 'x' && e.c && e.c.startsWith(wkKey(w) + 'd') && !e.ok && e.n === 1).forEach(e => { steps[e.sk] = (steps[e.sk] || 0) + 1; });
   const skLines = Object.keys(SKILLS).map(k => `| ${k} | ${SKILLS[k]} | ${sk[k].n} | ${sk[k].ok} | ${sk[k].n ? Math.round(100 * sk[k].ok / sk[k].n) + '%' : '—'} | ${SK_ST[skillState(sk[k])]} |`);
   const allWords = WEEKS.flatMap(x => x.words.flat().map(y => y[0]));
+  const avgWords = type => { const ps = w.passages.flatMap((_, d) => dayPass(w, d).filter(P => P.type === type)); return Math.round(ps.reduce((n, P) => n + (P.text.join(' ').match(/[A-Za-z]+(?:['’-][A-Za-z]+)*/g) || []).length, 0) / (ps.length || 1)); };
   return `# 後中英文 第 ${w.n} 週學習紀錄（匯出日 ${today}）
 
 ## 給 AI 的指示：請產生第 ${w.n + 1} 週的訓練內容
@@ -402,19 +407,20 @@ function exportMD(w) {
 請依照下面「本週紀錄」的弱項，產生第 ${w.n + 1} 週的兩個資料檔 \`w${String(w.n + 1).padStart(2, '0')}a.js\`、\`w${String(w.n + 1).padStart(2, '0')}b.js\`，格式必須和下面的規格完全一樣（網站會直接載入，格式錯了整頁會壞）。
 
 ### 內容要求
-1. 每天兩段：早上（10 個新單字＋2 個長句拆解）、晚上（1 個文法重點＋3 題、1 篇文章＋5 題、單字回想自動產生）。共 7 天。
-2. **新單字 70 個**：學術與醫學常用字（詞頻約 3000–12000 名），不可與「已學過的單字」重複。每天一個主題。每個字需有 3 個不同情境、不同句型的額外例句（晚上回想與錯題複習會使用，讓學習者不能只靠背熟單一句子）。
+1. 每天兩段：早上（12 個新單字＋2 個長句拆解）、晚上（1 個文法重點＋3 題、1 篇克漏字＋5 題、1 篇閱讀＋5 題、單字回想自動產生）。共 7 天。
+2. **新單字 84 個**：學術與醫學常用字（詞頻約 3000–12000 名），不可與「已學過的單字」重複。每天一個主題。每個字需有 3 個不同情境、不同句型的額外例句（8–22 字，晚上回想與錯題複習會使用）。
 3. **弱項優先**：「需要加強」的能力，下週至少安排兩天的文法重點或長句練它；「本週沒練到」的能力至少練一次；「穩定」的能力仍要在文章中混著出現。
 4. **錯題回收**：「答錯的單字」、「不熟的單字」與「回想時需要幫忙的字」要在下週的長句或文章裡再出現（當成已學過的字使用，不是新字）。
-5. **難度**：比本週稍難一點。文章 180–250 字，句子變長、修飾更多；克漏字與閱讀交替（第 1、3、5、7 天克漏字，第 2、4、6 天閱讀）。題目要有一個明確正解，三個誘答要合理但確定錯。
-6. 每一題附 2–3 步的「一步一步來」：每一步是一個小判斷，引導學生自己推出答案，不要直接給答案。
-7. 中文用台灣繁體，說明用語要白話；每個文法名詞第一次出現要解釋。
+5. **難度逐週增加**：克漏字與閱讀的文章長度都比本週多約 20–30 字（上限：克漏字 400 字、閱讀 450 字，目標是 1 月底接近考試文章長度），句子變長、修飾更多。題目要有一個明確正解，三個誘答要合理但確定錯。
+6. **選項不可提示答案**：同一組選項的長短、形式、詳細程度要相近；正解不可是唯一最長的選項；括號說明要嘛每個選項都有、要嘛都沒有，說明放在解析。
+7. 每一題附 2–3 步的「一步一步來」：每一步是一個小判斷，引導學生自己推出答案，不要直接給答案。步驟選項也要遵守第 6 點。
+8. 中文用台灣繁體，說明用語要白話；每個文法名詞第一次出現要解釋。
 
 ### 資料格式
 \`\`\`js
 // wNNa.js
 WEEKS.push({ n: ${w.n + 1}, theme: '本週主題', days: [] });
-WEEKS[${w.n}].words = [   // 7 天 × 10 個
+WEEKS[${w.n}].words = [   // 7 天 × 12 個
   [['英文', '詞性', '中文', '字根拆解（沒有就空字串）', '例句（必須包含這個字或它的變化形）', '例句中文', [['更多例句1', '中文'], ['更多例句2', '中文'], ['更多例句3', '中文']]], …],
   …
 ];
@@ -429,14 +435,17 @@ WEEKS[${w.n}].gram = [    // 7 天，各 1 個文法重點
     qs: [{ id: 'g1-1', sk: '能力代碼', q: '題目', o: ['正解', '誤1', '誤2', '誤3'], why: '解析', st: [['問題', '正解', '誤1', '誤2', '說明', '能力代碼'], …] }, …] },
   …
 ];
-WEEKS[${w.n}].passages = [  // 7 天，各 1 篇；克漏字的空格寫 {1}…{5}，題目 q 寫「第 (1) 格」
-  { type: 'cloze' | 'read', title: '標題', text: ['段落', …], zh: '全文中文',
+WEEKS[${w.n}].passages = [  // 7 天，各 2 篇：[克漏字, 閱讀]；克漏字空格寫 {1}…{5}，題目 q 寫「第 (1) 格」
+  [{ type: 'cloze', … }, { type: 'read', … }],
+  // 每篇格式：{ type: 'cloze' | 'read', title: '標題', text: ['段落', …], zh: '全文中文',
     qs: [{ id: 'p1-1', sk: '能力代碼', pre: '（閱讀題才要）題型：要找什麼', q: '題目', o: ['正解', …3 個誤答], why: '解析', st: [[…同上…]] }, …] },
   …
 ];
 \`\`\`
 - o 的第一個一定是正解（網站會打亂順序）。題目 id 在同一週內不可重複。
 - 能力代碼只能用下表的代碼。
+
+本週文章字數：克漏字平均 ${avgWords('cloze')} 字、閱讀平均 ${avgWords('read')} 字
 
 ## 本週紀錄
 

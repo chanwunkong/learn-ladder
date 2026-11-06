@@ -1,8 +1,8 @@
 // 後中英文：檢查每週資料格式（題目選項、步驟、能力代碼、克漏字空格、例句含單字、識別碼不重複）。用法：node tests/eng/data.test.js
 const fs = require('fs'), path = require('path');
-const dir = path.join(__dirname, '../../src/eng');
-const files = ['ui.js', ...fs.readdirSync(dir + '/wk').sort().map(f => 'wk/' + f), 'app.js'];
-const src = files.map(f => fs.readFileSync(path.join(dir, f), 'utf8')).join('\n');
+const dir = path.join(__dirname, '../../src/eng'), wkDir = process.env.ENG_WK_DIR || path.join(dir, 'wk');
+const files = ['ui.js', ...fs.readdirSync(wkDir).sort().map(f => path.join(wkDir, f)), 'app.js'];
+const src = files.map(f => fs.readFileSync(path.isAbsolute(f) ? f : path.join(dir, f), 'utf8')).join('\n');
 const g = new Function('localStorage', 'document', 'CSS', src + '\n;return { WEEKS, SKILLS, stemRe, qindex, amIds, pmIds };')({ getItem: () => null, setItem() {} }, {}, {});
 const { WEEKS, SKILLS, stemRe, qindex, amIds, pmIds } = g;
 const errs = [], E = (w, m) => errs.push(`第 ${w.n} 週：${m}`);
@@ -19,7 +19,7 @@ WEEKS.forEach((w, wi) => {
   for (const k of ['words', 'sents', 'gram', 'passages']) if (!Array.isArray(w[k]) || w[k].length !== 7) E(w, `${k} 不是 7 天`);
   const ids = new Set(), seenW = new Set();
   w.words.forEach((day, d) => {
-    if (day.length !== 10) E(w, `第${d + 1}天單字不是 10 個`);
+    if (day.length !== (w.n > 1 ? 12 : 10)) E(w, `第${d + 1}天單字不是 ${w.n > 1 ? 12 : 10} 個`);
     day.forEach(x => {
       if (x.length !== 7) E(w, `${x[0]} 欄位數不對`);
       if (seenW.has(x[0])) E(w, `單字重複：${x[0]}`); seenW.add(x[0]);
@@ -44,12 +44,18 @@ WEEKS.forEach((w, wi) => {
     s.steps.forEach((st, i) => { step(w, st, `第${d + 1}天長句${j + 1}第${i + 1}步`); Object.keys(st[6] || {}).forEach(k => { if (!s.chunks[k]) E(w, `第${d + 1}天長句${j + 1} 標記片段 ${k} 不存在`); }); });
   }));
   w.gram.forEach((G, d) => { sk(w, G.id, `第${d + 1}天文法`); if (G.qs.length !== 3) E(w, `第${d + 1}天文法題不是 3 題`); G.qs.forEach(q => { if (ids.has(q.id)) E(w, `id 重複 ${q.id}`); ids.add(q.id); mc(w, q, q.id); }); });
-  w.passages.forEach((P, d) => {
-    const want = d % 2 === 0 ? 'cloze' : 'read'; if (P.type !== want) E(w, `第${d + 1}天文章類型應為 ${want}`);
-    if (P.qs.length !== 5) E(w, `第${d + 1}天文章題不是 5 題`);
-    P.qs.forEach(q => { if (ids.has(q.id)) E(w, `id 重複 ${q.id}`); ids.add(q.id); mc(w, q, q.id); if (P.type === 'read' && !q.pre) E(w, `${q.id} 缺 pre`); });
-    if (P.type === 'cloze') { const b = (P.text.join(' ').match(/\{\d\}/g) || []); if (b.length !== P.qs.length) E(w, `第${d + 1}天克漏字空格 ${b.length} 個、題目 ${P.qs.length} 題`); }
-    const wc = P.text.join(' ').split(/\s+/).length; if (wc < 90) E(w, `第${d + 1}天文章只有 ${wc} 字`);
+  w.passages.forEach((day, d) => {
+    const ps = [].concat(day);
+    if (w.n > 1 && (!Array.isArray(day) || day.length !== 2)) E(w, `第${d + 1}天 passages 不是兩篇陣列`);
+    ps.forEach((P, k) => {
+      const want = w.n > 1 ? (k ? 'read' : 'cloze') : (d % 2 === 0 ? 'cloze' : 'read');
+      if (P.type !== want) E(w, `第${d + 1}天第${k + 1}篇文章類型應為 ${want}`);
+      if (P.qs.length !== 5) E(w, `第${d + 1}天第${k + 1}篇文章題不是 5 題`);
+      P.qs.forEach(q => { if (ids.has(q.id)) E(w, `id 重複 ${q.id}`); ids.add(q.id); mc(w, q, q.id); if (P.type === 'read' && !q.pre) E(w, `${q.id} 缺 pre`); });
+      if (P.type === 'cloze') { const b = (P.text.join(' ').match(/\{\d\}/g) || []); if (b.length !== P.qs.length) E(w, `第${d + 1}天克漏字空格 ${b.length} 個、題目 ${P.qs.length} 題`); }
+      const wc = (P.text.join(' ').match(/[A-Za-z]+(?:['’-][A-Za-z]+)*/g) || []).length, min = w.n > 1 ? (P.type === 'cloze' ? 180 : 200) : 90;
+      if (wc < min) E(w, `第${d + 1}天第${k + 1}篇文章只有 ${wc} 字`);
+    });
   });
   for (let d = 0; d < 7; d++) [...amIds(w, d), ...pmIds(w, d)].forEach(h => { if (!qindex()[h]) E(w, `索引找不到 ${h}`); });
 });

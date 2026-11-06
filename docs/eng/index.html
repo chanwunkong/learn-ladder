@@ -656,6 +656,672 @@ WEEKS[0].passages = [
       st: [['句子在空格前是否已經完整？', '是，已經完整', '不是，缺動詞', '不是，缺主詞', '空格只能放修飾語。', 's.core'], ['修飾整句的副詞？', 'overall', 'overall of', 'at overall', 'overall 本身就是副詞。', 'c.form'], ['句意？', '整體而言水是最好的選擇', '整體而言水不是好選擇', '整體而言甜味劑最好', '最後的結論。', 'r.para']] }] },
 ];
 
+/* ---------- 後中英文：第 2 週（單字與長句） ---------- */
+WEEKS.push({ n: 2, theme: '醫學研究的語言', days: [] });
+WEEKS[1].words = [
+  // 第 1 天：心血管與循環
+  [
+    ['cardiovascular', 'adj.', '心血管的', 'cardio（心臟）＋vascular（血管的）', 'Regular exercise lowers the risk of cardiovascular disease.', '規律運動能降低心血管疾病的風險。',
+      [['Smoking damages the cardiovascular system in ways that may take years to appear.', '抽菸對心血管系統的傷害，可能好幾年後才顯現。'],
+       ['The hospital opened a new cardiovascular unit for patients recovering from heart surgery.', '醫院為心臟手術後恢復中的病人開設了新的心血管病房。'],
+       ['Researchers followed the cardiovascular health of 5,000 adults for ten years.', '研究人員追蹤了五千名成人十年的心血管健康。']]],
+    ['artery', 'n.', '動脈', '', 'An artery carries blood away from the heart.', '動脈把血液從心臟送出去。',
+      [['Fat can build up inside an artery and slowly narrow the space for blood.', '脂肪會在動脈內堆積，慢慢讓血液通過的空間變窄。'],
+       ['The surgeon repaired a damaged artery in the patient’s leg.', '外科醫師修補了病人腿部一條受損的動脈。'],
+       ['Doctors check the pulse at the wrist, where an artery lies close to the skin.', '醫生在手腕量脈搏，因為那裡有一條動脈很靠近皮膚。']]],
+    ['vessel', 'n.', '血管；船', '', 'Blood vessels carry oxygen to every part of the body.', '血管把氧氣送到身體的每個部位。',
+      [['High blood sugar can harm the small vessels in the eyes and kidneys.', '高血糖會傷害眼睛和腎臟裡的小血管。'],
+       ['When you feel cold, the vessels near your skin become narrower to keep heat inside.', '覺得冷時，皮膚附近的血管會變窄，把熱留在體內。'],
+       ['The fishing vessel returned to port before the storm arrived.', '那艘漁船在暴風雨來之前回到港口。']]],
+    ['circulation', 'n.', '（血液）循環；流通', 'circul（繞圈）＋-ation（名詞）', 'Walking every day improves circulation in the legs.', '每天走路能改善腿部的血液循環。',
+      [['Poor circulation can make your hands and feet feel cold even in summer.', '循環不好，夏天手腳也可能冰冷。'],
+       ['Sitting on a long flight without moving may slow the circulation of blood.', '長途飛行一直坐著不動，可能讓血液循環變慢。'],
+       ['The old coins were taken out of circulation and replaced with new ones.', '舊硬幣停止流通，換成了新的。']]],
+    ['hypertension', 'n.', '高血壓', 'hyper-（過度）＋tension（壓力）', 'Hypertension often has no symptoms, so many people do not know they have it.', '高血壓常常沒有症狀，所以很多人不知道自己有。',
+      [['Eating less salt is one simple way to control hypertension.', '少吃鹽是控制高血壓的一個簡單方法。'],
+       ['Untreated hypertension increases the chance of stroke and kidney failure.', '沒有治療的高血壓會增加中風和腎衰竭的機會。'],
+       ['About one in four adults in Taiwan has been diagnosed with hypertension.', '台灣大約每四個成人就有一人被診斷出高血壓。']]],
+    ['clot', 'n. / v.', '血塊；凝結', '', 'A blood clot that blocks blood flow to the brain can cause a stroke.', '堵住腦部血流的血塊可能造成中風。',
+      [['After a cut, blood clots quickly to stop the bleeding.', '割傷後，血液很快凝結來止血。'],
+       ['Passengers on long flights are told to walk around to prevent clots in their legs.', '長途飛行的乘客被提醒要走動，以免腿部形成血塊。'],
+       ['Some drugs make it harder for blood to clot, so patients bleed more easily.', '有些藥讓血液比較不容易凝結，所以病人容易流血。']]],
+    ['elevated', 'adj.', '升高的、偏高的', 'e-（向外）＋lev（舉起）＋-ated', 'The blood test showed elevated levels of cholesterol.', '血液檢查顯示膽固醇偏高。',
+      [['Patients with an elevated heart rate at rest were asked to return for more tests.', '安靜時心跳偏快的病人被要求回診做更多檢查。'],
+       ['An elevated temperature is often the first sign of an infection.', '體溫升高常常是感染的第一個徵兆。'],
+       ['Stress can keep blood pressure elevated for several hours.', '壓力可能讓血壓維持偏高好幾個小時。']]],
+    ['impair', 'v.', '損害、削弱（功能）', 'im-（使）＋pair（變壞）', 'Lack of sleep can impair your memory and judgment.', '睡眠不足會削弱記憶力和判斷力。',
+      [['Drinking alcohol impairs a driver’s ability to react quickly.', '喝酒會削弱駕駛快速反應的能力。'],
+       ['Long-term high blood pressure may impair the function of the kidneys.', '長期高血壓可能損害腎臟功能。'],
+       ['Children with impaired hearing may need special support at school.', '聽力受損的孩子在學校可能需要特別的協助。']]],
+    ['fatal', 'adj.', '致命的', 'fat（命運）＋-al', 'A heart attack can be fatal if the patient does not get help quickly.', '心臟病發作若沒有及時救治，可能會致命。',
+      [['The disease was once fatal, but modern drugs have changed that.', '這種病以前會致命，但現代藥物改變了這一點。'],
+       ['A fatal car accident closed the highway for three hours.', '一場致命車禍讓高速公路封閉了三小時。'],
+       ['Making one small mistake during the surgery could have fatal results.', '手術中犯一個小錯，就可能造成致命的後果。']]],
+    ['restrict', 'v.', '限制', 're-（往回）＋strict（拉緊）', 'Doctors told him to restrict the amount of salt he eats.', '醫生要他限制吃鹽的量。',
+      [['Narrow arteries restrict the flow of blood to the heart.', '變窄的動脈會限制流向心臟的血液。'],
+       ['The hospital restricted visits during the flu season.', '醫院在流感季節限制探病。'],
+       ['Access to the laboratory is restricted to trained staff only.', '只有受過訓練的人員才能進入實驗室。']]],
+    ['sustain', 'v.', '維持、支撐；遭受（傷害）', 'sus-（在下面）＋tain（握住）', 'The heart must sustain a steady beat for a whole lifetime.', '心臟必須一輩子維持穩定的跳動。',
+      [['It is hard to sustain a strict diet for more than a few months.', '嚴格的飲食控制很難維持超過幾個月。'],
+       ['The driver sustained serious injuries to his head and chest.', '駕駛的頭部和胸部受了重傷。'],
+       ['Plants need water and light to sustain their growth.', '植物需要水和光來維持生長。']]],
+    ['adverse', 'adj.', '不利的、有害的', 'ad-（朝向）＋vers（轉）', 'The drug had few adverse effects in the trial.', '這種藥在試驗中很少出現不良反應。',
+      [['Hot weather can have an adverse effect on older people with heart disease.', '炎熱天氣對有心臟病的老人可能有不利影響。'],
+       ['Patients should report any adverse reaction to their doctor at once.', '病人出現任何不良反應都應該立刻告訴醫生。'],
+       ['The company’s profits fell because of adverse market conditions.', '公司利潤因為不利的市場狀況而下降。']]],
+  ],
+  // 第 2 天：研究方法
+  [
+    ['hypothesis', 'n.', '假設', 'hypo-（在下面）＋thesis（放置、主張）', 'The researchers tested the hypothesis that coffee improves memory.', '研究人員檢驗「咖啡能改善記憶」這個假設。',
+      [['The results did not support our hypothesis, so we had to rethink the idea.', '結果不支持我們的假設，所以我們得重新思考這個想法。'],
+       ['A good hypothesis must be something that experiments can prove wrong.', '好的假設必須是實驗能證明它錯的東西。'],
+       ['One hypothesis is that the virus first spread from bats to other animals.', '其中一個假設是病毒最早從蝙蝠傳到其他動物身上。']]],
+    ['cohort', 'n.', '世代、同一批研究對象', '', 'The study followed a cohort of 2,000 nurses for twenty years.', '這項研究追蹤一批兩千名護理師長達二十年。',
+      [['Members of the same cohort were born in the same year and grew up in similar conditions.', '同一世代的人在同一年出生，成長環境相近。'],
+       ['In a cohort study, researchers watch what happens to people over time.', '在世代研究中，研究人員觀察人們隨著時間發生了什麼事。'],
+       ['This year’s cohort of medical students is the largest in the school’s history.', '今年這一屆醫學生是該校歷來人數最多的。']]],
+    ['variable', 'n. / adj.', '變項；多變的', 'vari（改變）＋-able（可以）', 'Age and sex are important variables in most health studies.', '年齡和性別是大多數健康研究的重要變項。',
+      [['Researchers tried to control every variable except the amount of sleep.', '研究人員設法控制除了睡眠量以外的每個變項。'],
+       ['The weather in the mountains is highly variable, even in summer.', '山上的天氣變化很大，夏天也是。'],
+       ['Income was the variable most closely linked to life expectancy.', '收入是和平均壽命關係最密切的變項。']]],
+    ['correlation', 'n.', '相關（性）', 'cor-（一起）＋relation（關係）', 'There is a strong correlation between smoking and lung cancer.', '抽菸和肺癌之間有很強的相關。',
+      [['A correlation between two things does not prove that one causes the other.', '兩件事相關，並不能證明其中一件造成另一件。'],
+       ['The study found no correlation between shoe size and intelligence.', '研究發現鞋子尺寸和智力沒有相關。'],
+       ['Scientists noticed a correlation between hot summers and higher sales of ice cream.', '科學家注意到炎熱的夏天和冰淇淋銷量較高之間有相關。']]],
+    ['randomized', 'adj.', '隨機分派的', 'random（隨機）＋-ized（使成為）', 'A randomized trial is the best way to test a new drug.', '隨機分派試驗是檢驗新藥最好的方法。',
+      [['In a randomized study, a computer decides which group each patient joins.', '在隨機分派的研究中，由電腦決定每位病人加入哪一組。'],
+       ['The randomized design made it unlikely that the groups differed at the start.', '隨機分派的設計讓兩組在一開始就不同的可能性很低。'],
+       ['Only two of the ten studies they reviewed were randomized.', '他們回顧的十項研究中，只有兩項是隨機分派的。']]],
+    ['bias', 'n.', '偏差、偏見', '', 'Asking only hospital patients may introduce bias into the survey.', '只問住院病人，可能讓調查產生偏差。',
+      [['Researchers did not know which patients took the real drug, which reduced bias.', '研究人員不知道哪些病人吃了真藥，這減少了偏差。'],
+       ['The teacher was accused of bias against students from poor families.', '那位老師被指控對貧窮家庭的學生有偏見。'],
+       ['People who volunteer for a study may be healthier, a kind of bias that is hard to avoid.', '自願參加研究的人可能比較健康，這是一種難以避免的偏差。']]],
+    ['replicate', 'v.', '重複（實驗）、複製', 're-（再）＋plic（摺疊）＋-ate', 'Other laboratories failed to replicate the surprising results.', '其他實驗室無法重現那個令人驚訝的結果。',
+      [['A finding becomes more convincing when other scientists can replicate it.', '一個發現能被其他科學家重現時，就更有說服力。'],
+       ['Viruses replicate by using the machinery inside a host cell.', '病毒利用宿主細胞內部的機制來複製自己。'],
+       ['The team replicated the study with a larger group of older adults.', '研究團隊以更多的老年人重做了這項研究。']]],
+    ['criteria', 'n.（複數）', '標準、條件', '單數是 criterion', 'Patients had to meet strict criteria to join the trial.', '病人必須符合嚴格的條件才能加入試驗。',
+      [['The criteria for diagnosing the disease have changed over the past ten years.', '這種病的診斷標準在過去十年改變了。'],
+       ['Each application was judged on the same criteria: cost, safety, and speed.', '每份申請都用相同標準評判：成本、安全和速度。'],
+       ['People under 18 did not meet the criteria and were excluded.', '未滿 18 歲的人不符合條件，所以被排除在外。']]],
+    ['empirical', 'adj.', '實證的、根據觀察的', 'empiric（經驗）＋-al', 'There is little empirical evidence that the diet works.', '幾乎沒有實證證據顯示這種飲食法有效。',
+      [['Empirical research relies on data collected from real observations.', '實證研究依靠從真實觀察中收集的資料。'],
+       ['The theory sounds reasonable, but it has never been tested in an empirical study.', '這個理論聽起來合理，但從未在實證研究中檢驗過。'],
+       ['Doctors prefer treatments that have strong empirical support.', '醫生偏好有強力實證支持的治療。']]],
+    ['yield', 'v. / n.', '產生（結果）；產量', '', 'The new method yielded more accurate results than the old one.', '新方法產生的結果比舊方法更準確。',
+      [['Five years of research finally yielded a useful drug.', '五年的研究終於產出一種有用的藥。'],
+       ['Rice yield fell sharply because of the long dry season.', '因為長時間乾旱，稻米產量大幅下降。'],
+       ['A small survey may not yield enough data to draw firm conclusions.', '小規模的調查可能得不到足夠資料來下明確的結論。']]],
+    ['subsequent', 'adj.', '隨後的、後來的', 'sub-（在下面、在後）＋sequ（跟隨）＋-ent', 'The first test was negative, but subsequent tests showed the infection.', '第一次檢驗是陰性，但之後的檢驗顯示有感染。',
+      [['The drug was approved in 2015, and subsequent studies confirmed its safety.', '這種藥在 2015 年核准，之後的研究證實了它的安全性。'],
+       ['She broke her leg and spent the subsequent three months at home.', '她摔斷腿，接下來三個月都待在家裡。'],
+       ['Subsequently, the team changed the dose for younger patients.', '後來，研究團隊為較年輕的病人調整了劑量。']]],
+    ['attribute', 'v. / n.', '歸因於；特質', 'at-（朝向）＋tribute（給予）', 'Researchers attribute the drop in heart disease to lower smoking rates.', '研究人員把心臟病減少歸因於吸菸率降低。',
+      [['Many deaths in the past were attributed to poor water quality.', '過去許多死亡都被歸因於水質不佳。'],
+       ['Patience is an important attribute for anyone who works with children.', '耐心是和孩子一起工作的人很重要的特質。'],
+       ['It is too early to attribute the patient’s recovery to the new treatment alone.', '現在就把病人康復只歸功於新療法還太早。']]],
+  ],
+  // 第 3 天：細胞與基因
+  [
+    ['enzyme', 'n.', '酵素、酶', 'en-（在裡面）＋zyme（發酵）', 'Enzymes in the stomach break down proteins in food.', '胃裡的酵素分解食物中的蛋白質。',
+      [['Some people lack the enzyme needed to digest milk sugar.', '有些人缺少消化乳糖所需的酵素。'],
+       ['Heat can change the shape of an enzyme so that it no longer works.', '高溫會改變酵素的形狀，讓它不再發揮作用。'],
+       ['Liver enzymes in the blood rise when the liver is damaged.', '肝臟受損時，血液中的肝指數（肝酵素）會上升。']]],
+    ['molecule', 'n.', '分子', 'mole（團塊）＋-cule（小）', 'A water molecule is made of two hydrogen atoms and one oxygen atom.', '一個水分子由兩個氫原子和一個氧原子組成。',
+      [['DNA is a long molecule that stores genetic information.', 'DNA 是一種儲存遺傳資訊的長分子。'],
+       ['The new drug is a small molecule that can enter cells easily.', '這種新藥是能輕易進入細胞的小分子。'],
+       ['Scientists use powerful microscopes to study the shape of single molecules.', '科學家用高倍顯微鏡研究單一分子的形狀。']]],
+    ['mutation', 'n.', '突變', 'mut（改變）＋-ation', 'A single mutation in this gene can cause a serious disease.', '這個基因上一個突變就可能造成嚴重疾病。',
+      [['Most mutations have no effect, but a few can help or harm the body.', '大多數突變沒有影響，但少數會對身體有益或有害。'],
+       ['The virus changed through mutation, so the old vaccine worked less well.', '病毒經由突變而改變，所以舊疫苗效果變差。'],
+       ['Women who carry the mutation have a higher risk of breast cancer.', '帶有這個突變的女性，罹患乳癌的風險較高。']]],
+    ['tissue', 'n.', '（生物）組織；面紙', '', 'Muscle tissue is able to contract and relax.', '肌肉組織能夠收縮和放鬆。',
+      [['The doctor removed a small piece of tissue to check for cancer cells.', '醫生取下一小塊組織檢查有沒有癌細胞。'],
+       ['Scar tissue forms when a deep wound heals.', '深的傷口癒合時會形成疤痕組織。'],
+       ['She handed a tissue to the crying child in the waiting room.', '她在候診室遞了一張面紙給哭泣的孩子。']]],
+    ['organism', 'n.', '生物、有機體', 'organ（器官）＋-ism', 'Bacteria are tiny organisms that can live almost anywhere.', '細菌是幾乎在任何地方都能生存的微小生物。',
+      [['Every living organism needs some source of energy to survive.', '每一種生物都需要某種能量來源才能生存。'],
+       ['The lake contains many organisms that cannot be seen without a microscope.', '這座湖裡有許多不用顯微鏡就看不見的生物。'],
+       ['Scientists changed the genes of the organism to make it produce insulin.', '科學家改變這種生物的基因，讓它製造胰島素。']]],
+    ['sequence', 'n. / v.', '順序、序列；定出序列', '', 'Scientists have read the full DNA sequence of the virus.', '科學家已經讀出這種病毒完整的 DNA 序列。',
+      [['Please put the pictures in the correct sequence to tell the story.', '請把圖片照正確順序排好來說這個故事。'],
+       ['A change in the sequence of a gene can change the protein it makes.', '基因序列的改變可能改變它製造的蛋白質。'],
+       ['It now takes only a day to sequence a person’s entire genome.', '現在只要一天就能定出一個人整個基因體的序列。']]],
+    ['inherit', 'v.', '遺傳；繼承', 'in-（進入）＋herit（繼承人）', 'Children inherit half of their genes from each parent.', '孩子的基因一半遺傳自父親、一半遺傳自母親。',
+      [['Some forms of heart disease are inherited and run in families.', '有些心臟病是遺傳的，會在家族中出現。'],
+       ['She inherited her grandmother’s old house and its large garden.', '她繼承了祖母的老房子和它的大花園。'],
+       ['If one parent has the gene, each child has a fifty percent chance of inheriting it.', '父母一方有這個基因時，每個孩子有百分之五十的機會遺傳到。']]],
+    ['trait', 'n.', '特徵、特質', '', 'Eye color is a trait that is passed from parents to children.', '眼睛顏色是由父母傳給孩子的特徵。',
+      [['Height is a trait controlled by hundreds of different genes.', '身高是由數百個不同基因控制的特徵。'],
+       ['Honesty is the trait she values most in a friend.', '誠實是她最看重朋友的特質。'],
+       ['Some personality traits seem to be shaped by both genes and environment.', '有些人格特質似乎同時受基因和環境影響。']]],
+    ['membrane', 'n.', '膜、細胞膜', '', 'The cell membrane controls what enters and leaves the cell.', '細胞膜控制什麼東西進出細胞。',
+      [['A thin membrane covers the inside of the nose and mouth.', '一層薄膜覆蓋鼻腔和口腔內部。'],
+       ['Some antibiotics kill bacteria by breaking their outer membrane.', '有些抗生素藉由破壞細菌的外膜來殺死細菌。'],
+       ['Oxygen passes easily across the membrane, but larger molecules cannot.', '氧氣很容易穿過這層膜，但較大的分子不行。']]],
+    ['cellular', 'adj.', '細胞的', 'cell（細胞）＋-ular', 'Aging causes damage at the cellular level.', '老化會在細胞層次造成損傷。',
+      [['Scientists are studying how cellular repair slows down with age.', '科學家正在研究細胞修復如何隨年齡變慢。'],
+       ['Cellular energy is mostly produced inside the mitochondria.', '細胞的能量大部分在粒線體內產生。'],
+       ['The drug works by blocking a cellular signal that tells tumors to grow.', '這種藥的作用是阻斷一個讓腫瘤生長的細胞訊號。']]],
+    ['susceptible', 'adj.', '容易受影響的、易感的', 'sus-（在下面）＋cept（拿、接受）＋-ible', 'Young children are more susceptible to infections than adults.', '小孩比大人更容易受到感染。',
+      [['People with weak immune systems are especially susceptible to the flu.', '免疫系統弱的人特別容易得流感。'],
+       ['Some plants are susceptible to damage from cold weather.', '有些植物容易受寒冷天氣傷害。'],
+       ['Teenagers can be highly susceptible to pressure from their friends.', '青少年很容易受到朋友的壓力影響。']]],
+    ['alter', 'v.', '改變、變更', 'alter（另一個）', 'Smoking can alter the genes in lung cells.', '抽菸可能改變肺細胞的基因。',
+      [['The surgeon altered the plan after seeing the first scan.', '外科醫師看了第一次掃描後改變了計畫。'],
+       ['Even a small change in diet can alter the bacteria in your gut.', '飲食上的小改變也可能改變腸道裡的細菌。'],
+       ['The new evidence did not alter the committee’s final decision.', '新的證據沒有改變委員會的最後決定。']]],
+  ],
+  // 第 4 天：大腦與心理
+  [
+    ['neuron', 'n.', '神經元', 'neur（神經）＋-on', 'Neurons send electrical signals through the brain and body.', '神經元在大腦和身體中傳遞電訊號。',
+      [['The human brain contains about 86 billion neurons.', '人腦大約有 860 億個神經元。'],
+       ['When neurons die in this disease, patients slowly lose control of their movements.', '這種病讓神經元死亡時，病人會慢慢失去對動作的控制。'],
+       ['Learning a new skill creates new connections between neurons.', '學習新技能會在神經元之間建立新的連結。']]],
+    ['cortex', 'n.', '皮質（大腦外層）', '', 'The cortex is the thin outer layer of the brain.', '皮質是大腦外面薄薄的一層。',
+      [['The part of the cortex at the back of the head handles vision.', '後腦的那一部分皮質負責視覺。'],
+       ['Damage to the frontal cortex can change a person’s behavior.', '額葉皮質受損會改變一個人的行為。'],
+       ['Brain scans showed that the cortex was thinner in older adults.', '腦部掃描顯示年長者的皮質比較薄。']]],
+    ['stimulus', 'n.', '刺激（物）', 'stimul（刺、促使）＋-us', 'The eye reacts to light, which is a visual stimulus.', '眼睛會對光反應，光是一種視覺刺激。',
+      [['A loud noise is a stimulus that makes most people turn their heads.', '巨大的聲響是讓大多數人轉頭的刺激。'],
+       ['Lower interest rates acted as a stimulus to the economy.', '降低利率對經濟產生了刺激作用。'],
+       ['In the experiment, each stimulus appeared on the screen for one second.', '實驗中，每個刺激在螢幕上出現一秒。']]],
+    ['anxiety', 'n.', '焦慮', '', 'Many students feel anxiety before an important exam.', '很多學生在重要考試前會感到焦慮。',
+      [['Regular exercise can reduce anxiety and improve sleep.', '規律運動能減輕焦慮、改善睡眠。'],
+       ['Her anxiety about flying made it hard for her to travel abroad.', '她對搭飛機的焦慮讓她很難出國旅行。'],
+       ['Doctors should ask about anxiety when patients report chest pain with no clear cause.', '病人有原因不明的胸痛時，醫生應該問問是否有焦慮。']]],
+    ['depression', 'n.', '憂鬱（症）；蕭條', 'de-（向下）＋press（壓）＋-ion', 'Depression is more than feeling sad for a few days.', '憂鬱症不只是難過幾天而已。',
+      [['People with depression often lose interest in activities they once enjoyed.', '憂鬱症患者常對以前喜歡的活動失去興趣。'],
+       ['Treatment for depression may include talk therapy, medicine, or both.', '憂鬱症的治療可能包括談話治療、藥物，或兩者並用。'],
+       ['Millions of workers lost their jobs during the Great Depression.', '大蕭條期間，數百萬名工人失去工作。']]],
+    ['disorder', 'n.', '（身心）疾病、失調；混亂', 'dis-（相反）＋order（秩序）', 'Sleep disorders affect millions of adults.', '睡眠障礙影響數百萬名成人。',
+      [['She was diagnosed with an eating disorder at the age of sixteen.', '她十六歲時被診斷出飲食疾患。'],
+       ['Some genetic disorders appear only when both parents carry the same gene.', '有些遺傳疾病只有在父母都帶有同一個基因時才會出現。'],
+       ['After the earthquake, the city was in complete disorder.', '地震後，整座城市一片混亂。']]],
+    ['trigger', 'v. / n.', '引發；誘因', '', 'Stress can trigger a headache in some people.', '壓力會引發某些人的頭痛。',
+      [['Pollen is a common trigger for asthma attacks in spring.', '花粉是春天氣喘發作的常見誘因。'],
+       ['The news triggered a wave of panic buying.', '這個消息引發了一波搶購潮。'],
+       ['Doctors are still trying to find out what triggers the immune system to attack the body.', '醫生仍在設法找出是什麼引發免疫系統攻擊身體。']]],
+    ['fatigue', 'n.', '疲勞', '', 'Fatigue is one of the most common symptoms of the disease.', '疲勞是這種病最常見的症狀之一。',
+      [['Pilots must rest between flights to avoid fatigue.', '飛行員在航班之間必須休息，以免疲勞。'],
+       ['Many patients still reported fatigue months after the infection had cleared.', '許多病人在感染痊癒好幾個月後仍表示疲勞。'],
+       ['Doctors working long shifts may make mistakes because of fatigue.', '長時間值班的醫生可能因疲勞而出錯。']]],
+    ['resilience', 'n.', '韌性、恢復力', 're-（往回）＋sili（跳）＋-ence', 'Strong friendships help build resilience in hard times.', '深厚的友誼能在困難時期培養韌性。',
+      [['Children show remarkable resilience after a difficult event.', '孩子在經歷困難事件後展現出驚人的恢復力。'],
+       ['The program teaches nurses skills that improve their resilience to stress.', '這個課程教護理師提高抗壓韌性的技巧。'],
+       ['The town’s resilience was tested by two floods in a single year.', '這個小鎮的韌性在一年內兩次水災中受到考驗。']]],
+    ['cope', 'v.', '應付、處理', '', 'Talking to friends helps many people cope with stress.', '和朋友聊天幫助很多人應付壓力。',
+      [['The small hospital could not cope with so many patients at once.', '這家小醫院無法一次應付那麼多病人。'],
+       ['She learned to cope with the pain by changing how she sat at work.', '她改變上班時的坐姿，學會應付疼痛。'],
+       ['Families need support to cope when a parent becomes seriously ill.', '父母一方重病時，家人需要支持才能撐過去。']]],
+    ['impulse', 'n.', '衝動；（神經）脈衝', 'im-（向內）＋puls（推）', 'Nerve impulses travel from the brain to the muscles.', '神經衝動從大腦傳到肌肉。',
+      [['He bought the expensive jacket on impulse and regretted it later.', '他一時衝動買了那件昂貴的外套，後來很後悔。'],
+       ['Teenagers may find it harder to control their impulses than adults do.', '青少年可能比成人更難控制衝動。'],
+       ['An electrical impulse starts each beat of the heart.', '每一次心跳都由一個電脈衝啟動。']]],
+    ['deprivation', 'n.', '剝奪、缺乏', 'de-（完全）＋priv（拿走）＋-ation', 'Sleep deprivation makes it hard to concentrate.', '睡眠不足讓人很難專心。',
+      [['Long periods of sleep deprivation can weaken the immune system.', '長期睡眠剝奪會削弱免疫系統。'],
+       ['Children who grow up in deprivation often have poorer health as adults.', '在匱乏中長大的孩子，成年後健康常常比較差。'],
+       ['Oxygen deprivation for only a few minutes can damage the brain.', '缺氧只要幾分鐘就可能傷害大腦。']]],
+  ],
+
+  // 第 5 天：公共衛生與傳染病
+  [
+    ['epidemic', 'n. / adj.', '流行病、疫情', 'epi-（在…之上）＋dem（人民）＋-ic', 'The flu epidemic closed schools across the country.', '流感疫情讓全國學校停課。',
+      [['Health officials warned that obesity has become an epidemic in many rich countries.', '衛生官員警告，肥胖在許多富裕國家已經成為流行病。'],
+       ['During the epidemic, hospitals ran out of beds within two weeks.', '疫情期間，醫院在兩週內就沒有床位了。'],
+       ['Clean water helped end the cholera epidemic in the city.', '乾淨的水幫助這座城市結束霍亂疫情。']]],
+    ['outbreak', 'n.', '（疾病）爆發', 'out（向外）＋break（破）', 'An outbreak of food poisoning was traced to a school lunch.', '一起食物中毒事件被追查到是學校午餐造成的。',
+      [['Officials closed the farm after an outbreak of bird flu.', '爆發禽流感後，官員關閉了這座養殖場。'],
+       ['Quick testing helped stop the outbreak before it reached other towns.', '快速檢驗幫助在疫情擴散到其他城鎮前加以阻止。'],
+       ['The first cases of the outbreak were reported in early March.', '這次疫情的第一批病例在三月初通報。']]],
+    ['transmission', 'n.', '傳染、傳播；傳送', 'trans-（穿過）＋miss（送）＋-ion', 'Washing hands reduces the transmission of many diseases.', '洗手能減少許多疾病的傳播。',
+      [['Most transmission of the virus happens through the air in crowded rooms.', '這種病毒大部分是在擁擠的室內經由空氣傳播。'],
+       ['Mosquitoes play a key role in the transmission of dengue fever.', '蚊子在登革熱的傳播中扮演關鍵角色。'],
+       ['The live transmission of the game was interrupted by a power failure.', '比賽的現場轉播因為停電而中斷。']]],
+    ['mortality', 'n.', '死亡率', 'mort（死）＋-ality', 'Infant mortality has fallen sharply over the past century.', '嬰兒死亡率在過去一百年大幅下降。',
+      [['The new treatment cut mortality among severe patients by almost half.', '新療法讓重症病人的死亡率下降將近一半。'],
+       ['Mortality from heart disease is higher in men than in women of the same age.', '同年齡的男性，心臟病死亡率比女性高。'],
+       ['Researchers compared mortality rates in cities with clean air and polluted air.', '研究人員比較空氣乾淨和空氣污染城市的死亡率。']]],
+    ['vaccination', 'n.', '疫苗接種', 'vaccin（疫苗）＋-ation', 'Vaccination protects children from measles.', '接種疫苗保護孩子不得麻疹。',
+      [['The government offers free flu vaccination to everyone over 65.', '政府為所有 65 歲以上的人提供免費流感疫苗接種。'],
+       ['When vaccination rates drop, old diseases can return.', '疫苗接種率下降時，舊的疾病可能捲土重來。'],
+       ['Nurses kept a record of each child’s vaccinations.', '護理師記錄每個孩子的疫苗接種。']]],
+    ['sanitation', 'n.', '衛生設施（下水道、污水處理）', 'sanit（健康）＋-ation', 'Poor sanitation allows diseases to spread through dirty water.', '衛生設施差會讓疾病透過髒水傳播。',
+      [['Better sanitation saved more lives in the 1800s than any medicine did.', '在十九世紀，改善衛生設施拯救的人命比任何藥物都多。'],
+       ['Millions of people still live without basic sanitation such as clean toilets.', '仍有數百萬人沒有乾淨廁所之類的基本衛生設施。'],
+       ['The camp was crowded, and sanitation was a serious problem.', '營地很擁擠，衛生是嚴重的問題。']]],
+    ['contagious', 'adj.', '會傳染的', 'con-（一起）＋tag（接觸）＋-ious', 'Measles is one of the most contagious diseases known.', '麻疹是已知傳染力最強的疾病之一。',
+      [['Patients are most contagious during the first few days of symptoms.', '病人在出現症狀的頭幾天傳染力最強。'],
+       ['Her laugh was so contagious that soon the whole class was laughing.', '她的笑聲很有感染力，不久全班都笑了。'],
+       ['Stay home from work if you think you might be contagious.', '如果你覺得自己可能會傳染，就請假在家。']]],
+    ['incidence', 'n.', '發生率（新病例的比率）', 'in-（在上）＋cid（落下）＋-ence', 'The incidence of skin cancer is rising in sunny countries.', '陽光充足國家的皮膚癌發生率正在上升。',
+      [['Incidence counts new cases, while prevalence counts all existing cases.', '發生率算的是新病例，盛行率算的是所有現存病例。'],
+       ['The incidence of the disease was highest among children under five.', '這種病在五歲以下兒童中發生率最高。'],
+       ['After the vaccine was introduced, the incidence of the infection fell by 90 percent.', '疫苗上市後，這種感染的發生率下降了九成。']]],
+    ['mandatory', 'adj.', '強制的、規定必須的', 'mand（命令）＋-atory', 'Wearing a mask was mandatory on public transport.', '搭乘大眾運輸必須戴口罩。',
+      [['Some countries made vaccination mandatory for all school children.', '有些國家規定所有學童必須接種疫苗。'],
+       ['Safety training is mandatory for every new employee.', '每位新員工都必須接受安全訓練。'],
+       ['The rule is mandatory, not just a suggestion.', '這條規定是強制的，不只是建議。']]],
+    ['disparity', 'n.', '差距、不平等', 'dis-（分開）＋par（相等）＋-ity', 'There is a large disparity in health between rich and poor areas.', '富裕地區和貧窮地區的健康差距很大。',
+      [['The study revealed disparities in cancer care between cities and rural villages.', '研究揭露了城市和鄉村在癌症照護上的差距。'],
+       ['A wide disparity in income can lead to differences in life expectancy.', '收入差距大可能造成平均壽命的差異。'],
+       ['Officials promised to reduce the disparity in access to clean water.', '官員承諾要縮小取得乾淨水資源的差距。']]],
+    ['surveillance', 'n.', '監測、監視', 'sur-（在上面）＋veill（看守）＋-ance', 'Disease surveillance helps officials notice an outbreak early.', '疾病監測幫助官員及早發現疫情爆發。',
+      [['The country improved its surveillance of flu cases in hospitals.', '這個國家加強了醫院流感病例的監測。'],
+       ['The building is under video surveillance day and night.', '這棟大樓日夜都有錄影監視。'],
+       ['Without good surveillance, a new virus can spread for weeks before anyone notices.', '如果沒有良好的監測，新病毒可能傳播好幾週才被發現。']]],
+    ['eradicate', 'v.', '根除、消滅', 'e-（向外）＋radic（根）＋-ate', 'Smallpox was eradicated in 1980 after a global vaccine program.', '經過全球疫苗計畫，天花在 1980 年被根除。',
+      [['Health workers hope to eradicate polio within the next few years.', '衛生工作者希望在未來幾年內根除小兒麻痺。'],
+       ['It is almost impossible to eradicate mosquitoes from a large area.', '要在大範圍內消滅蚊子幾乎不可能。'],
+       ['The new law aims to eradicate corruption in local government.', '新法律的目標是根除地方政府的貪腐。']]],
+  ],
+  // 第 6 天：藥物與治療（字根日）
+  [
+    ['dosage', 'n.', '劑量', 'dose（一次的藥量）＋-age（名詞）', 'Children need a lower dosage than adults.', '兒童需要的劑量比成人低。',
+      [['Always check the dosage on the label before giving medicine to a child.', '給孩子吃藥前，一定要看標籤上的劑量。'],
+       ['The doctor slowly increased the dosage until the pain was under control.', '醫生慢慢增加劑量，直到疼痛受到控制。'],
+       ['Taking a higher dosage than prescribed can damage the liver.', '服用超過處方的劑量可能傷害肝臟。']]],
+    ['prescribe', 'v.', '開（藥）、開處方', 'pre-（事先）＋scribe（寫）', 'The doctor prescribed antibiotics for the infection.', '醫生為這個感染開了抗生素。',
+      [['Doctors should not prescribe antibiotics for a common cold.', '醫生不應該為一般感冒開抗生素。'],
+       ['She stopped taking the prescribed medicine because it made her dizzy.', '她停用了醫生開的藥，因為那讓她頭暈。'],
+       ['Some doctors now prescribe exercise as part of the treatment for depression.', '現在有些醫生把運動列為憂鬱症治療的一部分。']]],
+    ['administer', 'v.', '給（藥）、施打；管理', 'ad-（朝向）＋minister（服侍）', 'Nurses administer the drug through a needle in the arm.', '護理師從手臂的針頭給藥。',
+      [['The vaccine was administered in two doses, four weeks apart.', '疫苗分兩劑施打，間隔四週。'],
+       ['Only trained staff may administer this drug to patients.', '只有受過訓練的人員可以給病人使用這種藥。'],
+       ['The fund is administered by a committee of five doctors.', '這筆基金由五位醫生組成的委員會管理。']]],
+    ['toxic', 'adj.', '有毒的', 'tox（毒）＋-ic', 'Some cleaning products release toxic gases when they are mixed.', '有些清潔用品混在一起會釋放有毒氣體。',
+      [['At high doses, even common painkillers can be toxic to the liver.', '劑量太高時，連常見的止痛藥都可能對肝臟有毒。'],
+       ['The factory was fined for dumping toxic waste into the river.', '這家工廠因為把有毒廢棄物倒進河裡而被罰款。'],
+       ['Researchers measured the toxicity of each compound before testing it in animals.', '研究人員在動物試驗前先測量每種化合物的毒性。']]],
+    ['inhibit', 'v.', '抑制、阻止', 'in-（在裡面）＋hibit（握住）', 'This drug inhibits the growth of cancer cells.', '這種藥能抑制癌細胞生長。',
+      [['Aspirin inhibits an enzyme that helps blood clot.', '阿斯匹靈會抑制一種幫助血液凝結的酵素。'],
+       ['Fear of failure can inhibit students from asking questions.', '害怕失敗會讓學生不敢發問。'],
+       ['Cold temperatures inhibit the growth of most bacteria in food.', '低溫會抑制食物中大多數細菌的生長。']]],
+    ['suppress', 'v.', '壓制、抑制（症狀、反應）', 'sup-（在下面）＋press（壓）', 'Some drugs suppress the immune system after a transplant.', '有些藥在器官移植後會壓制免疫系統。',
+      [['Cough medicine may suppress the cough without treating its cause.', '止咳藥可能壓住咳嗽，卻沒有治療病因。'],
+       ['She tried to suppress a laugh during the serious meeting.', '她在嚴肅的會議中努力忍住不笑。'],
+       ['The government used the army to suppress the protest.', '政府動用軍隊鎮壓抗議。']]],
+    ['placebo', 'n.', '安慰劑', 'placebo（拉丁文：我會讓人滿意）', 'Half of the patients received the real drug and half received a placebo.', '一半病人拿到真的藥，一半拿到安慰劑。',
+      [['Some patients felt better even though they had only taken a placebo.', '有些病人只吃了安慰劑，卻仍覺得好轉。'],
+       ['A placebo looks exactly like the real pill but contains no active drug.', '安慰劑看起來和真藥一模一樣，但沒有有效成分。'],
+       ['The new drug worked no better than the placebo in the final analysis.', '在最後分析中，新藥的效果並沒有比安慰劑好。']]],
+    ['efficacy', 'n.', '（藥物、治療的）功效、療效', 'ef-（向外）＋fic（做）＋-acy', 'The trial showed the vaccine’s efficacy against severe disease.', '試驗顯示疫苗對重症的保護效力。',
+      [['The efficacy of the drug was lower in older patients.', '這種藥在年長病人身上的療效較低。'],
+       ['Before approval, a new treatment must prove both its safety and efficacy.', '新療法在核准前，必須證明它的安全性和療效。'],
+       ['Doctors still question the efficacy of vitamin C against colds.', '醫生仍然懷疑維生素 C 對感冒的功效。']]],
+    ['compound', 'n. / adj.', '化合物；複合的', 'com-（一起）＋pound（放）', 'Scientists found a compound in the plant that kills bacteria.', '科學家在這種植物裡發現一種能殺菌的化合物。',
+      [['Water is a compound of hydrogen and oxygen.', '水是氫和氧的化合物。'],
+       ['The company tested over 500 compounds before finding one that worked.', '這家公司試驗了五百多種化合物才找到一種有效的。'],
+       ['A compound fracture is a broken bone that pushes through the skin.', '開放性（複合）骨折是骨頭斷裂並穿出皮膚。']]],
+    ['abnormal', 'adj.', '異常的、不正常的', 'ab-（離開）＋normal（正常的）', 'The scan showed an abnormal growth in the lung.', '掃描顯示肺部有異常的增生。',
+      [['An abnormal heartbeat may be a sign of a serious problem.', '心跳不正常可能是嚴重問題的徵兆。'],
+       ['It is not abnormal to feel tired for a few days after a vaccination.', '接種疫苗後疲倦幾天並不是異常的。'],
+       ['Further tests were ordered because two of the results were abnormal.', '因為有兩項結果異常，所以安排了進一步的檢查。']]],
+    ['transplant', 'n. / v.', '移植', 'trans-（轉移）＋plant（種植）', 'She is waiting for a kidney transplant.', '她正在等待腎臟移植。',
+      [['After the transplant, he had to take drugs for the rest of his life.', '移植之後，他必須終生服藥。'],
+       ['Surgeons transplanted a new heart into the young patient.', '外科醫師為這名年輕病人移植了一顆新心臟。'],
+       ['There are far fewer donors than patients who need a transplant.', '捐贈者遠比需要移植的病人少。']]],
+    ['remedy', 'n. / v.', '療法、補救辦法；補救', '', 'Honey is a popular home remedy for a sore throat.', '蜂蜜是治喉嚨痛很受歡迎的居家療法。',
+      [['There is no simple remedy for the shortage of nurses.', '護理人力短缺沒有簡單的補救辦法。'],
+       ['Many herbal remedies have never been tested in clinical trials.', '許多草藥療法從未在臨床試驗中檢驗過。'],
+       ['The hospital took quick steps to remedy the mistake.', '醫院很快採取措施補救這個錯誤。']]],
+  ],
+  // 第 7 天：營養與代謝
+  [
+    ['metabolism', 'n.', '新陳代謝', 'meta-（變化）＋bol（丟）＋-ism', 'Metabolism slows down as people get older.', '人年紀愈大，新陳代謝愈慢。',
+      [['Muscle burns more energy than fat, so building muscle can speed up your metabolism.', '肌肉比脂肪消耗更多能量，所以增加肌肉能加快新陳代謝。'],
+       ['Some genetic disorders affect the metabolism of sugar.', '有些遺傳疾病會影響糖的代謝。'],
+       ['Thyroid hormones control the speed of the body’s metabolism.', '甲狀腺素控制身體新陳代謝的速度。']]],
+    ['glucose', 'n.', '葡萄糖', 'gluc（甜）＋-ose（糖）', 'The brain uses glucose as its main source of energy.', '大腦以葡萄糖作為主要能量來源。',
+      [['Patients with diabetes must check their blood glucose several times a day.', '糖尿病人一天要量好幾次血糖。'],
+       ['After a meal, the level of glucose in the blood rises quickly.', '飯後血液中的葡萄糖濃度會很快上升。'],
+       ['Runners sometimes drink glucose gel during a long race.', '跑者在長距離比賽中有時會喝葡萄糖凝膠。']]],
+    ['insulin', 'n.', '胰島素', 'insul（島）＋-in', 'Insulin helps move sugar from the blood into the cells.', '胰島素幫助糖從血液進入細胞。',
+      [['People with type 1 diabetes need to inject insulin every day.', '第一型糖尿病人每天都需要注射胰島素。'],
+       ['When cells stop responding to insulin, blood sugar stays high.', '細胞對胰島素不再有反應時，血糖會一直偏高。'],
+       ['The discovery of insulin in 1921 saved millions of lives.', '1921 年發現胰島素拯救了數百萬條人命。']]],
+    ['deficiency', 'n.', '缺乏（症）', 'de-（向下）＋fic（做）＋-iency', 'Iron deficiency is a common cause of tiredness in young women.', '缺鐵是年輕女性疲倦的常見原因。',
+      [['Vitamin D deficiency is surprisingly common in people who rarely go outside.', '很少出門的人缺乏維生素 D 的情形意外地普遍。'],
+       ['A deficiency of vitamin C can cause bleeding gums.', '缺乏維生素 C 會造成牙齦出血。'],
+       ['The report pointed out serious deficiencies in the hospital’s safety rules.', '報告指出這家醫院的安全規定有嚴重缺失。']]],
+    ['intake', 'n.', '攝取量', 'in（進入）＋take（拿）', 'Reducing sugar intake can lower the risk of tooth decay.', '減少糖的攝取量能降低蛀牙的風險。',
+      [['Adults should limit their daily salt intake to about five grams.', '成人應該把每天的鹽攝取量限制在大約五公克。'],
+       ['Her calorie intake dropped sharply while she was sick.', '她生病時熱量攝取大幅減少。'],
+       ['A higher intake of fruit and vegetables was linked to better heart health.', '多攝取蔬果和較好的心臟健康有關。']]],
+    ['digest', 'v.', '消化', 'di-（分開）＋gest（帶）', 'It takes several hours to digest a large meal.', '消化一頓大餐需要好幾個小時。',
+      [['Babies cannot digest some foods that adults eat easily.', '有些大人很容易消化的食物，嬰兒卻無法消化。'],
+       ['Fiber passes through the body without being fully digested.', '纖維通過身體時並沒有被完全消化。'],
+       ['Chewing food well makes it easier for the stomach to digest it.', '把食物嚼碎能讓胃比較容易消化。']]],
+    ['absorb', 'v.', '吸收', 'ab-（離開）＋sorb（吸）', 'The small intestine absorbs most of the nutrients from food.', '小腸吸收食物中大部分的營養素。',
+      [['Vitamin D helps the body absorb calcium from milk and other foods.', '維生素 D 幫助身體從牛奶和其他食物中吸收鈣。'],
+       ['Dark clothes absorb more heat from the sun than light ones.', '深色衣服比淺色衣服吸收更多陽光的熱。'],
+       ['Some drugs are absorbed more slowly if you take them with food.', '有些藥和食物一起吃，吸收會比較慢。']]],
+    ['calorie', 'n.', '卡路里、熱量', '', 'A can of soda contains about 150 calories.', '一罐汽水大約有 150 大卡。',
+      [['To lose weight, you need to burn more calories than you eat.', '要減重，消耗的熱量必須比吃進去的多。'],
+       ['Nuts are healthy but high in calories, so eat them in small amounts.', '堅果很健康但熱量高，所以要少量吃。'],
+       ['The menu shows the number of calories next to each dish.', '菜單在每道菜旁邊標出熱量。']]],
+    ['sedentary', 'adj.', '久坐不動的', 'sed（坐）＋-entary', 'A sedentary lifestyle increases the risk of heart disease.', '久坐不動的生活方式會增加心臟病的風險。',
+      [['Office workers with sedentary jobs should stand up and move every hour.', '從事久坐工作的上班族應該每小時起來動一動。'],
+       ['Children today are more sedentary than they were thirty years ago.', '現在的孩子比三十年前更少活動。'],
+       ['The study compared active adults with sedentary adults of the same age.', '這項研究比較同年齡活躍的成人和久坐不動的成人。']]],
+    ['supplement', 'n. / v.', '補充品；補充', 'sup-（在下面）＋ple（填滿）＋-ment', 'Many people take vitamin supplements without asking a doctor.', '很多人沒問過醫生就吃維生素補充品。',
+      [['Pregnant women are often told to take a folic acid supplement.', '孕婦常被建議服用葉酸補充品。'],
+       ['She supplements her income by teaching English in the evenings.', '她晚上教英文來補貼收入。'],
+       ['A healthy diet usually provides enough iron, so supplements are not always needed.', '健康的飲食通常能提供足夠的鐵，所以不一定需要補充品。']]],
+    ['moderate', 'adj.', '適度的、中等的', 'moder（控制、衡量）＋-ate', 'Moderate exercise, such as fast walking, is good for the heart.', '適度運動，例如快走，對心臟有益。',
+      [['The patient’s pain was moderate and did not require strong drugs.', '病人的疼痛屬中等，不需要用強效藥物。'],
+       ['Drinking coffee in moderate amounts appears to be safe for most adults.', '對大多數成人來說，適量喝咖啡似乎是安全的。'],
+       ['Prices rose at a moderate rate last year.', '去年物價以溫和的速度上漲。']]],
+    ['beneficial', 'adj.', '有益的', 'bene-（好）＋fic（做）＋-ial', 'Sunlight in the morning is beneficial for sleep.', '早上曬太陽對睡眠有益。',
+      [['Some bacteria in the gut are beneficial and help us digest food.', '腸道裡有些細菌是有益的，能幫助我們消化食物。'],
+       ['The new policy proved beneficial for both patients and nurses.', '新政策證實對病人和護理師都有好處。'],
+       ['Small changes, such as taking the stairs, can be surprisingly beneficial.', '小改變，例如走樓梯，可能有意想不到的好處。']]],
+  ],
+];
+WEEKS[1].sents = [
+  // 第 1 天：關係子句進階（whose、逗號 which、介系詞＋which）
+  [{ chunks: ['Patients', 'whose blood pressure remains elevated', 'despite treatment', 'should undergo a comprehensive assessment,', 'which may reveal damage to the arteries', 'that supply the kidneys and the brain.'], core: 'Patients should undergo a comprehensive assessment.', zh: '治療後血壓仍然偏高的病人應該接受全面評估；這項評估可能發現供應腎臟和大腦的動脈已經受損。',
+     steps: [['主要動詞是哪一個？', 'should undergo', 'remains elevated', 'may reveal', 'remains 在 whose 子句裡，may reveal 在 which 子句裡；只有 should undergo 不在任何子句中。', 's.core', { 3: 'v' }], ['誰應該接受評估？', 'Patients', 'blood pressure', 'the arteries', 'whose blood pressure…despite treatment 都在說明 Patients；whose 是「前面那個名詞的」：病人的血壓。', 's.rel', { 0: 's', 1: 'm', 2: 'm' }], ['逗號後的 which 指的是？', 'the assessment', 'the treatment', 'the patients', 'which 指物，緊接在 assessment 後面：可能發現損傷的是那次評估。', 's.rel', { 4: 'm' }], ['that supply the kidneys and the brain 修飾哪個名詞？', 'the arteries', 'the damage', 'the assessment', '供應腎臟和大腦的是動脈；that 子句緊跟在 arteries 後面。', 's.rel', { 5: 'm' }]] },
+   { chunks: ['Stroke,', 'which occurs when a clot blocks a vessel in the brain,', 'is a crucial reason', 'why doctors emphasize the control of hypertension,', 'a condition in which the pressure inside the arteries stays too high.'], core: 'Stroke is a crucial reason.', zh: '中風是血塊堵住腦部血管時發生的；它是醫生強調控制高血壓的關鍵原因。高血壓是動脈內壓力一直太高的狀態。',
+     steps: [['主要動詞是哪一個？', 'is', 'occurs', 'blocks', 'occurs 和 blocks 都在 which 子句裡；拿掉兩個逗號之間的部分，剩下 Stroke is a crucial reason。', 's.core', { 0: 's', 2: 'v' }], ['兩個逗號之間的 which 子句在補充什麼？', '中風怎麼發生', '血塊從哪裡來', '血管有多粗', '逗號＋which 是補充說明前面的 Stroke：血塊堵住腦血管時就會發生。拿掉它，主幹仍然完整。', 's.rel', { 1: 'm' }], ['why doctors emphasize… 修飾哪個名詞？', 'reason', 'Stroke', 'hypertension', 'the reason why…＝…的原因；why 子句說明是什麼原因。', 's.rel', { 3: 'm' }], ['in which 的 which 指的是？', 'a condition', 'the control', 'the brain', 'in which ＝ in a condition：在這種狀態裡，動脈內壓力太高。介系詞放在 which 前面時，不能換成 that。', 's.rel', { 4: 'm' }]] }],
+  // 第 2 天：時態與主詞動詞一致
+  [{ chunks: ['The number of participants', 'who reported excessive fatigue', 'has declined', 'since the researchers changed the protocol,', 'but the results of the randomized trial', 'have not yet been replicated', 'in other hospitals.'], core: 'The number has declined, but the results have not yet been replicated.', zh: '回報過度疲勞的受試者人數，自從研究人員修改研究計畫後已經減少；但這項隨機分派試驗的結果還沒有在其他醫院被重現。',
+     steps: [['but 前面這一半，主要動詞是？', 'has declined', 'reported fatigue', 'changed the protocol', 'reported 在 who 子句裡，changed 在 since 子句裡。', 's.core', { 2: 'v' }], ['has declined 的主詞是？', 'The number', 'participants', 'the researchers', 'The number of＋複數名詞：主詞是 number（單數），所以用 has。who reported… 修飾 participants。', 'g.tense', { 0: 's', 1: 'm' }], ['since 後面是過去的時間點，主要子句用什麼時態？', '現在完成式', '過去式', '未來式', 'since＋過去的事＝「從那時到現在」，主要子句用 have／has＋過去分詞。', 'g.tense', { 3: 'm' }], ['but 後面這一半，主詞和動詞是？', 'results / have', 'trial / has', 'hospitals / have', 'of the randomized trial 修飾 results；results 是複數，所以用 have。', 'g.tense', { 4: 's', 5: 'v', 6: 'm' }]] },
+   { chunks: ['Researchers', 'whose earlier study had found a correlation between sleep and obesity', 'later conducted a cohort study,', 'in which they followed 3,000 children for ten years', 'to test the hypothesis directly.'], core: 'Researchers later conducted a cohort study.', zh: '先前的研究發現睡眠和肥胖有相關的研究人員，後來進行了一項世代研究，追蹤三千名兒童十年，直接檢驗這個假設。',
+     steps: [['主要動詞是？', 'conducted', 'had found', 'followed', 'had found 在 whose 子句裡，followed 在 in which 子句裡。', 's.core', { 0: 's', 2: 'v' }], ['whose earlier study 是誰的研究？', '研究人員的', '兒童們的', '世代研究的', 'whose＝「前面那個名詞的」；前面是 Researchers。', 's.rel', { 1: 'm' }], ['in which 可以換成什麼？', 'in the cohort study', 'in the correlation', 'in the children', 'which 指前面的 a cohort study：在這項研究中追蹤孩子。', 's.rel', { 3: 'm' }], ['to test the hypothesis directly 說明什麼？', '做研究的目的', '研究的結果', '研究的地點', 'to＋原形動詞放在句尾，常表示目的：為了直接檢驗這個假設。', 's.core', { 4: 'm' }]] }],
+  // 第 3 天：讓步與對比
+  [{ chunks: ['Although most mutations have no effect on health,', 'a single change in one gene’s sequence', 'can alter an enzyme so much', 'that the body can no longer break down some sugars;', 'nevertheless, such disorders can often be managed with diet.'], core: 'A single change can alter an enzyme; such disorders can often be managed.', zh: '雖然大多數突變對健康沒有影響，一個基因序列上的單一改變，卻可能讓酵素改變到身體再也無法分解某些糖；儘管如此，這類疾病常常可以靠飲食控制。',
+     steps: [['分號前，主要動詞是？', 'can alter', 'have no effect', 'can no longer break', 'have 在 Although 子句裡，break 在 so…that 的 that 子句裡。', 's.core', { 1: 's', 2: 'v' }], ['Although 子句和主要子句是什麼關係？', '讓步：雖然…卻…', '因果：因為…所以…', '時間：先…再…', '大多數突變沒影響，這一個卻影響很大：方向相反，是讓步。although 後面接完整的子句。', 'g.conj', { 0: 'm' }], ['so much that… 表示什麼？', '程度大到產生某個結果', '為了達成某個目的', '如果發生某個條件', 'so＋程度＋that＋結果：改變大到身體無法分解糖。', 'c.logic', { 3: 'm' }], ['nevertheless 前後是什麼關係？', '轉折：雖然嚴重仍可控制', '補充：再說一個缺點', '舉例：說明哪些糖不行', '前面講壞處，後面說仍能用飲食控制，方向相反。nevertheless 是副詞，前面用分號或句號。', 'g.conj', { 4: 'm' }]] },
+   { chunks: ['Scientists', 'can now sequence a genome in a day,', 'compare it with thousands of others,', 'and identify the mutations', 'that make some people more susceptible to cancer', 'and others more resistant to infection.'], core: 'Scientists can sequence a genome, compare it, and identify the mutations.', zh: '科學家現在一天就能定出一個基因體（genome，一個人全部的基因）的序列、拿它和數千個其他基因體比較，並找出讓某些人比較容易得癌症、另一些人比較能抵抗感染的突變。',
+     steps: [['主詞是？', 'Scientists', 'a genome', 'the mutations', '句子最前面的名詞，後面接 can 帶出動詞。', 's.core', { 0: 's' }], ['can 後面並列了幾個動詞？', '三個', '兩個', '四個', 'sequence、compare、identify 三個原形動詞，用 A, B, and C 連接，共用 can。', 's.para', { 1: 'v', 2: 'v', 3: 'v' }], ['compare 為什麼用原形？', '跟著 can，和 sequence 平行', '跟著 thousands，表示數量', '跟著 others，表示複數名詞', '平行結構：and 連接的東西形式要一樣；can 後面都用原形。', 's.para', { 2: 'v' }], ['some people… and others… 是什麼結構？', 'make 後面兩組「人＋形容詞」', 'and 連接兩個完整的主要子句', 'that 子句裡兩個並列的主詞', 'make some people more susceptible and (make) others more resistant：兩組平行，第二組省略 make。', 's.para', { 4: 'm', 5: 'm' }]] }],
+  // 第 4 天：平行結構
+  [{ chunks: ['Chronic sleep deprivation', 'not only impairs memory and attention', 'but also makes people more likely', 'to perceive ordinary events as threats,', 'which may explain', 'why anxiety and depression are so common among night-shift workers.'], core: 'Chronic sleep deprivation not only impairs memory but also makes people more likely to perceive events as threats.', zh: '長期睡眠不足不只削弱記憶和注意力，也讓人更容易把平常的事情看成威脅；這可能說明為什麼焦慮和憂鬱在夜班工作者中這麼常見。',
+     steps: [['主詞是？', 'sleep deprivation', 'memory and attention', 'ordinary events', '句首的名詞片語 Chronic sleep deprivation，後面接動詞 impairs。', 's.core', { 0: 's' }], ['not only… but also… 連接哪兩個動詞？', 'impairs 和 makes', 'impairs 和 perceive', 'makes 和 explain', 'not only 後面是 impairs，but also 後面是 makes，兩個都是第三人稱單數現在式，形式一樣。', 's.para', { 1: 'v', 2: 'v' }], ['to perceive… 接在哪個字後面？', 'likely', 'people', 'makes', 'more likely to＋原形動詞：更可能去做某事。', 'c.collo', { 3: 'm' }], ['which may explain 的 which 指的是？', '前面整件事', 'ordinary events', 'threats', '逗號＋which 可以指前面整句：睡眠不足造成這些影響，這件事可能說明…。', 's.rel', { 4: 'm', 5: 'm' }]] },
+   { chunks: ['Effective programs for stressed nurses', 'combine regular exercise,', 'enough sleep,', 'and short conversations with colleagues,', 'because people who feel supported', 'cope better with fatigue', 'than people who are left to struggle alone.'], core: 'Effective programs combine regular exercise, enough sleep, and short conversations.', zh: '給壓力大的護理師的有效計畫，會結合規律運動、充足睡眠和與同事的簡短談話，因為覺得有人支持的人，比被留下獨自硬撐的人更能應付疲勞。',
+     steps: [['主要動詞是？', 'combine', 'feel supported', 'cope better', 'feel 和 cope 都在 because 子句裡。', 's.core', { 0: 's', 1: 'v' }], ['combine 的受詞有幾項？', '三項', '兩項', '四項', 'regular exercise, enough sleep, and short conversations：A, B, and C 三個名詞片語。', 's.para', { 2: 'm', 3: 'm' }], ['than 後面比較的對象是？', 'people left alone', 'nurses who feel supported', 'short conversations', '比較的兩邊形式要一樣：people who feel supported 對 people who are left to struggle alone。', 's.para', { 4: 'm', 5: 'm', 6: 'm' }]] }],
+  // 第 5 天：前後文邏輯
+  [{ chunks: ['Smallpox', 'was eradicated', 'through widespread vaccination and careful surveillance;', 'measles, however,', 'is far more contagious,', 'so even a small drop in vaccination rates', 'can quickly lead to an outbreak.'], core: 'Smallpox was eradicated; measles, however, is far more contagious.', zh: '天花透過普及的疫苗接種和仔細的監測而被根除；然而麻疹的傳染力強得多，所以疫苗接種率只要稍微下降，就可能很快引發疫情。',
+     steps: [['分號前，主詞和動詞是？', 'Smallpox / was eradicated', 'vaccination / was eradicated', 'Smallpox / surveillance', '天花「被根除」：被動語態 was＋過去分詞。through… 說明用什麼方法。', 's.pass', { 0: 's', 1: 'v', 2: 'm' }], ['however 表示分號前後是什麼關係？', '對比：天花做到了，麻疹比較難', '因果：天花造成了麻疹', '補充：再舉一個被根除的病', '前面說天花被根除，後面說麻疹傳染力強得多：方向相反。however 夾在句中，前後用逗號。', 'c.logic', { 3: 's', 4: 'v' }], ['so 引出的是什麼？', '傳染力強帶來的結果', '傳染力強的原因', '另一種疾病的例子', 'so＝所以：因為麻疹很會傳染，接種率稍降就可能爆發。', 'c.logic', { 5: 'm', 6: 'm' }]] },
+   { chunks: ['In rural areas,', 'where clean water and basic sanitation are still lacking,', 'the incidence of diarrhea among children under five', 'remains high,', 'a disparity that health officials have promised to reduce.'], core: 'The incidence remains high.', zh: '在仍然缺乏乾淨的水和基本衛生設施的鄉村地區，五歲以下兒童的腹瀉（diarrhea）發生率仍然偏高；這是衛生官員承諾要縮小的差距。',
+     steps: [['主要動詞是？', 'remains', 'are lacking', 'have promised', 'are lacking 在 where 子句裡，have promised 在 that 子句裡。', 's.core', { 3: 'v' }], ['主詞的中心是？', 'incidence', 'children', 'sanitation', 'the incidence of diarrhea among children…：of 和 among 都是修飾，中心是 incidence（單數，所以用 remains）。', 'g.tense', { 2: 's' }], ['where 指的是？', 'rural areas', 'clean water', 'children', 'where 用在地點：在那些鄉村地區，乾淨的水仍然缺乏。', 's.rel', { 0: 'm', 1: 'm' }], ['句尾的 a disparity that… 在做什麼？', '重新說明前面整件事', '當作 remains 的主詞', '修飾 health officials', '句尾的名詞片語把前面的情況換個說法：這是一種差距；that 子句再修飾 disparity。', 's.rel', { 4: 'm' }]] }],
+  // 第 6 天：字根拆字
+  [{ chunks: ['Antibiotics,', 'which kill bacteria but cannot inhibit viruses,', 'are often prescribed unnecessarily for colds,', 'a practice that promotes resistance', 'and reduces the effectiveness of these drugs for everyone.'], core: 'Antibiotics are often prescribed unnecessarily for colds.', zh: '抗生素能殺死細菌，卻不能抑制病毒，但它常被不必要地開給感冒的人；這種做法會助長抗藥性，並降低這些藥對所有人的效果。',
+     steps: [['主要動詞是？', 'are prescribed', 'kill', 'cannot inhibit', 'kill 和 inhibit 都在 which 子句裡；are prescribed 是被動。', 's.core', { 0: 's', 2: 'v' }], ['antibiotic 拆成 anti-＋bio＋-tic，意思是？', '對抗細菌這類生物的藥', '幫助生物生長的藥', '和生命無關的藥', 'anti-＝對抗，bio＝生命：抗生素對付的是細菌這類生物。', 'v.root', { 1: 'm' }], ['prescribe 的 pre- 表示什麼？', '事先', '再一次', '相反', 'pre-（事先）＋scribe（寫）：用藥前先寫下來＝開處方。', 'v.root', {}], ['句尾的 a practice that… 指的是？', '為感冒開抗生素這件事', '細菌抵抗藥物這件事', '病毒殺死細菌這件事', '句尾的名詞片語重新說明前面整件事；promotes 和 reduces 兩個動詞平行。', 's.para', { 3: 'm', 4: 'm' }]] },
+   { chunks: ['The efficacy of a new compound', 'that suppressed tumor growth in mice', 'was later tested in a randomized trial,', 'in which half of the patients received a placebo', 'and neither doctors nor patients knew who got the real drug.'], core: 'The efficacy of a new compound was later tested.', zh: '一種在小鼠身上能抑制腫瘤生長的新化合物，後來在隨機分派試驗中檢驗療效；試驗中一半病人拿到安慰劑，而且醫生和病人都不知道誰拿到真的藥。',
+     steps: [['主要動詞是？', 'was tested', 'suppressed', 'received', 'suppressed 在 that 子句裡，received 在 in which 子句裡。', 's.core', { 2: 'v' }], ['被檢驗的是什麼？', 'The efficacy', 'a new compound', 'tumor growth', 'The efficacy of a new compound：of 後面是修飾，中心是 efficacy（療效）。', 's.core', { 0: 's', 1: 'm' }], ['in which 的 which 指的是？', 'the trial', 'the patients', 'the mice', '介系詞＋which：in the trial，在這個試驗裡一半病人拿到安慰劑。', 's.rel', { 3: 'm' }], ['neither A nor B 是什麼意思？', 'A 和 B 都不', 'A 或 B 其中一個', '只有 A 不是 B', 'neither doctors nor patients knew：醫生和病人都不知道，這叫雙盲，可以減少偏差。', 's.para', { 4: 'm' }]] }],
+  // 第 7 天：固定搭配
+  [{ chunks: ['A sedentary lifestyle and a high intake of sugary drinks', 'are closely associated with obesity,', 'and both may contribute to', 'insulin resistance,', 'a condition in which cells respond poorly to insulin', 'and glucose builds up in the blood.'], core: 'A sedentary lifestyle and a high intake are associated with obesity, and both may contribute to insulin resistance.', zh: '久坐的生活方式和大量喝含糖飲料都和肥胖密切相關，而且兩者都可能造成胰島素阻抗，也就是細胞對胰島素反應很差、葡萄糖在血液中堆積的狀態。',
+     steps: [['主詞為什麼配 are？', '兩件事用 and 連接', 'drinks 離動詞最近', 'lifestyle 是可數名詞', 'A and B 當主詞時是複數，所以用 are；不是看離動詞最近的字。', 'g.tense', { 0: 's', 1: 'v' }], ['be associated 後面接哪個介系詞？', 'with', 'to', 'by', 'be associated with＝和…有關，是固定搭配。', 'c.collo', { 1: 'v' }], ['contribute to 的 to 後面要接什麼？', '名詞或動名詞', '原形動詞', '一個完整句子', 'contribute to 的 to 是介系詞，後面接名詞或 V-ing：contribute to insulin resistance。', 'c.collo', { 2: 'v', 3: 'm' }], ['in which 子句裡，and 連接哪兩個動詞？', 'respond 和 builds', 'respond 和 contribute', 'builds 和 associated', 'cells respond poorly… and glucose builds up…：兩個子句平行，一起說明這個狀態。', 's.para', { 4: 'm', 5: 'm' }]] },
+   { chunks: ['Dietitians', 'recommend', 'eating moderate portions,', 'choosing whole grains over white bread,', 'and taking a vitamin D supplement', 'only when tests demonstrate a deficiency,', 'rather than relying on pills', 'to replace a balanced diet.'], core: 'Dietitians recommend eating, choosing, and taking.', zh: '營養師建議吃適量的份量、選擇全穀類而不是白麵包，並且只在檢驗證明缺乏時才服用維生素 D 補充品，而不是靠藥丸取代均衡飲食。',
+     steps: [['主要動詞是？', 'recommend', 'demonstrate', 'replace', 'demonstrate 在 when 子句裡，replace 在 to V 裡。', 's.core', { 0: 's', 1: 'v' }], ['recommend 後面並列了幾個動作？', '三個', '兩個', '四個', 'eating, choosing, and taking：三個 V-ing 並列，都是 recommend 的受詞。', 's.para', { 2: 'm', 3: 'm', 4: 'm' }], ['為什麼是 taking，不是 to take？', '和前兩個 V-ing 平行', '因為前面有 and', '因為 recommend 後接 to V', '平行結構：and 連接的形式要一樣；而且 recommend 後面接 V-ing。', 's.para', { 5: 'm' }], ['rather than relying on pills 是什麼意思？', '而不是靠藥丸', '先靠藥丸再說', '多靠一些藥丸', 'rather than＝而不是；後面也用 V-ing（relying），和前面平行。', 'c.logic', { 6: 'm', 7: 'm' }]] }],
+];
+
+/* ---------- 後中英文：第 2 週（文法重點與文章） ----------
+   每天兩篇文章：[克漏字, 閱讀]。題目格式同第 1 週。 */
+WEEKS[1].gram = [
+  {
+  id: 's.rel',
+  title: '關係子句進階：whose、介系詞＋which、逗號＋which',
+  body: '<p>第 1 週學過 who、which、that。關係子句說明的那個名詞叫做<b>先行詞</b>（在子句「前面先出現」的名詞）。這週加上三個常考的變化：</p>\n<ul><li><b>whose＋名詞</b>＝「先行詞的…」，後面接完整的句子：</li></ul>\n<p class="ex"><span class="ch s">Patients</span> <span class="ch m">whose blood pressure stays high</span> <span class="ch v">need</span> regular checks.　（病人的血壓一直偏高）</p>\n<ul><li><b>介系詞＋which／whom</b>：把子句裡的介系詞搬到關係代名詞前面。the artery <b>through which</b> blood flows ＝ the artery (that) blood flows through。介系詞後面只能用 which（物）或 whom（人），<b>不能用 that</b>。</li>\n<li><b>逗號＋which</b>：補充說明，拿掉也不影響主幹。which 可以指前面一個名詞，也可以指前面<b>整件事</b>。逗號後面也<b>不能用 that</b>。</li></ul>\n<p class="ex"><span class="ch s">He</span> <span class="ch v">stopped</span> smoking, <span class="ch m">which lowered his risk of heart disease</span>.　（which ＝ 他戒菸這件事）</p>\n<p>判斷三步驟：① 先行詞是人還是物？② 空格後面缺什麼：缺主詞、缺受詞，還是句子完整（只缺「…的」）？③ 前面有沒有逗號或介系詞？</p>',
+  qs: [
+    { id: 'g1-1', sk: 's.rel', q: 'Doctors closely watch patients ____ arteries have been narrowed by fat deposits.', o: [ 'whose', 'who', 'which', 'whom' ], why: '空格後面 arteries have been narrowed 是完整的句子，意思是「病人的動脈」，要用表示所有的 whose。who、which 後面要缺主詞，whom 後面要缺受詞。', st: [ [ '先行詞是？', 'patients', 'arteries', 'deposits', '空格緊接在 patients 後面，子句在說明這些病人。', 's.rel' ], [ '空格後面 arteries have been narrowed 是？', '完整的句子', '缺主詞的句子', '缺受詞的句子', 'arteries 是主詞，have been narrowed 是動詞，什麼都不缺。', 's.rel' ], [ '子句完整，又要表示「病人的動脈」，用？', 'whose', 'which', 'that', 'whose＋名詞＝「…的」，後面接完整的句子。', 's.rel' ] ] },
+    { id: 'g1-2', sk: 's.rel', q: 'The clinic bought a new machine, ____ allows nurses to test how fast blood clots in five minutes.', o: [ 'which', 'that', 'it', 'what' ], why: '逗號後面補充說明 machine（物），用 which；逗號後面不能用 that；用 it 會讓兩個完整句子只靠逗號連接，是錯的。', st: [ [ '空格前面是什麼標點？', '逗號', '句號', '分號', 'a new machine, ___ allows…：逗號後面是補充說明。', 's.rel' ], [ '逗號後面補充說明「物」，可以用哪一個？', 'which', 'that', 'what', '逗號後面不能用 that；what 本身已經包含先行詞，不能接在名詞後面。', 's.rel' ], [ '為什麼不能用 it？', '兩個句子缺連接詞', 'it 不能指機器', 'it 不能接 allows', 'The clinic bought…, it allows…：兩個完整句子之間只有逗號，沒有連接詞。', 'g.conj' ] ] },
+    { id: 'g1-3', sk: 's.rel', q: 'The vessel ____ the clot was found is now being repaired.', o: [ 'in which', 'which', 'in that', 'whose' ], why: '原本的意思是 The clot was found in the vessel。把 in 搬到前面變成 in which；介系詞後面不能用 that；只用 which 會少了 in。', st: [ [ '血塊和血管是什麼關係？', '血塊在血管裡面', '血管在血塊裡面', '血塊就是血管', '原句是 The clot was found in the vessel：血塊在血管「裡面」被發現。', 's.rel' ], [ '空格後面 the clot was found 少了什麼？', '介系詞 in＋地點', '主詞 the vessel', '動詞 was found', '主詞和動詞都有，少的是「在哪裡」：in the vessel。', 's.rel' ], [ '介系詞搬到前面時，後面接？', 'which', 'that', 'whose', '介系詞後面只能接 which（物）或 whom（人），不能接 that。', 's.rel' ] ] }
+  ]
+},
+  {
+  id: 'g.tense',
+  title: '時態與主詞動詞一致：主詞再長，也要找到真正的中心',
+  body: '<p><b>主詞動詞一致</b>：動詞要配合主詞的單複數。單數主詞配 is／has／V-s，複數主詞配 are／have／V。長句裡主詞後面常跟著一串修飾，動詞要看<b>主詞的中心名詞</b>，不是離動詞最近的那個字。</p>\n<p class="ex"><span class="ch s">The results</span> <span class="ch m">of the study on sleep and memory</span> <span class="ch v">were</span> surprising.</p>\n<ul><li><b>the number of＋複數名詞</b>：中心是 number，單數。The number of patients <b>has</b> risen.</li>\n<li><b>a number of＋複數名詞</b>＝「好幾個」，複數。A number of patients <b>have</b> left the study.</li>\n<li><b>A and B</b> 當主詞是複數；<b>each（of…）、every＋名詞</b>是單數。</li></ul>\n<p><b>時態</b>是動詞表示時間的形式。研究報告最常用三種：<b>過去式</b>說這次研究做了什麼、發現什麼（We <b>recruited</b> 300 adults.）；<b>現在完成式</b>（have／has＋過去分詞）說從過去到現在累積的結果（Many studies <b>have shown</b>…）；<b>現在式</b>說一般事實（Smoking <b>causes</b> cancer.）。看到 since、so far、in recent years，常用現在完成式；看到 in 2018、last year、ago，用過去式。</p>',
+  qs: [
+    { id: 'g2-1', sk: 'g.tense', q: 'The number of participants who dropped out of the trial ____ smaller than expected.', o: [ 'was', 'were', 'have been', 'being' ], why: '主詞中心是 The number（單數）；who dropped out… 修飾 participants。說過去研究的結果用過去式 was。', st: [ [ '主詞的中心是？', 'The number', 'participants', 'the trial', 'The number of＋複數名詞，中心是 number。', 'g.tense' ], [ '單數主詞、說過去的結果，用？', 'was', 'were', 'are', 'number 是單數，所以不用 were。', 'g.tense' ] ] },
+    { id: 'g2-2', sk: 'g.tense', q: 'In recent years, several studies ____ a correlation between screen time and poor sleep in teenagers.', o: [ 'have found', 'has found', 'find', 'had been found' ], why: 'In recent years 表示從過去到現在，用現在完成式；主詞 several studies 是複數，用 have。', st: [ [ 'In recent years 表示什麼時間？', '從過去持續到現在', '只有過去某一刻', '未來的某個時候', 'in recent years＝近年來，常配現在完成式。', 'g.tense' ], [ '主詞 several studies 是單數還是複數？', '複數', '單數', '看不出來', 'studies 是 study 的複數。', 'g.tense' ], [ '複數主詞的現在完成式是？', 'have found', 'has found', 'had found', 'have＋過去分詞；has 配單數主詞。', 'g.tense' ] ] },
+    { id: 'g2-3', sk: 'g.tense', q: 'Each of the variables that the researchers measured ____ recorded twice by two different nurses.', o: [ 'was', 'were', 'have been', 'are' ], why: 'Each of＋複數名詞，中心是 Each（單數）；that the researchers measured 修飾 variables。', st: [ [ '主詞的中心是？', 'Each', 'the variables', 'the researchers', 'Each of the variables：「每一個」才是中心，of the variables 是修飾。', 'g.tense' ], [ 'Each 是單數還是複數？', '單數', '複數', '都可以', 'each＝每一個，一次只看一個，所以是單數。', 'g.tense' ] ] }
+  ]
+},
+  {
+  id: 'g.conj',
+  title: '讓步與對比：although 接句子，despite 接名詞',
+  body: '<p><b>讓步</b>是「雖然 A，還是 B」：前後方向相反，但兩件事同時成立。<b>對比</b>是把兩件事並排，比較差異。這幾個字意思接近，考的是<b>後面接什麼</b>和<b>標點</b>。先認識一個名詞：<b>子句</b>＝有自己的主詞和動詞的一段話。</p>\n<ul><li><b>although／though／even though＋子句</b>：<b>Although</b> the drug is expensive, many patients choose it.</li>\n<li><b>despite／in spite of＋名詞或 V-ing</b>：<b>Despite</b> its high cost, many patients choose it.　<b>Despite</b> being expensive, it is popular.</li>\n<li><b>whereas／while＋子句</b>：對比兩件事。Bacteria can be killed by antibiotics, <b>whereas</b> viruses cannot.</li>\n<li><b>however／nevertheless</b> 是副詞，不能直接連接兩個句子：前面用句號或分號，後面加逗號。The drug is expensive<b>; however,</b> many patients choose it.</li></ul>\n<p class="ex"><span class="ch m">Although most mutations are harmless,</span> <span class="ch s">some</span> <span class="ch v">cause</span> serious disease.</p>\n<p>常見錯誤：although 和 but 不能一起用（Although…, but… ✗）；despite 後面不能接子句（despite it is expensive ✗）。</p>',
+  qs: [
+    { id: 'g3-1', sk: 'g.conj', q: '____ her family history of heart disease, she has never had any symptoms.', o: [ 'Despite', 'Although', 'However', 'Whereas' ], why: '空格後面是名詞片語 her family history of heart disease（沒有動詞），要用 Despite；Although、Whereas 後面要接子句；However 是副詞，不能這樣連接。', st: [ [ '空格到逗號之間是什麼？', '只有名詞，沒有動詞', '有主詞也有動詞', '只有副詞和形容詞', 'her family history of heart disease：只有名詞片語，沒有動詞。', 'g.conj' ], [ '前後是什麼關係？', '讓步：有家族史卻沒症狀', '因果：有家族史所以沒症狀', '對比：兩個人的病史不同', '有危險因子，卻沒有症狀：方向相反。', 'c.logic' ], [ '表示讓步、後面接名詞的是？', 'despite', 'although', 'whereas', 'despite＋名詞；although＋子句。', 'g.conj' ] ] },
+    { id: 'g3-2', sk: 'g.conj', q: 'Some genetic traits are controlled by a single gene, ____ height is shaped by hundreds of genes working together.', o: [ 'whereas', 'despite', 'so', 'unless' ], why: '前後對比兩種特徵：一種由單一基因決定，一種由數百個基因決定；空格後面是子句，用 whereas。', st: [ [ '逗號前後在講什麼？', '兩種特徵的不同', '一件事的原因', '一件事的條件', '單一基因 vs. 數百個基因。', 'c.logic' ], [ '空格後面接的是？', '子句', '名詞片語', '副詞', 'height is shaped by…：有主詞 height，也有動詞 is shaped。', 'g.conj' ], [ '對比兩個子句用？', 'whereas', 'despite', 'so', 'despite 後面接名詞；so 表示結果。', 'g.conj' ] ] },
+    { id: 'g3-3', sk: 'g.conj', q: 'Gene therapy can cure some rare diseases. ____, it remains extremely expensive.', o: [ 'However', 'Although', 'Despite', 'Whereas' ], why: '空格在新句子的開頭、後面有逗號，要用副詞 However；Although、Whereas 是連接詞，要接在同一個句子裡；Despite 後面要接名詞。', st: [ [ '前一句和這一句是什麼關係？', '相反：能治病卻很貴', '因果：能治病所以很貴', '舉例：再舉一種療法', '優點對缺點：方向相反。', 'c.logic' ], [ '空格前是句號、後面是逗號，要用哪一類字？', '副詞（however 類）', '連接詞（although 類）', '介系詞（despite 類）', '句號已經把前一句結束了；新句子開頭用副詞加逗號。', 'g.conj' ] ] }
+  ]
+},
+  {
+  id: 's.para',
+  title: '平行結構進階：成對連接詞前後要對稱',
+  body: '<p><b>平行結構</b>：用連接詞連起來的東西，詞性和形式要一樣（名詞對名詞、to V 對 to V、V-ing 對 V-ing）。第 1 週練過 and、or；這週加上<b>成對連接詞</b>，也就是兩個字一組、一起使用的連接詞：</p>\n<ul><li><b>not only A but (also) B</b>：不只 A，還有 B</li><li><b>both A and B</b>：A 和 B 都</li><li><b>either A or B</b>：不是 A 就是 B；<b>neither A nor B</b>：A 和 B 都不</li></ul>\n<p class="ex"><span class="ch s">Exercise</span> <span class="ch v">improves</span> not only <span class="ch m">mood</span> but also <span class="ch m">memory</span>.　（名詞對名詞）</p>\n<p>A 和 B 緊接在兩個連接詞後面，形式要一樣：not only <b>reduces</b> stress but also <b>improves</b> sleep ✓；not only reduces stress but also <b>improving</b> sleep ✗。</p>\n<p><b>比較</b>也要平行：比較的兩邊要是同一類東西。The risk for smokers is higher than <b>that</b> for non-smokers.（that 代替 the risk：風險和風險比，不是風險和人比）</p>\n<p>做題技巧：先找到連接詞，再找出和空格配對的另一邊，空格照那一邊的形式寫。</p>',
+  qs: [
+    { id: 'g4-1', sk: 's.para', q: 'Regular exercise not only reduces anxiety but also ____ the quality of sleep.', o: [ 'improves', 'improving', 'to improve', 'improved' ], why: 'not only reduces… but also ___：兩邊平行。reduces 是現在式第三人稱單數，空格也用 improves。', st: [ [ '看到 not only，要找哪個字和它配對？', 'but also', 'and also', 'or else', 'not only A but also B 是一組。', 's.para' ], [ 'not only 後面的動詞是什麼形式？', 'reduces（現在式加 s）', 'reducing（V-ing）', 'to reduce（to V）', 'not only reduces anxiety。', 's.para' ], [ 'but also 後面要用？', 'improves', 'improving', 'to improve', '和 reduces 的形式一樣。', 's.para' ] ] },
+    { id: 'g4-2', sk: 's.para', q: 'Patients with depression often find it hard both to concentrate at work and ____ with daily stress.', o: [ 'to cope', 'coping', 'cope', 'copes' ], why: 'both to concentrate… and ___：兩邊都要是 to V，所以用 to cope。', st: [ [ '成對連接詞是？', 'both… and', 'often… at', 'hard… with', '看到 both，就找後面的 and。', 's.para' ], [ 'both 後面是什麼形式？', 'to V：to concentrate', 'V-ing：concentrating', '名詞：concentration', 'both to concentrate at work。', 's.para' ], [ 'and 後面要用？', 'to cope', 'coping', 'cope', '和 to concentrate 一樣用 to V。', 's.para' ] ] },
+    { id: 'g4-3', sk: 's.para', q: 'The risk of depression among people who sleep less than five hours is higher than ____ among people who sleep seven hours.', o: [ 'that', 'those', 'it', 'them' ], why: '比較的兩邊要是同一類東西：風險和風險比。代替單數的 the risk，用 that。', st: [ [ 'higher than 前面，是什麼東西比較高？', 'the risk', 'depression', 'people', 'The risk of depression… is higher：比較的是風險。', 's.para' ], [ 'than 後面要是什麼，才是同類相比？', '另一群人的風險', '另一群人本身', '另一種疾病', '風險要和風險比，不能和人比。', 's.para' ], [ '代替單數名詞 the risk，用？', 'that', 'those', 'them', 'that 代替單數名詞；those 代替複數名詞。', 's.para' ] ] }
+  ]
+},
+  {
+  id: 'c.logic',
+  title: '前後文邏輯：先判斷關係，再選連接的字',
+  body: '<p>克漏字很多空格考的是<b>前後文邏輯</b>，也就是兩句話之間的關係。不要先看選項；先讀空格前後各一句，判斷是哪一種關係：</p>\n<ul><li><b>補充</b>（同方向，再多說一點）：in addition、moreover、also</li>\n<li><b>舉例</b>（把前面說的事具體化）：for example、for instance</li>\n<li><b>轉折</b>（方向相反）：however、nevertheless、yet</li>\n<li><b>因果</b>：therefore、as a result、consequently（後面是結果）；because、since（後面是原因）</li>\n<li><b>換句話說</b>（同一件事講得更清楚）：in other words、that is</li>\n<li><b>取代</b>（不是 A，而是 B）：instead、rather</li></ul>\n<p>線索：後一句用 this／these 指回前面的事，常是補充或因果；後一句出現具體的病名、人名、數字，常是舉例；後一句出現 not、only、still，常是轉折。</p>\n<p class="ex">Many patients feel better after a week. <span class="ch m">However,</span> <span class="ch s">they</span> <span class="ch v">should finish</span> the full course of antibiotics.</p>\n<p>上週最常混淆的是補充、因果、舉例：<b>補充</b>是「再多一個同類的理由」，<b>因果</b>是「因為前面，所以後面」，<b>舉例</b>是「前面那句的一個具體實例」。</p>',
+  qs: [
+    { id: 'g5-1', sk: 'c.logic', q: 'Handwashing reduces the spread of many infections. ____, it costs almost nothing.', o: [ 'In addition', 'For example', 'Therefore', 'However' ], why: '前後都是洗手的好處，第二句再多說一個優點：補充，用 In addition。便宜不是因為能減少感染，所以不是因果。', st: [ [ '兩句都在講洗手的什麼？', '好處', '壞處', '歷史', '減少感染、幾乎不花錢：都是優點。', 'c.logic' ], [ '「幾乎不花錢」是「減少感染」造成的嗎？', '不是，是另一個優點', '是，前因後果', '是前一句的例子', '兩個優點各自成立，是補充，不是因果。', 'c.logic' ] ] },
+    { id: 'g5-2', sk: 'c.logic', q: 'Some infections spread through the air. ____, measles can pass between people who share a room for only a few minutes.', o: [ 'For example', 'However', 'Instead', 'As a result' ], why: 'measles 是「經空氣傳播的感染」的一個具體例子，用 For example。', st: [ [ '後一句出現了什麼具體的東西？', '一種病的名字', '一個相反的說法', '一個造成的原因', '具體的病名常常是舉例。', 'c.logic' ], [ 'measles 和「經空氣傳播的感染」是什麼關係？', '它是其中一個例子', '它是相反的例子', '它是造成的結果', '麻疹是經空氣傳播的感染之一。', 'c.logic' ] ] },
+    { id: 'g5-3', sk: 'c.logic', q: 'The vaccine does not prevent every infection. ____, it greatly lowers the chance of severe illness and death.', o: [ 'Nevertheless', 'Therefore', 'For instance', 'In other words' ], why: '前面說疫苗的限制，後面說它仍有很大的好處：方向相反，用 Nevertheless（儘管如此）。', st: [ [ '前一句在說疫苗的什麼？', '限制', '好處', '歷史', 'does not prevent every infection：不能預防所有感染。', 'c.logic' ], [ '後一句在說疫苗的什麼？', '好處', '限制', '價格', 'greatly lowers the chance of severe illness and death。', 'c.logic' ], [ '限制 → 好處，是什麼關係？', '轉折', '因果', '舉例', '方向相反，用轉折語。', 'c.logic' ] ] }
+  ]
+},
+  {
+  id: 'v.root',
+  title: '醫學字根：拆開字首、字根、字尾，就能猜字義',
+  body: '<p>很多醫學與學術單字是拼起來的：<b>字首</b>（放在前面，改變意思）＋<b>字根</b>（核心意思）＋<b>字尾</b>（通常決定詞性或類別）。認得常見的零件，遇到沒看過的字也能猜個大概。</p>\n<ul><li>字首：<b>anti-</b> 對抗（antibiotic）；<b>hyper-</b> 過度、<b>hypo-</b> 不足（hypertension 高血壓、hypothermia 失溫）；<b>in-／im-／ab-</b> 不、相反（inactive、abnormal）；<b>sub-／sup-</b> 在下面（subsequent、suppress）；<b>trans-</b> 穿過、轉移（transplant、transmission）</li>\n<li>字根：<b>cardi</b> 心臟；<b>neur</b> 神經；<b>derm</b> 皮膚；<b>gastr</b> 胃；<b>hem／em</b> 血；<b>glyc</b> 糖；<b>tox</b> 毒；<b>bio</b> 生命</li>\n<li>字尾：<b>-itis</b> 發炎（arthritis 關節炎）；<b>-ology</b> 學科（cardiology 心臟學）；<b>-ectomy</b> 切除（appendectomy 闌尾切除）；<b>-cide</b> 殺（pesticide 殺蟲劑）；<b>-ic／-al</b> 形容詞</li></ul>\n<p class="ex">gastr（胃）＋-itis（發炎）＝ <b>gastritis</b> 胃炎　　neur（神經）＋-ology（學科）＝ <b>neurology</b> 神經學</p>\n<p>拆字三步驟：① 先找認得的字根，知道「跟什麼有關」；② 再看字首，知道方向（過度、不足、對抗）；③ 最後看字尾，知道是病、學科、手術還是形容詞。字根只能幫你猜，一定要回到上下文確認。</p>',
+  qs: [
+    { id: 'g6-1', sk: 'v.root', q: 'A patient with dermatitis most likely has a problem with the ____.', o: [ 'skin', 'heart', 'stomach', 'nerves' ], why: 'derm（皮膚）＋-itis（發炎）＝皮膚炎。', st: [ [ '-itis 表示什麼？', '發炎', '切除', '學科', 'arthritis 關節炎、gastritis 胃炎。', 'v.root' ], [ 'derm 是哪個部位？', '皮膚', '心臟', '胃', 'dermatology＝皮膚科。', 'v.root' ] ] },
+    { id: 'g6-2', sk: 'v.root', q: 'Hypoglycemia means that the level of sugar in the blood is ____.', o: [ 'too low', 'too high', 'normal', 'changing' ], why: 'hypo-（不足）＋glyc（糖）＋-emia（血液的狀態）＝低血糖。hyper- 才是過高。', st: [ [ '字首 hypo- 表示？', '不足、低於', '過度、高於', '對抗、相反', 'hypothermia＝體溫過低（失溫）。', 'v.root' ], [ '和 hyperglycemia 相比，hypoglycemia 是？', '血糖過低', '血糖過高', '血糖正常', 'hyper-（過度）和 hypo-（不足）意思相反。', 'v.root' ] ] },
+    { id: 'g6-3', sk: 'v.root', q: 'A doctor who specializes in cardiology treats problems of the ____.', o: [ 'heart', 'brain', 'skin', 'bones' ], why: 'cardi（心臟）＋-ology（學科）＝心臟學。cardiovascular 也有同一個字根。', st: [ [ '-ology 表示？', '學科', '發炎', '切除', 'biology 生物學、psychology 心理學。', 'v.root' ], [ '字根 cardi 是什麼意思？', '心臟', '大腦', '骨頭', 'cardiovascular＝心血管的，cardi＝心臟。', 'v.root' ] ] }
+  ]
+},
+  {
+  id: 'c.collo',
+  title: '固定搭配：動詞後面接哪個介系詞，要整組記',
+  body: '<p><b>固定搭配</b>是英文習慣放在一起用的字，不能照中文意思自己換。醫學和研究文章最常見的是「動詞或形容詞＋介系詞」，介系詞選錯，整句就錯：</p>\n<ul><li><b>play a role in</b>＋名詞：在…中扮演角色</li><li><b>be associated with／be linked to</b>：和…有關</li><li><b>lead to／contribute to</b>＋名詞或 V-ing：導致、促成（這裡的 to 是介系詞，後面不接原形動詞）</li>\n<li><b>result in</b>＋結果／<b>result from</b>＋原因：A results in B ＝ B results from A</li><li><b>in response to</b>：對…做出反應；<b>be prone to</b>：容易有…的傾向</li></ul>\n<p class="ex"><span class="ch s">A diet high in sugar</span> <span class="ch v">is associated with</span> <span class="ch m">a higher risk of diabetes</span>.</p>\n<p>result in 和 result from 最常考：先判斷空格後面是<b>結果</b>還是<b>原因</b>。Smoking results <b>in</b> lung damage.（後面是結果）　Lung damage results <b>from</b> smoking.（後面是原因）</p>\n<p>記法：把空格前後的字連起來唸，記整組（contribute to、associated with），不要一個字一個字翻。</p>',
+  qs: [
+    { id: 'g7-1', sk: 'c.collo', q: 'Obesity is closely associated ____ type 2 diabetes and heart disease.', o: [ 'with', 'to', 'for', 'by' ], why: 'be associated with＝和…有關，是固定搭配；be linked to 才用 to。', st: [ [ '空格前和空格配成一組的字是？', 'associated', 'diabetes', 'closely', 'be associated 是一組，後面固定接一個介系詞。', 'c.collo' ], [ 'be associated 後面接？', 'with', 'to', 'by', 'be associated with；be linked to 才用 to。', 'c.collo' ] ] },
+    { id: 'g7-2', sk: 'c.collo', q: 'Low levels of vitamin D can result ____ weak bones in children.', o: [ 'in', 'from', 'to', 'with' ], why: 'weak bones 是結果，用 result in；後面是原因時才用 result from。', st: [ [ 'weak bones 是原因還是結果？', '結果', '原因', '都不是', '缺維生素 D → 骨頭弱：骨頭弱是結果。', 'c.logic' ], [ '後面接結果，用？', 'result in', 'result from', 'result to', 'result in＋結果；result from＋原因。', 'c.collo' ] ] },
+    { id: 'g7-3', sk: 'c.collo', q: 'Regular exercise can contribute to ____ blood pressure.', o: [ 'lowering', 'lower', 'be lowered', 'lowers' ], why: 'contribute to 的 to 是介系詞，後面接名詞或 V-ing：contribute to lowering。', st: [ [ 'contribute to 的 to 是哪一種？', '介系詞', '不定詞（to V）', '副詞', 'contribute to＋名詞，所以 to 是介系詞。', 'c.collo' ], [ '介系詞後面的動詞用？', 'V-ing', '原形', '過去式', '介系詞後面接名詞，動詞要改成動名詞 V-ing。', 'c.form' ] ] }
+  ]
+},
+];
+WEEKS[1].passages = [
+  // 第 1 天
+  [{
+  type: 'cloze',
+  title: 'The Silent Killer',
+  text: [ 'Hypertension is often called a “silent killer” because most people who have it feel completely normal. {1}, the constant force of blood pushing against the walls of their arteries is slowly damaging them. Over the years, the walls become stiff and narrow, {2} makes it harder for blood to reach the heart, the brain, and the kidneys.', 'Because there are usually no symptoms, diagnosis depends on regular checks. A single elevated reading is not enough; doctors look for a consistent pattern across several visits, since stress or a rushed walk to the clinic can raise the number for a short time. Patients whose blood pressure {3} high after these checks are then offered treatment, which usually begins with changes in daily habits rather than drugs.', 'Eating less salt, losing weight, and walking for thirty minutes a day can all lower blood pressure. When these changes are not enough, doctors add medicine. Some patients worry about side effects such as dizziness, but these can usually be managed by changing the dose. Many patients, however, stop taking their pills after a few months, {4} their blood pressure is under control only because of the pills. Without treatment, the risk of stroke and heart attack rises sharply, and the {5} can be fatal. Doctors therefore emphasize that controlling blood pressure is a lifelong commitment, not a short course of treatment.' ],
+  zh: '高血壓常被稱為「沉默殺手」，因為大多數高血壓患者感覺完全正常。儘管如此，血液不斷壓迫動脈壁的力量正慢慢傷害它們。多年下來，動脈壁變硬變窄，這讓血液更難到達心臟、大腦和腎臟。因為通常沒有症狀，診斷要靠定期檢查。一次偏高的讀數還不夠；醫生會看好幾次看診的讀數是否一致，因為壓力或匆忙走到診所都可能讓數字暫時升高。經過這些檢查後血壓仍然偏高的病人，才會接受治療，而治療通常從改變日常習慣開始，而不是用藥。少吃鹽、減重、每天走路三十分鐘都能降低血壓。這些改變不夠時，醫生會加上藥物。有些病人擔心頭暈之類的副作用，但這通常可以靠調整劑量來處理。然而，許多病人幾個月後就停藥，即使他們的血壓其實只是靠藥才控制住。不治療的話，中風和心臟病發作的風險會急劇上升，後果可能致命。所以醫生強調，控制血壓是一輩子的承諾，不是短期療程。',
+  qs: [
+    { id: 'c1-1', sk: 'c.logic', q: '第 (1) 格', o: [ 'Nevertheless', 'Therefore', 'For example', 'In addition' ], why: '前一句說病人感覺完全正常，後一句說動脈正在慢慢受損：方向相反，用表示轉折的 Nevertheless（儘管如此）。', st: [ [ '空格前一句說了什麼？', '病人感覺完全正常', '病人常常覺得頭痛', '病人很快去看醫生', 'most people who have it feel completely normal。', 'c.logic' ], [ '空格後一句說了什麼？', '動脈正慢慢受損', '血壓會自己下降', '症狀很快就出現', 'the force of blood… is slowly damaging them。', 'c.logic' ], [ '「感覺正常」和「其實正在受損」是什麼關係？', '相反', '因果', '舉例', '表面沒事、實際上有傷害：方向相反，用轉折語。', 'c.logic' ] ] },
+    { id: 'c1-2', sk: 's.rel', q: '第 (2) 格', o: [ 'which', 'that', 'it', 'what' ], why: '逗號後面補充說明前面整件事（動脈壁變硬變窄），用 which；逗號後不能用 that；用 it 會讓兩個句子之間沒有連接詞。', st: [ [ '空格前面是什麼標點？', '逗號', '句號', '分號', 'the walls become stiff and narrow, ___ makes…', 's.rel' ], [ '讓血液更難流過去的是什麼？', '動脈壁變硬變窄這件事', '心臟每次跳動的力量', '血液裡含有的鹽分', '空格指的是前面整件事。', 's.rel' ], [ '逗號後面、指前面整件事，用？', 'which', 'that', 'what', '逗號後面不能用 that；what 不能放在句子後面當補充。', 's.rel' ] ] },
+    { id: 'c1-3', sk: 'g.tense', q: '第 (3) 格', o: [ 'remains', 'remain', 'remaining', 'to remain' ], why: 'whose blood pressure ___ high 是關係子句，子句裡的主詞是 blood pressure（單數），所以用 remains；主要動詞是後面的 are offered。', st: [ [ '空格在哪一個子句裡？', 'whose 子句', '主要子句', 'because 子句', 'Patients whose blood pressure ___ high… are then offered treatment：主要動詞是 are offered。', 's.rel' ], [ '子句裡的主詞是？', 'blood pressure', 'the patients', 'the treatment', 'whose blood pressure：子句的主詞是血壓。', 'g.tense' ], [ '單數主詞、說一般的情況，動詞用？', 'remains', 'remain', 'remaining', '現在式，第三人稱單數加 s。', 'g.tense' ] ] },
+    { id: 'c1-4', sk: 'g.conj', q: '第 (4) 格', o: [ 'even though', 'because', 'so that', 'as soon as' ], why: '病人停藥，但血壓其實是靠藥才控制住：前後方向相反，用 even though（即使）。', st: [ [ '空格前說病人做了什麼？', '幾個月後就停藥', '每天按時吃藥', '開始多吃鹽', 'stop taking their pills after a few months。', 'c.logic' ], [ '空格後說了什麼事實？', '血壓靠藥才控制住', '藥讓血壓升高', '血壓會自己恢復', 'their blood pressure is under control only because of the pills。', 'c.logic' ], [ '「停藥」和「靠藥才控制住」是什麼關係？', '相反：需要卻停了', '原因：需要所以停', '目的：為了需要而停', '兩件事方向相反，用表示讓步的 even though。', 'g.conj' ] ] },
+    { id: 'c1-5', sk: 'v.mean', q: '第 (5) 格', o: [ 'consequences', 'procedures', 'assessments', 'perspectives' ], why: '中風和心臟病發作是不治療的「後果」，後果可能致命。', st: [ [ '空格前一句說了什麼？', '中風和心臟病風險上升', '可以選的治療方法變多', '需要做的檢查次數增加', 'the risk of stroke and heart attack rises sharply。', 'c.logic' ], [ '可能「致命」的是什麼？', '不治療帶來的後果', '醫生做的檢查', '看事情的角度', 'fatal＝致命的；會致命的是後果。', 'v.mean' ] ] }
+  ]
+},
+   {
+  type: 'read',
+  title: 'Should Healthy People Take Aspirin?',
+  text: [ 'For decades, millions of healthy adults took a small dose of aspirin, a synthetic drug first made in 1897, every day in the hope of protecting their hearts. The idea seemed reasonable. Most heart attacks happen when a clot forms inside a narrowed artery and blocks the flow of blood, and aspirin makes it harder for blood to clot. If a cheap pill could stop clots from forming, it might also prevent heart attacks and strokes.', 'The evidence, however, turned out to be more complicated. In 2018, several large trials followed tens of thousands of older adults who had no history of cardiovascular disease. Half of them took aspirin and half took a pill with no active drug. Those who took aspirin did not have clearly fewer heart attacks or strokes. They did, however, have more cases of serious bleeding, especially in the stomach and the brain, and some of these adverse events were fatal.', 'As a consequence, guidelines in many countries changed. Doctors no longer advise most healthy older people to start taking aspirin on their own. The picture is different for patients who have already had a heart attack or stroke: for them, the benefit of preventing a second event is much larger than the risk of bleeding, so daily aspirin is still widely recommended. The lesson is not that aspirin is a bad drug. It is that the same treatment can help one group and harm another, which is why a careful assessment of each patient’s risk is crucial.' ],
+  zh: '幾十年來，數百萬名健康的成年人每天吃一小劑量的阿斯匹靈（一種 1897 年首次製成的合成藥物），希望保護心臟。這個想法似乎很合理：大多數心臟病發作是因為血塊在變窄的動脈裡形成、堵住血流，而阿斯匹靈讓血液比較不容易凝結。如果一顆便宜的藥能阻止血塊形成，或許也能預防心臟病發作和中風。然而，證據比想像中複雜。2018 年，幾項大型試驗追蹤了數萬名沒有心血管疾病病史的老年人。一半的人吃阿斯匹靈，一半吃沒有有效成分的藥丸。吃阿斯匹靈的人，心臟病發作或中風並沒有明顯比較少。不過，他們嚴重出血的案例比較多，特別是胃和腦出血，而其中有些不良事件是致命的。因此，許多國家的指引改變了。醫生不再建議大多數健康的老年人自己開始吃阿斯匹靈。對已經發生過心臟病或中風的病人，情況就不同了：對他們來說，預防第二次發作的好處遠大於出血的風險，所以仍普遍建議他們每天服用。這件事的教訓不是阿斯匹靈是壞藥，而是同一種治療可能幫助一群人、卻傷害另一群人，所以仔細評估每位病人的風險非常關鍵。',
+  qs: [
+    { id: 'r1-1', sk: 'r.main', pre: '主旨：整篇文章最想說的事', q: 'What is the main idea of the passage?', o: [ 'Whether aspirin helps depends on a patient’s level of risk.', 'Aspirin should be taken daily by every adult over sixty.', 'Aspirin has been shown to cause most heart attacks.', 'Doctors still do not understand how blood clots form.' ], why: '文章先說阿斯匹靈被廣泛使用，再說研究發現對健康老人沒有好處，最後說對已經發作過的人仍然有益：重點是同一種治療對不同的人效果不同。', st: [ [ '作者在哪裡說出結論？', '最後兩句 The lesson is…', '第一段開頭 For decades…', '第二段的 In 2018…', '作者常用 The lesson is… 把重點說出來。', 'r.main' ], [ 'The lesson is… 這兩句的意思是？', '同一治療對不同人效果不同', '阿斯匹靈是一種壞藥', '所有人都該停用阿斯匹靈', 'the same treatment can help one group and harm another。', 'r.main' ] ] },
+    { id: 'r1-2', sk: 'r.locate', pre: '細節：研究的對象是誰', q: 'Who took part in the 2018 trials?', o: [ 'Older adults with no history of heart disease', 'Patients who had already had a heart attack', 'Young adults with a family history of stroke', 'Doctors who recommended aspirin to patients' ], why: '第二段：older adults who had no history of cardiovascular disease。', st: [ [ '答案在哪一段？', '第二段，有 2018 的地方', '第一段，有 decades 的地方', '第三段，有 guidelines 的地方', '題目問 2018 年的研究，找有 2018 的句子。', 'r.locate' ], [ 'no history of cardiovascular disease 是什麼意思？', '從來沒有心血管疾病', '已經有心血管疾病', '家人有心血管疾病', 'no history of＝過去沒有…的病史。', 'r.locate' ] ] },
+    { id: 'r1-3', sk: 'r.para', pre: '換句話說：哪個選項和原文那句意思一樣', q: 'Which sentence has the same meaning as “some of these adverse events were fatal”?', o: [ 'A number of the harmful effects caused death.', 'All of the side effects were very mild.', 'None of the patients had any bleeding.', 'Some of the patients left the trial early.' ], why: 'adverse events＝有害的事件；fatal＝致命的：有些有害事件造成死亡。', st: [ [ 'adverse 的意思是？', '有害的、不利的', '有益的、有效的', '輕微的、短暫的', '第 1 天的新字：adverse effects＝不良反應。', 'v.mean' ], [ 'fatal 的意思是？', '致命的', '少見的', '能預防的', 'fatal＝會造成死亡的。', 'v.mean' ] ] },
+    { id: 'r1-4', sk: 'r.infer', pre: '推論：原文沒有直接說，但可以推出的事', q: 'What can be inferred about patients who have already had a heart attack?', o: [ 'They face a higher risk of a second heart attack.', 'They were the main group in the 2018 trials.', 'They no longer face a risk of serious bleeding.', 'They should stop taking aspirin after one year.' ], why: '原文說對他們而言，預防「第二次」發作的好處大得多。同一種藥好處比較大，表示他們再發作的機會比健康的人高。原文沒有直說，但可以推出。', st: [ [ '原文對這群人說了什麼？', '預防第二次發作的好處大很多', '他們吃藥完全不會出血', '他們是 2018 年研究的對象', 'the benefit of preventing a second event is much larger than the risk of bleeding。', 'r.locate' ], [ '同一種藥，為什麼對他們好處比較大？', '他們再發作的機會比較高', '他們的年紀比較輕', '他們吃的劑量比較小', '預防的效果大小取決於原本的風險：風險越高，預防得到的好處越明顯。', 'r.infer' ] ] },
+    { id: 'r1-5', sk: 'r.attitude', pre: '作者態度：作者怎麼看阿斯匹靈', q: 'What is the author’s attitude toward aspirin?', o: [ 'Balanced: useful for some patients but not for all', 'Strongly negative: it should be taken off the market', 'Fully positive: everyone over fifty should take it', 'Uninterested: the author gives no opinion at all' ], why: 'The lesson is not that aspirin is a bad drug… the same treatment can help one group and harm another：作者沒有全盤否定，也沒有全盤肯定。', st: [ [ '作者有沒有說阿斯匹靈是壞藥？', '沒有，明確說不是', '有，說它該下架', '有，說它造成心臟病', 'The lesson is not that aspirin is a bad drug。', 'r.attitude' ], [ '作者認為它對誰有幫助？', '已經發作過的病人', '所有健康的老人', '所有五十歲以上的人', '第三段：仍建議已經發作過的病人每天服用。', 'r.attitude' ] ] }
+  ]
+}],
+  // 第 2 天
+  [{
+  type: 'cloze',
+  title: 'Correlation Is Not Causation',
+  text: [ 'Every year, newspapers report surprising findings: people who drink coffee live longer, or children who eat breakfast get better grades. Such headlines usually describe a correlation, a pattern in which two variables tend to rise or fall together. A correlation is useful because it can suggest a new hypothesis. {1}, it cannot tell us which variable causes the other, or whether either one causes anything at all. This has important implications for how we read health news.', 'Consider a well-known example. In many cities, ice cream sales and drowning deaths both {2} in summer. Nobody believes that ice cream causes drowning; {3}, a third variable, hot weather, drives both. Researchers call such a hidden factor a confounder. Coffee drinkers, for instance, may also differ from other people in income, smoking, or exercise, and any of these differences could explain their longer lives.', 'To deal with this problem, researchers measure possible confounders and adjust {4} them in the analysis. But this works only for factors they have thought of and measured. This is why a randomized trial, in which chance alone decides who receives the treatment, yields stronger evidence. When such trials are not possible, scientists look for results that are {5} across many different groups and study designs before they attribute an effect to a single cause.' ],
+  zh: '每年報紙都會報導令人驚訝的發現：喝咖啡的人活得比較久，或吃早餐的孩子成績比較好。這類標題通常描述的是一種相關，也就是兩個變項傾向一起上升或下降的模式。相關很有用，因為它能提出新的假設。然而，它無法告訴我們哪個變項造成另一個，甚至兩者是否造成任何事。這對我們怎麼閱讀健康新聞有重要的含意。想想一個有名的例子：在許多城市，冰淇淋銷量和溺水死亡人數都會在夏天增加。沒有人相信冰淇淋會造成溺水；而是第三個變項，也就是炎熱的天氣，同時推高了兩者。研究人員把這種隱藏的因素稱為干擾因子。例如，喝咖啡的人在收入、抽菸或運動上可能也和其他人不同，而這些差異中的任何一個都可能解釋他們為什麼比較長壽。為了處理這個問題，研究人員會測量可能的干擾因子，並在分析中校正它們。但這只對他們想到並測量過的因素有用。這就是為什麼完全由機率決定誰接受治療的隨機分派試驗，能產生更強的證據。做不到這種試驗時，科學家會先找在許多不同群體和研究設計中都一致的結果，才把某個效果歸因於單一原因。',
+  qs: [
+    { id: 'c2-1', sk: 'c.logic', q: '第 (1) 格', o: [ 'However', 'Therefore', 'For example', 'Similarly' ], why: '前面說相關有用（能提出新假設），後面說它不能告訴我們因果：方向相反，用 However。', st: [ [ '空格前一句對「相關」的評價是？', '有用，可提出新假設', '沒用，應該忽略', '危險，會誤導讀者', 'A correlation is useful because it can suggest a new hypothesis。', 'c.logic' ], [ '空格後一句的評價是？', '有限制，不能說明因果', '更有用，能證明因果', '一樣有用，能提出假設', 'it cannot tell us which variable causes the other。', 'c.logic' ], [ '前面說優點、後面說限制，是什麼關係？', '轉折', '因果', '舉例', '評價方向相反，用 However。', 'c.logic' ] ] },
+    { id: 'c2-2', sk: 'g.tense', q: '第 (2) 格', o: [ 'increase', 'increases', 'increasing', 'has increased' ], why: '主詞是 ice cream sales and drowning deaths：A and B 是複數；說的是每年夏天都會發生的情況，用現在式 increase。', st: [ [ '空格的主詞是？', 'sales and deaths', 'drowning deaths', 'ice cream', 'ice cream sales and drowning deaths：兩件事用 and 連起來一起當主詞。', 'g.tense' ], [ 'A and B 當主詞時是？', '複數', '單數', '看最近的字', '兩件事加在一起，是複數。', 'g.tense' ], [ '每年夏天都會發生的情況，用什麼時態？', '現在式', '過去式', '未來式', '一般事實、規律用現在式。', 'g.tense' ] ] },
+    { id: 'c2-3', sk: 'c.logic', q: '第 (3) 格', o: [ 'instead', 'for example', 'in addition', 'as a result' ], why: '前面否定「冰淇淋造成溺水」，後面提出真正的原因：用 instead（而是）取代前面的說法。', st: [ [ '分號前說了什麼？', '沒人相信冰淇淋造成溺水', '冰淇淋確實造成溺水', '溺水讓人想吃冰淇淋', 'Nobody believes that ice cream causes drowning。', 'c.logic' ], [ '分號後提出什麼？', '真正的原因是天氣熱', '冰淇淋的另一個例子', '溺水造成的結果', 'a third variable, hot weather, drives both。', 'c.logic' ], [ '「不是 A，而是 B」要用哪一個？', 'instead', 'for example', 'as a result', 'instead＝取而代之、而是。', 'c.logic' ] ] },
+    { id: 'c2-4', sk: 'c.collo', q: '第 (4) 格', o: [ 'for', 'with', 'on', 'by' ], why: 'adjust for＝把某個因素的影響考慮進去、加以校正，是研究報告常見的固定搭配。', st: [ [ 'adjust 在這裡是什麼意思？', '把干擾因素的影響扣掉', '把數字整體調得更大', '把整個研究重做一次', '研究人員要排除干擾因子造成的差異。', 'c.collo' ], [ '「校正某個因素」的固定說法是？', 'adjust for', 'adjust with', 'adjust on', 'adjust for＋因素。', 'c.collo' ] ] },
+    { id: 'c2-5', sk: 'v.mean', q: '第 (5) 格', o: [ 'consistent', 'excessive', 'temporary', 'synthetic' ], why: '科學家要找在許多群體與研究設計中都「一致」的結果，才比較有把握說是因果。', st: [ [ '科學家希望結果在很多群體中怎麼樣？', '都一樣', '都過量', '都短暫', 'across many different groups：在不同群體都出現同樣結果，才可靠。', 'c.logic' ], [ '「前後一致」是哪個字？', 'consistent', 'excessive', 'temporary', 'consistent＝一致的（第 1 週學過）。', 'v.mean' ] ] }
+  ]
+},
+   {
+  type: 'read',
+  title: 'When Observational Studies Got It Wrong',
+  text: [ 'In the 1980s and 1990s, many doctors recommended hormone therapy to women after menopause, the time of life when the body stops producing most of its estrogen. Large observational studies, in which researchers simply recorded what women chose to do, had found a striking pattern: women who took hormones had about 40 to 50 percent fewer heart attacks than women who did not. Many experts concluded that the hormones protected the heart.', 'To test this hypothesis directly, the Women’s Health Initiative began a randomized trial in the 1990s. More than 16,000 women were assigned by chance to receive either hormones or a pill with no active drug. In 2002, the trial was stopped early. Women taking hormones had a slightly higher risk of heart disease, stroke, blood clots, and breast cancer, which was the opposite of what the earlier studies had suggested. Because chance alone had decided who took the hormones, these results were far more robust than the earlier findings.', 'How could so many studies be wrong? The answer was bias. The women who chose hormone therapy tended to be wealthier, better educated, and more careful about their health; they exercised more and saw their doctors more often. These differences, not the hormones, probably explained much of their better heart health. Later analyses suggested that the effect may depend on a woman’s age when she starts the therapy, so the debate is not completely over. Still, from a scientific perspective, the episode remains a classic lesson: when people choose their own treatment, the groups being compared may differ in ways that researchers never measure.' ],
+  zh: '在 1980 和 1990 年代，許多醫生建議停經後（menopause，身體停止製造大部分雌激素的人生階段）的女性使用荷爾蒙療法。大型的觀察性研究（研究人員只記錄女性自己選擇做什麼）發現了一個驚人的模式：服用荷爾蒙的女性，心臟病發作比沒服用的女性少了大約四到五成。許多專家因此認為荷爾蒙能保護心臟。為了直接檢驗這個假設，「婦女健康倡議」在 1990 年代展開一項隨機分派試驗。超過一萬六千名女性由機率分配，接受荷爾蒙或沒有有效成分的藥丸。2002 年，試驗提早停止：服用荷爾蒙的女性，心臟病、中風、血栓和乳癌的風險略高，和先前研究的結果正好相反。因為誰吃荷爾蒙完全由機率決定，這些結果比早期的發現可靠得多。這麼多研究怎麼會錯？答案是偏差。選擇荷爾蒙療法的女性往往比較富裕、教育程度較高、比較注意健康；她們運動較多，也比較常看醫生。很可能是這些差異，而不是荷爾蒙，解釋了她們心臟比較健康的大部分原因。後來的分析認為，效果可能取決於女性開始治療時的年齡，所以爭論還沒有完全結束。儘管如此，從科學的角度來看，這件事仍是一個經典教訓：當人們自己選擇治療時，被比較的兩群人可能在研究人員從未測量的方面有所不同。',
+  qs: [
+    { id: 'r2-1', sk: 'r.main', pre: '主旨：整篇文章最想說的事', q: 'What is the passage mainly about?', o: [ 'How a randomized trial overturned the results of earlier studies', 'How hormones are produced in the body after menopause', 'Why most women should take hormones to protect the heart', 'Why randomized trials are usually stopped before they end' ], why: '第一段是觀察性研究的結論，第二段是隨機試驗的相反結果，第三段解釋原因（偏差）：整篇在說隨機試驗推翻了早期研究。', st: [ [ '第一段講的是？', '觀察研究認為荷爾蒙保護心臟', '荷爾蒙在體內如何製造與分泌', '醫生如何設計一項新的試驗', 'women who took hormones had about 40 to 50 percent fewer heart attacks。', 'r.main' ], [ '第二、三段講的是？', '隨機試驗結果相反及原因', '更多支持荷爾蒙的研究', '停經後身體有哪些變化', 'the opposite of what the earlier studies had suggested；The answer was bias。', 'r.main' ] ] },
+    { id: 'r2-2', sk: 'r.locate', pre: '細節：找數字', q: 'In the observational studies, how did women who took hormones compare with those who did not?', o: [ 'They had about 40 to 50 percent fewer heart attacks.', 'They had about 40 to 50 percent more heart attacks.', 'They had about the same number of heart attacks.', 'They had about 16,000 fewer heart attacks in total.' ], why: '第一段：women who took hormones had about 40 to 50 percent fewer heart attacks。16,000 是第二段隨機試驗的人數。', st: [ [ '答案在哪一段？', '第一段，observational studies', '第二段，randomized trial', '第三段，The answer was bias', '題目問的是 observational studies，看第一段。', 'r.locate' ], [ 'fewer 的意思是？', '比較少', '比較多', '一樣多', 'fewer heart attacks＝心臟病發作比較少。', 'r.locate' ] ] },
+    { id: 'r2-3', sk: 'r.infer', pre: '推論：原文沒有直接說，但可以推出的事', q: 'Why would assigning women to groups “by chance” solve the problem described in paragraph 3?', o: [ 'Healthier women would be spread evenly across both groups.', 'Women would be able to choose the treatment they preferred.', 'Doctors would be able to give hormones to healthier women.', 'The trial would include only women who exercised often.' ], why: '第三段說問題在於選擇吃荷爾蒙的人本來就比較健康。由機率分組，比較健康的人會平均分到兩組，兩組的差別就不會來自生活習慣。', st: [ [ '第三段說原本的問題是什麼？', '吃荷爾蒙的人本來就較健康', '荷爾蒙的劑量本來就太低', '參加研究的人數本來太少', 'The women who chose hormone therapy tended to be… more careful about their health。', 'r.locate' ], [ '隨機分派時，誰決定分到哪一組？', '機率', '女性自己', '她們的醫生', 'assigned by chance：由機率決定，不由個人選擇。', 'r.infer' ], [ '由機率決定時，比較健康的人會怎麼分布？', '平均分到兩組', '集中在吃藥組', '集中在沒吃藥組', '機率不會偏好健康的人，所以兩組的生活習慣差不多。', 'r.infer' ] ] },
+    { id: 'r2-4', sk: 'r.para', pre: '換句話說：哪個選項和原文那句意思一樣', q: 'Which sentence is closest in meaning to “These differences, not the hormones, probably explained much of their better heart health”?', o: [ 'Their healthier lives, rather than the drug, were likely the main reason.', 'The hormones, rather than their lives, were likely the main reason.', 'Their heart health was likely worse because of these differences.', 'The hormones and their habits likely had no effect on their hearts.' ], why: 'These differences＝她們比較健康的生活；A, not B＝是 A 不是 B：主要原因是生活方式，不是藥。', st: [ [ 'These differences 指的是什麼？', '較富裕、運動較多等差異', '荷爾蒙劑量上的差異', '試驗組別人數的差異', '前一句列出：wealthier, better educated… exercised more。', 'r.locate' ], [ 'A, not B 表示？', '是 A，不是 B', '是 B，不是 A', 'A 和 B 都是', 'These differences, not the hormones：是這些差異，不是荷爾蒙。', 'r.para' ] ] },
+    { id: 'r2-5', sk: 'r.attitude', pre: '作者態度：作者怎麼描述目前的爭論', q: 'How does the author describe the current debate about hormone therapy and the heart?', o: [ 'Not completely settled', 'Finally and fully resolved', 'Of no interest to scientists', 'Proven to be a total fraud' ], why: '第三段：the debate is not completely over。作者認為還沒有定論，但教訓仍然成立。', st: [ [ '作者在哪一句談到爭論？', '第三段 the debate…', '第一句 In the 1980s…', '第二段 In 2002…', 'debate＝爭論。', 'r.locate' ], [ 'not completely over 的意思是？', '還沒有完全結束', '已經完全結束', '從來沒有開始', 'over＝結束；not completely over＝還沒完全結束。', 'r.attitude' ] ] }
+  ]
+}],
+  // 第 3 天
+  [{
+  type: 'cloze',
+  title: 'Why Some Adults Can Drink Milk',
+  text: [ 'Almost all babies can break down lactose, the main sugar in milk, because their bodies produce an enzyme called lactase. In most mammals, production of this enzyme stops after the young animal stops feeding on its mother’s milk. {1}, most adults around the world produce little lactase, and drinking milk can give them stomach pain.', 'In some populations, {2}, a large share of adults can drink milk without any problem. Researchers have traced this trait to a small mutation in the DNA sequence near the lactase gene. The change does not alter the enzyme itself; it keeps the gene switched on throughout life. People who {3} the mutation from even one parent usually keep producing lactase as adults.', 'Why did this trait spread? The mutation appears to have become common only after people began keeping cows, goats, and sheep, about 10,000 years ago. In places {4} fresh milk was available, adults who could drink it gained an extra source of energy and water, which may have been crucial during famines. {5}, the trait became widespread in northern Europe and parts of Africa, but it remains rare in East Asia, where traditional diets included little milk. Scientists now use this story as a clear example of how human culture and human genes can shape each other over many generations.' ],
+  zh: '幾乎所有嬰兒都能分解乳糖（牛奶中主要的糖），因為他們的身體會製造一種叫乳糖酶的酵素。大多數哺乳類動物在幼年停止喝母乳後，就不再製造這種酵素。因此，世界上大多數成人只製造很少的乳糖酶，喝牛奶可能會胃痛。然而，在某些族群中，很大比例的成人喝牛奶完全沒問題。研究人員追查到這個特徵來自乳糖酶基因附近 DNA 序列上的一個小突變。這個改變並沒有改變酵素本身，而是讓這個基因一輩子保持開啟。只要從父母其中一方遺傳到這個突變，成年後通常就會繼續製造乳糖酶。這個特徵為什麼會擴散？這個突變似乎是在人類大約一萬年前開始飼養牛、山羊和綿羊之後才變得普遍。在有新鮮牛奶的地方，能喝牛奶的成人多了一個能量和水分的來源，這在饑荒時可能非常關鍵。因此，這個特徵在北歐和非洲部分地區變得很普遍，但在東亞仍然少見，因為東亞的傳統飲食很少有牛奶。科學家現在把這個故事當作一個清楚的例子，說明人類的文化和基因如何在許多世代中互相影響。',
+  qs: [
+    { id: 'c3-1', sk: 'c.logic', q: '第 (1) 格', o: [ 'As a result', 'However', 'For example', 'In contrast' ], why: '前一句說大多數哺乳類長大後就不再製造乳糖酶，後一句說大多數成人只製造很少乳糖酶：後者是前者的結果。', st: [ [ '空格前一句說了什麼？', '哺乳類長大後停止製造這種酵素', '嬰兒長大後就不能喝牛奶了', '牛奶裡的糖分比想像中少', 'production of this enzyme stops after the young animal stops feeding on its mother’s milk。', 'c.logic' ], [ '空格後一句和前一句是什麼關係？', '結果', '相反', '舉例', '停止製造（原因）→ 成人製造很少、喝奶會胃痛（結果）。', 'c.logic' ] ] },
+    { id: 'c3-2', sk: 'g.conj', q: '第 (2) 格', o: [ 'however', 'therefore', 'for instance', 'in addition' ], why: '前一段說大多數成人喝奶會胃痛，這裡說有些族群的成人喝奶沒問題：方向相反，用 however。夾在句中的 however 前後要有逗號。', st: [ [ '前一段最後說什麼？', '大多數成人喝奶會胃痛', '大多數成人很愛喝奶', '大多數成人沒喝過奶', 'drinking milk can give them stomach pain。', 'c.logic' ], [ '這一句說什麼？', '有些族群的成人喝奶沒問題', '有些族群的成人也會胃痛', '有些族群的嬰兒不能喝奶', 'a large share of adults can drink milk without any problem。', 'c.logic' ], [ '前後的方向是？', '相反', '相同', '因果', '大多數不行 vs. 有些可以：相反，用 however。', 'g.conj' ] ] },
+    { id: 'c3-3', sk: 'v.mean', q: '第 (3) 格', o: [ 'inherit', 'alter', 'sequence', 'restrict' ], why: 'from even one parent（從父母其中一方）：從父母那裡「遺傳」到突變，用 inherit。', st: [ [ '空格後面有什麼線索？', 'from even one parent', 'throughout life', 'the enzyme itself', '突變是「從父母一方」得到的。', 'c.logic' ], [ '從父母那裡得到基因，叫做？', '遺傳', '改變', '限制', 'inherit＝遺傳、繼承。', 'v.mean' ] ] },
+    { id: 'c3-4', sk: 's.rel', q: '第 (4) 格', o: [ 'where', 'which', 'who', 'what' ], why: '先行詞 places 是地點，空格後面 fresh milk was available 是完整的句子（不缺主詞、也不缺受詞），用 where。', st: [ [ '先行詞是？', 'places', 'milk', 'adults', '空格緊接在 places 後面。', 's.rel' ], [ '空格後面 fresh milk was available 缺什麼？', '什麼都不缺', '缺主詞', '缺受詞', '主詞 fresh milk、動詞 was available 都有。', 's.rel' ], [ '地點＋完整的句子，用？', 'where', 'which', 'what', 'which 後面要缺主詞或受詞；where＝in which。', 's.rel' ] ] },
+    { id: 'c3-5', sk: 'c.logic', q: '第 (5) 格', o: [ 'Consequently', 'Nevertheless', 'Instead', 'Similarly' ], why: '前面說能喝奶的成人在饑荒時比較有優勢，所以這個特徵在畜牧地區變普遍：前因後果，用 Consequently（因此）。', st: [ [ '空格前一句說了什麼？', '能喝奶的成人比較能撐過饑荒', '饑荒時牛奶反而完全喝不到', '饑荒讓大部分的人不再養牛', 'adults who could drink it gained an extra source of energy… crucial during famines。', 'c.logic' ], [ '「比較能活下來」和「特徵變普遍」是什麼關係？', '因果', '相反', '舉例', '活下來的人比較多，就把基因傳下去，特徵就變普遍。', 'c.logic' ] ] }
+  ]
+},
+   {
+  type: 'read',
+  title: 'Editing a Gene to Treat Sickle Cell Disease',
+  text: [ 'Sickle cell disease is an inherited disorder caused by a single mutation in the gene for hemoglobin, the molecule that carries oxygen in red blood cells. The disease is characterized by red blood cells that bend into a stiff, curved shape, like a farmer’s sickle. These misshaped cells get stuck in small vessels, block the circulation of blood, and cause sudden attacks of severe pain. They also break apart easily, so patients suffer from a constant shortage of red blood cells.', 'The disease appears exclusively in people who inherit the mutation from both parents. People who carry one normal copy and one changed copy are usually healthy. Notably, these carriers are less susceptible to severe malaria, which may explain why the mutation is common in parts of Africa where malaria has killed millions of people.', 'In 2023, regulators in the United Kingdom and the United States approved the first treatment based on CRISPR, a tool that can alter a specific DNA sequence. Doctors collect stem cells from the patient’s bone marrow, the soft tissue inside bones that makes blood cells. The cells are edited in a laboratory so that they produce a form of hemoglobin normally made only before birth, and then they are returned to the patient. In clinical trials, most patients had no severe pain attacks for at least a year after treatment. The therapy, however, is far from simple. Patients must first receive strong chemotherapy, the whole procedure takes months, and the cost is over two million US dollars per patient.' ],
+  zh: '鐮刀型貧血症是一種遺傳疾病，由血紅素（hemoglobin，紅血球裡運送氧氣的分子）基因上的單一突變造成。這種病的特徵是紅血球會彎成僵硬的彎曲形狀，像農夫的鐮刀。這些變形的細胞會卡在小血管裡、阻斷血液循環，造成突然的劇烈疼痛發作。它們也很容易破裂，所以病人長期缺少紅血球。這種病只出現在從父母雙方都遺傳到這個突變的人身上。帶有一個正常基因和一個突變基因的人通常是健康的。值得注意的是，這些帶原者比較不容易得嚴重的瘧疾，這可能說明為什麼這個突變在瘧疾奪走數百萬人性命的非洲部分地區很常見。2023 年，英國和美國的主管機關核准了第一個以 CRISPR（一種能改變特定 DNA 序列的工具）為基礎的療法。醫生從病人的骨髓（骨頭裡製造血球的軟組織）收集幹細胞，在實驗室編輯這些細胞，讓它們製造一種通常只在出生前製造的血紅素，再把細胞送回病人體內。在臨床試驗中，大多數病人治療後至少一年沒有發生劇烈疼痛。然而，這個療法一點也不簡單：病人必須先接受強烈的化學治療，整個程序要花好幾個月，每位病人的費用超過兩百萬美元。',
+  qs: [
+    { id: 'r3-1', sk: 'r.main', pre: '主旨：整篇文章最想說的事', q: 'What is the passage mainly about?', o: [ 'A genetic disease and a new gene-editing treatment for it', 'The history of malaria in different parts of Africa', 'How red blood cells carry oxygen around the body', 'Why gene therapy has replaced all other treatments' ], why: '第一、二段介紹鐮刀型貧血症的成因和遺傳方式，第三段介紹新的基因編輯療法和它的限制。瘧疾和氧氣都只是其中的細節。', st: [ [ '第一、二段介紹什麼？', '鐮刀型貧血症的成因與遺傳', '瘧疾在非洲的歷史與傳播', '紅血球如何運送氧氣到全身', 'Sickle cell disease is an inherited disorder…', 'r.main' ], [ '第三段介紹什麼？', '一種編輯基因的新療法', '一種預防瘧疾的新疫苗', '一種新的輸血方法', 'approved the first treatment based on CRISPR。', 'r.main' ] ] },
+    { id: 'r3-2', sk: 'r.word', pre: '由上下文猜字義：看前後文的解釋', q: 'In paragraph 3, “bone marrow” refers to ____.', o: [ 'the soft tissue inside bones that makes blood', 'a laboratory where cells are edited', 'a form of hemoglobin made before birth', 'the strong drugs given before treatment' ], why: '原文在逗號後面直接解釋：the soft tissue inside bones that makes blood cells。', st: [ [ 'bone marrow 後面的逗號接了什麼？', '一段解釋它的名詞片語', '一個新的完整句子', '一個舉例用的片語', '逗號後的 the soft tissue inside bones… 就是在解釋 bone marrow。', 'r.word' ], [ '那段解釋的意思是？', '骨頭裡造血的軟組織', '實驗室裡的細胞', '出生前的血紅素', 'tissue＝組織；makes blood cells＝製造血球。', 'r.word' ] ] },
+    { id: 'r3-3', sk: 'r.infer', pre: '推論：原文沒有直接說，但可以推出的事', q: 'Why is the sickle cell mutation common in parts of Africa?', o: [ 'Carriers survived malaria better and passed the gene on.', 'People there are exposed to more gene-editing tools.', 'The mutation protects carriers from all infections.', 'Patients in Africa usually inherit only one copy.' ], why: '第二段：帶一個突變的人比較不容易得嚴重瘧疾，而非洲瘧疾很多。比較能活下來的人把基因傳給下一代，突變就變普遍。原文用 may explain 暗示，沒有直接說。', st: [ [ '帶有一個突變的人有什麼特別？', '比較不容易得嚴重瘧疾', '比較容易得嚴重瘧疾', '完全不會得任何感染', 'these carriers are less susceptible to severe malaria。', 'r.locate' ], [ '在瘧疾多的地方，這代表什麼？', '帶原者比較能活下來生小孩', '帶原者比較早死、不能生小孩', '帶原者會搬離那個地方生活', '活下來的人比較多，就會把基因傳下去。', 'r.infer' ] ] },
+    { id: 'r3-4', sk: 'r.para', pre: '換句話說：哪個選項和原文那句意思一樣', q: 'Which sentence has the same meaning as “The therapy, however, is far from simple”?', o: [ 'The treatment is very complicated.', 'The treatment is quite easy to give.', 'The treatment is not far from home.', 'The treatment is simpler than before.' ], why: 'far from＋形容詞＝一點也不…：far from simple＝一點也不簡單，也就是很複雜，不是「距離很遠」。', st: [ [ 'far from simple 的 far from 在這裡是？', '一點也不', '距離很遠', '比較接近', 'far from＋形容詞＝完全不是…。', 'r.para' ], [ '後面列了哪些困難？', '化療、耗時、非常昂貴', '醫院離病人家太遠', '藥物太簡單沒有效', 'Patients must first receive strong chemotherapy… takes months… over two million US dollars。', 'r.locate' ] ] },
+    { id: 'r3-5', sk: 'r.locate', pre: '細節：找時間長度', q: 'According to the clinical trials, how long did most patients go without severe pain attacks?', o: [ 'At least one year', 'At least two months', 'Less than one week', 'About ten years' ], why: '第三段：most patients had no severe pain attacks for at least a year after treatment。two million 是費用，不是時間。', st: [ [ '答案在哪裡？', '第三段 In clinical trials…', '第二段 People who carry…', '第一段 These misshaped…', '題目問 clinical trials，找有 clinical trials 的句子。', 'r.locate' ], [ 'for at least a year 的意思是？', '至少一年', '最多一年', '一年之後', 'at least＝至少。', 'r.locate' ] ] }
+  ]
+}],
+  // 第 4 天
+  [{
+  type: 'cloze',
+  title: 'The Teenage Brain',
+  text: [ 'Parents often wonder why teenagers take risks that seem foolish to adults. Part of the answer lies in how the brain develops. The regions that respond to rewards and excitement become very active during the teenage years. {1}, the prefrontal cortex, the area behind the forehead that handles cognitive tasks such as planning ahead and controlling impulses, is not fully mature until about the age of 25.', 'This gap in timing helps explain a familiar pattern. When teenagers are alone, they usually make decisions about as carefully as adults do. In the presence of friends, {2}, they are much more likely to take risks. In one well-known experiment, teenagers playing a driving game ran more yellow lights when they knew their friends were watching, {3} adults behaved the same way whether or not anyone was watching.', 'It would be a mistake, however, to perceive the teenage brain only as a problem. The same sensitivity to rewards makes teenagers curious, creative, and {4} to learn new skills. The brain at this age is also highly flexible: neurons that are used often form strong connections, while unused ones are gradually removed. For this reason, experiences during adolescence, such as learning a language or a musical instrument, may {5} a lasting effect on the adult brain.' ],
+  zh: '父母常常納悶，為什麼青少年會冒一些大人覺得很愚蠢的險。部分答案在於大腦怎麼發育。對獎勵和刺激有反應的區域，在青少年時期變得非常活躍。相較之下，前額葉皮質（額頭後方負責預先計畫、控制衝動等認知工作的區域）要到大約 25 歲才完全成熟。這個時間上的落差，有助於解釋一個常見的模式。青少年獨處時，做決定通常和大人一樣謹慎。然而，有朋友在場時，他們冒險的可能性就高得多。在一個有名的實驗中，玩駕駛遊戲的青少年知道朋友在看時，會闖更多黃燈；而成人不管有沒有人看，表現都一樣。不過，如果只把青少年的大腦看成問題，就錯了。同樣對獎勵敏感的特性，讓青少年好奇、有創意，而且渴望學習新技能。這個年紀的大腦也非常有彈性：常用的神經元會形成強的連結，沒用到的則逐漸被移除。因此，青春期的經驗，例如學一種語言或樂器，可能對成年後的大腦有持久的影響。',
+  qs: [
+    { id: 'c4-1', sk: 'c.logic', q: '第 (1) 格', o: [ 'In contrast', 'For example', 'As a result', 'Similarly' ], why: '前一句說負責獎勵的區域很活躍，後一句說負責控制衝動的皮質還沒成熟：兩個區域的發展對比，用 In contrast。', st: [ [ '前一句說哪個區域怎麼樣？', '負責獎勵的區域很活躍', '負責計畫的區域很活躍', '整個大腦都還沒成熟', 'The regions that respond to rewards… become very active。', 'c.logic' ], [ '後一句說哪個區域怎麼樣？', '控制衝動的皮質還沒成熟', '控制衝動的皮質已經成熟', '負責獎勵的區域變慢', 'the prefrontal cortex… is not fully mature until about the age of 25。', 'c.logic' ], [ '「很活躍」和「還沒成熟」是什麼關係？', '對比', '因果', '舉例', '兩個區域的發展速度不同，形成對比。', 'c.logic' ] ] },
+    { id: 'c4-2', sk: 'g.conj', q: '第 (2) 格', o: [ 'however', 'therefore', 'for example', 'moreover' ], why: '前一句說獨處時跟大人一樣謹慎，這句說和朋友在一起時更愛冒險：方向相反，用 however。', st: [ [ '前一句說青少年獨處時怎麼樣？', '和大人一樣謹慎', '比大人更愛冒險', '完全不做決定', 'they usually make decisions about as carefully as adults do。', 'c.logic' ], [ '和朋友在一起時呢？', '比較愛冒險', '比較謹慎', '跟獨處一樣', 'they are much more likely to take risks。', 'c.logic' ], [ '前後的方向是？', '相反', '相同', '因果', '謹慎 vs. 冒險：相反，用 however。', 'g.conj' ] ] },
+    { id: 'c4-3', sk: 'g.conj', q: '第 (3) 格', o: [ 'whereas', 'because', 'unless', 'so that' ], why: '青少年有朋友在看時闖更多黃燈，成人有沒有人看都一樣：對比兩群人，用 whereas。', st: [ [ '空格前後分別在講誰？', '青少年和成人', '青少年和朋友', '成人和朋友', 'teenagers… ran more yellow lights；adults behaved the same way。', 'c.logic' ], [ '兩群人的表現？', '不同：青少年受影響、成人不受影響', '相同：兩群人都闖更多黃燈', '因果：成人讓青少年更常闖黃燈', '對比兩群人的差異。', 'c.logic' ], [ '對比兩個子句用？', 'whereas', 'because', 'unless', 'whereas＝而（對比兩件事）。', 'g.conj' ] ] },
+    { id: 'c4-4', sk: 's.para', q: '第 (4) 格', o: [ 'eager', 'eagerly', 'eagerness', 'be eager' ], why: 'curious, creative, and ___：A, B, and C 三個都是形容詞，空格也要用形容詞 eager。', st: [ [ 'and 連接的前兩項是什麼？', 'curious、creative', 'teenagers、rewards', 'makes、learn', 'makes teenagers curious, creative, and ___。', 's.para' ], [ 'curious、creative 是什麼詞性？', '形容詞', '名詞', '副詞', '它們描述青少年的特質。', 's.para' ], [ '空格要用？', 'eager', 'eagerly', 'eagerness', '和前兩個一樣用形容詞。', 's.para' ] ] },
+    { id: 'c4-5', sk: 'c.collo', q: '第 (5) 格', o: [ 'have', 'make', 'do', 'take' ], why: 'have an effect on＝對…有影響，是固定搭配。', st: [ [ '空格後面接的是？', 'a lasting effect on', 'a lasting skill in', 'a lasting idea of', '空格的受詞是 effect（影響）。', 'c.collo' ], [ '「對…有影響」的固定說法？', 'have an effect on', 'make an effect on', 'do an effect on', 'effect 搭配動詞 have。', 'c.collo' ] ] }
+  ]
+},
+   {
+  type: 'read',
+  title: 'Exercise as Medicine for Depression',
+  text: [ 'Depression affects more than 280 million people worldwide, and many of them never receive effective treatment. Medicine and talk therapy help many patients, but not everyone can afford them, and some people do not respond well to either. Waiting lists for therapy can also be long, especially outside big cities. For this reason, researchers have long asked whether something as simple as exercise could serve as a real intervention rather than just a healthy habit.', 'In 2024, a large and comprehensive review combined the results of 218 randomized trials involving more than 14,000 patients. It found that several types of exercise, including walking, jogging, yoga, and strength training, reduced symptoms of depression. Some types worked about as well as talk therapy, and the benefits tended to be larger when the exercise was more intense. The authors concluded that exercise should be considered a core treatment, alongside medicine and therapy.', 'These findings do not mean that patients should stop taking their medicine. Many of the trials were small, and in most of them participants knew which group they were in, which can introduce bias. Moreover, the people who are most severely depressed often find it hardest to get out of bed, let alone to start a training program. From a practical perspective, experts therefore suggest that exercise should be offered as one option among several, ideally with support from a coach or a group. Such support can enhance motivation and make it easier for patients to keep going on difficult days.' ],
+  zh: '全世界有超過兩億八千萬人受憂鬱症影響，其中很多人從未接受有效的治療。藥物和談話治療幫助了許多病人，但不是每個人都負擔得起，而且有些人對兩者的反應都不好。談話治療的等候名單也可能很長，大城市以外尤其如此。因此，研究人員一直在問：像運動這麼簡單的事，能不能成為真正的介入治療，而不只是健康習慣？2024 年，一項大型而全面的回顧研究合併了 218 個隨機分派試驗、超過一萬四千名病人的結果。研究發現，包括走路、慢跑、瑜伽和肌力訓練在內的多種運動，都能減輕憂鬱症狀。有些種類的效果和談話治療差不多，而且運動強度越高，效果往往越大。作者的結論是，運動應該被當作核心治療之一，和藥物、談話治療並列。這些發現並不表示病人應該停藥。許多試驗規模很小，而且大多數試驗的受試者知道自己在哪一組，這可能造成偏差。此外，憂鬱最嚴重的人常常連下床都最困難，更不用說開始一個訓練計畫。所以從實際的角度，專家建議運動應該作為幾種選擇之一，最好有教練或團體支持。這樣的支持能提升動力，讓病人在難熬的日子比較容易持續下去。',
+  qs: [
+    { id: 'r4-1', sk: 'r.main', pre: '主旨：最適合這篇文章的標題', q: 'Which title best fits the passage?', o: [ 'Exercise as One Useful Treatment for Depression', 'Why Medicine No Longer Works for Depression', 'How to Design a Training Program for Athletes', 'The Rising Number of People with Depression' ], why: '第一段提出問題，第二段說運動有效，第三段說研究的限制、運動是選擇之一：標題要涵蓋「有用」和「之一」。', st: [ [ '第二段的結論是？', '多種運動能減輕憂鬱症狀', '運動的效果比藥物好得多', '運動只對年輕的病人有效', 'several types of exercise… reduced symptoms of depression。', 'r.main' ], [ '第三段提醒什麼？', '研究有限制，運動是選項之一', '病人應該立刻停止吃藥物', '嚴重的病人最適合運動', 'These findings do not mean that patients should stop taking their medicine… one option among several。', 'r.main' ] ] },
+    { id: 'r4-2', sk: 'r.locate', pre: '細節：找數字', q: 'How many randomized trials did the 2024 review combine?', o: [ '218', '14,000', '280 million', '24' ], why: '第二段：combined the results of 218 randomized trials。14,000 是病人數，280 million 是全球憂鬱症人數。', st: [ [ '題目問的是什麼的數量？', '試驗（trials）', '病人（patients）', '全球患者（people）', 'How many randomized trials…', 'r.locate' ], [ '14,000 指的是什麼？', '參加試驗的病人數', '合併的試驗數', '全球的患者數', 'involving more than 14,000 patients：14,000 是病人，不是試驗。', 'r.locate' ] ] },
+    { id: 'r4-3', sk: 'r.word', pre: '由上下文猜字義：看前後文的意思', q: 'In paragraph 3, “let alone” is closest in meaning to ____.', o: [ 'and certainly not', 'and also easily', 'because of', 'in order to' ], why: 'find it hardest to get out of bed, let alone to start a training program：連下床都很難，更別說開始訓練。let alone＝更不用說。', st: [ [ 'let alone 前面說什麼很難？', '連下床都很難', '訓練很簡單', '吃藥很難', 'find it hardest to get out of bed。', 'r.word' ], [ '開始一個訓練計畫，和下床比起來？', '更難', '更簡單', '一樣簡單', '如果下床都很難，開始訓練一定更難。', 'r.word' ] ] },
+    { id: 'r4-4', sk: 'r.infer', pre: '推論：原文沒有直接說，但可以推出的事', q: 'Why might knowing which group they were in introduce bias?', o: [ 'Participants who expected to improve might report feeling better.', 'Participants could not find a place to exercise near home.', 'Researchers would not be able to count the number of patients.', 'Exercise would become more intense for every participant.' ], why: '憂鬱症狀多半是病人自己回報的。知道自己在運動組的人，可能因為「期待會變好」而回報比較好。原文只說會造成偏差，沒有說怎麼造成，要自己推。', st: [ [ '原文說什麼可能造成偏差？', '受試者知道自己在哪一組', '試驗進行的時間太長了', '運動的強度一直不夠', 'participants knew which group they were in, which can introduce bias。', 'r.locate' ], [ '知道自己在運動組，可能會怎樣？', '因期待而回報較好', '比較不想運動', '忘記自己在哪一組', '期待會影響自己回報的症狀。', 'r.infer' ] ] },
+    { id: 'r4-5', sk: 'r.para', pre: '換句話說：哪個選項和原文那句意思一樣', q: 'Which sentence has the same meaning as “Some types worked about as well as talk therapy”?', o: [ 'Certain exercises were roughly equal to talk therapy in effect.', 'All exercises were much better than talk therapy in effect.', 'Talk therapy was used as a type of exercise in the trials.', 'No type of exercise was nearly as useful as talk therapy.' ], why: 'Some types＝某些種類（不是全部）；about as well as＝和…差不多好。', st: [ [ 'Some types 指的是？', '某些種類的運動', '所有種類的運動', '沒有一種運動', 'Some＝有些，不是全部。', 'r.para' ], [ 'about as well as 的意思是？', '差不多一樣好', '好非常多', '差非常多', 'as well as＝和…一樣好；about＝大約。', 'r.para' ] ] }
+  ]
+}],
+  // 第 5 天
+  [{
+  type: 'cloze',
+  title: 'The Map That Stopped an Epidemic',
+  text: [ 'In August 1854, a terrible outbreak of cholera struck the Soho district of London. Within ten days, more than 500 people had died. At the time, most doctors believed that diseases like cholera spread through “bad air” rising from rubbish and dirty water. A doctor named John Snow doubted this idea. {1}, he suspected that the disease was carried by drinking water.', 'To test his idea, Snow went from house to house and recorded where each victim had lived. When he marked the deaths on a map, a clear pattern appeared: most of them were clustered around a single public water pump on Broad Street. {2}, the few victims who lived farther away had mostly walked to that pump for their water. Snow presented his evidence to local officials, and the handle of the pump {3} removed. The outbreak, which was already declining, soon ended.', 'Snow’s work is often described as the beginning of modern epidemiology, the study of how diseases spread through populations. His theory was not widely accepted until years after his death, {4} his method of collecting data and mapping cases became a model for disease surveillance. Contemporary health officials still trace the transmission of an infection by asking the same basic questions: who became sick, where, and when. Later improvements in sanitation, such as clean water and sewers, {5} more lives than almost any medicine.' ],
+  zh: '1854 年 8 月，倫敦蘇活區爆發了可怕的霍亂。十天內就有超過五百人死亡。當時大多數醫生相信，霍亂這類疾病是透過垃圾和髒水散發的「壞空氣」傳播的。一位名叫約翰．斯諾的醫生懷疑這個說法。他反而懷疑這種病是經由飲用水傳播。為了檢驗他的想法，斯諾挨家挨戶記錄每位死者住在哪裡。他把死亡案例標在地圖上，一個清楚的模式出現了：大部分死者集中在寬街的一個公用水泵周圍。此外，少數住得比較遠的死者，大多也曾走到那個水泵取水。斯諾把證據交給地方官員，水泵的把手被拆掉了。原本就已經在減緩的疫情很快就結束了。斯諾的研究常被認為是現代流行病學（研究疾病如何在人群中傳播的學問）的開端。他的理論直到他死後多年才被廣泛接受，但他收集資料、把病例標在地圖上的方法，成了疾病監測的典範。當代的衛生官員追查傳染病的傳播時，仍然問同樣的基本問題：誰生病了、在哪裡、在什麼時候。後來乾淨的水和下水道等衛生設施的改善，拯救的人命幾乎比任何藥物都多。',
+  qs: [
+    { id: 'c5-1', sk: 'c.logic', q: '第 (1) 格', o: [ 'Instead', 'For example', 'In addition', 'Therefore' ], why: 'Snow 懷疑「壞空氣」的說法，提出另一個想法（水）取代它：用 Instead（反而、取而代之）。', st: [ [ '空格前一句說 Snow 對「壞空氣」的看法是？', '懷疑', '相信', '沒有意見', 'A doctor named John Snow doubted this idea。', 'c.logic' ], [ '空格後一句提出什麼？', '另一個解釋：水', '壞空氣的例子', '壞空氣的結果', 'he suspected that the disease was carried by drinking water。', 'c.logic' ], [ '「不是 A，而是 B」用？', 'Instead', 'For example', 'Therefore', 'instead＝取而代之。', 'c.logic' ] ] },
+    { id: 'c5-2', sk: 'c.logic', q: '第 (2) 格', o: [ 'Moreover', 'Instead', 'Nevertheless', 'In other words' ], why: '前一句：死亡集中在水泵附近；這一句：住得遠的死者大多也喝了這個水泵的水。又多一個指向水泵的證據：補充，用 Moreover。', st: [ [ '前一句發現了什麼？', '死亡集中在一個水泵附近', '死亡平均分布在全城', '死亡集中在醫院附近', 'most of them were clustered around a single public water pump。', 'c.logic' ], [ '這一句和前一句的方向？', '相同：又一個指向水泵的證據', '相反：證明水泵沒有問題', '舉例：說明什麼是水泵', '住得遠的死者也喝了這個水泵的水，同樣指向水泵。', 'c.logic' ] ] },
+    { id: 'c5-3', sk: 'g.tense', q: '第 (3) 格', o: [ 'was', 'were', 'has', 'had' ], why: '主詞是 the handle（單數），of the pump 是修飾；把手是「被」拆掉，用被動 was removed。', st: [ [ '空格的主詞中心是？', 'the handle', 'the pump', 'officials', 'the handle of the pump：of the pump 修飾 handle。', 'g.tense' ], [ '把手是自己拆掉，還是被拆掉？', '被拆掉（被動）', '自己拆掉（主動）', '看不出來', '把手不會自己動，要用 be＋過去分詞。', 's.pass' ], [ '單數主詞、過去的被動，用？', 'was removed', 'were removed', 'had removed', 'was＋過去分詞。', 'g.tense' ] ] },
+    { id: 'c5-4', sk: 'g.conj', q: '第 (4) 格', o: [ 'but', 'because', 'so', 'unless' ], why: '理論生前沒被接受，方法卻成為典範：前後方向相反，用 but。', st: [ [ '逗號前說他的理論怎麼樣？', '生前沒被廣泛接受', '很快就被接受', '被證明是錯的', 'His theory was not widely accepted until years after his death。', 'c.logic' ], [ '逗號後說他的方法怎麼樣？', '成為監測的典範', '也沒有人使用', '證明理論是錯的', 'his method… became a model for disease surveillance。', 'c.logic' ], [ '「沒被接受」和「成為典範」是什麼關係？', '相反', '因果', '條件', '方向相反，用 but。', 'g.conj' ] ] },
+    { id: 'c5-5', sk: 'c.collo', q: '第 (5) 格', o: [ 'saved', 'helped', 'kept', 'won' ], why: 'save lives＝拯救性命，是固定搭配。', st: [ [ '空格的受詞是？', 'more lives', 'medicine', 'sanitation', '___ more lives than almost any medicine。', 'c.collo' ], [ '「拯救性命」的固定說法是？', 'save lives', 'help lives', 'keep lives', 'life／lives 搭配動詞 save。', 'c.collo' ] ] }
+  ]
+},
+   {
+  type: 'read',
+  title: 'Why Measles Is Coming Back',
+  text: [ 'Measles is one of the most contagious diseases known. A person with measles can infect up to 90 percent of the people close to them who are not immune, and the virus can remain in the air of a room for up to two hours after the sick person has left. Before a vaccine became available in 1963, measles killed an estimated 2.6 million people each year, primarily young children.', 'Because the virus spreads so easily, about 95 percent of a community must be vaccinated to stop its transmission. When vaccination rates fall even slightly below this level, outbreaks can begin again. This is exactly what has happened in recent years. In 2019, the number of reported cases worldwide reached its highest level in more than two decades, and large outbreaks occurred even in wealthy countries where the disease had been eliminated.', 'The reasons are diverse and vary from place to place. In poorer regions, the main problem is access: families may live far from clinics, and vaccine supplies can be interrupted by war or disasters. In richer countries, the problem is more often trust. False claims about vaccine safety spread quickly on social media, and some parents choose to delay or refuse vaccination for their children. Some governments have implemented rules that make vaccination mandatory for school entry, while others prefer to improve public education. Either way, experts agree that measles is a warning sign: when it returns, it shows that the protection of a whole community has begun to weaken.' ],
+  zh: '麻疹是已知傳染力最強的疾病之一。一個麻疹病人可能傳染身邊高達九成沒有免疫力的人，而且病人離開後，病毒還能在房間的空氣中停留長達兩小時。在 1963 年有疫苗之前，麻疹每年估計奪走兩百六十萬條人命，主要是幼兒。因為病毒傳播得這麼容易，一個社區大約要有 95% 的人接種，才能阻止它傳播。接種率只要稍微低於這個程度，疫情就可能再度爆發。這正是近年發生的事。2019 年，全球通報的病例數達到二十多年來最高，連已經消除麻疹的富裕國家也發生大規模疫情。原因很多樣，而且因地而異。在較貧窮的地區，主要問題是取得：家庭可能住得離診所很遠，疫苗供應也可能因戰爭或災難而中斷。在較富裕的國家，問題比較常是信任。關於疫苗安全的錯誤說法在社群媒體上快速散播，有些父母選擇延後或拒絕讓孩子接種。有些政府實施了入學前必須接種的規定，有些則偏好加強公眾教育。不論哪一種，專家都同意麻疹是一個警訊：它一回來，就表示整個社區的保護已經開始減弱。',
+  qs: [
+    { id: 'r5-1', sk: 'r.main', pre: '主旨：整篇文章最想說的事', q: 'What is the passage mainly about?', o: [ 'Why measles outbreaks are rising and what causes them', 'How the measles vaccine was first developed in 1963', 'Why measles is less dangerous than people believe', 'How social media helps doctors track measles cases' ], why: '第一段說麻疹傳染力強，第二段說病例最近又增加，第三段說原因：主旨是麻疹為什麼回來。', st: [ [ '第二段說最近發生了什麼？', '麻疹病例又增加了', '麻疹已經被根除了', '疫苗完全沒效了', 'the number of reported cases… reached its highest level in more than two decades。', 'r.main' ], [ '第三段說明什麼？', '病例增加的原因', '疫苗的製造方法', '麻疹的症狀', 'The reasons vary from place to place。', 'r.main' ] ] },
+    { id: 'r5-2', sk: 'r.locate', pre: '細節：找數字', q: 'What share of a community must be vaccinated to stop measles from spreading?', o: [ 'About 95 percent', 'About 90 percent', 'About 63 percent', 'About 26 percent' ], why: '第二段：about 95 percent of a community must be vaccinated。90 percent 是一個病人能傳染的比例。', st: [ [ '答案在哪一段？', '第二段 stop its transmission', '第一段 infect up to 90 percent', '第三段 mandatory for school', '題目的 stop… from spreading＝原文的 stop its transmission。', 'r.locate' ], [ '90 percent 在原文指的是？', '一個病人能傳染的比例', '社區需要接種的比例', '感染後死亡的比例', 'A person with measles can infect up to 90 percent of the people close to them。', 'r.locate' ] ] },
+    { id: 'r5-3', sk: 'r.para', pre: '換句話說：哪個選項和原文那句意思一樣', q: 'Which sentence has the same meaning as “In poorer regions, the main problem is access”?', o: [ 'In poorer areas, many families cannot easily get the vaccine.', 'In poorer areas, many families do not trust the vaccine.', 'In poorer areas, the vaccine is mandatory for all children.', 'In poorer areas, measles is no longer a serious problem.' ], why: 'access＝取得的管道；後面解釋：住得離診所遠、疫苗供應中斷，也就是拿不到疫苗。不信任是富裕國家的問題。', st: [ [ 'access 後面怎麼解釋？', '離診所遠、供應中斷', '不相信疫苗安全', '政府強制接種', 'families may live far from clinics, and vaccine supplies can be interrupted。', 'r.para' ], [ '「不信任疫苗」是哪裡的問題？', '較富裕的國家', '較貧窮的地區', '所有的地方', 'In richer countries, the problem is more often trust。', 'r.locate' ] ] },
+    { id: 'r5-4', sk: 'r.attitude', pre: '作者態度：作者怎麼介紹兩種政府對策', q: 'How does the author present mandatory vaccination and public education?', o: [ 'As two approaches, without choosing one', 'As useless steps that make things worse', 'As the same policy with different names', 'As ideas that experts strongly reject' ], why: 'Some governments… while others… Either way…：作者並列兩種做法，沒有說哪一種比較好。', st: [ [ '原文怎麼介紹這兩種做法？', '有些政府這樣，有些那樣', '只有其中一種做法有效', '兩種做法最後都失敗了', 'Some governments have implemented rules… while others prefer…', 'r.attitude' ], [ 'Either way 的意思是？', '不管哪一種', '兩種都不要', '只能選一種', 'either way＝無論用哪一種方法；作者接著說專家都同意的事，而不是選邊站。', 'r.attitude' ] ] },
+    { id: 'r5-5', sk: 'r.infer', pre: '推論：原文沒有直接說，但可以推出的事', q: 'Why does the author call measles “a warning sign”?', o: [ 'Its return suggests that vaccination rates have dropped.', 'It is the first disease to appear in every outbreak.', 'It shows that the measles vaccine no longer works.', 'It warns doctors that a new virus has appeared.' ], why: '麻疹傳染力極強，接種率稍微低於 95% 就會爆發。所以麻疹一出現，就代表社區的保護（接種率）已經下降。', st: [ [ '麻疹在什麼情況下會再爆發？', '接種率稍微下降時', '病毒發生了突變時', '天氣開始變冷時', 'When vaccination rates fall even slightly below this level, outbreaks can begin again。', 'r.locate' ], [ '所以麻疹出現代表什麼？', '社區的保護變弱了', '疫苗已經失效了', '新病毒出現了', 'it shows that the protection of a whole community has begun to weaken。', 'r.infer' ] ] }
+  ]
+}],
+  // 第 6 天
+  [{
+  type: 'cloze',
+  title: 'The Power of a Sugar Pill',
+  text: [ 'When a new drug is tested, half of the participants usually receive a placebo, a pill that looks exactly like the real drug but contains no active ingredient. Researchers do this because people often feel better simply because they believe they are being treated. This response, known as the placebo effect, is surprisingly {1}. In some trials of pain medicine, about a third of the patients who took a sugar pill reported less pain.', 'The placebo effect is not just imagination. Brain scans have shown that when patients expect relief, the brain releases natural chemicals that {2} pain signals. The effect also depends on details: two pills tend to work better than one, and an injection usually works better than a pill. {3}, a placebo cannot shrink a tumor or kill bacteria. Its effects are strongest for symptoms such as pain, nausea, and fatigue, {4} depend heavily on how the brain interprets signals from the body.', 'For this reason, a new drug is approved only if trials demonstrate that its efficacy is clearly greater than that of a placebo. Interestingly, some studies suggest that a placebo can help even when patients know {5} they are taking one. Doctors are now asking how this knowledge could be used honestly to enhance real treatments.' ],
+  zh: '測試新藥時，通常有一半的受試者會拿到安慰劑，也就是外表和真藥一模一樣、但沒有有效成分的藥丸。研究人員這樣做，是因為人常常只因為相信自己正在接受治療，就覺得好轉。這種反應叫做安慰劑效應，它強得令人驚訝。在一些止痛藥的試驗中，大約三分之一吃糖錠的病人表示疼痛減輕。安慰劑效應不只是想像。腦部掃描顯示，病人預期會舒緩時，大腦會釋放壓制疼痛訊號的天然化學物質。效果也取決於細節：兩顆藥往往比一顆有效，打針通常比吃藥有效。然而，安慰劑無法讓腫瘤縮小，也無法殺死細菌。它的效果在疼痛、噁心和疲勞這類症狀上最明顯，因為這些症狀很依賴大腦如何解讀身體傳來的訊號。因此，新藥只有在試驗證明它的療效明顯高於安慰劑時，才會被核准。有趣的是，一些研究認為，即使病人知道自己吃的是安慰劑，它仍然可能有幫助。醫生現在正在研究，如何誠實地運用這個知識來增強真正的治療。',
+  qs: [
+    { id: 'c6-1', sk: 'c.logic', q: '第 (1) 格', o: [ 'strong', 'rare', 'toxic', 'abnormal' ], why: '下一句說吃糖錠的病人約有三分之一疼痛減輕：效果出乎意料地強，用 strong。', st: [ [ '空格後一句提供什麼證據？', '三分之一的人疼痛減輕', '沒有任何人感覺變好', '吃了糖錠的人會中毒', 'about a third of the patients who took a sugar pill reported less pain。', 'c.logic' ], [ '三分之一的人有效，表示這個效果？', '很強', '很少見', '有毒', 'surprisingly strong＝強得令人驚訝。', 'c.logic' ] ] },
+    { id: 'c6-2', sk: 'v.mean', q: '第 (2) 格', o: [ 'suppress', 'administer', 'prescribe', 'transplant' ], why: '大腦釋放的天然化學物質會「壓制」疼痛訊號，用 suppress。', st: [ [ '病人預期會舒緩時，這些化學物質對疼痛訊號做什麼？', '減弱它', '放大它', '移植它', '預期舒緩 → 疼痛減少，所以是減弱疼痛訊號。', 'c.logic' ], [ '「壓制、抑制」是哪個字？', 'suppress', 'administer', 'prescribe', 'sup-（在下面）＋press（壓）＝壓下去。', 'v.root' ] ] },
+    { id: 'c6-3', sk: 'c.logic', q: '第 (3) 格', o: [ 'However', 'For example', 'As a result', 'In other words' ], why: '前面說安慰劑效應是真的、會受細節影響；後面說它不能縮小腫瘤或殺菌：說它的限制，方向相反，用 However。', st: [ [ '空格前講安慰劑的什麼？', '它真實有效的一面', '它造成的副作用', '它的價格', 'The placebo effect is not just imagination…', 'c.logic' ], [ '空格後講什麼？', '它做不到的事', '更多有效的例子', '它造成的結果', 'a placebo cannot shrink a tumor or kill bacteria。', 'c.logic' ], [ '有效 → 做不到，是什麼關係？', '轉折', '舉例', '因果', '方向相反，用轉折語。', 'c.logic' ] ] },
+    { id: 'c6-4', sk: 's.rel', q: '第 (4) 格', o: [ 'which', 'who', 'what', 'they' ], why: '逗號後面補充說明前面的症狀（物），用 which；用 they 會讓兩個句子之間沒有連接詞；who 指人；what 不能接在名詞後面。', st: [ [ '空格前面說的是什麼？', 'the symptoms', 'the brain', 'the bacteria', 'symptoms such as pain, nausea, and fatigue, ___ depend…', 's.rel' ], [ '這些症狀是人還是物？', '物', '人', '地點', '症狀是物，用 which。', 's.rel' ], [ '為什麼不能用 they？', '兩個子句沒有連接詞', 'they 不能指症狀', 'they 後面不能接動詞', '…fatigue, they depend…：逗號不能直接連接兩個完整的句子。', 'g.conj' ] ] },
+    { id: 'c6-5', sk: 's.noun', q: '第 (5) 格', o: [ 'that', 'what', 'which', 'whom' ], why: 'know 的受詞是一整個句子 they are taking one（句子完整），用 that 帶出名詞子句；what 後面的句子要缺東西。', st: [ [ 'know 後面的 they are taking one 是？', '完整的句子', '缺受詞的句子', '一個名詞', '主詞 they、動詞 are taking、受詞 one 都有。', 's.noun' ], [ '完整的句子當 know 的受詞，用？', 'that', 'what', 'which', 'that 帶出名詞子句，本身沒有意思；what 後面的句子要缺東西。', 's.noun' ] ] }
+  ]
+},
+   {
+  type: 'read',
+  title: 'Living with Someone Else’s Organ',
+  text: [ 'Since the first successful kidney transplant in 1954, transplants have saved hundreds of thousands of lives. Yet the surgical procedure is only the beginning of a lifelong challenge. The immune system is designed to attack anything it identifies as foreign, such as bacteria and viruses. Unfortunately, it treats a transplanted kidney or heart in the same way. Without treatment, the body would reject the new organ within days or weeks.', 'To prevent rejection, patients must take drugs that suppress the immune system for the rest of their lives. These drugs are administered in carefully controlled doses, because the balance is delicate. If the dosage is too low, the body may attack the organ; if it is too high, the patient becomes highly vulnerable to infections and certain cancers. Some of these drugs can also be toxic to the kidneys, which creates a cruel irony for kidney transplant patients. Specialized transplant teams therefore check blood levels regularly and adjust the treatment to preserve both the new organ and the patient’s health.', 'Researchers are searching for ways to make lifelong drugs unnecessary. One approach is to train the patient’s immune system to accept the new organ, for example by giving the patient stem cells from the donor at the time of the transplant. In small trials, some patients were able to stop taking their drugs completely. These results are encouraging, but the method is not yet safe or reliable enough for routine use. For now, the best remedy for rejection remains a daily pill and close medical care.' ],
+  zh: '自從 1954 年第一次成功的腎臟移植以來，器官移植已經拯救了數十萬條人命。然而，移植手術只是終生挑戰的開始。免疫系統的設計是攻擊任何被它認定為外來的東西，例如細菌和病毒。不幸的是，它也用同樣的方式對待移植進來的腎臟或心臟。如果不治療，身體會在幾天或幾週內排斥新器官。為了防止排斥，病人必須終生服用壓制免疫系統的藥物。這些藥要以嚴格控制的劑量給予，因為平衡很微妙：劑量太低，身體可能攻擊器官；劑量太高，病人會非常容易受到感染，也容易得某些癌症。有些這類藥物還可能對腎臟有毒，這對換腎的病人來說是殘酷的諷刺。因此專門的移植團隊會定期檢查血中濃度並調整治療，以同時保護新器官和病人的健康。研究人員正在尋找不必終生吃藥的方法。其中一種做法是訓練病人的免疫系統接受新器官，例如在移植時給病人捐贈者的幹細胞。在小規模的試驗中，有些病人能夠完全停藥。這些結果令人鼓舞，但這個方法還不夠安全可靠，不能常規使用。目前，對付排斥最好的辦法，仍然是每天吃藥和密切的醫療照護。',
+  qs: [
+    { id: 'r6-1', sk: 'r.main', pre: '主旨：整篇文章最想說的事', q: 'What is the main idea of the passage?', o: [ 'Transplant patients need lifelong drugs, though new methods are being tested.', 'Kidney transplants were first performed successfully in 1954.', 'The immune system is unable to recognize bacteria and viruses.', 'Stem cells have already replaced drugs for all transplant patients.' ], why: '第一段說身體會排斥新器官，第二段說要終生吃藥及其困難，第三段說正在研究的新方法：主旨要包含兩者。', st: [ [ '第二段的重點是？', '移植後要終生吃藥壓制免疫', '移植手術的歷史和過程', '免疫系統如何對抗細菌', 'patients must take drugs that suppress the immune system for the rest of their lives。', 'r.main' ], [ '第三段的重點是？', '研究不用終生吃藥的方法', '介紹更多種類的藥物', '說明手術的費用', 'Researchers are searching for ways to make lifelong drugs unnecessary。', 'r.main' ] ] },
+    { id: 'r6-2', sk: 'r.word', pre: '由上下文猜字義：看前後文', q: 'In paragraph 1, the word “reject” is closest in meaning to ____.', o: [ 'refuse to accept', 'grow to depend on', 'slowly repair', 'quickly copy' ], why: '免疫系統會攻擊外來的東西，不治療的話身體會「排斥」新器官：refuse to accept＝拒絕接受。', st: [ [ '前面說免疫系統怎麼對待外來的東西？', '攻擊它', '保護它', '複製它', 'The immune system is designed to attack anything it identifies as foreign。', 'r.word' ], [ '所以身體對新器官會？', '拒絕接受', '慢慢依賴', '快速修復', '把器官當成外來物攻擊，就是排斥。', 'r.word' ] ] },
+    { id: 'r6-3', sk: 'r.locate', pre: '細節：劑量太高會怎樣', q: 'What can happen if the dosage of the drugs is too high?', o: [ 'The patient may catch infections easily.', 'The body may attack the new organ.', 'The new organ may start to grow larger.', 'The patient may stop needing the drugs.' ], why: '第二段：if it is too high, the patient becomes highly vulnerable to infections。「身體攻擊器官」是劑量太低的結果。', st: [ [ '原文哪一句講劑量太高？', 'if it is too high, …', 'If the dosage is too low, …', 'Some of these drugs can…', '分號前講太低，分號後講太高。', 'r.locate' ], [ 'vulnerable to infections 的意思是？', '容易受到感染', '不會受到感染', '能對抗感染', 'vulnerable＝脆弱的、容易受傷害的（第 1 週學過）。', 'r.locate' ] ] },
+    { id: 'r6-4', sk: 'r.infer', pre: '推論：原文沒有直接說，但可以推出的事', q: 'Why does the author call the kidney damage “a cruel irony” for kidney transplant patients?', o: [ 'The drug that protects the new kidney may also harm it.', 'The new kidney makes the drugs more toxic to the body.', 'Kidney patients need higher doses than heart patients.', 'The drugs are too expensive for most kidney patients.' ], why: '病人吃藥是為了保護新腎臟，但藥本身可能傷害腎臟：保護它的東西反過來傷害它，所以是殘酷的諷刺。', st: [ [ '病人吃這些藥的目的是什麼？', '保護新的器官', '治療癌症', '預防感染', 'To prevent rejection, patients must take drugs…', 'r.locate' ], [ '這些藥可能傷害哪個器官？', '腎臟', '心臟', '大腦', 'Some of these drugs can also be toxic to the kidneys。', 'r.locate' ], [ '對換腎的人來說，這代表？', '保護腎的藥也可能傷腎', '新的腎臟會讓藥失效', '換腎的人不需要吃藥', 'irony＝諷刺：結果和目的相反。', 'r.infer' ] ] },
+    { id: 'r6-5', sk: 'r.para', pre: '換句話說：哪個選項和原文那句意思一樣', q: 'Which sentence has the same meaning as “the method is not yet safe or reliable enough for routine use”?', o: [ 'The method is still too risky and uncertain to use for everyone.', 'The method is already safe enough to be used in every hospital.', 'The method is reliable but too expensive for most patients.', 'The method has been tested on too many patients already.' ], why: 'not yet… enough＝還不夠…；routine use＝例行、普遍的使用：還不夠安全可靠，不能普遍使用。', st: [ [ 'not yet… enough 的意思是？', '還不夠', '已經夠了', '永遠不會', 'not yet＝還沒有。', 'r.para' ], [ 'routine use 指的是？', '平常、普遍地使用', '只在試驗中使用', '完全不使用', 'routine＝例行的、日常的。', 'r.para' ] ] }
+  ]
+}],
+  // 第 7 天
+  [{
+  type: 'cloze',
+  title: 'How the Body Handles Sugar',
+  text: [ 'After a meal, the digestive system breaks down carbohydrates into glucose, which is then absorbed into the blood. In response {1} the rising level of sugar, the pancreas releases insulin, a hormone that allows cells to take in glucose and use it for energy. In a healthy person, this careful regulation keeps blood sugar within a narrow range.', 'The prevalence of type 2 diabetes has risen sharply around the world as more people gain weight. In this disease, the cells gradually stop responding to insulin. The pancreas tries to make up for this by producing more and more insulin, {2} after many years it can no longer keep up. Several factors play a role {3} this process. A sedentary lifestyle and excess body fat, especially around the waist, strongly contribute {4} the disease, and genes also matter: people with a parent who has diabetes are more prone to developing it themselves.', 'If blood sugar stays high for years, it can damage small vessels in the eyes, kidneys, and nerves, which can {5} blindness, kidney failure, and even the loss of a foot. The good news is that type 2 diabetes is often preventable. In one large trial, people at high risk who lost a modest amount of weight and walked briskly for about 150 minutes a week cut their risk of developing the disease by more than half.' ],
+  zh: '吃完飯後，消化系統把碳水化合物分解成葡萄糖，再吸收進血液。胰臟對上升的血糖做出反應，釋放胰島素；胰島素是一種讓細胞能吸收葡萄糖、用來產生能量的荷爾蒙。在健康的人身上，這種精細的調節讓血糖維持在很窄的範圍內。隨著越來越多人體重增加，第二型糖尿病的盛行率在全世界急劇上升。在這種病中，細胞逐漸對胰島素失去反應。胰臟會設法製造越來越多胰島素來彌補，但多年之後就再也跟不上了。好幾個因素在這個過程中扮演角色。久坐不動的生活方式和過多的體脂肪（尤其是腰部）是很重要的促成因素，基因也有影響：父母一方有糖尿病的人，自己比較容易得病。如果血糖多年偏高，可能損害眼睛、腎臟和神經的小血管，進而導致失明、腎衰竭，甚至失去一隻腳。好消息是，第二型糖尿病常常可以預防。在一項大型試驗中，高風險的人只要減掉適度的體重、每週快走約 150 分鐘，得病的風險就降低了一半以上。',
+  qs: [
+    { id: 'c7-1', sk: 'c.collo', q: '第 (1) 格', o: [ 'to', 'for', 'with', 'of' ], why: 'in response to＝對…做出反應，是固定搭配。', st: [ [ '空格前和空格配成一組的是？', 'In response', 'the pancreas', 'rising level', 'In response ___ the rising level of sugar。', 'c.collo' ], [ '「對…做出反應」的固定說法？', 'in response to', 'in response for', 'in response of', 'response 後面接 to。', 'c.collo' ] ] },
+    { id: 'c7-2', sk: 'g.conj', q: '第 (2) 格', o: [ 'but', 'because', 'so', 'unless' ], why: '胰臟努力製造更多胰島素，但多年後還是跟不上：前後方向相反，用 but。', st: [ [ '空格前說胰臟在做什麼？', '努力製造更多胰島素', '停止製造胰島素', '製造更多葡萄糖', 'The pancreas tries to make up for this by producing more and more insulin。', 'c.logic' ], [ '空格後說結果如何？', '最後還是跟不上', '完全恢復正常', '需要的量變少', 'after many years it can no longer keep up。', 'c.logic' ], [ '「努力」和「跟不上」是什麼關係？', '相反', '因果', '條件', '努力了卻沒成功：方向相反，用 but。', 'g.conj' ] ] },
+    { id: 'c7-3', sk: 'c.collo', q: '第 (3) 格', o: [ 'in', 'on', 'at', 'of' ], why: 'play a role in＝在…中扮演角色，是固定搭配。', st: [ [ '空格前和空格配成一組的是？', 'play a role', 'several factors', 'this process', 'Several factors play a role ___ this process。', 'c.collo' ], [ '「在…中扮演角色」的固定說法？', 'play a role in', 'play a role on', 'play a role at', 'role 後面接 in。', 'c.collo' ] ] },
+    { id: 'c7-4', sk: 'c.collo', q: '第 (4) 格', o: [ 'to', 'with', 'for', 'at' ], why: 'contribute to＝促成、是…的原因之一。', st: [ [ '空格前的動詞是？', 'contribute', 'sedentary', 'strongly', '…excess body fat… strongly contribute ___ the disease。', 'c.collo' ], [ 'contribute 後面接？', 'to', 'with', 'for', 'contribute to＋名詞＝促成。', 'c.collo' ] ] },
+    { id: 'c7-5', sk: 'c.collo', q: '第 (5) 格', o: [ 'lead to', 'result from', 'consist of', 'depend on' ], why: '血管受損會「導致」失明、腎衰竭：後面是結果，用 lead to；result from 後面要接原因。', st: [ [ '空格後的 blindness, kidney failure 是什麼？', '血管受損的結果', '血管受損的原因', '血管的組成成分', '先判斷後面是結果還是原因。', 'c.logic' ], [ '後面接結果，用？', 'lead to', 'result from', 'consist of', 'lead to＋結果；result from＋原因。', 'c.collo' ] ] }
+  ]
+},
+   {
+  type: 'read',
+  title: 'Do Vitamin D Pills Work?',
+  text: [ 'Vitamin D is essential for strong bones, because it helps the body absorb calcium from food. The skin makes vitamin D when it is exposed to sunlight, and a deficiency is common among people who spend most of their time indoors. In the early 2000s, observational studies found that people with low levels of vitamin D had higher rates of cancer, heart disease, and depression. As a consequence, companies promoted vitamin D supplements heavily, and they became one of the best-selling health products in the world.', 'To find out whether the pills actually prevent disease, researchers in the United States conducted a large randomized trial called VITAL. More than 25,000 healthy adults took either vitamin D or a placebo for about five years. The results, published in 2018, were disappointing for supporters: vitamin D did not reduce the overall rate of cancer, heart attacks, or strokes. Because the trial was so large, its results are considered robust. Later analyses of the same trial found no clear benefit for depression either.', 'How can these findings be explained? One possibility is reverse causation: illness may lower vitamin D levels, rather than low vitamin D causing illness. People who are sick often go outside less and eat less, so their vitamin D levels fall. The trial does not mean that vitamin D is useless. People with a genuine deficiency, such as older adults living in care homes, may still benefit from supplements, and doctors can confirm the diagnosis with a simple blood test. For most healthy people who already get enough vitamin D, however, extra pills appear to offer little benefit.' ],
+  zh: '維生素 D 是強健骨骼不可缺少的，因為它幫助身體從食物中吸收鈣。皮膚照到陽光時會製造維生素 D，所以大部分時間待在室內的人很常缺乏。2000 年代初期，觀察性研究發現，維生素 D 濃度低的人，癌症、心臟病和憂鬱症的比率較高。因此，廠商大力推銷維生素 D 補充品，它們也成了全世界最暢銷的保健產品之一。為了查明這些藥丸是否真的能預防疾病，美國的研究人員進行了一項叫做 VITAL 的大型隨機分派試驗。超過兩萬五千名健康成人服用維生素 D 或安慰劑大約五年。2018 年發表的結果讓支持者失望：維生素 D 並沒有降低整體的癌症、心臟病發作或中風比率。因為試驗規模很大，它的結果被認為很可靠。後來對同一試驗的分析，也沒有發現對憂鬱症有明顯好處。這些發現要怎麼解釋？一種可能是反向因果：可能是生病讓維生素 D 降低，而不是維生素 D 低造成生病。生病的人常常比較少出門、吃得也比較少，所以維生素 D 濃度下降。這個試驗並不表示維生素 D 沒有用。真正缺乏的人，例如住在照護機構的老人，仍然可能從補充品得到好處，醫生可以用簡單的血液檢查確認診斷。然而，對大多數已經獲得足夠維生素 D 的健康人來說，額外的藥丸似乎沒什麼好處。',
+  qs: [
+    { id: 'r7-1', sk: 'r.main', pre: '主旨：整篇文章最想說的事', q: 'What is the passage mainly about?', o: [ 'Whether vitamin D pills prevent disease in healthy adults', 'How the skin produces vitamin D when exposed to sunlight', 'Why older adults should avoid taking vitamin D supplements', 'How vitamin D became the cheapest health product' ], why: '第一段說補充品為什麼流行，第二段說大型試驗的結果，第三段解釋原因並說誰仍可能受益：主旨是補充品對健康的人有沒有用。', st: [ [ '第二段的研究想知道什麼？', '維生素 D 能不能預防疾病', '維生素 D 怎麼在皮膚中製造', '哪一種維生素最便宜', 'To find out whether the pills actually prevent disease…', 'r.main' ], [ '研究的結論是？', '對健康的人沒有明顯好處', '對所有人都有很大的好處', '會讓健康的人生病', 'vitamin D did not reduce the overall rate of cancer, heart attacks, or strokes。', 'r.main' ] ] },
+    { id: 'r7-2', sk: 'r.locate', pre: '細節：找研究的設計', q: 'What did participants in the VITAL trial take?', o: [ 'Either vitamin D or a placebo', 'Both vitamin D and calcium', 'Only calcium tablets', 'Vitamin D in higher and lower doses' ], why: '第二段：took either vitamin D or a placebo for about five years。', st: [ [ '答案在哪一段？', '第二段 VITAL', '第一段 sunlight', '第三段 care homes', '題目提到 VITAL，找有 VITAL 的地方。', 'r.locate' ], [ 'either A or B 的意思是？', '不是 A 就是 B', 'A 和 B 都有', 'A 和 B 都沒有', '每個人只拿到其中一種：維生素 D 或安慰劑。', 'r.locate' ] ] },
+    { id: 'r7-3', sk: 'r.para', pre: '換句話說：哪個選項和原文那句意思一樣', q: 'Which sentence best explains “reverse causation” as used in paragraph 3?', o: [ 'Being sick may cause low vitamin D, not the other way around.', 'Low vitamin D may cause illness, exactly as people believed.', 'Vitamin D and illness have no connection with each other.', 'Taking vitamin D pills may make healthy people sick.' ], why: '原文：illness may lower vitamin D levels, rather than low vitamin D causing illness。reverse＝方向相反：是生病造成維生素 D 低，不是反過來。', st: [ [ '原文怎麼解釋 reverse causation？', '生病可能讓維生素 D 降低', '維生素 D 低會讓人生病', '維生素 D 和疾病無關', 'illness may lower vitamin D levels, rather than low vitamin D causing illness。', 'r.para' ], [ '為什麼生病會讓維生素 D 降低？', '比較少出門、吃得少', '吃了太多補充品', '曬了太多太陽', 'People who are sick often go outside less and eat less。', 'r.locate' ] ] },
+    { id: 'r7-4', sk: 'r.infer', pre: '推論：原文沒有直接說，但可以推出的事', q: 'Why might the early observational studies have been misleading?', o: [ 'Sick people were already likely to have low vitamin D.', 'The researchers gave participants too much vitamin D.', 'The studies included only people living in care homes.', 'Vitamin D was not yet sold as a supplement then.' ], why: '早期研究發現維生素 D 低的人比較常生病，就以為是缺乏造成疾病。但第三段說生病的人本來就比較少曬太陽、吃得少，所以維生素 D 低可能是生病的結果。', st: [ [ '早期研究發現了什麼？', '維生素 D 低的人比較常生病', '吃補充品的人比較常生病', '曬太陽的人比較常生病', 'people with low levels of vitamin D had higher rates of cancer, heart disease, and depression。', 'r.locate' ], [ '第三段提出的另一種解釋是？', '生病讓維生素 D 變低', '補充品讓人生病', '陽光讓人生病', 'illness may lower vitamin D levels。', 'r.infer' ] ] },
+    { id: 'r7-5', sk: 'r.attitude', pre: '作者態度：作者對維生素 D 補充品的看法', q: 'Which statement best describes the author’s view of vitamin D supplements?', o: [ 'Useful for people who truly lack it, but not for most', 'Necessary for everyone who spends time indoors', 'A dangerous product that should be banned', 'Effective against cancer, heart disease, and depression' ], why: '第三段：The trial does not mean that vitamin D is useless… People with a genuine deficiency… may still benefit… For most healthy people… little benefit。', st: [ [ '作者認為誰可能仍然有幫助？', '真的缺乏的人', '所有健康的人', '所有上班族', 'People with a genuine deficiency… may still benefit。', 'r.attitude' ], [ '對大多數健康的人呢？', '好處很少', '好處很大', '有危險', 'extra pills appear to offer little benefit。', 'r.attitude' ] ] }
+  ]
+}],
+];
+
 /* ---------- 錯題排程（化學、英文與首頁共用） ----------
    只從練習紀錄推算，不另外存狀態，所以紀錄同步到哪裡，排程就跟到哪裡。
    紀錄每一筆：{ t 時間, c 章, k 題型, h 題目識別碼, ok, n 第幾次作答 }；n === 1 是「一次作答」的開頭。
@@ -768,6 +1434,7 @@ const DAYN = '一二三四五六日';
 
 /* ---- 題目索引：每週的每一題都有固定識別碼，錯題本靠它找回題目 ---- */
 const wkKey = w => 'w' + w.n;
+const dayPass = (w, d) => [].concat(w.passages[d] || []);
 function wordQ(w, d, i) {
   const day = w.words[d], x = day[i], others = [1, 3, 6].map(k => day[(i + k) % day.length]);
   return { h: `w:${wkKey(w)}:${x[0]}`, k: 'w', sk: 'v.mean', c: `${wkKey(w)}d${d + 1}am`, en: 1,
@@ -783,10 +1450,10 @@ function recallQ(w, d, i) {
   const sent = esc(example[0]).replace(stemRe(x[0]), '<span class="gap">＿＿＿＿</span>');
   return { h: `wr:${wkKey(w)}:${x[0]}`, k: 'wr', sk: 'v.mean', c: `${wkKey(w)}d${d + 1}pm`, en: 1,
     q: `<span class="ens">${sent}</span><br><small class="mut">選項是原形，句中可能有變化。</small>`, o: [x[0], ...others.map(y => y[0])], hint: example[1],
-    why: `${esc(example[0])} ${sayBtn(example[0], '朗讀例句')}<br><span class="mut">${esc(example[1])}</span>`, qt: x[0] };
+    why: `${esc(example[0])} ${sayBtn(example[0], '朗讀例句')}<br><span class="mut">${esc(example[1])}</span><br><b>${esc(x[0])}</b> ${esc(x[1])}：${esc(x[2])}${x[3] ? `<br><span class="mut">${esc(x[3])}</span>` : ''}`, qt: x[0] };
 }
 const gramQ = (w, d, q) => ({ ...q, h: `g:${wkKey(w)}:${q.id}`, k: 'g', c: `${wkKey(w)}d${d + 1}pm`, en: 1, qt: q.q.replace(/<[^>]+>/g, '').slice(0, 60) });
-const passQ = (w, d, q) => ({ ...q, h: `p:${wkKey(w)}:${q.id}`, k: 'p', c: `${wkKey(w)}d${d + 1}pm`, en: 1, qt: `${w.passages[d].title}・${q.q}`.slice(0, 80) });
+const passQ = (w, d, q, P = dayPass(w, d).find(p => p.qs.includes(q))) => ({ ...q, h: `p:${wkKey(w)}:${q.id}`, k: 'p', c: `${wkKey(w)}d${d + 1}pm`, en: 1, qt: `${P.title}・${q.q}`.slice(0, 80) });
 const sentH = (w, d, j, i) => `s:${wkKey(w)}:${d}:${j}:${i}`;
 let QIX = null;
 function qindex() {
@@ -795,13 +1462,13 @@ function qindex() {
     day.forEach((x, i) => { const a = wordQ(w, d, i), b = recallQ(w, d, i); QIX[a.h] = { q: a, w, d }; QIX[b.h] = { q: b, w, d }; });
     (w.sents[d] || []).forEach((s, j) => s.steps.forEach((st, i) => { QIX[sentH(w, d, j, i)] = { sent: s, w, d, j, i, sk: st[5] }; }));
     if (w.gram[d]) w.gram[d].qs.forEach(q => { const g = gramQ(w, d, q); QIX[g.h] = { q: g, w, d }; });
-    if (w.passages[d]) w.passages[d].qs.forEach(q => { const p = passQ(w, d, q); QIX[p.h] = { q: p, w, d }; });
+    dayPass(w, d).forEach(P => P.qs.forEach(q => { const p = passQ(w, d, q, P); QIX[p.h] = { q: p, w, d }; }));
   }));
   return QIX;
 }
 // 每一段要完成的題目
 const amIds = (w, d) => [...w.words[d].map((x, i) => wordQ(w, d, i).h), ...(w.sents[d] || []).flatMap((s, j) => s.steps.map((st, i) => sentH(w, d, j, i)))];
-const pmIds = (w, d) => [...w.gram[d].qs.map(q => gramQ(w, d, q).h), ...w.passages[d].qs.map(q => passQ(w, d, q).h), ...w.words[d].map((x, i) => recallQ(w, d, i).h)];
+const pmIds = (w, d) => [...w.gram[d].qs.map(q => gramQ(w, d, q).h), ...dayPass(w, d).flatMap(P => P.qs.map(q => passQ(w, d, q, P).h)), ...w.words[d].map((x, i) => recallQ(w, d, i).h)];
 const frac = (ids, ok) => ids.filter(h => ok.has(h)).length / ids.length;
 
 /* ---- 選擇題：答錯可以再選；「一步一步來」把題目拆成小判斷 ---- */
@@ -824,7 +1491,7 @@ function collapse(box, first, text) {
   b.onclick = () => box.classList.toggle('collapsed'); box.prepend(b);
 }
 const plain = h => String(h).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 48);
-// 晚上的回想題：打開「早上的 10 個字」之後作答，記成 pk（看過卡片）
+// 晚上的回想題：打開早上的單字卡後作答，記成 pk（看過卡片）
 let PEEKED = false;
 function bindMcq(root, list, onDone, restore = true) {
   const views = {}, V = c => views[c] || (views[c] = viewOf(c));
@@ -949,11 +1616,14 @@ function renderHome() {
   const w = curWeek(), ok = okSet(), nx = nextSlot(w, ok), due = REVIEW.book(qlog()).due.length;
   const slot = (d, s) => {
     const f = frac(s === 'am' ? amIds(w, d) : pmIds(w, d), ok), cur = nx && nx.d === d && nx.s === s;
-    const what = s === 'am' ? '錯題複習・10 個新單字・2 個長句' : `文法：${w.gram[d].title.split('：')[0]}・${w.passages[d].type === 'cloze' ? '克漏字' : '閱讀'}・單字回想`;
-    return `<a class="slot${f >= 1 ? ' fin' : ''}${cur ? ' cur' : ''}" href="#d${d + 1}${s}"><span class="sl-h">${s === 'am' ? '早上' : '晚上'}<small>約 30 分鐘</small></span><span class="sl-w">${what}</span>${bar(f)}<span class="sl-st">${f >= 1 ? '✓ 完成' : f > 0 ? `${Math.round(100 * f)}%` : cur ? '從這裡開始 →' : ''}</span></a>`;
+    const n = w.words[d].length, ps = dayPass(w, d), kinds = [...new Set(ps.map(P => P.type === 'cloze' ? '克漏字' : '閱讀'))];
+    const what = s === 'am' ? `錯題複習・${n} 個新單字・2 個長句` : `文法：${w.gram[d].title.split('：')[0]}・${kinds.join('＋')}・單字回想`;
+    const mins = s === 'am' ? Math.round(15 + n * 1.5) : ps.length > 1 ? 45 : 30;
+    return `<a class="slot${f >= 1 ? ' fin' : ''}${cur ? ' cur' : ''}" href="#d${d + 1}${s}"><span class="sl-h">${s === 'am' ? '早上' : '晚上'}<small>約 ${mins} 分鐘</small></span><span class="sl-w">${what}</span>${bar(f)}<span class="sl-st">${f >= 1 ? '✓ 完成' : f > 0 ? `${Math.round(100 * f)}%` : cur ? '從這裡開始 →' : ''}</span></a>`;
   };
-  $('#main').innerHTML = `<p class="eyebrow">第 ${w.n} 週 · 每天約 60 分鐘</p><h1>${esc(w.theme)}</h1>
-<p class="lede">每天分成早上與晚上兩段。早上先複習到期的錯題，再學 10 個新單字和 2 個長句；晚上學一個文法重點，做一篇克漏字或閱讀，最後回想早上的單字。答錯的題目會自動排進之後的複習。</p>
+  const n = w.words[0].length, pm = dayPass(w, 0).length > 1 ? 45 : 30, am = Math.round(15 + n * 1.5);
+  $('#main').innerHTML = `<p class="eyebrow">第 ${w.n} 週 · 每天約 ${am + pm} 分鐘</p><h1>${esc(w.theme)}</h1>
+<p class="lede">每天分成早上與晚上兩段。早上先複習到期的錯題，再學 ${n} 個新單字和 2 個長句；晚上學一個文法重點，完成當天的${[...new Set(dayPass(w, 0).map(P => P.type === 'cloze' ? '克漏字' : '閱讀'))].join('＋')}，最後回想早上的單字。答錯的題目會自動排進之後的複習。</p>
 ${due ? `<p class="duebar"><a href="#review">錯題本有 <b>${due}</b> 題今天到期 →</a></p>` : ''}
 <ol class="days">${w.words.map((x, d) => `<li class="day${nx && nx.d === d ? ' now' : ''}"><h2>第 ${d + 1} 天<small>${esc(w.gram[d].title.split('：')[0])}</small></h2><div class="slots">${slot(d, 'am')}${slot(d, 'pm')}</div></li>`).join('')}</ol>
 <div class="row endrow"><a class="btn pri" href="#report">本週報告與匯出</a><a class="btn" href="#review">錯題本</a></div>
@@ -1009,28 +1679,28 @@ function renderAM(w, d) {
   $$('.rvgo').forEach(a => { a.onclick = () => store.set('rvBack', a.dataset.back); });
   bindUnsure($('#main')); bindMcq($('#wq'), wq, upd); w.sents[d].forEach((s, j) => bindSent($('#main'), w, d, j, s, upd)); upd(); resetBox(c);
 }
-function passageHTML(w, d, P) {
+function passageHTML(w, d, P, k = 0) {
   const blank = t => esc(t).replace(/\{(\d)\}/g, (m, n) => `<span class="blank" data-b="${n}">(${n}) ＿＿＿＿</span>`);
-  const pq = P.qs.map(q => passQ(w, d, q));
+  const pq = P.qs.map(q => passQ(w, d, q, P)), pid = `pq${k}`;
   const text = `<div class="passage card"><p class="ptitle">${esc(P.title)}</p>${P.text.map(t => `<p class="ens">${blank(t)} ${sayEl('p')}</p>`).join('')}<details><summary>中文翻譯（做完再看）</summary><p class="zh">${esc(P.zh)}</p></details></div>`;
-  if (P.type === 'cloze') return `<p class="note">克漏字：每格先看前後文是什麼關係（同方向、相反、因果），再看空格要什麼詞性。</p>${text}<div id="pq">${pq.map((q, i) => mcq(q, `第 ${i + 1} 格`)).join('')}</div>`;
+  if (P.type === 'cloze') return `<div class="passage-part" data-passage="${k}"><p class="note">克漏字：每格先看前後文是什麼關係（同方向、相反、因果），再看空格要什麼詞性。</p>${text}<div id="${pid}">${pq.map((q, i) => mcq(q, `第 ${i + 1} 格`)).join('')}</div></div>`;
   return `<p class="note">閱讀：先看題目知道要找什麼，再讀文章，最後回答。</p>
-<div class="card pre"><p class="lbl">先看題目</p><ol>${P.qs.map(q => `<li><span class="ens">${esc(q.q)}</span>${sayBtn(q.q.replace(/_+/g, ' blank '), '朗讀題目')}</li>`).join('')}</ol></div>${text}<div id="pq">${pq.map((q, i) => mcq(q, `第 ${i + 1} 題`)).join('')}</div>`;
+<div class="passage-part" data-passage="${k}"><div class="card pre"><p class="lbl">先看題目</p><ol>${P.qs.map(q => `<li><span class="ens">${esc(q.q)}</span>${sayBtn(q.q.replace(/_+/g, ' blank '), '朗讀題目')}</li>`).join('')}</ol></div>${text}<div id="${pid}">${pq.map((q, i) => mcq(q, `第 ${i + 1} 題`)).join('')}</div></div>`;
 }
 function renderPM(w, d) {
-  const G = w.gram[d], P = w.passages[d], c = `${wkKey(w)}d${d + 1}pm`;
-  const gq = G.qs.map(q => gramQ(w, d, q)), pq = P.qs.map(q => passQ(w, d, q)), rq = w.words[d].map((x, i) => recallQ(w, d, i));
+  const G = w.gram[d], Ps = dayPass(w, d), c = `${wkKey(w)}d${d + 1}pm`, n = w.words[d].length;
+  const gq = G.qs.map(q => gramQ(w, d, q)), pqs = Ps.map((P, k) => P.qs.map(q => passQ(w, d, q, P))), rq = w.words[d].map((x, i) => recallQ(w, d, i));
   $('#main').innerHTML = `${dayHead(w, d, 'pm')}<h1>晚上：文法與文章</h1><p class="segprog" id="segProg"></p><div class="resetbox" id="rsBox"></div>
 <section class="part" data-part="文法"><h2>1. 文法重點<small>約 10 分鐘</small><span class="pcnt"></span></h2><div class="card lesson"><h3>${esc(G.title)}</h3>${G.body}<p class="lbl">這一課練的能力：${esc(SKILLS[G.id] || G.id)}</p><div class="row">${unsureBtn(`u:gram:${wkKey(w)}:${d}`, c, G.title)}</div></div>
 <div id="gq">${gq.map((q, i) => mcq(q, `${i + 1} / ${gq.length}`)).join('')}</div></section>
-<section class="part" data-part="${P.type === 'cloze' ? '克漏字' : '閱讀'}"><h2>2. ${P.type === 'cloze' ? '克漏字' : '閱讀測驗'}<small>約 12 分鐘</small><span class="pcnt"></span></h2>${passageHTML(w, d, P)}<div class="row">${unsureBtn(`u:pass:${wkKey(w)}:${d}`, c, P.title)}</div></section>
-<section class="part" data-part="回想" id="rqPart"><h2>3. 單字回想<small>約 5 分鐘</small><span class="pcnt"></span></h2><p class="note">早上的 10 個字放回例句裡。先自己想；真的想不起來，按畫面下方的「早上的 10 個字」打開卡片（會記錄，週報會把這些字列為還不熟）。</p><div id="rq">${rq.map((q, i) => mcq(q, `${i + 1} / ${rq.length}`)).join('')}</div></section>
-<button class="btn pri peekbtn" type="button" id="peekBtn" hidden>早上的 10 個字</button>
-<div class="sheet" id="peek" hidden role="dialog" aria-label="早上的 10 個字"><div class="sheet-h"><b>早上的 10 個字</b><button class="btn sm" type="button" id="peekX">關閉</button></div><div class="words">${wordCards(w, d, false)}</div></div>
+${Ps.map((P, k) => `<section class="part" data-part="${P.type === 'cloze' ? '克漏字' : '閱讀'}"><h2>${k + 2}. ${P.type === 'cloze' ? '克漏字' : '閱讀測驗'}<small>約 ${Ps.length > 1 ? 15 : 12} 分鐘</small><span class="pcnt"></span></h2>${passageHTML(w, d, P, k)}<div class="row">${unsureBtn(k === 0 ? `u:pass:${wkKey(w)}:${d}` : `u:pass:${wkKey(w)}:${d}:${k}`, c, P.title)}</div></section>`).join('')}
+<section class="part" data-part="回想" id="rqPart"><h2>${Ps.length + 2}. 單字回想<small>約 5 分鐘</small><span class="pcnt"></span></h2><p class="note">早上的 ${n} 個字放回例句裡。先自己想；真的想不起來，按畫面下方的「早上的 ${n} 個字」打開卡片（會記錄，週報會把這些字列為還不熟）。</p><div id="rq">${rq.map((q, i) => mcq(q, `${i + 1} / ${rq.length}`)).join('')}</div></section>
+<button class="btn pri peekbtn" type="button" id="peekBtn" hidden>早上的 ${n} 個字</button>
+<div class="sheet" id="peek" hidden role="dialog" aria-label="早上的 ${n} 個字"><div class="sheet-h"><b>早上的 ${n} 個字</b><button class="btn sm" type="button" id="peekX">關閉</button></div><div class="words">${wordCards(w, d, false)}</div></div>
 <div class="row endrow"><a class="btn pri" href="${d < 6 ? `#d${d + 2}am` : '#report'}">${d < 6 ? '明天早上 ›' : '本週報告 ›'}</a><a class="btn" href="#">本週</a></div>`;
   const upd = q => {
     refreshParts();
-    if (q && P.type === 'cloze') { const n = P.qs.findIndex(x => passQ(w, d, x).h === q.h) + 1, b = $(`.blank[data-b="${n}"]`); if (b) { b.textContent = `(${n}) ${q.o[0]}`; b.classList.add('fill'); } }
+    if (q) Ps.forEach((P, k) => { if (P.type !== 'cloze') return; const n0 = P.qs.findIndex(x => passQ(w, d, x, P).h === q.h) + 1, b = $(`.blank[data-b="${n0}"]`, $(`[data-passage="${k}"]`)); if (n0 && b) { b.textContent = `(${n0}) ${q.o[0]}`; b.classList.add('fill'); } });
   };
   PEEKED = false;
   $('#peekBtn').onclick = () => { $('#peek').hidden = false; $('#peekBtn').hidden = true; if (!PEEKED) { PEEKED = true; logAnswer({ c, k: 'peek', h: `peek:${c}`, qt: '回想時打開早上的單字卡' }); } };
@@ -1038,7 +1708,7 @@ function renderPM(w, d) {
   let inRq = false;
   $('#peekX').onclick = () => { $('#peek').hidden = true; $('#peekBtn').hidden = !inRq; };
   if ('IntersectionObserver' in window) new IntersectionObserver(es => { inRq = es[0].isIntersecting; if ($('#peek').hidden) $('#peekBtn').hidden = !inRq; }).observe($('#rqPart'));
-  bindUnsure($('#main')); bindMcq($('#gq'), gq, upd); bindMcq($('#pq'), pq, upd); bindMcq($('#rq'), rq, upd); upd(); resetBox(c);
+  bindUnsure($('#main')); bindMcq($('#gq'), gq, upd); Ps.forEach((P, k) => bindMcq($(`#pq${k}`), pqs[k], upd)); bindMcq($('#rq'), rq, upd); upd(); resetBox(c);
 }
 
 /* ---- 錯題複習 ---- */
@@ -1057,7 +1727,7 @@ function reviewHTML(items) {
     if (it.sent) { const f = it.sent; return `<div class="rv-sent"><p class="qsrc">第 ${f.w.n} 週第 ${f.d + 1} 天・長句・${REVIEW.label(it.s)}</p>${sentHTML(f.w, f.d, f.j, f.w.sents[f.d][f.j], `r${f.d}:${f.j}`)}</div>`; }
     const q = it.q, f = it.f; let ctx = '';
     if (q.k === 'p') {
-      const P = f.w.passages[f.d], n0 = P.qs.findIndex(x => passQ(f.w, f.d, x).h === q.h) + 1;
+      const P = dayPass(f.w, f.d).find(p => p.qs.some(x => passQ(f.w, f.d, x, p).h === q.h)), n0 = P.qs.findIndex(x => passQ(f.w, f.d, x, P).h === q.h) + 1;
       if (P.type === 'cloze') {
         const para = P.text.find(t => t.includes(`{${n0}}`)) || '';
         ctx = `<p class="ens ctx">${esc(para).replace(/\{(\d)\}/g, (m, k) => (+k === n0 ? `<span class="blank">(${k}) ＿＿＿＿</span>` : esc(P.qs[k - 1].o[0])))}</p>`;
@@ -1143,6 +1813,7 @@ function exportMD(w) {
   const steps = {}; LOG.filter(e => e.k === 'x' && e.c && e.c.startsWith(wkKey(w) + 'd') && !e.ok && e.n === 1).forEach(e => { steps[e.sk] = (steps[e.sk] || 0) + 1; });
   const skLines = Object.keys(SKILLS).map(k => `| ${k} | ${SKILLS[k]} | ${sk[k].n} | ${sk[k].ok} | ${sk[k].n ? Math.round(100 * sk[k].ok / sk[k].n) + '%' : '—'} | ${SK_ST[skillState(sk[k])]} |`);
   const allWords = WEEKS.flatMap(x => x.words.flat().map(y => y[0]));
+  const avgWords = type => { const ps = w.passages.flatMap((_, d) => dayPass(w, d).filter(P => P.type === type)); return Math.round(ps.reduce((n, P) => n + (P.text.join(' ').match(/[A-Za-z]+(?:['’-][A-Za-z]+)*/g) || []).length, 0) / (ps.length || 1)); };
   return `# 後中英文 第 ${w.n} 週學習紀錄（匯出日 ${today}）
 
 ## 給 AI 的指示：請產生第 ${w.n + 1} 週的訓練內容
@@ -1152,19 +1823,20 @@ function exportMD(w) {
 請依照下面「本週紀錄」的弱項，產生第 ${w.n + 1} 週的兩個資料檔 \`w${String(w.n + 1).padStart(2, '0')}a.js\`、\`w${String(w.n + 1).padStart(2, '0')}b.js\`，格式必須和下面的規格完全一樣（網站會直接載入，格式錯了整頁會壞）。
 
 ### 內容要求
-1. 每天兩段：早上（10 個新單字＋2 個長句拆解）、晚上（1 個文法重點＋3 題、1 篇文章＋5 題、單字回想自動產生）。共 7 天。
-2. **新單字 70 個**：學術與醫學常用字（詞頻約 3000–12000 名），不可與「已學過的單字」重複。每天一個主題。每個字需有 3 個不同情境、不同句型的額外例句（晚上回想與錯題複習會使用，讓學習者不能只靠背熟單一句子）。
+1. 每天兩段：早上（12 個新單字＋2 個長句拆解）、晚上（1 個文法重點＋3 題、1 篇克漏字＋5 題、1 篇閱讀＋5 題、單字回想自動產生）。共 7 天。
+2. **新單字 84 個**：學術與醫學常用字（詞頻約 3000–12000 名），不可與「已學過的單字」重複。每天一個主題。每個字需有 3 個不同情境、不同句型的額外例句（8–22 字，晚上回想與錯題複習會使用）。
 3. **弱項優先**：「需要加強」的能力，下週至少安排兩天的文法重點或長句練它；「本週沒練到」的能力至少練一次；「穩定」的能力仍要在文章中混著出現。
 4. **錯題回收**：「答錯的單字」、「不熟的單字」與「回想時需要幫忙的字」要在下週的長句或文章裡再出現（當成已學過的字使用，不是新字）。
-5. **難度**：比本週稍難一點。文章 180–250 字，句子變長、修飾更多；克漏字與閱讀交替（第 1、3、5、7 天克漏字，第 2、4、6 天閱讀）。題目要有一個明確正解，三個誘答要合理但確定錯。
-6. 每一題附 2–3 步的「一步一步來」：每一步是一個小判斷，引導學生自己推出答案，不要直接給答案。
-7. 中文用台灣繁體，說明用語要白話；每個文法名詞第一次出現要解釋。
+5. **難度逐週增加**：克漏字與閱讀的文章長度都比本週多約 20–30 字（上限：克漏字 400 字、閱讀 450 字，目標是 1 月底接近考試文章長度），句子變長、修飾更多。題目要有一個明確正解，三個誘答要合理但確定錯。
+6. **選項不可提示答案**：同一組選項的長短、形式、詳細程度要相近；正解不可是唯一最長的選項；括號說明要嘛每個選項都有、要嘛都沒有，說明放在解析。
+7. 每一題附 2–3 步的「一步一步來」：每一步是一個小判斷，引導學生自己推出答案，不要直接給答案。步驟選項也要遵守第 6 點。
+8. 中文用台灣繁體，說明用語要白話；每個文法名詞第一次出現要解釋。
 
 ### 資料格式
 \`\`\`js
 // wNNa.js
 WEEKS.push({ n: ${w.n + 1}, theme: '本週主題', days: [] });
-WEEKS[${w.n}].words = [   // 7 天 × 10 個
+WEEKS[${w.n}].words = [   // 7 天 × 12 個
   [['英文', '詞性', '中文', '字根拆解（沒有就空字串）', '例句（必須包含這個字或它的變化形）', '例句中文', [['更多例句1', '中文'], ['更多例句2', '中文'], ['更多例句3', '中文']]], …],
   …
 ];
@@ -1179,14 +1851,17 @@ WEEKS[${w.n}].gram = [    // 7 天，各 1 個文法重點
     qs: [{ id: 'g1-1', sk: '能力代碼', q: '題目', o: ['正解', '誤1', '誤2', '誤3'], why: '解析', st: [['問題', '正解', '誤1', '誤2', '說明', '能力代碼'], …] }, …] },
   …
 ];
-WEEKS[${w.n}].passages = [  // 7 天，各 1 篇；克漏字的空格寫 {1}…{5}，題目 q 寫「第 (1) 格」
-  { type: 'cloze' | 'read', title: '標題', text: ['段落', …], zh: '全文中文',
+WEEKS[${w.n}].passages = [  // 7 天，各 2 篇：[克漏字, 閱讀]；克漏字空格寫 {1}…{5}，題目 q 寫「第 (1) 格」
+  [{ type: 'cloze', … }, { type: 'read', … }],
+  // 每篇格式：{ type: 'cloze' | 'read', title: '標題', text: ['段落', …], zh: '全文中文',
     qs: [{ id: 'p1-1', sk: '能力代碼', pre: '（閱讀題才要）題型：要找什麼', q: '題目', o: ['正解', …3 個誤答], why: '解析', st: [[…同上…]] }, …] },
   …
 ];
 \`\`\`
 - o 的第一個一定是正解（網站會打亂順序）。題目 id 在同一週內不可重複。
 - 能力代碼只能用下表的代碼。
+
+本週文章字數：克漏字平均 ${avgWords('cloze')} 字、閱讀平均 ${avgWords('read')} 字
 
 ## 本週紀錄
 

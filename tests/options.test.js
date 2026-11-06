@@ -13,7 +13,7 @@ const src = ['src/eng/ui.js', ...fs.readdirSync(path.join(__dirname, '../src/eng
 const W = new Function('localStorage', src + ';return WEEKS;')({ getItem: () => null, setItem() {} });
 W.forEach(w => {
   w.sents.flat().forEach(s => s.steps.forEach(st => { const b = bad(st.slice(1, 4), 0); if (b) out.push(['英文長句', b, st[0], st.slice(1, 4)]); }));
-  [...w.gram.flatMap(g => g.qs), ...w.passages.flatMap(p => p.qs)].forEach(q => {
+  [...w.gram.flatMap(g => g.qs), ...w.passages.flatMap(p => [].concat(p).flatMap(x => x.qs))].forEach(q => {
     const b = bad(q.o, 0); if (b) out.push(['英文題目 ' + q.id, b, q.q, q.o]);
     (q.st || []).forEach(st => { const b2 = bad(st.slice(1, 4), 0); if (b2) out.push(['英文步驟 ' + q.id, b2, st[0], st.slice(1, 4)]); });
   });
