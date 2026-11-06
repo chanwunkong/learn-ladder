@@ -383,8 +383,11 @@ const REVIEW = (() => {
     return { open: all, checks, due: all.concat(checks).filter(s => s.due <= now).concat(fin).sort((a, b) => a.due - b.due) };
   }
   // 答對之後的說明：下一次什麼時候回來
-  function after(s, firstTry) {
-    if (!firstTry) return '今天第一次沒答對（或理由沒答對），從第 1 格重新開始，明天再考一次。';
+  // 選對之後的開頭：第一次就選對才說「答對了」；前面選錯過就照實說（2026-11-07：選錯三次後仍顯示「答對了」很混淆）
+  const okHead = tries => (tries > 1 ? `<b>選對了</b>，但前面選錯 ${tries - 1} 次，這次不算答對。` : '<b>答對了。</b>');
+  // guess：第一次就選對、但追問理由答錯
+  function after(s, firstTry, guess = false) {
+    if (!firstTry) return `${guess ? '理由沒選對，算猜對' : '今天第一次沒選對'}，從第 1 格重新開始，明天再考一次。`;
     if (s.final) return '考前總複習完成。';
     if (s.chk) return '確認完成：這題真的會了。';
     if (s.stage + 1 >= GAPS.length) return `五格都過了，這題已經掌握，離開錯題本（2027 年 3 月起的考前總複習還會再出現一次）。`;
@@ -397,7 +400,7 @@ const REVIEW = (() => {
     [].concat(open).filter(s => s.due > now && s.due <= now + days * DAY).forEach(s => { const k = dayKey(s.due); m.set(k, (m.get(k) || 0) + 1); });
     return [...m.entries()].sort();
   }
-  return { trials, state, book, after, label, upcoming, dayKey, dayStart, DAY, GAPS, CHECK, RULE, FINAL };
+  return { trials, state, book, after, okHead, label, upcoming, dayKey, dayStart, DAY, GAPS, CHECK, RULE, FINAL };
 })();
 
 /* 由 tools/chem/meta.js 自動產生，請勿手改 */
@@ -440,7 +443,8 @@ const md = s => { const d = new Date(pd(s)); return `${d.getFullYear()}/${d.getM
 
 const chemLog = () => local('chem-ladder', 'log', []);
 // 英文：紀錄給錯題與連續天數；每天哪一段做完由英文頁存的摘要（eng-ladder:sum）提供
-const engLog = () => local('eng-ladder', 'log', []).filter(e => ['w', 'wr', 's', 'g', 'p'].includes(e.k));
+// 要和英文頁的 qlog 一樣含 fu（追問）：追問答錯的題目算猜對、進錯題本，少了它首頁的錯題數和到期數會和錯題本頁對不上
+const engLog = () => local('eng-ladder', 'log', []).filter(e => ['w', 'wr', 's', 'g', 'p', 'fu'].includes(e.k));
 const engSum = () => local('eng-ladder', 'sum', null);
 const ENG_WEEKS = 17;   // 2026-11 起到 2027-02 底
 const chemDone = () => local('chem-ladder', 'done', {});

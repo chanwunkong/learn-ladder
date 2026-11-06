@@ -3,8 +3,8 @@ const fs = require('fs'), path = require('path');
 const dir = path.join(__dirname, '../../src/eng'), wkDir = process.env.ENG_WK_DIR || path.join(dir, 'wk');
 const files = ['ui.js', ...fs.readdirSync(wkDir).sort().map(f => path.join(wkDir, f)), 'app.js'];
 const src = files.map(f => fs.readFileSync(path.isAbsolute(f) ? f : path.join(dir, f), 'utf8')).join('\n');
-const g = new Function('localStorage', 'document', 'CSS', src + '\n;return { WEEKS, SKILLS, stemRe, qindex, amIds, pmIds };')({ getItem: () => null, setItem() {} }, {}, {});
-const { WEEKS, SKILLS, stemRe, qindex, amIds, pmIds } = g;
+const g = new Function('localStorage', 'document', 'CSS', src + '\n;return { WEEKS, SKILLS, stemRe, qindex, amIds, pmIds, wordQ, zhClash };')({ getItem: () => null, setItem() {} }, {}, {});
+const { WEEKS, SKILLS, stemRe, qindex, amIds, pmIds, wordQ, zhClash } = g;
 const errs = [], E = (w, m) => errs.push(`第 ${w.n} 週：${m}`);
 const sk = (w, k, where) => { if (!SKILLS[k]) E(w, `${where} 能力代碼不存在：${k}`); };
 const step = (w, st, where) => { if (st.length < 6 || st.slice(0, 6).some(x => typeof x !== 'string' || !x)) E(w, `${where} 步驟格式錯`); if (new Set(st.slice(1, 4)).size < 3) E(w, `${where} 步驟選項重複`); sk(w, st[5], where); };
@@ -57,6 +57,10 @@ WEEKS.forEach((w, wi) => {
       if (wc < min) E(w, `第${d + 1}天第${k + 1}篇文章只有 ${wc} 字`);
     });
   });
+  // 字義題：4 個選項，誤答的中文不可和正解（或彼此）共用詞
+  w.words.forEach((day, d) => day.forEach((x, i) => { const q = wordQ(w, d, i);
+    if (q.o.length !== 4) E(w, `字義題 ${x[0]} 只有 ${q.o.length} 個選項`);
+    q.o.forEach((a, j) => q.o.slice(j + 1).forEach((b, k) => { if (zhClash(a, b)) E(w, `字義題 ${x[0]}：「${a}」和「${b}」意思重疊（${q.ow[j]} / ${q.ow[j + 1 + k]}）`); })); }));
   for (let d = 0; d < 7; d++) [...amIds(w, d), ...pmIds(w, d)].forEach(h => { if (!qindex()[h]) E(w, `索引找不到 ${h}`); });
 });
 if (errs.length) { console.log(errs.join('\n')); process.exit(1); }

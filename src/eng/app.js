@@ -19,11 +19,26 @@ const DAYN = '一二三四五六日';
 /* ---- 題目索引：每週的每一題都有固定識別碼，錯題本靠它找回題目 ---- */
 const wkKey = w => 'w' + w.n;
 const dayPass = (w, d) => [].concat(w.passages[d] || []);
+// 字義題的誤答（2026-11-07 修正混淆）：從所有週的單字挑詞性相同、中文不重疊的字，先挑別天的（同一天主題相近，容易是近義字）
+const zhBi = z => { const t = String(z).replace(/[的地]/g, '').split(/[、，；;,／/（）()\s]+/).filter(Boolean), b = new Set(); t.forEach(x => { for (let k = 0; k + 1 < x.length; k++) b.add(x.slice(k, k + 2)); if (x.length === 1) b.add(x); }); return b; };
+const zhClash = (a, b) => { const A = zhBi(a); for (const x of zhBi(b)) if (A.has(x)) return true; return false; };
+const posOf = p => String(p).split(/[\s/（]/)[0];
+function wordFoils(w, d, x) {
+  const seen = new Set([x[0]]), pool = [];
+  WEEKS.forEach(W => W.words.forEach((day, dd) => day.forEach(y => { if (!seen.has(y[0])) { seen.add(y[0]); pool.push({ y, near: W === w && dd === d }); } })));
+  const ok = pool.filter(p => posOf(p.y[1]) === posOf(x[1]) && !zhClash(p.y[2], x[2]));
+  const many = z => /[、；]/.test(z);   // 一個意思還是好幾個：盡量和正解同一種，不能靠「只有它寫一個詞」猜答案
+  const rank = p => (p.near ? 2 : 0) * 2 ** 32 + (many(p.y[2]) === many(x[2]) ? 0 : 1) * 2 ** 32 + hash(x[0] + '|' + p.y[0]);
+  const pick = [];
+  const fill = list => { for (const p of list.sort((a, b) => rank(a) - rank(b))) if (pick.length < 3 && !pick.includes(p.y) && !pick.some(q => zhClash(q[2], p.y[2]))) pick.push(p.y); };
+  fill(ok); fill(pool.filter(p => !zhClash(p.y[2], x[2])));   // 同詞性的字不夠（例如連接詞）→ 用其他詞性補
+  return pick;
+}
 function wordQ(w, d, i) {
-  const day = w.words[d], x = day[i], others = [1, 3, 6].map(k => day[(i + k) % day.length]);
+  const x = w.words[d][i], others = wordFoils(w, d, x);
   return { h: `w:${wkKey(w)}:${x[0]}`, k: 'w', sk: 'v.mean', c: `${wkKey(w)}d${d + 1}am`, en: 1,
-    q: `<span class="enw">${esc(x[0])}</span>${sayBtn(x[0])} <span class="pos">${esc(x[1])}</span> 的意思是？`, o: [x[2], ...others.map(y => y[2])],
-    why: `${esc(x[0])}：${esc(x[2])}。${x[3] ? `<br><span class="mut">${esc(x[3])}</span>` : ''}`, qt: x[0] };
+    q: `<span class="enw">${esc(x[0])}</span>${sayBtn(x[0])} <span class="pos">${esc(x[1])}</span> 的意思是？`, o: [x[2], ...others.map(y => y[2])], ow: [x[0], ...others.map(y => y[0])],
+    why: `${esc(x[0])}：${esc(x[2])}。${x[3] ? `<br><span class="mut">${esc(x[3])}</span>` : ''}${x[4] ? `<br><span class="ens">${esc(x[4])}</span> ${sayBtn(x[4], '朗讀例句')}<br><span class="mut">${esc(x[5] || '')}</span>` : ''}`, qt: x[0] };
 }
 // 晚上的回想：把早上例句裡的單字挖空
 function stemRe(word) { const s = word.length > 5 ? word.replace(/(e|y|ate|ize)$/, '') : word; return new RegExp(`\\b${s}\\w*`, 'i'); }
@@ -91,7 +106,7 @@ function bindMcq(root, list, onDone, restore = true) {
       collapse(qe, true, plain(q.q));
       $$('.opt', qe).forEach(x => { x.disabled = true; if (x.dataset.o === '0') x.classList.add('right'); });
       if (hb) hb.parentNode.hidden = true;
-      why.hidden = false; why.className = 'why ok'; why.innerHTML = `<b>已完成。</b>${q.why}`; qe.classList.add('done');
+      why.hidden = false; why.className = 'why ok'; why.innerHTML = `<b>已完成。</b>${q.why}`; qe.classList.add('done'); showOw(qe, q);
       if (onDone) onDone(q); return;
     }
     if (q.st && q.st.length) guide(qe, q);
@@ -101,7 +116,7 @@ function bindMcq(root, list, onDone, restore = true) {
       b.classList.add(ok ? 'right' : 'wrong'); b.disabled = true; why.hidden = false;
       if (ok) {
         $$('.opt', qe).forEach(x => { x.disabled = true; }); const g = $('.guide', qe); if (g) g.hidden = true;
-        const fin = (fok, st) => { why.className = 'why ok'; why.innerHTML = `${st && !fok ? `<b>這次先當成猜對</b>：理由是「${esc(st[1])}」，${esc(st[4])} 已排進錯題本。<br>` : st ? '<b>理由也對，這題算會了。</b>' : '<b>答對了。</b>'}${q.why}${q.rv ? `<br><small>${REVIEW.after(q.rv, n === 1 && fok !== false)}</small>` : ''}`; };
+        const fin = (fok, st) => { why.className = 'why ok'; why.innerHTML = `${st && !fok ? `<b>這次先當成猜對</b>：理由是「${esc(st[1])}」，${esc(st[4])} 已排進錯題本。<br>` : st ? '<b>理由也對，這題算會了。</b>' : REVIEW.okHead(n)}${q.why}${q.rv ? `<br><small>${REVIEW.after(q.rv, n === 1 && fok !== false, fok === false)}</small>` : ''}`; showOw(qe, q); };
         qe.classList.add('done');
         // 第一次就答對、有拆解步驟 → 追問理由（排除猜對）
         if (n === 1 && q.st && q.st.length) { why.className = 'why fu'; FOLLOW.ask(why, q.st, esc, (fok, st) => { logAnswer({ c: q.c, k: 'fu', fk: q.k, h: q.h, ok: fok ? 1 : 0, n: 1, qt: q.qt }); fin(fok, st); }); }
@@ -113,6 +128,11 @@ function bindMcq(root, list, onDone, restore = true) {
       }
     }; });
   });
+}
+// 字義題選對後，每個選項旁標出它是哪個英文字：選錯的中文也順便認識對應的字
+function showOw(qe, q) {
+  if (!q.ow) return;
+  $$('.opt', qe).forEach(b => { if (!$('.ow', b)) b.insertAdjacentHTML('beforeend', ` <span class="ow">${esc(q.ow[+b.dataset.o])}</span>`); });
 }
 function guide(qe, q) {
   const sts = q.st, box = document.createElement('div'); box.className = 'guide';
@@ -415,6 +435,7 @@ function exportMD(w) {
 6. **選項不可提示答案**：同一組選項的長短、形式、詳細程度要相近；正解不可是唯一最長的選項；括號說明要嘛每個選項都有、要嘛都沒有，說明放在解析。
 7. 每一題附 2–3 步的「一步一步來」：每一步是一個小判斷，引導學生自己推出答案，不要直接給答案。步驟選項也要遵守第 6 點。
 8. 中文用台灣繁體，說明用語要白話；每個文法名詞第一次出現要解釋。
+9. **單字的中文**：寫 1–2 個最常考的意思，用「、」分開（例：promote → 促進、晉升）；同一週不同單字的中文不可共用同一個詞（例：不要一個寫「促進」、另一個寫「培養、促進」），字義題的誤答是從其他單字的中文挑的。
 
 ### 資料格式
 \`\`\`js

@@ -190,7 +190,7 @@ ${items.length ? items.map(({ s, f }, n) => `<div class="q" data-r="${n}"><p cla
       const ok = +b.dataset.o === q.a; b.classList.add(ok ? 'right' : 'wrong'); why.hidden = false; tries++;
       logAnswer({ c: f.c.id, k: f.k, i: f.i, h: s.h, qt: strip(q.q).slice(0, 60), p: +b.dataset.o, ok: ok ? 1 : 0, n: tries });
       if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); const gb = $('.guide', qe); if (gb) gb.hidden = true;
-        const fin = (fok, st) => { why.className = 'why ok'; why.innerHTML = `${st && !fok ? `<b>這次先當成猜對</b>：理由是「${st[1]}」，${st[4]}<br>` : '<b>答對了。</b>'}${q.why}<br><small>${REVIEW.after(s, tries === 1 && fok !== false)}</small>`; renderTOC('review'); };
+        const fin = (fok, st) => { why.className = 'why ok'; why.innerHTML = `${st && !fok ? `<b>這次先當成猜對</b>：理由是「${st[1]}」，${st[4]}<br>` : REVIEW.okHead(tries)}${q.why}<br><small>${REVIEW.after(s, tries === 1 && fok !== false, fok === false)}</small>`; renderTOC('review'); };
         if (tries === 1 && sts) { why.className = 'why fu'; FOLLOW.ask(why, sts, x => x, (fok, st) => { logAnswer({ c: f.c.id, k: 'fu', fk: f.k, i: f.i, h: s.h, qt: strip(q.q).slice(0, 60), ok: fok ? 1 : 0, n: 1 }); fin(fok, st); }); }
         else fin(); }
       else { b.disabled = true; why.className = 'why no'; why.innerHTML = `<b>再想想。</b>${sts ? '下面拆成幾個小步驟，一步一步推回來。' : `可以回到<a href="#${f.c.id}">${f.c.title.split('：')[0]}</a>看看。`}`; if (sts) qe.openGuide(); }
@@ -252,7 +252,7 @@ function bindQuiz(id) {
       const demo = q.show && INST[q.show.w] ? '<button class="btn sm" type="button" data-show>在圖上看 ↑</button>' : '';
       if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); const gb = $('.guide', qe); if (gb) gb.hidden = true;
         const fin = (fok, st) => {
-          why.className = 'why ok'; why.innerHTML = `${!st ? '<b>答對了。</b>' : fok ? '<b>理由也對，這題算會了。</b>' : `<b>這題先當成猜對</b>：理由是「${st[1]}」，${st[4]} 已排進錯題本，明天再考。<br>`}${q.why}${demo}`;
+          why.className = 'why ok'; why.innerHTML = `${!st ? REVIEW.okHead(tries) : fok ? '<b>理由也對，這題算會了。</b>' : `<b>這題先當成猜對</b>：理由是「${st[1]}」，${st[4]} 已排進錯題本，明天再考。<br>`}${q.why}${demo}`;
           const sb = $('[data-show]', why); if (sb) sb.onclick = () => showOnChart(q.show, qe);
           if (kind === 'q' && !state.done[id] && quizAllRight(id)) { setDone(id, true); bindDone(id); }
         };
