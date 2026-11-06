@@ -49,6 +49,62 @@ const ORBV = (() => {
   const meanR = (o, cf) => (2 * NSTAR[+o[0]] + 1) / (2 * zeff(cf, o) / NSTAR[+o[0]]);
   return { prj, shape, plane, PLANES, NAMES, BYM, zeff, meanR };
 })();
+/* ---------- 小型 3D 繪圖（自己寫，不用外部套件；離線可用）：光滑曲面、明暗、前後遮擋、拖動旋轉 ---------- */
+const R3D = (() => {
+  const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]], cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  const norm = v => { const l = Math.hypot(...v) || 1; return v.map(x => x / l); };
+  const perp = u => { const a = Math.abs(u[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0], e1 = norm(cross(u, a)); return [e1, cross(u, e1)]; };
+  // 參數曲面 → 四邊形網格
+  function grid(f, nu, nv, col, a) { const q = [];
+    for (let i = 0; i < nu; i++) for (let j = 0; j < nv; j++) q.push({ v: [f(i / nu, j / nv), f((i + 1) / nu, j / nv), f((i + 1) / nu, (j + 1) / nv), f(i / nu, (j + 1) / nv)], rgb: hex(col), a });
+    return q; }
+  // 橢球（瓣）：中心 c、沿方向 u 的半軸 la、垂直方向半軸 lb
+  function ellipsoid(c, u, la, lb, col, a) { u = norm(u); const [e1, e2] = perp(u);
+    return grid((s, t) => { const th = s * Math.PI, ph = t * 2 * Math.PI, x = la * Math.cos(th), r = lb * Math.sin(th); return [0, 1, 2].map(k => c[k] + u[k] * x + e1[k] * r * Math.cos(ph) + e2[k] * r * Math.sin(ph)); }, 16, 26, col, a); }
+  const sphere = (r, col, a) => ellipsoid([0, 0, 0], [0, 0, 1], r, r, col, a);
+  const torus = (R0, r, col, a) => grid((s, t) => { const u = s * 2 * Math.PI, v = t * 2 * Math.PI, w = R0 + r * Math.cos(v); return [w * Math.cos(u), w * Math.sin(u), r * Math.sin(v)]; }, 24, 10, col, a);
+  // 半透明圓盤（節面）：e1、e2 為平面上的兩個方向
+  const disc = (e1, e2, R, col, a) => grid((s, t) => { const r = R * s, ph = t * 2 * Math.PI; return [0, 1, 2].map(k => r * (e1[k] * Math.cos(ph) + e2[k] * Math.sin(ph))); }, 3, 32, col, a).map(q => ({ ...q, two: true }));
+  // 畫布：左右拖動旋轉（手機上下滑動仍可捲動頁面），桌機可以上下調仰角
+  function view(cv) {
+    const ctx = cv.getContext('2d'), st = { yaw: 0.6, pitch: 0.38 }; let quads = [], scale = 100, axes = 1.2, drag = null;
+    function draw() {
+      const W2 = cv.width / 2, H2 = cv.height / 2, cy = Math.cos(st.yaw), sy = Math.sin(st.yaw), cp = Math.cos(st.pitch), sp = Math.sin(st.pitch);
+      const T = ([x, y, z]) => { const x1 = x * cy - y * sy, y1 = x * sy + y * cy, y2 = y1 * cp - z * sp, z2 = y1 * sp + z * cp; return [x1, y2, z2]; };
+      const dark = document.documentElement.dataset.theme === 'dark' || (document.documentElement.dataset.theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      // 座標軸（畫在最後面）
+      ctx.lineWidth = 2; ctx.font = '26px system-ui'; ctx.strokeStyle = ctx.fillStyle = dark ? 'rgba(220,230,225,.45)' : 'rgba(40,50,45,.4)';
+      [[[axes, 0, 0], 'x'], [[0, axes, 0], 'y'], [[0, 0, axes], 'z']].forEach(([p, t]) => { const a = T(p), b = T(p.map(x => -x)); ctx.beginPath(); ctx.moveTo(W2 + b[0] * scale, H2 - b[2] * scale); ctx.lineTo(W2 + a[0] * scale, H2 - a[2] * scale); ctx.stroke(); ctx.fillText(t, W2 + a[0] * scale + 6, H2 - a[2] * scale - 6); });
+      const L = norm([-0.35, -0.75, 0.55]);
+      const list = quads.map(q => { const v = q.v.map(T), n = norm(cross(sub(v[2], v[0]), sub(v[3], v[1]))), d = (v[0][1] + v[1][1] + v[2][1] + v[3][1]) / 4; return { q, v, d, lit: 0.38 + 0.62 * Math.abs(n[0] * L[0] + n[1] * L[1] + n[2] * L[2]) }; }).sort((a, b) => b.d - a.d);
+      for (const { q, v, lit } of list) {
+        const [r, g, b] = q.rgb.map(c => Math.min(255, Math.round(c * lit + (q.two ? 0 : 18))));
+        ctx.fillStyle = ctx.strokeStyle = `rgba(${r},${g},${b},${q.a})`; ctx.lineWidth = 0.8;
+        ctx.beginPath(); v.forEach(([x, , z], i) => (i ? ctx.lineTo(W2 + x * scale, H2 - z * scale) : ctx.moveTo(W2 + x * scale, H2 - z * scale))); ctx.closePath(); ctx.fill(); if (q.a > 0.6) ctx.stroke();
+      }
+      ctx.fillStyle = '#C0392B'; ctx.beginPath(); ctx.arc(W2, H2, 6, 0, 6.283); ctx.fill();
+    }
+    cv.addEventListener('pointerdown', e => { drag = { x: e.clientX, y: e.clientY, y0: st.yaw, p0: st.pitch }; });
+    cv.addEventListener('pointermove', e => { if (!drag) return; st.yaw = drag.y0 + (e.clientX - drag.x) * 0.012; if (e.pointerType === 'mouse') st.pitch = Math.max(-1.2, Math.min(1.4, drag.p0 + (e.clientY - drag.y) * 0.01)); draw(); });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => cv.addEventListener(t, () => { drag = null; }));
+    return { set(o) { ({ quads = quads, scale = scale, axes = axes } = o); draw(); }, draw };
+  }
+  return { ellipsoid, sphere, torus, disc, view, norm };
+})();
+// 一個實數軌域的立體形狀：type 's'|'p'|'d'，idx 同 ORBV（p：x,y,z；d：xy,yz,xz,x²−y²,z²）；colOf(sign) → [顏色, 透明度]
+function orbMesh(type, idx, R, colOf) {
+  if (type === 's' || type === 'f') { const [c, a] = colOf(1); return R3D.sphere(0.62 * R * (type === 'f' ? 0.7 : 1), c, a); }
+  const L = { p: [[[1, 0, 0], 1], [[-1, 0, 0], -1]], q: [[[0, 1, 0], 1], [[0, -1, 0], -1]], r: [[[0, 0, 1], 1], [[0, 0, -1], -1]] };
+  const lobes = type === 'p' ? [L.p, L.q, L.r][idx] : [[[[1, 1, 0], 1], [[-1, -1, 0], 1], [[1, -1, 0], -1], [[-1, 1, 0], -1]], [[[0, 1, 1], 1], [[0, -1, -1], 1], [[0, 1, -1], -1], [[0, -1, 1], -1]],
+    [[[1, 0, 1], 1], [[-1, 0, -1], 1], [[1, 0, -1], -1], [[-1, 0, 1], -1]], [[[1, 0, 0], 1], [[-1, 0, 0], 1], [[0, 1, 0], -1], [[0, -1, 0], -1]], [[[0, 0, 1], 1], [[0, 0, -1], 1]]][idx];
+  const w = type === 'p' ? 0.27 : 0.21, out = [];
+  lobes.forEach(([u, sg]) => { const n = R3D.norm(u), [c, a] = colOf(sg); out.push(...R3D.ellipsoid(n.map(x => x * 0.55 * R), n, 0.5 * R, w * R, c, a)); });
+  if (type === 'd' && idx === 4) { const [c, a] = colOf(-1); out.push(...R3D.torus(0.42 * R, 0.13 * R, c, a)); }
+  return out;
+}
+
 // 填的狀態 → 樣式：空＝灰色虛線、一個電子＝淺色、兩個電子＝深色；剛變化的加粗外框
 const FILLHUE = { s: '#3A7BD5', p: '#D9822B', d: '#2E9E6B', f: '#9B59B6' };
 const fillStyle = (type, e, isNew) => () => (e === 0 ? `fill="none" stroke="var(--muted)" stroke-dasharray="4 3" stroke-width="1.4"`
@@ -103,20 +159,22 @@ ${ctl('電荷', seg('a3Q', [['0', '中性'], ['1', '+1'], ['2', '+2'], ['3', '+3
 <div class="a3grid"><div id="a3M"></div><div id="a3B"></div></div><p class="eq" id="a3S"></p><div id="a3X"></div><p class="note" id="a3N"></p>`;
   const sup = n => String(n).split('').map(c => SUP[c]).join(''), DEXC = Object.keys(EXC).map(Number).filter(z => ![57, 58, 64].includes(z));
   let timer = 0;
+  // 填的狀態 → 立體顏色：空＝淡灰半透明、一個電子＝淺色、兩個電子＝深色；剛變化的最清楚，其他淡一點
+  const tint = (h, f) => '#' + [1, 3, 5].map(i => Math.round(parseInt(h.slice(i, i + 2), 16) * (1 - f) + 255 * f).toString(16).padStart(2, '0')).join('');
+  // s 球包在其他形狀外面，一定半透明；p、d 剛變化的最清楚
+  const colFor = (t, e, isNew) => () => (e === 0 ? ['#9AA3A0', 0.1] : [e === 1 ? tint(FILLHUE[t], 0.5) : FILLHUE[t], t === 's' ? (isNew ? 0.4 : 0.22) : isNew ? 0.95 : 0.5]);
+  const MV = { v: null };
   function model(Z, cf, prevCnt, coreName, coreOrb, subs) {
     const cnt = Object.fromEntries(cf), all = subs.concat(cf.map(x => x[0]).filter(o => !coreOrb.includes(o) && !subs.includes(o)))
       .filter(o => cnt[o] || o[1] === 's' || (o[1] === 'd' && [19, 20, 37, 38].includes(Z)));
-    // 依畫出來的最大形狀放大到填滿（s 球半徑 0.62R、p 瓣伸到 1.31R、d 瓣伸到 1.16R）
-    const R = o => ORBV.meanR(o, cf), coreR = coreOrb.length ? Math.max(...coreOrb.map(R)) : 0, reach = o => R(o) * ({ s: 0.62, p: 1.31, d: 1.16, f: 0.5 })[o[1]];
-    const k = 148 / Math.max(coreR * 0.62, ...all.map(reach)), cx = 170, cy = 160;
-    const cr = Math.max(16, coreR * k * 0.62);
-    let s = '';
-    // s 球由大到小，接著內層的灰色球（畫在 s 球上面才看得到），再畫 p、d、f；剛變化的加粗外框
-    all.filter(o => o[1] === 's').sort((a, b) => R(b) - R(a)).forEach(o => { const e = cnt[o] || 0; s += ORBV.shape(cx, cy, R(o) * k, 's', 0, fillStyle('s', e, e !== (prevCnt[o] || 0))); });
-    if (coreName) s += `<circle cx="${cx}" cy="${cy}" r="${cr.toFixed(1)}" class="coreb"/>`;
-    all.filter(o => o[1] !== 's').forEach(o => { const t = o[1], oc = occOf(cnt[o] || 0, MORB[t]), op = occOf(prevCnt[o] || 0, MORB[t]);
-      oc.forEach((e, i) => { if (t !== 'f' || i === 0) s += ORBV.shape(cx, cy, R(o) * k * (t === 'p' ? 1.25 : 1.1), t, t === 'f' ? 0 : Math.min(i, t === 'd' ? 4 : 2), fillStyle(t, e, e !== op[i])); }); });
-    return `<svg viewBox="0 0 340 320" class="ch amodel" role="img" aria-label="${ELEM[Z - 1]} 的原子模型">${s}<circle cx="${cx}" cy="${cy}" r="4" class="nuP"/>${coreName ? `<text class="tk corel" x="${cx}" y="${cy + 296 / 2 - 4}" text-anchor="middle">中間灰色的球＝內層 [${coreName}]</text>` : ''}</svg>`;
+    const R = o => ORBV.meanR(o, cf), coreR = coreOrb.length ? Math.max(...coreOrb.map(R)) : 0, reach = o => R(o) * ({ s: 0.62, p: 1.31, d: 1.16, f: 0.45 })[o[1]];
+    const ext = Math.max(coreR * 0.62, ...all.map(reach)), q = [];
+    if (coreName) q.push(...R3D.sphere(Math.max(coreR * 0.62, ext * 0.12), '#7C8784', 0.9));
+    all.forEach(o => { const t = o[1], oc = occOf(cnt[o] || 0, MORB[t]), op = occOf(prevCnt[o] || 0, MORB[t]);
+      oc.forEach((e, i) => { if (t !== 'f' || i === 0) q.push(...orbMesh(t, t === 'f' ? 0 : Math.min(i, t === 'd' ? 4 : 2), R(o) * (t === 'p' ? 1.25 : t === 'd' ? 1.1 : 1), colFor(t, e, e !== op[i]))); }); });
+    if (!MV.v) { $('#a3M', el).innerHTML = `<canvas width="600" height="560" class="r3d" aria-label="原子模型，左右拖動旋轉"></canvas><p class="small mut c" id="a3C"></p>`; MV.v = R3D.view($('#a3M canvas', el)); }
+    MV.v.set({ quads: q, scale: 245 / ext, axes: ext * 1.08 });
+    $('#a3C', el).textContent = (coreName ? `中間灰色的球＝內層 [${coreName}]。` : '') + '左右拖動可以旋轉。';
   }
   function draw() {
     clearTimeout(timer);
@@ -124,7 +182,7 @@ ${ctl('電荷', seg('a3Q', [['0', '中性'], ['1', '+1'], ['2', '+2'], ['3', '+3
     const prev = Object.fromEntries(isExc && st.phase === 2 ? econfAuf(Z) : q ? econf(Z, q - 1) : Z > 1 ? econf(Z - 1) : []);
     const ne = Z - q, core = Z > 10 ? CORES.find(([n]) => n < ne && econf(n).every(([o, k]) => (cf.find(x => x[0] === o) || [0, 0])[1] === k)) : null, coreOrb = core ? econf(core[0]).map(x => x[0]) : [];
     const subs = valenceSet(Z, coreOrb), val = cf.filter(([o, k]) => !coreOrb.includes(o) && k > 0);
-    $('#a3M', el).innerHTML = model(Z, cf, prev, core && core[1], coreOrb, subs);
+    model(Z, cf, prev, core && core[1], coreOrb, subs);
     $('#a3B', el).innerHTML = `<p class="lbl">軌域圖：越上面能量越高${Z >= 19 ? '；s 和 d 幾乎一樣高' : ''}</p>` + orbitalChart('m', cf, subs).svg;
     $('#a3O', el).textContent = `${Z}　${ELEM[Z - 1]}（${ENAME[Z - 1]}）`; $('#a3Z', el).value = Z;
     const nm = `${ELEM[Z - 1]}${q ? (q > 1 ? sup(q) : '') + '⁺' : ''}`;
@@ -142,7 +200,7 @@ ${ctl('電荷', seg('a3Q', [['0', '中性'], ['1', '+1'], ['2', '+2'], ['3', '+3
     } else $('#a3X', el).innerHTML = '';
     const nw = val.filter(([o, k]) => k !== (prev[o] || 0)).map(([o]) => o), shp = { s: '球', p: '啞鈴', d: '四葉草', f: '多瓣' };
     $('#a3N', el).innerHTML = (q ? `${nm}：從中性原子拿走最上面（能量最高）的電子。${Z >= 21 && Z <= 30 ? ' 3d 填了電子之後畫在 4s 下面，所以先被拿走的是 4s（變成虛線）。' : ''}`
-      : `${nw.length ? `第 ${Z} 個電子放進 <b>${nw.join('、')}</b>（紅色外框）。` : ''}電子放進能量最低、還有空位的軌域；同一組軌域先各放一個（淺色），再成對（深色）。`)
+      : `${nw.length ? `第 ${Z} 個電子放進 <b>${nw.join('、')}</b>（顏色最清楚的那個）。` : ''}電子放進能量最低、還有空位的軌域；同一組軌域先各放一個（淺色），再成對（深色）。`)
       + (core ? ` 灰色的球是內層，和 ${core[1]} 一樣，就是寫法裡的 [${core[1]}]。` : '')
       + (q === 0 && (Z === 19 || Z === 20) ? ' 看軌域圖：3d 是空的虛線，畫在 4s 上面一點，所以電子先放 4s。' : '')
       + ([57, 58, 64].includes(Z) ? ' 鑭系有少數例外（La、Ce、Gd），考試不考。' : '');
