@@ -51,8 +51,7 @@ ${labs.map(l => `<line x1="212" x2="222" y1="${l.y}" y2="${l.ly}" class="node"/>
 /* ===== 2. 量子數與軌域 ===== */
 W.qn = el => {
   const st = { n: 2, l: 1, m: 0 }, LN = 'spdf';
-  el.innerHTML = `<div id="qnC"></div><div class="bgrid"><div id="qnS"><canvas width="560" height="500" class="a3c" aria-label="軌域的 3D 模型，可以拖動旋轉"></canvas><p class="small mut c" id="qnCap"></p></div><div class="cards" id="qnK"></div></div><p class="note" id="qnN"></p>`;
-  const QC = {}; let QV = null;
+  el.innerHTML = `<div id="qnC"></div><div class="bgrid"><div id="qnS"><div id="qnV"></div><p class="small mut c" id="qnCap"></p></div><div class="cards" id="qnK"></div></div><p class="note" id="qnN"></p>`;
   function shape() {
     const { l, m } = st;
     if (l === 0) return '<circle class="orbf" cx="110" cy="100" r="58"/>';
@@ -78,15 +77,25 @@ W.qn = el => {
     bindSeg(el, 'qnN1', v => { st.n = +v; st.l = Math.min(st.l, st.n - 1); st.m = clamp(st.m, -st.l, st.l); draw(); });
     bindSeg(el, 'qnL', v => { st.l = +v; st.m = clamp(st.m, -st.l, st.l); draw(); });
     bindSeg(el, 'qnM', v => { st.m = +v; draw(); });
-    // 3D 點雲：氫原子的真實波函數（徑向節點是點雲裡的空殼，角節面是沒有點的平面）
-    const idx = l === 0 ? 0 : l === 3 ? m + 3 : O3D.BYM['spd'[l]][m][0], nm = l === 0 ? `${n}s` : l === 3 ? `${n}f` : `${n}${O3D.BYM['spd'[l]][m][1]}`;
-    const key = `${n}|${l}|${idx}`; if (!QC[key]) QC[key] = O3D.hydrogen(n, l, idx, 2600);
-    QV.set({ layers: [{ pts: QC[key].pts, hue: O3D.HUE['spdf'[l]], alpha: 0.55 }], scale: 230 / QC[key].R, unit: '' });
-    $('#qnCap', el).innerHTML = `${nm} 軌域（拖動旋轉）。點越密，電子越常出現；兩種顏色是波函數的正負。${n - l - 1 ? `裡面有 ${n - l - 1} 層沒有點的空殼（徑向節點）。` : ''}${l ? `有 ${l} 個沒有點的平面（角節面）。` : ''}`;
+    // 實心形狀：兩種顏色＝波函數正負；淡色平面＝角節面；裡面反色的小瓣（或球）＝徑向節點之內的部分
+    const t = 'spdf'[l], idx = l === 0 || l === 3 ? 0 : ORBV.BYM[t][m], nm = l === 0 ? `${n}s` : l === 3 ? `${n}f` : `${n}${ORBV.NAMES[t][idx]}`, k = n - l - 1, cx = 160, cy = 150, R = 118;
+    const sign = (sg, a) => () => `fill="${sg > 0 ? '#3A7BD5' : '#E07B39'}" fill-opacity="${a}" stroke="${sg > 0 ? '#2B5FA8' : '#B45A22'}" stroke-width="1.2"`;
+    let g = '';
+    if (l === 3) g = `<text class="tk" x="${cx}" y="${cy}" text-anchor="middle">f 軌域形狀複雜，考試只需要知道有 7 個</text>`;
+    else {
+      if (l) g += ORBV.PLANES[t][idx].map(([e1, e2]) => ORBV.plane(cx, cy, R, e1, e2)).join('');
+      g += l === 0 ? ORBV.shape(cx, cy, R * 1.25, 's', 0, (sg => () => sign(1, k ? 0.25 : 0.5)())(1)) : ORBV.shape(cx, cy, R, t, idx, sg => sign(sg, k ? 0.3 : 0.55)());
+      for (let j = 1; j <= k; j++) {   // 每多一個徑向節點，裡面多一層反號的小形狀
+        const r = R * (1 - j / (k + 1)), flip = j % 2 ? -1 : 1;
+        if (l === 0) g += `<circle cx="${cx}" cy="${cy}" r="${(0.62 * r * 1.25).toFixed(1)}" fill="none" class="rnode"/>` + ORBV.shape(cx, cy, r * 1.2, 's', 0, () => sign(flip, 0.5)());
+        else g += ORBV.shape(cx, cy, r * 0.75, t, idx, sg => sign(sg * flip, 0.75)());
+      }
+    }
+    $('#qnV', el).innerHTML = `<svg viewBox="0 0 320 300" class="ch amodel" role="img" aria-label="${nm} 軌域">${g}<circle cx="${cx}" cy="${cy}" r="4" class="nuP"/><text class="tk" x="${cx + 130}" y="${cy + 70}">x</text><text class="tk" x="${cx - 136}" y="${cy + 70}">y</text><text class="tk" x="${cx + 6}" y="18">z</text></svg>`;
+    $('#qnCap', el).innerHTML = `${nm} 軌域。藍色、橘色是波函數的正、負號。${l ? `淡色平面是<b>角節面</b>（${l} 個）：平面上找不到電子。` : ''}${k ? `裡面反色的${l ? '小瓣' : '小球'}代表有 <b>${k} 個徑向節點</b>：${l ? '' : '虛線圓那個球面上'}找不到電子，越過它正負號就反過來。` : ''}${l === 2 && m === 0 ? ' d_z² 的節面是兩個圓錐面，沒有畫出來。' : ''}`;
     $('#qnK', el).innerHTML = card('o', '軌域', `${n}${LN[l]}`) + card('c', '這個副層的軌域數', 2 * l + 1) + card('e', '最多電子數', 2 * (2 * l + 1)) + card('s', `n = ${n} 殼層總軌域數`, n * n) + card('nd', '節面數（角節面 ℓ + 徑向 n−ℓ−1）', `${l} + ${n - l - 1}`);
     $('#qnN', el).innerHTML = `規則：n = 1, 2, 3…；ℓ = 0 到 n − 1；mℓ = −ℓ 到 +ℓ；每個軌域再有 ms = ±½ 兩個自旋。所以第 n 層有 n² 個軌域、最多 2n² 個電子。<b>沒有 1p、2d</b>，因為 ℓ 必須小於 n。`;
   }
-  QV = O3D.view($('#qnS canvas', el));
   draw();
   return { set(s) { Object.assign(st, s); draw(); } };
 };
@@ -131,12 +140,11 @@ W.econf = el => {
     const unp = cf.reduce((s2, [o, k]) => { const nb = 2 * LN[o[1]] + 1; return s2 + (k <= nb ? k : 2 * nb - k); }, 0);
     const iso = CORES.find(([n]) => n === ne);
     $('#ecK', el).innerHTML = card('n', '電子數', ne, `${Z} − (${q})`) + card('u', '未成對電子', unp, unp ? '順磁性' : '反磁性') + card('b', '週期表的區', `${last[1]} 區`, `最後填入 ${last}`) + card('i', '等電子', iso ? iso[1] : '—', iso ? '與鈍氣電子數相同' : '不是鈍氣組態');
-    // 陽離子：從中性原子拿走的是哪個副層（用真實能量說明）
-    const E = ORBE[Z - 1][1], lost = q > 0 ? cf0.filter(([o, k]) => k > (Object.fromEntries(cf)[o] || 0)).map(([o]) => o) : [];
-    const exc = q === 0 && MEAS[Z] && /d/.test(MEAS[Z][1]) && Z !== 19 && Z !== 20 && Z !== 21;
+    // 陽離子：從中性原子拿走的是哪個副層
+    const lost = q > 0 ? cf0.filter(([o, k]) => k > (Object.fromEntries(cf)[o] || 0)).map(([o]) => o) : [], exc = q === 0 && EXC[Z] && ![57, 58, 64].includes(Z);
     $('#ecN', el).innerHTML = `這張圖是課本的寫法：一格是一個軌域，最多兩個箭頭（自旋相反）；同一個副層先每格一個、同方向，再成對。`
-      + (exc ? ` <b>${ENAME[Z - 1]}的實際組態和照順序寫的不同</b>：原因看上面原子模型旁的真實能量與實際測量。` : '')
-      + (lost.length ? ` 拿走的是 ${lost.join('、')}：中性 ${ELEM[Z - 1]} 的 ${lost.map(o => `${o} 在 ${E[o].toFixed(1)} eV`).join('、')}，是最上面的電子。${lost.includes('4s') && E['3d'] < E['4s'] ? ` 注意 3d（${E['3d'].toFixed(1)} eV）已經比 4s 低，所以先失去 4s。` : ''}` : '')
+      + (exc ? ` <b>${ENAME[Z - 1]}的實際組態和照順序寫的不同</b>：原因看上面原子模型下方的比較圖。` : '')
+      + (lost.length ? ` 拿走的是 ${lost.join('、')}：它們在中性 ${ELEM[Z - 1]} 裡能量最高。${lost.includes('4s') && Z >= 21 ? ' 3d 填了電子之後比 4s 低，所以先失去 4s。' : ''}` : '')
       + (q < 0 ? ' 陰離子把多的電子依同樣順序繼續填入。' : '');
     pressSeg(el, 'ecQ', String(q));
     $$('[data-p]', el).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.p === `${Z},${q}`)));

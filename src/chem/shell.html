@@ -382,9 +382,15 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 .orbf { fill: var(--acid); fill-opacity: .35; stroke: var(--acid); } .orbf.b { fill: var(--base); stroke: var(--base); }
 .axl { stroke: var(--line); stroke-dasharray: 3 3; }
 .ionc { fill: var(--soft); stroke: var(--accent); stroke-width: 2; }
+.obox { fill: none; stroke: var(--line); stroke-width: 1; } .obox.red { fill: var(--bad-soft); stroke: var(--bad); stroke-width: 2; }
+.arr { font-size: 12px; font-weight: 700; fill: var(--ink); } .xlink { fill: none; stroke: var(--arrow); stroke-width: 1.3; opacity: .7; } .xlink.dn { stroke: var(--acid); } .mv { fill: none; stroke: var(--arrow); stroke-width: 2.2; stroke-dasharray: 5 3; }
+.coreb { fill: var(--muted); fill-opacity: .55; stroke: var(--ink); stroke-width: 1.2; } .nplane { fill: var(--muted); fill-opacity: .12; stroke: var(--muted); stroke-opacity: .4; } .rnode { stroke: var(--ink); stroke-dasharray: 4 3; stroke-width: 1.3; }
+.amodel { max-width: 360px; display: block; margin: 0 auto; } .ochart { max-width: 340px; display: block; }
+.xcmp { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px; } .redt { color: var(--bad); font-weight: 700; }
+.legend3 { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 13px; color: var(--muted); margin: 4px 0; } .legend3 span::before { content: ""; display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+.lg0::before { border: 1.4px dashed var(--muted); } .lg1::before { background: #3A7BD5; opacity: .3; } .lg2::before { background: #3A7BD5; opacity: .78; }
 .nearz { fill: var(--sunk); opacity: .8; } .lgd::before { content: ""; display: inline-block; width: 14px; height: 4px; background: var(--c); margin-right: 4px; vertical-align: middle; } .lgd { font-weight: 700; margin-right: 4px; }
-#a3E svg { max-width: 240px; display: block; margin: 0 auto; }
-.a3grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 220px); gap: 12px; align-items: start; } .a3c { width: 100%; max-width: 560px; touch-action: none; cursor: grab; display: block; margin: 0 auto; background: var(--bg); border-radius: 10px; }
+.a3grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px; align-items: start; } .a3c { width: 100%; max-width: 560px; touch-action: none; cursor: grab; display: block; margin: 0 auto; background: var(--bg); border-radius: 10px; }
 @media (max-width: 560px) { .a3grid { grid-template-columns: minmax(0, 1fr); } }
 .wall { fill: var(--muted); opacity: .45; } .w-ok { stroke: var(--good); } .w-bad { stroke: var(--bad); } .dot-bad { fill: var(--bad); } .w-okl { stroke: var(--good); stroke-width: 3; } .tk.bad { fill: var(--bad); font-weight: 700; }
 .el-f { fill: var(--accent); } .el-e { fill: none; stroke: var(--muted); stroke-width: 1; opacity: .7; }
