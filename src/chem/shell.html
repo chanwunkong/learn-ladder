@@ -382,6 +382,12 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 .orbf { fill: var(--acid); fill-opacity: .35; stroke: var(--acid); } .orbf.b { fill: var(--base); stroke: var(--base); }
 .axl { stroke: var(--line); stroke-dasharray: 3 3; }
 .ionc { fill: var(--soft); stroke: var(--accent); stroke-width: 2; }
+.rmbox { fill: none; stroke: var(--arrow); stroke-width: 2.5; stroke-dasharray: 5 3; } .rmt { fill: var(--arrow); font-weight: 700; }
+.bv.sel, .bc.sel { stroke: var(--arrow); stroke-width: 3; }
+.nsym { display: flex; align-items: center; justify-content: center; gap: 2px; margin: 4px 0 6px; font-family: var(--display); }
+.ns-l { display: flex; flex-direction: column; align-items: flex-end; } .ns-x { font-size: 44px; font-weight: 700; line-height: 1; } .ns-q { align-self: flex-start; }
+.ns-n { border: 1px dashed var(--accent); background: var(--surface); color: var(--accent); border-radius: 6px; font-size: 16px; padding: 0 6px; min-height: 28px; cursor: pointer; } .ns-n[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.nusvg.hl-A .nuE, .nusvg.hl-Z .nuN, .nusvg.hl-Z .nuE, .nusvg.hl-q .nuP, .nusvg.hl-q .nuN { opacity: .15; }
 .obox { fill: none; stroke: var(--line); stroke-width: 1; } .obox.red { fill: var(--bad-soft); stroke: var(--bad); stroke-width: 2; }
 .arr { font-size: 12px; font-weight: 700; fill: var(--ink); } .xlink { fill: none; stroke: var(--arrow); stroke-width: 1.3; opacity: .7; } .xlink.dn { stroke: var(--acid); } .mv { fill: none; stroke: var(--arrow); stroke-width: 2.2; stroke-dasharray: 5 3; }
 .coreb { fill: var(--muted); fill-opacity: .55; stroke: var(--ink); stroke-width: 1.2; } .nplane { fill: var(--muted); fill-opacity: .12; stroke: var(--muted); stroke-opacity: .4; } .rnode { stroke: var(--ink); stroke-dasharray: 4 3; stroke-width: 1.3; }

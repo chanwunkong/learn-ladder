@@ -207,7 +207,7 @@ const supN = v => String(v).split('').map(c => SUP[c]).join(''), subN = v => Str
 // [按鈕, 元素符號, Z, A, 電荷, 各殼層電子數（K, L, M…）]
 const NUC = [['¹H', 'H', 1, 1, 0, [1]], ['²H（氘）', 'H', 1, 2, 0, [1]], ['¹²C', 'C', 6, 12, 0, [2, 4]], ['¹⁴C', 'C', 6, 14, 0, [2, 4]], ['²³Na⁺', 'Na', 11, 23, 1, [2, 8]], ['³⁵Cl⁻', 'Cl', 17, 35, -1, [2, 8, 8]], ['³⁷Cl', 'Cl', 17, 37, 0, [2, 8, 7]], ['⁵⁶Fe³⁺', 'Fe', 26, 56, 3, [2, 8, 13]], ['³²S²⁻', 'S', 16, 32, -2, [2, 8, 8]], ['²³⁸U', 'U', 92, 238, 0, [2, 8, 18, 32, 21, 9, 2]]];
 W.nuclide = el => {
-  let cur = 7;
+  let cur = 7, hl = '';
   el.innerHTML = `<div class="w-row">${NUC.map(([t], i) => `<button class="btn sm ghost" type="button" data-i="${i}">${t}</button>`).join('')}</div><div id="nuG"></div><p class="small mut" id="nuC"></p><div class="cards" id="nuK"></div><p class="note" id="nuN"></p>`;
   function draw() {
     const [, sy, Z, A, q, sh] = NUC[cur], N = A - Z, e = Z - q, tot = Z + N, nn = Math.min(tot, 60), np = Math.round(nn * Z / tot);
@@ -221,13 +221,16 @@ W.nuclide = el => {
     const rings = sh.map((k, j) => { const R = core + gap * (j + 1), er = k > 20 ? 2.2 : k > 10 ? 2.8 : 3.6;
       return `<circle cx="110" cy="110" r="${R}" class="nuO"/>` + Array.from({ length: k }, (_, i) => { const a = -Math.PI / 2 + (i + 0.5) / k * Math.PI * 2 + (k > 1 ? 0.35 : 0.6); return `<circle cx="${110 + Math.cos(a) * R}" cy="${110 + Math.sin(a) * R}" r="${er}" class="nuE"/>`; }).join('')
         + (sh.length <= 4 ? `<text class="tk" x="110" y="${110 - R + 3}" text-anchor="middle" style="paint-order:stroke;stroke:var(--bg);stroke-width:3px">n=${j + 1}</text>` : ''); }).join('');
-    $('#nuG', el).innerHTML = `<svg class="ch" style="max-width:260px;margin:auto" viewBox="-10 -6 250 232" role="img" aria-label="原子組成示意：原子核與電子殼層">${rings}${dots}</svg>`;
+    const qs = q ? (Math.abs(q) > 1 ? Math.abs(q) : '') + (q > 0 ? '+' : '−') : '';
+    $('#nuG', el).innerHTML = `<div class="nsym" role="group" aria-label="點符號上的數字">${['A', 'Z'].map(x => '').join('')}<span class="ns-l"><button type="button" data-h="A" class="ns-n">${A}</button><button type="button" data-h="Z" class="ns-n">${Z}</button></span><span class="ns-x">${sy}</span>${q ? `<button type="button" data-h="q" class="ns-n ns-q">${qs}</button>` : ''}</div>
+<svg class="ch nusvg${hl ? ' hl-' + hl : ''}" style="max-width:260px;margin:auto" viewBox="-10 -6 250 232" role="img" aria-label="原子組成示意：原子核與電子殼層">${rings}${dots}</svg>`;
+    $$('[data-h]', el).forEach(b => { b.setAttribute('aria-pressed', String(b.dataset.h === hl)); b.onclick = () => { hl = hl === b.dataset.h ? '' : b.dataset.h; draw(); }; });
     $('#nuC', el).textContent = `電子殼層由內到外：${sh.join('、')}（共 ${e} 個）。${tot > 60 ? `原子核有 ${tot} 個粒子，圖上只畫 60 個，紅灰比例不變。` : ''}示意圖不按比例：實際的原子核只有原子大小的約十萬分之一；電子也不是在固定的圓形軌道上，真正的分布見第 5 節的軌域。`;
     $('#nuK', el).innerHTML = card('sym', '符號', `${supN(A)}${subN(Z)}${sy}${q ? (Math.abs(q) > 1 ? supN(Math.abs(q)) : '') + (q > 0 ? '⁺' : '⁻') : ''}`) + card('p', '質子（紅）= 原子序 Z', Z) + card('n', '中子（灰）= A − Z', `${N}`, `${A} − ${Z}`) + card('e', '電子（藍）= Z − 電荷', e, `${Z} − (${q})`);
-    $('#nuN', el).innerHTML = `質量數 A = 質子 + 中子；原子序 Z = 質子數，決定是哪一種元素。${q ? `帶 ${q > 0 ? '+' : '−'}${Math.abs(q)} 電荷表示${q > 0 ? '失去' : '得到'} ${Math.abs(q)} 個電子，質子與中子不變。` : '中性原子的電子數等於質子數。'} Z 相同、A 不同的原子互為<b>同位素</b>（例如 ³⁵Cl 與 ³⁷Cl），化學性質幾乎相同。`;
+    $('#nuN', el).innerHTML = (hl === 'A' ? `<b>左上的 ${A} 是質量數</b>：原子核裡質子＋中子的總數（亮起來的紅、灰點）。` : hl === 'Z' ? `<b>左下的 ${Z} 是原子序</b>：質子數（亮起來的紅點），決定是哪一種元素。` : hl === 'q' ? `<b>右上的 ${qs} 是電荷</b>：電子數 = ${Z} − (${q}) = ${Z - q}（亮起來的藍點）。` : '點上面符號的數字，看它對應哪些粒子。') + ` 質量數 A = 質子 + 中子；原子序 Z = 質子數，決定是哪一種元素。${q ? `帶 ${q > 0 ? '+' : '−'}${Math.abs(q)} 電荷表示${q > 0 ? '失去' : '得到'} ${Math.abs(q)} 個電子，質子與中子不變。` : '中性原子的電子數等於質子數。'} Z 相同、A 不同的原子互為<b>同位素</b>（例如 ³⁵Cl 與 ³⁷Cl），化學性質幾乎相同。`;
     $$('[data-i]', el).forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.i === cur)));
   }
-  $$('[data-i]', el).forEach(b => { b.onclick = () => { cur = +b.dataset.i; draw(); }; });
+  $$('[data-i]', el).forEach(b => { b.onclick = () => { cur = +b.dataset.i; hl = ''; draw(); }; });
   draw();
   return { set(s) { cur = s.i ?? cur; draw(); } };
 };
@@ -501,7 +504,12 @@ W.ionrad = el => {
     const [, d] = IONR[cur], sc = 0.36, slot = r => Math.max(2 * r * sc + 24, 112), W = d.reduce((s2, x) => s2 + slot(x[2]), 0) + 12, H = 2 * Math.max(...d.map(x => x[2])) * sc + 70;
     let x = 12;   // 圓的半徑照真實比例（pm），由左到右排
     $('#irB', el).innerHTML = `<svg viewBox="0 0 ${Math.max(W, 300)} ${H}" class="ch" role="img" aria-label="原子與離子的大小（照比例）">${d.map(([t, Z, r]) => { const R = r * sc, cx = x + slot(r) / 2; x += slot(r);
-      return `<circle cx="${cx}" cy="${H - 50 - R}" r="${R}" class="ionc"/><circle cx="${cx}" cy="${H - 50 - R}" r="4" class="nuP"/><text class="tk" x="${cx}" y="${H - 30}" text-anchor="middle">${t}</text><text class="tk sm" x="${cx}" y="${H - 14}" text-anchor="middle">${Z} 個質子・${r} pm</text>`; }).join('')}</svg>`;
+      // 電子層：照組態分 n 層，畫成同心圓，每層的電子平均排開
+      const qq = (m => (m ? (({ '¹': 1, '²': 2, '³': 3 })[m[1]] || 1) * (m[2] === '⁺' ? 1 : -1) : 0))(t.match(/([¹²³]?)([⁺⁻])$/)), shells = {};
+      econf(Z, qq).forEach(([o, n2]) => { shells[o[0]] = (shells[o[0]] || 0) + n2; });
+      const ns = Object.keys(shells).sort(), cyy = H - 50 - R;
+      const rings = ns.map((n, j) => { const rr = R * (j + 1) / ns.length * 0.92; return `<circle cx="${cx}" cy="${cyy}" r="${rr.toFixed(1)}" class="nuO"/>` + Array.from({ length: shells[n] }, (_, i) => { const a = -Math.PI / 2 + i / shells[n] * 6.283; return `<circle cx="${(cx + rr * Math.cos(a)).toFixed(1)}" cy="${(cyy + rr * Math.sin(a)).toFixed(1)}" r="2.2" class="nuE"/>`; }).join(''); }).join('');
+      return `<circle cx="${cx}" cy="${cyy}" r="${R}" class="ionc"/>${rings}<circle cx="${cx}" cy="${cyy}" r="4" class="nuP"/><text class="tk" x="${cx}" y="${H - 30}" text-anchor="middle">${t}</text><text class="tk sm" x="${cx}" y="${H - 14}" text-anchor="middle">${Z} 個質子・${r} pm</text>`; }).join('')}</svg>`;
     $('#irN', el).innerHTML = cur === 'ai' ? '陽離子失去電子（常常整層失去），<b>比原子小</b>；陰離子多了電子、電子間排斥增加，<b>比原子大</b>。'
       : `這些粒子的<b>電子數相同</b>（等電子），差別只有質子數。質子越多，對同樣的電子拉得越緊，半徑越小：${d.map(x => x[0]).join(' > ')}。`;
     pressSeg(el, 'irS', cur);
@@ -516,17 +524,22 @@ W.ionrad = el => {
 const SIE = { Na: [11, [496, 4562, 6910, 9543]], Mg: [12, [738, 1451, 7733, 10543]], Al: [13, [578, 1817, 2745, 11577]], Si: [14, [787, 1577, 3232, 4356, 16091]], P: [15, [1012, 1907, 2914, 4964, 6274, 21267]], Ca: [20, [590, 1145, 4912, 6491, 8153]] };
 W.succie = el => {
   let cur = 'Mg';
-  el.innerHTML = `${seg('siS', Object.keys(SIE).map(k => [k, k]), cur)}<div id="siG"></div><div class="cards" id="siK"></div><p class="note" id="siN"></p>`;
+  let sel = 0;
+  el.innerHTML = `${seg('siS', Object.keys(SIE).map(k => [k, k]), cur)}<div class="cards" id="siK"></div><div id="siG"></div><div id="siO"></div><p class="note" id="siN"></p>`;
   function draw() {
-    const [, v] = SIE[cur], r = v.slice(1).map((x, i) => x / v[i]), k = r.indexOf(Math.max(...r)) + 1;
+    const [Z, v] = SIE[cur], r = v.slice(1).map((x, i) => x / v[i]), k = r.indexOf(Math.max(...r)) + 1; if (!sel || sel > v.length) sel = k + 1;
     $('#siG', el).innerHTML = chart({ w: 560, h: 240, x: [0.4, 6.6], y: [2.5, 4.5], xt: [1, 2, 3, 4, 5, 6], yt: [3, 3.5, 4, 4.5], xlab: '第幾個游離能 Iₙ', ylab: 'log₁₀ I（kJ/mol）', label: '連續游離能' }, (X, Y) =>
-      v.map((x, i) => `<rect x="${X(i + 1) - 18}" y="${Y(Math.log10(x))}" width="36" height="${Y(2.5) - Y(Math.log10(x))}" class="${i < k ? 'bv' : 'bc'}"/><text class="tk" x="${X(i + 1)}" y="${Y(Math.log10(x)) - 5}" text-anchor="middle">${x}</text>`).join('')
+      v.map((x, i) => `<rect x="${X(i + 1) - 18}" y="${Y(Math.log10(x))}" width="36" height="${Y(2.5) - Y(Math.log10(x))}" class="${i < k ? 'bv' : 'bc'}${i + 1 === sel ? ' sel' : ''}" data-b="${i + 1}" style="cursor:pointer"/><text class="tk" x="${X(i + 1)}" y="${Y(Math.log10(x)) - 5}" text-anchor="middle">${x}</text>`).join('')
       + `<line class="mk" x1="${X(k + 0.5)}" x2="${X(k + 0.5)}" y1="${Y(4.5)}" y2="${Y(2.5)}" data-cur="跳躍"/><text class="tk hl" x="${X(k + 0.5)}" y="${Y(2.5) - 8}" text-anchor="middle">大跳</text>`);
+    // 拿走第 sel 個電子之前的組態，標出下一個要拿走的電子；週期 3 的元素連 2s、2p 一起畫，看得到「拿到內層」
+    const cfq = econf(Z, sel - 1), last = cfq[cfq.length - 1][0], per = Z <= 18 ? 3 : 4, subs = per === 3 ? ['2s', '2p', '3s', '3p'] : ['3s', '3p', '4s'];
+    $('#siO', el).innerHTML = `<p class="lbl">點長條：拿走第 ${sel} 個電子（I${subN(sel)}）時，被拿走的是 ${last} 的電子${sel > k ? '，已經是內層' : '，還在最外層'}</p>` + orbitalChart('si', cfq, subs, { mark: last }).svg;
+    $$('#siG [data-b]', el).forEach(b => { b.onclick = () => { sel = +b.dataset.b; draw(); }; });
     $('#siK', el).innerHTML = card('j', '最大的跳躍', `I${subN(k)} → I${subN(k + 1)}`, `×${fx(r[k - 1], 1)}`) + card('v', '價電子數', k) + card('g', '族', k <= 2 ? `第 ${k} 族` : `第 ${k + 10} 族`);
     $('#siN', el).innerHTML = `前 ${k} 個電子在最外層，拿掉之後剩下的是穩定的鈍氣組態；第 ${k + 1} 個要從<b>內層</b>拿，所以游離能突然跳很大（縱軸是對數，跳躍仍然很明顯）。看到「第 k 個之後大跳」，就知道有 k 個價電子。`;
     pressSeg(el, 'siS', cur);
   }
-  bindSeg(el, 'siS', v => { cur = v; draw(); });
+  bindSeg(el, 'siS', v => { cur = v; sel = 0; draw(); });
   draw();
   return { set(s) { cur = s.e || cur; draw(); } };
 };

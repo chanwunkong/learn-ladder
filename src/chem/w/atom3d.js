@@ -134,7 +134,9 @@ function orbitalChart(id, cf, subs, opts = {}) {
     if (!(opts.equal && t === 'd')) svg += `<text class="tk" x="${x0 - 10}" y="${ys[o] + 5}" text-anchor="end">${opts.equal ? rows.filter(r => r !== o).concat([o]).reverse().join(' ＝ ') : o}</text>`;
     const sx = opts.equal && t === 'd' ? W + 22 : 0;
     oc.forEach((e, i) => { const cx = x0 + 20 + sx + i * (W + 6), cy = ys[o]; pos[o + i] = [cx, cy];
-      svg += `<rect x="${cx - W / 2}" y="${cy - 17}" width="${W}" height="34" rx="6" class="obox${opts.pairRed && e === 2 && t === 's' ? ' red' : ''}"/>`
+      const k = cnt[o] || 0, mi = opts.mark === o ? (k > MORB[t] ? k - MORB[t] - 1 : k - 1) : -1;
+      svg += `<rect x="${cx - W / 2}" y="${cy - 17}" width="${W}" height="34" rx="6" class="obox${(opts.pairRed && t === 's' || opts.pairRedP && t === 'p') && e === 2 ? ' red' : ''}"/>`
+        + (i === mi ? `<rect x="${cx - W / 2 - 4}" y="${cy - 21}" width="${W + 8}" height="42" rx="8" class="rmbox" data-cur="下一個拿走的電子"/><text class="tk sm rmt" x="${cx}" y="${cy + 34}" text-anchor="middle">拿走這個</text>` : '')
         + ORBV.shape(cx, cy - 2, 24, t, t === 'f' ? 0 : Math.min(i, t === 'd' ? 4 : 2), fillStyle(t, e, false))
         + (e ? `<text class="arr" x="${cx}" y="${cy + 14}" text-anchor="middle">${e === 2 ? '↑↓' : '↑'}</text>` : '');
       if (e) (ups[o] = ups[o] || []).push([cx, cy]); if (e === 2) (dns[o] = dns[o] || []).push([cx, cy]); });
@@ -146,7 +148,7 @@ function orbitalChart(id, cf, subs, opts = {}) {
   if (opts.move) { const [fo, to] = opts.move, [fx0, fy] = pos[fo + '0'], [tx, ty] = pos[to + '4'] || pos[to + '0'];
     svg += `<defs><marker id="mv${id}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--arrow)"/></marker></defs><path d="M${fx0},${fy + 20} C${fx0 + 20},${fy + 46} ${tx - 20},${ty + 46} ${tx},${ty + 20}" class="mv" marker-end="url(#mv${id})" data-cur="搬動的電子"/>`; }
   const maxW = x0 + 20 + Math.max(...rows.map(o => MORB[o[1]])) * (W + 6) + (opts.equal ? W + 22 : 0);
-  return { svg: `<svg viewBox="0 0 ${Math.max(maxW, 250)} ${y + (opts.links ? 60 : 34)}" class="ch ochart" role="img" aria-label="軌域圖">${svg}</svg>`, links: nl };
+  return { svg: `<svg viewBox="0 0 ${Math.max(maxW, 250)} ${y + (opts.links ? 60 : opts.mark ? 48 : 34)}" class="ch ochart" role="img" aria-label="軌域圖">${svg}</svg>`, links: nl };
 }
 
 /* ===== 第 6 節：原子模型＋軌域圖 ===== */
@@ -162,7 +164,7 @@ ${ctl('電荷', seg('a3Q', [['0', '中性'], ['1', '+1'], ['2', '+2'], ['3', '+3
   // 填的狀態 → 立體顏色：空＝淡灰半透明、一個電子＝淺色、兩個電子＝深色；剛變化的最清楚，其他淡一點
   const tint = (h, f) => '#' + [1, 3, 5].map(i => Math.round(parseInt(h.slice(i, i + 2), 16) * (1 - f) + 255 * f).toString(16).padStart(2, '0')).join('');
   // s 球包在其他形狀外面，一定半透明；p、d 剛變化的最清楚
-  const colFor = (t, e, isNew) => () => (e === 0 ? ['#9AA3A0', 0.1] : [e === 1 ? tint(FILLHUE[t], 0.5) : FILLHUE[t], t === 's' ? (isNew ? 0.4 : 0.22) : isNew ? 0.95 : 0.5]);
+  const colFor = (t, e, isNew) => () => (e === 0 ? ['#9AA3A0', 0.08] : [e === 1 ? tint(FILLHUE[t], 0.5) : FILLHUE[t], t === 's' ? (isNew ? 0.4 : 0.22) : isNew ? 0.95 : 0.16]);
   const MV = { v: null };
   function model(Z, cf, prevCnt, coreName, coreOrb, subs) {
     const cnt = Object.fromEntries(cf), all = subs.concat(cf.map(x => x[0]).filter(o => !coreOrb.includes(o) && !subs.includes(o)))
@@ -212,4 +214,23 @@ ${ctl('電荷', seg('a3Q', [['0', '中性'], ['1', '+1'], ['2', '+2'], ['3', '+3
   bindSeg(el, 'a3Q', v => { st.q = Math.min(+v, st.Z - 1); st.phase = 2; draw(); });
   draw();
   return { set(s2) { Object.assign(st, s2, { phase: 1 }); draw(); } };
+};
+
+/* ===== 第 7 節：游離能的凹陷（Be／B、N／O、Mg／Al、P／S）：並排的軌域圖，標出被拿走的電子 ===== */
+W.iedip = el => {
+  const P = { be: [4, 5, 'Be > B', '兩個都在第 2 層，但 B 被拿走的是 2p 電子，2p 比 2s 高（2s 會穿透到原子核附近，抓得比較緊），所以 B 比較好拿，游離能較小。'],
+    no: [7, 8, 'N > O', 'N 的三個 2p 電子各占一格；O 多一個電子，只能和另一個擠在同一格（紅色），兩個互相排斥，拿走其中一個比較容易，所以 O 的游離能較小。'],
+    mg: [12, 13, 'Mg > Al', '和 Be／B 一樣：Al 拿走的是比較高的 3p 電子。'], ps: [15, 16, 'P > S', '和 N／O 一樣：S 的 3p 有一格擠兩個電子（紅色），互相排斥。'] };
+  let cur = 'be';
+  el.innerHTML = `${seg('idS', [['be', 'Be 與 B'], ['no', 'N 與 O'], ['mg', 'Mg 與 Al'], ['ps', 'P 與 S']], cur)}<div class="xcmp" id="idG"></div><p class="note" id="idN"></p>`;
+  function draw() {
+    const [a, b, ord, why] = P[cur], per = a <= 10 ? 2 : 3, subs = [`${per}s`, `${per}p`];
+    const one = Z => { const cf = econf(Z), last = cf[cf.length - 1][0]; return `<div><p class="lbl">${ELEM[Z - 1]}（${ENAME[Z - 1]}）</p>${orbitalChart('d' + Z, cf, subs, { mark: last, pairRedP: true }).svg}</div>`; };
+    $('#idG', el).innerHTML = one(a) + one(b);
+    $('#idN', el).innerHTML = `第一游離能 <b>${ord}</b>，和「往右變大」相反。${why}`;
+    pressSeg(el, 'idS', cur);
+  }
+  bindSeg(el, 'idS', v => { cur = v; draw(); });
+  draw();
+  return { set(s2) { cur = s2.p || cur; draw(); } };
 };
