@@ -102,7 +102,7 @@ const LOG = store.get('log', []);
 const qbank = (c, k) => (k === 'x' ? c.exam : c.quiz) || [];
 // 舊版紀錄只有題號：第一次載入時依「當時的題庫」補上識別碼與快照，之後題庫怎麼改都對得上
 (() => { let ch = 0; LOG.forEach(e => { if (e.h) return; const c = chOf(e.c), q = c && qbank(c, e.k)[e.i]; if (q) { e.h = qid(c.id, q, e.k); e.qt = strip(q.q).slice(0, 60); ch = 1; } }); if (ch) store.set('log', LOG); })();
-function logAnswer(e) { LOG.push({ t: Date.now(), ...e }); if (LOG.length > 20000) LOG.splice(0, LOG.length - 20000); store.set('log', LOG); if (typeof CLOUD !== 'undefined' && CLOUD.pushLog) CLOUD.pushLog(); }
+function logAnswer(e) { LOG.push({ t: Date.now(), ...e }); if (LOG.length > 20000) LOG.splice(0, LOG.length - 20000); store.set('log', LOG); if (typeof CLOUD !== 'undefined' && CLOUD.pushLog) CLOUD.pushLog(); setTimeout(() => { if (typeof refreshPrac === 'function') refreshPrac(); }, 0); }
 // 由識別碼找回目前的題目（題號可能已變）
 let QIX = null;
 function qfind(cid, h, k, i) {
@@ -138,7 +138,7 @@ function qblock(list, kind) {
 // 把連續的作答併成「一題一次」：同一章、同一題、同一頁面瀏覽中，從第 1 次作答到答對為止
 function sessions(log = LOG) {
   const out = [];
-  log.filter(e => e.k !== 'r' && e.k !== 'fu').forEach(e => { const key = e.h || e.k + e.i, last = out.length && [...out].reverse().find(s => s.c === e.c && s.key === key && !s.closed);
+  log.filter(e => e.k !== 'r' && e.k !== 'fu' && e.k !== 'reset').forEach(e => { const key = e.h || e.k + e.i, last = out.length && [...out].reverse().find(s => s.c === e.c && s.key === key && !s.closed);
     if (e.n === 1 || !last) out.push({ t: e.t, c: e.c, k: e.k, i: e.i, h: e.h, qt: e.qt, key, tries: 1, ok: e.ok, first: e.ok, closed: !!e.ok, end: e.t });
     else { last.tries++; last.end = e.t; if (e.ok) { last.ok = 1; last.closed = true; } } });
   return out;
@@ -265,6 +265,44 @@ function bindQuiz(id) {
   });
 }
 
+/* ---- 回到做過的小節：已作答的收成一行（✓ 第一次答對／✗ 第一次答錯，點開可再做）；跳過的標出來；「重新練習這一節」只清除畫面上的顯示 ---- */
+const secKey = (id, sec) => `reset:${id}/${sec}`;
+const resetAt = h => LOG.reduce((t, e) => (e.k === 'reset' && e.h === h ? Math.max(t, e.t) : t), 0);
+function restorePrac(id, sec) {
+  const c = chOf(id), t0 = resetAt(secKey(id, sec)), log = LOG.filter(e => e.c === id && e.t > t0);
+  const ok = new Set(log.filter(e => e.ok && e.k !== 'fu').map(e => e.h)), f1 = new Map();
+  REVIEW.trials(log).forEach(t => { if (!f1.has(t.h)) f1.set(t.h, t.ok); });
+  $$('.q[data-k]', $('#article')).forEach(qe => {
+    const kind = qe.dataset.k, q = (kind === 'x' ? c.exam : c.quiz)[+qe.dataset.q], h = qid(id, q, kind);
+    if (!ok.has(h)) return;
+    const first = f1.get(h) !== false;
+    qe.classList.add('prev', 'collapsed');
+    if (first) { qe.classList.add('done'); $$('.opt', qe).forEach(b => { b.disabled = true; if (+b.dataset.o === q.a) b.classList.add('right'); }); const w = $('.why', qe); w.hidden = false; w.className = 'why ok'; w.innerHTML = `<b>已完成。</b>${q.why}`; const g = $('.guide', qe); if (g) g.hidden = true; }
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'qrow';
+    b.innerHTML = `<b class="${first ? 'r-ok' : 'r-no'}">${first ? '✓ 第一次答對' : '✗ 第一次答錯（已進錯題本）・點開再做一次'}</b><span>${esc(strip(q.q).slice(0, 44))}</span>`;
+    b.onclick = () => qe.classList.toggle('collapsed'); qe.prepend(b);
+  });
+  refreshPrac();
+}
+function refreshPrac() {
+  const box = $('#pracSum'); if (!box) return;
+  const items = $$('.q[data-k]', $('#article')), isDone = e => e.classList.contains('prev') || !!$('.opt.right', e);
+  const last = items.map(isDone).lastIndexOf(true), skip = items.filter((e, k) => k < last && !isDone(e));
+  items.forEach(e => e.classList.toggle('skipped', skip.includes(e)));
+  const n = items.filter(isDone).length;
+  box.innerHTML = `<span class="${n === items.length ? 'ok' : ''}">已完成 ${n} / ${items.length} 題</span>${skip.length ? `<span class="skips">跳過：${skip.map(e => `<button type="button" class="linkb" data-sk="${items.indexOf(e)}">第 ${items.indexOf(e) + 1} 題</button>`).join('、')}</span>` : ''}`;
+  $$('[data-sk]', box).forEach(b => { b.onclick = () => { const e = items[+b.dataset.sk], d = e.closest('details'); if (d) d.open = true; e.scrollIntoView({ behavior: 'smooth', block: 'center' }); }; });
+}
+function resetPrac(id, sec) {
+  const box = $('#pracReset'); if (!box) return;
+  box.innerHTML = '<button class="btn sm ghost" type="button" data-rs>重新練習這一節</button>';
+  $('[data-rs]', box).onclick = () => {
+    box.innerHTML = '<span class="small">讓這一節的題目全部恢復成沒做過的樣子？作答紀錄和錯題本不會刪除。</span><button class="btn sm pri" type="button" data-y>確定</button><button class="btn sm" type="button" data-n>取消</button>';
+    $('[data-y]', box).onclick = () => { logAnswer({ c: id, k: 'reset', h: secKey(id, sec), qt: '重新練習這一節' }); renderPaged(id, sec); };
+    $('[data-n]', box).onclick = () => resetPrac(id, sec);
+  };
+}
+
 /* ---- 一節一頁（2026-11-01 使用者要求，先在第一章）：概覽頁 → 每節一頁（說明、互動圖、看懂了、這一節的練習）→ 綜合練習 ----
    題目屬於哪一節：題目的 s（第幾節），沒有的話看「在圖上看」連到哪一節的互動圖；都沒有就放綜合練習。 */
 const PAGED = ['atom'];
@@ -274,7 +312,7 @@ const qitem = ({ kind, i, q }, num) => `<div class="q" data-k="${kind}" data-q="
 function practiceHTML(items, head) {
   if (!items.length) return '';
   const first = items.slice(0, 3), more = items.slice(3);
-  return `<section class="sec practice" id="sec-prac"><h2><span class="sn">練</span>${head}</h2><p class="mut small">讀完上面的說明就做。答錯了按「一步一步來」或「在圖上看」，錯題會排進錯題複習。</p>${first.map((x, k) => qitem(x, k + 1)).join('')}${more.length ? `<details class="more"><summary>這一節還有 ${more.length} 題歷屆考題相似題</summary>${more.map((x, k) => qitem(x, k + 4)).join('')}</details>` : ''}</section>`;
+  return `<section class="sec practice" id="sec-prac"><h2><span class="sn">練</span>${head}</h2><p class="mut small">讀完上面的說明就做。答錯了按「一步一步來」或「在圖上看」，錯題會排進錯題複習。</p><div class="pracsum" id="pracSum"></div><div class="resetbox" id="pracReset"></div>${first.map((x, k) => qitem(x, k + 1)).join('')}${more.length ? `<details class="more"><summary>這一節還有 ${more.length} 題歷屆考題相似題</summary>${more.map((x, k) => qitem(x, k + 4)).join('')}</details>` : ''}</section>`;
 }
 // 頁首的章內導覽：回概覽、第幾節、上一節／下一節、換章
 function chbar(id, sec) {
@@ -305,6 +343,7 @@ ${practiceHTML(practiceOf(c, k), '這一節的練習')}<div class="nextsec">${ne
   }
   $('#article').innerHTML = html;
   mountWidgets(); bindQuiz(id); bindTerms(id);
+  if (sec) { restorePrac(id, sec); resetPrac(id, sec); }
   if (READ_ON.includes(id)) drawRead(id);
   bindDone(id);
   const j = $('#chJump'); if (j) j.onchange = () => { location.hash = j.value; };

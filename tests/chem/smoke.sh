@@ -52,7 +52,7 @@ window.__errs = []; addEventListener('error', e => __errs.push(e.message)); cons
       const sig = () => [...w.querySelectorAll('.cards > .card')].map(c => { const b = c.getBoundingClientRect(); return `${Math.round(b.left)},${Math.round(b.top - w.getBoundingClientRect().top)},${Math.round(b.width)},${Math.round(b.height)}`; }).join(' ');
       r.value = r.min; fire(r, 'input'); const s0 = sig();
       for (const v of [r.max, (+r.min + +r.max) / 2, +r.min + (r.max - r.min) * 0.27, +r.min + (r.max - r.min) * 0.81]) {
-        r.value = v; fire(r, 'input'); if (sig() !== s0) layout.push(`${w.dataset.w} 拖動「${(r.closest('label') || r.parentNode).textContent.trim().slice(0, 8)}」時數值卡跳動`);
+        r.value = v; fire(r, 'input'); check(w, `［${(r.closest('label') || r.parentNode).textContent.trim().slice(0, 6)}=${r.value}］`); if (sig() !== s0) layout.push(`${w.dataset.w} 拖動「${(r.closest('label') || r.parentNode).textContent.trim().slice(0, 8)}」時數值卡跳動`);
         for (const e of w.querySelectorAll('.card b, .card span')) if (e.scrollWidth > e.clientWidth + 1) layout.push(`${w.dataset.w} 數值卡文字被截斷：${e.textContent.slice(0, 16)}`);
       }
     }

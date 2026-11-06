@@ -69,6 +69,7 @@ h1, h2, h3 { text-wrap: balance; line-height: 1.3; }
 .cloud-btn { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; font-size: 13px; }
 .cb-av, .cp-av { width: 20px; height: 20px; border-radius: 50%; }
 .cb-dot { width: 8px; height: 8px; border-radius: 50%; background: #2E9E5B; }
+@media (max-width: 480px) { .cloud-btn > span:last-child { display: none; } }   /* 手機：頁首只顯示頭像或雲朵，維持一行 */
 .cloud-panel { position: absolute; right: 0; top: calc(100% + 8px); width: min(320px, calc(100vw - 32px)); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 28px rgba(0,0,0,.14); padding: 14px 16px; z-index: 40; font-size: 13.5px; line-height: 1.6; }
 .cloud-panel p { margin: 0 0 10px; }
 .cp-t { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
@@ -220,6 +221,16 @@ details summary { cursor: pointer; color: var(--accent); font-size: 14px; }
 .spk-pop input { flex: 1; width: auto !important; }
 .spk-pop select { flex: 1; max-width: none !important; }
 /* 回想題的提示、早上單字面板 */
+.qrow { display: flex; flex-wrap: wrap; gap: 2px 10px; width: 100%; text-align: left; background: none; border: 0; padding: 4px 0; cursor: pointer; color: var(--ink); font-size: 14px; }
+.qrow span { color: var(--muted); min-width: 0; overflow-wrap: anywhere; } .qrow .r-ok { color: var(--good); } .qrow .r-no { color: var(--bad); }
+.collapsed > :not(.qrow) { display: none !important; }
+.q.skipped, .sentc.skipped { border-left: 4px solid var(--warn); padding-left: 10px; }
+.q.skipped::before, .sentc.skipped::before { content: "跳過了"; display: inline-block; font-size: 12px; color: var(--warn); background: var(--warn-soft); border-radius: 4px; padding: 0 6px; margin-bottom: 4px; }
+.pcnt { margin-left: auto; font-family: var(--mono); font-size: 12.5px; color: var(--warn); font-weight: 400; } .pcnt.fin { color: var(--good); }
+.skips { flex-basis: 100%; font-size: 13px; color: var(--warn); }
+.linkb { background: none; border: 0; padding: 0; color: var(--accent); text-decoration: underline; cursor: pointer; font-size: 13px; }
+.resetbox { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 4px 0 0; }
+.segprog { flex-wrap: wrap; }
 .redo { margin: 0 0 6px; font-size: 13.5px; color: var(--warn); background: var(--warn-soft); border-radius: 6px; padding: 4px 10px; display: inline-block; }
 .hintrow { margin: 0 0 8px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .hintz { color: var(--warn); font-size: 14px; }
@@ -426,39 +437,39 @@ WEEKS[0].words = [
 WEEKS[0].sents = [
   // 第 1 天：主幹
   [{ chunks: ['Patients', 'with chronic pain', 'often', 'sleep', 'poorly.'], core: 'Patients sleep poorly.', zh: '慢性疼痛的病人常常睡不好。',
-     steps: [['這句的主要動詞是？', 'sleep', 'pain', 'with', '動詞表示「做什麼」：病人「睡」。pain 在這裡是名詞。', 's.core', { 3: 'v' }], ['誰在睡？（主詞）', 'Patients', 'chronic pain', 'often', '主詞是動作的發出者。', 's.core', { 0: 's' }], ['with chronic pain 的作用是？', '修飾 Patients：哪一種病人', '主詞', '動詞', '介系詞片語跟在名詞後面，說明是哪一種人。', 's.core', { 1: 'm', 2: 'm' }]] },
+     steps: [['這句的主要動詞是？', 'sleep', 'pain', 'with', '動詞表示「做什麼」：病人「睡」。pain 在這裡是名詞。', 's.core', { 3: 'v' }], ['誰在睡？（主詞）', 'Patients', 'chronic pain', 'often', '主詞是動作的發出者。', 's.core', { 0: 's' }], ['with chronic pain 的作用是？', '修飾 Patients', '修飾 poorly', '修飾 sleep', '介系詞片語跟在名詞後面，說明是哪一種人。', 's.core', { 1: 'm', 2: 'm' }]] },
    { chunks: ['The prevalence', 'of obesity', 'in children', 'has increased', 'rapidly', 'over the past twenty years.'], core: 'The prevalence has increased.', zh: '過去二十年來，兒童肥胖的盛行率快速上升。',
-     steps: [['主要動詞是？', 'has increased', 'children', 'past', 'has + 過去分詞是現在完成式，整組算一個動詞。', 's.core', { 3: 'v' }], ['什麼增加了？（主詞）', 'The prevalence', 'obesity', 'children', 'of obesity in children 都是在說明 prevalence。主詞是第一個名詞。', 's.core', { 0: 's' }], ['of obesity、in children 是什麼？', '修飾主詞的介系詞片語', '另外兩個主詞', '動詞', '介系詞片語可以一個接一個，全部掛在前面的名詞上。', 's.core', { 1: 'm', 2: 'm', 5: 'm' }]] }],
+     steps: [['主要動詞是？', 'has increased', 'in children', 'over the past', 'has + 過去分詞是現在完成式，整組算一個動詞。', 's.core', { 3: 'v' }], ['什麼增加了？（主詞）', 'The prevalence', 'the obesity', 'the children', 'of obesity in children 都是在說明 prevalence。主詞是第一個名詞。', 's.core', { 0: 's' }], ['of obesity、in children 是什麼？', '修飾主詞的介系詞片語', '另外兩個並列的主詞', '句子的主要動詞片語', '介系詞片語可以一個接一個，全部掛在前面的名詞上。', 's.core', { 1: 'm', 2: 'm', 5: 'm' }]] }],
   // 第 2 天：關係子句
   [{ chunks: ['People', 'who sleep less than six hours', 'are', 'more vulnerable', 'to infection.'], core: 'People are more vulnerable to infection.', zh: '睡不到六小時的人比較容易感染。',
      steps: [['句中有兩個動詞 sleep、are，哪一個是主要動詞？', 'are', 'sleep', '都是', 'sleep 在 who 開頭的子句裡；子句裡的動詞不是整句的動詞。', 's.rel', { 2: 'v' }], ['are 的主詞是？', 'People', 'six hours', 'infection', '去掉 who 子句，就剩 People are…。', 's.core', { 0: 's' }], ['who sleep less than six hours 修飾誰？', 'People', 'hours', 'infection', '關係代名詞 who 指人，緊接在它要修飾的名詞後面。', 's.rel', { 1: 'm' }]] },
    { chunks: ['The hormone', 'that controls blood sugar', 'is called', 'insulin.'], core: 'The hormone is called insulin.', zh: '控制血糖的激素叫作胰島素。',
-     steps: [['主要動詞是？', 'is called', 'controls', 'blood', 'controls 在 that 子句裡。', 's.rel', { 2: 'v' }], ['主詞是？', 'The hormone', 'blood sugar', 'insulin', 'that 子句說明是哪一種激素。', 's.core', { 0: 's' }], ['that 在這裡可以換成哪一個字？', 'which（指物）', 'who', 'what', '指物用 which 或 that；指人用 who 或 that。', 's.rel', { 1: 'm' }]] }],
+     steps: [['主要動詞是？', 'is called', 'controls', 'blood', 'controls 在 that 子句裡。', 's.rel', { 2: 'v' }], ['主詞是？', 'The hormone', 'blood sugar', 'insulin', 'that 子句說明是哪一種激素。', 's.core', { 0: 's' }], ['that 在這裡可以換成哪一個字？', 'which', 'who', 'what', '指物用 which 或 that；指人用 who 或 that。', 's.rel', { 1: 'm' }]] }],
   // 第 3 天：分詞修飾
   [{ chunks: ['Participants', 'taking the new drug', 'reported', 'fewer symptoms.'], core: 'Participants reported fewer symptoms.', zh: '服用新藥的受試者回報的症狀較少。',
-     steps: [['taking 和 reported，誰是主要動詞？', 'reported', 'taking', '兩個都是', '名詞後面的 V-ing 是在修飾名詞，不是主要動詞。', 's.part', { 2: 'v' }], ['taking the new drug 修飾誰？', 'Participants', 'drug', 'symptoms', '= Participants who were taking the new drug。', 's.part', { 1: 'm', 0: 's' }], ['主幹是？', 'Participants reported fewer symptoms.', 'Participants taking the drug.', 'The new drug reported symptoms.', '去掉分詞片語，主詞＋動詞＋受詞。', 's.core', {}]] },
+     steps: [['taking 和 reported，誰是主要動詞？', 'reported', 'taking', '兩個都是', '名詞後面的 V-ing 是在修飾名詞，不是主要動詞。', 's.part', { 2: 'v' }], ['taking the new drug 修飾誰？', 'Participants', 'the new drug', 'fewer symptoms', '= Participants who were taking the new drug。', 's.part', { 1: 'm', 0: 's' }], ['主幹是？', 'Participants reported fewer symptoms.', 'Participants were taking the drug.', 'The new drug reported fewer symptoms.', '去掉分詞片語，主詞＋動詞＋受詞。', 's.core', {}]] },
    { chunks: ['The samples', 'collected from 200 patients', 'were tested', 'in a specialized laboratory.'], core: 'The samples were tested.', zh: '從 200 位病人採集的樣本在專門的實驗室中檢驗。',
-     steps: [['collected 和 were tested，誰是主要動詞？', 'were tested', 'collected', '兩個都是', 'collected 前面沒有 be 動詞或 have，又緊跟在名詞後面，是過去分詞在修飾名詞。', 's.part', { 2: 'v' }], ['collected from 200 patients 的意思是？', '被採集的（被動）', '正在採集的（主動）', '將要採集的', 'V-ed 表示被動：樣本是「被採集」的；V-ing 表示主動。', 's.part', { 1: 'm', 0: 's' }], ['in a specialized laboratory 是？', '地點，修飾動詞', '主詞', '受詞', '介系詞片語說明在哪裡檢驗。', 's.core', { 3: 'm' }]] }],
+     steps: [['collected 和 were tested，誰是主要動詞？', 'were tested', 'collected', '兩個都是', 'collected 前面沒有 be 動詞或 have，又緊跟在名詞後面，是過去分詞在修飾名詞。', 's.part', { 2: 'v' }], ['collected from 200 patients 的意思是？', '被採集的（被動）', '正在採集的（主動）', '將要採集的', 'V-ed 表示被動：樣本是「被採集」的；V-ing 表示主動。', 's.part', { 1: 'm', 0: 's' }], ['in a specialized laboratory 是？', '地點，修飾動詞', '主詞，做動作的人', '受詞，被檢驗的東西', '介系詞片語說明在哪裡檢驗。', 's.core', { 3: 'm' }]] }],
   // 第 4 天：連接詞
   [{ chunks: ['Although the drug is effective,', 'it', 'causes', 'severe side effects', 'in some patients.'], core: 'It causes severe side effects.', zh: '雖然這個藥有效，它在某些病人身上會造成嚴重的副作用。',
-     steps: [['Although 開頭的部分是什麼？', '附屬子句（讓步：雖然…）', '主要子句', '主詞', 'Although、because、when、if 引導的子句不能單獨成句，要接主要子句。', 'g.conj', { 0: 'm' }], ['主要子句的動詞是？', 'causes', 'is', 'effective', 'is 在 Although 子句裡。', 's.core', { 2: 'v', 1: 's' }], ['前後兩部分的關係？', '轉折：有效，但有副作用', '因果', '時間先後', 'although 表示「雖然」，後面講相反方向的事。', 'g.conj', {}]] },
+     steps: [['Although 開頭的部分是什麼？', '讓步的附屬子句', '句子的主要子句', '整句話的主詞', 'Although、because、when、if 引導的子句不能單獨成句，要接主要子句。', 'g.conj', { 0: 'm' }], ['主要子句的動詞是？', 'causes', 'is', 'effective', 'is 在 Although 子句裡。', 's.core', { 2: 'v', 1: 's' }], ['前後兩部分的關係？', '轉折：有效但有副作用', '因果：有效所以有副作用', '時間：先有效再有副作用', 'although 表示「雖然」，後面講相反方向的事。', 'g.conj', {}]] },
    { chunks: ['Exercise', 'lowers', 'blood pressure;', 'moreover,', 'it', 'improves', 'mood.'], core: 'Exercise lowers blood pressure; it improves mood.', zh: '運動會降低血壓；而且，它會改善心情。',
-     steps: [['分號前後各有幾個主要動詞？', '各一個：lowers、improves', '只有一個', '都沒有', '分號連接兩個完整的句子。', 's.core', { 1: 'v', 5: 'v' }], ['moreover 表示？', '補充（而且）', '轉折（但是）', '結果（因此）', 'moreover 和 in addition、furthermore 同類。', 'g.conj', { 3: 'm' }], ['it 指的是？', 'Exercise', 'blood pressure', 'mood', '代名詞通常指前面的主詞。', 'r.locate', { 0: 's', 4: 's' }]] }],
+     steps: [['分號前後各有幾個主要動詞？', '各一個', '只有一個', '兩邊都沒有', '分號連接兩個完整的句子。', 's.core', { 1: 'v', 5: 'v' }], ['moreover 表示？', '補充（而且）', '轉折（但是）', '結果（因此）', 'moreover 和 in addition、furthermore 同類。', 'g.conj', { 3: 'm' }], ['it 指的是？', 'Exercise', 'blood pressure', 'mood', '代名詞通常指前面的主詞。', 'r.locate', { 0: 's', 4: 's' }]] }],
   // 第 5 天：被動語態
   [{ chunks: ['The vaccine', 'was developed', 'by a team of scientists', 'in less than a year.'], core: 'The vaccine was developed.', zh: '這個疫苗由一群科學家在不到一年內研發出來。',
-     steps: [['主要動詞是？', 'was developed', 'scientists', 'year', 'be 動詞 + 過去分詞＝被動語態。', 's.pass', { 1: 'v' }], ['主詞 The vaccine 是動作的發出者還是承受者？', '承受者：疫苗被研發', '發出者', '都不是', '被動句中主詞承受動作。', 's.pass', { 0: 's' }], ['真正做研發的是誰？', 'a team of scientists（by 後面）', 'The vaccine', '沒有說', '被動句用 by 帶出動作的發出者。', 's.pass', { 2: 'm', 3: 'm' }]] },
+     steps: [['主要動詞是？', 'was developed', 'scientists', 'year', 'be 動詞 + 過去分詞＝被動語態。', 's.pass', { 1: 'v' }], ['主詞 The vaccine 是動作的發出者還是承受者？', '承受者', '發出者', '兩者都不是', '被動句中主詞承受動作。', 's.pass', { 0: 's' }], ['真正做研發的是誰？', 'a team of scientists', 'The vaccine itself', 'the reader', '被動句用 by 帶出動作的發出者。', 's.pass', { 2: 'm', 3: 'm' }]] },
    { chunks: ['More than 300 patients', 'were included', 'in the final analysis,', 'which', 'was conducted', 'in 2024.'], core: 'More than 300 patients were included.', zh: '超過 300 位病人被納入最後的分析，而這項分析在 2024 年進行。',
-     steps: [['主要動詞是？', 'were included', 'was conducted', 'analysis', 'was conducted 在 which 子句裡。', 's.pass', { 1: 'v', 0: 's' }], ['which 指的是？', 'the final analysis', 'patients', '2024', '逗號加 which 補充說明前面那個名詞。', 's.rel', { 2: 'm', 3: 'm', 4: 'm', 5: 'm' }], ['was conducted 是哪一種語態？', '被動：分析被進行', '主動', '進行式', 'be + 過去分詞。', 's.pass', {}]] }],
+     steps: [['主要動詞是？', 'were included', 'was conducted', 'analysis', 'was conducted 在 which 子句裡。', 's.pass', { 1: 'v', 0: 's' }], ['which 指的是？', 'the final analysis', 'the patients in it', 'the year 2024', '逗號加 which 補充說明前面那個名詞。', 's.rel', { 2: 'm', 3: 'm', 4: 'm', 5: 'm' }], ['was conducted 是哪一種語態？', '被動語態', '主動語態', '現在進行式', 'be + 過去分詞。', 's.pass', {}]] }],
   // 第 6 天：名詞子句
   [{ chunks: ['What surprised the doctors', 'was', 'how quickly the patient recovered.'], core: 'What surprised the doctors was how quickly the patient recovered.', zh: '讓醫生驚訝的是病人恢復得多快。',
-     steps: [['主要動詞是？', 'was', 'surprised', 'recovered', '另外兩個動詞各在 What 子句與 how 子句裡。', 's.noun', { 1: 'v' }], ['主詞是？', '整段 What surprised the doctors（讓醫生驚訝的事）', 'the doctors', 'the patient', '一整個子句可以當主詞，What… ＝「…的事」。', 's.noun', { 0: 's' }], ['how quickly the patient recovered 在句中當什麼？', '補語（說明主詞是什麼）', '另一個主詞', '修飾 doctors', '名詞子句也能放在 be 動詞後面。', 's.noun', { 2: 'm' }]] },
+     steps: [['主要動詞是？', 'was', 'surprised', 'recovered', '另外兩個動詞各在 What 子句與 how 子句裡。', 's.noun', { 1: 'v' }], ['主詞是？', 'What surprised the doctors', 'surprised the doctors', 'how quickly the patient', '一整個子句可以當主詞，What… ＝「…的事」。', 's.noun', { 0: 's' }], ['how quickly the patient recovered 在句中當什麼？', '補語，說明主詞是什麼', '另一個主詞', '修飾 doctors 的子句', '名詞子句也能放在 be 動詞後面。', 's.noun', { 2: 'm' }]] },
    { chunks: ['Researchers', 'do not know', 'whether the effect', 'will last', 'for more than a year.'], core: 'Researchers do not know whether…', zh: '研究人員不知道這個效果是否會持續超過一年。',
-     steps: [['主要動詞是？', 'do not know', 'will last', 'effect', 'will last 在 whether 子句裡。', 's.noun', { 1: 'v', 0: 's' }], ['whether 開頭的子句在句中當什麼？', 'know 的受詞（不知道「什麼」）', '主詞', '修飾 Researchers', '名詞子句可以當受詞。', 's.noun', { 2: 'm', 3: 'm', 4: 'm' }], ['whether 的意思？', '是否', '雖然', '當…時', 'whether = if（是否）。', 's.noun', {}]] }],
+     steps: [['主要動詞是？', 'do not know', 'will last', 'effect', 'will last 在 whether 子句裡。', 's.noun', { 1: 'v', 0: 's' }], ['whether 開頭的子句在句中當什麼？', 'know 的受詞', '句子的主詞', '修飾 Researchers', '名詞子句可以當受詞。', 's.noun', { 2: 'm', 3: 'm', 4: 'm' }], ['whether 的意思？', '是否', '雖然', '當…時', 'whether = if（是否）。', 's.noun', {}]] }],
   // 第 7 天：平行結構
   [{ chunks: ['Regular exercise', 'lowers', 'blood pressure,', 'improves', 'sleep,', 'and', 'reduces', 'stress.'], core: 'Regular exercise lowers…, improves…, and reduces…', zh: '規律運動能降低血壓、改善睡眠，並減輕壓力。',
-     steps: [['這句的主要動詞有幾個？', '三個：lowers、improves、reduces', '一個', '兩個', '同一個主詞做了三件事。', 's.para', { 1: 'v', 3: 'v', 6: 'v' }], ['三個動詞的形式？', '相同（都是第三人稱單數現在式）', '各不相同', '只有第一個加 s', 'and 連接的東西形式要一致，稱為平行結構。', 's.para', { 0: 's' }], ['and 放在哪裡？', '最後一項之前', '每一項之間', '最前面', 'A, B, and C 的寫法。', 's.para', {}]] },
+     steps: [['這句的主要動詞有幾個？', '三個', '一個', '兩個', '同一個主詞做了三件事。', 's.para', { 1: 'v', 3: 'v', 6: 'v' }], ['三個動詞的形式？', '都相同', '各不相同', '只有第一個加 s', 'and 連接的東西形式要一致，稱為平行結構。', 's.para', { 0: 's' }], ['and 放在哪裡？', '最後一項之前', '每一項之間', '最前面', 'A, B, and C 的寫法。', 's.para', {}]] },
    { chunks: ['The study', 'aimed', 'to measure the effect of sleep', 'and', 'to identify the patients', 'most at risk.'], core: 'The study aimed to measure… and to identify…', zh: '這項研究的目的是測量睡眠的影響，並找出風險最高的病人。',
-     steps: [['主要動詞是？', 'aimed', 'measure', 'identify', 'to + 原形動詞是不定詞，不是主要動詞。', 's.core', { 1: 'v', 0: 's' }], ['and 連接的是哪兩個部分？', 'to measure… 和 to identify…', 'sleep 和 patients', 'study 和 effect', '找 and 前後形式相同的東西。', 's.para', { 2: 'm', 4: 'm' }], ['most at risk 修飾誰？', 'the patients', 'the study', 'sleep', '形容詞片語放在名詞後面。', 's.part', { 5: 'm' }]] }],
+     steps: [['主要動詞是？', 'aimed', 'measure', 'identify', 'to + 原形動詞是不定詞，不是主要動詞。', 's.core', { 1: 'v', 0: 's' }], ['and 連接的是哪兩個部分？', 'to measure… 和 to identify…', 'the study 和 the effect of sleep', 'sleep 和 the patients at risk', '找 and 前後形式相同的東西。', 's.para', { 2: 'm', 4: 'm' }], ['most at risk 修飾誰？', 'the patients', 'the whole study', 'the poor sleep', '形容詞片語放在名詞後面。', 's.part', { 5: 'm' }]] }],
 ];
 
 /* ---------- 後中英文：第 1 週（文法重點與短文） ----------
@@ -470,18 +481,18 @@ WEEKS[0].gram = [
     qs: [{ id: 'g1-1', sk: 's.core', q: 'The number of elderly patients in Taiwan ____ every year.', o: ['increases', 'increase', 'increasing', 'to increase'], why: '主詞是 The number（單數），in Taiwan、of elderly patients 都是修飾。',
       st: [['這句缺的是什麼？', '主要動詞', '主詞', '受詞', '句子已經有主詞，後面沒有任何動詞。', 's.core'], ['主詞是哪個字？', 'The number（單數）', 'patients（複數）', 'Taiwan', 'of elderly patients 修飾 number；看第一個名詞。', 's.core'], ['單數主詞＋現在式，動詞要？', '加 s：increases', '原形 increase', 'V-ing', '第三人稱單數現在式加 s。', 'g.tense']] },
       { id: 'g1-2', sk: 's.core', q: 'Which word is the main verb? “Doctors in rural areas often treat patients with very limited equipment.”', o: ['treat', 'areas', 'limited', 'equipment'], why: '醫生「治療」病人；limited 是形容詞，修飾 equipment。',
-      st: [['動詞表示什麼？', '主詞做的動作', '東西的名稱', '描述東西的性質', '找「做什麼」。', 's.core'], ['in rural areas 是？', '修飾 Doctors 的介系詞片語', '動詞', '主詞', '介系詞＋名詞是修飾，先跳過。', 's.core'], ['limited 在這裡是？', '形容詞（有限的）', '主要動詞', '主詞', 'limited 放在名詞 equipment 前面，描述它。', 's.core']] },
+      st: [['動詞表示什麼？', '主詞做的動作', '東西的名稱', '描述東西的性質', '找「做什麼」。', 's.core'], ['in rural areas 是？', '修飾 Doctors 的片語', '修飾 equipment 的片語', '當作句子主詞的片語', '介系詞＋名詞是修飾，先跳過。', 's.core'], ['limited 在這裡是？', '形容詞', '主要動詞', '主詞', 'limited 放在名詞 equipment 前面，描述它。', 's.core']] },
       { id: 'g1-3', sk: 's.core', q: '“The results of the latest study on sleep and memory ____ surprising.”', o: ['were', 'was', 'being', 'to be'], why: '主詞是 The results（複數）。',
       st: [['主詞是？', 'The results', 'the latest study', 'memory', '看最前面的名詞；of… 和 on… 都是修飾。', 's.core'], ['它是單數還是複數？', '複數', '單數', '看不出來', 'results 有 s。', 's.core'], ['複數主詞的過去式 be 動詞？', 'were', 'was', 'is', 'was 用在單數。', 'g.tense']] }] },
   { id: 's.rel', title: '關係子句：who、which、that 補充說明前面的名詞', body: `<p>想說明「是哪一個人或東西」時，英文把說明放在名詞<b>後面</b>，用 who（人）、which（物）、that（人或物）接起來。關係子句裡有自己的動詞，但那不是整句的主要動詞。</p>
 <p class="ex"><span class="ch s">People</span> <span class="ch m">who sleep less than six hours</span> <span class="ch v">are</span> more vulnerable to infection.</p>
 <p>逗號加 which（, which…）是附帶補充，拿掉不影響句子的意思。</p>`,
     qs: [{ id: 'g2-1', sk: 's.rel', q: 'Patients ____ take the drug for more than a year may lose bone density.', o: ['who', 'which', 'whose', 'what'], why: '先行詞是 Patients（人），後面缺主詞，用 who。',
-      st: [['空格前的名詞是人還是物？', '人：Patients', '物', '時間', '先行詞決定用哪一個關係代名詞。', 's.rel'], ['空格後面缺什麼？', '主詞（take 的主詞）', '受詞', '什麼都不缺', '___ take the drug：誰吃藥？', 's.rel'], ['人＋缺主詞，用？', 'who', 'which', 'whose', 'which 指物；whose 後面要接名詞。', 's.rel']] },
+      st: [['空格前的名詞是人還是物？', '人：Patients', '物：the drug', '時間：a year', '先行詞決定用哪一個關係代名詞。', 's.rel'], ['空格後面缺什麼？', 'take 的主詞', 'take 的受詞', '什麼都不缺', '___ take the drug：誰吃藥？', 's.rel'], ['人＋缺主詞，用？', 'who', 'which', 'whose', 'which 指物；whose 後面要接名詞。', 's.rel']] },
       { id: 'g2-2', sk: 's.rel', q: 'Insulin is a hormone ____ helps cells take up sugar.', o: ['that', 'who', 'where', 'what'], why: '先行詞 hormone 是物，that／which 都可以。',
-      st: [['先行詞是？', 'a hormone（物）', 'Insulin', 'cells', '空格緊接在 hormone 後面。', 's.rel'], ['指物可以用哪些關係代名詞？', 'which 或 that', 'who', 'where', 'where 用在地點。', 's.rel'], ['what 為什麼不行？', 'what 本身已包含先行詞（＝the thing that），前面不能再有名詞', 'what 指人', '可以用', 'what 用在名詞子句。', 's.noun']] },
+      st: [['先行詞是？', 'a hormone', 'Insulin', 'cells', '空格緊接在 hormone 後面。', 's.rel'], ['指物可以用哪些關係代名詞？', 'which 或 that', 'who 或 that', 'where 或 what', 'where 用在地點。', 's.rel'], ['what 為什麼不行？', 'what 已含先行詞', 'what 只能指人', 'what 不能當主詞', 'what 用在名詞子句。', 's.noun']] },
       { id: 'g2-3', sk: 's.rel', q: '“The study, which was conducted in five hospitals, found no serious side effects.” 主要動詞是？', o: ['found', 'was conducted', 'hospitals', 'side effects'], why: 'which 子句是補充說明，主幹是 The study found…。',
-      st: [['兩個逗號之間是什麼？', '補充說明 The study 的 which 子句', '主要子句', '主詞', '逗號加 which 可以整段拿掉。', 's.rel'], ['拿掉後句子變成？', 'The study found no serious side effects.', 'Which was conducted…', 'The study was conducted.', '剩下主詞＋動詞＋受詞。', 's.core'], ['所以主要動詞是？', 'found', 'was conducted', 'conducted', 'was conducted 在 which 子句裡。', 's.core']] }] },
+      st: [['兩個逗號之間是什麼？', '補充 The study 的子句', '整句話的主要子句', '修飾 hospitals 的子句', '逗號加 which 可以整段拿掉。', 's.rel'], ['拿掉後句子變成？', 'The study found no serious side effects.', 'Which was conducted in five hospitals.', 'The study was conducted in five hospitals.', '剩下主詞＋動詞＋受詞。', 's.core'], ['所以主要動詞是？', 'found', 'was conducted', 'conducted', 'was conducted 在 which 子句裡。', 's.core']] }] },
   { id: 's.part', title: '分詞修飾：名詞後面的 V-ing 與 V-ed', body: `<p>名詞後面直接接 V-ing 或 V-ed 片語，是把「關係代名詞＋be 動詞」省略掉的關係子句：</p>
 <p class="ex"><span class="ch s">Participants</span> <span class="ch m">taking the new drug</span> <span class="ch v">reported</span> fewer symptoms.　（＝ who were taking）</p>
 <p class="ex"><span class="ch s">The samples</span> <span class="ch m">collected from 200 patients</span> <span class="ch v">were tested</span>.　（＝ that were collected）</p>
@@ -489,45 +500,45 @@ WEEKS[0].gram = [
     qs: [{ id: 'g3-1', sk: 's.part', q: 'The data ____ from the survey showed a clear pattern.', o: ['collected', 'collecting', 'collect', 'to collect'], why: '資料是「被收集」的，用過去分詞 collected。',
       st: [['句子的主要動詞是？', 'showed', '空格', 'survey', 'showed 已經是主要動詞，空格只能是修飾。', 's.core'], ['資料和「收集」的關係是？', '被收集（被動）', '自己去收集（主動）', '沒有關係', '資料不會自己收集東西。', 's.part'], ['被動用？', '過去分詞 V-ed', '現在分詞 V-ing', '原形', 'V-ed 表被動。', 's.part']] },
       { id: 'g3-2', sk: 's.part', q: 'Children ____ in polluted cities are more likely to develop asthma.', o: ['living', 'lived', 'live', 'are living'], why: '孩子自己住在城市，主動，用 living。',
-      st: [['主要動詞是？', 'are', '空格', 'develop', '空格後面已經有 are。', 's.core'], ['孩子和「住」的關係？', '主動：孩子自己住', '被動：被住', '沒有關係', '住是孩子自己做的事。', 's.part'], ['主動用？', 'V-ing：living', 'V-ed：lived', '原形 live', 'V-ing 表主動。', 's.part']] },
-      { id: 'g3-3', sk: 's.part', q: '“Drugs approved by the agency must be tested again every five years.” approved 的作用是？', o: ['修飾 Drugs：被核准的藥', '主要動詞', '形容 agency', '表示過去發生的動作'], why: '主要動詞是 must be tested；approved by the agency ＝ that are approved by the agency。',
-      st: [['主要動詞是？', 'must be tested', 'approved', 'agency', '助動詞 must 帶出主要動詞。', 's.core'], ['approved 前面有 be 動詞或 have 嗎？', '沒有，而且緊跟在名詞後面', '有', '前面是 must', '沒有 be／have 的 V-ed 跟在名詞後面，是分詞修飾。', 's.part'], ['它表示主動還是被動？', '被動：藥被核准', '主動', '進行中', 'V-ed 表被動。', 's.part']] }] },
+      st: [['主要動詞是？', 'are', '空格', 'develop', '空格後面已經有 are。', 's.core'], ['孩子和「住」的關係？', '主動：孩子自己住', '被動：孩子被住', '沒有主被動關係', '住是孩子自己做的事。', 's.part'], ['主動用？', 'V-ing：living', 'V-ed：lived', '原形 live', 'V-ing 表主動。', 's.part']] },
+      { id: 'g3-3', sk: 's.part', q: '“Drugs approved by the agency must be tested again every five years.” approved 的作用是？', o: ['修飾 Drugs', '主要動詞', '修飾 agency', '過去式動詞'], why: '主要動詞是 must be tested；approved by the agency ＝ that are approved by the agency。',
+      st: [['主要動詞是？', 'must be tested', 'were approved', 'by the agency', '助動詞 must 帶出主要動詞。', 's.core'], ['approved 前面有 be 動詞或 have 嗎？', '沒有，緊跟在名詞後', '有，前面是 are', '有，前面是 must', '沒有 be／have 的 V-ed 跟在名詞後面，是分詞修飾。', 's.part'], ['它表示主動還是被動？', '被動', '主動', '進行中', 'V-ed 表被動。', 's.part']] }] },
   { id: 'g.conj', title: '連接詞與轉折語：前後是什麼關係？', body: `<p>克漏字最常考空格前後的<b>邏輯關係</b>。先判斷前後兩句是同方向、相反方向，還是因果，再選字：</p>
 <ul><li><b>補充（同方向）</b>：and、moreover、in addition、furthermore</li><li><b>轉折（相反）</b>：but、however、although、whereas、nevertheless</li><li><b>因果</b>：because、since（原因）；therefore、consequently、thus（結果）</li></ul>
 <p>注意形式：although、because 後面接子句；however、therefore 是副詞，前面要用句號或分號。</p>`,
-    qs: [{ id: 'g4-1', sk: 'g.conj', q: 'The treatment is expensive. ____, many patients choose it because it works quickly.', o: ['Nevertheless', 'Therefore', 'Moreover', 'Because'], why: '「貴」和「很多人仍選」方向相反，用表示轉折的 Nevertheless。',
-      st: [['前一句說了什麼？', '治療很貴（缺點）', '治療很便宜', '治療很快', '先讀懂前句。', 'c.logic'], ['後一句說了什麼？', '很多人還是選它', '很多人不選', '它很危險', '貴卻仍然選：方向相反。', 'c.logic'], ['相反方向又放在句首、後面接逗號，用？', 'Nevertheless', 'Therefore', 'Because', 'Because 後面要接子句；Therefore 是結果。', 'g.conj']] },
+    qs: [{ id: 'g4-1', sk: 'g.conj', q: 'The treatment is expensive. ____, many patients choose it because it works quickly.', o: ['Nevertheless', 'Consequently', 'Furthermore', 'Because of this'], why: '「貴」和「很多人仍選」方向相反，用表示轉折的 Nevertheless。',
+      st: [['前一句說了什麼？', '治療很貴', '治療很便宜', '治療很快', '先讀懂前句。', 'c.logic'], ['後一句說了什麼？', '很多人還是選它', '很多人不選', '它很危險', '貴卻仍然選：方向相反。', 'c.logic'], ['相反方向又放在句首、後面接逗號，用？', 'Nevertheless', 'Consequently', 'Because', 'Because 後面要接子句；Therefore 是結果。', 'g.conj']] },
       { id: 'g4-2', sk: 'g.conj', q: 'Type 1 diabetes usually begins in childhood, ____ type 2 diabetes is more common in adults.', o: ['whereas', 'because', 'so', 'unless'], why: '兩種糖尿病的發病年齡做對比，用 whereas。',
-      st: [['前後在比較什麼？', '兩種糖尿病的發病年齡', '原因與結果', '時間先後', 'type 1 vs type 2。', 'c.logic'], ['關係是？', '對比', '因果', '條件', '一個在兒童、一個在成人。', 'c.logic'], ['表示對比、連接兩個子句的是？', 'whereas', 'because', 'unless', 'unless＝除非。', 'g.conj']] },
-      { id: 'g4-3', sk: 'g.conj', q: 'He stopped smoking; ____, his cough disappeared within a month.', o: ['consequently', 'however', 'although', 'whereas'], why: '戒菸是原因，咳嗽消失是結果。',
-      st: [['分號前後的關係？', '原因 → 結果', '相反', '並列對比', '戒菸之後咳嗽消失。', 'c.logic'], ['表示結果的副詞？', 'consequently、therefore', 'however', 'whereas', 'however 是轉折。', 'g.conj'], ['為什麼 although 不行？', 'although 是連接詞，不能放在分號後當副詞', '意思不對但形式可以', '可以', '形式也要對。', 'c.form']] }] },
+      st: [['前後在比較什麼？', '兩種糖尿病的發病年齡', '兩種糖尿病的病因', '兩種糖尿病的治療', 'type 1 vs type 2。', 'c.logic'], ['關係是？', '對比', '因果', '條件', '一個在兒童、一個在成人。', 'c.logic'], ['表示對比、連接兩個子句的是？', 'whereas', 'because', 'unless', 'unless＝除非。', 'g.conj']] },
+      { id: 'g4-3', sk: 'g.conj', q: 'He stopped smoking; ____, his cough disappeared within a month.', o: ['consequently', 'nevertheless', 'although', 'whereas'], why: '戒菸是原因，咳嗽消失是結果。',
+      st: [['分號前後的關係？', '原因 → 結果', '相反', '並列對比', '戒菸之後咳嗽消失。', 'c.logic'], ['表示結果的副詞？', 'consequently', 'nevertheless', 'whereas', 'however 是轉折。', 'g.conj'], ['為什麼 although 不行？', 'although 不能放在分號後', 'although 意思不對', 'although 也可以用', '形式也要對。', 'c.form']] }] },
   { id: 's.pass', title: '被動語態：主詞是「被」做的那一方', body: `<p>科學文章常用被動，因為重點是「做了什麼」，而不是誰做的。形式是 <b>be 動詞＋過去分詞</b>，做動作的人用 by 帶出（常常省略）：</p>
 <p class="ex"><span class="ch s">The vaccine</span> <span class="ch v">was developed</span> <span class="ch m">by a team of scientists</span>.</p>
 <p>判斷要不要用被動：問「主詞能不能自己做這個動作」。樣本不會自己檢驗、病人不會自己被診斷，就用被動。</p>`,
     qs: [{ id: 'g5-1', sk: 's.pass', q: 'The results ____ in a medical journal last month.', o: ['were published', 'published', 'have publish', 'publishing'], why: '結果「被發表」，而且是上個月：過去式被動 were published。',
-      st: [['結果能自己發表嗎？', '不能，是被發表', '能', '看情況', '主詞是承受動作的一方。', 's.pass'], ['被動的形式？', 'be 動詞＋過去分詞', '只有過去分詞', 'have＋原形', 'were published。', 's.pass'], ['時間 last month 用什麼時態？', '過去式：were', '現在式：are', '未來式', '時間副詞決定時態。', 'g.tense']] },
+      st: [['結果能自己發表嗎？', '不能，是被發表', '能，自己發表', '要看是哪種結果', '主詞是承受動作的一方。', 's.pass'], ['被動的形式？', 'be 動詞＋過去分詞', '只有過去分詞', 'have＋原形', 'were published。', 's.pass'], ['時間 last month 用什麼時態？', '過去式：were', '現在式：are', '未來式', '時間副詞決定時態。', 'g.tense']] },
       { id: 'g5-2', sk: 's.pass', q: 'More than 500 nurses ____ in the survey.', o: ['were included', 'included', 'were including', 'include'], why: '護理師是「被納入」調查的。',
-      st: [['誰把護理師放進調查？', '研究人員（沒寫出來）', '護理師自己', '調查', '動作的發出者不是主詞。', 's.pass'], ['所以主詞和動作的關係？', '被動', '主動', '進行', '護理師被納入。', 's.pass'], ['形式？', 'were included', 'included', 'were including', 'were including 是主動進行式。', 's.pass']] },
-      { id: 'g5-3', sk: 's.pass', q: '“The disease is characterized by high fever and a rash.” 這句的意思是？', o: ['這個疾病的特徵是高燒和疹子', '高燒造成這個疾病', '這個疾病造成高燒', '高燒和疹子很少見'], why: 'be characterized by ＝ 以…為特徵。',
-      st: [['主要動詞是？', 'is characterized', 'fever', 'rash', 'be＋過去分詞。', 's.pass'], ['by 後面是什麼？', '這個特徵的內容', '研究人員', '原因', 'characterized by：以…為特徵。', 'v.collo'], ['所以句意？', '疾病的特徵是高燒和疹子', '高燒造成疾病', '疾病很少見', '常見搭配要記：be characterized by。', 'v.collo']] }] },
+      st: [['誰把護理師放進調查？', '研究人員', '護理師自己', '調查本身', '動作的發出者不是主詞。', 's.pass'], ['所以主詞和動作的關係？', '被動', '主動', '進行', '護理師被納入。', 's.pass'], ['形式？', 'were included', 'included', 'were including', 'were including 是主動進行式。', 's.pass']] },
+      { id: 'g5-3', sk: 's.pass', q: '“The disease is characterized by high fever and a rash.” 這句的意思是？', o: ['這個疾病的特徵是高燒和疹子', '高燒和疹子造成這個疾病', '這個疾病會造成高燒和疹子', '高燒和疹子在這個疾病很少見'], why: 'be characterized by ＝ 以…為特徵。',
+      st: [['主要動詞是？', 'is characterized', 'characterized', 'by high fever', 'be＋過去分詞。', 's.pass'], ['by 後面是什麼？', '特徵的內容', '研究人員', '疾病的原因', 'characterized by：以…為特徵。', 'v.collo'], ['所以句意？', '疾病的特徵是高燒和疹子', '高燒和疹子造成疾病', '疾病很少有高燒和疹子', '常見搭配要記：be characterized by。', 'v.collo']] }] },
   { id: 's.noun', title: '名詞子句：整段話當主詞或受詞', body: `<p>what、that、whether、how 可以把一整個句子變成一個名詞，放在主詞或受詞的位置：</p>
 <p class="ex"><span class="ch s">What surprised the doctors</span> <span class="ch v">was</span> <span class="ch m">how quickly the patient recovered</span>.</p>
 <ul><li><b>what</b>：…的事物（本身就是名詞，前面不能再有名詞）</li><li><b>that</b>：…這件事（The study shows that…）</li><li><b>whether／if</b>：是否</li></ul>
 <p>看到句首是 What 或 Whether，先找到它結束的位置，後面才是主要動詞。</p>`,
     qs: [{ id: 'g6-1', sk: 's.noun', q: 'The study shows ____ regular exercise improves memory.', o: ['that', 'what', 'which', 'who'], why: 'shows 的受詞是一個完整句子，用 that 帶出。',
-      st: [['空格後面是不是完整的句子？', '是：regular exercise improves memory', '不是，缺主詞', '不是，缺受詞', '主詞＋動詞＋受詞都有。', 's.noun'], ['完整句子當受詞，用？', 'that', 'what', 'which', 'what 後面的句子會缺東西。', 's.noun'], ['整句意思？', '研究顯示規律運動能改善記憶', '研究顯示什麼運動', '研究顯示哪一種記憶', 'that 本身沒有意思，只是把句子變成名詞。', 's.noun']] },
+      st: [['空格後面是不是完整的句子？', '是，句子完整', '不是，缺少主詞', '不是，缺少受詞', '主詞＋動詞＋受詞都有。', 's.noun'], ['完整句子當受詞，用？', 'that', 'what', 'which', 'what 後面的句子會缺東西。', 's.noun'], ['整句意思？', '研究顯示規律運動能改善記憶', '研究顯示哪一種運動能改善記憶', '研究顯示記憶能改善運動習慣', 'that 本身沒有意思，只是把句子變成名詞。', 's.noun']] },
       { id: 'g6-2', sk: 's.noun', q: '____ the drug works in children is still unknown.', o: ['Whether', 'That', 'What', 'Which'], why: '「這個藥對兒童是否有效」還不知道：用 Whether。',
-      st: [['主要動詞是？', 'is', 'works', 'unknown', 'works 在空格開頭的子句裡。', 's.core'], ['主詞是什麼？', '空格開頭到 children 的整段', 'the drug', 'children', '整段子句當主詞。', 's.noun'], ['「還不知道」的是？', '藥「是否」有效', '藥「什麼」有效', '「那個」藥', 'unknown 搭配 whether（是否）。', 's.noun']] },
+      st: [['主要動詞是？', 'is', 'works', 'unknown', 'works 在空格開頭的子句裡。', 's.core'], ['主詞是什麼？', '空格開頭到 children 的整段', '空格後面的 the drug 這個名詞', '句子最後的 children 這個字', '整段子句當主詞。', 's.noun'], ['「還不知道」的是？', '藥「是否」有效', '藥「什麼」有效', '「那個」藥', 'unknown 搭配 whether（是否）。', 's.noun']] },
       { id: 'g6-3', sk: 's.noun', q: '____ patients need most is clear information.', o: ['What', 'That', 'Whether', 'Which'], why: 'What patients need most＝病人最需要的東西，what 子句裡 need 缺受詞。',
-      st: [['空格後的 patients need most 缺什麼？', 'need 的受詞', '主詞', '什麼都不缺', '需要「什麼」？', 's.noun'], ['子句缺受詞，用？', 'What（本身就是那個受詞）', 'That', 'Whether', 'that、whether 後面要接完整句子。', 's.noun'], ['整句意思？', '病人最需要的是清楚的資訊', '病人是否需要資訊', '那些病人需要資訊', 'What… ＝ …的東西。', 's.noun']] }] },
+      st: [['空格後的 patients need most 缺什麼？', 'need 的受詞', '主詞', '什麼都不缺', '需要「什麼」？', 's.noun'], ['子句缺受詞，用？', 'What', 'That', 'Whether', 'that、whether 後面要接完整句子。', 's.noun'], ['整句意思？', '病人最需要的是清楚的資訊', '病人是否需要清楚的資訊', '那些病人需要清楚的資訊', 'What… ＝ …的東西。', 's.noun']] }] },
   { id: 's.para', title: '平行結構：and、or 連接的東西形式要一樣', body: `<p>用 and、or、but、not only… but also… 連接兩個以上的東西時，它們的<b>詞性與形式要一致</b>：名詞配名詞、動詞配同樣時態的動詞、to V 配 to V。克漏字看到 and 後面的空格，先往前找和它對應的那一個。</p>
 <p class="ex">Regular exercise <span class="ch v">lowers</span> blood pressure, <span class="ch v">improves</span> sleep, and <span class="ch v">reduces</span> stress.</p>`,
     qs: [{ id: 'g7-1', sk: 's.para', q: 'The program aims to reduce smoking and ____ physical activity.', o: ['to increase', 'increasing', 'increased', 'increases'], why: 'to reduce… and to increase…：平行的不定詞。',
-      st: [['and 前面是什麼形式？', 'to reduce（to＋原形）', 'reducing', 'reduced', '往前找和空格對應的部分。', 's.para'], ['and 後面要用？', '同樣的形式：to increase', 'increasing', 'increased', '平行結構。', 's.para'], ['（to 也可以省略，寫成 and increase）這兩者都對嗎？', '對，但選項中只有 to increase', '只有 increasing 對', '都不對', '選項中形式一致的只有 to increase。', 'c.form']] },
+      st: [['and 前面是什麼形式？', 'to reduce', 'reducing', 'reduced', '往前找和空格對應的部分。', 's.para'], ['and 後面要用？', 'to increase', 'increasing', 'increased', '平行結構。', 's.para'], ['（to 也可以省略，寫成 and increase）這兩者都對嗎？', '都對，選項中只有 to increase', '都錯，要改成 increasing', '只有省略 to 的寫法才對', '選項中形式一致的只有 to increase。', 'c.form']] },
       { id: 'g7-2', sk: 's.para', q: 'Patients were asked to rest, drink water, and ____ alcohol.', o: ['avoid', 'avoiding', 'to avoiding', 'avoided'], why: 'to rest, (to) drink, and (to) avoid：三個原形動詞平行。',
-      st: [['前兩項的形式？', 'rest、drink（原形）', 'V-ing', '過去式', 'to 後面接原形。', 's.para'], ['第三項要？', '原形：avoid', 'avoiding', 'avoided', '三項形式一致。', 's.para'], ['and 放在哪？', '最後一項之前', '每一項之間', '第一項之前', 'A, B, and C。', 's.para']] },
+      st: [['前兩項的形式？', '原形', 'V-ing', '過去式', 'to 後面接原形。', 's.para'], ['第三項要？', '原形：avoid', 'avoiding', 'avoided', '三項形式一致。', 's.para'], ['and 放在哪？', '最後一項之前', '每一項之間', '第一項之前', 'A, B, and C。', 's.para']] },
       { id: 'g7-3', sk: 's.para', q: 'The new test is not only cheaper but also ____.', o: ['more accurate', 'accuracy', 'accurately', 'to be accurate'], why: 'not only cheaper but also more accurate：兩個比較級形容詞平行。',
-      st: [['not only 後面是什麼詞性？', '形容詞比較級 cheaper', '名詞', '副詞', 'not only A but also B，A 與 B 形式相同。', 's.para'], ['but also 後面要？', '形容詞比較級：more accurate', '名詞 accuracy', '副詞 accurately', '平行結構。', 's.para'], ['accurate 為什麼用 more？', '三個音節以上的形容詞用 more 表比較級', '因為後面有 than', '隨便', 'cheap → cheaper；accurate → more accurate。', 'c.form']] }] },
+      st: [['not only 後面是什麼詞性？', '形容詞比較級', '名詞的複數', '副詞的比較級', 'not only A but also B，A 與 B 形式相同。', 's.para'], ['but also 後面要？', 'more accurate', 'accuracy', 'accurately', '平行結構。', 's.para'], ['accurate 為什麼用 more？', '多音節形容詞用 more', '後面要接 than 才用 more', '只是習慣，沒有規則', 'cheap → cheaper；accurate → more accurate。', 'c.form']] }] },
 ];
 
 WEEKS[0].passages = [
@@ -538,31 +549,31 @@ WEEKS[0].passages = [
     'For this reason, doctors now recommend treatment that combines medicine, exercise, and psychological {5}. A single drug is rarely enough.'],
     zh: '慢性疼痛是持續三個月以上的疼痛，影響全世界約五分之一的成人。和割傷的疼痛不同（傷口好了就不痛），慢性疼痛常常在原本的傷已經癒合後仍持續。原因之一是神經系統本身改變了：長期暴露在疼痛中的神經變得更敏感，連輕輕碰一下都可能覺得痛。此外，慢性疼痛和睡眠、情緒密切相關：睡不好的病人覺得更痛，而更痛又更難入睡。因此，醫師現在建議結合藥物、運動和心理治療的療法；單一藥物很少足夠。',
     qs: [{ id: 'p1-1', sk: 'c.form', q: '第 (1) 格', o: ['affects', 'affect', 'affecting', 'effect'], why: '主詞 It（單數），現在式動詞加 s。',
-      st: [['這一句缺什麼？', '主要動詞', '主詞', '受詞', 'It ___ about one in five adults。', 's.core'], ['主詞 It 單數還是複數？', '單數', '複數', '看不出來', 'It 指 chronic pain。', 'c.form'], ['effect 為什麼不行？', 'effect 是名詞（效果），動詞是 affect', '意思不對', '可以', 'affect（v.）影響；effect（n.）效果。', 'v.mean']] },
+      st: [['這一句缺什麼？', '主要動詞', '主詞', '受詞', 'It ___ about one in five adults。', 's.core'], ['主詞 It 單數還是複數？', '單數', '複數', '看不出來', 'It 指 chronic pain。', 'c.form'], ['effect 為什麼不行？', 'effect 是名詞', 'effect 是形容詞', 'effect 是過去式', 'affect（v.）影響；effect（n.）效果。', 'v.mean']] },
       { id: 'p1-2', sk: 'c.logic', q: '第 (2) 格', o: ['after', 'before', 'because', 'unless'], why: '傷「已經癒合之後」疼痛仍持續。',
-      st: [['前面說了什麼對比？', '割傷的痛在傷口好了就消失', '割傷不會痛', '慢性疼痛會消失', 'Unlike pain from a cut…', 'c.logic'], ['所以慢性疼痛是？', '傷好了以後還在痛', '傷好之前就停', '因為傷好了才痛', '和割傷相反。', 'c.logic'], ['「…之後」用？', 'after', 'before', 'unless', 'has healed 是已經完成的事。', 'g.conj']] },
+      st: [['前面說了什麼對比？', '割傷好了就不痛', '割傷不會痛', '慢性疼痛會消失', 'Unlike pain from a cut…', 'c.logic'], ['所以慢性疼痛是？', '傷好了以後還在痛', '傷好之前就停', '因為傷好了才痛', '和割傷相反。', 'c.logic'], ['「…之後」用？', 'after', 'before', 'unless', 'has healed 是已經完成的事。', 'g.conj']] },
       { id: 'p1-3', sk: 'c.form', q: '第 (3) 格', o: ['can', 'is', 'to', 'being'], why: 'even a light touch can feel painful：can＋原形動詞 feel。',
-      st: [['空格後面是什麼？', '原形動詞 feel', '名詞', '形容詞', '原形動詞前面需要助動詞。', 'c.form'], ['哪一個可以接原形動詞？', '助動詞 can', 'is', 'being', 'is feel 不合文法。', 'c.form'], ['句意？', '連輕碰都可能覺得痛', '輕碰是痛', '輕碰不痛', 'can 表可能。', 'r.para']] },
+      st: [['空格後面是什麼？', '原形動詞', '名詞', '形容詞', '原形動詞前面需要助動詞。', 'c.form'], ['哪一個可以接原形動詞？', '助動詞 can', 'is', 'being', 'is feel 不合文法。', 'c.form'], ['句意？', '連輕碰都可能覺得痛', '輕碰本身就是疼痛', '輕碰不會覺得痛', 'can 表可能。', 'r.para']] },
       { id: 'p1-4', sk: 'c.logic', q: '第 (4) 格', o: ['In addition', 'However', 'Therefore', 'For example'], why: '前面說神經改變，後面再補充另一個原因（睡眠與情緒）。',
-      st: [['前一段在說什麼？', '慢性疼痛難治的原因一：神經變敏感', '治療方法', '病人的年齡', 'One reason is…', 'c.logic'], ['空格後在說什麼？', '另一個原因：和睡眠情緒有關', '相反的說法', '前面的結果', '又是一個原因。', 'c.logic'], ['補充另一點用？', 'In addition', 'However', 'Therefore', 'However 是轉折。', 'g.conj']] },
+      st: [['前一段在說什麼？', '慢性疼痛難治的一個原因', '慢性疼痛的治療方法', '病人年齡和疼痛的關係', 'One reason is…', 'c.logic'], ['空格後在說什麼？', '另一個原因', '相反的說法', '前面的結果', '又是一個原因。', 'c.logic'], ['補充另一點用？', 'In addition', 'However', 'Therefore', 'However 是轉折。', 'g.conj']] },
       { id: 'p1-5', sk: 'v.collo', q: '第 (5) 格', o: ['therapy', 'symptom', 'infection', 'diagnosis'], why: 'psychological therapy（心理治療）和 medicine、exercise 並列，都是治療方式。',
-      st: [['and 前面列了什麼？', 'medicine、exercise（治療方式）', '症狀', '疾病', '平行結構：三者是同一類。', 's.para'], ['所以空格要是？', '另一種治療方式', '一種症狀', '一種疾病', 'combines medicine, exercise, and psychological ___。', 'c.logic'], ['哪一個字是「治療」？', 'therapy', 'symptom', 'diagnosis', 'symptom 症狀、diagnosis 診斷。', 'v.mean']] }] },
+      st: [['and 前面列了什麼？', '兩種治療方式', '兩種症狀', '兩種疾病', '平行結構：三者是同一類。', 's.para'], ['所以空格要是？', '另一種治療方式', '另一種症狀', '另一種疾病', 'combines medicine, exercise, and psychological ___。', 'c.logic'], ['哪一個字是「治療」？', 'therapy', 'symptom', 'diagnosis', 'symptom 症狀、diagnosis 診斷。', 'v.mean']] }] },
   // 第 2 天：閱讀
   { type: 'read', title: 'Sleep and memory in older adults', text: [
     'Many older adults sleep less deeply than they did when they were young. For years, this was seen as a normal part of aging. However, a growing number of studies suggest that poor sleep may also contribute to memory decline.',
     'In one study, 120 participants aged 65 to 80 wore a small device that measured their sleep for two weeks. They then took memory tests. Participants who spent more time in deep sleep remembered more words, even after the researchers controlled for age and education.',
     'The researchers believe that deep sleep helps the brain move new information into long-term memory. If this is true, treating sleep problems in older adults could protect cognitive function. The authors note, however, that the study cannot prove that poor sleep causes memory loss; people with early brain changes may simply sleep worse.'],
     zh: '很多長者睡得比年輕時淺。多年來，這被視為老化的正常現象。然而越來越多研究顯示，睡不好也可能造成記憶衰退。在一項研究中，120 位 65 到 80 歲的受試者戴著測量睡眠的小型裝置兩週，接著做記憶測驗。深層睡眠時間較長的受試者記得較多單字，即使研究人員已經把年齡和教育程度的影響排除。研究人員認為，深層睡眠幫助大腦把新資訊轉成長期記憶；如果這是真的，治療長者的睡眠問題可能可以保護認知功能。不過作者也指出，這項研究無法證明睡不好「造成」記憶衰退：有早期腦部變化的人可能本來就睡得比較差。',
-    qs: [{ id: 'p2-1', sk: 'r.main', pre: '主旨：整篇在講什麼關係', q: 'What is the passage mainly about?', o: ['A possible link between deep sleep and memory in older adults', 'How to measure sleep with a device', 'Why young people sleep more deeply', 'A new drug for memory loss'], why: '第 1 段提出問題（睡眠與記憶），第 2 段是研究，第 3 段是解釋與限制。',
-      st: [['第 1 段最後一句提出什麼？', '睡不好可能造成記憶衰退', '年輕人睡得好', '裝置很準', 'However, a growing number of studies suggest…', 'r.locate'], ['第 2、3 段在做什麼？', '用研究支持並討論這個關係', '介紹新藥', '比較年輕人', '整篇圍繞同一件事。', 'r.main'], ['哪個選項涵蓋全文？', '深層睡眠與長者記憶的可能關聯', '如何用裝置量睡眠', '新藥', '裝置只是細節。', 'r.para']] },
-      { id: 'p2-2', sk: 'r.locate', pre: '細節：受試者做了什麼', q: 'What did the participants do in the study?', o: ['They wore a sleep device for two weeks and then took memory tests.', 'They took a sleeping pill every night.', 'They slept in a hospital for two weeks.', 'They were all younger than 65.'], why: '第 2 段：wore a small device… for two weeks. They then took memory tests.',
-      st: [['答案在哪一段？', '第 2 段', '第 1 段', '第 3 段', '描述研究怎麼做的那一段。', 'r.locate'], ['受試者戴了什麼、多久？', '測量睡眠的裝置，兩週', '吃藥兩週', '住院', 'wore a small device that measured their sleep for two weeks', 'r.locate'], ['之後做了什麼？', '記憶測驗', '睡眠藥物', '問卷', 'They then took memory tests.', 'r.para']] },
-      { id: 'p2-3', sk: 'r.word', pre: '字義：controlled for 的意思', q: 'In paragraph 2, “controlled for age and education” most likely means the researchers ____.', o: ['made sure age and education did not explain the result', 'asked participants about their age', 'chose only highly educated people', 'changed the participants’ age'], why: 'control for 是研究用語：排除某因素的影響。',
-      st: [['前面的 even after 暗示什麼？', '即使排除其他可能的解釋，結果仍成立', '結果改變了', '研究失敗了', 'even after…：即使…之後仍然。', 'c.logic'], ['年齡和教育可能怎麼影響記憶？', '年紀大、教育少的人記憶測驗本來就可能較差', '沒有影響', '只影響睡眠', '所以要把它們的影響拿掉。', 'r.infer'], ['所以 controlled for 的意思？', '確保結果不是由年齡、教育造成的', '控制受試者的年齡', '只選高學歷', '研究方法的常見說法。', 'r.word']] },
-      { id: 'p2-4', sk: 'r.locate', pre: '細節：研究人員認為深層睡眠的作用', q: 'According to the researchers, deep sleep may ____.', o: ['help move new information into long-term memory', 'cause memory loss', 'make people sleep less', 'replace memory tests'], why: '第 3 段第一句。',
-      st: [['用題目關鍵字 deep sleep 找，在哪一段？', '第 3 段第一句', '第 1 段', '第 2 段最後一句', 'The researchers believe that deep sleep…', 'r.locate'], ['那一句說深層睡眠做什麼？', 'helps the brain move new information into long-term memory', 'causes memory loss', 'makes people tired', '找到原句。', 'r.locate'], ['哪個選項是同一句話？', 'help move new information into long-term memory', 'cause memory loss', 'replace tests', '換句話說的程度很低，直接對應。', 'r.para']] },
-      { id: 'p2-5', sk: 'r.attitude', pre: '作者態度：研究能不能證明因果', q: 'Which statement would the authors agree with?', o: ['The study shows a link but cannot prove that poor sleep causes memory loss.', 'The study proves that poor sleep causes memory loss.', 'Sleep has nothing to do with memory.', 'Older adults should stop taking memory tests.'], why: '第 3 段最後：cannot prove that poor sleep causes memory loss。',
-      st: [['作者的保留意見在哪？', '第 3 段最後的 however 之後', '第 1 段', '第 2 段', 'The authors note, however…', 'r.locate'], ['作者說研究不能證明什麼？', '睡不好「造成」記憶衰退', '兩者有關', '深層睡眠存在', 'cannot prove that poor sleep causes memory loss', 'r.attitude'], ['為什麼不能證明？', '可能是早期腦部變化讓人睡不好（方向相反）', '樣本太大', '沒有測驗', 'people with early brain changes may simply sleep worse', 'r.infer']] }] },
+    qs: [{ id: 'p2-1', sk: 'r.main', pre: '主旨：整篇在講什麼關係', q: 'What is the passage mainly about?', o: ['A possible link between deep sleep and memory', 'How to measure sleep with a small device', 'Why young people sleep more deeply than others', 'A new drug that improves memory in older adults'], why: '第 1 段提出問題（睡眠與記憶），第 2 段是研究，第 3 段是解釋與限制。',
+      st: [['第 1 段最後一句提出什麼？', '睡不好可能造成記憶衰退', '年輕人睡得比長者好', '睡眠裝置的測量很準', 'However, a growing number of studies suggest…', 'r.locate'], ['第 2、3 段在做什麼？', '用研究支持並討論這個關係', '介紹一種改善記憶的新藥', '比較年輕人和長者的睡眠', '整篇圍繞同一件事。', 'r.main'], ['哪個選項涵蓋全文？', '深層睡眠與記憶的關聯', '如何用裝置測量睡眠', '一種改善記憶的新藥', '裝置只是細節。', 'r.para']] },
+      { id: 'p2-2', sk: 'r.locate', pre: '細節：受試者做了什麼', q: 'What did the participants do in the study?', o: ['They wore a sleep device and then took memory tests.', 'They took a sleeping pill every night for two weeks.', 'They slept in a hospital for two weeks of tests.', 'They took memory tests before and after a nap.'], why: '第 2 段：wore a small device… for two weeks. They then took memory tests.',
+      st: [['答案在哪一段？', '第 2 段', '第 1 段', '第 3 段', '描述研究怎麼做的那一段。', 'r.locate'], ['受試者戴了什麼、多久？', '戴測量睡眠的裝置兩週', '每晚吃安眠藥兩週', '住院接受檢查兩週', 'wore a small device that measured their sleep for two weeks', 'r.locate'], ['之後做了什麼？', '記憶測驗', '睡眠藥物', '問卷', 'They then took memory tests.', 'r.para']] },
+      { id: 'p2-3', sk: 'r.word', pre: '字義：controlled for 的意思', q: 'In paragraph 2, “controlled for age and education” most likely means the researchers ____.', o: ['made sure age and education did not explain the result', 'asked participants to report their age and education', 'chose only participants with a high level of education', 'changed the participants’ age and education levels'], why: 'control for 是研究用語：排除某因素的影響。',
+      st: [['前面的 even after 暗示什麼？', '排除其他解釋後，結果仍成立', '排除其他解釋後，結果改變了', '因為其他因素，研究失敗了', 'even after…：即使…之後仍然。', 'c.logic'], ['年齡和教育可能怎麼影響記憶？', '年紀大、教育少本來就可能記得少', '年齡和教育跟記憶完全無關', '年齡和教育只會影響睡眠長短', '所以要把它們的影響拿掉。', 'r.infer'], ['所以 controlled for 的意思？', '確保結果不是年齡、教育造成的', '控制受試者的年齡和學歷', '只選年輕而且高學歷的人', '研究方法的常見說法。', 'r.word']] },
+      { id: 'p2-4', sk: 'r.locate', pre: '細節：研究人員認為深層睡眠的作用', q: 'According to the researchers, deep sleep may ____.', o: ['help move new information into long-term memory', 'cause memory loss in people over the age of sixty', 'make people sleep less deeply during the night', 'replace the need for regular memory tests'], why: '第 3 段第一句。',
+      st: [['用題目關鍵字 deep sleep 找，在哪一段？', '第 3 段第一句', '第 1 段', '第 2 段最後一句', 'The researchers believe that deep sleep…', 'r.locate'], ['那一句說深層睡眠做什麼？', 'helps the brain store new information', 'makes the brain lose old information', 'makes people tired during the day', '找到原句。', 'r.locate'], ['哪個選項是同一句話？', 'help move new information into long-term memory', 'cause memory loss in people over sixty-five', 'make people sleep less deeply at night', '換句話說的程度很低，直接對應。', 'r.para']] },
+      { id: 'p2-5', sk: 'r.attitude', pre: '作者態度：研究能不能證明因果', q: 'Which statement would the authors agree with?', o: ['The study shows a link but cannot prove cause.', 'The study proves that poor sleep causes memory loss.', 'Sleep and memory are not related in older adults.', 'Older adults should stop taking memory tests.'], why: '第 3 段最後：cannot prove that poor sleep causes memory loss。',
+      st: [['作者的保留意見在哪？', '第 3 段 however 之後', '第 1 段 However 之後', '第 2 段最後一句', 'The authors note, however…', 'r.locate'], ['作者說研究不能證明什麼？', '睡不好「造成」記憶衰退', '睡眠和記憶「有關」', '深層睡眠真的存在', 'cannot prove that poor sleep causes memory loss', 'r.attitude'], ['為什麼不能證明？', '可能是腦部變化讓人睡不好', '受試者的人數太多了', '研究沒有做任何記憶測驗', 'people with early brain changes may simply sleep worse', 'r.infer']] }] },
   // 第 3 天：克漏字
   { type: 'cloze', title: 'How is a clinical trial conducted?', text: [
     'Before a new drug can be sold, it must be tested in clinical trials. In a typical trial, participants are divided {1} two groups at random. One group receives the new drug, {2} the other group receives a placebo, a pill that looks the same but contains no active ingredient.',
@@ -570,45 +581,45 @@ WEEKS[0].passages = [
     'If the drug group does much better, the drug is {4} to be effective. Even then, one trial is rarely enough; the results must be {5} by other studies before the drug is approved.'],
     zh: '新藥上市前必須經過臨床試驗。典型的試驗把受試者隨機分成兩組：一組服用新藥，另一組服用安慰劑（外觀一樣但不含有效成分的藥丸）。受試者和醫生都不知道誰在哪一組；這種設計稱為雙盲試驗，可以避免預期心理影響結果。試驗結束時，研究人員比較兩組的結果。如果服藥組好很多，這個藥就被認為有效。即使如此，一次試驗很少足夠，結果必須被其他研究證實，藥才會核准。',
     qs: [{ id: 'p3-1', sk: 'v.collo', q: '第 (1) 格', o: ['into', 'from', 'with', 'on'], why: 'divide A into B：把 A 分成 B。',
-      st: [['divide 的常見搭配？', 'divide … into …（分成…）', 'divide from', 'divide on', '固定搭配要記。', 'v.collo'], ['句意？', '受試者被隨機分成兩組', '從兩組來', '和兩組一起', '分成兩組。', 'r.para'], ['所以填？', 'into', 'from', 'with', 'into 表示變成。', 'v.collo']] },
+      st: [['divide 的常見搭配？', 'divide … into …', 'divide … from …', 'divide … on …', '固定搭配要記。', 'v.collo'], ['句意？', '受試者被隨機分成兩組', '受試者從兩組中被選出', '受試者和兩組一起試驗', '分成兩組。', 'r.para'], ['所以填？', 'into', 'from', 'with', 'into 表示變成。', 'v.collo']] },
       { id: 'p3-2', sk: 'c.logic', q: '第 (2) 格', o: ['while', 'because', 'so', 'if'], why: '一組吃新藥、另一組吃安慰劑，兩者對照，用 while（而）。',
-      st: [['逗號前後在說什麼？', '一組吃藥、另一組吃安慰劑', '原因與結果', '條件', 'One group…, ___ the other group…', 'c.logic'], ['兩者的關係？', '對照', '因果', '條件', 'one… the other… 是對照。', 'c.logic'], ['表示對照、連接兩個子句的是？', 'while', 'because', 'so', 'while 也可以表示「而」。', 'g.conj']] },
+      st: [['逗號前後在說什麼？', '一組吃藥、一組吃安慰劑', '先吃藥、後來才吃安慰劑', '吃藥的原因和吃藥的結果', 'One group…, ___ the other group…', 'c.logic'], ['兩者的關係？', '對照', '因果', '條件', 'one… the other… 是對照。', 'c.logic'], ['表示對照、連接兩個子句的是？', 'while', 'because', 'so', 'while 也可以表示「而」。', 'g.conj']] },
       { id: 'p3-3', sk: 's.rel', q: '第 (3) 格', o: ['which', 'what', 'who', 'it'], why: '逗號後補充說明 This design，用 which。',
-      st: [['空格前的名詞是？', 'This design（物）', 'the doctors', 'the group', '逗號前緊接的名詞。', 's.rel'], ['這段兩個逗號之間是？', '補充說明 This design 的子句', '主要子句', '主詞', '拿掉後：This design prevents…', 's.rel'], ['補充說明物，用？', 'which', 'what', 'who', '逗號後不用 that。', 's.rel']] },
+      st: [['空格前的名詞是？', 'This design', 'the doctors', 'the group', '逗號前緊接的名詞。', 's.rel'], ['這段兩個逗號之間是？', '補充 This design', '修飾 the doctors', '修飾 the results', '拿掉後：This design prevents…', 's.rel'], ['補充說明物，用？', 'which', 'what', 'who', '逗號後不用 that。', 's.rel']] },
       { id: 'p3-4', sk: 's.pass', q: '第 (4) 格', o: ['considered', 'considering', 'consider', 'to consider'], why: 'the drug is considered to be effective：藥被認為有效（被動）。',
-      st: [['空格前有什麼？', 'is（be 動詞）', 'have', '沒有東西', 'the drug is ___。', 's.pass'], ['藥會自己認為嗎？', '不會，是被認為（被動）', '會', '看情況', '主詞承受動作。', 's.pass'], ['be＋過去分詞？', 'considered', 'considering', 'consider', 'be considered to be…＝被認為是…。', 'v.collo']] },
+      st: [['空格前有什麼？', 'be 動詞 is', '助動詞 have', '沒有任何字', 'the drug is ___。', 's.pass'], ['藥會自己認為嗎？', '不會，是被認為', '會，藥自己認為', '要看哪一種藥', '主詞承受動作。', 's.pass'], ['be＋過去分詞？', 'considered', 'considering', 'consider', 'be considered to be…＝被認為是…。', 'v.collo']] },
       { id: 'p3-5', sk: 'v.mean', q: '第 (5) 格', o: ['confirmed', 'ignored', 'hidden', 'reduced'], why: '其他研究要「證實」結果，藥才會核准。',
-      st: [['前面說一次試驗怎樣？', '很少足夠（rarely enough）', '一定足夠', '沒有用', 'one trial is rarely enough', 'c.logic'], ['所以其他研究要對結果做什麼？', '再次證實', '忽略', '隱藏', '核准前要更多證據。', 'r.infer'], ['「證實」的英文？', 'confirmed', 'ignored', 'reduced', 'confirm＝證實。', 'v.mean']] }] },
+      st: [['前面說一次試驗怎樣？', '很少足夠', '一定足夠', '完全沒用', 'one trial is rarely enough', 'c.logic'], ['所以其他研究要對結果做什麼？', '再次證實', '忽略', '隱藏', '核准前要更多證據。', 'r.infer'], ['「證實」的英文？', 'confirmed', 'ignored', 'reduced', 'confirm＝證實。', 'v.mean']] }] },
   // 第 4 天：閱讀
   { type: 'read', title: 'Do sugar taxes reduce obesity?', text: [
     'More than 50 countries now tax drinks that contain added sugar. The idea is simple: if sugary drinks cost more, people will buy fewer of them, and obesity rates will eventually fall.',
     'The first part of this idea is well supported. In Mexico, sales of sugary drinks dropped by about 10 percent in the two years after a tax was introduced, and the decline was largest among poorer families. Some companies also reduced the sugar in their drinks to avoid the tax.',
     'The second part is harder to prove. Obesity develops slowly and has many causes, so a change in one type of drink may take years to show an effect. Moreover, people may replace sugary drinks with other high-calorie foods. Most experts therefore see sugar taxes as one useful tool, not a complete solution.'],
     zh: '目前有 50 多個國家對添加糖的飲料課稅。想法很簡單：含糖飲料變貴，人們就會少買，肥胖率最終就會下降。前半部分有充分證據：在墨西哥，開徵稅後兩年內含糖飲料的銷售量下降約一成，貧窮家庭降得最多；有些公司也降低飲料含糖量來避稅。後半部分比較難證明：肥胖發展得很慢、原因很多，單一類飲料的改變可能要好幾年才看得出效果；而且人們可能改吃其他高熱量的食物。因此多數專家認為糖稅是一項有用的工具，但不是完整的解決方案。',
-    qs: [{ id: 'p4-1', sk: 'r.main', pre: '主旨：文章對糖稅的整體評價', q: 'What is the main idea of the passage?', o: ['Sugar taxes reduce sugary drink sales, but their effect on obesity is less clear.', 'Sugar taxes have ended obesity in Mexico.', 'Sugar taxes are unfair to poor families.', 'Companies refuse to change their drinks.'], why: '第 2 段：銷量確實下降；第 3 段：對肥胖的效果較難證明。',
-      st: [['第 1 段提出的想法有幾個部分？', '兩個：少買飲料、肥胖下降', '一個', '三個', 'people will buy fewer… and obesity rates will fall', 'r.locate'], ['第 2、3 段各自在談哪一部分？', '第 2 段：銷量（有證據）；第 3 段：肥胖（難證明）', '都在談肥胖', '都在談公司', 'The first part… The second part…', 'r.main'], ['涵蓋兩段的選項？', '銷量下降，但對肥胖的效果不明確', '已經消滅肥胖', '對窮人不公平', '只講一半的選項不是主旨。', 'r.para']] },
+    qs: [{ id: 'p4-1', sk: 'r.main', pre: '主旨：文章對糖稅的整體評價', q: 'What is the main idea of the passage?', o: ['Sales fell, but the effect on obesity is unclear.', 'Sugar taxes have ended obesity in Mexico.', 'Sugar taxes are unfair to poor families.', 'Companies refuse to change their drinks.'], why: '第 2 段：銷量確實下降；第 3 段：對肥胖的效果較難證明。',
+      st: [['第 1 段提出的想法有幾個部分？', '兩個', '一個', '三個', 'people will buy fewer… and obesity rates will fall', 'r.locate'], ['第 2、3 段各自在談哪一部分？', '第 2 段談銷量，第 3 段談肥胖', '第 2 段談肥胖，第 3 段談公司', '兩段都在談肥胖率的變化', 'The first part… The second part…', 'r.main'], ['涵蓋兩段的選項？', '銷量下降，但對肥胖效果不明', '糖稅已經完全消滅了肥胖', '糖稅對貧窮家庭不公平', '只講一半的選項不是主旨。', 'r.para']] },
       { id: 'p4-2', sk: 'r.locate', pre: '細節：墨西哥的結果', q: 'What happened in Mexico after the tax was introduced?', o: ['Sales of sugary drinks fell by about 10 percent.', 'Obesity fell by 10 percent.', 'Sales rose among poorer families.', 'All companies stopped selling sugary drinks.'], why: '第 2 段：sales of sugary drinks dropped by about 10 percent。',
-      st: [['用 Mexico 找答案在哪？', '第 2 段', '第 1 段', '第 3 段', '題目的專有名詞是最好的定位線索。', 'r.locate'], ['下降的是什麼？', '含糖飲料的銷量', '肥胖率', '稅率', 'sales of sugary drinks dropped', 'r.locate'], ['為什麼「肥胖下降一成」是陷阱？', '文中下降的是銷量，不是肥胖', '數字不對', '國家不對', '換掉主詞是常見陷阱。', 'r.para']] },
-      { id: 'p4-3', sk: 'r.infer', pre: '推論：為什麼肥胖的效果難證明', q: 'Why is it hard to prove that sugar taxes reduce obesity?', o: ['Obesity has many causes and changes slowly.', 'People drink more after the tax.', 'The tax is too small to matter.', 'Experts refuse to study it.'], why: '第 3 段：Obesity develops slowly and has many causes。',
-      st: [['答案在哪一段？', '第 3 段', '第 2 段', '第 1 段', 'The second part is harder to prove.', 'r.locate'], ['文中給了哪兩個理由？', '肥胖發展慢、原因多；人們可能改吃其他高熱量食物', '稅太少', '專家不研究', '找 because 或 so、Moreover。', 'r.locate'], ['哪個選項是其中之一？', '肥胖原因多、變化慢', '稅後喝更多', '稅太小', '其他選項文中沒有。', 'r.para']] },
-      { id: 'p4-4', sk: 'r.word', pre: '字義：replace 的意思', q: 'In paragraph 3, “replace sugary drinks with other high-calorie foods” means people may ____.', o: ['eat other high-calorie foods instead of sugary drinks', 'drink more sugary drinks', 'stop eating completely', 'add sugar to their food'], why: 'replace A with B：用 B 取代 A。',
-      st: [['replace A with B 的意思？', '用 B 取代 A', '用 A 取代 B', '把 A 和 B 混合', '常見搭配。', 'v.collo'], ['A 和 B 各是什麼？', 'A 含糖飲料、B 其他高熱量食物', '相反', '都是飲料', '照順序對應。', 'r.locate'], ['為什麼這是問題？', '熱量仍然沒有減少', '飲料變好喝', '稅變高', 'Moreover 帶出的另一個困難。', 'r.infer']] },
-      { id: 'p4-5', sk: 'r.attitude', pre: '作者態度：專家怎麼看糖稅', q: 'How do most experts view sugar taxes?', o: ['As a useful tool but not a complete solution', 'As completely useless', 'As the only way to end obesity', 'As harmful to health'], why: '最後一句：one useful tool, not a complete solution。',
-      st: [['在哪一句？', '最後一句', '第一句', '第 2 段', 'Most experts therefore see…', 'r.locate'], ['專家的看法有幾個部分？', '有用，但不是完整的解決方案', '完全沒用', '唯一的方法', 'not A but B 的反向：A，not B。', 'r.attitude'], ['對應的選項？', 'useful tool but not a complete solution', 'useless', 'the only way', '兩個部分都要對上。', 'r.para']] }] },
+      st: [['用 Mexico 找答案在哪？', '第 2 段', '第 1 段', '第 3 段', '題目的專有名詞是最好的定位線索。', 'r.locate'], ['下降的是什麼？', '含糖飲料的銷量', '兒童的肥胖率', '飲料的稅率', 'sales of sugary drinks dropped', 'r.locate'], ['為什麼「肥胖下降一成」是陷阱？', '下降的是銷量，不是肥胖', '文中的數字是兩成', '文中的國家不是墨西哥', '換掉主詞是常見陷阱。', 'r.para']] },
+      { id: 'p4-3', sk: 'r.infer', pre: '推論：為什麼肥胖的效果難證明', q: 'Why is it hard to prove that sugar taxes reduce obesity?', o: ['Obesity has many causes and changes slowly.', 'People drink more sugary drinks after the tax.', 'The tax is too small to change anything.', 'Experts refuse to study the effects of taxes.'], why: '第 3 段：Obesity develops slowly and has many causes。',
+      st: [['答案在哪一段？', '第 3 段', '第 2 段', '第 1 段', 'The second part is harder to prove.', 'r.locate'], ['文中給了哪兩個理由？', '肥胖發展慢、原因多；可能改吃別的', '稅太少，而且專家都不願意研究', '飲料變貴，而且公司都不願意改', '找 because 或 so、Moreover。', 'r.locate'], ['哪個選項是其中之一？', '肥胖原因多、變化慢', '稅後大家喝更多', '稅太少沒有效果', '其他選項文中沒有。', 'r.para']] },
+      { id: 'p4-4', sk: 'r.word', pre: '字義：replace 的意思', q: 'In paragraph 3, “replace sugary drinks with other high-calorie foods” means people may ____.', o: ['eat other high-calorie foods instead', 'drink more sugary drinks than before', 'stop eating high-calorie foods completely', 'add more sugar to the food they eat'], why: 'replace A with B：用 B 取代 A。',
+      st: [['replace A with B 的意思？', '用 B 取代 A', '用 A 取代 B', '把 A 和 B 混合', '常見搭配。', 'v.collo'], ['A 和 B 各是什麼？', 'A 含糖飲料、B 高熱量食物', 'A 高熱量食物、B 含糖飲料', 'A、B 都是含糖飲料', '照順序對應。', 'r.locate'], ['為什麼這是問題？', '總熱量仍然沒有減少', '飲料變得更好喝', '稅率又變得更高', 'Moreover 帶出的另一個困難。', 'r.infer']] },
+      { id: 'p4-5', sk: 'r.attitude', pre: '作者態度：專家怎麼看糖稅', q: 'How do most experts view sugar taxes?', o: ['As useful but not a complete solution', 'As completely useless for health', 'As the only way to end obesity', 'As harmful to people’s health'], why: '最後一句：one useful tool, not a complete solution。',
+      st: [['在哪一句？', '最後一句', '第一句', '第 2 段', 'Most experts therefore see…', 'r.locate'], ['專家的看法有幾個部分？', '有用，但不夠', '沒用，也有害', '唯一的方法', 'not A but B 的反向：A，not B。', 'r.attitude'], ['對應的選項？', 'useful but not a complete solution', 'completely useless for public health', 'the only way to end obesity quickly', '兩個部分都要對上。', 'r.para']] }] },
   // 第 5 天：克漏字
   { type: 'cloze', title: 'Exercise and the immune system', text: [
     'Moderate exercise, such as brisk walking for 30 minutes a day, appears to {1} the immune system. During exercise, immune cells move faster through the blood and are more likely to find and destroy germs.',
     'Studies have shown that people who exercise regularly catch fewer colds {2} people who rarely exercise. The effect is especially important for elderly people, {3} immune systems naturally weaken with age.',
     'However, more is not always better. Very long or intense exercise, such as running a marathon, may {4} weaken the immune system for a few hours. During this period, athletes are more {5} to infection.'],
     zh: '適度運動，例如每天快走 30 分鐘，似乎能強化免疫系統。運動時，免疫細胞在血液中移動得更快，更容易找到並消滅病菌。研究顯示，規律運動的人比很少運動的人少感冒。這對長者特別重要，因為免疫系統會隨年齡自然變弱。不過，越多不一定越好：非常長或劇烈的運動，例如跑馬拉松，可能會暫時削弱免疫系統幾個小時；這段期間運動員比較容易感染。',
-    qs: [{ id: 'p5-1', sk: 'v.mean', q: '第 (1) 格', o: ['strengthen', 'weaken', 'replace', 'ignore'], why: '後面說免疫細胞更快找到病菌：運動「強化」免疫系統。',
-      st: [['後一句說運動時免疫細胞怎樣？', '移動更快、更容易消滅病菌', '變慢', '消失', '用後文判斷方向。', 'c.logic'], ['所以運動對免疫系統是？', '有好處', '有壞處', '沒影響', '方向是正面的。', 'c.logic'], ['「強化」的英文？', 'strengthen', 'weaken', 'ignore', 'strength＋-en＝使變強。', 'v.root']] },
+    qs: [{ id: 'p5-1', sk: 'v.mean', q: '第 (1) 格', o: ['strengthen', 'weaken', 'overwhelm', 'replace'], why: '後面說免疫細胞更快找到病菌：運動「強化」免疫系統。',
+      st: [['後一句說運動時免疫細胞怎樣？', '移動更快、更容易消滅病菌', '移動變慢、比較少遇到病菌', '數量減少、消失在血液中', '用後文判斷方向。', 'c.logic'], ['所以運動對免疫系統是？', '有好處', '有壞處', '沒影響', '方向是正面的。', 'c.logic'], ['「強化」的英文？', 'strengthen', 'weaken', 'lengthen', 'strength＋-en＝使變強。', 'v.root']] },
       { id: 'p5-2', sk: 'c.form', q: '第 (2) 格', o: ['than', 'as', 'to', 'from'], why: 'fewer… than…：比較級要配 than。',
-      st: [['空格前有什麼比較詞？', 'fewer（比較級）', 'same', 'most', 'catch fewer colds ___ people…', 'c.form'], ['比較級後面接？', 'than', 'as', 'to', 'as 用在 as… as。', 'c.form'], ['句意？', '規律運動的人比很少運動的人少感冒', '和很少運動的人一樣', '從很少運動的人來', 'than 帶出比較對象。', 'r.para']] },
+      st: [['空格前有什麼比較詞？', 'fewer', 'same', 'most', 'catch fewer colds ___ people…', 'c.form'], ['比較級後面接？', 'than', 'as', 'to', 'as 用在 as… as。', 'c.form'], ['句意？', '規律運動的人比較少感冒', '兩種人感冒的次數一樣', '規律運動的人比較常感冒', 'than 帶出比較對象。', 'r.para']] },
       { id: 'p5-3', sk: 's.rel', q: '第 (3) 格', o: ['whose', 'who', 'which', 'what'], why: '空格後是名詞 immune systems：長者「的」免疫系統，用 whose。',
-      st: [['空格後面接什麼？', '名詞 immune systems', '動詞', '形容詞', 'whose 後面一定接名詞。', 's.rel'], ['免疫系統和長者的關係？', '是長者的（所有關係）', '長者就是免疫系統', '沒有關係', 'elderly people 的免疫系統。', 's.rel'], ['表示「…的」的關係代名詞？', 'whose', 'who', 'which', 'who 後面接動詞。', 's.rel']] },
+      st: [['空格後面接什麼？', '名詞 immune systems', '動詞 naturally weaken', '形容詞 elderly people', 'whose 後面一定接名詞。', 's.rel'], ['免疫系統和長者的關係？', '是長者的', '長者就是它', '兩者沒關係', 'elderly people 的免疫系統。', 's.rel'], ['表示「…的」的關係代名詞？', 'whose', 'who', 'which', 'who 後面接動詞。', 's.rel']] },
       { id: 'p5-4', sk: 'v.mean', q: '第 (4) 格', o: ['temporarily', 'permanently', 'never', 'always'], why: '後面說 for a few hours：只是暫時。',
-      st: [['同一句後面有什麼時間線索？', 'for a few hours（幾個小時）', 'forever', '沒有', '找時間線索。', 'c.logic'], ['幾個小時表示？', '暫時的', '永久的', '從來沒有', 'temporary＝暫時的。', 'v.mean'], ['修飾動詞 weaken 要用？', '副詞 temporarily', '形容詞 temporary', '名詞', 'may temporarily weaken。', 'c.form']] },
+      st: [['同一句後面有什麼時間線索？', 'for a few hours', 'forever', 'for many years', '找時間線索。', 'c.logic'], ['幾個小時表示？', '暫時的', '永久的', '從來沒有', 'temporary＝暫時的。', 'v.mean'], ['修飾動詞 weaken 要用？', '副詞 temporarily', '形容詞 temporary', '名詞', 'may temporarily weaken。', 'c.form']] },
       { id: 'p5-5', sk: 'v.collo', q: '第 (5) 格', o: ['vulnerable', 'immune', 'resistant', 'superior'], why: 'be vulnerable to infection：容易感染。',
       st: [['前一句說免疫系統怎樣了？', '被削弱', '被強化', '沒變', 'weaken the immune system', 'c.logic'], ['所以運動員對感染？', '比較容易被感染', '不會感染', '抵抗力較強', '方向是負面的。', 'c.logic'], ['「容易受…傷害」？', 'vulnerable to', 'immune to（免於）', 'resistant to（抵抗）', 'immune to 意思相反。', 'v.collo']] }] },
   // 第 6 天：閱讀
@@ -617,16 +628,16 @@ WEEKS[0].passages = [
     'Resistance develops through natural selection. When an antibiotic is used, most bacteria die, but a few may carry genetic changes that help them survive. These survivors multiply, and soon the drug no longer works. Every unnecessary use of antibiotics, such as taking them for a cold, which is caused by a virus, gives resistant bacteria another chance to spread.',
     'Experts recommend two main strategies: using antibiotics only when they are truly needed, and developing new drugs. The second strategy is difficult, because new antibiotics are expensive to develop and earn little money, since they are used for only a short time.'],
     zh: '抗生素是殺死細菌的藥物，自 1940 年代以來拯救了數百萬人的性命。然而現在越來越多細菌能在抗生素下存活。這個問題稱為抗生素抗藥性，被視為全球健康最大的威脅之一。抗藥性是經由天擇產生的：使用抗生素時大部分細菌死亡，但少數可能帶有幫助它們存活的基因變化；這些存活者繁殖之後，藥很快就不再有效。每一次不必要的使用，例如為了由病毒引起的感冒吃抗生素，都給抗藥細菌另一次擴散的機會。專家建議兩個主要策略：只在真正需要時使用抗生素，以及研發新藥。第二個策略很困難，因為新的抗生素研發昂貴、賺錢很少，因為只會短期使用。',
-    qs: [{ id: 'p6-1', sk: 'r.main', pre: '主旨：抗生素抗藥性的原因與對策', q: 'What is the passage mainly about?', o: ['How antibiotic resistance develops and how to deal with it', 'The history of the first antibiotic', 'Why colds are caused by viruses', 'How to make money from new drugs'], why: '第 1 段提出問題，第 2 段原因，第 3 段對策。',
-      st: [['第 1 段提出什麼問題？', '細菌對抗生素產生抗藥性', '抗生素的歷史', '感冒', 'This problem, called antibiotic resistance…', 'r.locate'], ['第 2、3 段分別在講？', '原因、對策', '歷史、價格', '感冒、病毒', '問題 → 原因 → 對策是常見結構。', 'r.main'], ['涵蓋全文的選項？', '抗藥性如何產生與如何應對', '第一個抗生素的歷史', '如何賺錢', '只對應一句的不是主旨。', 'r.para']] },
-      { id: 'p6-2', sk: 'r.locate', pre: '細節：抗藥性怎麼產生', q: 'According to paragraph 2, how does resistance develop?', o: ['A few bacteria with helpful genetic changes survive and multiply.', 'Antibiotics change into viruses.', 'All bacteria die and are replaced by new ones.', 'Patients become allergic to the drug.'], why: '第 2 段：a few may carry genetic changes that help them survive. These survivors multiply…',
-      st: [['用 develop 找答案在哪？', '第 2 段第一句之後', '第 1 段', '第 3 段', 'Resistance develops through natural selection.', 'r.locate'], ['使用抗生素時發生什麼？', '大部分細菌死，少數帶基因變化的存活', '全部死亡', '細菌變成病毒', 'most bacteria die, but a few…', 'r.locate'], ['接下來？', '存活者繁殖，藥失效', '存活者死亡', '病人過敏', 'These survivors multiply…', 'r.para']] },
-      { id: 'p6-3', sk: 'r.infer', pre: '推論：為什麼感冒不該吃抗生素', q: 'Why is taking antibiotics for a cold an example of unnecessary use?', o: ['Colds are caused by viruses, which antibiotics do not kill.', 'Colds are too mild to treat.', 'Antibiotics cause colds.', 'Colds are caused by resistant bacteria.'], why: '文中說感冒 is caused by a virus，而抗生素是殺細菌的藥。',
-      st: [['第 1 段說抗生素殺什麼？', '細菌', '病毒', '兩者都殺', 'Antibiotics are drugs that kill bacteria.', 'r.locate'], ['第 2 段說感冒由什麼引起？', '病毒', '細菌', '抗生素', 'which is caused by a virus', 'r.locate'], ['把兩句合起來的結論？', '抗生素對感冒沒用，只會給抗藥細菌機會', '感冒太輕微', '抗生素造成感冒', '推論題要合併兩處的資訊。', 'r.infer']] },
+    qs: [{ id: 'p6-1', sk: 'r.main', pre: '主旨：抗生素抗藥性的原因與對策', q: 'What is the passage mainly about?', o: ['How antibiotic resistance develops and how to slow it', 'The history of the first antibiotic and its discovery', 'Why colds are caused by viruses and not bacteria', 'How drug companies make money from new antibiotics'], why: '第 1 段提出問題，第 2 段原因，第 3 段對策。',
+      st: [['第 1 段提出什麼問題？', '細菌對抗生素產生抗藥性', '抗生素被發現的歷史', '感冒由病毒引起', 'This problem, called antibiotic resistance…', 'r.locate'], ['第 2、3 段分別在講？', '原因、對策', '歷史、價格', '感冒、病毒', '問題 → 原因 → 對策是常見結構。', 'r.main'], ['涵蓋全文的選項？', '抗藥性怎麼產生、怎麼應對', '第一個抗生素怎麼被發現', '藥廠怎麼從新的抗生素賺錢', '只對應一句的不是主旨。', 'r.para']] },
+      { id: 'p6-2', sk: 'r.locate', pre: '細節：抗藥性怎麼產生', q: 'According to paragraph 2, how does resistance develop?', o: ['A few bacteria with helpful changes survive and multiply.', 'Antibiotics slowly change bacteria into viruses.', 'All bacteria die and new ones move in from outside.', 'Patients become allergic to the drug over time.'], why: '第 2 段：a few may carry genetic changes that help them survive. These survivors multiply…',
+      st: [['用 develop 找答案在哪？', '第 2 段第一句', '第 1 段第一句', '第 3 段第一句', 'Resistance develops through natural selection.', 'r.locate'], ['使用抗生素時發生什麼？', '大部分死，少數變異的存活', '所有的細菌全部一起死亡', '細菌全部慢慢變成病毒', 'most bacteria die, but a few…', 'r.locate'], ['接下來？', '存活者繁殖，藥失效', '存活者死亡，藥有效', '病人對藥物過敏', 'These survivors multiply…', 'r.para']] },
+      { id: 'p6-3', sk: 'r.infer', pre: '推論：為什麼感冒不該吃抗生素', q: 'Why is taking antibiotics for a cold an example of unnecessary use?', o: ['Colds are caused by viruses, which antibiotics cannot kill.', 'Colds are too mild to need any kind of medicine at all.', 'Antibiotics are the main reason that most people catch colds.', 'Colds are caused by bacteria that are already resistant.'], why: '文中說感冒 is caused by a virus，而抗生素是殺細菌的藥。',
+      st: [['第 1 段說抗生素殺什麼？', '細菌', '病毒', '兩者都殺', 'Antibiotics are drugs that kill bacteria.', 'r.locate'], ['第 2 段說感冒由什麼引起？', '病毒', '細菌', '抗生素', 'which is caused by a virus', 'r.locate'], ['把兩句合起來的結論？', '抗生素對感冒沒用，還幫抗藥菌', '感冒太輕微，根本不必吃藥', '抗生素反而是感冒的原因', '推論題要合併兩處的資訊。', 'r.infer']] },
       { id: 'p6-4', sk: 'r.word', pre: '字義：threats 的意思', q: 'In paragraph 1, “one of the biggest threats to global health” is closest to ____.', o: ['one of the biggest dangers', 'one of the best treatments', 'one of the oldest drugs', 'one of the cheapest solutions'], why: 'threat＝威脅、危險。',
-      st: [['前文在講好事還是壞事？', '壞事：細菌能抵抗抗生素', '好事', '中性', 'This problem…', 'c.logic'], ['所以 threat 是正面還是負面？', '負面', '正面', '中性', '用前後文判斷字的方向。', 'r.word'], ['最接近的意思？', 'danger（危險）', 'treatment', 'solution', 'threat＝威脅。', 'v.mean']] },
-      { id: 'p6-5', sk: 'r.locate', pre: '細節：研發新藥為什麼困難', q: 'Why is developing new antibiotics difficult?', o: ['They are expensive to develop but earn little money.', 'Scientists do not know how bacteria work.', 'They are banned in many countries.', 'Patients use them for too long.'], why: '最後一句：expensive to develop and earn little money。',
-      st: [['在哪一句？', '最後一句（because 之後）', '第 1 段', '第 2 段', 'The second strategy is difficult, because…', 'r.locate'], ['because 後面的兩個原因？', '研發貴、賺錢少', '科學家不懂', '被禁止', 'expensive to develop and earn little money', 'r.locate'], ['為什麼賺錢少？', '只用很短的時間', '太便宜', '沒人用', 'since they are used for only a short time', 'r.infer']] }] },
+      st: [['前文在講好事還是壞事？', '壞事', '好事', '中性', 'This problem…', 'c.logic'], ['所以 threat 是正面還是負面？', '負面', '正面', '中性', '用前後文判斷字的方向。', 'r.word'], ['最接近的意思？', 'danger', 'treatment', 'solution', 'threat＝威脅。', 'v.mean']] },
+      { id: 'p6-5', sk: 'r.locate', pre: '細節：研發新藥為什麼困難', q: 'Why is developing new antibiotics difficult?', o: ['They cost a lot to develop but earn little.', 'Scientists do not know how bacteria work.', 'They are banned in many countries.', 'Patients use them for too long.'], why: '最後一句：expensive to develop and earn little money。',
+      st: [['在哪一句？', '最後一句', '第 1 段', '第 2 段', 'The second strategy is difficult, because…', 'r.locate'], ['because 後面的兩個原因？', '研發貴、賺錢少', '科學家不懂', '被禁止', 'expensive to develop and earn little money', 'r.locate'], ['為什麼賺錢少？', '只用很短的時間', '價格太便宜', '沒有人想用', 'since they are used for only a short time', 'r.infer']] }] },
   // 第 7 天：克漏字
   { type: 'cloze', title: 'Are artificial sweeteners a healthy choice?', text: [
     'Artificial sweeteners are synthetic substances that taste sweet but contain almost no calories. Many people use them to lose weight or to {1} their blood sugar.',
@@ -634,15 +645,15 @@ WEEKS[0].passages = [
     'Other studies, however, have found no clear harm. The evidence is not {4}, partly because people who use sweeteners are often already trying to lose weight. For now, most experts say that sweeteners are better than sugar, but water is the best choice {5}.'],
     zh: '人工甜味劑是嚐起來甜、但幾乎沒有熱量的合成物質。很多人用它來減重或控制血糖。起初它們看起來是完美的解決方法。然而近年的研究提出了一些疑慮：有些研究顯示甜味劑可能改變腸道中的細菌，進而影響身體處理糖的方式。不過也有研究沒有發現明確的害處。證據並不一致，部分原因是使用甜味劑的人往往本來就在努力減重。目前多數專家認為，甜味劑比糖好，但水才是最好的選擇。',
     qs: [{ id: 'p7-1', sk: 'v.collo', q: '第 (1) 格', o: ['control', 'increase', 'ignore', 'measure'], why: '用甜味劑減重或「控制」血糖。',
-      st: [['and 前面說用甜味劑來做什麼？', '減重', '增重', '增加熱量', 'to lose weight or to ___', 's.para'], ['所以空格也是對健康有利的目的', '控制血糖', '增加血糖', '忽視血糖', '平行的兩個目的方向一致。', 'c.logic'], ['「控制血糖」？', 'control blood sugar', 'increase', 'ignore', '常見搭配。', 'v.collo']] },
+      st: [['and 前面說用甜味劑來做什麼？', '減重', '增重', '增加熱量', 'to lose weight or to ___', 's.para'], ['所以空格也是對健康有利的目的', '控制血糖', '增加血糖', '忽視血糖', '平行的兩個目的方向一致。', 'c.logic'], ['「控制血糖」？', 'control blood sugar', 'increase blood sugar', 'ignore blood sugar', '常見搭配。', 'v.collo']] },
       { id: 'p7-2', sk: 'c.logic', q: '第 (2) 格', o: ['However', 'Therefore', 'In addition', 'For example'], why: '「看似完美」和「出現疑慮」方向相反。',
-      st: [['前一句說了什麼？', '起初看起來是完美的解決方法', '有害', '沒用', 'At first, they seemed to be a perfect solution.', 'c.logic'], ['後一句說了什麼？', '近來研究提出疑慮', '更多好處', '一個例子', 'raised some concerns', 'c.logic'], ['方向相反用？', 'However', 'Therefore', 'In addition', 'At first… However… 是常見的轉折。', 'g.conj']] },
+      st: [['前一句說了什麼？', '起初看似完美的方法', '一開始就被認為有害', '一開始就沒有效果', 'At first, they seemed to be a perfect solution.', 'c.logic'], ['後一句說了什麼？', '近來研究提出疑慮', '近來研究發現更多好處', '近來研究舉了一個例子', 'raised some concerns', 'c.logic'], ['方向相反用？', 'However', 'Therefore', 'In addition', 'At first… However… 是常見的轉折。', 'g.conj']] },
       { id: 'p7-3', sk: 's.rel', q: '第 (3) 格', o: ['which', 'who', 'what', 'where'], why: '逗號後的 which 指前面整件事（甜味劑改變腸道細菌），這件事可能影響…。',
-      st: [['空格後缺什麼？', '主詞（could affect 的主詞）', '受詞', '什麼都不缺', '___ could affect…', 's.rel'], ['可能影響身體處理糖的是什麼？', '前面整件事：改變腸道細菌', 'the gut', 'people', '逗號＋which 可以指前面整句。', 's.rel'], ['所以用？', 'which', 'who', 'what', 'what 前面不能有先行詞；逗號後不用 that。', 's.rel']] },
+      st: [['空格後缺什麼？', 'could affect 的主詞', 'could affect 的受詞', '什麼都不缺', '___ could affect…', 's.rel'], ['可能影響身體處理糖的是什麼？', '前面整件事', 'the gut', 'people', '逗號＋which 可以指前面整句。', 's.rel'], ['所以用？', 'which', 'who', 'what', 'what 前面不能有先行詞；逗號後不用 that。', 's.rel']] },
       { id: 'p7-4', sk: 'v.mean', q: '第 (4) 格', o: ['consistent', 'robust', 'artificial', 'specialized'], why: '有些研究有疑慮、有些沒發現害處：證據不一致。',
-      st: [['前兩段的研究結果？', '有的發現疑慮，有的沒發現害處', '全部發現有害', '全部發現無害', 'Some studies suggest… Other studies… found no clear harm.', 'c.logic'], ['所以證據是？', '不一致', '一致', '很強', 'not ___：不…', 'r.infer'], ['「一致的」？', 'consistent', 'robust', 'artificial', 'robust 是強而可靠的。', 'v.mean']] },
+      st: [['前兩段的研究結果？', '有的有疑慮，有的沒害處', '全部研究都發現有害', '全部研究都發現無害', 'Some studies suggest… Other studies… found no clear harm.', 'c.logic'], ['所以證據是？', '不一致', '一致', '很強', 'not ___：不…', 'r.infer'], ['「一致的」？', 'consistent', 'robust', 'artificial', 'robust 是強而可靠的。', 'v.mean']] },
       { id: 'p7-5', sk: 'c.form', q: '第 (5) 格', o: ['overall', 'overall of', 'at overall', 'overalls'], why: 'the best choice overall：整體而言最好的選擇。',
-      st: [['句子在空格前是否已經完整？', '是：water is the best choice', '不是，缺動詞', '不是，缺主詞', '空格只能放修飾語。', 's.core'], ['修飾整句的副詞？', 'overall（整體而言）', 'overall of', 'at overall', 'overall 本身就是副詞。', 'c.form'], ['句意？', '整體而言水是最好的選擇', '水不好', '甜味劑最好', '最後的結論。', 'r.para']] }] },
+      st: [['句子在空格前是否已經完整？', '是，已經完整', '不是，缺動詞', '不是，缺主詞', '空格只能放修飾語。', 's.core'], ['修飾整句的副詞？', 'overall', 'overall of', 'at overall', 'overall 本身就是副詞。', 'c.form'], ['句意？', '整體而言水是最好的選擇', '整體而言水不是好選擇', '整體而言甜味劑最好', '最後的結論。', 'r.para']] }] },
 ];
 
 /* ---------- 錯題排程（化學、英文與首頁共用） ----------
@@ -745,6 +756,7 @@ const REVIEW_KINDS = new Set(['w', 'wr', 's', 'g', 'p']);
 function logAnswer(e) {
   LOG.push({ t: Date.now(), ...e }); if (LOG.length > 20000) LOG.splice(0, LOG.length - 20000);
   store.set('log', LOG); if (typeof CLOUD !== 'undefined' && CLOUD.pushLog) CLOUD.pushLog();
+  setTimeout(() => { if (typeof refreshParts === 'function') refreshParts(); }, 0);
 }
 const qlog = () => LOG.filter(e => REVIEW_KINDS.has(e.k) || e.k === 'fu');   // fu：答對後的追問（追問答錯 → 那次算猜對）
 const okSet = () => new Set(LOG.filter(e => e.ok && e.h).map(e => e.h));
@@ -797,18 +809,35 @@ function mcq(q, num) {
   const ord = shuffled(q.o.length, q.h + Math.random());   // 每次打開都重新打亂，複習時不能靠記位置
   return `<div class="q" data-h="${esc(q.h)}">${num ? `<p class="qnum">${num}</p>` : ''}<p class="qt">${q.q}</p>${q.hint ? `<p class="hintrow"><button class="btn sm ghost" type="button" data-hint>看中文提示</button><span class="hintz" hidden>${esc(q.hint)}</span></p>` : ''}<div class="opts">${ord.map(j => `<button class="opt${q.en ? ' en-o' : ''}" type="button" data-o="${j}">${esc(q.o[j])}</button>`).join('')}</div><div class="why" hidden></div></div>`;
 }
+// 「重新練習這一段」：記一筆 k:'reset'（c 為這一段），畫面只看這之後的作答；作答紀錄、錯題本、週報都不受影響
+const resetT = c => LOG.reduce((t, e) => (e.k === 'reset' && e.c === c ? Math.max(t, e.t) : t), 0);
+function viewOf(c) {
+  const t0 = resetT(c), ok = new Set(LOG.filter(e => e.ok && e.h && e.t > t0).map(e => e.h)), f1 = new Map();
+  REVIEW.trials(qlog().filter(e => e.t > t0)).forEach(t => { if (!f1.has(t.h)) f1.set(t.h, t.ok); });
+  return { ok, f1 };
+}
+// 已作答的題目收成一行；點一下展開／收起
+function collapse(box, first, text) {
+  box.classList.add('prev', 'collapsed'); if (first) box.classList.add('done');
+  const b = document.createElement('button'); b.type = 'button'; b.className = 'qrow';
+  b.innerHTML = `<b class="${first ? 'r-ok' : 'r-no'}">${first ? '✓ 第一次答對' : '✗ 第一次答錯（已進錯題本）・點開再做一次'}</b><span>${esc(text)}</span>`;
+  b.onclick = () => box.classList.toggle('collapsed'); box.prepend(b);
+}
+const plain = h => String(h).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 48);
 // 晚上的回想題：打開「早上的 10 個字」之後作答，記成 pk（看過卡片）
 let PEEKED = false;
 function bindMcq(root, list, onDone, restore = true) {
-  const done0 = restore ? okSet() : new Set(), f1 = restore ? firstOk() : new Map();
+  const views = {}, V = c => views[c] || (views[c] = viewOf(c));
   list.forEach(q => {
     const qe = root.querySelector(`.q[data-h="${CSS.escape(q.h)}"]`); if (!qe) return;
     let n = 0; const why = $('.why', qe);
     const hb = $('[data-hint]', qe);
     if (hb) hb.onclick = () => { hb.hidden = true; $('.hintz', qe).hidden = false; logAnswer({ c: q.c, k: 'hint', h: q.h, qt: q.qt }); };
-    if (f1.get(q.h) === false) {   // 第一次答錯：只提醒，不標出上次選的選項，可以重新作答（同一天重做不影響紀錄與錯題排程）
-      qe.insertAdjacentHTML('afterbegin', '<p class="redo">這題第一次答錯（已排進錯題本），再做一次。</p>');
-    } else if (done0.has(q.h)) {   // 第一次就答對：直接顯示結果
+    const v = restore ? V(q.c) : null;
+    if (v && v.ok.has(q.h) && v.f1.get(q.h) === false) {   // 第一次答錯：收成一行，點開可以重新作答，不標出上次選的選項
+      collapse(qe, false, plain(q.q));
+    } else if (v && v.ok.has(q.h)) {   // 第一次就答對：收成一行，點開看答案與解析
+      collapse(qe, true, plain(q.q));
       $$('.opt', qe).forEach(x => { x.disabled = true; if (x.dataset.o === '0') x.classList.add('right'); });
       if (hb) hb.parentNode.hidden = true;
       why.hidden = false; why.className = 'why ok'; why.innerHTML = `<b>已完成。</b>${q.why}`; qe.classList.add('done');
@@ -898,11 +927,11 @@ function bindSent(root, w, d, j, s, onDone, key = `${d}:${j}`, restore = true) {
     }; });
   };
   if (restore) {
-    const ok = okSet(), f1 = firstOk(), hs = s.steps.map((st, i) => sentH(w, d, j, i));
-    if (hs.every(h => ok.has(h))) {
-      const bad = hs.map((h, i) => (f1.get(h) === false ? i + 1 : 0)).filter(Boolean);
-      if (!bad.length) return finish();
-      card.insertAdjacentHTML('afterbegin', `<p class="redo">這句的第 ${bad.join('、')} 步第一次答錯（已排進錯題本），再拆一次。</p>`);
+    const v = viewOf(c), hs = s.steps.map((st, i) => sentH(w, d, j, i));
+    if (hs.every(h => v.ok.has(h))) {
+      const first = hs.every(h => v.f1.get(h) !== false);
+      collapse(card, first, s.core);
+      if (first) return finish();
     }
   }
   draw(0);
@@ -936,9 +965,30 @@ function dayHead(w, d, s) {
   return `<p class="eyebrow">第 ${w.n} 週・第 ${d + 1} 天・${s === 'am' ? '早上' : '晚上'}</p>
 <nav class="pn">${prev ? `<a href="${prev}">‹ 上一段</a>` : ''}<a href="#">本週</a><a href="${next}">${s === 'pm' && d === 6 ? '本週報告' : '下一段'} ›</a></nav>`;
 }
-function progressLine(ids) {
-  const el = $('#segProg'); if (!el) return;
-  const f = frac(ids, okSet()); el.innerHTML = `${bar(f)}<span>${f >= 1 ? '✓ 這一段完成了' : `完成 ${Math.round(100 * f)}%`}</span>`;
+// 每一部分標題旁的「已完成 x / y」；在已作答的題目之前、還沒作答的題目標成「跳過」，最上方列出來
+const itemDone = e => e.classList.contains('done') || e.classList.contains('prev') || (e.classList.contains('sentc') && !!e.querySelector('.core'));
+function refreshParts() {
+  const top = $('#segProg'); if (!top) return;
+  const all = [];
+  $$('[data-part]').forEach(sec => {
+    const items = $$('.q[data-h], .sentc', sec).filter(e => !e.closest('.sheet')), n = items.filter(itemDone).length;
+    const lab = $('.pcnt', sec); if (lab) { lab.textContent = items.length ? `已完成 ${n} / ${items.length}` : ''; lab.classList.toggle('fin', n === items.length); }
+    items.forEach((e, k) => all.push({ e, label: `${sec.dataset.part}第 ${k + 1} 題` }));
+  });
+  const last = all.map(x => itemDone(x.e)).lastIndexOf(true), skip = all.filter((x, k) => k < last && !itemDone(x.e));
+  all.forEach(x => x.e.classList.toggle('skipped', skip.includes(x)));
+  const n = all.filter(x => itemDone(x.e)).length;
+  top.innerHTML = `${bar(all.length ? n / all.length : 0)}<span>${n === all.length ? '✓ 這一段完成了' : `已完成 ${n} / ${all.length} 題`}</span>${skip.length ? `<span class="skips">跳過：${skip.map((x, k) => `<button type="button" class="linkb" data-sk="${k}">${x.label}</button>`).join('、')}</span>` : ''}`;
+  $$('[data-sk]', top).forEach(b => { b.onclick = () => skip[+b.dataset.sk].e.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
+}
+function resetBox(c) {
+  const box = $('#rsBox'); if (!box) return;
+  box.innerHTML = '<button class="btn sm ghost" type="button" data-rs>重新練習這一段</button>';
+  $('[data-rs]', box).onclick = () => {
+    box.innerHTML = '<span class="small">讓這一段全部恢復成沒做過的樣子？作答紀錄和錯題本不會刪除。</span><button class="btn sm pri" type="button" data-y>確定</button><button class="btn sm" type="button" data-n>取消</button>';
+    $('[data-y]', box).onclick = () => { logAnswer({ c, k: 'reset', h: `reset:${c}`, qt: '重新練習這一段' }); route(); };
+    $('[data-n]', box).onclick = () => resetBox(c);
+  };
 }
 // 單字卡：早上的頁面（可標「不熟」）與晚上的面板共用
 function wordCards(w, d, withUnsure) {
@@ -946,17 +996,18 @@ function wordCards(w, d, withUnsure) {
   return w.words[d].map(x => `<article class="wcard"><p class="wh"><span class="enw">${esc(x[0])}</span>${sayBtn(x[0])}<span class="pos">${esc(x[1])}</span><span class="wz">${esc(x[2])}</span></p>${x[3] ? `<p class="root">${esc(x[3])}</p>` : ''}<p class="ens">${esc(x[4])} ${sayBtn(x[4], '朗讀例句')}</p><p class="zh">${esc(x[5])}</p>${withUnsure ? unsureBtn(`u:word:${wkKey(w)}:${x[0]}`, c, `${x[0]}（${x[2]}）`) : ''}</article>`).join('');
 }
 function renderAM(w, d) {
-  const words = w.words[d], wq = words.map((x, i) => wordQ(w, d, i)), c = `${wkKey(w)}d${d + 1}am`, rv = reviewItems(12);
-  $('#main').innerHTML = `${dayHead(w, d, 'am')}<h1>早上：單字與長句</h1><p class="segprog" id="segProg"></p>
-<section class="part"><h2>1. 錯題複習<small>約 5–10 分鐘</small></h2>${rv.length ? `<p class="note">之前答錯、今天到期的題目。第一次就答對才算過關，答錯會再排一次。</p><div id="rv">${reviewHTML(rv)}</div>` : '<p class="note">今天沒有到期的錯題。</p>'}</section>
-<section class="part"><h2>2. 新單字<small>約 10 分鐘</small></h2><p class="note">先看字根拆解和例句，大聲唸一次例句。不熟的按「？還不太懂」，匯出時會列給下一週。</p>
+  const words = w.words[d], wq = words.map((x, i) => wordQ(w, d, i)), c = `${wkKey(w)}d${d + 1}am`, due = REVIEW.book(qlog()).due.length;
+  $('#main').innerHTML = `${dayHead(w, d, 'am')}<h1>早上：單字與長句</h1><p class="segprog" id="segProg"></p><div class="resetbox" id="rsBox"></div>
+<section class="part"><h2>1. 錯題複習<small>約 5–10 分鐘</small></h2>${due ? `<a class="btn pri rvgo" href="#review" data-back="#d${d + 1}am">今天到期 ${due} 題，先去錯題本複習 →</a><p class="note">做完會有按鈕回到這裡。</p>` : '<p class="note">今天沒有到期的錯題。</p>'}</section>
+<section class="part" data-part="單字"><h2>2. 新單字<small>約 10 分鐘</small><span class="pcnt"></span></h2><p class="note">先看字根拆解和例句，大聲唸一次例句。不熟的按「？還不太懂」，匯出時會列給下一週。</p>
 <div class="words">${wordCards(w, d, true)}</div>
 
 <h3>小測驗：選出意思</h3><div id="wq">${wq.map((q, i) => mcq(q, `${i + 1} / ${wq.length}`)).join('')}</div></section>
-<section class="part"><h2>3. 長句拆解<small>約 10 分鐘</small></h2><p class="note">先找主要動詞，再找主詞，其他部分都是修飾。每一步答對，句子上會標出來。</p>${w.sents[d].map((s, j) => sentHTML(w, d, j, s)).join('')}</section>
+<section class="part" data-part="長句"><h2>3. 長句拆解<small>約 10 分鐘</small><span class="pcnt"></span></h2><p class="note">先找主要動詞，再找主詞，其他部分都是修飾。每一步答對，句子上會標出來。</p>${w.sents[d].map((s, j) => sentHTML(w, d, j, s)).join('')}</section>
 <div class="row endrow"><a class="btn pri" href="#d${d + 1}pm">晚上的部分 ›</a></div>`;
-  const ids = amIds(w, d), upd = () => progressLine(ids);
-  bindReview(rv); bindUnsure($('#main')); bindMcq($('#wq'), wq, upd); w.sents[d].forEach((s, j) => bindSent($('#main'), w, d, j, s, upd)); upd();
+  const upd = () => refreshParts();
+  $$('.rvgo').forEach(a => { a.onclick = () => store.set('rvBack', a.dataset.back); });
+  bindUnsure($('#main')); bindMcq($('#wq'), wq, upd); w.sents[d].forEach((s, j) => bindSent($('#main'), w, d, j, s, upd)); upd(); resetBox(c);
 }
 function passageHTML(w, d, P) {
   const blank = t => esc(t).replace(/\{(\d)\}/g, (m, n) => `<span class="blank" data-b="${n}">(${n}) ＿＿＿＿</span>`);
@@ -964,27 +1015,30 @@ function passageHTML(w, d, P) {
   const text = `<div class="passage card"><p class="ptitle">${esc(P.title)}</p>${P.text.map(t => `<p class="ens">${blank(t)} ${sayEl('p')}</p>`).join('')}<details><summary>中文翻譯（做完再看）</summary><p class="zh">${esc(P.zh)}</p></details></div>`;
   if (P.type === 'cloze') return `<p class="note">克漏字：每格先看前後文是什麼關係（同方向、相反、因果），再看空格要什麼詞性。</p>${text}<div id="pq">${pq.map((q, i) => mcq(q, `第 ${i + 1} 格`)).join('')}</div>`;
   return `<p class="note">閱讀：先看題目知道要找什麼，再讀文章，最後回答。</p>
-<div class="card pre"><p class="lbl">先看題目</p><ol>${P.qs.map(q => `<li><span class="ens">${esc(q.q)}</span>${sayBtn(q.q.replace(/_+/g, ' blank '), '朗讀題目')}<br><small class="mut">${esc(q.pre || '')}</small></li>`).join('')}</ol></div>${text}<div id="pq">${pq.map((q, i) => mcq(q, `第 ${i + 1} 題`)).join('')}</div>`;
+<div class="card pre"><p class="lbl">先看題目</p><ol>${P.qs.map(q => `<li><span class="ens">${esc(q.q)}</span>${sayBtn(q.q.replace(/_+/g, ' blank '), '朗讀題目')}</li>`).join('')}</ol></div>${text}<div id="pq">${pq.map((q, i) => mcq(q, `第 ${i + 1} 題`)).join('')}</div>`;
 }
 function renderPM(w, d) {
   const G = w.gram[d], P = w.passages[d], c = `${wkKey(w)}d${d + 1}pm`;
   const gq = G.qs.map(q => gramQ(w, d, q)), pq = P.qs.map(q => passQ(w, d, q)), rq = w.words[d].map((x, i) => recallQ(w, d, i));
-  $('#main').innerHTML = `${dayHead(w, d, 'pm')}<h1>晚上：文法與文章</h1><p class="segprog" id="segProg"></p>
-<section class="part"><h2>1. 文法重點<small>約 10 分鐘</small></h2><div class="card lesson"><h3>${esc(G.title)}</h3>${G.body}<p class="lbl">這一課練的能力：${esc(SKILLS[G.id] || G.id)}</p><div class="row">${unsureBtn(`u:gram:${wkKey(w)}:${d}`, c, G.title)}</div></div>
+  $('#main').innerHTML = `${dayHead(w, d, 'pm')}<h1>晚上：文法與文章</h1><p class="segprog" id="segProg"></p><div class="resetbox" id="rsBox"></div>
+<section class="part" data-part="文法"><h2>1. 文法重點<small>約 10 分鐘</small><span class="pcnt"></span></h2><div class="card lesson"><h3>${esc(G.title)}</h3>${G.body}<p class="lbl">這一課練的能力：${esc(SKILLS[G.id] || G.id)}</p><div class="row">${unsureBtn(`u:gram:${wkKey(w)}:${d}`, c, G.title)}</div></div>
 <div id="gq">${gq.map((q, i) => mcq(q, `${i + 1} / ${gq.length}`)).join('')}</div></section>
-<section class="part"><h2>2. ${P.type === 'cloze' ? '克漏字' : '閱讀測驗'}<small>約 12 分鐘</small></h2>${passageHTML(w, d, P)}<div class="row">${unsureBtn(`u:pass:${wkKey(w)}:${d}`, c, P.title)}</div></section>
-<section class="part"><h2>3. 單字回想<small>約 5 分鐘</small></h2><p class="note">早上的 10 個字放回例句裡。先自己想；真的想不起來，按畫面下方的「早上的 10 個字」打開卡片（會記錄，週報會把這些字列為還不熟）。</p><div id="rq">${rq.map((q, i) => mcq(q, `${i + 1} / ${rq.length}`)).join('')}</div></section>
-<button class="btn pri peekbtn" type="button" id="peekBtn">早上的 10 個字</button>
+<section class="part" data-part="${P.type === 'cloze' ? '克漏字' : '閱讀'}"><h2>2. ${P.type === 'cloze' ? '克漏字' : '閱讀測驗'}<small>約 12 分鐘</small><span class="pcnt"></span></h2>${passageHTML(w, d, P)}<div class="row">${unsureBtn(`u:pass:${wkKey(w)}:${d}`, c, P.title)}</div></section>
+<section class="part" data-part="回想" id="rqPart"><h2>3. 單字回想<small>約 5 分鐘</small><span class="pcnt"></span></h2><p class="note">早上的 10 個字放回例句裡。先自己想；真的想不起來，按畫面下方的「早上的 10 個字」打開卡片（會記錄，週報會把這些字列為還不熟）。</p><div id="rq">${rq.map((q, i) => mcq(q, `${i + 1} / ${rq.length}`)).join('')}</div></section>
+<button class="btn pri peekbtn" type="button" id="peekBtn" hidden>早上的 10 個字</button>
 <div class="sheet" id="peek" hidden role="dialog" aria-label="早上的 10 個字"><div class="sheet-h"><b>早上的 10 個字</b><button class="btn sm" type="button" id="peekX">關閉</button></div><div class="words">${wordCards(w, d, false)}</div></div>
 <div class="row endrow"><a class="btn pri" href="${d < 6 ? `#d${d + 2}am` : '#report'}">${d < 6 ? '明天早上 ›' : '本週報告 ›'}</a><a class="btn" href="#">本週</a></div>`;
-  const ids = pmIds(w, d), upd = q => {
-    progressLine(ids);
+  const upd = q => {
+    refreshParts();
     if (q && P.type === 'cloze') { const n = P.qs.findIndex(x => passQ(w, d, x).h === q.h) + 1, b = $(`.blank[data-b="${n}"]`); if (b) { b.textContent = `(${n}) ${q.o[0]}`; b.classList.add('fill'); } }
   };
   PEEKED = false;
   $('#peekBtn').onclick = () => { $('#peek').hidden = false; $('#peekBtn').hidden = true; if (!PEEKED) { PEEKED = true; logAnswer({ c, k: 'peek', h: `peek:${c}`, qt: '回想時打開早上的單字卡' }); } };
-  $('#peekX').onclick = () => { $('#peek').hidden = true; $('#peekBtn').hidden = false; };
-  bindUnsure($('#main')); bindMcq($('#gq'), gq, upd); bindMcq($('#pq'), pq, upd); bindMcq($('#rq'), rq, upd); upd();
+  // 浮動按鈕只在「單字回想」這一段出現在畫面上時顯示
+  let inRq = false;
+  $('#peekX').onclick = () => { $('#peek').hidden = true; $('#peekBtn').hidden = !inRq; };
+  if ('IntersectionObserver' in window) new IntersectionObserver(es => { inRq = es[0].isIntersecting; if ($('#peek').hidden) $('#peekBtn').hidden = !inRq; }).observe($('#rqPart'));
+  bindUnsure($('#main')); bindMcq($('#gq'), gq, upd); bindMcq($('#pq'), pq, upd); bindMcq($('#rq'), rq, upd); upd(); resetBox(c);
 }
 
 /* ---- 錯題複習 ---- */
@@ -1021,7 +1075,7 @@ function renderReview() {
   const items = reviewItems(), book = REVIEW.book(qlog());
   $('#main').innerHTML = `<p class="eyebrow">錯題本</p><h1>今天到期的錯題</h1>
 <p class="lede">${REVIEW.RULE}</p><p>錯題本目前共 <b>${book.open.length}</b> 題，待確認（答對過的新題）<b>${book.checks.length}</b> 題；今天到期 <b>${book.due.length}</b> 題。</p>${(up => up.length ? `<p class="small mut">接下來 14 天：${up.map(([d, n]) => `${+d.slice(5, 7)}/${+d.slice(8)} ${n} 題`).join('、')}</p>` : '')(REVIEW.upcoming(book.open.concat(book.checks)))}
-<div id="rv">${items.length ? reviewHTML(items) : '<p class="note">今天沒有到期的錯題。</p>'}</div><div class="row endrow"><a class="btn" href="#">回到本週</a></div>`;
+<div id="rv">${items.length ? reviewHTML(items) : '<p class="note">今天沒有到期的錯題。</p>'}</div><div class="row endrow">${store.get('rvBack', '') ? `<a class="btn pri" href="${store.get('rvBack', '')}">回到早上的練習 ›</a>` : ''}<a class="btn" href="#">回到本週</a></div>`;
   bindReview(items);
 }
 

@@ -177,6 +177,15 @@ svg.en.clip { overflow: hidden; }
 .secnav a.r-ok { border-color: var(--good); background: var(--good-soft); color: var(--good); } .secnav a.r-ok::before { content: "✓ "; }
 .secnav a.r-unsure { border-color: var(--warn); background: var(--warn-soft); color: var(--warn); } .secnav a.r-unsure::before { content: "？ "; }
 /* 一節一頁：章內導覽、小節清單、練習區 */
+.qrow { display: flex; flex-wrap: wrap; gap: 2px 10px; width: 100%; text-align: left; background: none; border: 0; padding: 4px 0; cursor: pointer; color: var(--ink); font-size: 14px; }
+.qrow span { color: var(--muted); min-width: 0; overflow-wrap: anywhere; } .qrow .r-ok { color: var(--good); } .qrow .r-no { color: var(--bad); }
+.collapsed > :not(.qrow) { display: none !important; }
+.q.skipped { border-left: 4px solid var(--warn); padding-left: 10px; }
+.q.skipped::before { content: "跳過了"; display: inline-block; font-size: 12px; color: var(--warn); background: var(--warn-soft); border-radius: 4px; padding: 0 6px; margin-bottom: 4px; }
+.pracsum { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 13.5px; color: var(--warn); margin: 6px 0; } .pracsum .ok { color: var(--good); }
+.skips { font-size: 13px; color: var(--warn); }
+.linkb { background: none; border: 0; padding: 0; color: var(--accent); text-decoration: underline; cursor: pointer; font-size: 13px; }
+.resetbox { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 4px 0 8px; }
 .chbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 10px 0; border-bottom: 1px solid var(--line); margin-bottom: 4px; font-size: 14px; }
 .chb-t { font-weight: 700; text-decoration: none; color: var(--ink); flex: 1 1 auto; min-width: 0; }
 .chb-n { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
@@ -372,6 +381,16 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 .lvl.on { stroke: var(--arrow); stroke-width: 3; }
 .orbf { fill: var(--acid); fill-opacity: .35; stroke: var(--acid); } .orbf.b { fill: var(--base); stroke: var(--base); }
 .axl { stroke: var(--line); stroke-dasharray: 3 3; }
+.ionc { fill: var(--soft); stroke: var(--accent); stroke-width: 2; }
+.nearz { fill: var(--sunk); opacity: .8; } .lgd::before { content: ""; display: inline-block; width: 14px; height: 4px; background: var(--c); margin-right: 4px; vertical-align: middle; } .lgd { font-weight: 700; margin-right: 4px; }
+#a3E svg { max-width: 240px; display: block; margin: 0 auto; }
+.a3grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 220px); gap: 12px; align-items: start; } .a3c { width: 100%; max-width: 560px; touch-action: none; cursor: grab; display: block; margin: 0 auto; background: var(--bg); border-radius: 10px; }
+@media (max-width: 560px) { .a3grid { grid-template-columns: minmax(0, 1fr); } }
+.wall { fill: var(--muted); opacity: .45; } .w-ok { stroke: var(--good); } .w-bad { stroke: var(--bad); } .dot-bad { fill: var(--bad); } .w-okl { stroke: var(--good); stroke-width: 3; } .tk.bad { fill: var(--bad); font-weight: 700; }
+.el-f { fill: var(--accent); } .el-e { fill: none; stroke: var(--muted); stroke-width: 1; opacity: .7; }
+.nlc { fill: var(--surface); stroke: var(--line); stroke-width: 1.2; } .nlc.cur { stroke: var(--arrow); stroke-width: 2.5; }
+.nlf { fill: var(--accent); opacity: .22; pointer-events: none; }
+.diag { stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 4 3; opacity: .7; }
 .boxes { display: flex; flex-wrap: wrap; gap: 10px 16px; margin: 8px 0; }
 .boxes .sub { display: grid; gap: 2px; justify-items: center; }
 .boxes .sub > div { display: flex; }
