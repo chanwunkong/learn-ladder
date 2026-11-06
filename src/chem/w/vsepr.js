@@ -1,14 +1,57 @@
-/* ---------- 後中化學：化學鍵與分子形狀的互動圖 ---------- */
+/* ---------- 後中化學：化學鍵與分子形狀的互動圖（第二章；3D 分子在 vsepr3d.js） ---------- */
 
-/* ===== 1. 電負度差與鍵的類型 ===== */
+/* ===== 第 1 節：位能曲線＋兩個原子之間的吸引與排斥 =====
+   鍵長 pm、鍵能 kJ/mol（教科書常用值）；曲線用 E = D[(r₀/r)¹² − 2(r₀/r)⁶] 示意 */
+const BONDS2 = { 'H–H': [74, 436], 'F–F': [142, 158], 'Cl–Cl': [199, 243], 'Br–Br': [228, 193], 'I–I': [267, 151], 'O=O': [121, 498], 'N≡N': [110, 945] };
+W.potcurve = el => {
+  const st = { b: 'Cl–Cl', r: 300 };
+  el.innerHTML = `${seg('pcS', Object.keys(BONDS2).map(k => [k, k]), st.b)}<div class="w-row"><label class="rng">核間距離 r<input type="range" id="pcR" min="60" max="450" step="2"><output class="mono" id="pcO"></output></label></div><div id="pcA"></div><div id="pcG"></div><p class="eq" id="pcF"></p><p class="note" id="pcN"></p>`;
+  const E = (r, [r0, D]) => D * ((r0 / r) ** 12 - 2 * (r0 / r) ** 6);
+  function atoms() {
+    const [r0] = BONDS2[st.b], [a, b] = st.b.split(/[–=≡]/), half = st.r * 0.5, x1 = 280 - half, x2 = 280 + half, R = Math.min(30, Math.max(14, r0 * 0.12));
+    // 力的大小（對 r 微分）：吸引 ∝ (r₀/r)⁷、排斥 ∝ (r₀/r)¹³，在 r₀ 兩者相等；箭頭長度以 r₀ 時 = 40 px
+    const fa = (r0 / st.r) ** 7, fr = (r0 / st.r) ** 13, La = Math.min(110, 40 * fa), Lr = Math.min(110, 40 * fr);
+    const ar = (x, dir, L, y, c) => (L < 3 ? '' : `<line x1="${x}" y1="${y}" x2="${x + dir * L}" y2="${y}" stroke="${c}" stroke-width="5" marker-end="url(#pc${c === '#3A6FD8' ? 'b' : 'r'})"/>`);
+    return `<svg viewBox="0 0 560 100" class="chart" role="img" aria-label="兩個原子之間的吸引與排斥"><defs><marker id="pcb" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10z" fill="#3A6FD8"/></marker><marker id="pcr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--bad)"/></marker></defs>
+<circle cx="${x1}" cy="50" r="${R}" fill="var(--accent)" opacity=".25"/><circle cx="${x2}" cy="50" r="${R}" fill="var(--accent)" opacity=".25"/><text class="tk" x="${x1}" y="55" text-anchor="middle">${a}</text><text class="tk" x="${x2}" y="55" text-anchor="middle">${b}</text>
+${ar(x1, 1, La, 50 - R - 8, '#3A6FD8')}${ar(x2, -1, La, 50 - R - 8, '#3A6FD8')}${ar(x1, -1, Lr, 50 + R + 8, 'var(--bad)')}${ar(x2, 1, Lr, 50 + R + 8, 'var(--bad)')}</svg>`;
+  }
+  function draw() {
+    const d = BONDS2[st.b], e = E(st.r, d), xs = r0 => Array.from({ length: 200 }, (_, i) => 50 + i * 2).filter(r => r > r0 * 0.86);
+    $('#pcA', el).innerHTML = atoms();
+    $('#pcG', el).innerHTML = chart({ w: 560, h: 240, x: [50, 450], y: [-1000, 400], xt: [100, 200, 300, 400], yt: [-1000, -500, 0, 400], xlab: '核間距離 r（pm）', ylab: '位能（kJ/mol）', label: '位能曲線' }, (X, Y) =>
+      Object.entries(BONDS2).map(([k, v]) => `<path class="tline${k === st.b ? '' : ' faint'}" d="${path(xs(v[0]).map(r => [X(r), Y(clamp(E(r, v), -1000, 400))]))}"/>`).join('')
+      + `<line class="mk" x1="${X(d[0])}" x2="${X(d[0])}" y1="${Y(0)}" y2="${Y(-d[1])}"/><circle class="dot" data-cur="${st.b}" cx="${X(st.r)}" cy="${Y(clamp(e, -1000, 400))}" r="7"/>`);
+    $('#pcR', el).value = st.r; $('#pcO', el).textContent = `${st.r} pm`;
+    $('#pcF', el).innerHTML = `${st.b}：谷底在 r = <b>${d[0]} pm</b>（鍵長），深度 <b>${d[1]} kJ/mol</b>（鍵能）；目前 r = ${st.r} pm，位能 ${fx(e, 0)} kJ/mol`;
+    $('#pcN', el).innerHTML = `上面兩個原子跟著滑桿移動：<span style="color:#3A6FD8">藍箭頭</span>是原子核吸引對方電子的力，<span style="color:var(--bad)">紅箭頭</span>是兩個原子核（和內層電子）的排斥。${st.r > d[0] * 1.05 ? '現在離得遠：吸引比排斥大，原子會再靠近，位能往下走。' : st.r < d[0] * 0.95 ? '現在太近：排斥急遽變大、壓過吸引，位能急遽升高。' : '現在在谷底：兩個箭頭一樣長，力互相抵消，這個距離就是鍵長。'}`;
+    pressSeg(el, 'pcS', st.b);
+  }
+  $('#pcR', el).oninput = e => { st.r = +e.target.value; draw(); };
+  bindSeg(el, 'pcS', v => { st.b = v; st.r = Math.round(BONDS2[v][0] * 1.6); draw(); });
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+
+/* ===== 第 2 節：電負度差 → 電子雲偏向哪一邊 ===== */
 const EN = { H: 2.20, Li: 0.98, B: 2.04, C: 2.55, N: 3.04, O: 3.44, F: 3.98, Na: 0.93, Mg: 1.31, Si: 1.90, P: 2.19, S: 2.58, Cl: 3.16, K: 0.82, As: 2.18, Br: 2.96, I: 2.66 };
 W.bondtype = el => {
   let a = 'H', b = 'Cl';
-  el.innerHTML = `<div class="w-row"><label class="sel">原子 A <select id="btA">${Object.keys(EN).map(k => `<option>${k}</option>`).join('')}</select></label><label class="sel">原子 B <select id="btB">${Object.keys(EN).map(k => `<option>${k}</option>`).join('')}</select></label><span class="sp"></span>${[['H', 'H'], ['C', 'H'], ['H', 'Cl'], ['C', 'O'], ['Na', 'Cl']].map(([x, y]) => `<button class="btn sm ghost" type="button" data-p="${x},${y}">${x}–${y}</button>`).join('')}</div><div id="btC"></div><p class="note" id="btN"></p>`;
+  const opts = Object.keys(EN).map(k => `<option>${k}</option>`).join('');
+  el.innerHTML = `<div class="w-row">${ctl('兩個原子', `<label class="sel">A <select id="btA">${opts}</select></label><label class="sel">B <select id="btB">${opts}</select></label>`)}${ctl('常見的鍵', [['H', 'H'], ['C', 'H'], ['H', 'Cl'], ['C', 'O'], ['H', 'F'], ['Na', 'Cl']].map(([x, y]) => `<button class="btn sm ghost" type="button" data-p="${x},${y}">${x}–${y}</button>`).join(''))}</div><div id="btE"></div><div id="btC"></div><p class="note" id="btN"></p>`;
+  function cloud(d, hiLeft) {
+    const xa = 190, xb = 370, f = Math.min(d / 1.7, 1), ion = d >= 1.7, dir = hiLeft ? -1 : 1;
+    const cx = ion ? (hiLeft ? xa : xb) : 280 + dir * f * 75, rx = ion ? 46 : 105 - 45 * f;
+    const lab = (x, t) => `<text class="tk hl" x="${x}" y="20" text-anchor="middle">${t}</text>`;
+    const tags = d < 0.05 ? '' : ion ? lab(hiLeft ? xb : xa, '+') + lab(hiLeft ? xa : xb, '−') : lab(hiLeft ? xb : xa, 'δ+') + lab(hiLeft ? xa : xb, 'δ−');
+    return `<svg viewBox="0 0 560 120" class="chart" role="img" aria-label="鍵上的電子雲"><ellipse data-cur="${a}–${b}" cx="${cx}" cy="68" rx="${rx}" ry="${ion ? 46 : 34}" fill="var(--accent)" opacity=".28"/>
+<circle cx="${xa}" cy="68" r="24" fill="none" stroke="currentColor" stroke-opacity=".5"/><circle cx="${xb}" cy="68" r="24" fill="none" stroke="currentColor" stroke-opacity=".5"/><text class="tk" x="${xa}" y="73" text-anchor="middle">${a}</text><text class="tk" x="${xb}" y="73" text-anchor="middle">${b}</text>${tags}</svg>`;
+  }
   function draw() {
     const d = Math.abs(EN[a] - EN[b]), hi = EN[a] >= EN[b] ? a : b, lo = hi === a ? b : a;
-    $('#btC', el).innerHTML = chart({ x: [0, 3.3], y: [0, 1], xt: [0, 0.5, 1, 1.7, 2, 3], yt: [], xlab: '電負度差 ΔEN', h: 120 }, (X, Y) => `<rect x="${X(0)}" y="${Y(1)}" width="${X(0.5) - X(0)}" height="${Y(0) - Y(1)}" fill="var(--acid)" opacity=".12"/><rect x="${X(0.5)}" y="${Y(1)}" width="${X(1.7) - X(0.5)}" height="${Y(0) - Y(1)}" fill="var(--accent)" opacity=".12"/><rect x="${X(1.7)}" y="${Y(1)}" width="${X(3.3) - X(1.7)}" height="${Y(0) - Y(1)}" fill="var(--base)" opacity=".14"/><text class="tk" x="${X(0.25)}" y="${Y(0.85)}" text-anchor="middle">非極性共價</text><text class="tk" x="${X(1.1)}" y="${Y(0.85)}" text-anchor="middle">極性共價</text><text class="tk" x="${X(2.5)}" y="${Y(0.85)}" text-anchor="middle">離子性為主</text><circle class="dot" cx="${X(Math.min(3.2, d))}" cy="${Y(0.4)}" r="8"/>`);
-    $('#btN', el).innerHTML = a === b ? `${a}–${b}：完全相同的原子，電子平均共用，<b>非極性共價鍵</b>。` : `${a}（${EN[a]}）與 ${b}（${EN[b]}），ΔEN = ${fx(d, 2)}：${d < 0.5 ? '<b>非極性共價鍵</b>（C–H 屬此類，所以烷類幾乎不反應）' : d < 1.7 ? `<b>極性共價鍵</b>，電子偏向 ${hi}：${hi} 帶 δ−、${lo} 帶 δ+` : `<b>離子鍵為主</b>：電子幾乎完全轉移到 ${hi}，形成 ${lo}⁺ 與 ${hi}⁻`}。界線（0.5、1.7）只是大約的分法，鍵的性質是連續變化的。`;
+    $('#btE', el).innerHTML = cloud(d, EN[a] > EN[b]);
+    $('#btC', el).innerHTML = chart({ x: [0, 3.3], y: [0, 1], xt: [0, 0.5, 1, 1.7, 2, 3], yt: [], xlab: '電負度差 ΔEN', h: 110 }, (X, Y) => `<rect x="${X(0)}" y="${Y(1)}" width="${X(0.5) - X(0)}" height="${Y(0) - Y(1)}" fill="var(--acid)" opacity=".12"/><rect x="${X(0.5)}" y="${Y(1)}" width="${X(1.7) - X(0.5)}" height="${Y(0) - Y(1)}" fill="var(--accent)" opacity=".12"/><rect x="${X(1.7)}" y="${Y(1)}" width="${X(3.3) - X(1.7)}" height="${Y(0) - Y(1)}" fill="var(--base)" opacity=".14"/><text class="tk" x="${X(0.25)}" y="${Y(0.8)}" text-anchor="middle">非極性</text><text class="tk" x="${X(1.1)}" y="${Y(0.8)}" text-anchor="middle">極性共價</text><text class="tk" x="${X(2.5)}" y="${Y(0.8)}" text-anchor="middle">離子性為主</text><circle class="dot" cx="${X(Math.min(3.2, d))}" cy="${Y(0.35)}" r="8"/>`);
+    $('#btN', el).innerHTML = a === b ? `${a}–${b}：兩個原子相同，電子雲在正中間，<b>非極性共價鍵</b>。` : `${a}（${EN[a]}）與 ${b}（${EN[b]}），ΔEN = ${fx(d, 2)}：電子雲偏向電負度大的 <b>${hi}</b>。${d < 0.5 ? '偏得很少，視為<b>非極性共價鍵</b>（C–H 屬於這一類）。' : d < 1.7 ? `<b>極性共價鍵</b>：${hi} 端帶部分負電（δ−），${lo} 端帶部分正電（δ+）；ΔEN 越大，鍵的極性越大。` : `電子幾乎整個移到 ${hi}，${lo} 變成陽離子、${hi} 變成陰離子：<b>離子鍵</b>。`}`;
     $('#btA', el).value = a; $('#btB', el).value = b;
   }
   $('#btA', el).onchange = e => { a = e.target.value; draw(); };
@@ -18,186 +61,245 @@ W.bondtype = el => {
   return { set(s) { a = s.a || a; b = s.b || b; draw(); } };
 };
 
-/* ===== 2. VSEPR：電子區域與孤對電子 ===== */
-W.vsepr = el => {
-  // 各位置（二維投影）＋鍵型；孤對電子位置由前面開始放（三角雙錐先放赤道）
-  const GEO = {
-    2: [[[-1.3, 0], 's'], [[1.3, 0], 's']],
-    3: [[[0, 1.25], 's'], [[-1.1, -0.65], 's'], [[1.1, -0.65], 's']],
-    4: [[[0, 1.25], 's'], [[1.15, -0.4], 's'], [[-0.95, -0.55], 'w'], [[-0.25, -1.1], 'h']],
-    5: [[[1.3, 0], 's'], [[-0.75, -0.45], 'w'], [[-0.5, 0.55], 'h'], [[0, 1.35], 's'], [[0, -1.35], 's']],
-    6: [[[1.3, 0], 's'], [[-1.3, 0], 's'], [[0.6, 0.5], 'h'], [[-0.6, -0.5], 'w'], [[0, 1.35], 's'], [[0, -1.35], 's']],
-  };
-  const NAME = { '2,0': ['直線', '180°', 'CO₂、BeCl₂、HCN、NO₂⁺'], '3,0': ['平面三角形', '120°', 'BF₃、SO₃、NO₃⁻、CO₃²⁻'], '3,1': ['彎曲', '< 120°', 'SO₂、O₃、NO₂⁻'], '4,0': ['正四面體', '109.5°', 'CH₄、CCl₄、SiCl₄、NH₄⁺、SO₄²⁻'], '4,1': ['三角錐', '約 107°', 'NH₃、PCl₃、H₃O⁺'], '4,2': ['彎曲', '約 104.5°', 'H₂O、OF₂'],
-    '5,0': ['三角雙錐', '90°、120°', 'PCl₅、PF₅'], '5,1': ['蹺蹺板', '< 90°、< 120°', 'SF₄、SeF₄'], '5,2': ['T 形', '< 90°', 'ClF₃、IF₃'], '5,3': ['直線', '180°', 'XeF₂、I₃⁻'],
-    '6,0': ['正八面體', '90°', 'SF₆、PF₆⁻'], '6,1': ['四角錐', '< 90°', 'BrF₅、IF₅、XeOF₄'], '6,2': ['平面四方形', '90°', 'XeF₄、ICl₄⁻'] };
-  const HYB = { 2: 'sp', 3: 'sp²', 4: 'sp³', 5: 'sp³d', 6: 'sp³d²' }, NONPOLAR = ['2,0', '3,0', '4,0', '5,0', '5,3', '6,0', '6,2'];
-  const LPORDER = { 2: [], 3: [0], 4: [0, 3], 5: [0, 1, 2], 6: [4, 5] };
-  const st = { d: 4, lp: 1 };
-  el.innerHTML = `<div class="w-row"><span class="small">電子區域數</span>${[2, 3, 4, 5, 6].map(v => `<button class="btn sm" type="button" data-d="${v}">${v}</button>`).join('')}<span class="sp"></span><span class="small">其中孤對電子</span><span id="vsL"></span></div><div class="bgrid"><div id="vsM"></div><div class="cards" id="vsK"></div></div><p class="note" id="vsN"></p>`;
-  function draw() {
-    const maxlp = { 2: 0, 3: 1, 4: 2, 5: 3, 6: 2 }[st.d]; st.lp = Math.min(st.lp, maxlp);
-    $('#vsL', el).innerHTML = Array.from({ length: maxlp + 1 }, (_, i) => `<button class="btn sm${i === st.lp ? ' pri' : ''}" type="button" data-l="${i}">${i}</button>`).join('');
-    $$('[data-l]', el).forEach(b => { b.onclick = () => { st.lp = +b.dataset.l; draw(); }; });
-    $$('[data-d]', el).forEach(b => b.classList.toggle('pri', +b.dataset.d === st.d));
-    const lps = new Set(LPORDER[st.d].slice(0, st.lp)), atoms = { A: { x: 0, y: 0, t: 'A' } }, bonds = [];
-    GEO[st.d].forEach(([[x, y], k], i) => { if (lps.has(i)) { atoms['L' + i] = { x: x * 0.62, y: y * 0.62, t: '', lp: [Math.atan2(y, x) * 180 / Math.PI] }; return; } atoms['X' + i] = { x, y, t: 'X' }; bonds.push(['A', 'X' + i, k]); });
-    const svg = MOL.svg({ atoms, bonds }, { w: 260, h: 220, s: 62 }).replace(/<circle class="lp"/g, '<circle class="lp big"');
-    $('#vsM', el).innerHTML = svg;
-    const [nm, ang, ex] = NAME[`${st.d},${st.lp}`];
-    const key = `${st.d},${st.lp}`;
-    $('#vsK', el).innerHTML = card('g', '電子區域排列', { 2: '直線', 3: '平面三角形', 4: '四面體', 5: '三角雙錐', 6: '八面體' }[st.d]) + card('s', '分子形狀', nm) + card('a', '鍵角', ang) + card('h', '中心原子混成', HYB[st.d], `${st.d} 個電子區域`) + card('p', '周圍原子相同時', NONPOLAR.includes(key) ? '非極性' : '極性', NONPOLAR.includes(key) ? '鍵偶極抵消' : '不對稱');
-    $('#vsN', el).innerHTML = `例子：${ex}。電子區域（鍵或孤對）彼此排斥，盡量遠離，決定<b>電子區域的排列</b>；但<b>分子形狀</b>只看原子的位置，孤對電子「看不見」。孤對電子比鍵結電子佔更多空間，會把鍵角壓小（CH₄ 109.5° → NH₃ 107° → H₂O 104.5°）。${st.d === 5 && st.lp ? '三角雙錐的孤對電子放在<b>赤道</b>位置（120° 方向，比較寬敞）。' : ''}${st.d === 6 && st.lp === 2 ? '八面體的兩對孤對電子放在<b>相對</b>位置，互相離得最遠，所以是平面四方形。' : ''}`;
-  }
-  $$('[data-d]', el).forEach(b => { b.onclick = () => { st.d = +b.dataset.d; draw(); }; });
-  draw();
-  return { set(s) { Object.assign(st, s); draw(); } };
-};
-
-/* ===== 3. 分子極性：鍵偶極的向量和 ===== */
-W.dipole = el => {
-  const M = {
-    co2: { n: 'CO₂', a: { C: [0, 0, 'C'], O1: [-1.3, 0, 'O'], O2: [1.3, 0, 'O'] }, b: [['C', 'O1', 'd'], ['C', 'O2', 'd']], v: [[-1, 0], [1, 0]], polar: false },
-    h2o: { n: 'H₂O', a: { O: [0, 0.2, 'O'], H1: [-0.95, -0.55, 'H'], H2: [0.95, -0.55, 'H'] }, b: [['O', 'H1', 's'], ['O', 'H2', 's']], v: [[0.6, 0.55], [-0.6, 0.55]], polar: true },
-    bf3: { n: 'BF₃', a: { B: [0, 0, 'B'], F1: [0, 1.25, 'F'], F2: [-1.1, -0.65, 'F'], F3: [1.1, -0.65, 'F'] }, b: [['B', 'F1', 's'], ['B', 'F2', 's'], ['B', 'F3', 's']], v: [[0, 1], [-0.87, -0.5], [0.87, -0.5]], polar: false },
-    nh3: { n: 'NH₃', a: { N: [0, 0.25, 'N'], H1: [-1.05, -0.4, 'H'], H2: [0.3, -0.75, 'H'], H3: [1.0, -0.3, 'H'] }, b: [['N', 'H1', 's'], ['N', 'H2', 'w'], ['N', 'H3', 'h']], v: [[0.5, 0.3], [-0.1, 0.5], [-0.45, 0.3]], polar: true },
-    ccl4: { n: 'CCl₄', a: { C: [0, 0, 'C'], A: [0, 1.25, 'Cl'], B: [1.15, -0.4, 'Cl'], D: [-0.95, -0.55, 'Cl'], E: [-0.25, -1.1, 'Cl'] }, b: [['C', 'A', 's'], ['C', 'B', 's'], ['C', 'D', 'w'], ['C', 'E', 'h']], v: [], polar: false },
-    ch3cl: { n: 'CH₃Cl', a: { C: [0, 0, 'C'], A: [0, 1.25, 'Cl'], B: [1.15, -0.4, 'H'], D: [-0.95, -0.55, 'H'], E: [-0.25, -1.1, 'H'] }, b: [['C', 'A', 's'], ['C', 'B', 's'], ['C', 'D', 'w'], ['C', 'E', 'h']], v: [[0, 1]], polar: true },
-  };
-  let cur = 'h2o';
-  el.innerHTML = `${seg('dpS', Object.entries(M).map(([k, v]) => [k, v.n]), cur)}<div class="bgrid"><div id="dpM"></div><p class="note" id="dpN"></p></div>`;
-  function draw() {
-    const m = M[cur], atoms = Object.fromEntries(Object.entries(m.a).map(([k, [x, y, t]]) => [k, { x, y, t }]));
-    let svg = MOL.svg({ atoms, bonds: m.b }, { w: 280, h: 230, s: 62 });
-    const sx = 140, sy = 115, S = 62, sum = m.v.reduce((s, v) => [s[0] + v[0], s[1] + v[1]], [0, 0]), L = Math.hypot(...sum);
-    const arrows = m.polar ? `<line x1="${sx}" y1="${sy + 10}" x2="${sx + sum[0] / L * S * 1.2}" y2="${sy + 10 - sum[1] / L * S * 1.2}" class="netd" marker-end="url(#dpm)"/><defs><marker id="dpm" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--arrow)"/></marker></defs>` : '';
-    $('#dpM', el).innerHTML = svg.replace('</svg>', arrows + '</svg>');
-    $('#dpN', el).innerHTML = `<b>${m.n}</b>：${m.polar ? '<span class="ok">極性分子</span>。各鍵的偶極加起來不為零，紅色箭頭是淨偶極方向（指向電子偏向的一側）。' : '<span class="warn">非極性分子</span>。雖然每個鍵都有極性，但形狀對稱，鍵偶極互相抵消，淨偶極為零。'}判斷方法：先用 VSEPR 決定形狀，再把鍵偶極當向量相加。CCl₄ 非極性、CH₃Cl 極性，就是因為一個對稱、一個不對稱。`;
-    pressSeg(el, 'dpS', cur);
-  }
-  bindSeg(el, 'dpS', v => { cur = v; draw(); });
-  draw();
-  return { set(s) { cur = s.m || cur; draw(); } };
-};
-
-/* ===== 4. 分子間作用力：氫化物的沸點 ===== */
-W.imf = el => {
-  const G = { 14: ['CH₄', -161.5, 'SiH₄', -111.9, 'GeH₄', -88.5, 'SnH₄', -51.8], 15: ['NH₃', -33.3, 'PH₃', -87.7, 'AsH₃', -62.5, 'SbH₃', -17.0], 16: ['H₂O', 100.0, 'H₂S', -60.3, 'H₂Se', -41.3, 'H₂Te', -2.2], 17: ['HF', 19.5, 'HCl', -85.1, 'HBr', -66.8, 'HI', -35.4] };
-  const C = { 14: 'var(--muted)', 15: 'var(--acid)', 16: 'var(--arrow)', 17: 'var(--base)' };
-  el.innerHTML = `<div id="imC"></div><p class="note">第 14 族（CH₄ 系列）只有分散力：分子越大、電子越多，越容易被極化，沸點規律上升。第 15–17 族的第二週期（<b>NH₃、H₂O、HF</b>）沸點反常地高，因為 N、O、F 電負度大、半徑小，形成<b>氫鍵</b>。H₂O 每個分子可以形成四個氫鍵（兩個 H、兩對孤對電子），所以沸點最高。</p>`;
-  $('#imC', el).innerHTML = chart({ x: [1.5, 5.5], y: [-180, 120], xt: [2, 3, 4, 5], yt: [-150, -100, -50, 0, 50, 100], xlab: '週期', ylab: '沸點（°C）', h: 280, label: '氫化物沸點' }, (X, Y) => Object.entries(G).map(([g, d]) => { const pts = [0, 1, 2, 3].map(i => [X(i + 2), Y(d[2 * i + 1])]); return `<path d="${path(pts)}" fill="none" stroke="${C[g]}" stroke-width="2.4"/>${pts.map((p, i) => `<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="${C[g]}"/><text class="tk" x="${p[0] + ({ 14: -7, 15: 7, 16: 7, 17: -7 })[g]}" y="${p[1] + ({ 14: 4, 15: 14, 16: -6, 17: -6 })[g]}" text-anchor="${g == 14 || g == 17 ? 'end' : 'start'}">${d[2 * i]}</text>`).join('')}`; }).join(''));
-  return { set() {} };
-};
-
-/* ===== 5. 位能曲線：鍵長與鍵能 =====
-   鍵長 pm、鍵能 kJ/mol（教科書常用值）；曲線用 E = D[(r₀/r)¹² − 2(r₀/r)⁶] 示意 */
-const BONDS2 = { 'H–H': [74, 436], 'F–F': [142, 158], 'Cl–Cl': [199, 243], 'Br–Br': [228, 193], 'I–I': [267, 151], 'O=O': [121, 498], 'N≡N': [110, 945] };
-W.potcurve = el => {
-  const st = { b: 'Cl–Cl', r: 300 };
-  el.innerHTML = `${seg('pcS', Object.keys(BONDS2).map(k => [k, k]), st.b)}<div class="w-row"><label class="rng">核間距離 r<input type="range" id="pcR" min="60" max="450" step="2"><output class="mono" id="pcO"></output></label></div><div id="pcG"></div><p class="eq" id="pcF"></p><p class="note" id="pcN"></p>`;
-  const E = (r, [r0, D]) => D * ((r0 / r) ** 12 - 2 * (r0 / r) ** 6);
-  function draw() {
-    const d = BONDS2[st.b], e = E(st.r, d), xs = r0 => Array.from({ length: 200 }, (_, i) => 50 + i * 2).filter(r => r > r0 * 0.86);
-    $('#pcG', el).innerHTML = chart({ w: 560, h: 260, x: [50, 450], y: [-1000, 400], xt: [100, 200, 300, 400], yt: [-1000, -500, 0, 400], xlab: '核間距離 r（pm）', ylab: '位能（kJ/mol）', label: '位能曲線' }, (X, Y) =>
-      Object.entries(BONDS2).map(([k, v]) => `<path class="tline${k === st.b ? '' : ' faint'}" d="${path(xs(v[0]).map(r => [X(r), Y(clamp(E(r, v), -1000, 400))]))}"/>`).join('')
-      + `<line class="mk" x1="${X(d[0])}" x2="${X(d[0])}" y1="${Y(0)}" y2="${Y(-d[1])}"/><circle class="dot" cx="${X(st.r)}" cy="${Y(clamp(e, -1000, 400))}" r="7"/>`);
-    $('#pcR', el).value = st.r; $('#pcO', el).textContent = `${st.r} pm`;
-    $('#pcF', el).innerHTML = `${st.b}：最低點在 r = <b>${d[0]} pm</b>（鍵長），深度 <b>${d[1]} kJ/mol</b>（鍵能）；目前 r = ${st.r} pm，位能 ${fx(e, 0)} kJ/mol`;
-    $('#pcN', el).innerHTML = `${st.r > d[0] * 1.05 ? '距離較遠時，原子核吸引對方的電子，越靠近位能越低（吸引為主）。' : st.r < d[0] * 0.95 ? '靠得太近時，兩個原子核（以及內層電子）互相排斥，位能急遽升高。' : '位能最低點：吸引與排斥平衡，這個距離就是鍵長。'} 拆開一個鍵要把位能從谷底拉回 0，所需的能量就是鍵能。比較各曲線：鍵級越高（N≡N）谷越深、鍵越短；同族往下（Cl₂ → I₂）原子越大，鍵越長、越弱。F–F 是例外，F 原子小、孤對電子互相排斥，鍵能比 Cl–Cl 小。`;
-    pressSeg(el, 'pcS', st.b);
-  }
-  $('#pcR', el).oninput = e => { st.r = +e.target.value; draw(); };
-  bindSeg(el, 'pcS', v => { st.b = v; draw(); });
-  draw();
-  return { set(s) { Object.assign(st, s); draw(); } };
-};
-
-/* ===== 6. 晶格能：電荷乘積 ÷ 離子間距 =====
+/* ===== 第 2 節：晶格能——兩組離子並排比較電荷與距離 =====
    晶格能 kJ/mol（Brown《Chemistry: The Central Science》表 8.2）；離子半徑 pm（Shannon，配位數 6） */
 const IONRAD = { 'Li⁺': 76, 'Na⁺': 102, 'K⁺': 138, 'Cs⁺': 167, 'Mg²⁺': 72, 'Ca²⁺': 100, 'Sr²⁺': 118, 'F⁻': 133, 'Cl⁻': 181, 'Br⁻': 196, 'I⁻': 220, 'O²⁻': 140 };
 const LAT = [['LiF', 'Li⁺', 'F⁻', 1, 1030], ['LiCl', 'Li⁺', 'Cl⁻', 1, 834], ['NaF', 'Na⁺', 'F⁻', 1, 910], ['NaCl', 'Na⁺', 'Cl⁻', 1, 788], ['NaBr', 'Na⁺', 'Br⁻', 1, 732], ['NaI', 'Na⁺', 'I⁻', 1, 682], ['KCl', 'K⁺', 'Cl⁻', 1, 701], ['CsCl', 'Cs⁺', 'Cl⁻', 1, 657], ['MgO', 'Mg²⁺', 'O²⁻', 4, 3795], ['CaO', 'Ca²⁺', 'O²⁻', 4, 3414], ['SrO', 'Sr²⁺', 'O²⁻', 4, 3217]];
 W.lattice = el => {
-  let cur = 'NaCl';
-  el.innerHTML = `<div class="w-row">${LAT.map(([f]) => `<button class="btn sm ghost" type="button" data-f="${f}">${f}</button>`).join('')}</div><div id="ltG"></div><p class="eq" id="ltF"></p><p class="note" id="ltN"></p>`;
-  const xv = ([, c, a, q]) => 1000 * q / (IONRAD[c] + IONRAD[a]);
-  function draw() {
-    const d = LAT.find(x => x[0] === cur), x0 = xv(d);
-    $('#ltG', el).innerHTML = chart({ w: 560, h: 250, x: [0, 20], y: [0, 4000], xt: [0, 5, 10, 15, 20], yt: [0, 1000, 2000, 3000, 4000], xlab: '|q₊ × q₋| ÷ (r₊ + r₋)（×10⁻³ pm⁻¹）', ylab: '晶格能（kJ/mol）', label: '晶格能' }, (X, Y) =>
-      LAT.map(v => `<circle cx="${X(xv(v))}" cy="${Y(v[4])}" r="${v[0] === cur ? 8 : 5}" class="${v[0] === cur ? 'dot' : 'pt'}" data-f="${v[0]}"/>`).join('') + `<text class="tk hl" x="${X(x0) + 12}" y="${Y(d[4]) + 4}">${cur}</text>`);
-    $('#ltF', el).innerHTML = `${cur}：|${d[3] === 4 ? '(+2)(−2)' : '(+1)(−1)'}| ÷ (${IONRAD[d[1]]} + ${IONRAD[d[2]]}) pm = ${fx(x0, 2)} × 10⁻³　→　晶格能 ${d[4]} kJ/mol`;
-    $('#ltN', el).innerHTML = `晶格能是把一莫耳離子晶體拆成氣態離子所需的能量。依庫侖定律，它和<b>離子電荷的乘積成正比、和離子間距離成反比</b>，所以點大致落在一條直線上。+2/−2 的 MgO 電荷乘積是 NaCl 的 4 倍，晶格能也約大 4 倍多；同為 1:1 的鹵化鈉中，離子越小（F⁻ &lt; Cl⁻ &lt; Br⁻ &lt; I⁻）晶格能越大，熔點也越高。`;
-    $$('[data-f]', el).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.f === cur)));
+  const st = { a: 'NaCl', b: 'MgO' };
+  const opts = LAT.map(([f]) => `<option>${f}</option>`).join('');
+  el.innerHTML = `<div class="w-row">${ctl('左邊', `<label class="sel"><select id="ltA">${opts}</select></label>`)}${ctl('右邊', `<label class="sel"><select id="ltB">${opts}</select></label>`)}${ctl('常考的比較', [['NaF', 'NaI'], ['NaCl', 'MgO'], ['LiCl', 'KCl'], ['MgO', 'SrO']].map(([x, y]) => `<button class="btn sm ghost" type="button" data-p="${x},${y}">${x}／${y}</button>`).join(''))}</div><div id="ltG"></div><div class="cards" id="ltK"></div><p class="eq" id="ltF"></p><p class="note" id="ltN"></p>`;
+  const row = f => LAT.find(x => x[0] === f), xv = ([, c, a, q]) => 1000 * q / (IONRAD[c] + IONRAD[a]);
+  function pair(f, cx) {
+    const [, c, a] = row(f), k = 0.33, rc = IONRAD[c] * k, ra = IONRAD[a] * k, x0 = cx - (rc + ra), y = 82, ly = y + Math.max(rc, ra) + 12;
+    return `<circle cx="${x0 + rc}" cy="${y}" r="${rc}" fill="var(--base)" opacity=".3"/><circle cx="${x0 + 2 * rc + ra}" cy="${y}" r="${ra}" fill="var(--bad)" opacity=".25"/>
+<text class="tk" x="${x0 + rc}" y="${y + 5}" text-anchor="middle">${c}</text><text class="tk" x="${x0 + 2 * rc + ra}" y="${y + 5}" text-anchor="middle">${a}</text>
+<line x1="${x0 + rc}" y1="${ly}" x2="${x0 + 2 * rc + ra}" y2="${ly}" stroke="currentColor" stroke-width="2" data-cur="${f}"/><text class="tk" x="${cx}" y="${ly + 17}" text-anchor="middle">${f}：r = ${IONRAD[c] + IONRAD[a]} pm</text>`;
   }
-  el.addEventListener('click', e => { const t = e.target.closest('[data-f]'); if (t) { cur = t.dataset.f; draw(); } });
+  function draw() {
+    const A = row(st.a), B = row(st.b), qs = d => (d[3] === 4 ? '2 × 2' : '1 × 1');
+    $('#ltG', el).innerHTML = `<svg viewBox="0 0 560 196" class="chart" role="img" aria-label="兩組離子照比例並排">${pair(st.a, 140)}${pair(st.b, 420)}</svg>`;
+    $('#ltK', el).innerHTML = card('a', `${st.a} 晶格能`, `${A[4]} kJ/mol`) + card('b', `${st.b} 晶格能`, `${B[4]} kJ/mol`) + card('r', '右 ÷ 左', `${fx(B[4] / A[4], 2)} 倍`, `電荷÷距離比 ${fx(xv(B) / xv(A), 2)} 倍`);
+    $('#ltF', el).innerHTML = `晶格能 ∝ 電荷乘積 ÷ 距離：${st.a} ${qs(A)} ÷ ${IONRAD[A[1]] + IONRAD[A[2]]} = ${fx(xv(A), 1)}　｜　${st.b} ${qs(B)} ÷ ${IONRAD[B[1]] + IONRAD[B[2]]} = ${fx(xv(B), 1)}（×10⁻³）`;
+    $('#ltN', el).innerHTML = `圓照真實大小的比例畫。正、負離子靠得越近（r 越小）、電荷越大，互相吸引越強，拆開需要的能量（<b>晶格能</b>）越大，熔點也越高。${A[3] !== B[3] ? '電荷從 1 × 1 變成 2 × 2，乘積是 4 倍，影響比距離大得多。' : '電荷相同時，只比距離：離子越小，晶格能越大。'}`;
+    $('#ltA', el).value = st.a; $('#ltB', el).value = st.b;
+  }
+  $('#ltA', el).onchange = e => { st.a = e.target.value; draw(); };
+  $('#ltB', el).onchange = e => { st.b = e.target.value; draw(); };
+  $$('[data-p]', el).forEach(x => { x.onclick = () => { [st.a, st.b] = x.dataset.p.split(','); draw(); }; });
   draw();
-  return { set(s) { cur = s.f || cur; draw(); } };
+  return { set(s) { if (s.f) { st.b = s.f; if (st.a === s.f) st.a = s.f === 'NaCl' ? 'NaI' : 'NaCl'; } draw(); } };
 };
 
-/* ===== 7. 路易斯結構與形式電荷 =====
+/* ===== 第 3 節：路易斯結構與形式電荷 =====
    每個結構：原子 [元素, 孤對數, x, y]、鍵 [i, j, 鍵級] */
 const VAL = { N: 5, C: 4, O: 6, P: 5, Cl: 7, S: 6 };
 const LEWIS = {
   nco: ['NCO⁻', [[['N', 2, -1.3, 0], ['C', 0, 0, 0], ['O', 2, 1.3, 0]], [[0, 1, 2], [1, 2, 2]]], [[['N', 1, -1.3, 0], ['C', 0, 0, 0], ['O', 3, 1.3, 0]], [[0, 1, 3], [1, 2, 1]]], [[['N', 3, -1.3, 0], ['C', 0, 0, 0], ['O', 1, 1.3, 0]], [[0, 1, 1], [1, 2, 3]]]],
   n2o: ['N₂O', [[['N', 2, -1.3, 0], ['N', 0, 0, 0], ['O', 2, 1.3, 0]], [[0, 1, 2], [1, 2, 2]]], [[['N', 1, -1.3, 0], ['N', 0, 0, 0], ['O', 3, 1.3, 0]], [[0, 1, 3], [1, 2, 1]]], [[['N', 3, -1.3, 0], ['N', 0, 0, 0], ['O', 1, 1.3, 0]], [[0, 1, 1], [1, 2, 3]]]],
   co2: ['CO₂', [[['O', 2, -1.3, 0], ['C', 0, 0, 0], ['O', 2, 1.3, 0]], [[0, 1, 2], [1, 2, 2]]], [[['O', 1, -1.3, 0], ['C', 0, 0, 0], ['O', 3, 1.3, 0]], [[0, 1, 3], [1, 2, 1]]]],
+  co: ['CO', [[['C', 1, -0.65, 0], ['O', 1, 0.65, 0]], [[0, 1, 3]]]],
+  cn: ['CN⁻', [[['C', 1, -0.65, 0], ['N', 1, 0.65, 0]], [[0, 1, 3]]]],
   no: ['NO⁺', [[['N', 1, -0.65, 0], ['O', 1, 0.65, 0]], [[0, 1, 3]]]],
-  o3: ['O₃', [[['O', 2, -1.15, -0.5], ['O', 1, 0, 0.3], ['O', 3, 1.15, -0.5]], [[0, 1, 2], [1, 2, 1]]]],
   no3: ['NO₃⁻', [[['N', 0, 0, 0], ['O', 2, 0, 1.3], ['O', 3, -1.15, -0.65], ['O', 3, 1.15, -0.65]], [[0, 1, 2], [0, 2, 1], [0, 3, 1]]]],
   pocl3: ['POCl₃', [[['P', 0, 0, 0], ['O', 2, 0, 1.3], ['Cl', 3, -1.15, -0.55], ['Cl', 3, 1.15, -0.55], ['Cl', 3, 0, -1.3]], [[0, 1, 2], [0, 2, 1], [0, 3, 1], [0, 4, 1]]], [[['P', 0, 0, 0], ['O', 3, 0, 1.3], ['Cl', 3, -1.15, -0.55], ['Cl', 3, 1.15, -0.55], ['Cl', 3, 0, -1.3]], [[0, 1, 1], [0, 2, 1], [0, 3, 1], [0, 4, 1]]]],
 };
+const FCCOL = { N: '#3A6FD8', C: '#59615E', O: '#D9453B', P: '#E08A2E', Cl: '#3FA34D', S: '#C9A21F' };
 W.fcharge = el => {
-  const st = { m: 'nco', k: 1 };
-  el.innerHTML = `${seg('fcS', Object.entries(LEWIS).map(([k, v]) => [k, v[0]]), st.m)}<div class="w-row" id="fcK"></div><div id="fcG"></div><div class="fcrows" id="fcR"></div><p class="note" id="fcN"></p>`;
-  const fcOf = ([at, bd]) => at.map(([e, lp], i) => VAL[e] - 2 * lp - bd.filter(b => b[0] === i || b[1] === i).reduce((s2, b) => s2 + b[2], 0));
+  const st = { m: 'nco', k: 0, t: 'fc', a: 1 };
+  el.innerHTML = `<div class="w-row">${ctl('粒子', segX('fcS', Object.entries(LEWIS).map(([k, v]) => [k, v[0]]), st.m))}</div>
+<div class="w-row">${ctl('步驟', segX('fcT', [['val', '① 數價電子'], ['lew', '② 畫結構'], ['fc', '③ 算形式電荷']], st.t))}${ctl('結構', segX('fcK', [0, 1, 2].map(i => [String(i), `結構 ${i + 1}`]), '0'))}</div>
+<div id="fcG"></div><div class="fcrows" id="fcR"></div><p class="note" id="fcN"></p>`;
+  const nb = (bd, i) => bd.filter(b => b[0] === i || b[1] === i).reduce((s, b) => s + b[2], 0);
+  const fcOf = ([at, bd]) => at.map(([e, lp], i) => VAL[e] - 2 * lp - nb(bd, i));
   const sgn = v => (v > 0 ? `+${v}` : v < 0 ? `−${-v}` : '0'), chs = v => (v === 0 ? '' : `${Math.abs(v) > 1 ? Math.abs(v) : ''}${v > 0 ? '+' : '−'}`);
   const score = f => { const fc = fcOf(f); return fc.reduce((a, v) => a + Math.abs(v), 0) * 10 - fc.reduce((a, v, i) => a + (v < 0 ? EN[f[0][i][0]] : 0), 0); };
-  function draw() {
-    const [nm, ...forms] = LEWIS[st.m]; st.k = Math.min(st.k, forms.length - 1);
-    const f = forms[st.k], [at, bd] = f, fc = fcOf(f), best = forms.map(score).indexOf(Math.min(...forms.map(score)));
-    $('#fcK', el).innerHTML = forms.length > 1 ? forms.map((_, i) => `<button class="btn sm${i === st.k ? ' pri' : ''}" type="button" data-k="${i}">結構 ${i + 1}${i === best ? '（最佳）' : ''}</button>`).join('') : '';
-    $$('[data-k]', el).forEach(b => { b.onclick = () => { st.k = +b.dataset.k; draw(); }; });
-    const atoms = {}, bonds = [];
+  const W2 = 380, H2 = 200, S = 52, P = (x, y) => [W2 / 2 + x * S, H2 / 2 - y * S];
+  function lewisSVG(f, nm, fc, sel) {
+    const [at, bd] = f, atoms = {}, bonds = [];
     at.forEach(([e, lp, x, y], i) => {
-      const nb = bd.filter(b => b[0] === i || b[1] === i).map(b => { const j = b[0] === i ? b[1] : b[0]; return Math.atan2(at[j][3] - y, at[j][2] - x) * 180 / Math.PI; });
+      const dirs = bd.filter(b => b[0] === i || b[1] === i).map(b => { const j = b[0] === i ? b[1] : b[0]; return Math.atan2(at[j][3] - y, at[j][2] - x) * 180 / Math.PI; });
       let lps = [];
-      if (nb.length === 1) lps = Array.from({ length: lp }, (_, q) => nb[0] + 180 + (q - (lp - 1) / 2) * 90);
-      else { const mx = nb.reduce((a, t) => a + Math.cos(t * Math.PI / 180), 0), my = nb.reduce((a, t) => a + Math.sin(t * Math.PI / 180), 0), base = Math.hypot(mx, my) > 0.2 ? Math.atan2(-my, -mx) * 180 / Math.PI : 90; lps = Array.from({ length: lp }, (_, q) => base + (lp === 2 && Math.hypot(mx, my) <= 0.2 ? q * 180 : (q - (lp - 1) / 2) * 70)); }
-      atoms['a' + i] = { x, y, t: e, lp: lps, c: chs(fc[i]) };
+      if (dirs.length === 1) lps = Array.from({ length: lp }, (_, q) => dirs[0] + 180 + (q - (lp - 1) / 2) * 90);
+      else { const mx = dirs.reduce((a, t) => a + Math.cos(t * Math.PI / 180), 0), my = dirs.reduce((a, t) => a + Math.sin(t * Math.PI / 180), 0), base = Math.hypot(mx, my) > 0.2 ? Math.atan2(-my, -mx) * 180 / Math.PI : 90; lps = Array.from({ length: lp }, (_, q) => base + (lp === 2 && Math.hypot(mx, my) <= 0.2 ? q * 180 : (q - (lp - 1) / 2) * 70)); }
+      atoms['a' + i] = { x, y, t: e, lp: lps, c: fc ? chs(fc[i]) : '' };
     });
     bd.forEach(([i, j, o]) => bonds.push(['a' + i, 'a' + j, o === 3 ? 't' : o === 2 ? 'd' : 's']));
-    $('#fcG', el).innerHTML = MOL.svg({ atoms, bonds }, { w: 380, h: 200, s: 52, label: nm }).replace('<svg ', '<svg style="max-width:420px;margin:auto" ');
-    $('#fcR', el).innerHTML = at.map(([e, lp], i) => { const nb = bd.filter(b => b[0] === i || b[1] === i).reduce((s2, b) => s2 + b[2], 0); return `<span><b>${e}</b>：${VAL[e]} − ${2 * lp} − ${nb} = <b class="${fc[i] ? 'bad' : ''}">${sgn(fc[i])}</b></span>`; }).join('');
-    $('#fcN', el).innerHTML = `形式電荷 = 價電子數 − 未共用電子數 − 鍵數（每條線算 1）。每個原子下方的算式對應圖上數得到的點與線。總和 = ${sgn(fc.reduce((a, b) => a + b, 0))}，等於整個粒子的電荷。${forms.length > 1 ? `判斷最佳結構：形式電荷越接近 0 越好；有負的形式電荷時，放在電負度較大的原子上較好。${st.m === 'pocl3' ? ' 結構 1 中 P 有 10 個價電子（擴展八隅體），形式電荷全為 0。' : ''}` : ''}`;
-    pressSeg(el, 'fcS', st.m);
+    let extra = '';
+    if (sel != null) {   // 圈出屬於這個原子的電子：自己的孤對（整圈）＋每個鍵的一半（粗線）
+      const [x, y] = P(at[sel][2], at[sel][3]);
+      bd.filter(b => b[0] === sel || b[1] === sel).forEach(b => { const j = b[0] === sel ? b[1] : b[0], [x2, y2] = P(at[j][2], at[j][3]); extra += `<line x1="${x}" y1="${y}" x2="${(x + x2) / 2}" y2="${(y + y2) / 2}" stroke="var(--accent)" stroke-width="12" stroke-linecap="round" opacity=".35"/>`; });
+      extra += `<circle cx="${x}" cy="${y}" r="${S * 0.58}" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="5 4" data-cur="${at[sel][0]}"/>`;
+    }
+    const hit = at.map(([, , x, y], i) => { const [px, py] = P(x, y); return `<circle cx="${px}" cy="${py}" r="20" fill="transparent" data-a="${i}" style="cursor:pointer"/>`; }).join('');
+    return MOL.svg({ atoms, bonds }, { w: W2, h: H2, s: S, label: nm }).replace('<svg ', '<svg style="max-width:420px;margin:auto" ').replace('</svg>', extra + hit + '</svg>');
   }
-  bindSeg(el, 'fcS', v => { st.m = v; st.k = 0; draw(); });
+  function valSVG(at, q) {   // 每個原子分開畫，價電子用自己的顏色點在四周
+    const n = at.length, gap = Math.min(110, 340 / n), x0 = W2 / 2 - gap * (n - 1) / 2, side = [[0, -1], [1, 0], [0, 1], [-1, 0]];
+    let s = at.map(([e], i) => { const cx = x0 + i * gap, cy = 92, c = FCCOL[e] || '#555';
+      const dots = Array.from({ length: VAL[e] }, (_, k) => { const [dx, dy] = side[k % 4], o = k < 4 ? -4 : 4, px = cx + dx * 22 + (dx ? 0 : o), py = cy + dy * 22 + (dy ? 0 : o); return `<circle cx="${px}" cy="${py}" r="3.4" fill="${c}"/>`; }).join('');
+      return `<text class="at" x="${cx}" y="${cy + 6}" text-anchor="middle" fill="${c}">${e}</text>${dots}<text class="tk" x="${cx}" y="${cy + 52}" text-anchor="middle">${VAL[e]}</text>`; }).join('');
+    if (q) s += Array.from({ length: Math.abs(q) }, (_, k) => `<circle cx="${W2 - 24 - k * 10}" cy="30" r="3.4" fill="var(--muted)"/>`).join('') + `<text class="tk" x="${W2 - 22}" y="56" text-anchor="end">電荷 ${q < 0 ? '+' : '−'}${Math.abs(q)}</text>`;
+    return `<svg viewBox="0 0 ${W2} 170" class="chart" style="max-width:420px;margin:auto" role="img" aria-label="各原子的價電子">${s}</svg>`;
+  }
+  function draw() {
+    const [nm, ...forms] = LEWIS[st.m]; st.k = Math.min(st.k, forms.length - 1);
+    const f = forms[st.k], [at, bd] = f, fc = fcOf(f), q = fcOf(forms[0]).reduce((a, b) => a + b, 0), best = forms.map(score).indexOf(Math.min(...forms.map(score)));
+    st.a = Math.min(st.a, at.length - 1);
+    const tot = at.reduce((s, [e]) => s + VAL[e], 0) - q;
+    if (st.t === 'val') {
+      $('#fcG', el).innerHTML = valSVG(at, q);
+      $('#fcR', el).innerHTML = `<span>${at.map(([e]) => `${e} ${VAL[e]}`).join(' ＋ ')}${q ? ` ${q < 0 ? '＋' : '−'} 電荷 ${Math.abs(q)}` : ''} = <b>${tot} 個價電子 = ${tot / 2} 對</b></span>`;
+      $('#fcN', el).innerHTML = '先數總價電子數：每個原子帶來自己的價電子（主族元素 = 族號的個位數），陰離子多幾個負電荷就加幾個，陽離子減掉。下一步把這些電子對分配成鍵和孤對電子。';
+    } else {
+      $('#fcG', el).innerHTML = lewisSVG(f, nm, st.t === 'fc' ? fc : null, st.t === 'fc' ? st.a : null);
+      if (st.t === 'lew') {
+        $('#fcR', el).innerHTML = `<span>鍵 ${bd.reduce((s, b) => s + b[2], 0)} 對 ＋ 孤對 ${at.reduce((s, a) => s + a[1], 0)} 對 = <b>${tot / 2} 對</b>（和第 ① 步一樣）</span>`;
+        $('#fcN', el).innerHTML = `畫法：先用單鍵把原子連起來，剩下的電子對當孤對電子補給外圍原子，讓每個原子周圍有 8 個電子（八隅體）；不夠時把孤對電子改成雙鍵或參鍵。${forms.length > 1 ? `${nm} 可以畫出 ${forms.length} 種，到第 ③ 步比較哪一個最好。` : ''}${st.m === 'pocl3' && st.k === 0 ? ' 結構 1 的 P 周圍有 10 個電子（擴展八隅體）：P 在第三週期，有空的 3d 軌域可以容納多出來的電子，體積也大到能圍住更多原子。' : ''}`;
+      } else {
+        $('#fcR', el).innerHTML = at.map(([e, lp], i) => `<span class="${i === st.a ? 'on' : ''}" data-a="${i}"><b>${e}</b>：價電子 ${VAL[e]} − 圈到（孤對 ${2 * lp} ＋ 鍵 ${nb(bd, i)}）= <b class="${fc[i] ? 'bad' : ''}">${sgn(fc[i])}</b></span>`).join('');
+        $('#fcN', el).innerHTML = `點圖上的原子。虛線圈住的是「算給它」的電子：自己的孤對電子全部算，每個鍵只算一半（一條線算 1 個）。形式電荷 = 價電子數 − 圈到的電子數；全部加起來 = ${sgn(fc.reduce((a, b) => a + b, 0))}，等於整個粒子的電荷。${forms.length > 1 ? `選最好的結構：形式電荷越接近 0 越好，負的放在電負度大的原子上——這裡是<b>結構 ${best + 1}</b>。` : ''}`;
+      }
+    }
+    pressSeg(el, 'fcS', st.m); pressSeg(el, 'fcT', st.t);
+    $$('#fcK button', el).forEach(b => { b.disabled = +b.dataset.v >= forms.length || st.t === 'val'; b.setAttribute('aria-pressed', String(+b.dataset.v === st.k)); });
+    $$('[data-a]', el).forEach(x => { x.onclick = () => { st.a = +x.dataset.a; if (st.t !== 'fc') st.t = 'fc'; draw(); }; });
+  }
+  bindSeg(el, 'fcS', v => { st.m = v; st.k = 0; const at = LEWIS[v][1][0]; st.a = at.length === 2 ? 0 : at.length === 3 && at[0][0] !== 'N' && at[0][0] !== 'O' ? 0 : at.length === 3 ? 1 : 0; draw(); });
+  bindSeg(el, 'fcT', v => { st.t = v; draw(); });
+  bindSeg(el, 'fcK', v => { st.k = +v; draw(); });
+  draw();
+  return { set(s) { Object.assign(st, s); if (s.m && s.a == null) st.a = LEWIS[s.m][1][0].length === 3 ? 1 : 0; draw(); } };
+};
+
+/* ===== 第 4 節：共振結構、平均鍵級與鍵長 =====
+   [名稱, 鍵長 pm, 結構們（原子 [標籤, 孤對, x, y]、鍵 [i, j, 鍵級]，同一粒子的鍵順序相同）, 要比的鍵在第幾條]
+   鍵長：教科書常用值；N₂O₄ 的 N–N 為 175 pm（很長的單鍵） */
+const RES = {
+  co: ['C–O 鍵', [
+    ['CH₃OH', 143, [[[['H₃C', 0, -0.8, 0], ['O', 2, 0.55, 0], ['H', 0, 1.35, 0.55]], [[0, 1, 1], [1, 2, 1]]]], 0],
+    ['CO₃²⁻', 129, [0, 1, 2].map(k => [[['C', 0, 0, 0], ['O', k === 0 ? 2 : 3, 0, 1.2], ['O', k === 1 ? 2 : 3, -1.05, -0.6], ['O', k === 2 ? 2 : 3, 1.05, -0.6]], [[0, 1, k === 0 ? 2 : 1], [0, 2, k === 1 ? 2 : 1], [0, 3, k === 2 ? 2 : 1]]]), 0],
+    ['HCOO⁻', 127, [0, 1].map(k => [[['C', 0, 0, 0], ['H', 0, -1.1, 0], ['O', k ? 3 : 2, 0.65, 0.95], ['O', k ? 2 : 3, 0.65, -0.95]], [[0, 1, 1], [0, 2, k ? 1 : 2], [0, 3, k ? 2 : 1]]]), 1],
+    ['H₂C=O', 121, [[[['C', 0, -0.3, 0], ['O', 2, 0.95, 0], ['H', 0, -0.95, 0.9], ['H', 0, -0.95, -0.9]], [[0, 1, 2], [0, 2, 1], [0, 3, 1]]]], 0],
+    ['CO₂', 116, [[[['O', 2, -1.2, 0], ['C', 0, 0, 0], ['O', 2, 1.2, 0]], [[0, 1, 2], [1, 2, 2]]]], 0],
+    ['CO', 113, [[[['C', 1, -0.6, 0], ['O', 1, 0.6, 0]], [[0, 1, 3]]]], 0]]],
+  nn: ['N–N 鍵', [
+    ['N₂O₄', 175, [[[['N', 0, -0.62, 0], ['N', 0, 0.62, 0], ['O', 2, -1.25, 0.95], ['O', 3, -1.25, -0.95], ['O', 2, 1.25, 0.95], ['O', 3, 1.25, -0.95]], [[0, 1, 1], [0, 2, 2], [0, 3, 1], [1, 4, 2], [1, 5, 1]]]], 0],
+    ['N₂H₄', 145, [[[['N', 1, -0.62, 0], ['N', 1, 0.62, 0], ['H', 0, -1.2, 0.8], ['H', 0, -1.2, -0.8], ['H', 0, 1.2, 0.8], ['H', 0, 1.2, -0.8]], [[0, 1, 1], [0, 2, 1], [0, 3, 1], [1, 4, 1], [1, 5, 1]]]], 0],
+    ['N₂O', 113, [[[['N', 2, -1.2, 0], ['N', 0, 0, 0], ['O', 2, 1.2, 0]], [[0, 1, 2], [1, 2, 2]]], [[['N', 1, -1.2, 0], ['N', 0, 0, 0], ['O', 3, 1.2, 0]], [[0, 1, 3], [1, 2, 1]]]], 0],
+    ['N₂', 110, [[[['N', 1, -0.6, 0], ['N', 1, 0.6, 0]], [[0, 1, 3]]]], 0]]],
+  cc: ['C–C 鍵', [
+    ['乙烷', 154, [[[['H₃C', 0, -0.65, 0], ['CH₃', 0, 0.65, 0]], [[0, 1, 1]]]], 0],
+    ['苯', 140, [0, 1].map(k => [Array.from({ length: 6 }, (_, i) => ['', 0, Math.cos((90 + 60 * i) * Math.PI / 180) * 1.1, Math.sin((90 + 60 * i) * Math.PI / 180) * 1.1]), Array.from({ length: 6 }, (_, i) => [i, (i + 1) % 6, (i + k) % 2 ? 1 : 2])]), 0],
+    ['乙烯', 134, [[[['H₂C', 0, -0.65, 0], ['CH₂', 0, 0.65, 0]], [[0, 1, 2]]]], 0],
+    ['乙炔', 120, [[[['HC', 0, -0.65, 0], ['CH', 0, 0.65, 0]], [[0, 1, 3]]]], 0]]],
+};
+W.bondlen = el => {
+  const st = { c: 'co', i: 2 };
+  el.innerHTML = `<div class="w-row">${ctl('比哪一種鍵', segX('blS', Object.entries(RES).map(([k, v]) => [k, v[0]]), st.c))}${ctl('粒子', '<label class="sel"><select id="blM"></select></label>')}</div>
+<div class="resrow" id="blF"></div><div id="blA"></div><div id="blR"></div><p class="note" id="blN"></p>`;
+  const kind = o => (o === 3 ? 't' : o === 2 ? 'd' : 's');
+  const svgOf = ([at, bd], o) => { const atoms = {}, bonds = [];
+    at.forEach(([t, lp, x, y], i) => { atoms['a' + i] = { x, y, t, lp: lp ? Array.from({ length: lp }, (_, q) => (Math.atan2(y, x) * 180 / Math.PI) + (q - (lp - 1) / 2) * 75) : [] }; });
+    bd.forEach(([i, j, k]) => bonds.push(['a' + i, 'a' + j, k]));
+    return MOL.svg({ atoms, bonds }, o); };
+  function draw() {
+    const [nm, list] = RES[st.c]; st.i = Math.min(st.i, list.length - 1);
+    const [name, len, forms, tb] = list[st.i], avg = forms[0][1].map((_, b) => forms.reduce((s, f) => s + f[1][b][2], 0) / forms.length), bo = avg[tb];
+    $('#blM', el).innerHTML = list.map(([n], i) => `<option value="${i}"${i === st.i ? ' selected' : ''}>${n}</option>`).join('');
+    const small = { w: 170, h: 130, s: 36 };
+    $('#blF', el).innerHTML = forms.length > 1 ? forms.map(f => `<div>${svgOf([f[0], f[1].map(([i, j, o]) => [i, j, kind(o)])], small)}</div>`).join('<span class="rarr">↔</span>') : `<p class="small mut">${name} 只有一種路易斯結構，沒有共振。</p>`;
+    // 平均結構：鍵級不是整數的畫成一實一虛；要比的鍵標上鍵級
+    const f0 = forms[0], [i0, j0] = f0[1][tb], ab = f0[1].map(([i, j], b) => [i, j, Number.isInteger(avg[b]) ? kind(avg[b]) : avg[b] < 2 ? 'sd' : 't']);
+    const [x1, y1, x2, y2] = [f0[0][i0][2], f0[0][i0][3], f0[0][j0][2], f0[0][j0][3]], S = 44, cx = 190, cy = 85, mx = cx + (x1 + x2) / 2 * S, my = cy - (y1 + y2) / 2 * S, dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy) || 1;
+    // 鍵級標籤放在鍵的旁邊：兩個垂直方向中，離其他原子比較遠的那一邊
+    const near = (x, y) => Math.min(...f0[0].map(a => Math.hypot(cx + a[2] * S - x, cy - a[3] * S - y)));
+    const cand = [1, -1].map(sg => [sg * dy / L, sg * dx / L]), [ux, uy] = cand.sort((p, q) => near(mx + q[0] * 40, my + q[1] * 40) - near(mx + p[0] * 40, my + p[1] * 40))[0], lx = mx + ux * 24, ly = my + uy * 20 + 4, lab = Number.isInteger(bo) ? bo : bo === 1.5 ? '1.5' : bo > 2 ? '2.5' : '4/3';
+    $('#blA', el).innerHTML = `<p class="lbl c">${forms.length > 1 ? '真實的粒子＝平均：' : ''}${name}</p>` + svgOf([forms.length > 1 ? f0[0].map(a => [a[0], 0, a[2], a[3]]) : f0[0], ab], { w: 380, h: 170, s: S }).replace('<svg ', '<svg style="max-width:400px;margin:auto" ').replace('</svg>', `<text class="tk hl" x="${lx}" y="${ly}" text-anchor="${ux > 0.4 ? 'start' : ux < -0.4 ? 'end' : 'middle'}" data-cur="${name}">鍵級 ${lab}</text></svg>`);
+    const lo = 100, hi = 180, X = v => 120 + (v - lo) / (hi - lo) * 300;
+    $('#blR', el).innerHTML = `<svg viewBox="0 0 560 ${list.length * 28 + 30}" class="chart" role="img" aria-label="${nm}的鍵長">${list.map(([n, l, fs, t], i) => { const a = fs[0][1].map((_, b) => fs.reduce((s, f) => s + f[1][b][2], 0) / fs.length)[t], y = 18 + i * 28;
+      return `<text class="tk${i === st.i ? ' hl' : ''}" x="110" y="${y + 5}" text-anchor="end">${n}</text><rect x="120" y="${y - 7}" width="${X(l) - 120}" height="14" rx="3" fill="${i === st.i ? 'var(--accent)' : 'var(--muted)'}" opacity="${i === st.i ? 0.9 : 0.4}"/><text class="tk" x="${X(l) + 8}" y="${y + 5}">${l} pm・鍵級 ${Number.isInteger(a) ? a : fx(a, 2).replace(/0$/, '')}</text>`; }).join('')}
+<text class="tk" x="120" y="${list.length * 28 + 24}">尺：長條越長＝鍵越長</text></svg>`;
+    $('#blN', el).innerHTML = `${forms.length > 1 ? `${name} 有 ${forms.length} 個共振結構，只差在電子（雙鍵）放在哪裡。真實的粒子不會在它們之間跳來跳去，而是固定的平均：每個鍵的鍵級 = 各結構的鍵級平均 = <b>${lab}</b>，所以這幾個鍵一樣長。` : `${name} 的這個鍵鍵級是 <b>${lab}</b>。`}下面的尺把同一種鍵排在一起：<b>鍵級越高，鍵越短</b>（也越強）。${st.c === 'nn' && st.i === 0 ? 'N₂O₄ 的 N–N 是單鍵，而且兩個 N 都帶正的形式電荷互相排斥，所以特別長。' : ''}`;
+    pressSeg(el, 'blS', st.c);
+  }
+  bindSeg(el, 'blS', v => { st.c = v; st.i = 0; draw(); });
+  $('#blM', el).onchange = e => { st.i = +e.target.value; draw(); };
+  draw();
+  return { set(s) { if (s.c) { st.c = s.c; st.i = s.i ?? (s.c === 'co' ? 2 : 0); } draw(); } };
+};
+
+/* ===== 第 8 節：氫化物的沸點＋兩個分子之間的作用力 ===== */
+const IMFH = { 14: ['CH₄', -161.5, 'SiH₄', -111.9, 'GeH₄', -88.5, 'SnH₄', -51.8], 15: ['NH₃', -33.3, 'PH₃', -87.7, 'AsH₃', -62.5, 'SbH₃', -17.0], 16: ['H₂O', 100.0, 'H₂S', -60.3, 'H₂Se', -41.3, 'H₂Te', -2.2], 17: ['HF', 19.5, 'HCl', -85.1, 'HBr', -66.8, 'HI', -35.4] };
+// 兩分子圖：[中心元素, H 數, 孤對數, 作用力 'hb'|'dd'|'disp', 分子大小（分散力的雲）]
+const IMFP = { 'CH₄': ['C', 4, 0, 'disp', 0.9], 'SnH₄': ['Sn', 4, 0, 'disp', 1.35], 'NH₃': ['N', 3, 1, 'hb'], 'HF': ['F', 1, 3, 'hb'], 'H₂O': ['O', 2, 2, 'hb'], 'H₂S': ['S', 2, 2, 'dd'], 'HCl': ['Cl', 1, 3, 'dd'] };
+W.imf = el => {
+  const st = { h: 'H₂O' }, C = { 14: 'var(--muted)', 15: 'var(--acid)', 16: 'var(--arrow)', 17: 'var(--base)' };
+  el.innerHTML = `<div class="w-row">${ctl('看兩個分子之間', segX('imS', Object.keys(IMFP).map(k => [k, k]), st.h))}</div><div class="bgrid"><div id="imC"></div><div id="imP"></div></div><p class="note" id="imN"></p>`;
+  function pairSVG() {
+    const [X, nH, nLP, kind, size] = IMFP[st.h], atoms = {}, bonds = [];
+    // 左分子：一個 H 指向右；右分子：一對孤對電子（或 H）指向左
+    const mk = (id, cx, face) => { const n = nH + nLP, angs = Array.from({ length: n }, (_, i) => face + i * 360 / n);
+      atoms[id] = { x: cx, y: 0, t: X, lp: [], halo: kind === 'disp' ? size : 0, c: kind === 'dd' ? (id === 'A' ? '' : 'δ−') : '' };
+      const hFirst = id === 'A' || !nLP;
+      angs.forEach((g, i) => { const isH = hFirst ? i < nH : i >= nLP; if (isH) { const h = id + 'h' + i; atoms[h] = { x: cx + Math.cos(g * Math.PI / 180) * 0.95, y: Math.sin(g * Math.PI / 180) * 0.95, t: 'H', c: kind === 'dd' && id === 'A' && i === 0 ? 'δ+' : '' }; bonds.push([id, h, 's']); } else atoms[id].lp.push(g); }); };
+    mk('A', -1.65, 0); mk('B', 1.55, 180);
+    const S = 46, cx = 200, P = (x, y) => [cx + x * S, 85 - y * S];
+    let extra = '';
+    if (kind !== 'disp') { const [x1, y1] = P(-0.6, 0), [x2, y2] = P(1.55 - 0.5, 0); extra = `<line x1="${x1 + 8}" y1="${y1}" x2="${x2 - 4}" y2="${y2}" stroke="${kind === 'hb' ? 'var(--bad)' : 'var(--muted)'}" stroke-width="${kind === 'hb' ? 3 : 2}" stroke-dasharray="${kind === 'hb' ? '6 4' : '2 4'}" data-cur="${st.h}"/><text class="tk${kind === 'hb' ? ' hl' : ''}" x="${(x1 + x2) / 2}" y="${y1 + 38}" text-anchor="middle">${kind === 'hb' ? '氫鍵' : '偶極–偶極力'}</text>`; }
+    else extra = `<text class="tk hl" x="${cx - 2}" y="160" text-anchor="middle" data-cur="${st.h}">分散力（雲越大越強）</text>`;
+    return MOL.svg({ atoms, bonds }, { w: 400, h: 175, s: S, cx, cy: 85 }).replace('<svg ', '<svg style="max-width:420px;margin:auto" ').replace('</svg>', extra + '</svg>');
+  }
+  function draw() {
+    $('#imC', el).innerHTML = chart({ x: [1.5, 5.5], y: [-180, 120], xt: [2, 3, 4, 5], yt: [-150, -100, -50, 0, 50, 100], xlab: '週期', ylab: '沸點（°C）', h: 280, label: '氫化物沸點' }, (X, Y) => Object.entries(IMFH).map(([g, d]) => { const pts = [0, 1, 2, 3].map(i => [X(i + 2), Y(d[2 * i + 1])]);
+      return `<path d="${path(pts)}" fill="none" stroke="${C[g]}" stroke-width="2.4"/>${pts.map((p, i) => `<circle cx="${p[0]}" cy="${p[1]}" r="${d[2 * i] === st.h ? 8 : 4}" fill="${C[g]}" ${IMFP[d[2 * i]] ? `data-h="${d[2 * i]}" style="cursor:pointer"` : ''}/><text class="tk${d[2 * i] === st.h ? ' hl' : ''}" x="${p[0] + ({ 14: -7, 15: 7, 16: 7, 17: -7 })[g]}" y="${p[1] + ({ 14: 4, 15: 14, 16: -6, 17: -6 })[g]}" text-anchor="${g == 14 || g == 17 ? 'end' : 'start'}">${d[2 * i]}</text>`).join('')}`; }).join(''));
+    $('#imP', el).innerHTML = pairSVG();
+    const k = IMFP[st.h][3];
+    $('#imN', el).innerHTML = (k === 'hb' ? `<b>${st.h}</b>：H 接在電負度很大、又很小的 ${IMFP[st.h][0]} 上，H 幾乎是裸露的正電，被隔壁分子 ${IMFP[st.h][0]} 的孤對電子強烈吸引（紅色虛線）＝<b>氫鍵</b>。拆開氫鍵要額外的能量，所以第二週期的 NH₃、H₂O、HF 沸點反常地高（偏離同族的趨勢）。H₂O 每個分子有 2 個 H、2 對孤對電子，能形成最多氫鍵，沸點最高。`
+      : k === 'dd' ? `<b>${st.h}</b>：${IMFP[st.h][0]} 比 N、O、F 大、電負度小，H 上的正電不夠集中，只有較弱的<b>偶極–偶極力</b>（加上分散力），不是氫鍵。同族往下分子越大，分散力增加，沸點又慢慢上升。`
+      : `<b>${st.h}</b>：沒有孤對電子、分子對稱，只有<b>分散力</b>。分子越大、電子越多，電子雲（圈）越容易被推歪，分散力越強：CH₄ → SnH₄ 沸點一路上升。`) + ' 點左圖的點也可以切換。';
+    pressSeg(el, 'imS', st.h);
+  }
+  el.addEventListener('click', e => { const t = e.target.closest('[data-h]'); if (t) { st.h = t.dataset.h; draw(); } });
+  bindSeg(el, 'imS', v => { st.h = v; draw(); });
+  draw();
+  return { set(s) { if (s.h && IMFP[s.h]) st.h = s.h; draw(); } };
+};
+
+/* ===== 第 8 節：誰能和水形成氫鍵？ =====
+   原子 [id, 標籤, x, y, 孤對角度們, 電荷]、鍵 [a, b]、和水的連接 [原子 id, 方向角, 'acc'（孤對接水的 H）|'don'（H 接水的 O）|'ion'] */
+const HBW = {
+  ether: ['甲醚 CH₃OCH₃', [['O', 'O', 0, 0.2, [60, 120]], ['C1', 'H₃C', -1.15, -0.45], ['C2', 'CH₃', 1.15, -0.45]], [['O', 'C1'], ['O', 'C2']], [['O', 60, 'acc'], ['O', 120, 'acc']], 'O 上有兩對孤對電子，可以<b>接受</b>水的 H；但 O 上沒有 H，C–H 的 H 不夠正，不能提供。所以醚能溶於水，醚分子彼此之間卻沒有氫鍵（沸點低）。'],
+  ch4: ['甲烷 CH₄', [['C', 'C', 0, 0], ['H1', 'H', 0, 1], ['H2', 'H', 0.95, -0.35], ['H3', 'H', -0.95, -0.35]], [['C', 'H1'], ['C', 'H2'], ['C', 'H3']], [], '沒有孤對電子，C–H 的 H 也不帶明顯正電：<b>不能</b>和水形成氫鍵，所以甲烷幾乎不溶於水。'],
+  f: ['氟離子 F⁻', [['F', 'F', 0, 0, [], '−']], [], [['F', 45, 'acc'], ['F', 135, 'acc'], ['F', 225, 'acc'], ['F', 315, 'acc']], 'F⁻ 帶負電、有四對孤對電子，可以<b>接受</b>四個水分子的 H。'],
+  hcooh: ['甲酸 HCOOH', [['C', 'C', -0.35, 0], ['H0', 'H', -1.35, 0], ['O1', 'O', 0.3, 0.95, [60, 165]], ['O2', 'O', 0.3, -0.95, [-150, -90]], ['H2', 'H', 1.2, -1.25]], [['C', 'H0'], ['C', 'O1'], ['C', 'O2'], ['O2', 'H2']], [['O1', 60, 'acc'], ['H2', -20, 'don']], '既能<b>提供</b>（O–H 的 H 接水的 O），也能<b>接受</b>（C=O 的 O 接水的 H）。羧酸、醇都是這樣，所以小分子的羧酸、醇易溶於水。'],
+  na: ['鈉離子 Na⁺', [['Na', 'Na', 0, 0, [], '+']], [], [['Na', 0, 'ion'], ['Na', 90, 'ion'], ['Na', 180, 'ion'], ['Na', 270, 'ion']], 'Na⁺ 沒有 H、也沒有孤對電子可以給，<b>不是氫鍵</b>：它吸引水分子帶負電的 O 端，叫做<b>離子–偶極力</b>。'],
+};
+W.hbwater = el => {
+  const st = { m: 'hcooh' };
+  el.innerHTML = `<div class="w-row">${ctl('粒子', segX('hwS', Object.entries(HBW).map(([k, v]) => [k, v[0].split(' ')[1] || v[0]]), st.m))}</div><div id="hwG"></div><p class="note" id="hwN"></p>`;
+  function draw() {
+    const [nm, at, bd, links, note] = HBW[st.m], atoms = {}, bonds = [], pos = {};
+    at.forEach(([id, t, x, y, lp, c]) => { atoms[id] = { x, y, t, lp: lp || [], c: c || '' }; pos[id] = [x, y]; });
+    bd.forEach(([a, b]) => bonds.push([a, b, 's']));
+    const S = 38, cx = 220, cy = 135, P = ([x, y]) => [cx + x * S, cy - y * S];
+    let extra = '';
+    links.forEach(([id, g, k], n) => { const u = [Math.cos(g * Math.PI / 180), Math.sin(g * Math.PI / 180)], at0 = pos[id], w = 'w' + n, add = (p, d) => [p[0] + u[0] * d, p[1] + u[1] * d], rot = (a, d) => { const t = (g + a) * Math.PI / 180; return [Math.cos(t) * d, Math.sin(t) * d]; };
+      let first;
+      if (k === 'acc') { const h = add(at0, 1.25), o = add(at0, 2.0), r = rot(180 + 105, 0.75); atoms[w + 'h'] = { x: h[0], y: h[1], t: 'H' }; atoms[w + 'o'] = { x: o[0], y: o[1], t: 'O' }; atoms[w + 'h2'] = { x: o[0] - r[0] * -1, y: o[1] - r[1] * -1, t: 'H' }; bonds.push([w + 'h', w + 'o', 's'], [w + 'o', w + 'h2', 's']); first = h; }
+      else { const o = add(at0, k === 'ion' ? 1.45 : 1.3), r1 = rot(55, 0.75), r2 = rot(-55, 0.75); atoms[w + 'o'] = { x: o[0], y: o[1], t: 'O' }; atoms[w + 'a'] = { x: o[0] + r1[0], y: o[1] + r1[1], t: 'H' }; atoms[w + 'b'] = { x: o[0] + r2[0], y: o[1] + r2[1], t: 'H' }; bonds.push([w + 'o', w + 'a', 's'], [w + 'o', w + 'b', 's']); first = o; }
+      const [x1, y1] = P(add(at0, 0.42)), [x2, y2] = P(add(first, -0.3));
+      extra += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${k === 'ion' ? 'var(--muted)' : k === 'acc' ? 'var(--bad)' : '#3A6FD8'}" stroke-width="3" stroke-dasharray="6 4"${n ? '' : ` data-cur="${nm}"`}/>`; });
+    $('#hwG', el).innerHTML = MOL.svg({ atoms, bonds }, { w: 440, h: 270, s: S, cx, cy }).replace('<svg ', '<svg style="max-width:440px;margin:auto" ').replace('</svg>', extra + '</svg>');
+    $('#hwN', el).innerHTML = `<b>${nm}</b>：${note}<br><span style="color:var(--bad)">紅色虛線</span>＝它的孤對電子接受水的 H；<span style="color:#3A6FD8">藍色虛線</span>＝它的 H 被水的 O 接住；灰色虛線＝離子–偶極力。`;
+    pressSeg(el, 'hwS', st.m);
+  }
+  bindSeg(el, 'hwS', v => { st.m = v; draw(); });
   draw();
   return { set(s) { Object.assign(st, s); draw(); } };
 };
 
-/* ===== 8. 鍵級與鍵長 =====
-   pm（教科書常用值） */
-const BLEN = {
-  co: ['C–O 鍵', [['CH₃OH', 1, 143], ['CO₃²⁻', 1.33, 129], ['HCOO⁻', 1.5, 127], ['H₂C=O', 2, 121], ['CO₂', 2, 116], ['C≡O', 3, 113]]],
-  nn: ['N–N 鍵', [['N₂H₄', 1, 145], ['N₂O', 2.5, 113], ['N₂', 3, 110]]],
-  cc: ['C–C 鍵', [['乙烷', 1, 154], ['苯', 1.5, 140], ['乙烯', 2, 134], ['乙炔', 3, 120]]],
-};
-W.bondlen = el => {
-  let cur = 'co';
-  el.innerHTML = `${seg('blS', Object.entries(BLEN).map(([k, v]) => [k, v[0]]), cur)}<div id="blG"></div><p class="note" id="blN"></p>`;
-  function draw() {
-    const [nm, d] = BLEN[cur];
-    $('#blG', el).innerHTML = chart({ w: 560, h: 250, x: [0.7, 3.3], y: [105, 160], xt: [1, 1.5, 2, 2.5, 3], yt: [110, 120, 130, 140, 150, 160], xlab: '鍵級', ylab: '鍵長（pm）', label: '鍵級與鍵長' }, (X, Y) =>
-      d.map(([t, o, l], i) => `<circle class="dot" cx="${X(o)}" cy="${Y(l)}" r="6"/><text class="tk" x="${X(o) + (i % 2 ? -10 : 10)}" y="${Y(l) + 4}" text-anchor="${i % 2 ? 'end' : 'start'}">${t} ${l}</text>`).join(''));
-    $('#blN', el).innerHTML = `${nm}：<b>鍵級越高，鍵越短</b>（也越強）。有共振的粒子，鍵級是平均值：CO₃²⁻ 的三個 C–O 共用一個 π 鍵，鍵級 4/3；HCOO⁻ 的兩個 C–O 共用一個 π 鍵，鍵級 3/2，所以長度介於單鍵和雙鍵之間。`;
-    pressSeg(el, 'blS', cur);
-  }
-  bindSeg(el, 'blS', v => { cur = v; draw(); });
-  draw();
-  return { set(s) { cur = s.c || cur; draw(); } };
-};
-
-/* ===== 9. 沸點比較：哪一種作用力在主導 =====
+/* ===== 第 8 節：沸點比較：哪一種作用力在主導 =====
    正常沸點 °C、偶極矩 D（CRC Handbook） */
 const BPS = {
   mw: ['分子量相近', [['丙烷 C₃H₈', 44, -42, 0.1, 0], ['甲醚 CH₃OCH₃', 46, -24, 1.3, 0], ['氯甲烷 CH₃Cl', 50, -24, 1.9, 0], ['乙醛 CH₃CHO', 44, 20, 2.7, 0], ['乙腈 CH₃CN', 41, 82, 3.9, 0], ['乙醇 C₂H₅OH', 46, 78, 1.7, 1]]],

@@ -80,7 +80,7 @@ sed 's#<script>#<script src="probe.js"></script><script>#' docs/chem/index.html 
 CHAPTERS=$(node -e "const fs=require('fs');console.log(new Function(['src/chem/content.js',...require('fs').readdirSync('src/chem/ch').map(f=>'src/chem/ch/'+f)].map(f=>fs.readFileSync(f,'utf8')).join('\n')+';return CH;')().map(c=>c.id).join(' '))")
 CHAPTERS=${ONLY:-$CHAPTERS}
 # 一節一頁的章節（app.js 的 PAGED）：概覽頁、每一節、綜合練習都要各測一次
-PAGED=$(grep -o "^const PAGED = \[[^]]*\]" src/chem/app.js | grep -o "'[a-z-]*'" | tr -d "'")
+PAGED=$(grep -o "^const PAGED = \[[^]]*\]" src/chem/app.js | grep -o "'[a-z-]*'" | tr -d "'" | tr '\n' ' ')
 CHAPTERS=$(for c in $CHAPTERS; do if echo " $PAGED " | grep -q " $c "; then n=$(node -e "const fs=require('fs');const CH=new Function(['src/chem/content.js',...fs.readdirSync('src/chem/ch').map(f=>'src/chem/ch/'+f)].map(f=>fs.readFileSync(f,'utf8')).join('\\n')+';return CH;')();console.log(CH.find(x=>x.id==='$c').sections.length)"); echo "$c"; for k in $(seq 1 $n); do echo "$c/$k"; done; [ "$(node -e "const fs=require('fs');const CH=new Function(['src/chem/content.js',...fs.readdirSync('src/chem/ch').map(f=>'src/chem/ch/'+f)].map(f=>fs.readFileSync(f,'utf8')).join('\\n')+';return CH;')();const c=CH.find(x=>x.id==='$c'),W=s=>[].concat(s.w||[]);console.log([...c.quiz,...(c.exam||[])].some(q=>!q.s&&!(q.show&&c.sections.some(x=>W(x).includes(q.show.w))))?1:0)")" = 1 ] && echo "$c/mix"; else echo "$c"; fi; done)
 fail=0
 for c in home $CHAPTERS; do

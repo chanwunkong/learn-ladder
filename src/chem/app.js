@@ -199,7 +199,7 @@ ${items.length ? items.map(({ s, f }, n) => `<div class="q" data-r="${n}"><p cla
 }
 
 // 每段讀完的標記：記成練習紀錄中 k = 'r' 的事件（p：1 看懂了、0 還不太懂、−1 取消），以最後一筆為準；隨練習紀錄一起同步
-const READ_ON = ['atom'];   // 先在第一章試用
+const READ_ON = ['atom', 'vsepr'];   // 先在第一章試用
 const readState = id => { const m = {}; LOG.forEach(e => { if (e.k === 'r' && e.c === id) m[e.i] = e; }); return m; };
 function drawRead(id) {
   const c = chOf(id), m = readState(id), n = c.sections.length, ok = k => m[k] && m[k].p === 1, unsure = k => m[k] && m[k].p === 0;
@@ -305,7 +305,7 @@ function resetPrac(id, sec) {
 
 /* ---- 一節一頁（2026-11-01 使用者要求，先在第一章）：概覽頁 → 每節一頁（說明、互動圖、看懂了、這一節的練習）→ 綜合練習 ----
    題目屬於哪一節：題目的 s（第幾節），沒有的話看「在圖上看」連到哪一節的互動圖；都沒有就放綜合練習。 */
-const PAGED = ['atom'];
+const PAGED = ['atom', 'vsepr'];
 const secOf = (c, q) => { if (q.s) return q.s; const k = q.show ? c.sections.findIndex(s => [].concat(s.w || []).includes(q.show.w)) : -1; return k + 1; };
 const practiceOf = (c, sec) => [...c.quiz.map((q, i) => ({ kind: 'q', i, q })), ...(c.exam || []).map((q, i) => ({ kind: 'x', i, q }))].filter(x => secOf(c, x.q) === sec);
 const qitem = ({ kind, i, q }, num) => `<div class="q" data-k="${kind}" data-q="${i}">${q.src ? `<p class="qsrc">仿 ${String(q.src).replace(/^仿\s*/, '')}</p>` : ''}<p class="qt">${num}. ${q.q}</p><div class="opts">${order(q, i).map(j => `<button class="opt" type="button" data-o="${j}">${q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`;

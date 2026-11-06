@@ -65,10 +65,16 @@ const R3D = (() => {
   const sphere = (r, col, a) => ellipsoid([0, 0, 0], [0, 0, 1], r, r, col, a);
   const torus = (R0, r, col, a) => grid((s, t) => { const u = s * 2 * Math.PI, v = t * 2 * Math.PI, w = R0 + r * Math.cos(v); return [w * Math.cos(u), w * Math.sin(u), r * Math.sin(v)]; }, 24, 10, col, a);
   // 半透明圓盤（節面）：e1、e2 為平面上的兩個方向
+  // 圓柱／圓錐（r2 = 0 為箭頭的錐）：從 a 到 b
+  function tube(a, b, r, col, al, r2 = r) { const u = sub(b, a), L = Math.hypot(...u) || 1, [e1, e2] = perp(norm(u));
+    return grid((s, t) => { const ph = t * 2 * Math.PI, rr = r + (r2 - r) * s; return [0, 1, 2].map(k => a[k] + u[k] * s + rr * (e1[k] * Math.cos(ph) + e2[k] * Math.sin(ph))); }, 1, 14, col, al); }
+  const ball = (c, r, col, al) => ellipsoid(c, [0, 0, 1], r, r, col, al);
+  // 位移：把一組 quads 放到畫面上的另一個位置（各自繞自己的中心旋轉，並排比較用）
+  const shift = (qs, o) => qs.map(q => ({ ...q, o }));
   const disc = (e1, e2, R, col, a) => grid((s, t) => { const r = R * s, ph = t * 2 * Math.PI; return [0, 1, 2].map(k => r * (e1[k] * Math.cos(ph) + e2[k] * Math.sin(ph))); }, 3, 32, col, a).map(q => ({ ...q, two: true }));
   // 畫布：左右拖動旋轉（手機上下滑動仍可捲動頁面），桌機可以上下調仰角
   function view(cv) {
-    const ctx = cv.getContext('2d'), st = { yaw: 0.6, pitch: 0.38 }; let quads = [], scale = 100, axes = 1.2, drag = null;
+    const ctx = cv.getContext('2d'), st = { yaw: 0.6, pitch: 0.38 }; let quads = [], scale = 100, axes = 1.2, labels = [], dot = true, drag = null;
     function draw() {
       const W2 = cv.width / 2, H2 = cv.height / 2, cy = Math.cos(st.yaw), sy = Math.sin(st.yaw), cp = Math.cos(st.pitch), sp = Math.sin(st.pitch);
       const T = ([x, y, z]) => { const x1 = x * cy - y * sy, y1 = x * sy + y * cy, y2 = y1 * cp - z * sp, z2 = y1 * sp + z * cp; return [x1, y2, z2]; };
@@ -76,22 +82,29 @@ const R3D = (() => {
       ctx.clearRect(0, 0, cv.width, cv.height);
       // 座標軸（畫在最後面）
       ctx.lineWidth = 2; ctx.font = '26px system-ui'; ctx.strokeStyle = ctx.fillStyle = dark ? 'rgba(220,230,225,.45)' : 'rgba(40,50,45,.4)';
-      [[[axes, 0, 0], 'x'], [[0, axes, 0], 'y'], [[0, 0, axes], 'z']].forEach(([p, t]) => { const a = T(p), b = T(p.map(x => -x)); ctx.beginPath(); ctx.moveTo(W2 + b[0] * scale, H2 - b[2] * scale); ctx.lineTo(W2 + a[0] * scale, H2 - a[2] * scale); ctx.stroke(); ctx.fillText(t, W2 + a[0] * scale + 6, H2 - a[2] * scale - 6); });
+      if (axes) [[[axes, 0, 0], 'x'], [[0, axes, 0], 'y'], [[0, 0, axes], 'z']].forEach(([p, t]) => { const a = T(p), b = T(p.map(x => -x)); ctx.beginPath(); ctx.moveTo(W2 + b[0] * scale, H2 - b[2] * scale); ctx.lineTo(W2 + a[0] * scale, H2 - a[2] * scale); ctx.stroke(); ctx.fillText(t, W2 + a[0] * scale + 6, H2 - a[2] * scale - 6); });
       const L = norm([-0.35, -0.75, 0.55]);
-      const list = quads.map(q => { const v = q.v.map(T), n = norm(cross(sub(v[2], v[0]), sub(v[3], v[1]))), d = (v[0][1] + v[1][1] + v[2][1] + v[3][1]) / 4; return { q, v, d, lit: 0.38 + 0.62 * Math.abs(n[0] * L[0] + n[1] * L[1] + n[2] * L[2]) }; }).sort((a, b) => b.d - a.d);
+      const list = quads.map(q => { const v = q.v.map(p => { const t = T(p); return q.o ? [t[0] + q.o[0], t[1], t[2] + q.o[1]] : t; }), n = norm(cross(sub(v[2], v[0]), sub(v[3], v[1]))), d = (v[0][1] + v[1][1] + v[2][1] + v[3][1]) / 4; return { q, v, d, lit: 0.38 + 0.62 * Math.abs(n[0] * L[0] + n[1] * L[1] + n[2] * L[2]) }; }).sort((a, b) => b.d - a.d);
       for (const { q, v, lit } of list) {
         const [r, g, b] = q.rgb.map(c => Math.min(255, Math.round(c * lit + (q.two ? 0 : 18))));
         ctx.fillStyle = ctx.strokeStyle = `rgba(${r},${g},${b},${q.a})`; ctx.lineWidth = 0.8;
         ctx.beginPath(); v.forEach(([x, , z], i) => (i ? ctx.lineTo(W2 + x * scale, H2 - z * scale) : ctx.moveTo(W2 + x * scale, H2 - z * scale))); ctx.closePath(); ctx.fill(); if (q.a > 0.6) ctx.stroke();
       }
-      ctx.fillStyle = '#C0392B'; ctx.beginPath(); ctx.arc(W2, H2, 6, 0, 6.283); ctx.fill();
+      if (dot) { ctx.fillStyle = '#C0392B'; ctx.beginPath(); ctx.arc(W2, H2, 6, 0, 6.283); ctx.fill(); }
+      // 文字標籤：{ p: 3D 位置, t: 文字, o: 位移, c: 顏色, big }；在後面的較淡
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      labels.forEach(l => { const t = T(l.p), x = W2 + (t[0] + (l.o ? l.o[0] : 0)) * scale, y = H2 - (t[2] + (l.o ? l.o[1] : 0)) * scale;
+        ctx.font = `${l.big ? 700 : 600} ${l.size || 28}px system-ui`; ctx.globalAlpha = t[1] > 0.25 && !l.fix ? 0.45 : 1;
+        if (l.bg !== false) { ctx.lineWidth = 6; ctx.strokeStyle = dark ? '#1b2220' : '#ffffff'; ctx.strokeText(l.t, x, y); }
+        ctx.fillStyle = l.c || (dark ? '#e8efec' : '#1d2522'); ctx.fillText(l.t, x, y); ctx.globalAlpha = 1; });
+      ctx.textAlign = 'start'; ctx.textBaseline = 'alphabetic';
     }
     cv.addEventListener('pointerdown', e => { drag = { x: e.clientX, y: e.clientY, y0: st.yaw, p0: st.pitch }; });
     cv.addEventListener('pointermove', e => { if (!drag) return; st.yaw = drag.y0 + (e.clientX - drag.x) * 0.012; if (e.pointerType === 'mouse') st.pitch = Math.max(-1.2, Math.min(1.4, drag.p0 + (e.clientY - drag.y) * 0.01)); draw(); });
     ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => cv.addEventListener(t, () => { drag = null; }));
-    return { set(o) { ({ quads = quads, scale = scale, axes = axes } = o); draw(); }, draw };
+    return { set(o) { ({ quads = quads, scale = scale, axes = axes, labels = labels, dot = dot } = o); draw(); }, draw };
   }
-  return { ellipsoid, sphere, torus, disc, view, norm };
+  return { ellipsoid, sphere, torus, disc, tube, ball, shift, view, norm };
 })();
 // 一個實數軌域的立體形狀：type 's'|'p'|'d'，idx 同 ORBV（p：x,y,z；d：xy,yz,xz,x²−y²,z²）；colOf(sign) → [顏色, 透明度]
 function orbMesh(type, idx, R, colOf) {
