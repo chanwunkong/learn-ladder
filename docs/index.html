@@ -338,14 +338,23 @@ const CLOUD = (() => {
    - 考前總複習：FINAL 那天起，所有曾經答錯、已經掌握的題目再到期一次；答對就完成，答錯就重新進錯題本。
    防止「猜對」（2026-11-02 使用者要求，兩個方法一起用）：
    - 追問：第一次就答對時，接著追問這題的一個推理步驟（k: 'fu'，fk 為原題型）。追問第一次就答錯 → 這次作答當成答錯（猜對）。
-   - 確認題：第一次就答對的新題目，CHECK 天後再出一次（chk）；答對才算會，答錯就進五格複習。 */
+   - 確認題：第一次就答對的新題目，CHECK 天後再出一次（chk）；答對才算會，答錯就進五格複習。
+   作廢（2026-11-07 使用者要求）：「重新練習」選「之前的不算」時記一筆 k:'reset'、v 為那一段的題目識別碼；那些題目在這之前的作答全部不算（紀錄本身保留）。 */
 const REVIEW = (() => {
   const DAY = 864e5, GAPS = [1, 3, 7, 14, 30], CHECK = 3, FINAL = new Date(2027, 2, 1).getTime();   // 2027-03-01
   const dayStart = t => { const d = new Date(t); d.setHours(0, 0, 0, 0); return d.getTime(); };
   const dayKey = t => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
   const RULE = `第一次就答錯的題目會進錯題本，依序在隔 ${GAPS.join('、')} 天回來（共 ${GAPS.length} 格）。每次都要當天第一次就答對才往下一格；中途答錯就從第 1 格重新開始。五格都過才算掌握。為了排除猜對：答對後會追問一個理由，理由答錯就當成猜對、進錯題本；第一次就答對的題目，${CHECK} 天後還會出一次確認題。2027 年 3 月 1 日起，所有曾經錯過的題目會再出現一次（考前總複習）。`;
+  // 拿掉被「之前的不算」作廢的作答
+  function live(log) {
+    const rs = log.filter(e => e.k === 'reset' && e.v);
+    if (!rs.length) return log;
+    const cut = new Map(); rs.forEach(r => r.v.forEach(h => cut.set(h, Math.max(cut.get(h) || 0, r.t))));
+    return log.filter(e => !(e.h && e.k !== 'reset' && e.t < (cut.get(e.h) || 0)));
+  }
   // 每題每天的第一次作答
   function trials(log) {
+    log = live(log);
     const seen = new Set(), out = [], guess = new Set();
     for (const e of log) if (e.k === 'fu' && e.n === 1 && !e.ok) guess.add(`${e.c}|${e.fk}|${e.h}@${dayKey(e.t)}`);   // 追問答錯 → 那天的作答算猜對
     for (const e of log) {
@@ -393,6 +402,8 @@ const REVIEW = (() => {
     if (s.stage + 1 >= GAPS.length) return `五格都過了，這題已經掌握，離開錯題本（2027 年 3 月起的考前總複習還會再出現一次）。`;
     return `${GAPS[s.stage + 1]} 天後再考一次（進到第 ${s.stage + 2} / ${GAPS.length} 格）。`;
   }
+  // 「重新練習」的確認：之前的作答照算（隔很久重新複習），或不算（測試、亂按、跳過）
+  const resetAsk = what => `<span class="small">讓${what}全部恢復成沒做過的樣子。之前的作答要算嗎？</span><button class="btn sm pri" type="button" data-y>照算（重新複習）</button><button class="btn sm" type="button" data-v>之前的不算（測試／亂按）</button><button class="btn sm" type="button" data-n>取消</button><span class="small">「之前的不算」：${what}的題目在這之前的作答，錯題本和週報都不算。</span>`;
   const label = s => (s.final ? '考前總複習' : s.chk ? '確認題（之前第一次就答對）' : `第 ${s.stage + 1} / ${GAPS.length} 格`);
   // 接下來 14 天每天到期幾題：[[dayKey, 題數]]
   function upcoming(open, now = Date.now(), days = 14) {
@@ -400,7 +411,7 @@ const REVIEW = (() => {
     [].concat(open).filter(s => s.due > now && s.due <= now + days * DAY).forEach(s => { const k = dayKey(s.due); m.set(k, (m.get(k) || 0) + 1); });
     return [...m.entries()].sort();
   }
-  return { trials, state, book, after, okHead, label, upcoming, dayKey, dayStart, DAY, GAPS, CHECK, RULE, FINAL };
+  return { live, resetAsk, trials, state, book, after, okHead, label, upcoming, dayKey, dayStart, DAY, GAPS, CHECK, RULE, FINAL };
 })();
 
 /* 由 tools/chem/meta.js 自動產生，請勿手改 */
@@ -444,7 +455,7 @@ const md = s => { const d = new Date(pd(s)); return `${d.getFullYear()}/${d.getM
 const chemLog = () => local('chem-ladder', 'log', []);
 // 英文：紀錄給錯題與連續天數；每天哪一段做完由英文頁存的摘要（eng-ladder:sum）提供
 // 要和英文頁的 qlog 一樣含 fu（追問）：追問答錯的題目算猜對、進錯題本，少了它首頁的錯題數和到期數會和錯題本頁對不上
-const engLog = () => local('eng-ladder', 'log', []).filter(e => ['w', 'wr', 's', 'g', 'p', 'fu'].includes(e.k));
+const engLog = () => REVIEW.live(local('eng-ladder', 'log', [])).filter(e => ['w', 'wr', 's', 'g', 'p', 'fu'].includes(e.k));
 const engSum = () => local('eng-ladder', 'sum', null);
 const ENG_WEEKS = 17;   // 2026-11 起到 2027-02 底
 const chemDone = () => local('chem-ladder', 'done', {});

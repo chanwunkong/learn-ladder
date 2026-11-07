@@ -265,7 +265,7 @@ function bindQuiz(id) {
   });
 }
 
-/* ---- 回到做過的小節：已作答的收成一行（✓ 第一次答對／✗ 第一次答錯，點開可再做）；跳過的標出來；「重新練習這一節」只清除畫面上的顯示 ---- */
+/* ---- 回到做過的小節：已作答的收成一行（✓ 第一次答對／✗ 第一次答錯，點開可再做）；跳過的標出來；「重新練習這一節」清除畫面上的顯示，選「之前的不算」時錯題本也不算之前的作答 ---- */
 const secKey = (id, sec) => `reset:${id}/${sec}`;
 const resetAt = h => LOG.reduce((t, e) => (e.k === 'reset' && e.h === h ? Math.max(t, e.t) : t), 0);
 function restorePrac(id, sec) {
@@ -297,8 +297,10 @@ function resetPrac(id, sec) {
   const box = $('#pracReset'); if (!box) return;
   box.innerHTML = '<button class="btn sm ghost" type="button" data-rs>重新練習這一節</button>';
   $('[data-rs]', box).onclick = () => {
-    box.innerHTML = '<span class="small">讓這一節的題目全部恢復成沒做過的樣子？作答紀錄和錯題本不會刪除。</span><button class="btn sm pri" type="button" data-y>確定</button><button class="btn sm" type="button" data-n>取消</button>';
-    $('[data-y]', box).onclick = () => { logAnswer({ c: id, k: 'reset', h: secKey(id, sec), qt: '重新練習這一節' }); renderPaged(id, sec); };
+    box.innerHTML = REVIEW.resetAsk('這一節');
+    const go = v => { logAnswer({ c: id, k: 'reset', h: secKey(id, sec), qt: '重新練習這一節', ...(v ? { v: practiceOf(chOf(id), sec).map(x => qid(id, x.q, x.kind)) } : {}) }); renderPaged(id, sec); };
+    $('[data-y]', box).onclick = () => go(false);
+    $('[data-v]', box).onclick = () => go(true);
     $('[data-n]', box).onclick = () => resetPrac(id, sec);
   };
 }

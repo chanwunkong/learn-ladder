@@ -29,4 +29,10 @@ const fu = (day, ok) => ({ t: t0 + day * D + 1000, c: 'x', k: 'fu', fk: 'q', h: 
 log = [ev(0, true), fu(0, false)]; eq(st(log).open && !st(log).chk, true, '追問答錯 → 進錯題本'); eq(REVIEW.trials(log).length, 1, '追問不算一題'); eq(REVIEW.trials(log)[0].guess, true, '標記為猜對');
 log = [ev(0, true), fu(0, true)]; eq(st(log).chk, true, '追問答對 → 確認題');
 log = [ev(0, false), ev(1, true), fu(1, false)]; eq(st(log).stage, 0, '複習時理由答錯不前進');
+// 重新練習：「之前的不算」（v）作廢之前的作答；照算（沒有 v）不影響；之後的作答照常
+const rs = (day, v) => ({ t: t0 + day * D + 1, c: 'x', k: 'reset', h: 'reset:x', ...(v ? { v } : {}) });
+eq(REVIEW.book([ev(0, false), rs(0, ['h1'])]).open.length, 0, '作廢後不在錯題本');
+eq(REVIEW.book([ev(0, false), rs(0)]).open.length, 1, '照算 → 仍在錯題本');
+eq(REVIEW.book([ev(0, false), rs(0, ['h2'])]).open.length, 1, '別的題目不受影響');
+eq(st([ev(0, false), rs(0, ['h1']), ev(1, true)]).chk, true, '作廢後重做答對 → 當成新題');
 if (fail) process.exit(1); console.log('錯題排程 OK');

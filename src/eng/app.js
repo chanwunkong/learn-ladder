@@ -8,7 +8,7 @@ function logAnswer(e) {
   store.set('log', LOG); if (typeof CLOUD !== 'undefined' && CLOUD.pushLog) CLOUD.pushLog();
   setTimeout(() => { if (typeof refreshParts === 'function') refreshParts(); }, 0);
 }
-const qlog = () => LOG.filter(e => REVIEW_KINDS.has(e.k) || e.k === 'fu');   // fu：答對後的追問（追問答錯 → 那次算猜對）
+const qlog = () => REVIEW.live(LOG).filter(e => REVIEW_KINDS.has(e.k) || e.k === 'fu');   // fu：答對後的追問（追問答錯 → 那次算猜對）
 const okSet = () => new Set(LOG.filter(e => e.ok && e.h).map(e => e.h));
 // 每題「第一次作答」是否答對（只看最早的 n === 1）：回到頁面時決定顯示「已答對」還是「第一次答錯，再做一次」
 // 用錯題排程的「每天第一次作答」（已把追問答錯的猜對算成答錯），取每題最早的一次
@@ -75,7 +75,7 @@ function mcq(q, num) {
   const ord = shuffled(q.o.length, q.h + Math.random());   // 每次打開都重新打亂，複習時不能靠記位置
   return `<div class="q" data-h="${esc(q.h)}">${num ? `<p class="qnum">${num}</p>` : ''}<p class="qt">${q.q}</p>${q.hint ? `<p class="hintrow"><button class="btn sm ghost" type="button" data-hint>看中文提示</button><span class="hintz" hidden>${esc(q.hint)}</span></p>` : ''}<div class="opts">${ord.map(j => `<button class="opt${q.en ? ' en-o' : ''}" type="button" data-o="${j}">${esc(q.o[j])}</button>`).join('')}</div><div class="why" hidden></div></div>`;
 }
-// 「重新練習這一段」：記一筆 k:'reset'（c 為這一段），畫面只看這之後的作答；作答紀錄、錯題本、週報都不受影響
+// 「重新練習這一段」：記一筆 k:'reset'（c 為這一段），畫面只看這之後的作答；選「之前的不算」時加上 v（這一段的題目），錯題本、週報就不算之前的作答
 const resetT = c => LOG.reduce((t, e) => (e.k === 'reset' && e.c === c ? Math.max(t, e.t) : t), 0);
 function viewOf(c) {
   const t0 = resetT(c), ok = new Set(LOG.filter(e => e.ok && e.h && e.t > t0).map(e => e.h)), f1 = new Map();
@@ -259,8 +259,10 @@ function resetBox(c) {
   const box = $('#rsBox'); if (!box) return;
   box.innerHTML = '<button class="btn sm ghost" type="button" data-rs>重新練習這一段</button>';
   $('[data-rs]', box).onclick = () => {
-    box.innerHTML = '<span class="small">讓這一段全部恢復成沒做過的樣子？作答紀錄和錯題本不會刪除。</span><button class="btn sm pri" type="button" data-y>確定</button><button class="btn sm" type="button" data-n>取消</button>';
-    $('[data-y]', box).onclick = () => { logAnswer({ c, k: 'reset', h: `reset:${c}`, qt: '重新練習這一段' }); route(); };
+    box.innerHTML = REVIEW.resetAsk('這一段');
+    const go = v => { logAnswer({ c, k: 'reset', h: `reset:${c}`, qt: '重新練習這一段', ...(v ? { v: [...new Set(LOG.filter(e => e.c === c && e.h && e.k !== 'reset').map(e => e.h))] } : {}) }); route(); };
+    $('[data-y]', box).onclick = () => go(false);
+    $('[data-v]', box).onclick = () => go(true);
     $('[data-n]', box).onclick = () => resetBox(c);
   };
 }
@@ -393,8 +395,8 @@ ${unsureList.length ? `<p class="lbl">你標記「不熟」的地方</p><ul clas
 // 回想時需要幫忙的字：按了「看中文提示」，或打開早上的卡片後才答出來
 function helpedWords(w) {
   const pre = wkKey(w) + 'd', word = h => h.split(':')[2];
-  const hint = new Set(LOG.filter(e => e.k === 'hint' && e.c && e.c.startsWith(pre)).map(e => word(e.h)));
-  const peek = new Set(LOG.filter(e => e.k === 'wr' && e.pk && e.c && e.c.startsWith(pre)).map(e => word(e.h)));
+  const hint = new Set(REVIEW.live(LOG).filter(e => e.k === 'hint' && e.c && e.c.startsWith(pre)).map(e => word(e.h)));
+  const peek = new Set(REVIEW.live(LOG).filter(e => e.k === 'wr' && e.pk && e.c && e.c.startsWith(pre)).map(e => word(e.h)));
   return { hint: [...hint], peek: [...peek].filter(x => !hint.has(x)) };
 }
 /* ---- 匯出：本週紀錄＋給下一週 AI 的指示 ---- */
@@ -402,7 +404,7 @@ function exportMD(w) {
   const { tr, sk } = weekStats(w), ix = qindex(), u = unsure(), today = REVIEW.dayKey(Date.now());
   const st = REVIEW.state(qlog());
   const wrong = {}; tr.filter(x => !x.ok).forEach(x => { wrong[x.h] = (wrong[x.h] || 0) + 1; });
-  const picks = {}; LOG.forEach(e => { if (e.h && !e.ok && e.p != null && REVIEW_KINDS.has(e.k)) (picks[e.h] = picks[e.h] || new Set()).add(e.p); });
+  const picks = {}; REVIEW.live(LOG).forEach(e => { if (e.h && !e.ok && e.p != null && REVIEW_KINDS.has(e.k)) (picks[e.h] = picks[e.h] || new Set()).add(e.p); });
   const strip = s => String(s).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
   const line = h => {
     const f = ix[h], s = st.get([...st.keys()].find(k => k.endsWith('|' + h)) || '') || {}, mark = s.open ? '未掌握' : '已掌握';
@@ -414,7 +416,7 @@ function exportMD(w) {
   const prevOpen = REVIEW.book(qlog()).open.filter(s => !(s.c || '').startsWith(wkKey(w) + 'd'));
   const wrongWords = Object.keys(wrong).filter(h => /^wr?:/.test(h)).map(h => h.split(':')[2]);
   const unsureL = Object.values(u).filter(Boolean);
-  const steps = {}; LOG.filter(e => e.k === 'x' && e.c && e.c.startsWith(wkKey(w) + 'd') && !e.ok && e.n === 1).forEach(e => { steps[e.sk] = (steps[e.sk] || 0) + 1; });
+  const steps = {}; REVIEW.live(LOG).filter(e => e.k === 'x' && e.c && e.c.startsWith(wkKey(w) + 'd') && !e.ok && e.n === 1).forEach(e => { steps[e.sk] = (steps[e.sk] || 0) + 1; });
   const skLines = Object.keys(SKILLS).map(k => `| ${k} | ${SKILLS[k]} | ${sk[k].n} | ${sk[k].ok} | ${sk[k].n ? Math.round(100 * sk[k].ok / sk[k].n) + '%' : '—'} | ${SK_ST[skillState(sk[k])]} |`);
   const allWords = WEEKS.flatMap(x => x.words.flat().map(y => y[0]));
   const avgWords = type => { const ps = w.passages.flatMap((_, d) => dayPass(w, d).filter(P => P.type === type)); return Math.round(ps.reduce((n, P) => n + (P.text.join(' ').match(/[A-Za-z]+(?:['’-][A-Za-z]+)*/g) || []).length, 0) / (ps.length || 1)); };

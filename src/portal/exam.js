@@ -36,7 +36,7 @@ const md = s => { const d = new Date(pd(s)); return `${d.getFullYear()}/${d.getM
 const chemLog = () => local('chem-ladder', 'log', []);
 // 英文：紀錄給錯題與連續天數；每天哪一段做完由英文頁存的摘要（eng-ladder:sum）提供
 // 要和英文頁的 qlog 一樣含 fu（追問）：追問答錯的題目算猜對、進錯題本，少了它首頁的錯題數和到期數會和錯題本頁對不上
-const engLog = () => local('eng-ladder', 'log', []).filter(e => ['w', 'wr', 's', 'g', 'p', 'fu'].includes(e.k));
+const engLog = () => REVIEW.live(local('eng-ladder', 'log', [])).filter(e => ['w', 'wr', 's', 'g', 'p', 'fu'].includes(e.k));
 const engSum = () => local('eng-ladder', 'sum', null);
 const ENG_WEEKS = 17;   // 2026-11 起到 2027-02 底
 const chemDone = () => local('chem-ladder', 'done', {});
