@@ -17851,8 +17851,10 @@ function restorePrac(id, sec) {
   refreshPrac();
 }
 function refreshPrac() {
-  const box = $('#pracSum'); if (!box) return;
-  const items = $$('.q[data-k]', $('#article')), isDone = e => e.classList.contains('prev') || !!$('.opt.right', e);
+  const box = $('#pracSum'), items = $$('.q[data-k]', $('#article')), isDone = e => e.classList.contains('prev') || !!$('.opt.right', e);
+  // 頁首（捲動時固定在最上面）：這一頁有題目就顯示這一頁完成幾題，沒有就顯示完成幾章（2026-11-07 使用者要求）
+  if (items.length) { const d = items.filter(isDone).length; $('#progTxt').textContent = `本頁 ${d} / ${items.length} 題`; $('#progBar').style.width = `${100 * d / items.length}%`; } else updateProgress();
+  if (!box) return;
   const last = items.map(isDone).lastIndexOf(true), skip = items.filter((e, k) => k < last && !isDone(e));
   items.forEach(e => e.classList.toggle('skipped', skip.includes(e)));
   const n = items.filter(isDone).length;
@@ -17957,7 +17959,7 @@ function route(h) {
   const c = chOf(id);
   if (c && PAGED.includes(id)) {
     shown = id; renderPaged(id, sec); renderTOC(id); document.title = `${c.title}｜後中化學`;
-    $('#tocBox').classList.remove('open'); $('#tocBtn').textContent = '☰ 單元'; window.scrollTo(0, 0); return;
+    $('#tocBox').classList.remove('open'); $('#tocBtn').textContent = '☰ 單元'; window.scrollTo(0, 0); refreshPrac(); return;
   }
   if (c && shown === id && sec) { const t = document.getElementById(`sec-${sec}`); if (t) t.scrollIntoView({ block: 'start' }); return; }  // 同一章只捲動，保留互動圖狀態
   shown = c ? id : null;
@@ -17965,7 +17967,7 @@ function route(h) {
   else if (id === 'log') { renderLog(); renderTOC('log'); document.title = '練習紀錄｜後中化學'; }
   else if (id === 'review') { renderReview(); renderTOC('review'); document.title = '錯題複習｜後中化學'; }
   else { renderHome(); bindTree(); renderTOC(''); document.title = '後中化學｜學習階梯'; }
-  $('#tocBox').classList.remove('open'); $('#tocBtn').textContent = '☰ 單元';
+  $('#tocBox').classList.remove('open'); $('#tocBtn').textContent = '☰ 單元'; refreshPrac();
   const t = sec ? document.getElementById(`sec-${sec}`) : id === 'map' && document.getElementById('map');
   if (t) setTimeout(() => t.scrollIntoView({ block: 'start' }), 0); else window.scrollTo(0, 0);
 }
