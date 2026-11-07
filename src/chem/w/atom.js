@@ -552,7 +552,7 @@ ${ok ? nodes.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4.5" fill="var(--in
 <text class="tk ${ok ? 'hl' : 'bad'}" x="${cx}" y="${cy - R - 36}" text-anchor="middle">${ok ? `剛好 ${n} 個波長：接得起來（允許，n = ${n}）` : '繞一圈接不起來：不允許'}</text>
 ${ok ? `<text class="tk sm" x="${cx + R + 30}" y="${cy + 4}">黑點：振幅 0（節點）</text>` : ''}</svg>`;
     $('#rwR', el).value = st.k; $('#rwO', el).textContent = `${fx(k, ok ? 0 : 2)} 個`;
-    $('#rwN', el).innerHTML = ok ? `一圈剛好 ${n} 個波長，波繞回起點時和自己接上，可以穩定存在：這就是第 ${n} 個軌道（n = ${n}）。黑點是振幅為 0 的節點，電子不會出現在那裡。`
+    $('#rwN', el).innerHTML = ok ? `一圈剛好 ${n} 個波長，波繞回起點時和自己接上，可以穩定存在：這就是第 ${n} 個軌道（n = ${n}）。黑點是振幅為 0 的節點，電子不會出現在那裡。圖上把軌道畫成一樣大，只看接不接得起來；實際上 n 越大軌道越大（第 3 小節的 r ∝ n²）。`
       : `一圈是 ${fx(k, 2)} 個波長，不是整數：繞回起點時，波的高度（紅點）和起點（黑點）對不上，繞幾圈之後會互相抵消，不能存在。拖到整數看看。`;
   }
   $('#rwR', el).oninput = e => { st.k = +e.target.value; draw(); };
