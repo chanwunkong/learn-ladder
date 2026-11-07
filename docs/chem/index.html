@@ -487,6 +487,15 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 .box { width: 30px; height: 30px; border: 1.5px solid var(--ink); margin-left: -1.5px; display: grid; place-items: center; font-size: 15px; letter-spacing: -3px; }
 .ptab { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; margin: 8px 0 14px; }
 .pcell { border-radius: 6px; padding: 4px 2px; text-align: center; background: color-mix(in srgb, var(--accent) calc(var(--v) * 85%), var(--surface)); border: 1px solid var(--line); font-size: 12px; line-height: 1.25; }
+.uc-chain { font-size: 14px; line-height: 2.8; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); overflow-x: auto; }
+.uc-frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; font-family: var(--mono); font-size: 12px; line-height: 1.5; margin: 0 2px; }
+.uc-frac > span:first-child { border-bottom: 1.5px solid currentColor; padding: 0 4px; }
+.uc-res { font-size: 15px; margin: 8px 0; } .uc-res.ok { color: var(--good); } .uc-bad { color: var(--bad); font-weight: 700; } .uc-res s { color: var(--muted); }
+.uc-cards { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 10px; }
+.uc-card { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.uc-card.on { border-color: var(--accent); background: var(--soft); }
+.uc-use { border: 0; background: none; color: var(--ink); padding: 6px 4px 6px 8px; cursor: pointer; }
+.uc-flip { border: 0; border-left: 1px solid var(--line); background: none; color: var(--accent); padding: 6px 10px; font-size: 16px; cursor: pointer; align-self: stretch; }
 .xmap { display: grid; grid-template-columns: 18px repeat(10, minmax(0, 1fr)); gap: 3px; margin: 8px 0 4px; align-items: center; }
 .xg { font-family: var(--mono); font-size: 10.5px; color: var(--muted); text-align: center; }
 .xc { min-width: 0; padding: 7px 0; border: 1px solid var(--line); border-radius: 5px; background: var(--surface); color: var(--muted); font-size: 13px; cursor: pointer; }
@@ -1730,48 +1739,54 @@ CH.push({
 <p class="eq">平均原子量 = Σ（同位素質量 × 豐度）<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>豐度</dt><dd>這種同位素在天然樣品中所佔的比例（小數，全部加起來 = 1）</dd></div><div><dt>Σ</dt><dd>每一種同位素算一次再加總</dd></div></dl>
 <p>原子模型的演進：<b>道耳頓</b>的原子說只談「原子」本身（元素由不可分割的原子組成、同元素原子相同、化合物由固定比例的原子組成、反應只是原子重新排列），還沒有電子、質子、中子與同位素的概念；之後湯姆森發現電子，拉塞福用 α 粒子散射發現原子核，查兌克發現中子。</p>` },
-    { h: '波長越短，光的能量越大嗎？', w: ['wave', 'emspec'], body: `
+    { h: '波長越短，光的能量越大嗎？', w: ['wave', 'unitmol', 'emspec'], body: `
 <p>拖動下面這張圖的波長：波長變短時，波變密、顏色從紅往紫走、一個光子的能量變大。</p>
 [[w:wave]]
 <p>為什麼會這樣：</p>
 <p>光是電磁波：電場和磁場一起往前傳的波動。描述一個波要用三個量：<b>波長 λ</b>（相鄰兩個波峰的距離）、<b>頻率 ν</b>（每秒通過幾個波峰）和傳播速度。所有電磁波在真空中都以光速 c 前進，所以波長越短，每秒通過的波峰越多，頻率越高。</p>
-<p>光的能量是一份一份的，每一份稱為一個<b>光子</b>。一個光子的能量只由頻率決定：頻率越高，能量越大。把 ν = c/λ 代進去，就得到「波長越短，能量越大」。</p>
+<p>光的能量是一份一份的，每一份稱為一個<b>光子</b>。一個光子的能量只由頻率決定：E = hν，頻率越高，能量越大。再把 c = λν 代進去（ν = c/λ），就得到能量和波長的關係。兩個反比的量，寫成「相乘是定值」最好記：</p>
 <p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式或常數推出，不用死背；<span class="tg given">卷上會給</span>題目或卷首常數表會提供。</p>
 <p class="eq">c = λν<span class="tg must">要背</span></p>
-<p class="eq">E = hν = hc/λ<span class="tg must">要背</span></p>
+<p class="eq">E × λ = hc<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>c</dt><dd>光速，3.00 × 10⁸ m/s<span class="tg given">卷上會給</span></dd></div><div><dt>λ</dt><dd>波長（讀作 lambda），單位 m；光常用 nm（奈米，10⁻⁹ m）</dd></div><div><dt>ν</dt><dd>頻率（讀作 nu），每秒振動的次數，單位 Hz（= s⁻¹）</dd></div><div><dt>E</dt><dd>一個光子的能量，單位 J（焦耳）</dd></div><div><dt>h</dt><dd>普朗克常數，6.63 × 10⁻³⁴ J·s<span class="tg given">卷上會給</span></dd></div></dl>
-<p>化學習慣用「每莫耳」：一莫耳光子的能量，是一個光子的能量乘上亞佛加厥數 Nₐ（6.02 × 10²³ mol⁻¹）。把三個常數先乘好，就得到一個常用的換算：</p>
-<p class="eq">E（kJ/mol）≈ 119,600 ÷ λ（nm）<span class="tg derive">會推</span></p>
-<dl class="sym"><div><dt>119,600</dt><dd>就是 h × c × Nₐ = (6.63 × 10⁻³⁴)(3.00 × 10⁸)(6.02 × 10²³) ≈ 0.1196 J·m/mol，再把 J 換成 kJ（÷ 1000）、m 換成 nm（× 10⁹）。不用背，忘了就用三個常數重算。</dd></div></dl>
-<p>下面的圖把範圍放大到整個電磁波譜（γ 射線到無線電波），拖動滑桿看各區的波長與能量。考試常問兩件事：電磁波譜的排序，以及「打斷一個化學鍵最少需要多長波長的光」（把鍵能 kJ/mol 換成單一光子的能量，再用 λ = hc/E）。</p>
+<p>E × λ 固定：波長變 2 倍，能量就變一半。</p>
+<p>化學習慣用「每莫耳」和 nm：一莫耳光子的能量，是一個光子的能量乘上亞佛加厥數 Nₐ（6.02 × 10²³ 個/mol）。hc 換成這些單位是多少？下面的圖從 h × c 出發，<b>自己選要乘哪些換算比例</b>（每一張都等於 1，可以翻轉），把單位換成 kJ·nm/mol。消掉的單位會畫刪除線。</p>
+[[w:unitmol]]
+<p class="eq">E（kJ/mol）× λ（nm）≈ 119,600<span class="tg derive">會推</span></p>
+<p>119,600 不用背：忘了就用卷上的 h、c、Nₐ 照上面的方法重算。</p>
+<p>下面的圖把範圍放大到整個電磁波譜（γ 射線到無線電波），拖動滑桿看各區的波長與能量。考試常問兩件事：電磁波譜的排序，以及「打斷一個化學鍵最少需要多長波長的光」（鍵能用 kJ/mol，就用 E × λ ≈ 119,600 求 λ）。</p>
 [[w:emspec]]
 <p>金屬鹽在火焰中加熱時，電子被激發後掉回低能階，<b>放出</b>特定顏色的光（<b>焰色</b>）。煙火的顏色就是這些金屬鹽的放射光<span class="tg must">要背</span>：鋰紅、鈉黃、鉀紫、鈣橙紅、鍶紅、鋇黃綠、銅藍綠。</p>
 <p class="flames"><span><i style="background:#D81B60"></i>鋰</span><span><i style="background:#F2C230"></i>鈉</span><span><i style="background:#B28DD6"></i>鉀</span><span><i style="background:#E8742A"></i>鈣</span><span><i style="background:#D3262E"></i>鍶</span><span><i style="background:#9CC63A"></i>鋇</span><span><i style="background:#2BA59A"></i>銅</span></p>` },
-    { h: '氫原子的光為什麼是一條一條的？', w: ['hspec', 'bohrr'], body: `
+    { h: '氫原子的光為什麼是一條一條的？', w: ['hspec', 'unitev', 'bohrr'], body: `
 <p>把氫氣通電，發出的光經過稜鏡不是連續的彩虹，而是幾條特定顏色的線。這代表電子只能待在某些特定能量（能階），從高能階掉到低能階時，放出的光子能量剛好等於能階差。下面的圖切換粒子與躍遷：能階圖下方的光譜會跟著換，看能量怎麼隨 Z 改變。</p>
 [[w:hspec]]
-<p>波耳模型對只有一個電子的粒子（H、He⁺、Li²⁺…）給出：</p>
-<p class="eq">Eₙ = −13.6 eV × Z²/n²<span class="tg must">要背</span></p>
-<p class="eq">rₙ = 0.529 Å × n²/Z<span class="tg must">要背</span></p>
-<p class="eq">ΔE = hc/λ<span class="tg must">要背</span></p>
+<p>波耳模型對只有一個電子的粒子（H、He⁺、Li²⁺…）給出能量和軌道半徑。考試幾乎都是比較題（誰比較大、差幾倍），所以先記比例：在分數上面的是正比，在下面的是反比。</p>
+<p class="eq">E ∝ −Z²/n²<span class="tg must">要背</span></p>
+<p class="eq">r ∝ n²/Z<span class="tg must">要背</span></p>
+<p>兩個都有 n²，Z 的位置剛好相反。要算數字時才用氫原子的值：E₁ = −13.6 eV、r₁ = 0.529 Å<span class="tg must">要背</span>，也就是 Eₙ = −13.6 eV × Z²/n²、rₙ = 0.529 Å × n²/Z。</p>
+<p><b>比較題的常數會消掉</b>：He⁺ 的游離能是氫的幾倍？兩者都是 n = 1，E 的比 = (2²/1²) ÷ (1²/1²) = 4 倍，13.6 根本用不到。</p>
 <dl class="sym"><div><dt>n</dt><dd>主量子數：電子在第幾層（1, 2, 3…）</dd></div><div><dt>Z</dt><dd>原子核的質子數（氫 1、He⁺ 2、Li²⁺ 3）</dd></div><div><dt>Eₙ</dt><dd>電子在第 n 層的能量。負號表示電子被原子核束縛；越接近 0 越容易脫離，等於 0 就是離開原子</dd></div><div><dt>eV</dt><dd>電子伏特：一個電子通過 1 伏特電壓獲得的能量，1 eV = 1.602 × 10⁻¹⁹ J。單一原子的能量很小，用 eV 比用 J 方便</dd></div><div><dt>rₙ</dt><dd>電子在第 n 層的軌道半徑</dd></div><div><dt>Å</dt><dd>埃，10⁻¹⁰ m（= 0.1 nm），原子大小的常用單位</dd></div><div><dt>13.6 eV</dt><dd>氫原子基態（n = 1）電子的束縛能，也就是把它整個拿走所需的能量（氫的游離能，實驗量得 13.6 eV）。波耳由電子質量、電荷、普朗克常數算出同一個值，模型因此被接受。考試直接用，不必推導</dd></div><div><dt>× Z²</dt><dd>原子核電荷變成 Z 倍，拉力變大、軌道又縮小成 1/Z，兩個效果相乘，能量變成 Z² 倍</dd></div><div><dt>÷ n²</dt><dd>越外層離核越遠、束縛越鬆：第 2 層只剩 1/4，第 3 層 1/9</dd></div><div><dt>0.529 Å</dt><dd>波耳半徑 a₀：氫原子基態（n = 1）的軌道半徑，和 13.6 eV 一起由同一組常數算出。半徑隨 n² 變大、隨 Z 縮小（核電荷越大，電子被拉得越近）</dd></div><div><dt>h、c、λ</dt><dd>普朗克常數 6.626 × 10⁻³⁴ J·s（卷上會給）、光速 3.00 × 10⁸ m/s、光的波長</dd></div><div><dt>ΔE</dt><dd>兩個能階的能量差，就是放出（或吸收）的光子能量</dd></div></dl>
-<p>能量越大，波長越短。換算時常用捷徑：</p>
-<p class="eq">λ（nm）≈ 1240 ÷ ΔE（eV）<span class="tg derive">會推</span></p>
-<dl class="sym"><div><dt>1240</dt><dd>就是 hc 用 eV·nm 表示：(6.63 × 10⁻³⁴ × 3.00 × 10⁸) ÷ (1.602 × 10⁻¹⁹) ≈ 1.24 × 10⁻⁶ eV·m = 1240 eV·nm。和 119,600 是同一件事，只是能量單位不同。</dd></div></dl>
+<p>放出的光子能量等於能階差 ΔE，波長用第 2 節的 E × λ = hc 求。能階差用 eV，波長用 nm 時，hc 是多少？下面的圖自己選換算比例，把單位換成 eV·nm（也可以切到「1 eV 是幾 kJ/mol」，看兩種單位怎麼互換）。</p>
+[[w:unitev]]
+<p class="eq">ΔE（eV）× λ（nm）≈ 1240<span class="tg derive">會推</span></p>
+<p>1240 和第 2 節的 119,600 都是 hc，只是單位不同；兩者相差 96.5 倍，就是 1 eV（一個粒子）= 96.5 kJ/mol。</p>
 <p>從高能階掉到同一個低能階的一組譜線稱為一個「系」：掉到 n = 1 是<b>來曼系</b>（紫外光），掉到 n = 2 是<b>巴耳末系</b>（可見光），掉到 n = 3 是<b>帕申系</b>（紅外光）。巴耳末系中 3 → 2 是 656 nm 的紅線。把電子從原子完全移走所需的能量稱為<b>游離能</b>：n → ∞ 時能量為 0，所以基態氫原子的游離能是 0 − (−13.6) = 13.6 eV（1312 kJ/mol），He⁺ 是它的 Z² = 4 倍。回到上面的圖切換躍遷，光譜會跟著換成那一個系（萊曼系在紫外、巴耳末系在可見、帕申系在紅外）。</p>
-<p>軌道半徑 rₙ = 0.529 Å × n²/Z：下面的圖看半徑怎麼隨 n 變大、隨 Z 縮小。</p>
+<p>軌道半徑 r ∝ n²/Z：下面的圖看半徑怎麼隨 n 變大、隨 Z 縮小。</p>
 [[w:bohrr]]` },
     { h: '為什麼電子的能量只能取特定值？', w: 'ringwave', body: `
 <p>第 3 節的波耳模型說，電子只能在 n = 1, 2, 3… 的軌道上，能量只能是幾個值，但沒有說為什麼。答案是：<b>電子也是波</b>。</p>
 <p>1924 年德布羅意提出：電子這種粒子也有波長，而且由它跑多快決定。1927 年，電子束打到晶體上出現和光一樣的繞射圖樣，證實電子真的是波。</p>
-<p class="eq">λ = h/(mv)<span class="tg must">要背</span></p>
-<dl class="sym"><div><dt>λ</dt><dd>電子的波長（物質波）</dd></div><div><dt>h</dt><dd>普朗克常數 6.63 × 10⁻³⁴ J·s（卷上會給）</dd></div><div><dt>m、v</dt><dd>電子的質量與速度</dd></div></dl>
-<p>意思是<b>波長越短，電子跑得越快</b>。</p>
+<p class="eq">λ × mv = h<span class="tg must">要背</span></p>
+<dl class="sym"><div><dt>λ</dt><dd>電子的波長（物質波）</dd></div><div><dt>h</dt><dd>普朗克常數 6.63 × 10⁻³⁴ J·s（卷上會給）</dd></div><div><dt>m、v</dt><dd>電子的質量與速度；mv 稱為<b>動量</b>（質量 × 速度）</dd></div></dl>
+<p>意思是<b>波長 × 動量是定值</b>：電子跑得越快，波長越短。這和第 2 節光的 E × λ = hc 是同一條：光的動量是 E/c，把 E × λ = hc 兩邊除以 c，就是 λ × (E/c) = h。德布羅意做的事，就是把光的這條關係套到電子上。</p>
+<table class="tbl"><tr><th></th><th>光（第 2 節）</th><th>電子（本節）</th></tr><tr><td>動量</td><td>E/c</td><td>mv</td></tr><tr><td>波長 × 動量 = h</td><td>λ × E/c = h，也就是 E × λ = hc</td><td>λ × mv = h</td></tr></table>
 <p><b>繞一圈要接得起來</b>：電子繞著原子核跑，它的波繞一圈回到起點時，必須和自己接上；接不上的波會和自己錯開、互相抵消，不能存在。下面的圖：拖動「一圈放幾個波長」，看波繞一圈後能不能接起來。</p>
 [[w:ringwave]]
-<p class="eq">軌道一圈的長度 = 整數個波長：2πr = nλ，n = 1, 2, 3…<span class="tg derive">會推</span></p>
+<p class="eq">2πr = nλ<span class="tg derive">會推</span></p>
+<p>軌道一圈的長度（2πr）剛好是整數個波長，n = 1, 2, 3…</p>
 <p>這個整數 n 就是波耳模型的主量子數。只有幾個軌道接得起來，所以電子的半徑、速度、能量都只能是幾個值（第 3 節的 Eₙ = −13.6 eV × Z²/n²）。<b>電子被原子核關住 → 只能是接得起來的駐波 → 能量一格一格</b>，這就是能量量子化的原因。</p>
-<p>把 λ = h/(mv) 代進 2πr = nλ，得到 mvr = nh/(2π)。這是波耳當初直接假設的條件（稱為角動量量子化），德布羅意的波讓它有了原因。</p>
+<p>把 λ = h/(mv) 代進 2πr = nλ，兩邊整理成乘式：mv × 2πr = nh。這是波耳當初直接假設的條件（稱為角動量量子化），德布羅意的波讓它有了原因。</p>
 <p><b>駐波上的節點</b>：圖上波的振幅是 0 的點，電子不會出現在那裡。波耳的圓形軌道是簡化的圖像，真正的電子不是沿著一條圓線跑：在立體的原子裡，電子的駐波就是第 5 節的軌域，這些 0 的地方就是軌域的節面。</p>
 <p>同樣的道理也用在分子：共軛分子的 π 電子被關在碳鏈上，能量也一格一格，在「共軛二烯」一章用箱中粒子模型計算。</p>` },
     { h: '電子的狀態用哪四個量子數描述？', w: ['qn', 'radial'], body: `
@@ -2327,11 +2342,12 @@ CH.push({
 [[w:pboxc]]
 <p>電子有波的性質（第一章第 4 節）。電子穿不過牆，在牆上找到它的機率是 0，所以它的波在兩端都必須是 0，只能是兩端固定、在原地上下振動的<b>駐波</b>（吉他弦振動時就是駐波）。<b>下面的圖</b>：拖動波長，只有右端也剛好落在 0 的波才能存在，這時箱子裡剛好放進整數個半波長。</p>
 [[w:boxfit]]
-<p class="eq">L = n × λ/2，也就是 λ = 2L/n，n = 1, 2, 3…<span class="tg derive">會推</span></p>
-<p><b>波長怎麼變成能量？</b>用第一章第 4 節的德布羅意關係 λ = h/(mv)：<b>波長越短，電子跑得越快</b>。箱子只允許幾個波長，速度就只能是幾個值，能量也就只能是幾個值。三步就推出箱中粒子的公式，不用背：</p>
-<ol><li>箱子決定波長：λ = 2L/n</li><li>波長決定速度：v = h/(mλ) = nh/(2mL)</li><li>速度決定能量：E = ½mv² = ½m × n²h²/(4m²L²)</li></ol>
-<p class="eq">Eₙ = n² × h²/(8mL²)<span class="tg derive">會推</span></p>
-<p>前面的 n² 是重點，後面的 h²/(8mL²) 只是一個固定的單位（就是 n = 1 的能量 E₁）。考試的題目都在問這個公式的三個比例：</p>
+<p class="eq">n × λ = 2L<span class="tg derive">會推</span></p>
+<p>箱子裡放進 n 個半波長（n = 1, 2, 3…），n 個半波長的總長就是箱長 L。</p>
+<p><b>波長怎麼變成能量？</b>用第一章第 4 節的德布羅意關係 λ × mv = h：<b>波長越短，電子跑得越快</b>。箱子只允許幾個波長，速度就只能是幾個值，能量也就只能是幾個值。三步就推出箱中粒子的公式，不用背：</p>
+<ol><li>箱子決定波長：λ = 2L/n</li><li>波長決定速度：代進 λ × mv = h，得到 mv = nh/(2L)</li><li>速度決定能量：E = ½mv²，把 mv 代進去，m 約掉一個，E = n²h²/(8mL²)</li></ol>
+<p class="eq">E ∝ n²/(mL²)<span class="tg derive">會推</span></p>
+<p>在分數上面的是正比、下面的是反比：n 越大能量越高；粒子越重、箱子越長，能量越低。剩下的 h²/8 是常數，題目的答案都寫成「幾個 h²/(8mL²)」，也就是 n = 1 的能量 E₁ 的幾倍。考試的題目都在問這三個比例：</p>
 <p><b>1. 能量和 n² 成正比。</b>下面的圖畫出 n = 1～4 的波和能階：n 越大，半波越多、波長越短、電子越快，能量是 E₁ 的 1、4、9、16 倍。點一個躍遷，看兩個能階差幾倍。</p>
 [[w:pbox]]
 <p>例如「基態（n = 1）到第一激發態（n = 2）」：(2² − 1²) = 3，答案是 3h²/(8mL²)；「n = 2 到 n = 3」：(3² − 2²) = 5，答案是 5h²/(8mL²)。最低的能量是 n = 1 的 E₁，不是 0：電子關在箱子裡不可能完全靜止。</p>
@@ -12539,6 +12555,57 @@ ${ok ? '' : `<circle cx="${x1}" cy="${yc - A * end}" r="7" class="dot-bad"/>`}
 };
 
 /* ===== 4b. 能量和 n²、L 的關係：真實單位 eV；左邊 L = 1 nm 的箱子固定，右邊的箱子寬度跟著 L 變 ===== */
+// 第一章第 2、3 節：單位換算鏈，讀者自己選要乘哪些「等於 1 的比例」（可翻轉、可拿掉、不限順序），單位對了才算完成（2026-11-07 使用者要求：不要固定步驟的引導式）
+const UC_CARDS = [
+  { id: 'ev', num: '1 eV', den: '1.602 × 10⁻¹⁹ J', v: 1 / 1.602e-19, u: { eV: 1, J: -1 } },
+  { id: 'nm', num: '10⁹ nm', den: '1 m', v: 1e9, u: { nm: 1, m: -1 } },
+  { id: 'na', num: '6.02 × 10²³', den: '1 mol', v: 6.022e23, u: { mol: -1 } },
+  { id: 'kj', num: '1 kJ', den: '1000 J', v: 1e-3, u: { kJ: 1, J: -1 } },
+  { id: 'a', num: '10¹⁰ Å', den: '1 m', v: 1e10, u: { 'Å': 1, m: -1 } },
+  { id: 'cal', num: '1 cal', den: '4.184 J', v: 1 / 4.184, u: { cal: 1, J: -1 } },
+];
+const HC = { txt: 'h × c = (6.63 × 10⁻³⁴ J·s)(3.00 × 10⁸ m/s)', v: 6.626e-34 * 2.998e8, u: { J: 1, m: 1 }, gone: ['s'] };
+const UC_T = {
+  mol: { lab: '一莫耳光子：kJ·nm/mol', start: HC, goal: { kJ: 1, nm: 1, mol: -1 }, done: 'E（kJ/mol）× λ（nm）≈ 119,600' },
+  ev: { lab: '一個光子：eV·nm', start: HC, goal: { eV: 1, nm: 1 }, done: 'ΔE（eV）× λ（nm）≈ 1240' },
+  evkj: { lab: '1 eV 是幾 kJ/mol', start: { txt: '1 eV（一個粒子的能量）', v: 1, u: { eV: 1 }, gone: [] }, goal: { kJ: 1, mol: -1 }, done: '1 eV（一個粒子）≈ 96.5 kJ/mol' },
+};
+const ucUnits = u => { const sup = n => (n === 1 ? '' : String(n).split('').map(c => SUP[c]).join('')), up = Object.keys(u).filter(k => u[k] > 0), dn = Object.keys(u).filter(k => u[k] < 0);
+  return (up.map(k => k + sup(u[k])).join('·') || (dn.length ? '1' : '（沒有單位）')) + (dn.length ? '/' + dn.map(k => k + sup(-u[k])).join('·') : ''); };
+const ucNum = v => { const a = Math.abs(v); if (a >= 1 && a < 1e6) return Number(v.toPrecision(4)).toLocaleString('en-US');
+  const e = Math.floor(Math.log10(a)), m = v / 10 ** e; return `${m.toFixed(2)} × 10${String(e).split('').map(c => SUP[c]).join('')}`; };
+function unitChain(el, t0) {
+  const st = { t: t0, used: [], flip: {}, hint: false };
+  el.innerHTML = `${ctl('換成什麼單位', seg('ucT', Object.entries(UC_T).map(([k, x]) => [k, x.lab]), t0))}<p class="lbl">算式（點下面的卡片乘進來，再點一次拿掉；↻ 翻轉分子分母）</p><div class="uc-chain" id="ucC"></div><p id="ucR"></p>
+<p class="lbl">換算比例（每一張都等於 1）</p><div class="uc-cards" id="ucK"></div><div class="w-row"><button class="btn sm" type="button" id="ucH">提示</button><button class="btn sm" type="button" id="ucX">重來</button></div><p class="note" id="ucN"></p>`;
+  const frac = (c, f) => `<span class="uc-frac"><span>${f > 0 ? c.num : c.den}</span><span>${f > 0 ? c.den : c.num}</span></span>`;
+  function draw() {
+    const T = UC_T[st.t], u = { ...T.start.u }, seen = new Set([...Object.keys(T.start.u), ...T.start.gone]); let v = T.start.v;
+    st.used.forEach(({ id, f }) => { const c = UC_CARDS.find(x => x.id === id); v *= c.v ** f; Object.entries(c.u).forEach(([k, e]) => { u[k] = (u[k] || 0) + f * e; seen.add(k); }); });
+    Object.keys(u).forEach(k => { if (!u[k]) delete u[k]; });
+    const all = new Set([...Object.keys(u), ...Object.keys(T.goal)]), ok = [...all].every(k => (u[k] || 0) === (T.goal[k] || 0)), gone = [...seen].filter(k => !u[k]);
+    const bad = Object.keys(u).filter(k => u[k] !== (T.goal[k] || 0));
+    $('#ucC', el).innerHTML = `<span class="mono">${T.start.txt}</span>${st.used.map(({ id, f }) => ` × ${frac(UC_CARDS.find(x => x.id === id), f)}`).join('')}`;
+    $('#ucR', el).innerHTML = `${ok ? '<b class="r-ok">完成：</b>' : '目前：'}<b class="mono">${ucNum(v)}</b> <span class="mono">${ok ? ucUnits(T.goal) : Object.keys(u).length ? ucUnits(u).replace(/[A-Za-zÅ]+/g, k => (bad.includes(k) ? `<span class="uc-bad">${k}</span>` : k)) : '（沒有單位）'}</span>${gone.length ? `　<span class="small mut">已消掉：${gone.map(k => `<s>${k}</s>`).join('、')}</span>` : ''}`;
+    $('#ucR', el).className = ok ? 'uc-res ok' : 'uc-res';
+    $('#ucK', el).innerHTML = UC_CARDS.map(c => { const on = st.used.find(x => x.id === c.id), f = on ? on.f : st.flip[c.id] || 1;
+      return `<span class="uc-card${on ? ' on' : ''}"${on ? ' data-cur="已選的比例"' : ''}><button type="button" class="uc-use" data-c="${c.id}" aria-pressed="${!!on}">${frac(c, f)}</button><button type="button" class="uc-flip" data-f="${c.id}" aria-label="翻轉">↻</button></span>`; }).join('');
+    const miss = Object.keys(T.goal).filter(k => (u[k] || 0) !== T.goal[k] && !bad.includes(k));
+    $('#ucN', el).innerHTML = ok ? `單位剛好是 ${ucUnits(T.goal)}：<b>${T.done}</b>。換一種順序或路線也會得到同一個數。`
+      : st.hint ? (bad.length ? `還有 <b>${bad.join('、')}</b> 的次方不對（多出來或方向反了）：找一張含有它的比例，讓它在分子分母各出現一次就會消掉。` : `還缺 <b>${miss.join('、')}</b>：找一張把它帶進來的比例。`)
+      : `目標單位：${ucUnits(T.goal)}。卡片可以翻轉；選錯方向時，單位會變成消不掉的樣子（例如 J²），拿掉或翻轉就好。`;
+    $$('.uc-use', el).forEach(b => { b.onclick = () => { const id = b.dataset.c, i = st.used.findIndex(x => x.id === id); if (i >= 0) st.used.splice(i, 1); else st.used.push({ id, f: st.flip[id] || 1 }); st.hint = false; draw(); }; });
+    $$('.uc-flip', el).forEach(b => { b.onclick = () => { const id = b.dataset.f, x = st.used.find(y => y.id === id); st.flip[id] = -(st.flip[id] || 1); if (x) x.f = st.flip[id]; st.hint = false; draw(); }; });
+    pressSeg(el, 'ucT', st.t);
+  }
+  bindSeg(el, 'ucT', v => { st.t = v; st.used = []; st.hint = false; draw(); });
+  $('#ucH', el).onclick = () => { st.hint = true; draw(); };
+  $('#ucX', el).onclick = () => { st.used = []; st.flip = {}; st.hint = false; draw(); };
+  draw();
+  return { set(s2) { Object.assign(st, s2); draw(); } };
+}
+W.unitmol = el => unitChain(el, 'mol');
+W.unitev = el => unitChain(el, 'ev');
 // 第一章第 4 節：電子的波繞原子核一圈要接得起來（2πr = nλ）；接不起來的畫紅色，接得起來的標出節點（2026-11-07 使用者確認：箱中粒子移到共軛二烯一章）
 W.ringwave = el => {
   const st = { k: 2.6 };

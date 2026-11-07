@@ -405,6 +405,15 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 .box { width: 30px; height: 30px; border: 1.5px solid var(--ink); margin-left: -1.5px; display: grid; place-items: center; font-size: 15px; letter-spacing: -3px; }
 .ptab { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; margin: 8px 0 14px; }
 .pcell { border-radius: 6px; padding: 4px 2px; text-align: center; background: color-mix(in srgb, var(--accent) calc(var(--v) * 85%), var(--surface)); border: 1px solid var(--line); font-size: 12px; line-height: 1.25; }
+.uc-chain { font-size: 14px; line-height: 2.8; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); overflow-x: auto; }
+.uc-frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; font-family: var(--mono); font-size: 12px; line-height: 1.5; margin: 0 2px; }
+.uc-frac > span:first-child { border-bottom: 1.5px solid currentColor; padding: 0 4px; }
+.uc-res { font-size: 15px; margin: 8px 0; } .uc-res.ok { color: var(--good); } .uc-bad { color: var(--bad); font-weight: 700; } .uc-res s { color: var(--muted); }
+.uc-cards { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 10px; }
+.uc-card { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.uc-card.on { border-color: var(--accent); background: var(--soft); }
+.uc-use { border: 0; background: none; color: var(--ink); padding: 6px 4px 6px 8px; cursor: pointer; }
+.uc-flip { border: 0; border-left: 1px solid var(--line); background: none; color: var(--accent); padding: 6px 10px; font-size: 16px; cursor: pointer; align-self: stretch; }
 .xmap { display: grid; grid-template-columns: 18px repeat(10, minmax(0, 1fr)); gap: 3px; margin: 8px 0 4px; align-items: center; }
 .xg { font-family: var(--mono); font-size: 10.5px; color: var(--muted); text-align: center; }
 .xc { min-width: 0; padding: 7px 0; border: 1px solid var(--line); border-radius: 5px; background: var(--surface); color: var(--muted); font-size: 13px; cursor: pointer; }

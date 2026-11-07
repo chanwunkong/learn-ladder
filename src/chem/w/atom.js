@@ -464,6 +464,57 @@ ${ok ? '' : `<circle cx="${x1}" cy="${yc - A * end}" r="7" class="dot-bad"/>`}
 };
 
 /* ===== 4b. 能量和 n²、L 的關係：真實單位 eV；左邊 L = 1 nm 的箱子固定，右邊的箱子寬度跟著 L 變 ===== */
+// 第一章第 2、3 節：單位換算鏈，讀者自己選要乘哪些「等於 1 的比例」（可翻轉、可拿掉、不限順序），單位對了才算完成（2026-11-07 使用者要求：不要固定步驟的引導式）
+const UC_CARDS = [
+  { id: 'ev', num: '1 eV', den: '1.602 × 10⁻¹⁹ J', v: 1 / 1.602e-19, u: { eV: 1, J: -1 } },
+  { id: 'nm', num: '10⁹ nm', den: '1 m', v: 1e9, u: { nm: 1, m: -1 } },
+  { id: 'na', num: '6.02 × 10²³', den: '1 mol', v: 6.022e23, u: { mol: -1 } },
+  { id: 'kj', num: '1 kJ', den: '1000 J', v: 1e-3, u: { kJ: 1, J: -1 } },
+  { id: 'a', num: '10¹⁰ Å', den: '1 m', v: 1e10, u: { 'Å': 1, m: -1 } },
+  { id: 'cal', num: '1 cal', den: '4.184 J', v: 1 / 4.184, u: { cal: 1, J: -1 } },
+];
+const HC = { txt: 'h × c = (6.63 × 10⁻³⁴ J·s)(3.00 × 10⁸ m/s)', v: 6.626e-34 * 2.998e8, u: { J: 1, m: 1 }, gone: ['s'] };
+const UC_T = {
+  mol: { lab: '一莫耳光子：kJ·nm/mol', start: HC, goal: { kJ: 1, nm: 1, mol: -1 }, done: 'E（kJ/mol）× λ（nm）≈ 119,600' },
+  ev: { lab: '一個光子：eV·nm', start: HC, goal: { eV: 1, nm: 1 }, done: 'ΔE（eV）× λ（nm）≈ 1240' },
+  evkj: { lab: '1 eV 是幾 kJ/mol', start: { txt: '1 eV（一個粒子的能量）', v: 1, u: { eV: 1 }, gone: [] }, goal: { kJ: 1, mol: -1 }, done: '1 eV（一個粒子）≈ 96.5 kJ/mol' },
+};
+const ucUnits = u => { const sup = n => (n === 1 ? '' : String(n).split('').map(c => SUP[c]).join('')), up = Object.keys(u).filter(k => u[k] > 0), dn = Object.keys(u).filter(k => u[k] < 0);
+  return (up.map(k => k + sup(u[k])).join('·') || (dn.length ? '1' : '（沒有單位）')) + (dn.length ? '/' + dn.map(k => k + sup(-u[k])).join('·') : ''); };
+const ucNum = v => { const a = Math.abs(v); if (a >= 1 && a < 1e6) return Number(v.toPrecision(4)).toLocaleString('en-US');
+  const e = Math.floor(Math.log10(a)), m = v / 10 ** e; return `${m.toFixed(2)} × 10${String(e).split('').map(c => SUP[c]).join('')}`; };
+function unitChain(el, t0) {
+  const st = { t: t0, used: [], flip: {}, hint: false };
+  el.innerHTML = `${ctl('換成什麼單位', seg('ucT', Object.entries(UC_T).map(([k, x]) => [k, x.lab]), t0))}<p class="lbl">算式（點下面的卡片乘進來，再點一次拿掉；↻ 翻轉分子分母）</p><div class="uc-chain" id="ucC"></div><p id="ucR"></p>
+<p class="lbl">換算比例（每一張都等於 1）</p><div class="uc-cards" id="ucK"></div><div class="w-row"><button class="btn sm" type="button" id="ucH">提示</button><button class="btn sm" type="button" id="ucX">重來</button></div><p class="note" id="ucN"></p>`;
+  const frac = (c, f) => `<span class="uc-frac"><span>${f > 0 ? c.num : c.den}</span><span>${f > 0 ? c.den : c.num}</span></span>`;
+  function draw() {
+    const T = UC_T[st.t], u = { ...T.start.u }, seen = new Set([...Object.keys(T.start.u), ...T.start.gone]); let v = T.start.v;
+    st.used.forEach(({ id, f }) => { const c = UC_CARDS.find(x => x.id === id); v *= c.v ** f; Object.entries(c.u).forEach(([k, e]) => { u[k] = (u[k] || 0) + f * e; seen.add(k); }); });
+    Object.keys(u).forEach(k => { if (!u[k]) delete u[k]; });
+    const all = new Set([...Object.keys(u), ...Object.keys(T.goal)]), ok = [...all].every(k => (u[k] || 0) === (T.goal[k] || 0)), gone = [...seen].filter(k => !u[k]);
+    const bad = Object.keys(u).filter(k => u[k] !== (T.goal[k] || 0));
+    $('#ucC', el).innerHTML = `<span class="mono">${T.start.txt}</span>${st.used.map(({ id, f }) => ` × ${frac(UC_CARDS.find(x => x.id === id), f)}`).join('')}`;
+    $('#ucR', el).innerHTML = `${ok ? '<b class="r-ok">完成：</b>' : '目前：'}<b class="mono">${ucNum(v)}</b> <span class="mono">${ok ? ucUnits(T.goal) : Object.keys(u).length ? ucUnits(u).replace(/[A-Za-zÅ]+/g, k => (bad.includes(k) ? `<span class="uc-bad">${k}</span>` : k)) : '（沒有單位）'}</span>${gone.length ? `　<span class="small mut">已消掉：${gone.map(k => `<s>${k}</s>`).join('、')}</span>` : ''}`;
+    $('#ucR', el).className = ok ? 'uc-res ok' : 'uc-res';
+    $('#ucK', el).innerHTML = UC_CARDS.map(c => { const on = st.used.find(x => x.id === c.id), f = on ? on.f : st.flip[c.id] || 1;
+      return `<span class="uc-card${on ? ' on' : ''}"${on ? ' data-cur="已選的比例"' : ''}><button type="button" class="uc-use" data-c="${c.id}" aria-pressed="${!!on}">${frac(c, f)}</button><button type="button" class="uc-flip" data-f="${c.id}" aria-label="翻轉">↻</button></span>`; }).join('');
+    const miss = Object.keys(T.goal).filter(k => (u[k] || 0) !== T.goal[k] && !bad.includes(k));
+    $('#ucN', el).innerHTML = ok ? `單位剛好是 ${ucUnits(T.goal)}：<b>${T.done}</b>。換一種順序或路線也會得到同一個數。`
+      : st.hint ? (bad.length ? `還有 <b>${bad.join('、')}</b> 的次方不對（多出來或方向反了）：找一張含有它的比例，讓它在分子分母各出現一次就會消掉。` : `還缺 <b>${miss.join('、')}</b>：找一張把它帶進來的比例。`)
+      : `目標單位：${ucUnits(T.goal)}。卡片可以翻轉；選錯方向時，單位會變成消不掉的樣子（例如 J²），拿掉或翻轉就好。`;
+    $$('.uc-use', el).forEach(b => { b.onclick = () => { const id = b.dataset.c, i = st.used.findIndex(x => x.id === id); if (i >= 0) st.used.splice(i, 1); else st.used.push({ id, f: st.flip[id] || 1 }); st.hint = false; draw(); }; });
+    $$('.uc-flip', el).forEach(b => { b.onclick = () => { const id = b.dataset.f, x = st.used.find(y => y.id === id); st.flip[id] = -(st.flip[id] || 1); if (x) x.f = st.flip[id]; st.hint = false; draw(); }; });
+    pressSeg(el, 'ucT', st.t);
+  }
+  bindSeg(el, 'ucT', v => { st.t = v; st.used = []; st.hint = false; draw(); });
+  $('#ucH', el).onclick = () => { st.hint = true; draw(); };
+  $('#ucX', el).onclick = () => { st.used = []; st.flip = {}; st.hint = false; draw(); };
+  draw();
+  return { set(s2) { Object.assign(st, s2); draw(); } };
+}
+W.unitmol = el => unitChain(el, 'mol');
+W.unitev = el => unitChain(el, 'ev');
 // 第一章第 4 節：電子的波繞原子核一圈要接得起來（2πr = nλ）；接不起來的畫紅色，接得起來的標出節點（2026-11-07 使用者確認：箱中粒子移到共軛二烯一章）
 W.ringwave = el => {
   const st = { k: 2.6 };
