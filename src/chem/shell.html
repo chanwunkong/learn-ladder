@@ -412,6 +412,14 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 .box { width: 30px; height: 30px; border: 1.5px solid var(--ink); margin-left: -1.5px; display: grid; place-items: center; font-size: 15px; letter-spacing: -3px; }
 .ptab { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; margin: 8px 0 14px; }
 .pcell { border-radius: 6px; padding: 4px 2px; text-align: center; background: color-mix(in srgb, var(--accent) calc(var(--v) * 85%), var(--surface)); border: 1px solid var(--line); font-size: 12px; line-height: 1.25; }
+.xmap { display: grid; grid-template-columns: 18px repeat(10, minmax(0, 1fr)); gap: 3px; margin: 8px 0 4px; align-items: center; }
+.xg { font-family: var(--mono); font-size: 10.5px; color: var(--muted); text-align: center; }
+.xc { min-width: 0; padding: 7px 0; border: 1px solid var(--line); border-radius: 5px; background: var(--surface); color: var(--muted); font-size: 13px; cursor: pointer; }
+.xc.half, .xk.half::before { background: #F5C66B; } .xc.full, .xk.full::before { background: #7FB8E6; } .xc.pd, .xk.pd::before { background: #B9A3E3; }
+.xc.half, .xc.full, .xc.pd { color: #1d2522; font-weight: 700; border-color: transparent; }
+.xc.not { background: var(--sunk); color: var(--ink); border: 1.5px dashed var(--muted); }
+.xc[aria-pressed="true"] { outline: 2.5px solid var(--ink); outline-offset: 1px; }
+.xk::before { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 4px; vertical-align: -1px; } .xk.not::before { background: var(--sunk); border: 1px solid var(--line); }
 .pcell b { display: block; font-size: 14px; } .pcell small { font-family: var(--mono); font-size: 10.5px; }
 .mol .lp.big { r: 3.2px; }
 .netd { stroke: var(--arrow); stroke-width: 3.5; }

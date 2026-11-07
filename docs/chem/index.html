@@ -494,6 +494,14 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 .box { width: 30px; height: 30px; border: 1.5px solid var(--ink); margin-left: -1.5px; display: grid; place-items: center; font-size: 15px; letter-spacing: -3px; }
 .ptab { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; margin: 8px 0 14px; }
 .pcell { border-radius: 6px; padding: 4px 2px; text-align: center; background: color-mix(in srgb, var(--accent) calc(var(--v) * 85%), var(--surface)); border: 1px solid var(--line); font-size: 12px; line-height: 1.25; }
+.xmap { display: grid; grid-template-columns: 18px repeat(10, minmax(0, 1fr)); gap: 3px; margin: 8px 0 4px; align-items: center; }
+.xg { font-family: var(--mono); font-size: 10.5px; color: var(--muted); text-align: center; }
+.xc { min-width: 0; padding: 7px 0; border: 1px solid var(--line); border-radius: 5px; background: var(--surface); color: var(--muted); font-size: 13px; cursor: pointer; }
+.xc.half, .xk.half::before { background: #F5C66B; } .xc.full, .xk.full::before { background: #7FB8E6; } .xc.pd, .xk.pd::before { background: #B9A3E3; }
+.xc.half, .xc.full, .xc.pd { color: #1d2522; font-weight: 700; border-color: transparent; }
+.xc.not { background: var(--sunk); color: var(--ink); border: 1.5px dashed var(--muted); }
+.xc[aria-pressed="true"] { outline: 2.5px solid var(--ink); outline-offset: 1px; }
+.xk::before { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 4px; vertical-align: -1px; } .xk.not::before { background: var(--sunk); border: 1px solid var(--line); }
 .pcell b { display: block; font-size: 14px; } .pcell small { font-family: var(--mono); font-size: 10.5px; }
 .mol .lp.big { r: 3.2px; }
 .netd { stroke: var(--arrow); stroke-width: 3.5; }
@@ -1779,7 +1787,7 @@ CH.push({
 <p>下面的圖畫出電子出現在各個距離的機率，機率降到 0 的地方就是徑向節點的位置。</p>
 [[w:radial]]
 <p>所以 3s 沒有角節面、有 2 個球面節點；4d 有 2 個角節面。徑向節點的位置可以由波函數為 0 求出，例如氫原子 2s 的節點在 r = 2a₀（a₀ 是第 3 節的波耳半徑 0.529 Å）。</p>` },
-    { h: '電子怎麼填進軌域？', w: ['nlorder', 'atom3d', 'econf'], body: `
+    { h: '電子怎麼填進軌域？', w: ['nlorder', 'atom3d', 'excmap', 'econf'], body: `
 <p>電子一個一個放進原子時，規則只有一條：</p>
 <p class="eq">電子放進能量最低、而且還有空位的軌域（構築原理）<span class="tg must">要背</span></p>
 <p><b>哪個軌域能量比較低？</b>不用死背，用下面的對角線圖推：每一格是一個副層，n 是層數、ℓ 代表形狀（s = 0、p = 1、d = 2、f = 3）。拖動電子數，看電子照什麼順序填進去。</p>
@@ -1791,8 +1799,9 @@ CH.push({
 <p><b>接著看電子實際怎麼放</b>：按下面的「加一個電子」，按鈕下方會出現組態，和一個綠色框說明這一步用到哪一條規則。再往下，左邊是原子模型（s 是球、p 是啞鈴、d 是四葉草，大小照比例），右邊是軌域圖（越上面能量越高）。顏色表示填的狀態：灰色虛線是空的，淺色是一個電子，深色是兩個電子；剛放進電子的軌域有紅色外框。內層和前一個鈍氣一樣時，縮成一顆灰色的球，就是 [Ne]、[Ar]。電荷選正的是拿走電子（陽離子），選負的是多放電子（陰離子）。</p>
 [[w:atom3d]]
 <p>整理剛才看到的<span class="tg must">要背</span>：每個軌域最多兩個電子、自旋相反（<b>包立不相容原理</b>）；同一組軌域先各放一個、方向相同，再成對（<b>洪德定則</b>）；n + ℓ 小的先填，所以 4s 比 3d 先填；3d 填進電子之後比 4s 低，所以過渡金屬變成離子時先失去 4s（Fe²⁺ 是 [Ar]3d⁶）。</p>
-<p>要記的例外<span class="tg must">要背</span>：Cr、Mo 是 d⁵s¹，Cu、Ag、Au 是 d¹⁰s¹，Pd 是 4d¹⁰。</p>
-<p><b>為什麼會有這些例外？</b>在剛才那張圖加到 Cr（第 24 個電子）：先出現照順序寫的 3d⁴4s²，一秒後一個電子從 4s 搬到 3d；圖的最下方多出兩張並排的軌域圖說明原因。s 和 d 幾乎一樣高，搬一個電子只要往上爬一點點；換來的是 3d 五個電子各占一格、方向相同，同方向電子之間的連線從 6 條變成 10 條（同方向的電子可以互換位置，越多越穩定，稱為<b>交換能</b>），4s 也不用兩個擠在一格互相排斥。得到的比付出的多，所以實際是 3d⁵4s¹。Cu 也一樣：3d 補成全滿，連線從 16 條變 20 條。只有 s 和 d 幾乎一樣高的元素才划算，所以例外集中在同一族的上下：第 6 族 Cr、Mo，第 11 族 Cu、Ag、Au。</p>
+<p><b>有幾個元素不照順序（例外）</b>：在剛才那張圖加到 Cr（第 24 個電子）：先出現照順序寫的 3d⁴4s²，一秒後一個電子從 4s 搬到 3d；圖的最下方多出兩張並排的軌域圖說明原因。s 和 d 幾乎一樣高，搬一個電子只要往上爬一點點；換來的是 3d 五個電子各占一格、方向相同，同方向電子之間的連線從 6 條變成 10 條（同方向的電子可以互換位置，越多越穩定，稱為<b>交換能</b>），4s 也不用兩個擠在一格互相排斥。得到的比付出的多，所以實際是 3d⁵4s¹。Cu 也一樣：3d 補成全滿，連線從 16 條變 20 條。只有 s 和 d 幾乎一樣高的元素才划算。</p>
+<p>要記的例外<span class="tg must">要背</span>：Cr、Mo 是 d⁵s¹，Cu、Ag、Au 是 d¹⁰s¹，Pd 是 4d¹⁰。用位置記比較快：在下面的 d 區週期表上，它們幾乎都在同一族。第 11 族（Cu、Ag、Au）整族都是；第 6 族只有 Cr、Mo，<b>W 不是</b>；第 10 族只有 Pd。</p>
+[[w:excmap]]
 <p><b>考試的組態用課本的寫法</b>：一格是一個軌域，箭頭是電子與自旋。下面的圖可以直接點常見的例子（Fe²⁺、S²⁻、Cr、Cu…）。</p>
 [[w:econf]]
 <p><b>離子</b>：過渡金屬先失去 n 最大的 s 電子（Fe²⁺ 是 [Ar]3d⁶）；主族元素得失電子後常和鈍氣<b>等電子</b>（F⁻、Ne、Na⁺、Mg²⁺ 都是 1s²2s²2p⁶）。</p>
@@ -12881,6 +12890,34 @@ W.iedip = el => {
   bindSeg(el, 'idS', v => { cur = v; draw(); });
   draw();
   return { set(s2) { cur = s2.p || cur; draw(); } };
+};
+
+/* ===== 第 6 節：d 區的例外，畫成簡易週期表（2026-11-07 使用者要求：例外大多同族，用位置記） ===== */
+W.excmap = el => {
+  const ROWS = [[21, 30], [39, 48], [57, 57, 72, 80]].map(r => r.length === 2 ? Array.from({ length: 10 }, (_, i) => r[0] + i) : [57, ...Array.from({ length: 9 }, (_, i) => 72 + i)]);
+  const KIND = { 24: 'half', 42: 'half', 29: 'full', 47: 'full', 79: 'full', 46: 'pd', 74: 'not' };
+  const TAG = { half: 'd⁵s¹ 半滿', full: 'd¹⁰s¹ 全滿', pd: 'd¹⁰，s 空', not: '不是例外' };
+  const st = { Z: 24 };
+  el.innerHTML = `<p class="legend3"><span class="xk half">d⁵s¹（d 半滿）</span><span class="xk full">d¹⁰s¹（d 全滿）</span><span class="xk pd">Pd：4d¹⁰</span><span class="xk not">W：不是例外</span></p>
+<div class="xmap"><span></span>${[3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(g => `<span class="xg">${g}</span>`).join('')}
+${ROWS.map((r, i) => `<span class="xg">${i + 4}</span>` + r.map(Z => `<button type="button" class="xc ${KIND[Z] || ''}" data-z="${Z}">${ELEM[Z - 1]}</button>`).join('')).join('')}</div>
+<p class="small mut">上排是族，左邊是週期。點一格看它的組態。</p><p class="note" id="xmN"></p>`;
+  // 只列價層：ns 與 (n−1)d
+  const val = (cf, n) => cf.filter(([o]) => o === `${n - 1}d` || o === `${n}s`).sort((x, y) => +x[0][0] - +y[0][0]).map(([o, k]) => `${o}${String(k).split('').map(c => SUP[c]).join('')}`).join(' ') || '—';
+  function draw() {
+    const Z = st.Z, n = Z > 54 ? 6 : Z > 36 ? 5 : 4, k = KIND[Z], a = val(econfAuf(Z), n), b = val(econf(Z), n), name = `${ELEM[Z - 1]}（${ENAME[Z - 1]}）`;
+    $$('.xc', el).forEach(c => { const on = +c.dataset.z === Z; c.setAttribute('aria-pressed', on); if (on) c.dataset.cur = name; else delete c.dataset.cur; });
+    $('#xmN', el).innerHTML = k === 'half' || k === 'full' || k === 'pd'
+      ? `<b>${name}</b>：照順序應該是 ${a}，實際是 <b>${b}</b>。${k === 'half' ? 'd 補成半滿（五格各一個、方向相同）比較穩定。' : k === 'full' ? 'd 補成全滿比較穩定。' : 's 的兩個電子都搬進 4d，讓 4d 全滿。'}${Z === 24 || Z === 29 ? ` <button class="btn sm" type="button" id="xmGo">在加電子的圖看 ${ELEM[Z - 1]} 怎麼搬</button>` : ''}`
+      : k === 'not' ? `<b>${name}</b>：${b}，照順序填，<b>不是例外</b>。同族的 Cr、Mo 是 d⁵s¹，到 W 就不是了，所以不能用「同族都一樣」去推。`
+      : a !== b ? `<b>${name}</b>：照順序是 ${a}，實際是 ${b}。第五、六週期還有幾個這種不規則的，考試幾乎不考，不用背。`
+      : `<b>${name}</b>：${b}，照順序填，沒有例外。`;
+    // 跳到加電子的圖：對齊圖的上緣（按鈕和說明在上面），扣掉固定的頁首
+    const go = $('#xmGo', el); if (go) go.onclick = () => { const it = INST.atom3d; if (!it) return; it.inst.set({ Z, q: 0 }); scrollTo({ top: it.el.getBoundingClientRect().top + scrollY - $('.top').offsetHeight - 8, behavior: 'smooth' }); };
+  }
+  $$('.xc', el).forEach(c => { c.onclick = () => { st.Z = +c.dataset.z; draw(); }; });
+  draw();
+  return { set(s2) { Object.assign(st, s2); draw(); } };
 };
 
 /* ---------- 後中化學：生物分子的補充互動圖 ---------- */

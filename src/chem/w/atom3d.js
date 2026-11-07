@@ -267,3 +267,31 @@ W.iedip = el => {
   draw();
   return { set(s2) { cur = s2.p || cur; draw(); } };
 };
+
+/* ===== 第 6 節：d 區的例外，畫成簡易週期表（2026-11-07 使用者要求：例外大多同族，用位置記） ===== */
+W.excmap = el => {
+  const ROWS = [[21, 30], [39, 48], [57, 57, 72, 80]].map(r => r.length === 2 ? Array.from({ length: 10 }, (_, i) => r[0] + i) : [57, ...Array.from({ length: 9 }, (_, i) => 72 + i)]);
+  const KIND = { 24: 'half', 42: 'half', 29: 'full', 47: 'full', 79: 'full', 46: 'pd', 74: 'not' };
+  const TAG = { half: 'd⁵s¹ 半滿', full: 'd¹⁰s¹ 全滿', pd: 'd¹⁰，s 空', not: '不是例外' };
+  const st = { Z: 24 };
+  el.innerHTML = `<p class="legend3"><span class="xk half">d⁵s¹（d 半滿）</span><span class="xk full">d¹⁰s¹（d 全滿）</span><span class="xk pd">Pd：4d¹⁰</span><span class="xk not">W：不是例外</span></p>
+<div class="xmap"><span></span>${[3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(g => `<span class="xg">${g}</span>`).join('')}
+${ROWS.map((r, i) => `<span class="xg">${i + 4}</span>` + r.map(Z => `<button type="button" class="xc ${KIND[Z] || ''}" data-z="${Z}">${ELEM[Z - 1]}</button>`).join('')).join('')}</div>
+<p class="small mut">上排是族，左邊是週期。點一格看它的組態。</p><p class="note" id="xmN"></p>`;
+  // 只列價層：ns 與 (n−1)d
+  const val = (cf, n) => cf.filter(([o]) => o === `${n - 1}d` || o === `${n}s`).sort((x, y) => +x[0][0] - +y[0][0]).map(([o, k]) => `${o}${String(k).split('').map(c => SUP[c]).join('')}`).join(' ') || '—';
+  function draw() {
+    const Z = st.Z, n = Z > 54 ? 6 : Z > 36 ? 5 : 4, k = KIND[Z], a = val(econfAuf(Z), n), b = val(econf(Z), n), name = `${ELEM[Z - 1]}（${ENAME[Z - 1]}）`;
+    $$('.xc', el).forEach(c => { const on = +c.dataset.z === Z; c.setAttribute('aria-pressed', on); if (on) c.dataset.cur = name; else delete c.dataset.cur; });
+    $('#xmN', el).innerHTML = k === 'half' || k === 'full' || k === 'pd'
+      ? `<b>${name}</b>：照順序應該是 ${a}，實際是 <b>${b}</b>。${k === 'half' ? 'd 補成半滿（五格各一個、方向相同）比較穩定。' : k === 'full' ? 'd 補成全滿比較穩定。' : 's 的兩個電子都搬進 4d，讓 4d 全滿。'}${Z === 24 || Z === 29 ? ` <button class="btn sm" type="button" id="xmGo">在加電子的圖看 ${ELEM[Z - 1]} 怎麼搬</button>` : ''}`
+      : k === 'not' ? `<b>${name}</b>：${b}，照順序填，<b>不是例外</b>。同族的 Cr、Mo 是 d⁵s¹，到 W 就不是了，所以不能用「同族都一樣」去推。`
+      : a !== b ? `<b>${name}</b>：照順序是 ${a}，實際是 ${b}。第五、六週期還有幾個這種不規則的，考試幾乎不考，不用背。`
+      : `<b>${name}</b>：${b}，照順序填，沒有例外。`;
+    // 跳到加電子的圖：對齊圖的上緣（按鈕和說明在上面），扣掉固定的頁首
+    const go = $('#xmGo', el); if (go) go.onclick = () => { const it = INST.atom3d; if (!it) return; it.inst.set({ Z, q: 0 }); scrollTo({ top: it.el.getBoundingClientRect().top + scrollY - $('.top').offsetHeight - 8, behavior: 'smooth' }); };
+  }
+  $$('.xc', el).forEach(c => { c.onclick = () => { st.Z = +c.dataset.z; draw(); }; });
+  draw();
+  return { set(s2) { Object.assign(st, s2); draw(); } };
+};
