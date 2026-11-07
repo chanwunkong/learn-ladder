@@ -41,9 +41,11 @@ const engSum = () => local('eng-ladder', 'sum', null);
 const ENG_WEEKS = 17;   // 2026-11 起到 2027-02 底
 const chemDone = () => local('chem-ladder', 'done', {});
 
-// 各章狀態：未開始／練習中／待加強／已掌握
+// 一題的進度（依錯題複習）：沒做 0；錯題本第 1 格 0.2、每過一格 +0.15；第一次就答對、等確認題 0.6；確認答對或五格都過 1
+const qScore = s => (!s ? 0 : !s.open ? 1 : s.chk ? 0.6 : 0.2 + 0.15 * s.stage);
+// 各章狀態：未開始／練習中／待加強／已掌握；got＝已拿到的考卷比重（%）：每章佔 w × 2 %（中國醫每份 50 題約 w 題），平分給有題目的各小節，各節再乘上題目進度的平均
 function chemChapters(log) {
-  const tr = REVIEW.trials(log), book = REVIEW.book(log), done = chemDone();
+  const tr = REVIEW.trials(log), book = REVIEW.book(log), done = chemDone(), stM = REVIEW.state(log);
   return CHEM_META.map(m => {
     const t = tr.filter(x => x.c === m.id), recent = t.slice(-20), acc = recent.length ? recent.filter(x => x.ok).length / recent.length : 0;
     const seen = new Set(t.map(x => x.key)).size, open = book.open.filter(s => s.c === m.id).length;
@@ -53,7 +55,8 @@ function chemChapters(log) {
       else if (done[m.id] && seen >= m.n * 0.4 && acc >= 0.8 && !open) st = 'master';
       else st = 'prac';
     }
-    return { ...m, st, acc, seen, open };
+    const pct = m.w * 2, got = m.s.length ? m.s.reduce((a, qs) => a + qs.reduce((b, kh) => b + qScore(stM.get(`${m.id}|${kh}`)), 0) / qs.length, 0) / m.s.length * pct : 0;
+    return { ...m, st, acc, seen, open, pct, got };
   });
 }
 const CH_ST = { master: '已掌握', prac: '練習中', weak: '待加強', none: '未開始' };
@@ -75,9 +78,8 @@ function renderExam() {
   // 倒數：最近一場還沒考的筆試，與下一個還沒到的日期
   const mine = e => e.s === TARGET || e.st === 'goal';
   const nextExam = EXAM_DATES.find(e => e.exam && mine(e) && daysTo(e.a) >= 0), nextDate = EXAM_DATES.find(e => mine(e) && daysTo(e.b || e.a) >= 0);
-  // 化學總進度（依考試比重加權）
-  const chs = chemChapters(log), W = chs.reduce((s, c) => s + c.w, 0), share = st => chs.filter(c => c.st === st).reduce((s, c) => s + c.w, 0) / W * 100;
-  const pct = { master: share('master'), prac: share('prac'), weak: share('weak'), none: share('none') };
+  // 化學總進度：各章已拿到的考卷比重加總。各章合計約 94%（每份約 3 題無法歸章），所以全部掌握也到不了 100%
+  const chs = chemChapters(log), got = chs.reduce((s, c) => s + c.got, 0), W = chs.reduce((s, c) => s + c.pct, 0);
   const cnt = st => chs.filter(c => c.st === st).length;
 
   $('#exam').innerHTML = `
@@ -104,11 +106,11 @@ ${enterHTML(es)}
   <section class="panel" aria-labelledby="progH">
     <h3 id="progH">總進度</h3>
     <details class="subj" open>
-      <summary><a class="sj" href="${chemResume().href}">化學 →</a><span class="big">${Math.round(pct.master)}<small>%</small></span><span class="mut small">考試範圍已掌握</span></summary>
-      <div class="stack" aria-hidden="true">${['master', 'prac', 'weak', 'none'].map(st => `<i class="s-${st}" style="width:${pct[st]}%"></i>`).join('')}</div>
+      <summary><a class="sj" href="${chemResume().href}">化學 →</a><span class="big">${got.toFixed(1)}<small>%</small></span><span class="mut small">考試範圍已掌握</span></summary>
+      <div class="stack" aria-hidden="true"><i class="s-master" style="width:${got}%"></i></div>
       <p class="legend">${['master', 'prac', 'weak', 'none'].map(st => `<span class="k-${st}">${CH_ST[st]} ${cnt(st)} 章</span>`).join('')}</p>
-      <div class="chmap">${chs.map(c => `<a class="tile t-${c.st}" href="./chem/#${c.id}" title="${c.t}：${CH_ST[c.st]}${c.seen ? `，做過 ${c.seen}/${c.n} 題，最近第一次答對 ${Math.round(100 * c.acc)}%` : ''}"><span>${c.t} <i aria-hidden="true">→</i></span><small>${CH_ST[c.st]}${c.open ? `・錯題 ${c.open}` : ''}</small></a>`).join('')}</div>
-      <p class="mut small">百分比依各章在中國醫歷屆考題的比重加權。已掌握＝標記完成、做過至少四成的題目、最近第一次答對八成以上、而且沒有待複習的錯題；待加強＝最近第一次答對不到六成，或錯題本裡有 3 題以上。</p>
+      <div class="chmap">${chs.map(c => `<a class="tile t-${c.st}" href="./chem/#${c.id}" title="${c.t}：${CH_ST[c.st]}${c.seen ? `，做過 ${c.seen}/${c.n} 題，最近第一次答對 ${Math.round(100 * c.acc)}%` : ''}"><span>${c.t} <i aria-hidden="true">→</i></span><small>${c.got.toFixed(1)} / ${c.pct.toFixed(1)}%・${CH_ST[c.st]}${c.open ? `・錯題 ${c.open}` : ''}</small></a>`).join('')}</div>
+      <p class="mut small">每章佔考卷的比重依中國醫歷屆考題（每份 50 題中約幾題，例如原子結構 1.9 題＝3.8%），平分給這一章有練習題的各小節；每一節再乘上題目的複習進度：沒做 0、錯題本第 1 格 20%、每過一格 +15%、第一次就答對（等確認題）60%、確認答對或五格都過 100%。方塊顯示「已拿到 / 這一章佔」。各章合計 ${W.toFixed(0)}%，其餘是無法歸到單一章的題目。已掌握＝標記完成、做過至少四成的題目、最近第一次答對八成以上、而且沒有待複習的錯題；待加強＝最近第一次答對不到六成，或錯題本裡有 3 題以上。</p>
     </details>
     ${engProgress(es)}
     ${SUBJECTS.filter(x => x.st !== 'live').map(x => `<details class="subj"><summary><span class="sj">${x.name}</span><span class="big">${x.big || '—'}</span><span class="mut small">${SUBJ_ST[x.st]}</span></summary><p class="small">${x.note}</p></details>`).join('')}
