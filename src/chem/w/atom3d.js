@@ -284,9 +284,10 @@ ${ROWS.map((r, i) => `<span class="xg">${i + 4}</span>` + r.map(Z => `<button ty
     const Z = st.Z, n = Z > 54 ? 6 : Z > 36 ? 5 : 4, k = KIND[Z], a = val(econfAuf(Z), n), b = val(econf(Z), n), name = `${ELEM[Z - 1]}（${ENAME[Z - 1]}）`;
     $$('.xc', el).forEach(c => { const on = +c.dataset.z === Z; c.setAttribute('aria-pressed', on); if (on) c.dataset.cur = name; else delete c.dataset.cur; });
     $('#xmN', el).innerHTML = k === 'half' || k === 'full' || k === 'pd'
-      ? `<b>${name}</b>：照順序應該是 ${a}，實際是 <b>${b}</b>。${k === 'half' ? 'd 補成半滿（五格各一個、方向相同）比較穩定。' : k === 'full' ? 'd 補成全滿比較穩定。' : 's 的兩個電子都搬進 4d，讓 4d 全滿。'}${Z === 24 || Z === 29 ? ` <button class="btn sm" type="button" id="xmGo">在加電子的圖看 ${ELEM[Z - 1]} 怎麼搬</button>` : ''}`
-      : k === 'not' ? `<b>${name}</b>：${b}，照順序填，<b>不是例外</b>。同族的 Cr、Mo 是 d⁵s¹，到 W 就不是了，所以不能用「同族都一樣」去推。`
+      ? `<b>${name}</b>：照順序應該是 ${a}，實際是 <b>${b}</b>。${k === 'half' ? 'd 補成半滿（五格各一個、方向相同）比較穩定，而且這一週期 s 和 d 夠接近，搬一個電子划算。' : k === 'full' ? `d 補成全滿比較穩定。全滿的好處比半滿大${Z === 79 ? '，連第 6 週期 6s 和 5d 差距較大都還划算（W 就不划算）' : ''}。` : '第 5 週期的 4d 大、不擠，而且這時 4d 已經比 5s 低，兩個 5s 電子都搬進去：4d 全滿、5s 也不用兩個擠一格。同族的 Ni 的 3d 太擠，照順序是 3d⁸4s²。'}${Z === 24 || Z === 29 ? ` <button class="btn sm" type="button" id="xmGo">在加電子的圖看 ${ELEM[Z - 1]} 怎麼搬</button>` : ''}`
+      : k === 'not' ? `<b>${name}</b>：${b}，照順序填，<b>不是例外</b>。第 6 週期的 6s 被原子核拉得特別低，和 5d 差距變大；半滿的好處付不起搬電子的代價，所以不搬。同族的 Cr、Mo 是 d⁵s¹，到 W 就不是了，不能用「同族都一樣」去推。`
       : a !== b ? `<b>${name}</b>：照順序是 ${a}，實際是 ${b}。第五、六週期還有幾個這種不規則的，考試幾乎不考，不用背。`
+      : Z === 28 ? `<b>${name}</b>：${b}，照順序填。3d 很小、很擠，再把 4s 的電子塞進 3d 排斥太大，所以不像同族的 Pd 那樣搬。`
       : `<b>${name}</b>：${b}，照順序填，沒有例外。`;
     // 跳到加電子的圖：對齊圖的上緣（按鈕和說明在上面），扣掉固定的頁首
     const go = $('#xmGo', el); if (go) go.onclick = () => { const it = INST.atom3d; if (!it) return; it.inst.set({ Z, q: 0 }); scrollTo({ top: it.el.getBoundingClientRect().top + scrollY - $('.top').offsetHeight - 8, behavior: 'smooth' }); };
