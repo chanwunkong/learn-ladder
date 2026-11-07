@@ -215,11 +215,14 @@ function drawRead(id) {
 }
 
 const INST = {};   // 目前頁面上各互動圖的實例（練習題「在圖上看」用）
+// 小節內文：內文裡的 [[w:名稱]] 換成那張圖，讓每張圖的說明緊貼在圖的上方；沒標的圖放在最後（2026-11-07 使用者要求）
+const secBody = s => `<div class="prose">${s.body.replace(/\[\[w:(\w+)\]\]/g, (_, w) => `</div><div class="widget" data-w="${w}"></div><div class="prose">`)}</div>`.replace(/<div class="prose">\s*<\/div>/g, '')
+  + [].concat(s.w || []).filter(w => !s.body.includes(`[[w:${w}]]`)).map(w => `<div class="widget" data-w="${w}"></div>`).join('');
 function renderChapter(id) {
   const c = chOf(id), i = CH.indexOf(c), prev = CH[i - 1], next = CH[i + 1];
   $('#article').innerHTML = `<p class="eyebrow">${UNITS.find(p => p.items.some(x => x[0] === c.unit)).part} · ${unitName(c.unit)}</p><h1>${c.title}</h1><p class="lede">${c.lede}</p>${READ_ON.includes(id) ? '<div class="readprog" id="readProg"></div>' : ''}
 <nav class="secnav" aria-label="本章小節">${c.sections.map((s, k) => `<a href="#${id}/${k + 1}">${k + 1}. ${s.h}</a>`).join('')}<a href="#${id}/quiz">確認理解</a>${c.exam ? `<a href="#${id}/exam">歷屆考題相似題</a>` : ''}</nav>${(TERMS[id] || []).length ? `<div class="tchips" aria-label="本章名詞"><span class="lbl">本章名詞</span>${TERMS[id].map((t, k) => `<button type="button" class="tchip" data-t="${k}">${t[0]}</button>`).join('')}</div>` : ''}
-${c.sections.map((s, k) => `<section class="sec" id="sec-${k + 1}"><h2><span class="sn">${k + 1}</span>${s.h}</h2><div class="prose">${s.body}</div>${[].concat(s.w || []).map(w => `<div class="widget" data-w="${w}"></div>`).join('')}${READ_ON.includes(id) ? `<div class="readbar" data-s="${k + 1}"></div>` : ''}</section>`).join('')}
+${c.sections.map((s, k) => `<section class="sec" id="sec-${k + 1}"><h2><span class="sn">${k + 1}</span>${s.h}</h2>${secBody(s)}${READ_ON.includes(id) ? `<div class="readbar" data-s="${k + 1}"></div>` : ''}</section>`).join('')}
 <section class="sec" id="sec-quiz"><h2><span class="sn">✓</span>確認理解</h2><p class="mut small">答錯了沒關係：按「在圖上看」回到對應的圖，找出哪裡想錯。${lastSeen(id)}</p>${qblock(c.quiz, 'q')}</section>
 ${c.exam ? `<section class="sec" id="sec-exam"><h2><span class="sn">考</span>歷屆考題相似題</h2><p class="mut small">依照中國醫藥、義守、慈濟大學歷屆試題的考法另外出的題目（化合物與數字已更換），每題標出參考的原題。</p>${qblock(c.exam, 'x')}</section>` : ''}
 <div class="foot"><button class="btn ${state.done[id] ? 'done' : ''}" type="button" id="doneBtn">${state.done[id] ? '已完成 ✓' : '標記為完成'}</button><nav class="pn">${prev ? `<a href="#${prev.id}"><small>上一章</small>${prev.title}</a>` : '<span></span>'}${next ? `<a href="#${next.id}" class="nx"><small>下一章</small>${next.title}</a>` : ''}</nav></div>`;
@@ -340,7 +343,7 @@ ${(TERMS[id] || []).length ? `<div class="tchips" aria-label="本章名詞"><spa
     html = `${chbar(id, 'mix')}<h1>綜合練習</h1><p class="lede">這些題目同時用到好幾節的觀念。${lastSeen(id)}</p>${mix.map((x, k) => qitem(x, k + 1)).join('')}<div class="foot"><button class="btn" type="button" id="doneBtn">標記為完成</button>${nextBtn(n + 2)}</div>`;
   } else {
     const k = +sec, s = c.sections[k - 1];
-    html = `${chbar(id, k)}<section class="sec" id="sec-${k}"><h2><span class="sn">${k}</span>${s.h}</h2><div class="prose">${s.body}</div>${[].concat(s.w || []).map(w => `<div class="widget" data-w="${w}"></div>`).join('')}${READ_ON.includes(id) ? `<div class="readbar" data-s="${k}"></div>` : ''}</section>
+    html = `${chbar(id, k)}<section class="sec" id="sec-${k}"><h2><span class="sn">${k}</span>${s.h}</h2>${secBody(s)}${READ_ON.includes(id) ? `<div class="readbar" data-s="${k}"></div>` : ''}</section>
 ${practiceHTML(practiceOf(c, k), '這一節的練習')}<div class="nextsec">${nextBtn(k + 1)}</div>`;
   }
   $('#article').innerHTML = html;
