@@ -9,6 +9,7 @@
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --accent: #5CCDB6; --accent-ink: #0B231E; --soft: #15302A; --water: #1C2B33; --acid: #8EA9F2; --base: #F0A060; --arrow: #F07DB0; --c1: #8EA9F2; --c2: #F07DB0; --c3: #6FCF97; --c4: #F0A060; } }
 :root[data-theme="dark"] { --accent: #5CCDB6; --accent-ink: #0B231E; --soft: #15302A; --water: #1C2B33; --acid: #8EA9F2; --base: #F0A060; --arrow: #F07DB0; --c1: #8EA9F2; --c2: #F07DB0; --c3: #6FCF97; --c4: #F0A060; }
 body { margin: 0; }
+.top-in .prog[hidden] { display: none; }
 .top-in .prog { margin-left: auto; display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
 .prog .bar { width: 90px; height: 6px; background: var(--sunk); border-radius: 3px; overflow: hidden; }
 .prog .bar i { display: block; height: 100%; background: var(--accent); width: 0; transition: width .3s; }
@@ -188,18 +189,11 @@ svg.en.clip { overflow: hidden; }
 .skips { font-size: 13px; color: var(--warn); }
 .linkb { background: none; border: 0; padding: 0; color: var(--accent); text-decoration: underline; cursor: pointer; font-size: 13px; }
 .resetbox { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 4px 0 8px; }
-.chbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 10px 0; border-bottom: 1px solid var(--line); margin-bottom: 4px; font-size: 14px; }
-.chb-t { font-weight: 700; text-decoration: none; color: var(--ink); flex: 1 1 auto; min-width: 0; }
-.chb-n { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
-.chb-pn { display: flex; gap: 6px; }
-.chb-pn .btn { min-width: 44px; justify-content: center; text-decoration: none; font-size: 18px; }
-.chb-j { flex: 1 1 100%; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
-.chb-j select { flex: 1; min-width: 0; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 6px; padding: 6px; font-size: 14px; }
+.chbar { margin: 4px 0; padding-bottom: 8px; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
 .seclist { list-style: none; margin: 18px 0; padding: 0; display: grid; gap: 8px; }
 .seclist a { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; grid-template-areas: "n h go" "n s go"; gap: 2px 12px; align-items: center; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); text-decoration: none; }
 .seclist a:hover { border-color: var(--accent); }
 .seclist .sn { grid-area: n; } .seclist .sl-h { grid-area: h; font-weight: 500; } .seclist small { grid-area: s; color: var(--muted); font-size: 12.5px; } .seclist .go { grid-area: go; color: var(--accent); font-size: 18px; }
-.seclist a.r-ok { border-color: var(--good); } .seclist a.r-ok .sl-h::after { content: " ✓"; color: var(--good); }
 .seclist a.r-unsure { border-color: var(--warn); } .seclist a.r-unsure .sl-h::after { content: " ？"; color: var(--warn); }
 .practice { margin-top: 26px; border-top: 2px solid var(--line); }
 details.more { margin-top: 10px; } details.more > summary { cursor: pointer; color: var(--accent); padding: 10px 0; font-size: 14.5px; }
@@ -211,7 +205,6 @@ details.more { margin-top: 10px; } details.more > summary { cursor: pointer; col
 .btn.unsure { background: var(--warn-soft); border-color: var(--warn); color: var(--warn); }
 .readprog { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 10px 0 4px; font-size: 14px; }
 .readprog a.btn { text-decoration: none; }
-.rp-bar { flex: 1 1 100%; height: 6px; background: var(--sunk); border-radius: 99px; overflow: hidden; } .rp-bar i { display: block; height: 100%; background: var(--good); }
 .secnav a:hover { border-color: var(--accent); color: var(--accent); }
 .sec { padding-top: 26px; scroll-margin-top: 70px; }
 .sec h2 { font-family: var(--display); font-size: 25px; display: flex; gap: 12px; align-items: baseline; margin: 10px 0 8px; }
@@ -496,11 +489,11 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 
 <header class="top"><div class="top-in">
   <a class="brand" href="#" style="text-decoration:none">後中化學<small>CHEMISTRY · 原理 → 應用</small></a>
-  <button class="btn sm toc-btn" type="button" id="tocBtn">☰ 單元</button>
-  <div class="prog" aria-label="學習進度"><span id="progTxt">0 / 2 章</span><span class="bar"><i id="progBar"></i></span></div>
+  <button class="btn sm toc-btn" type="button" id="tocBtn">☰ 章節</button>
+  <div class="prog" aria-label="本頁進度" hidden><span id="progTxt"></span><span class="bar"><i id="progBar"></i></span></div>
 </div></header>
 <div class="layout">
-  <aside id="tocBox" aria-label="單元目錄"><nav id="toc"></nav></aside>
+  <aside id="tocBox" aria-label="章節目錄"><nav id="toc"></nav></aside>
   <main id="article"></main>
 </div>
 <script>

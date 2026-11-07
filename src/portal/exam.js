@@ -106,11 +106,11 @@ ${enterHTML(es)}
   <section class="panel" aria-labelledby="progH">
     <h3 id="progH">總進度</h3>
     <details class="subj" open>
-      <summary><a class="sj" href="${chemResume().href}">化學 →</a><span class="big">${got.toFixed(1)}<small>%</small></span><span class="mut small">考試範圍已掌握</span></summary>
+      <summary><span class="sj">化學</span><span class="big">${got.toFixed(1)}<small>%</small></span><span class="mut small">考試範圍已掌握</span></summary>
       <div class="stack" aria-hidden="true"><i class="s-master" style="width:${got}%"></i></div>
       <p class="legend">${['master', 'prac', 'weak', 'none'].map(st => `<span class="k-${st}">${CH_ST[st]} ${cnt(st)} 章</span>`).join('')}</p>
       <div class="chmap">${chs.map(c => `<a class="tile t-${c.st}" href="./chem/#${c.id}" title="${c.t}：${CH_ST[c.st]}${c.seen ? `，做過 ${c.seen}/${c.n} 題，最近第一次答對 ${Math.round(100 * c.acc)}%` : ''}"><span>${c.t} <i aria-hidden="true">→</i></span><small>${c.got.toFixed(1)} / ${c.pct.toFixed(1)}%・${CH_ST[c.st]}${c.open ? `・錯題 ${c.open}` : ''}</small></a>`).join('')}</div>
-      <p class="mut small">每章佔考卷的比重依中國醫歷屆考題（每份 50 題中約幾題，例如原子結構 1.9 題＝3.8%），平分給這一章有練習題的各小節；每一節再乘上題目的複習進度：沒做 0、錯題本第 1 格 20%、每過一格 +15%、第一次就答對（等確認題）60%、確認答對或五格都過 100%。方塊顯示「已拿到 / 這一章佔」。各章合計 ${W.toFixed(0)}%，其餘是無法歸到單一章的題目。已掌握＝標記完成、做過至少四成的題目、最近第一次答對八成以上、而且沒有待複習的錯題；待加強＝最近第一次答對不到六成，或錯題本裡有 3 題以上。</p>
+      <p class="mut small">每章佔考卷的比重依中國醫歷屆考題（每份 50 題中約幾題，例如原子結構 1.9 題＝3.8%），平分給這一章有練習題的各小節；每一節再乘上題目的複習進度：沒做 0、錯題本第 1 格 20%、每過一格 +15%、第一次就答對（等確認題）60%、確認答對或五格都過 100%。方塊顯示「已拿到 / 這一章佔」。各章合計 ${W.toFixed(0)}%，其餘是無法歸到單一章的題目。已掌握＝章末小題全部答對過、做過至少四成的題目、最近第一次答對八成以上、而且沒有待複習的錯題；待加強＝最近第一次答對不到六成，或錯題本裡有 3 題以上。</p>
     </details>
     ${engProgress(es)}
     ${SUBJECTS.filter(x => x.st !== 'live').map(x => `<details class="subj"><summary><span class="sj">${x.name}</span><span class="big">${x.big || '—'}</span><span class="mut small">${SUBJ_ST[x.st]}</span></summary><p class="small">${x.note}</p></details>`).join('')}
@@ -134,7 +134,7 @@ function engToday(es, n) {
 }
 function engProgress(es) {
   const days = es ? es.slots.filter(x => x[0] >= 1 && x[1] >= 1).length : 0;
-  return `<details class="subj"><summary><a class="sj" href="${engResume(es).href}">英文 →</a><span class="big">${es ? es.n - 1 + (days === 7 ? 1 : 0) : 0}<small> / ${ENG_WEEKS} 週</small></span><span class="mut small">${es ? `第 ${es.n} 週完成 ${days} / 7 天` : '還沒開始'}</span></summary>
+  return `<details class="subj"><summary><span class="sj">英文</span><span class="big">${es ? es.n - 1 + (days === 7 ? 1 : 0) : 0}<small> / ${ENG_WEEKS} 週</small></span><span class="mut small">${es ? `第 ${es.n} 週完成 ${days} / 7 天` : '還沒開始'}</span></summary>
 ${es ? `<p class="small">本週：${esc(es.theme)}</p><div class="eslots" aria-label="本週每天早晚的完成度">${es.slots.map((x, d) => `<a href="./eng/#d${d + 1}am" title="第 ${d + 1} 天：早上 ${Math.round(100 * x[0])}%、晚上 ${Math.round(100 * x[1])}%"><small>${d + 1}</small><i style="--f:${x[0]}"></i><i style="--f:${x[1]}"></i></a>`).join('')}</div>
 ${es.weak.length ? `<p class="small">待加強：${es.weak.map(esc).join('、')}</p>` : ''}` : ''}
 <p class="mut small">每週 7 天、每天早晚各約 30 分鐘。週末在英文頁的「本週報告」匯出錯題與弱項，交給 AI 產生下一週的內容。</p></details>`;

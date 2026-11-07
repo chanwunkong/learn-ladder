@@ -83,7 +83,7 @@ h1, h2, h3 { text-wrap: balance; line-height: 1.3; }
 .cp-err { color: var(--eosin); font-size: 12px; margin-top: 8px !important; }
 .sync-hint { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 14px 0 0; padding: 10px 14px; border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px; background: var(--soft); font-size: 13.5px; }
 .sync-hint span { flex: 1 1 260px; }
-.home-link { font-size: 13px; color: var(--muted); text-decoration: none; margin-right: -8px; }
+.home-link { font-size: 13px; color: var(--muted); text-decoration: none; margin-right: -8px; max-width: 40vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .home-link:hover { color: var(--accent); }
 
 /* 後中化學：沿用學習階梯色票，主色改為實驗室的青綠；化學圖用自己的一組顏色 */
@@ -91,6 +91,7 @@ h1, h2, h3 { text-wrap: balance; line-height: 1.3; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --accent: #5CCDB6; --accent-ink: #0B231E; --soft: #15302A; --water: #1C2B33; --acid: #8EA9F2; --base: #F0A060; --arrow: #F07DB0; --c1: #8EA9F2; --c2: #F07DB0; --c3: #6FCF97; --c4: #F0A060; } }
 :root[data-theme="dark"] { --accent: #5CCDB6; --accent-ink: #0B231E; --soft: #15302A; --water: #1C2B33; --acid: #8EA9F2; --base: #F0A060; --arrow: #F07DB0; --c1: #8EA9F2; --c2: #F07DB0; --c3: #6FCF97; --c4: #F0A060; }
 body { margin: 0; }
+.top-in .prog[hidden] { display: none; }
 .top-in .prog { margin-left: auto; display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
 .prog .bar { width: 90px; height: 6px; background: var(--sunk); border-radius: 3px; overflow: hidden; }
 .prog .bar i { display: block; height: 100%; background: var(--accent); width: 0; transition: width .3s; }
@@ -270,18 +271,11 @@ svg.en.clip { overflow: hidden; }
 .skips { font-size: 13px; color: var(--warn); }
 .linkb { background: none; border: 0; padding: 0; color: var(--accent); text-decoration: underline; cursor: pointer; font-size: 13px; }
 .resetbox { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 4px 0 8px; }
-.chbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 10px 0; border-bottom: 1px solid var(--line); margin-bottom: 4px; font-size: 14px; }
-.chb-t { font-weight: 700; text-decoration: none; color: var(--ink); flex: 1 1 auto; min-width: 0; }
-.chb-n { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
-.chb-pn { display: flex; gap: 6px; }
-.chb-pn .btn { min-width: 44px; justify-content: center; text-decoration: none; font-size: 18px; }
-.chb-j { flex: 1 1 100%; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
-.chb-j select { flex: 1; min-width: 0; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 6px; padding: 6px; font-size: 14px; }
+.chbar { margin: 4px 0; padding-bottom: 8px; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
 .seclist { list-style: none; margin: 18px 0; padding: 0; display: grid; gap: 8px; }
 .seclist a { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; grid-template-areas: "n h go" "n s go"; gap: 2px 12px; align-items: center; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); text-decoration: none; }
 .seclist a:hover { border-color: var(--accent); }
 .seclist .sn { grid-area: n; } .seclist .sl-h { grid-area: h; font-weight: 500; } .seclist small { grid-area: s; color: var(--muted); font-size: 12.5px; } .seclist .go { grid-area: go; color: var(--accent); font-size: 18px; }
-.seclist a.r-ok { border-color: var(--good); } .seclist a.r-ok .sl-h::after { content: " ✓"; color: var(--good); }
 .seclist a.r-unsure { border-color: var(--warn); } .seclist a.r-unsure .sl-h::after { content: " ？"; color: var(--warn); }
 .practice { margin-top: 26px; border-top: 2px solid var(--line); }
 details.more { margin-top: 10px; } details.more > summary { cursor: pointer; color: var(--accent); padding: 10px 0; font-size: 14.5px; }
@@ -293,7 +287,6 @@ details.more { margin-top: 10px; } details.more > summary { cursor: pointer; col
 .btn.unsure { background: var(--warn-soft); border-color: var(--warn); color: var(--warn); }
 .readprog { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 10px 0 4px; font-size: 14px; }
 .readprog a.btn { text-decoration: none; }
-.rp-bar { flex: 1 1 100%; height: 6px; background: var(--sunk); border-radius: 99px; overflow: hidden; } .rp-bar i { display: block; height: 100%; background: var(--good); }
 .secnav a:hover { border-color: var(--accent); color: var(--accent); }
 .sec { padding-top: 26px; scroll-margin-top: 70px; }
 .sec h2 { font-family: var(--display); font-size: 25px; display: flex; gap: 12px; align-items: baseline; margin: 10px 0 8px; }
@@ -581,11 +574,11 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 
 <header class="top"><div class="top-in">
   <a class="brand" href="#" style="text-decoration:none">後中化學<small>CHEMISTRY · 原理 → 應用</small></a>
-  <button class="btn sm toc-btn" type="button" id="tocBtn">☰ 單元</button>
-  <div class="prog" aria-label="學習進度"><span id="progTxt">0 / 2 章</span><span class="bar"><i id="progBar"></i></span></div>
+  <button class="btn sm toc-btn" type="button" id="tocBtn">☰ 章節</button>
+  <div class="prog" aria-label="本頁進度" hidden><span id="progTxt"></span><span class="bar"><i id="progBar"></i></span></div>
 </div></header>
 <div class="layout">
-  <aside id="tocBox" aria-label="單元目錄"><nav id="toc"></nav></aside>
+  <aside id="tocBox" aria-label="章節目錄"><nav id="toc"></nav></aside>
   <main id="article"></main>
 </div>
 <script>
@@ -17627,11 +17620,10 @@ CH.sort((a, b) => UORDER.indexOf(a.unit) - UORDER.indexOf(b.unit));
 const chOf = id => CH.find(c => c.id === id), unitCh = u => CH.find(c => c.unit === u);
 const unitName = u => UNITS.flatMap(p => p.items).find(i => i[0] === u)[1];
 
-function updateProgress() {
-  const n = CH.filter(c => state.done[c.id]).length;
-  $('#progTxt').textContent = `${n} / ${CH.length} 章`;
-  $('#progBar').style.width = `${100 * n / CH.length}%`;
-}
+// 頁首只顯示「本頁幾題」（refreshPrac）；沒有題目的頁面不顯示進度（2026-11-07 使用者要求：進度只留本頁題數和首頁的 %）
+function updateProgress() { $('#progTxt').textContent = ''; $('#progBar').style.width = '0'; $('.prog').hidden = true; }
+// 頁首的返回：一律回上一層（小節 → 章 → 後中化學 → 學習階梯）
+function setBack(href, text) { const a = $('.home-link'); if (a) { a.href = href; a.textContent = '‹ ' + text; } }
 function setDone(id, v) {
   if (v) state.done[id] = 1; else delete state.done[id];
   store.set('done', state.done); updateProgress(); renderTOC(id);
@@ -17651,8 +17643,8 @@ function renderHome() {
 <p class="lede">普通化學和有機化學，每一章都從直覺和圖像開始：先動手看到現象，再推出公式與規則，最後用在題目上。普化學到的酸鹼、平衡、熱力學，會直接拿來解釋有機反應。</p>
 ${(() => { const nx = CH.find(c => !state.done[c.id]) || CH[0], any = CH.some(c => state.done[c.id]), last = store.get('last', null), lc = last && chOf(last.id);
   const go = lc ? `<a class="btn pri" href="#${lc.id}${last.sec ? '/' + last.sec : ''}">繼續上次：${lc.title}${last.sh ? `・${last.sh}` : ''} →</a>` : `<a class="btn pri" href="#${nx.id}">${any ? '繼續：' : '從第一章開始：'}${nx.title} →</a>`;
-  return `<div class="cta">${go}<a class="btn" href="#map">看課程地圖</a><a class="btn" href="#review">錯題複習${(n => n ? `（今天 ${n} 題）` : '')(REVIEW.book(LOG).due.length)}</a><a class="btn" href="#log">練習紀錄</a></div>`; })()}
-<h2 id="map">課程地圖</h2>
+  return `<div class="cta">${go}</div>`; })()}
+<h2 id="map">章節地圖：先修關係與考試比重</h2>
 <p class="mut tree-note">由上往下是學習順序：最基礎的章節在最上面，下面的章節會用到上面的觀念。數字是三校歷屆試題中，<b>每份 50 題平均約考幾題</b>。點虛線框的是規劃中的章節。</p>
 <div class="seg" id="wview">${WVIEW.map((v, i) => `<button aria-pressed="${i === state.wv}" data-i="${i}">${v}</button>`).join('')}</div>
 <div class="trees">${UNITS.map(p => `<div class="tree" data-k="${p.key}"><h3>${p.part}</h3><div class="tree-in"><svg class="tree-ln" aria-hidden="true"></svg>${treeRows(p)}</div></div>`).join('')}</div>
@@ -17820,20 +17812,20 @@ ${items.length ? items.map(({ s, f }, n) => `<div class="q" data-r="${n}"><p cla
   });
 }
 
-// 每段讀完的標記：記成練習紀錄中 k = 'r' 的事件（p：1 看懂了、0 還不太懂、−1 取消），以最後一筆為準；隨練習紀錄一起同步
+// 每節讀完的標記：記成練習紀錄中 k = 'r' 的事件（p：1 看懂了、0 還不太懂、−1 取消），以最後一筆為準；隨練習紀錄一起同步
 const READ_ON = ['atom', 'vsepr'];   // 先在第一章試用
 const readState = id => { const m = {}; LOG.forEach(e => { if (e.k === 'r' && e.c === id) m[e.i] = e; }); return m; };
 function drawRead(id) {
-  const c = chOf(id), m = readState(id), n = c.sections.length, ok = k => m[k] && m[k].p === 1, unsure = k => m[k] && m[k].p === 0;
+  const c = chOf(id), m = readState(id), n = c.sections.length, ok = k => !!m[k] && m[k].p === 1, unsure = k => !!m[k] && m[k].p === 0;   // 要是布林值：classList.toggle(x, undefined) 會變成切換
   $$('.readbar', $('#article')).forEach(bar => {
     const k = +bar.dataset.s, e = m[k];
-    bar.innerHTML = `<span class="small mut">${e && e.p >= 0 ? `${e.p ? '已看懂' : '標記為還不太懂'}（${dstr(e.t)}）` : '讀完這一段了嗎？'}</span><button class="btn sm${ok(k) ? ' done' : ''}" type="button" data-r="1">✓ 看懂了</button><button class="btn sm${unsure(k) ? ' unsure' : ''}" type="button" data-r="0">？還不太懂</button>`;
+    bar.innerHTML = `<span class="small mut">${e && e.p >= 0 ? `${e.p ? '已看懂' : '標記為還不太懂'}（${dstr(e.t)}）` : '讀完這一節了嗎？'}</span><button class="btn sm${ok(k) ? ' done' : ''}" type="button" data-r="1">✓ 看懂了</button><button class="btn sm${unsure(k) ? ' unsure' : ''}" type="button" data-r="0">？還不太懂</button>`;
     $$('[data-r]', bar).forEach(b => { b.onclick = () => { const v = +b.dataset.r, cur = m[k] && m[k].p; logAnswer({ c: id, k: 'r', i: k, h: 'read-' + k, qt: c.sections[k - 1].h, p: cur === v ? -1 : v }); drawRead(id); }; });
   });
   for (let k = 1; k <= n; k++) { const a = $(`.secnav a[href="#${id}/${k}"], .seclist a[href="#${id}/${k}"]`); if (a) { a.classList.toggle('r-ok', ok(k)); a.classList.toggle('r-unsure', unsure(k)); } }
   const done = Array.from({ length: n }, (_, i) => i + 1).filter(ok).length, nx = Array.from({ length: n }, (_, i) => i + 1).find(k => !ok(k)), uns = Array.from({ length: n }, (_, i) => i + 1).filter(unsure);
   const box = $('#readProg');
-  if (box) box.innerHTML = `<div class="rp-bar"><i style="width:${100 * done / n}%"></i></div><span>已看懂 <b>${done} / ${n}</b> 段${uns.length ? `，還不太懂：${uns.map(k => `<a href="#${id}/${k}">第 ${k} 段</a>`).join('、')}` : ''}</span>${nx ? `<a class="btn sm pri" href="#${id}/${nx}">${done ? '從' : '從'}第 ${nx} 段${done ? '繼續' : '開始'}：${c.sections[nx - 1].h}</a>` : '<span class="ok">這一章每一段都看懂了 ✓</span>'}`;
+  if (box) box.innerHTML = `${nx ? `<a class="btn sm pri" href="#${id}/${nx}">從第 ${nx} 節${done ? '繼續' : '開始'}：${c.sections[nx - 1].h}</a>` : '<span class="ok">這一章每一節都看懂了 ✓</span>'}${uns.length ? `<span>還不太懂：${uns.map(k => `<a href="#${id}/${k}">第 ${k} 節</a>`).join('、')}</span>` : ''}`;
 }
 
 const INST = {};   // 目前頁面上各互動圖的實例（練習題「在圖上看」用）
@@ -17847,11 +17839,10 @@ function renderChapter(id) {
 ${c.sections.map((s, k) => `<section class="sec" id="sec-${k + 1}"><h2><span class="sn">${k + 1}</span>${s.h}</h2>${secBody(s)}${READ_ON.includes(id) ? `<div class="readbar" data-s="${k + 1}"></div>` : ''}</section>`).join('')}
 <section class="sec" id="sec-quiz"><h2><span class="sn">✓</span>確認理解</h2><p class="mut small">答錯了沒關係：按「在圖上看」回到對應的圖，找出哪裡想錯。${lastSeen(id)}</p>${qblock(c.quiz, 'q')}</section>
 ${c.exam ? `<section class="sec" id="sec-exam"><h2><span class="sn">考</span>歷屆考題相似題</h2><p class="mut small">依照中國醫藥、義守、慈濟大學歷屆試題的考法另外出的題目（化合物與數字已更換），每題標出參考的原題。</p>${qblock(c.exam, 'x')}</section>` : ''}
-<div class="foot"><button class="btn ${state.done[id] ? 'done' : ''}" type="button" id="doneBtn">${state.done[id] ? '已完成 ✓' : '標記為完成'}</button><nav class="pn">${prev ? `<a href="#${prev.id}"><small>上一章</small>${prev.title}</a>` : '<span></span>'}${next ? `<a href="#${next.id}" class="nx"><small>下一章</small>${next.title}</a>` : ''}</nav></div>`;
+<div class="foot"><nav class="pn">${prev ? `<a href="#${prev.id}"><small>上一章</small>${prev.title}</a>` : '<span></span>'}${next ? `<a href="#${next.id}" class="nx"><small>下一章</small>${next.title}</a>` : ''}</nav></div>`;
   mountWidgets(); bindQuiz(id);
   bindTerms(id);
   if (READ_ON.includes(id)) drawRead(id);
-  bindDone(id);
 }
 function mountWidgets() {
   for (const k in INST) delete INST[k];
@@ -17859,11 +17850,7 @@ function mountWidgets() {
 }
 // 章末小題全部答對過 → 自動標記本章完成（看紀錄，題目分散在不同頁也算得到）
 const quizAllRight = id => { const c = chOf(id), ok = new Set(LOG.filter(e => e.ok && e.c === id && e.k === 'q').map(e => e.h)); return c.quiz.every(q => ok.has(qid(id, q, 'q'))); };
-function bindDone(id) {
-  const b = $('#doneBtn'); if (!b) return;
-  const mark = () => { const d = !!state.done[id]; b.textContent = d ? '已完成 ✓' : '標記為完成'; b.classList.toggle('done', d); };
-  b.onclick = () => { setDone(id, !state.done[id]); mark(); }; mark();
-}
+// 章的「完成」不再手按：章末小題全部答對過時自動記下（bindQuiz），首頁「已掌握」會用到
 function bindQuiz(id) {
   const c = chOf(id);
   $$('.q[data-k]', $('#article')).forEach(qe => {
@@ -17879,7 +17866,7 @@ function bindQuiz(id) {
         const fin = (fok, st) => {
           why.className = 'why ok'; why.innerHTML = `${!st ? REVIEW.okHead(tries) : fok ? '<b>理由也對，這題算會了。</b>' : `<b>這題先當成猜對</b>：理由是「${st[1]}」，${st[4]} 已排進錯題本，明天再考。<br>`}${q.why}${demo}`;
           const sb = $('[data-show]', why); if (sb) sb.onclick = () => showOnChart(q.show, qe);
-          if (kind === 'q' && !state.done[id] && quizAllRight(id)) { setDone(id, true); bindDone(id); }
+          if (kind === 'q' && !state.done[id] && quizAllRight(id)) setDone(id, true);
         };
         // 第一次就答對 → 追問理由（排除猜對）
         if (tries === 1 && sts) { why.className = 'why fu'; FOLLOW.ask(why, sts, x => x, (fok, st) => { logAnswer({ c: id, k: 'fu', fk: kind, i: qi, h: qid(id, q, kind), qt: strip(q.q).slice(0, 60), ok: fok ? 1 : 0, n: 1 }); fin(fok, st); }); }
@@ -17915,7 +17902,7 @@ function refreshPrac() {
   if (!items.length) return updateProgress();
   const last = items.map(isDone).lastIndexOf(true), skip = items.filter((e, k) => k < last && !isDone(e)), n = items.filter(isDone).length;
   items.forEach(e => e.classList.toggle('skipped', skip.includes(e)));
-  $('#progTxt').innerHTML = `${n === items.length ? '✓ ' : ''}本頁 ${n} / ${items.length} 題${skip.length ? `<button type="button" class="linkb skipb" id="pgSkip">跳過 ${skip.length} 題 ↓</button>` : ''}`;
+  $('.prog').hidden = false; $('#progTxt').innerHTML = `${n === items.length ? '✓ ' : ''}本頁 ${n} / ${items.length} 題${skip.length ? `<button type="button" class="linkb skipb" id="pgSkip">跳過 ${skip.length} 題 ↓</button>` : ''}`;
   $('#progBar').style.width = `${100 * n / items.length}%`;
   const sb = $('#pgSkip'); if (sb) sb.onclick = () => { const e = skip[0], d = e.closest('details'); if (d) d.open = true; e.scrollIntoView({ behavior: 'smooth', block: 'center' }); };
 }
@@ -17940,15 +17927,12 @@ const qitem = ({ kind, i, q }, num) => `<div class="q" data-k="${kind}" data-q="
 function practiceHTML(items, head) {
   if (!items.length) return '';
   const first = items.slice(0, 3), more = items.slice(3);
-  return `<section class="sec practice" id="sec-prac"><h2><span class="sn">練</span>${head}</h2><p class="mut small">讀完上面的說明就做。答錯了按「一步一步來」或「在圖上看」，錯題會排進錯題複習。</p><div class="resetbox" id="pracReset"></div>${first.map((x, k) => qitem(x, k + 1)).join('')}${more.length ? `<details class="more"><summary>這一節還有 ${more.length} 題歷屆考題相似題</summary>${more.map((x, k) => qitem(x, k + 4)).join('')}</details>` : ''}</section>`;
+  return `<section class="sec practice" id="sec-prac"><h2><span class="sn">練</span>${head}</h2><p class="mut small">讀完上面的說明就做。答錯了按「一步一步來」或「在圖上看」，錯題會排進錯題複習。</p><div class="resetbox" id="pracReset"></div>${first.map((x, k) => qitem(x, k + 1)).join('')}${more.length ? `<details class="more"><summary>展開另外 ${more.length} 題歷屆考題相似題（頁首的題數包含這些）</summary>${more.map((x, k) => qitem(x, k + 4)).join('')}</details>` : ''}</section>`;
 }
-// 頁首的章內導覽：回概覽、第幾節、上一節／下一節、換章
+// 頁首下方的位置標示：第幾節（返回在頁首、上一章下一章在單元目錄、下一節在頁尾）
 function chbar(id, sec) {
-  const c = chOf(id), n = c.sections.length, k = sec === 'mix' ? n + 1 : +sec;
-  const href = j => (j < 1 ? `#${id}` : j <= n ? `#${id}/${j}` : `#${id}/mix`);
-  return `<nav class="chbar" aria-label="章內導覽"><a class="chb-t" href="#${id}">‹ ${c.title}</a><span class="chb-n">${sec === 'mix' ? '綜合練習' : `第 ${k} / ${n} 節`}</span>
-<span class="chb-pn"><a class="btn sm" href="${href(k - 1)}" aria-label="上一節">‹</a><a class="btn sm" href="${href(k + 1)}" aria-label="下一節"${k > n || (k === n && !practiceOf(c, 0).length) ? ' hidden' : ''}>›</a></span>
-<label class="chb-j">換章 <select id="chJump">${CH.map(x => `<option value="${x.id}"${x.id === id ? ' selected' : ''}>${x.title}</option>`).join('')}</select></label></nav>`;
+  const c = chOf(id), n = c.sections.length;
+  return `<p class="chbar">${c.title.split('：')[0]}・${sec === 'mix' ? '綜合練習' : `第 ${sec} / ${n} 節`}</p>`;
 }
 function renderPaged(id, sec) {
   const c = chOf(id), n = c.sections.length, i = CH.indexOf(c), prev = CH[i - 1], next = CH[i + 1];
@@ -17961,9 +17945,9 @@ function renderPaged(id, sec) {
     html = `<p class="eyebrow">${UNITS.find(p => p.items.some(x => x[0] === c.unit)).part} · ${unitName(c.unit)}</p><h1>${c.title}</h1><p class="lede">${c.lede}</p>${READ_ON.includes(id) ? '<div class="readprog" id="readProg"></div>' : ''}
 <ol class="seclist">${c.sections.map((s, k) => `<li><a href="#${id}/${k + 1}"><span class="sn">${k + 1}</span><span class="sl-h">${s.h}</span><small>練習 ${cnt(practiceOf(c, k + 1))}</small><span class="go" aria-hidden="true">→</span></a></li>`).join('')}${mix.length ? `<li><a href="#${id}/mix"><span class="sn">綜</span><span class="sl-h">綜合練習（跨好幾節的題目）</span><small>${cnt(mix)}</small><span class="go" aria-hidden="true">→</span></a></li>` : ''}</ol>
 ${(TERMS[id] || []).length ? `<div class="tchips" aria-label="本章名詞"><span class="lbl">本章名詞</span>${TERMS[id].map((t, k) => `<button type="button" class="tchip" data-t="${k}">${t[0]}</button>`).join('')}</div>` : ''}
-<div class="foot"><button class="btn" type="button" id="doneBtn">標記為完成</button><nav class="pn">${prev ? `<a href="#${prev.id}"><small>上一章</small>${prev.title}</a>` : '<span></span>'}${next ? `<a href="#${next.id}" class="nx"><small>下一章</small>${next.title}</a>` : ''}</nav></div>`;
+<div class="foot"><nav class="pn">${prev ? `<a href="#${prev.id}"><small>上一章</small>${prev.title}</a>` : '<span></span>'}${next ? `<a href="#${next.id}" class="nx"><small>下一章</small>${next.title}</a>` : ''}</nav></div>`;
   } else if (sec === 'mix') {
-    html = `${chbar(id, 'mix')}<h1>綜合練習</h1><p class="lede">這些題目同時用到好幾節的觀念。${lastSeen(id)}</p>${mix.map((x, k) => qitem(x, k + 1)).join('')}<div class="foot"><button class="btn" type="button" id="doneBtn">標記為完成</button>${nextBtn(n + 2)}</div>`;
+    html = `${chbar(id, 'mix')}<h1>綜合練習</h1><p class="lede">這些題目同時用到好幾節的觀念。${lastSeen(id)}</p>${mix.map((x, k) => qitem(x, k + 1)).join('')}<div class="foot">${nextBtn(n + 2)}</div>`;
   } else {
     const k = +sec, s = c.sections[k - 1];
     html = `${chbar(id, k)}<section class="sec" id="sec-${k}"><h2><span class="sn">${k}</span>${s.h}</h2>${secBody(s)}${READ_ON.includes(id) ? `<div class="readbar" data-s="${k}"></div>` : ''}</section>
@@ -17973,8 +17957,7 @@ ${practiceHTML(practiceOf(c, k), '這一節的練習')}<div class="nextsec">${ne
   mountWidgets(); bindQuiz(id); bindTerms(id);
   if (sec) { restorePrac(id, sec); resetPrac(id, sec); }
   if (READ_ON.includes(id)) drawRead(id);
-  bindDone(id);
-  const j = $('#chJump'); if (j) j.onchange = () => { location.hash = j.value; };
+  
   store.set('last', { id, sec: sec || '', sh: sec === 'mix' ? '綜合練習' : sec ? `第 ${sec} 節` : '', t: Date.now() });
 }
 // 名詞：內文第一次出現時變成連結，點了跳出解釋框；有對應互動圖時可以「在圖上看」
@@ -18017,7 +18000,8 @@ function route(h) {
   const c = chOf(id);
   if (c && PAGED.includes(id)) {
     shown = id; renderPaged(id, sec); renderTOC(id); document.title = `${c.title}｜後中化學`;
-    $('#tocBox').classList.remove('open'); $('#tocBtn').textContent = '☰ 單元'; window.scrollTo(0, 0); refreshPrac(); return;
+    if (sec) setBack(`#${id}`, c.title.split('：')[0]); else setBack('#', '後中化學');
+    $('#tocBox').classList.remove('open'); $('#tocBtn').textContent = '☰ 章節'; window.scrollTo(0, 0); refreshPrac(); return;
   }
   if (c && shown === id && sec) { const t = document.getElementById(`sec-${sec}`); if (t) t.scrollIntoView({ block: 'start' }); return; }  // 同一章只捲動，保留互動圖狀態
   shown = c ? id : null;
@@ -18025,13 +18009,14 @@ function route(h) {
   else if (id === 'log') { renderLog(); renderTOC('log'); document.title = '練習紀錄｜後中化學'; }
   else if (id === 'review') { renderReview(); renderTOC('review'); document.title = '錯題複習｜後中化學'; }
   else { renderHome(); bindTree(); renderTOC(''); document.title = '後中化學｜學習階梯'; }
-  $('#tocBox').classList.remove('open'); $('#tocBtn').textContent = '☰ 單元'; refreshPrac();
+  if (c || id === 'log' || id === 'review') setBack('#', '後中化學'); else setBack('../', '學習階梯');
+  $('#tocBox').classList.remove('open'); $('#tocBtn').textContent = '☰ 章節'; refreshPrac();
   const t = sec ? document.getElementById(`sec-${sec}`) : id === 'map' && document.getElementById('map');
   if (t) setTimeout(() => t.scrollIntoView({ block: 'start' }), 0); else window.scrollTo(0, 0);
 }
 function boot() {
   addEventListener('hashchange', () => route(location.hash.slice(1)));
-  $('#tocBtn').onclick = () => { const o = $('#tocBox').classList.toggle('open'); $('#tocBtn').textContent = o ? '✕ 關閉' : '☰ 單元'; window.scrollTo(0, 0); };
+  $('#tocBtn').onclick = () => { const o = $('#tocBox').classList.toggle('open'); $('#tocBtn').textContent = o ? '✕ 關閉' : '☰ 章節'; window.scrollTo(0, 0); };
   updateProgress(); route(location.hash.slice(1));
 }
 
@@ -18172,6 +18157,8 @@ const CLOUD = (() => {
 
 
 /* ---------- 後中化學：啟動、雲端同步、PWA ---------- */
+// 頁首的返回連結要在 boot 之前放好，route 才能依頁面改成「回上一層」
+if (document.querySelector('meta[name="app-site"]')) document.querySelector('.brand').insertAdjacentHTML('beforebegin', '<a class="home-link" href="../">‹ 學習階梯</a>');
 boot();
 store.set('total', CH.length);  // 給學習階梯首頁顯示進度
 const COURSE = {
@@ -18181,7 +18168,6 @@ const COURSE = {
   logs: { doc: 'chemLog', get: () => LOG, set: a => { LOG.length = 0; LOG.push(...a); store.set('log', LOG); } },
 };
 if (document.querySelector('meta[name="app-site"]')) {
-  document.querySelector('.brand').insertAdjacentHTML('beforebegin', '<a class="home-link" href="../">‹ 學習階梯</a>');
   if (typeof CLOUD !== 'undefined') CLOUD.start();
   if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('../sw.js', { scope: '../' }).catch(() => {});
 }
