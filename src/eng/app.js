@@ -242,6 +242,9 @@ function dayHead(w, d, s) {
 // 每一部分標題旁的「已完成 x / y」；在已作答的題目之前、還沒作答的題目標成「跳過」，最上方列出來
 const itemDone = e => e.classList.contains('done') || e.classList.contains('prev') || (e.classList.contains('sentc') && !!e.querySelector('.core'));
 function refreshParts() {
+  // 頁首（捲動時固定在最上面）：這一頁有題目就顯示完成幾題（2026-11-07 使用者要求，和化學一樣）
+  const pq = $$('.q[data-h], .sentc', $('#main')).filter(e => !e.closest('.sheet'));
+  $('#pgTag').textContent = pq.length ? `本頁 ${pq.filter(itemDone).length} / ${pq.length} 題` : '';
   const top = $('#segProg'); if (!top) return;
   const all = [];
   $$('[data-part]').forEach(sec => {
@@ -516,7 +519,7 @@ function route() {
   else if (h === 'review') renderReview();
   else if (h === 'report') renderReport();
   else renderHome();
-  $('#wkTag').textContent = `第 ${w.n} 週`;
+  $('#wkTag').textContent = `第 ${w.n} 週`; refreshParts();
   saveSummary();
   window.scrollTo(0, 0);
 }

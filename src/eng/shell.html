@@ -169,7 +169,8 @@ details summary { cursor: pointer; color: var(--accent); font-size: 14px; }
   --stop-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='6' y='6' width='12' height='12' rx='1.5'/%3E%3C/svg%3E"); }
 .no-tts .say { display: none; }
 .top-in .wk { margin-left: auto; }
-@media (max-width: 480px) { .top-in .wk { display: none; } .top-in #spkSlot { margin-left: auto; } }
+.top-in .pg { font-family: var(--mono); font-size: 12px; color: var(--muted); margin: 0 12px; white-space: nowrap; }
+@media (max-width: 480px) { .top-in .wk { display: none; } .top-in #spkSlot { margin-left: auto; } .top-in .pg { order: 9; flex-basis: 100%; text-align: right; margin: 0; } .top-in .pg:empty { display: none; } }
 @media (max-width: 560px) {
   .spk { width: 100%; }
   .slots { grid-template-columns: minmax(0, 1fr); }
@@ -182,7 +183,7 @@ details summary { cursor: pointer; color: var(--accent); font-size: 14px; }
 
 <header class="top"><div class="top-in">
   <a class="brand" href="#" style="text-decoration:none">後中英文<small>ENGLISH · 句構 → 閱讀</small></a>
-  <span class="wk" id="wkTag"></span><span id="spkSlot"></span>
+  <span class="wk" id="wkTag"></span><span class="pg" id="pgTag"></span><span id="spkSlot"></span>
 </div></header>
 <main id="main"></main>
 <script>
