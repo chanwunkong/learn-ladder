@@ -559,6 +559,14 @@ ${ok ? `<text class="tk sm" x="${cx + R + 30}" y="${cy + 4}">黑點：振幅 0�
   draw();
   return { set(s2) { Object.assign(st, s2); draw(); } };
 };
+// 第 6 節：按鈕打開第 5 節的徑向分布圖，預先選好 3d 和 4s（2026-11-08 使用者要求：前面學過的觀念在原地帶回來）
+W.radial34 = el => {
+  el.innerHTML = '<button class="btn sm" type="button" data-rt>看 3d 和 4s 的徑向分布（第 5 小節的圖）</button><div data-ri hidden></div>';
+  const b = $('[data-rt]', el), box = $('[data-ri]', el); let inst = null;
+  b.onclick = () => { box.hidden = !box.hidden; b.textContent = box.hidden ? '看 3d 和 4s 的徑向分布（第 5 小節的圖）' : '收起徑向分布圖';
+    if (!box.hidden && !inst) { inst = W.radial(box); inst.set({ sel: ['3d', '4s'] }); } };
+  return { set() {} };
+};
 // 第 4 節開頭：箱中粒子對應到真實的東西：共軛分子的碳鏈＝箱子，鏈長＝L（2026-11-07 使用者：「箱中粒子是指半徑嗎？」）
 W.pboxc = el => {
   const st = { c: 6 }, NM = { 4: '丁二烯（4 個碳）', 6: '己三烯（6 個碳）', 8: '辛四烯（8 個碳）' };
