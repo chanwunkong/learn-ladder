@@ -464,30 +464,93 @@ ${ok ? '' : `<circle cx="${x1}" cy="${yc - A * end}" r="7" class="dot-bad"/>`}
 };
 
 /* ===== 4b. 能量和 n²、L 的關係：真實單位 eV；左邊 L = 1 nm 的箱子固定，右邊的箱子寬度跟著 L 變 ===== */
-W.pbox = el => {
-  const st = { L: 1.0, t: '1-2' };
-  el.innerHTML = `<div class="w-row"><label class="rng">右邊箱子的長度 L<input type="range" id="pbL" min="0.5" max="2" step="0.05"><output class="mono" id="pbO"></output></label></div>${ctl('躍遷', seg('pbS', [['1-2', 'n = 1 → 2'], ['1-3', 'n = 1 → 3'], ['2-3', 'n = 2 → 3']], st.t))}<div class="cards" id="pbK"></div><div id="pbG"></div><p class="eq" id="pbF"></p><p class="note" id="pbN"></p>`;
-  const E1 = L => 0.376 / (L * L);   // 電子：h²/(8mL²)，L 以 nm 計 → eV
+// 第一章第 4 節：電子的波繞原子核一圈要接得起來（2πr = nλ）；接不起來的畫紅色，接得起來的標出節點（2026-11-07 使用者確認：箱中粒子移到共軛二烯一章）
+W.ringwave = el => {
+  const st = { k: 2.6 };
+  el.innerHTML = `<div class="w-row"><label class="rng">一圈放幾個波長<input type="range" id="rwR" min="1" max="6" step="0.02"><output class="mono" id="rwO"></output></label></div><div id="rwG"></div><p class="note" id="rwN"></p>`;
   function draw() {
-    const [a, b] = st.t.split('-').map(Number), L = st.L, e1 = E1(L), dE = (b * b - a * a) * e1, lam = 1239.84 / dE;
-    const Y = e => 238 - e / 25 * 210, W = 95, ax = 52, r0 = 76, r1 = r0 + W, b0 = 222, b1 = b0 + L * W;
-    const box = (x0, x1, Lb, lab) => `<line class="ax" x1="${x0}" x2="${x0}" y1="${Y(25)}" y2="${Y(0)}"/><line class="ax" x1="${x1}" x2="${x1}" y1="${Y(25)}" y2="${Y(0)}"/><text class="tk" x="${(x0 + x1) / 2}" y="${Y(0) + 16}" text-anchor="middle">${lab}</text>`
-      + [1, 2, 3, 4].filter(n => n * n * E1(Lb) <= 25).map(n => `<line class="lvl${Lb === L && (n === a || n === b) ? ' on' : ''}" x1="${x0}" x2="${x1}" y1="${Y(n * n * E1(Lb))}" y2="${Y(n * n * E1(Lb))}"/>`).join('');
-    // 右邊箱子的能階標籤：太近就往上推
-    const labs = []; [1, 2, 3, 4].filter(n => n * n * e1 <= 25).forEach(n => { const y = Y(n * n * e1); labs.push({ n, y, ly: labs.length ? Math.min(y, labs[labs.length - 1].ly - 13) : y }); });
-    $('#pbG', el).innerHTML = `<svg viewBox="0 0 520 262" class="ch" role="img" aria-label="兩個箱子的能階">
-${[0, 5, 10, 15, 20, 25].map(v => `<line x1="${ax - 4}" x2="${ax}" y1="${Y(v)}" y2="${Y(v)}" class="ax"/><text class="tk" x="${ax - 6}" y="${Y(v) + 4}" text-anchor="end">${v}</text>`).join('')}<line class="ax" x1="${ax}" x2="${ax}" y1="${Y(25)}" y2="${Y(0)}"/><text class="tk" x="${ax - 6}" y="12" text-anchor="end">eV</text>
-${box(r0, r1, 1, 'L = 1 nm（比較用）')}${box(b0, b1, L, `L = ${fx(L, 2)} nm`)}
-${labs.map(l => `<text class="tk${l.n === a || l.n === b ? ' hl' : ''}" x="${b1 + 8}" y="${l.ly + 4}">n=${l.n}　${fx(l.n * l.n * e1, 2)}</text>`).join('')}
-<line x1="${(b0 + b1) / 2}" x2="${(b0 + b1) / 2}" y1="${Y(a * a * e1)}" y2="${Y(b * b * e1) + 5}" class="dlt up" marker-end="url(#pbA)" data-cur="躍遷箭頭"/><defs><marker id="pbA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" class="ahp"/></marker></defs></svg>`;
-    $('#pbO', el).textContent = `${fx(L, 2)} nm`; $('#pbL', el).value = L;
-    $('#pbF', el).innerHTML = `ΔE = (${b}² − ${a}²) × E₁ = ${b * b - a * a} × ${fx(e1, 3)} eV = <b>${fx(dE, 3)} eV</b>`;
-    $('#pbK', el).innerHTML = card('e1', '右邊箱子的 E₁', `${fx(e1, 3)} eV`, `0.376 ÷ ${fx(L, 2)}²`) + card('de', '躍遷的 ΔE', `${fx(dE, 2)} eV`) + card('l', '吸收光的波長', `${fx(lam, 0)} nm`, '≈ 1240 ÷ ΔE');
-    $('#pbN', el).innerHTML = `兩個箱子用同一條能量軸（單位 eV），左邊固定 L = 1 nm。把右邊的箱子拉長：箱子變寬，所有能階都往下掉、靠得更近；L 變成 2 倍，能量變成 1/4（和 L² 成反比）。同一個箱子裡，第 n 個能階是 E₁ 的 n² 倍：1、4、9、16。`;
+    const n = Math.round(st.k), ok = Math.abs(st.k - n) < 0.05 && n >= 1, k = ok ? n : st.k, cx = 260, cy = 155, R = 100, A = 26, P = (r, t) => [cx + r * Math.cos(t - Math.PI / 2), cy + r * Math.sin(t - Math.PI / 2)];
+    const wave = path(Array.from({ length: 361 }, (_, i) => { const t = i / 360 * 2 * Math.PI; return P(R + A * Math.sin(k * t), t); }));
+    const end = P(R + A * Math.sin(k * 2 * Math.PI), 2 * Math.PI), start = P(R, 0);
+    const nodes = ok ? Array.from({ length: 2 * n }, (_, i) => P(R, i * Math.PI / n)) : [];
+    $('#rwG', el).innerHTML = `<svg viewBox="0 0 520 300" class="ch" role="img" aria-label="繞原子核一圈的電子波">
+<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" class="node"/><circle cx="${cx}" cy="${cy}" r="9" fill="#C0392B"/><text class="tk sm" x="${cx}" y="${cy + 24}" text-anchor="middle">原子核</text>
+<path d="${wave}" fill="none" stroke-width="3.5" class="${ok ? 'w-ok' : 'w-bad'}" data-cur="電子的波"/>
+${ok ? nodes.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4.5" fill="var(--ink)"/>`).join('') : `<circle cx="${start[0]}" cy="${start[1]}" r="6" fill="var(--ink)"/><circle cx="${end[0]}" cy="${end[1]}" r="7" class="dot-bad"/><line x1="${start[0]}" y1="${start[1]}" x2="${end[0]}" y2="${end[1]}" stroke="var(--bad)" stroke-width="2" stroke-dasharray="3 3"/><text class="tk sm" x="${start[0] - 12}" y="${start[1] - 4}" text-anchor="end">起點</text><text class="tk sm bad" x="${end[0] + 12}" y="${end[1] + 12}">繞一圈回來</text>`}
+<text class="tk ${ok ? 'hl' : 'bad'}" x="${cx}" y="${cy - R - 36}" text-anchor="middle">${ok ? `剛好 ${n} 個波長：接得起來（允許，n = ${n}）` : '繞一圈接不起來：不允許'}</text>
+${ok ? `<text class="tk sm" x="${cx + R + 30}" y="${cy + 4}">黑點：振幅 0（節點）</text>` : ''}</svg>`;
+    $('#rwR', el).value = st.k; $('#rwO', el).textContent = `${fx(k, ok ? 0 : 2)} 個`;
+    $('#rwN', el).innerHTML = ok ? `一圈剛好 ${n} 個波長，波繞回起點時和自己接上，可以穩定存在：這就是第 ${n} 個軌道（n = ${n}）。黑點是振幅為 0 的節點，電子不會出現在那裡。`
+      : `一圈是 ${fx(k, 2)} 個波長，不是整數：繞回起點時，波的高度（紅點）和起點（黑點）對不上，繞幾圈之後會互相抵消，不能存在。拖到整數看看。`;
+  }
+  $('#rwR', el).oninput = e => { st.k = +e.target.value; draw(); };
+  draw();
+  return { set(s2) { Object.assign(st, s2); draw(); } };
+};
+// 第 4 節開頭：箱中粒子對應到真實的東西：共軛分子的碳鏈＝箱子，鏈長＝L（2026-11-07 使用者：「箱中粒子是指半徑嗎？」）
+W.pboxc = el => {
+  const st = { c: 6 }, NM = { 4: '丁二烯（4 個碳）', 6: '己三烯（6 個碳）', 8: '辛四烯（8 個碳）' };
+  el.innerHTML = `${ctl('碳鏈', seg('pcS', [['4', '丁二烯'], ['6', '己三烯'], ['8', '辛四烯']], '6'))}<div id="pcG"></div><p class="note" id="pcN"></p>`;
+  function draw() {
+    const n = st.c, dx = 50, x0 = 260 - (n - 1) * dx / 2, x1 = x0 + (n - 1) * dx, yc = 70, C = Array.from({ length: n }, (_, i) => [x0 + i * dx, yc + (i % 2 ? -14 : 14)]);
+    const bonds = C.slice(1).map((q, i) => { const p0 = C[i], dbl = i % 2 === 0, ox = (q[1] - p0[1]) / 50 * 4, oy = -(q[0] - p0[0]) / 50 * 4;
+      return `<line x1="${p0[0]}" y1="${p0[1]}" x2="${q[0]}" y2="${q[1]}" stroke="var(--ink)" stroke-width="3"/>` + (dbl ? `<line x1="${p0[0] + ox * 1.6}" y1="${p0[1] + oy * 1.6}" x2="${q[0] + ox * 1.6}" y2="${q[1] + oy * 1.6}" stroke="var(--ink)" stroke-width="3"/>` : ''); }).join('');
+    const bx0 = x0 - 14, bx1 = x1 + 14, by = 200;
+    $('#pcG', el).innerHTML = `<svg viewBox="0 0 520 270" class="ch" role="img" aria-label="共軛碳鏈與箱子">
+<rect x="${x0 - 18}" y="${yc - 34}" width="${x1 - x0 + 36}" height="68" rx="34" fill="#3A7BD5" opacity=".14" data-cur="π 電子能跑的範圍"/>
+${bonds}${C.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="6" fill="var(--ink)"/>`).join('')}
+<text class="tk sm" x="${x0 - 22}" y="${yc - 38}">π 電子可以沿整條鏈跑（藍色範圍）</text>
+<line x1="${bx0}" x2="${bx0}" y1="${yc + 36}" y2="${by - 30}" class="node"/><line x1="${bx1}" x2="${bx1}" y1="${yc + 36}" y2="${by - 30}" class="node"/>
+<rect x="${bx0 - 10}" y="${by - 30}" width="10" height="56" class="wall"/><rect x="${bx1}" y="${by - 30}" width="10" height="56" class="wall"/>
+<line x1="${bx0}" x2="${bx1}" y1="${by + 24}" y2="${by + 24}" class="ax"/><circle cx="${(bx0 + bx1) / 2}" cy="${by}" r="7" fill="#3A7BD5"/><text class="tk sm" x="${(bx0 + bx1) / 2}" y="${by - 14}" text-anchor="middle">e⁻ ⇆</text>
+<text class="tk hl" x="${(bx0 + bx1) / 2}" y="${by + 44}" text-anchor="middle">L ＝ 鏈長</text><text class="tk sm" x="${bx0 - 5}" y="${by + 44}" text-anchor="end">牆</text><text class="tk sm" x="${bx1 + 5}" y="${by + 44}">牆</text></svg>`;
+    $('#pcN', el).innerHTML = `${NM[n]}：π 電子在整條碳鏈上都可以跑，但跑不出鏈的兩端。把它簡化成箱子：<b>鏈的兩端就是牆，鏈長就是 L</b>。碳越多，箱子越長。`;
+    pressSeg(el, 'pcS', String(n));
+  }
+  bindSeg(el, 'pcS', v => { st.c = +v; draw(); });
+  draw();
+  return { set(s2) { Object.assign(st, s2); draw(); } };
+};
+// 第 4 節：一個箱子裡 n = 1～4 的駐波與能階（能量以 E₁ = h²/(8mL²) 為單位，不代數字）；點躍遷看能階差
+W.pbox = el => {
+  const st = { t: '1-2' };
+  el.innerHTML = `${ctl('躍遷', seg('pbS', [['1-2', 'n = 1 → 2'], ['2-3', 'n = 2 → 3'], ['1-3', 'n = 1 → 3'], ['3-4', 'n = 3 → 4']], st.t))}<div id="pbG"></div><p class="eq" id="pbF"></p><p class="note" id="pbN"></p>`;
+  function draw() {
+    const [a, b] = st.t.split('-').map(Number), x0 = 120, x1 = 360, Y = e => 278 - e / 16 * 246, A = 10;
+    const wave = n => path(Array.from({ length: 81 }, (_, i) => [x0 + (x1 - x0) * i / 80, Y(n * n) - A * Math.sin(n * Math.PI * i / 80)]));
+    const ax = 440;
+    $('#pbG', el).innerHTML = `<svg viewBox="0 0 520 300" class="ch" role="img" aria-label="箱子裡的駐波與能階">
+<rect x="${x0 - 12}" y="${Y(17)}" width="12" height="${Y(0) - Y(17)}" class="wall"/><rect x="${x1}" y="${Y(17)}" width="12" height="${Y(0) - Y(17)}" class="wall"/>
+<line class="ax" x1="${x0}" x2="${x1}" y1="${Y(0)}" y2="${Y(0)}"/><text class="tk sm" x="${x0 - 18}" y="${Y(0) + 4}" text-anchor="end">0</text>
+${[1, 2, 3, 4].map(n => `<line class="lvl${n === a || n === b ? ' on' : ''}" x1="${x0}" x2="${x1}" y1="${Y(n * n)}" y2="${Y(n * n)}" opacity=".35"/><path d="${wave(n)}" fill="none" stroke-width="3" class="w-ok"${n === b ? ' data-cur="上面的能階"' : ''} opacity="${n === a || n === b ? 1 : 0.45}"/>
+<text class="tk${n === a || n === b ? ' hl' : ''}" x="${x0 - 18}" y="${Y(n * n) + 4}" text-anchor="end">n=${n}</text><text class="tk${n === a || n === b ? ' hl' : ''}" x="${x1 + 20}" y="${Y(n * n) + 4}">${n * n} E₁</text>`).join('')}
+<line x1="${ax}" x2="${ax}" y1="${Y(a * a)}" y2="${Y(b * b) + 6}" stroke="#D0443C" stroke-width="3" marker-end="url(#pbA)" data-cur="躍遷箭頭"/><text class="tk hl" x="${ax + 8}" y="${(Y(a * a) + Y(b * b)) / 2 + 4}">ΔE</text>
+<defs><marker id="pbA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#D0443C"/></marker></defs></svg>`;
+    $('#pbF', el).innerHTML = `ΔE = E${'₀₁₂₃₄'[b]} − E${'₀₁₂₃₄'[a]} = (${b}² − ${a}²) × h²/(8mL²) = <b>${b * b - a * a} h²/(8mL²)</b>`;
+    $('#pbN', el).innerHTML = `每一條綠色的波就是一個允許的駐波：第 n 個能階放進 n 個半波長。往上走，半波越多、波長越短（2L/n）、電子跑得越快，能量是 E₁ 的 n² 倍。${a === 1 ? `n = 1 是<b>基態</b>，n = 2 是<b>第一激發態</b>。` : ''}從 n = ${a} 到 n = ${b}，差 ${b * b} − ${a * a} = ${b * b - a * a} 個 E₁。`;
     pressSeg(el, 'pbS', st.t);
   }
-  $('#pbL', el).oninput = e => { st.L = +e.target.value; draw(); };
   bindSeg(el, 'pbS', v => { st.t = v; draw(); });
+  draw();
+  return { set(s) { Object.assign(st, s); draw(); } };
+};
+// 第 4 節：箱子變長，能階變低：左邊固定長度 L，右邊是 k 倍；能量以左邊的 E₁ 為單位
+W.pboxl = el => {
+  const st = { k: 2 }, ratio = k => (k === 1 ? '1' : k > 1 ? `1/${fx(k * k, 2).replace(/\.?0+$/, '')}` : fx(1 / (k * k), 2));
+  el.innerHTML = `<div class="w-row"><label class="rng">右邊箱子的長度<input type="range" id="plR" min="0.6" max="3" step="0.1"><output class="mono" id="plO"></output></label></div><div id="plG"></div><div class="cards" id="plK"></div><p class="note" id="plN"></p>`;
+  function draw() {
+    const k = st.k, Y = e => 268 - e / 10 * 236, W0 = 90, l0 = 64, r0 = l0 + W0 + 50, r1 = r0 + W0 * Math.min(k, 3);
+    const box = (x0, x1, f, lab) => `<line class="ax" x1="${x0}" x2="${x0}" y1="${Y(10)}" y2="${Y(0)}"/><line class="ax" x1="${x1}" x2="${x1}" y1="${Y(10)}" y2="${Y(0)}"/><line class="ax" x1="${x0}" x2="${x1}" y1="${Y(0)}" y2="${Y(0)}"/><text class="tk sm" x="${(x0 + x1) / 2}" y="${Y(0) + 18}" text-anchor="middle">${lab}</text>`
+      + (() => { let ly = 1e9; return [1, 2, 3].map(n => { const e = n * n * f; if (e > 10) return ''; ly = Math.min(Y(e) - 5, ly - 14);   // 標籤太近就往上推
+        return `<line class="lvl${n === 1 ? ' on' : ''}" x1="${x0}" x2="${x1}" y1="${Y(e)}" y2="${Y(e)}"/><text class="tk sm" x="${x0 + 4}" y="${ly}">n=${n}・${fx(e, e < 1 ? 2 : 1)}</text>`; }).join(''); })();
+    $('#plG', el).innerHTML = `<svg viewBox="0 0 520 296" class="ch" role="img" aria-label="兩個箱子的能階">
+<text class="tk sm" x="${l0 - 10}" y="${Y(10) + 4}" text-anchor="end">10</text><text class="tk sm" x="${l0 - 10}" y="${Y(0) + 4}" text-anchor="end">0</text><text class="tk sm" x="4" y="14">能量（左邊的 E₁）</text>
+${box(l0, l0 + W0, 1, '長度 L')}${box(r0, r1, 1 / (k * k), `長度 ${fx(k, 1)} L`)}</svg>`;
+    $('#plR', el).value = k; $('#plO', el).textContent = `${fx(k, 1)} L`;
+    $('#plK', el).innerHTML = card('l', '長度', `${fx(k, 1)} 倍`) + card('e', '每個能階', `${ratio(k)} 倍`, `1 ÷ ${fx(k, 1)}²`);
+    $('#plN', el).innerHTML = `公式分母是 L²：長度變 ${fx(k, 1)} 倍，每個能階都變成 ${ratio(k)} 倍（紅線是 n = 1）。${k >= 1 ? '箱子越長，能放下越長的波，電子跑得越慢，能量越低；能階之間也靠得越近' : '箱子變短，波長被迫變短，電子跑得更快，能量變高；能階之間也拉得更開'}，n = 1 → 2 的差從 3 變成 ${fx(3 / (k * k), 2)}（單位：左邊的 E₁）。`;
+  }
+  $('#plR', el).oninput = e => { st.k = +e.target.value; draw(); };
   draw();
   return { set(s) { Object.assign(st, s); draw(); } };
 };

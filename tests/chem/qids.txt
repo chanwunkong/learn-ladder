@@ -263,7 +263,8 @@ atom|8s0wal	⁵⁶Fe³⁺（Fe 的原子序 26）有幾個質子、電子、中�
 atom|1tqa1gn	下列電磁輻射，頻率由高到低何者正確？
 atom|1blu65y	氫原子的電子從 n = 3 掉到 n = 2，放出的光是什麼顏色？
 atom|xj7no3	氫原子的游離能為 1312 kJ/mol，則 He⁺ 的游離能約為？
-atom|hln21e	一維箱中粒子由基態激發到第一激發態，所需能量為？
+atom|1mrun35	依德布羅意的解釋，氫原子第 3 個軌道上電子的波，繞軌道一圈有幾個波長？
+atom|1nli7z7	下列哪一個實驗證實電子具有波的性質？
 atom|11dsta	下列哪一組量子數不可能存在？
 atom|8t056i	4d 軌域有幾個角節面（節面）？
 atom|zssgfa	Cu（Z = 29）的基態電子組態為？
@@ -277,7 +278,6 @@ atom|3uvfqk	下列電磁波依波長由長到短排列，何者正確？
 atom|1jwq2tx	燃燒含鈉化合物時火焰呈黃色，這是因為鈉原子？
 atom|fhbhph	氫原子中電子由 n = 4 掉到 n = 2，放出的光波長約為？
 atom|1dytrbv	依波耳模型，下列何者的電子軌道半徑最大？
-atom|1n37r24	一維箱中粒子由 n = 2 激發到 n = 3，所需能量為？
 atom|1lsbduf	下列量子數組合 (n, ℓ, mℓ, ms) 何者正確？
 atom|nai5n0	一個原子中，量子數 n = 5、ℓ = 1 的電子最多有幾個？
 atom|hqu697	一個 3p 軌域有幾個節面（平面）與幾個球面節點？
@@ -428,6 +428,7 @@ carbonyl|slq82l	丁醛與 CH₃CH₂MgBr 反應，再 H₃O⁺，產物是？
 carbonyl|1g3bley	要分辨乙醛與丙酮，除了托倫斯試劑，還可以用？
 carbonyl|ljpyu5	2-戊酮與 Ph₃P=CH₂ 反應，產物是？
 carbonyl|1xde7zr	要把苯乙酮的 C=O 還原成 CH₂（得乙苯），在鹼性條件下應使用？
+conj|hln21e	一維箱中粒子由基態激發到第一激發態，所需能量為？
 conj|trx8mh	下列何者是共軛二烯？
 conj|17le97q	下列何者的紫外光最大吸收波長最長？
 conj|152sc5y	1,3-丁二烯的 HOMO 是哪一個軌域？
@@ -435,6 +436,7 @@ conj|31jllr	1,3-丁二烯在 −80 °C 與 HBr 反應，主產物是？
 conj|19igb2b	Diels–Alder 反應中，雙烯必須採取哪一種構形？
 conj|1coi5qx	6π 電子的多烯在加熱下閉環，旋轉方式是？
 conj|qh7nci	烯丙基苯基醚加熱後的主產物是？
+conj|1n37r24	一維箱中粒子由 n = 2 激發到 n = 3，所需能量為？
 conj|yh3orx	下列何者是共軛二烯？ I. 1,2-己二烯 II. 1,3-己二烯 III. 2
 conj|12unxui	1,3,5-己三烯的 LUMO 有幾個節面？
 conj|kznya9	關於 Diels–Alder 反應，何者錯誤？
