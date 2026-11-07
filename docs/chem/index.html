@@ -330,7 +330,7 @@ details.more { margin-top: 10px; } details.more > summary { cursor: pointer; col
 @media (max-width: 560px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .card { border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; background: var(--bg); min-width: 0; }
 .card span { display: block; font-size: 12px; color: var(--muted); }   /* 標題可以換行，不再被切掉（2026-11-07） */
-.card b { display: block; font-family: var(--mono); font-size: clamp(14px, 3.8vw, 18px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+.card b { display: block; font-family: var(--mono); font-size: clamp(14px, 3.8vw, 18px); overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }   /* 數值放不下就換行，不再切掉（2026-11-07） */
 .card small { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--muted); overflow-wrap: anywhere; }
 .note { background: var(--soft); border-radius: 8px; padding: 10px 14px; font-size: 14.5px; margin: 10px 0 0; }
 .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--line); vertical-align: -2px; }
@@ -487,6 +487,14 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 .box { width: 30px; height: 30px; border: 1.5px solid var(--ink); margin-left: -1.5px; display: grid; place-items: center; font-size: 15px; letter-spacing: -3px; }
 .ptab { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; margin: 8px 0 14px; }
 .pcell { border-radius: 6px; padding: 4px 2px; text-align: center; background: color-mix(in srgb, var(--accent) calc(var(--v) * 85%), var(--surface)); border: 1px solid var(--line); font-size: 12px; line-height: 1.25; }
+.fpanel { margin: 10px 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); }
+.frow { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 6px 0; font-size: 16px; } .frow > b { font-family: var(--mono); }
+.fnum { flex-basis: 100%; font-family: var(--mono); font-size: 12.5px; color: var(--muted); overflow-wrap: anywhere; }
+.fv { cursor: pointer; font-weight: 700; } .fv-l, .fvt-l { color: #D9822B; fill: #D9822B; } .fv-n { color: #3A7BD5; } .fv-e { color: #9B59B6; }
+.fvl-l { stroke: #D9822B; } .card.fvc-n { border-color: #3A7BD5; } .card.fvc-e { border-color: #9B59B6; }
+.frow.fnew { padding: 4px 6px; border-radius: 6px; background: var(--good-soft); }
+.fsub { border: 1.5px dashed #3A7BD5; border-radius: 6px; background: none; padding: 0 6px; font: inherit; cursor: pointer; }
+.fflash { animation: fflash .9s; } @keyframes fflash { 0%, 60% { outline: 3px solid currentColor; outline-offset: 2px; opacity: .55; } 100% { outline: 0; opacity: 1; } }
 .uc-chain { font-size: 14px; line-height: 2.8; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); overflow-x: auto; }
 .uc-frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; font-family: var(--mono); font-size: 12px; line-height: 1.5; margin: 0 2px; }
 .uc-frac > span:first-child { border-bottom: 1.5px solid currentColor; padding: 0 4px; }
@@ -1744,49 +1752,51 @@ CH.push({
 [[w:wave]]
 <p>為什麼會這樣：</p>
 <p>光是電磁波：電場和磁場一起往前傳的波動。描述一個波要用三個量：<b>波長 λ</b>（相鄰兩個波峰的距離）、<b>頻率 ν</b>（每秒通過幾個波峰）和傳播速度。所有電磁波在真空中都以光速 c 前進，所以波長越短，每秒通過的波峰越多，頻率越高。</p>
-<p>光的能量是一份一份的，每一份稱為一個<b>光子</b>。一個光子的能量只由頻率決定：E = hν，頻率越高，能量越大。再把 c = λν 代進去（ν = c/λ），就得到能量和波長的關係。兩個反比的量，寫成「相乘是定值」最好記：</p>
+<p>光的能量是一份一份的，每一份稱為一個<b>光子</b>。這一節要學的公式只有三條，都在上面那張圖的下方，跟著波長即時代入：</p>
+<ol><li><b>ν = c/λ</b>：光每秒前進 c 公尺，每個波長 λ 公尺，所以每秒通過 c ÷ λ 個波峰。看圖就推得出來。</li><li><b>E = hν</b>：普朗克發現，一個光子的能量和頻率成正比，比例常數就是 h（要背）。</li><li><b>E = hc/λ</b>：把 ① 的 ν 直接代入 ②。在圖下點一下 ② 裡的 ν，就會換成 c/λ。</li></ol>
 <p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式或常數推出，不用死背；<span class="tg given">卷上會給</span>題目或卷首常數表會提供。</p>
-<p class="eq">c = λν<span class="tg must">要背</span></p>
-<p class="eq">E × λ = hc<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>c</dt><dd>光速，3.00 × 10⁸ m/s<span class="tg given">卷上會給</span></dd></div><div><dt>λ</dt><dd>波長（讀作 lambda），單位 m；光常用 nm（奈米，10⁻⁹ m）</dd></div><div><dt>ν</dt><dd>頻率（讀作 nu），每秒振動的次數，單位 Hz（= s⁻¹）</dd></div><div><dt>E</dt><dd>一個光子的能量，單位 J（焦耳）</dd></div><div><dt>h</dt><dd>普朗克常數，6.63 × 10⁻³⁴ J·s<span class="tg given">卷上會給</span></dd></div></dl>
-<p>E × λ 固定：波長變 2 倍，能量就變一半。</p>
+<p>題目給波長、求能量，就用 E = hc/λ。<b>反過來給能量、求波長</b>：E 和 λ 互換位置，λ = hc/E。</p>
 <p>化學習慣用「每莫耳」和 nm：一莫耳光子的能量，是一個光子的能量乘上亞佛加厥數 Nₐ（6.02 × 10²³ 個/mol）。hc 換成這些單位是多少？下面的圖從 h × c 出發，<b>自己選要乘哪些換算比例</b>（每一張都等於 1，可以翻轉），把單位換成 kJ·nm/mol。消掉的單位會畫刪除線。</p>
 [[w:unitmol]]
-<p class="eq">E（kJ/mol）× λ（nm）≈ 119,600<span class="tg derive">會推</span></p>
-<p>119,600 不用背：忘了就用卷上的 h、c、Nₐ 照上面的方法重算。</p>
-<p>下面的圖把範圍放大到整個電磁波譜（γ 射線到無線電波），拖動滑桿看各區的波長與能量。考試常問兩件事：電磁波譜的排序，以及「打斷一個化學鍵最少需要多長波長的光」（鍵能用 kJ/mol，就用 E × λ ≈ 119,600 求 λ）。</p>
+<p class="eq">E（kJ/mol）≈ 119,600 ÷ λ（nm）<span class="tg derive">會推</span></p>
+<p>反過來求波長也一樣互換：λ（nm）≈ 119,600 ÷ E（kJ/mol）。119,600 不用背，忘了就用卷上的 h、c、Nₐ 照上面的方法重算。</p>
+<p><b>歷屆題怎麼用</b>：義守 108「某分子吸收 300 nm 的紫外光解離，需要多少 kJ/mol？」→ 119,600 ÷ 300 ≈ 400 kJ/mol。義守 115「O₂ 的鍵焓 498.7 kJ/mol，能解離它的光最大波長？」→ 119,600 ÷ 498.7 ≈ 240 nm。</p>
+<p>下面的圖把範圍放大到整個電磁波譜（γ 射線到無線電波），拖動滑桿看各區的波長與能量。考試常問兩件事：電磁波譜的排序，以及「打斷一個化學鍵最少需要多長波長的光」（鍵能用 kJ/mol，就用 λ ≈ 119,600 ÷ 鍵能）。</p>
 [[w:emspec]]
 <p>金屬鹽在火焰中加熱時，電子被激發後掉回低能階，<b>放出</b>特定顏色的光（<b>焰色</b>）。煙火的顏色就是這些金屬鹽的放射光<span class="tg must">要背</span>：鋰紅、鈉黃、鉀紫、鈣橙紅、鍶紅、鋇黃綠、銅藍綠。</p>
 <p class="flames"><span><i style="background:#D81B60"></i>鋰</span><span><i style="background:#F2C230"></i>鈉</span><span><i style="background:#B28DD6"></i>鉀</span><span><i style="background:#E8742A"></i>鈣</span><span><i style="background:#D3262E"></i>鍶</span><span><i style="background:#9CC63A"></i>鋇</span><span><i style="background:#2BA59A"></i>銅</span></p>` },
     { h: '氫原子的光為什麼是一條一條的？', w: ['hspec', 'unitev', 'bohrr'], body: `
 <p>把氫氣通電，發出的光經過稜鏡不是連續的彩虹，而是幾條特定顏色的線。這代表電子只能待在某些特定能量（能階），從高能階掉到低能階時，放出的光子能量剛好等於能階差。下面的圖切換粒子與躍遷：能階圖下方的光譜會跟著換，看能量怎麼隨 Z 改變。</p>
 [[w:hspec]]
-<p>波耳模型對只有一個電子的粒子（H、He⁺、Li²⁺…）給出能量和軌道半徑。考試幾乎都是比較題（誰比較大、差幾倍），所以先記比例：在分數上面的是正比，在下面的是反比。</p>
-<p class="eq">E ∝ −Z²/n²<span class="tg must">要背</span></p>
-<p class="eq">r ∝ n²/Z<span class="tg must">要背</span></p>
-<p>兩個都有 n²，Z 的位置剛好相反。要算數字時才用氫原子的值：E₁ = −13.6 eV、r₁ = 0.529 Å<span class="tg must">要背</span>，也就是 Eₙ = −13.6 eV × Z²/n²、rₙ = 0.529 Å × n²/Z。</p>
-<p><b>比較題的常數會消掉</b>：He⁺ 的游離能是氫的幾倍？兩者都是 n = 1，E 的比 = (2²/1²) ÷ (1²/1²) = 4 倍，13.6 根本用不到。</p>
+<p>波耳模型對只有一個電子的粒子（H、He⁺、Li²⁺…）給出能量和軌道半徑：</p>
+<p class="eq">Eₙ = −13.6 eV × Z²/n²<span class="tg must">要背</span></p>
+<p class="eq">rₙ = 0.529 Å × n²/Z<span class="tg must">要背</span></p>
+<p>讀法：在分數上面的是正比，在下面的是反比。兩條都有 n²，Z 的位置剛好相反。</p>
+
+<p><b>比較題的常數會消掉</b>：He⁺ 的游離能是氫的幾倍？兩者都是 n = 1，只看 Z²：2² ÷ 1² = 4 倍，13.6 用不到。義守 113「依波耳模型，下列何者半徑最大？」也一樣，只要比 n²/Z。</p>
 <dl class="sym"><div><dt>n</dt><dd>主量子數：電子在第幾層（1, 2, 3…）</dd></div><div><dt>Z</dt><dd>原子核的質子數（氫 1、He⁺ 2、Li²⁺ 3）</dd></div><div><dt>Eₙ</dt><dd>電子在第 n 層的能量。負號表示電子被原子核束縛；越接近 0 越容易脫離，等於 0 就是離開原子</dd></div><div><dt>eV</dt><dd>電子伏特：一個電子通過 1 伏特電壓獲得的能量，1 eV = 1.602 × 10⁻¹⁹ J。單一原子的能量很小，用 eV 比用 J 方便</dd></div><div><dt>rₙ</dt><dd>電子在第 n 層的軌道半徑</dd></div><div><dt>Å</dt><dd>埃，10⁻¹⁰ m（= 0.1 nm），原子大小的常用單位</dd></div><div><dt>13.6 eV</dt><dd>氫原子基態（n = 1）電子的束縛能，也就是把它整個拿走所需的能量（氫的游離能，實驗量得 13.6 eV）。波耳由電子質量、電荷、普朗克常數算出同一個值，模型因此被接受。考試直接用，不必推導</dd></div><div><dt>× Z²</dt><dd>原子核電荷變成 Z 倍，拉力變大、軌道又縮小成 1/Z，兩個效果相乘，能量變成 Z² 倍</dd></div><div><dt>÷ n²</dt><dd>越外層離核越遠、束縛越鬆：第 2 層只剩 1/4，第 3 層 1/9</dd></div><div><dt>0.529 Å</dt><dd>波耳半徑 a₀：氫原子基態（n = 1）的軌道半徑，和 13.6 eV 一起由同一組常數算出。半徑隨 n² 變大、隨 Z 縮小（核電荷越大，電子被拉得越近）</dd></div><div><dt>h、c、λ</dt><dd>普朗克常數 6.626 × 10⁻³⁴ J·s（卷上會給）、光速 3.00 × 10⁸ m/s、光的波長</dd></div><div><dt>ΔE</dt><dd>兩個能階的能量差，就是放出（或吸收）的光子能量</dd></div></dl>
-<p>放出的光子能量等於能階差 ΔE，波長用第 2 節的 E × λ = hc 求。能階差用 eV，波長用 nm 時，hc 是多少？下面的圖自己選換算比例，把單位換成 eV·nm（也可以切到「1 eV 是幾 kJ/mol」，看兩種單位怎麼互換）。</p>
+<p>放出的光子能量等於能階差 ΔE，波長用第 2 節的 λ = hc/E 求。能階差用 eV，波長用 nm 時，hc 是多少？下面的圖自己選換算比例，把單位換成 eV·nm（也可以切到「1 eV 是幾 kJ/mol」，看兩種單位怎麼互換）。</p>
 [[w:unitev]]
-<p class="eq">ΔE（eV）× λ（nm）≈ 1240<span class="tg derive">會推</span></p>
+<p class="eq">λ（nm）≈ 1240 ÷ ΔE（eV）<span class="tg derive">會推</span></p>
+<p><b>歷屆題怎麼用</b>：中國醫 110「氫原子的電子從 n = 5 掉到 n = 2，放出的光波長？」→ ΔE = 13.6 × (1/2² − 1/5²) ≈ 2.86 eV，λ ≈ 1240 ÷ 2.86 ≈ 434 nm（4.34 × 10⁻⁷ m）。</p>
 <p>1240 和第 2 節的 119,600 都是 hc，只是單位不同；兩者相差 96.5 倍，就是 1 eV（一個粒子）= 96.5 kJ/mol。</p>
 <p>從高能階掉到同一個低能階的一組譜線稱為一個「系」：掉到 n = 1 是<b>來曼系</b>（紫外光），掉到 n = 2 是<b>巴耳末系</b>（可見光），掉到 n = 3 是<b>帕申系</b>（紅外光）。巴耳末系中 3 → 2 是 656 nm 的紅線。把電子從原子完全移走所需的能量稱為<b>游離能</b>：n → ∞ 時能量為 0，所以基態氫原子的游離能是 0 − (−13.6) = 13.6 eV（1312 kJ/mol），He⁺ 是它的 Z² = 4 倍。回到上面的圖切換躍遷，光譜會跟著換成那一個系（萊曼系在紫外、巴耳末系在可見、帕申系在紅外）。</p>
-<p>軌道半徑 r ∝ n²/Z：下面的圖看半徑怎麼隨 n 變大、隨 Z 縮小。</p>
+<p>軌道半徑 rₙ = 0.529 Å × n²/Z：下面的圖看半徑怎麼隨 n 變大、隨 Z 縮小。</p>
 [[w:bohrr]]` },
     { h: '為什麼電子的能量只能取特定值？', w: 'ringwave', body: `
 <p>第 3 節的波耳模型說，電子只能在 n = 1, 2, 3… 的軌道上，能量只能是幾個值，但沒有說為什麼。答案是：<b>電子也是波</b>。</p>
 <p>1924 年德布羅意提出：電子這種粒子也有波長，而且由它跑多快決定。1927 年，電子束打到晶體上出現和光一樣的繞射圖樣，證實電子真的是波。</p>
-<p class="eq">λ × mv = h<span class="tg must">要背</span></p>
+<p class="eq">λ = h/(mv)<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>λ</dt><dd>電子的波長（物質波）</dd></div><div><dt>h</dt><dd>普朗克常數 6.63 × 10⁻³⁴ J·s（卷上會給）</dd></div><div><dt>m、v</dt><dd>電子的質量與速度；mv 稱為<b>動量</b>（質量 × 速度）</dd></div></dl>
-<p>意思是<b>波長 × 動量是定值</b>：電子跑得越快，波長越短。這和第 2 節光的 E × λ = hc 是同一條：光的動量是 E/c，把 E × λ = hc 兩邊除以 c，就是 λ × (E/c) = h。德布羅意做的事，就是把光的這條關係套到電子上。</p>
-<table class="tbl"><tr><th></th><th>光（第 2 節）</th><th>電子（本節）</th></tr><tr><td>動量</td><td>E/c</td><td>mv</td></tr><tr><td>波長 × 動量 = h</td><td>λ × E/c = h，也就是 E × λ = hc</td><td>λ × mv = h</td></tr></table>
+<p>意思是<b>電子跑得越快，波長越短</b>。這和第 2 節光的 λ = hc/E 長得一樣：都是 λ = h ÷ 某個量。德布羅意做的事，就是把光的這條關係套到電子上。</p>
+<table class="tbl"><tr><th></th><th>光（第 2 節）</th><th>電子（本節）</th></tr><tr><td>波長</td><td>λ = hc/E</td><td>λ = h/(mv)</td></tr><tr><td>分母越大</td><td>能量越大，波長越短</td><td>跑得越快（或越重），波長越短</td></tr></table>
 <p><b>繞一圈要接得起來</b>：電子繞著原子核跑，它的波繞一圈回到起點時，必須和自己接上；接不上的波會和自己錯開、互相抵消，不能存在。下面的圖：拖動「一圈放幾個波長」，看波繞一圈後能不能接起來。</p>
 [[w:ringwave]]
 <p class="eq">2πr = nλ<span class="tg derive">會推</span></p>
 <p>軌道一圈的長度（2πr）剛好是整數個波長，n = 1, 2, 3…</p>
 <p>這個整數 n 就是波耳模型的主量子數。只有幾個軌道接得起來，所以電子的半徑、速度、能量都只能是幾個值（第 3 節的 Eₙ = −13.6 eV × Z²/n²）。<b>電子被原子核關住 → 只能是接得起來的駐波 → 能量一格一格</b>，這就是能量量子化的原因。</p>
-<p>把 λ = h/(mv) 代進 2πr = nλ，兩邊整理成乘式：mv × 2πr = nh。這是波耳當初直接假設的條件（稱為角動量量子化），德布羅意的波讓它有了原因。</p>
+<p>把 λ = h/(mv) 代進 2πr = nλ，得到 2πr = nh/(mv)。這就是波耳當初直接假設的條件（稱為角動量量子化），德布羅意的波讓它有了原因。</p>
 <p><b>駐波上的節點</b>：圖上波的振幅是 0 的點，電子不會出現在那裡。波耳的圓形軌道是簡化的圖像，真正的電子不是沿著一條圓線跑：在立體的原子裡，電子的駐波就是第 5 節的軌域，這些 0 的地方就是軌域的節面。</p>
 <p>同樣的道理也用在分子：共軛分子的 π 電子被關在碳鏈上，能量也一格一格，在「共軛二烯」一章用箱中粒子模型計算。</p>` },
     { h: '電子的狀態用哪四個量子數描述？', w: ['qn', 'radial'], body: `
@@ -2342,12 +2352,12 @@ CH.push({
 [[w:pboxc]]
 <p>電子有波的性質（第一章第 4 節）。電子穿不過牆，在牆上找到它的機率是 0，所以它的波在兩端都必須是 0，只能是兩端固定、在原地上下振動的<b>駐波</b>（吉他弦振動時就是駐波）。<b>下面的圖</b>：拖動波長，只有右端也剛好落在 0 的波才能存在，這時箱子裡剛好放進整數個半波長。</p>
 [[w:boxfit]]
-<p class="eq">n × λ = 2L<span class="tg derive">會推</span></p>
-<p>箱子裡放進 n 個半波長（n = 1, 2, 3…），n 個半波長的總長就是箱長 L。</p>
-<p><b>波長怎麼變成能量？</b>用第一章第 4 節的德布羅意關係 λ × mv = h：<b>波長越短，電子跑得越快</b>。箱子只允許幾個波長，速度就只能是幾個值，能量也就只能是幾個值。三步就推出箱中粒子的公式，不用背：</p>
-<ol><li>箱子決定波長：λ = 2L/n</li><li>波長決定速度：代進 λ × mv = h，得到 mv = nh/(2L)</li><li>速度決定能量：E = ½mv²，把 mv 代進去，m 約掉一個，E = n²h²/(8mL²)</li></ol>
-<p class="eq">E ∝ n²/(mL²)<span class="tg derive">會推</span></p>
-<p>在分數上面的是正比、下面的是反比：n 越大能量越高；粒子越重、箱子越長，能量越低。剩下的 h²/8 是常數，題目的答案都寫成「幾個 h²/(8mL²)」，也就是 n = 1 的能量 E₁ 的幾倍。考試的題目都在問這三個比例：</p>
+<p class="eq">λ = 2L/n<span class="tg derive">會推</span></p>
+<p>箱子裡放進 n 個半波長（n = 1, 2, 3…），所以每個半波長是 L/n，一個波長是 2L/n。</p>
+<p><b>波長怎麼變成能量？</b>用第一章第 4 節的德布羅意關係 λ = h/(mv)：<b>波長越短，電子跑得越快</b>。要從波長求動量，λ 和 mv 互換位置：mv = h/λ（和第一章第 2 節「E 和 λ 互換」是同一招）。箱子只允許幾個波長，速度就只能是幾個值，能量也就只能是幾個值。三步就推出箱中粒子的公式，不用背：</p>
+<ol><li>箱子決定波長：λ = 2L/n</li><li>波長決定動量：把 λ 代入 mv = h/λ，得到 mv = nh/(2L)</li><li>動量決定能量：動能 ½mv² 也可以寫成 (mv)²/(2m)，把 mv 代入，得到 E = n²h²/(8mL²)</li></ol>
+<p class="eq">Eₙ = n²h²/(8mL²)<span class="tg derive">會推</span></p>
+<p>讀法：在分數上面的是正比、下面的是反比。n 越大能量越高；粒子越重、箱子越長，能量越低。題目的選項都寫成「幾個 h²/(8mL²)」，也就是 n = 1 的能量 E₁ 的幾倍。考試的題目都在問這三個比例：</p>
 <p><b>1. 能量和 n² 成正比。</b>下面的圖畫出 n = 1～4 的波和能階：n 越大，半波越多、波長越短、電子越快，能量是 E₁ 的 1、4、9、16 倍。點一個躍遷，看兩個能階差幾倍。</p>
 [[w:pbox]]
 <p>例如「基態（n = 1）到第一激發態（n = 2）」：(2² − 1²) = 3，答案是 3h²/(8mL²)；「n = 2 到 n = 3」：(3² − 2²) = 5，答案是 5h²/(8mL²)。最低的能量是 n = 1 的 E₁，不是 0：電子關在箱子裡不可能完全靜止。</p>
@@ -12344,7 +12354,10 @@ W.wave = el => {
   const P = [['紫外光 250 nm', 250], ['紫光 410 nm', 410], ['鈉的黃光 589 nm', 589], ['氫的紅線 656 nm', 656], ['紅外光 1200 nm', 1200]];
   el.innerHTML = `<div class="w-row">${P.map(([t, v]) => `<button class="btn sm ghost" type="button" data-v="${v}">${t}</button>`).join('')}</div>
 <div class="w-row"><label class="rng">波長 λ<input type="range" id="wvR" min="200" max="1400" step="1"><output class="mono" id="wvO"></output></label></div>
-<div id="wvG"></div><div id="wvS"></div><div class="cards" id="wvK"></div><p class="note" id="wvN"></p>`;
+<div id="wvG"></div><div id="wvS"></div><div class="cards" id="wvK"></div><div class="fpanel" id="wvF"></div><p class="note" id="wvN"></p>`;
+  let sub = false;   // ② 裡的 ν 是否已經點過、代入成 c/λ
+  // 公式長在圖上（2026-11-07 使用者要求）：λ、ν、E 用同一個顏色對應圖、卡片與公式；數值跟著波長即時代入；③ 由讀者點 ν 推出來
+  const V = (k, t) => `<span class="fv fv-${k}" data-fv="${k}">${t}</span>`;
   function draw() {
     const col = nmRGB(nm), W0 = 600, H = 150, win = 3000;   // 畫面寬度代表 3000 nm
     let d = '';
@@ -12353,7 +12366,7 @@ W.wave = el => {
     $('#wvG', el).innerHTML = `<svg class="ch" viewBox="0 -16 ${W0} ${H + 46}" role="img" aria-label="波長 ${nm} nm 的波">
 <line class="ax" x1="0" x2="${W0}" y1="${H / 2}" y2="${H / 2}" stroke-dasharray="3 4"/>
 <path d="${d}" fill="none" stroke="${col || 'var(--muted)'}" stroke-width="3" ${col ? '' : 'stroke-dasharray="6 4"'}/>
-${x2 < W0 ? `<line class="mk" x1="${x1}" x2="${x2}" y1="${H / 2 - 62}" y2="${H / 2 - 62}"/><text class="tk" x="${(x1 + x2) / 2}" y="${H / 2 - 68}" text-anchor="middle">λ = ${nm} nm</text>` : ''}
+${x2 < W0 ? `<line class="mk fvl-l" data-fv="l" x1="${x1}" x2="${x2}" y1="${H / 2 - 62}" y2="${H / 2 - 62}"/><text class="tk fvt-l" x="${(x1 + x2) / 2}" y="${H / 2 - 68}" text-anchor="middle">λ = ${nm} nm</text>` : ''}
 <text class="tk" x="${W0 / 2}" y="${H + 22}" text-anchor="middle">同一段距離（3000 nm）裡有 ${crests} 個多波峰：波長越短，越密</text></svg>`;
     // 可見光色帶與目前位置
     const stops = Array.from({ length: 38 }, (_, i) => { const w = 380 + i * 10; return `<stop offset="${(i / 37 * 100).toFixed(1)}%" stop-color="${nmRGB(w)}"/>`; }).join('');
@@ -12365,7 +12378,17 @@ ${x2 < W0 ? `<line class="mk" x1="${x1}" x2="${x2}" y1="${H / 2 - 62}" y2="${H /
     const nu = 2.998e8 / (nm * 1e-9), E = 6.626e-34 * nu, Em = E * 6.022e23 / 1000;
     $('#wvO', el).textContent = `${nm} nm`;
     $('#wvK', el).innerHTML = card('c', '顏色', `<span style="display:inline-block;width:.9em;height:.9em;border-radius:3px;vertical-align:-.1em;margin-right:.3em;background:${col || 'transparent'};border:1px solid var(--line)"></span>${nmName(nm)}`)
-      + card('n', '頻率 ν = c ÷ λ', `${sci(nu, 3)} Hz`, '每秒通過的波峰數') + card('e', '一個光子 E = hν', `${sci(E, 3)} J`) + card('m', '一莫耳光子', `${fx(Em, 0)} kJ/mol`, `≈ 119,600 ÷ ${nm}`);
+      + card('n', '頻率 ν', `${sci(nu, 2)} Hz`, '每秒通過的波峰數') + card('e', '一個光子的能量 E', `${sci(E, 2)} J`) + card('m', '一莫耳光子', `${fx(Em, 0)} kJ/mol`, `≈ 119,600 ÷ ${nm}`);
+    $('[data-k="n"]', el).classList.add('fvc-n'); $('[data-k="e"]', el).classList.add('fvc-e');
+    const tg = (c, t) => `<span class="tg ${c}">${t}</span>`, lam = `${nm} × 10⁻⁹ m`;
+    $('#wvF', el).innerHTML = `<p class="lbl">這一節的公式（拖動波長，數值跟著變；點彩色的字母看它在圖上是哪裡）</p>
+<div class="frow"><b>① ${V('n', 'ν')} = c/${V('l', 'λ')}</b>${tg('derive', '會推')}<span class="fnum">= (3.00 × 10⁸ m/s) ÷ (${lam}) = ${sci(nu, 2)} Hz</span></div>
+<div class="frow"><b>② ${V('e', 'E')} = h × ${sub ? V('n', 'ν') : `<button type="button" class="fsub" id="wvSub">${V('n', 'ν')}</button>`}</b>${tg('must', '要背')}<span class="fnum">= (6.63 × 10⁻³⁴ J·s) × ${sci(nu, 2)} Hz = ${sci(E, 2)} J</span></div>
+${sub ? `<div class="frow fnew"><b>③ ${V('e', 'E')} = hc/${V('l', 'λ')}</b>${tg('derive', '會推')}<span class="fnum">= (6.63 × 10⁻³⁴ J·s)(3.00 × 10⁸ m/s) ÷ (${lam}) = ${sci(E, 2)} J</span></div>` : ''}
+<p class="small mut">${sub ? '把 ① 的 ν = c/λ 直接代入 ② 的 E = hν，就是 ③，沒有移項；兩種算法得到同一個 E。<button type="button" class="linkb" id="wvUn">再推一次</button>' : '③ 怎麼來？點 ② 裡虛線框的 ν，用 ① 代入。'}</p>`;
+    const sb = $('#wvSub', el); if (sb) sb.onclick = () => { sub = true; draw(); };
+    const un = $('#wvUn', el); if (un) un.onclick = () => { sub = false; draw(); };
+    $$('[data-fv]', $('#wvF', el)).forEach(f => { f.onmouseenter = f.onclick = () => { const k = f.dataset.fv, t = k === 'l' ? $$('.fvl-l, .fvt-l', el) : $$(`.fvc-${k}`, el); t.forEach(x => { x.classList.remove('fflash'); void x.getBBox; x.classList.add('fflash'); setTimeout(() => x.classList.remove('fflash'), 900); }); }; });
     $('#wvN', el).innerHTML = `波長變短一半，頻率和光子能量就變成兩倍。${nm < 400 ? '紫外光的光子能量（超過約 300 kJ/mol）已經和許多化學鍵的鍵能相當，所以能打斷鍵、曬傷皮膚。' : nm > 750 ? '紅外光的光子能量太小，不能讓電子躍遷，只能讓化學鍵振動（光譜一章的 IR）。' : '可見光的光子能量剛好讓某些分子的電子躍遷，所以物質才有顏色。'}`;
     $('#wvR', el).value = nm;
   }
@@ -12566,8 +12589,8 @@ const UC_CARDS = [
 ];
 const HC = { txt: 'h × c = (6.63 × 10⁻³⁴ J·s)(3.00 × 10⁸ m/s)', v: 6.626e-34 * 2.998e8, u: { J: 1, m: 1 }, gone: ['s'] };
 const UC_T = {
-  mol: { lab: '一莫耳光子：kJ·nm/mol', start: HC, goal: { kJ: 1, nm: 1, mol: -1 }, done: 'E（kJ/mol）× λ（nm）≈ 119,600' },
-  ev: { lab: '一個光子：eV·nm', start: HC, goal: { eV: 1, nm: 1 }, done: 'ΔE（eV）× λ（nm）≈ 1240' },
+  mol: { lab: '一莫耳光子：kJ·nm/mol', start: HC, goal: { kJ: 1, nm: 1, mol: -1 }, done: 'E（kJ/mol）≈ 119,600 ÷ λ（nm）' },
+  ev: { lab: '一個光子：eV·nm', start: HC, goal: { eV: 1, nm: 1 }, done: 'λ（nm）≈ 1240 ÷ ΔE（eV）' },
   evkj: { lab: '1 eV 是幾 kJ/mol', start: { txt: '1 eV（一個粒子的能量）', v: 1, u: { eV: 1 }, gone: [] }, goal: { kJ: 1, mol: -1 }, done: '1 eV（一個粒子）≈ 96.5 kJ/mol' },
 };
 const ucUnits = u => { const sup = n => (n === 1 ? '' : String(n).split('').map(c => SUP[c]).join('')), up = Object.keys(u).filter(k => u[k] > 0), dn = Object.keys(u).filter(k => u[k] < 0);

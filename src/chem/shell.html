@@ -248,7 +248,7 @@ details.more { margin-top: 10px; } details.more > summary { cursor: pointer; col
 @media (max-width: 560px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .card { border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; background: var(--bg); min-width: 0; }
 .card span { display: block; font-size: 12px; color: var(--muted); }   /* 標題可以換行，不再被切掉（2026-11-07） */
-.card b { display: block; font-family: var(--mono); font-size: clamp(14px, 3.8vw, 18px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+.card b { display: block; font-family: var(--mono); font-size: clamp(14px, 3.8vw, 18px); overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }   /* 數值放不下就換行，不再切掉（2026-11-07） */
 .card small { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--muted); overflow-wrap: anywhere; }
 .note { background: var(--soft); border-radius: 8px; padding: 10px 14px; font-size: 14.5px; margin: 10px 0 0; }
 .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--line); vertical-align: -2px; }
@@ -405,6 +405,14 @@ svg.ch, svg.mol, svg.en, svg.bk, svg.ions { width: 100%; height: auto; display: 
 .box { width: 30px; height: 30px; border: 1.5px solid var(--ink); margin-left: -1.5px; display: grid; place-items: center; font-size: 15px; letter-spacing: -3px; }
 .ptab { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; margin: 8px 0 14px; }
 .pcell { border-radius: 6px; padding: 4px 2px; text-align: center; background: color-mix(in srgb, var(--accent) calc(var(--v) * 85%), var(--surface)); border: 1px solid var(--line); font-size: 12px; line-height: 1.25; }
+.fpanel { margin: 10px 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); }
+.frow { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 6px 0; font-size: 16px; } .frow > b { font-family: var(--mono); }
+.fnum { flex-basis: 100%; font-family: var(--mono); font-size: 12.5px; color: var(--muted); overflow-wrap: anywhere; }
+.fv { cursor: pointer; font-weight: 700; } .fv-l, .fvt-l { color: #D9822B; fill: #D9822B; } .fv-n { color: #3A7BD5; } .fv-e { color: #9B59B6; }
+.fvl-l { stroke: #D9822B; } .card.fvc-n { border-color: #3A7BD5; } .card.fvc-e { border-color: #9B59B6; }
+.frow.fnew { padding: 4px 6px; border-radius: 6px; background: var(--good-soft); }
+.fsub { border: 1.5px dashed #3A7BD5; border-radius: 6px; background: none; padding: 0 6px; font: inherit; cursor: pointer; }
+.fflash { animation: fflash .9s; } @keyframes fflash { 0%, 60% { outline: 3px solid currentColor; outline-offset: 2px; opacity: .55; } 100% { outline: 0; opacity: 1; } }
 .uc-chain { font-size: 14px; line-height: 2.8; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); overflow-x: auto; }
 .uc-frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; font-family: var(--mono); font-size: 12px; line-height: 1.5; margin: 0 2px; }
 .uc-frac > span:first-child { border-bottom: 1.5px solid currentColor; padding: 0 4px; }

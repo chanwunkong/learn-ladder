@@ -253,7 +253,10 @@ W.wave = el => {
   const P = [['紫外光 250 nm', 250], ['紫光 410 nm', 410], ['鈉的黃光 589 nm', 589], ['氫的紅線 656 nm', 656], ['紅外光 1200 nm', 1200]];
   el.innerHTML = `<div class="w-row">${P.map(([t, v]) => `<button class="btn sm ghost" type="button" data-v="${v}">${t}</button>`).join('')}</div>
 <div class="w-row"><label class="rng">波長 λ<input type="range" id="wvR" min="200" max="1400" step="1"><output class="mono" id="wvO"></output></label></div>
-<div id="wvG"></div><div id="wvS"></div><div class="cards" id="wvK"></div><p class="note" id="wvN"></p>`;
+<div id="wvG"></div><div id="wvS"></div><div class="cards" id="wvK"></div><div class="fpanel" id="wvF"></div><p class="note" id="wvN"></p>`;
+  let sub = false;   // ② 裡的 ν 是否已經點過、代入成 c/λ
+  // 公式長在圖上（2026-11-07 使用者要求）：λ、ν、E 用同一個顏色對應圖、卡片與公式；數值跟著波長即時代入；③ 由讀者點 ν 推出來
+  const V = (k, t) => `<span class="fv fv-${k}" data-fv="${k}">${t}</span>`;
   function draw() {
     const col = nmRGB(nm), W0 = 600, H = 150, win = 3000;   // 畫面寬度代表 3000 nm
     let d = '';
@@ -262,7 +265,7 @@ W.wave = el => {
     $('#wvG', el).innerHTML = `<svg class="ch" viewBox="0 -16 ${W0} ${H + 46}" role="img" aria-label="波長 ${nm} nm 的波">
 <line class="ax" x1="0" x2="${W0}" y1="${H / 2}" y2="${H / 2}" stroke-dasharray="3 4"/>
 <path d="${d}" fill="none" stroke="${col || 'var(--muted)'}" stroke-width="3" ${col ? '' : 'stroke-dasharray="6 4"'}/>
-${x2 < W0 ? `<line class="mk" x1="${x1}" x2="${x2}" y1="${H / 2 - 62}" y2="${H / 2 - 62}"/><text class="tk" x="${(x1 + x2) / 2}" y="${H / 2 - 68}" text-anchor="middle">λ = ${nm} nm</text>` : ''}
+${x2 < W0 ? `<line class="mk fvl-l" data-fv="l" x1="${x1}" x2="${x2}" y1="${H / 2 - 62}" y2="${H / 2 - 62}"/><text class="tk fvt-l" x="${(x1 + x2) / 2}" y="${H / 2 - 68}" text-anchor="middle">λ = ${nm} nm</text>` : ''}
 <text class="tk" x="${W0 / 2}" y="${H + 22}" text-anchor="middle">同一段距離（3000 nm）裡有 ${crests} 個多波峰：波長越短，越密</text></svg>`;
     // 可見光色帶與目前位置
     const stops = Array.from({ length: 38 }, (_, i) => { const w = 380 + i * 10; return `<stop offset="${(i / 37 * 100).toFixed(1)}%" stop-color="${nmRGB(w)}"/>`; }).join('');
@@ -274,7 +277,17 @@ ${x2 < W0 ? `<line class="mk" x1="${x1}" x2="${x2}" y1="${H / 2 - 62}" y2="${H /
     const nu = 2.998e8 / (nm * 1e-9), E = 6.626e-34 * nu, Em = E * 6.022e23 / 1000;
     $('#wvO', el).textContent = `${nm} nm`;
     $('#wvK', el).innerHTML = card('c', '顏色', `<span style="display:inline-block;width:.9em;height:.9em;border-radius:3px;vertical-align:-.1em;margin-right:.3em;background:${col || 'transparent'};border:1px solid var(--line)"></span>${nmName(nm)}`)
-      + card('n', '頻率 ν = c ÷ λ', `${sci(nu, 3)} Hz`, '每秒通過的波峰數') + card('e', '一個光子 E = hν', `${sci(E, 3)} J`) + card('m', '一莫耳光子', `${fx(Em, 0)} kJ/mol`, `≈ 119,600 ÷ ${nm}`);
+      + card('n', '頻率 ν', `${sci(nu, 2)} Hz`, '每秒通過的波峰數') + card('e', '一個光子的能量 E', `${sci(E, 2)} J`) + card('m', '一莫耳光子', `${fx(Em, 0)} kJ/mol`, `≈ 119,600 ÷ ${nm}`);
+    $('[data-k="n"]', el).classList.add('fvc-n'); $('[data-k="e"]', el).classList.add('fvc-e');
+    const tg = (c, t) => `<span class="tg ${c}">${t}</span>`, lam = `${nm} × 10⁻⁹ m`;
+    $('#wvF', el).innerHTML = `<p class="lbl">這一節的公式（拖動波長，數值跟著變；點彩色的字母看它在圖上是哪裡）</p>
+<div class="frow"><b>① ${V('n', 'ν')} = c/${V('l', 'λ')}</b>${tg('derive', '會推')}<span class="fnum">= (3.00 × 10⁸ m/s) ÷ (${lam}) = ${sci(nu, 2)} Hz</span></div>
+<div class="frow"><b>② ${V('e', 'E')} = h × ${sub ? V('n', 'ν') : `<button type="button" class="fsub" id="wvSub">${V('n', 'ν')}</button>`}</b>${tg('must', '要背')}<span class="fnum">= (6.63 × 10⁻³⁴ J·s) × ${sci(nu, 2)} Hz = ${sci(E, 2)} J</span></div>
+${sub ? `<div class="frow fnew"><b>③ ${V('e', 'E')} = hc/${V('l', 'λ')}</b>${tg('derive', '會推')}<span class="fnum">= (6.63 × 10⁻³⁴ J·s)(3.00 × 10⁸ m/s) ÷ (${lam}) = ${sci(E, 2)} J</span></div>` : ''}
+<p class="small mut">${sub ? '把 ① 的 ν = c/λ 直接代入 ② 的 E = hν，就是 ③，沒有移項；兩種算法得到同一個 E。<button type="button" class="linkb" id="wvUn">再推一次</button>' : '③ 怎麼來？點 ② 裡虛線框的 ν，用 ① 代入。'}</p>`;
+    const sb = $('#wvSub', el); if (sb) sb.onclick = () => { sub = true; draw(); };
+    const un = $('#wvUn', el); if (un) un.onclick = () => { sub = false; draw(); };
+    $$('[data-fv]', $('#wvF', el)).forEach(f => { f.onmouseenter = f.onclick = () => { const k = f.dataset.fv, t = k === 'l' ? $$('.fvl-l, .fvt-l', el) : $$(`.fvc-${k}`, el); t.forEach(x => { x.classList.remove('fflash'); void x.getBBox; x.classList.add('fflash'); setTimeout(() => x.classList.remove('fflash'), 900); }); }; });
     $('#wvN', el).innerHTML = `波長變短一半，頻率和光子能量就變成兩倍。${nm < 400 ? '紫外光的光子能量（超過約 300 kJ/mol）已經和許多化學鍵的鍵能相當，所以能打斷鍵、曬傷皮膚。' : nm > 750 ? '紅外光的光子能量太小，不能讓電子躍遷，只能讓化學鍵振動（光譜一章的 IR）。' : '可見光的光子能量剛好讓某些分子的電子躍遷，所以物質才有顏色。'}`;
     $('#wvR', el).value = nm;
   }
@@ -475,8 +488,8 @@ const UC_CARDS = [
 ];
 const HC = { txt: 'h × c = (6.63 × 10⁻³⁴ J·s)(3.00 × 10⁸ m/s)', v: 6.626e-34 * 2.998e8, u: { J: 1, m: 1 }, gone: ['s'] };
 const UC_T = {
-  mol: { lab: '一莫耳光子：kJ·nm/mol', start: HC, goal: { kJ: 1, nm: 1, mol: -1 }, done: 'E（kJ/mol）× λ（nm）≈ 119,600' },
-  ev: { lab: '一個光子：eV·nm', start: HC, goal: { eV: 1, nm: 1 }, done: 'ΔE（eV）× λ（nm）≈ 1240' },
+  mol: { lab: '一莫耳光子：kJ·nm/mol', start: HC, goal: { kJ: 1, nm: 1, mol: -1 }, done: 'E（kJ/mol）≈ 119,600 ÷ λ（nm）' },
+  ev: { lab: '一個光子：eV·nm', start: HC, goal: { eV: 1, nm: 1 }, done: 'λ（nm）≈ 1240 ÷ ΔE（eV）' },
   evkj: { lab: '1 eV 是幾 kJ/mol', start: { txt: '1 eV（一個粒子的能量）', v: 1, u: { eV: 1 }, gone: [] }, goal: { kJ: 1, mol: -1 }, done: '1 eV（一個粒子）≈ 96.5 kJ/mol' },
 };
 const ucUnits = u => { const sup = n => (n === 1 ? '' : String(n).split('').map(c => SUP[c]).join('')), up = Object.keys(u).filter(k => u[k] > 0), dn = Object.keys(u).filter(k => u[k] < 0);
