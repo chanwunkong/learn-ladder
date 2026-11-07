@@ -693,9 +693,9 @@ W.isoavg = el => {
       d.map(([A, m, p]) => `<rect x="${X(m) - 16}" y="${Y(p)}" width="32" height="${Y(0) - Y(p)}" class="bv"/><text class="tk" x="${X(m)}" y="${Y(p) - 6}" text-anchor="middle">${supN(A)}${cur} ${p}%</text>`).join('')
       + `<line class="mk" x1="${X(avg)}" x2="${X(avg)}" y1="${Y(0)}" y2="${Y(100)}"/><circle class="dot" cx="${X(avg)}" cy="${Y(0)}" r="7"/><text class="tk hl" x="${X(avg)}" y="${Y(100) + 12}" text-anchor="middle">平均 ${fx(avg, 2)}</text>`);
     $('#iaF', el).innerHTML = `平均原子量 = ${d.map(([, m, p]) => `${m} × ${fx(p / 100, 4)}`).join(' + ')} = <b>${fx(avg, 2)}</b>`;
-    $('#iaN', el).innerHTML = `長條的高度是豐度、位置是質量；平均原子量是以豐度加權的「重心」（紅色虛線），會偏向豐度較高的同位素。質譜中 ${cur} 會出現 ${d.length} 個峰，高度比約 ${d.map(x => Math.round(x[2])).join(' : ')}。`;
+    $('#iaN', el).innerHTML = `長條的高度是豐度、位置是質量；平均原子量是以豐度加權的「重心」（紅色虛線），會偏向豐度較高的同位素。質譜儀量 ${cur} 會出現 ${d.length} 個訊號，高度比約 ${d.map(x => Math.round(x[2])).join(' : ')}。`;
     $('#iaR', el).value = a1; $('#iaO', el).textContent = `${fx(a1, 1)}%`;
-    if (ab != null) $('#iaN', el).innerHTML += ` 拖動豐度時，平均值跟著往豐度較高的那一邊移動；天然的 ${cur} 原子量是 ${fx(nat.reduce((a, [, m, p]) => a + m * p / 100, 0), 2)}。反過來，已知平均原子量求豐度：設較輕的佔 x，解 m₁x + m₂(1 − x) = 平均值。`;
+    if (ab != null) $('#iaN', el).innerHTML += ` 拖動豐度時，平均值跟著往豐度較高的那一邊移動；天然的 ${cur} 原子量是 ${fx(nat.reduce((a, [, m, p]) => a + m * p / 100, 0), 2)}。`;
     pressSeg(el, 'iaS', cur);
   }
   $('#iaR', el).oninput = e => { ab = +e.target.value; draw(); };
