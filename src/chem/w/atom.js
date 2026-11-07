@@ -253,10 +253,8 @@ W.wave = el => {
   const P = [['紫外光 250 nm', 250], ['紫光 410 nm', 410], ['鈉的黃光 589 nm', 589], ['氫的紅線 656 nm', 656], ['紅外光 1200 nm', 1200]];
   el.innerHTML = `<div class="w-row">${P.map(([t, v]) => `<button class="btn sm ghost" type="button" data-v="${v}">${t}</button>`).join('')}</div>
 <div class="w-row"><label class="rng">波長 λ<input type="range" id="wvR" min="200" max="1400" step="1"><output class="mono" id="wvO"></output></label></div>
-<div id="wvG"></div><div id="wvS"></div><div class="cards" id="wvK"></div><div class="fpanel" id="wvF"></div><p class="note" id="wvN"></p>`;
-  let sub = false;   // ② 裡的 ν 是否已經點過、代入成 c/λ
-  // 公式長在圖上（2026-11-07 使用者要求）：λ、ν、E 用同一個顏色對應圖、卡片與公式；數值跟著波長即時代入；③ 由讀者點 ν 推出來
-  const V = (k, t) => `<span class="fv fv-${k}" data-fv="${k}">${t}</span>`;
+<div id="wvG"></div><div id="wvS"></div><p class="eq" id="wvF"></p><p class="note" id="wvN"></p>`;
+  // 第 2 節第一張圖只看波長、顏色和頻率；光子能量等課文講到光電效應之後才出現（2026-11-07 使用者：講解要一句承接一句）
   function draw() {
     const col = nmRGB(nm), W0 = 600, H = 150, win = 3000;   // 畫面寬度代表 3000 nm
     let d = '';
@@ -264,31 +262,19 @@ W.wave = el => {
     const crests = Math.floor(win / nm), x1 = 60 + W0 * (nm / 4) / win, x2 = x1 + W0 * nm / win;
     $('#wvG', el).innerHTML = `<svg class="ch" viewBox="0 -16 ${W0} ${H + 46}" role="img" aria-label="波長 ${nm} nm 的波">
 <line class="ax" x1="0" x2="${W0}" y1="${H / 2}" y2="${H / 2}" stroke-dasharray="3 4"/>
-<path d="${d}" fill="none" stroke="${col || 'var(--muted)'}" stroke-width="3" ${col ? '' : 'stroke-dasharray="6 4"'}/>
-${x2 < W0 ? `<line class="mk fvl-l" data-fv="l" x1="${x1}" x2="${x2}" y1="${H / 2 - 62}" y2="${H / 2 - 62}"/><text class="tk fvt-l" x="${(x1 + x2) / 2}" y="${H / 2 - 68}" text-anchor="middle">λ = ${nm} nm</text>` : ''}
+<path d="${d}" fill="none" stroke="${col || 'var(--muted)'}" stroke-width="3" ${col ? '' : 'stroke-dasharray="6 4"'} data-cur="波"/>
+${x2 < W0 ? `<line class="mk" x1="${x1}" x2="${x2}" y1="${H / 2 - 62}" y2="${H / 2 - 62}"/><text class="tk" x="${(x1 + x2) / 2}" y="${H / 2 - 68}" text-anchor="middle">λ = ${nm} nm</text>` : ''}
 <text class="tk" x="${W0 / 2}" y="${H + 22}" text-anchor="middle">同一段距離（3000 nm）裡有 ${crests} 個多波峰：波長越短，越密</text></svg>`;
-    // 可見光色帶與目前位置
     const stops = Array.from({ length: 38 }, (_, i) => { const w = 380 + i * 10; return `<stop offset="${(i / 37 * 100).toFixed(1)}%" stop-color="${nmRGB(w)}"/>`; }).join('');
     const sx = v => 40 + (v - 200) / 1200 * 520;
-    $('#wvS', el).innerHTML = `<svg class="ch" viewBox="0 0 600 46" role="img" aria-label="可見光範圍與目前波長"><defs><linearGradient id="wvGr">${stops}</linearGradient></defs>
+    $('#wvS', el).innerHTML = `<svg class="ch" viewBox="0 0 600 62" role="img" aria-label="可見光範圍與目前波長"><defs><linearGradient id="wvGr">${stops}</linearGradient></defs>
 <rect x="${sx(200)}" y="8" width="${sx(380) - sx(200)}" height="16" fill="var(--sunk)"/><rect x="${sx(380)}" y="8" width="${sx(750) - sx(380)}" height="16" fill="url(#wvGr)"/><rect x="${sx(750)}" y="8" width="${sx(1400) - sx(750)}" height="16" fill="var(--sunk)"/>
 <text class="tk" x="${sx(290)}" y="40" text-anchor="middle">紫外光</text><text class="tk" x="${sx(565)}" y="40" text-anchor="middle">可見光</text><text class="tk" x="${sx(1075)}" y="40" text-anchor="middle">紅外光</text>
-<path d="M${sx(nm)},4 l-6,-6 h12 z" class="dot"/><line class="mk" x1="${sx(nm)}" x2="${sx(nm)}" y1="4" y2="28"/></svg>`;
-    const nu = 2.998e8 / (nm * 1e-9), E = 6.626e-34 * nu, Em = E * 6.022e23 / 1000;
+<path d="M${sx(nm)},4 l-6,-6 h12 z" class="dot"/><line class="mk" x1="${sx(nm)}" x2="${sx(nm)}" y1="4" y2="28"/><text class="tk hl" x="${sx(nm)}" y="58" text-anchor="${sx(nm) < 140 ? 'start' : sx(nm) > 460 ? 'end' : 'middle'}">現在：${nmName(nm)}</text></svg>`;
+    const nu = 2.998e8 / (nm * 1e-9);
     $('#wvO', el).textContent = `${nm} nm`;
-    $('#wvK', el).innerHTML = card('c', '顏色', `<span style="display:inline-block;width:.9em;height:.9em;border-radius:3px;vertical-align:-.1em;margin-right:.3em;background:${col || 'transparent'};border:1px solid var(--line)"></span>${nmName(nm)}`)
-      + card('n', '頻率 ν', `${sci(nu, 2)} Hz`, '每秒通過的波峰數') + card('e', '一個光子的能量 E', `${sci(E, 2)} J`) + card('m', '一莫耳光子', `${fx(Em, 0)} kJ/mol`, `≈ 119,600 ÷ ${nm}`);
-    $('[data-k="n"]', el).classList.add('fvc-n'); $('[data-k="e"]', el).classList.add('fvc-e');
-    const tg = (c, t) => `<span class="tg ${c}">${t}</span>`, lam = `${nm} × 10⁻⁹ m`;
-    $('#wvF', el).innerHTML = `<p class="lbl">這一節的公式（拖動波長，數值跟著變；點彩色的字母看它在圖上是哪裡）</p>
-<div class="frow"><b>① ${V('n', 'ν')} = c/${V('l', 'λ')}</b>${tg('derive', '會推')}<span class="fnum">= (3.00 × 10⁸ m/s) ÷ (${lam}) = ${sci(nu, 2)} Hz</span></div>
-<div class="frow"><b>② ${V('e', 'E')} = h × ${sub ? V('n', 'ν') : `<button type="button" class="fsub" id="wvSub">${V('n', 'ν')}</button>`}</b>${tg('must', '要背')}<span class="fnum">= (6.63 × 10⁻³⁴ J·s) × ${sci(nu, 2)} Hz = ${sci(E, 2)} J</span></div>
-${sub ? `<div class="frow fnew"><b>③ ${V('e', 'E')} = hc/${V('l', 'λ')}</b>${tg('derive', '會推')}<span class="fnum">= (6.63 × 10⁻³⁴ J·s)(3.00 × 10⁸ m/s) ÷ (${lam}) = ${sci(E, 2)} J</span></div>` : ''}
-<p class="small mut">${sub ? '把 ① 的 ν = c/λ 直接代入 ② 的 E = hν，就是 ③，沒有移項；兩種算法得到同一個 E。<button type="button" class="linkb" id="wvUn">再推一次</button>' : '③ 怎麼來？點 ② 裡虛線框的 ν，用 ① 代入。'}</p>`;
-    const sb = $('#wvSub', el); if (sb) sb.onclick = () => { sub = true; draw(); };
-    const un = $('#wvUn', el); if (un) un.onclick = () => { sub = false; draw(); };
-    $$('[data-fv]', $('#wvF', el)).forEach(f => { f.onmouseenter = f.onclick = () => { const k = f.dataset.fv, t = k === 'l' ? $$('.fvl-l, .fvt-l', el) : $$(`.fvc-${k}`, el); t.forEach(x => { x.classList.remove('fflash'); void x.getBBox; x.classList.add('fflash'); setTimeout(() => x.classList.remove('fflash'), 900); }); }; });
-    $('#wvN', el).innerHTML = `波長變短一半，頻率和光子能量就變成兩倍。${nm < 400 ? '紫外光的光子能量（超過約 300 kJ/mol）已經和許多化學鍵的鍵能相當，所以能打斷鍵、曬傷皮膚。' : nm > 750 ? '紅外光的光子能量太小，不能讓電子躍遷，只能讓化學鍵振動（光譜一章的 IR）。' : '可見光的光子能量剛好讓某些分子的電子躍遷，所以物質才有顏色。'}`;
+    $('#wvF', el).innerHTML = `頻率 ν = c/λ = (3.00 × 10⁸ m/s) ÷ (${nm} × 10⁻⁹ m) ≈ <b>${sci(nu, 2)} Hz</b>：每秒通過這麼多個波峰`;
+    $('#wvN', el).innerHTML = `波長變短一半，頻率就變兩倍。人眼只看得到約 380–750 nm（可見光），比紫光短的是紫外光，比紅光長的是紅外光。`;
     $('#wvR', el).value = nm;
   }
   $('#wvR', el).oninput = e => { nm = +e.target.value; draw(); };
@@ -428,6 +414,27 @@ W.eaff = el => {
 
 /* ===== 6. 電磁波譜：λ、ν、E 與每莫耳能量 ===== */
 const EMR = [['γ 射線', -14, -11, '#7a5cff', 0], ['X 射線', -11, -8, '#6a6ad8', 1], ['紫外光', -8, -6.42, '#8a4cff', 0], ['可見光', -6.42, -6.12, '#2fbf5f', 1], ['紅外光', -6.12, -3, '#e2403a', 0], ['微波', -3, 0, '#c87a3a', 1], ['無線電波', 0, 3, '#9a8a6a', 0]];
+// 第 2 節：光電效應（觀察）：顏色決定電子飛不飛得出來，亮度只決定飛出幾個；金屬用鈉（約 2.3 eV，波長短於約 540 nm 才打得出）
+W.photoel = el => {
+  const st = { nm: 650, n: 3 }, C = [['紅光 650 nm', 650], ['綠光 520 nm', 520], ['紫光 410 nm', 410], ['紫外光 250 nm', 250]];
+  el.innerHTML = `${ctl('光的顏色', seg('peC', C.map(([t, v]) => [String(v), t]), '650'))}${ctl('亮度', seg('peB', [['3', '暗'], ['9', '很亮']], '3'))}<div id="peG"></div><p class="note" id="peN"></p>`;
+  function draw() {
+    const ok = st.nm < 540, col = nmRGB(st.nm) || '#8E5BD6', ys = Array.from({ length: st.n }, (_, i) => 40 + i * (150 / st.n));
+    const ph = ys.map(y => `<path d="${path(Array.from({ length: 41 }, (_, k) => [40 + k * 4.5, y + 7 * Math.sin(k * 0.9)]))}" fill="none" stroke="${col}" stroke-width="2.5"/><path d="M225 ${y} l-9 -5 v10 z" fill="${col}"/>`).join('');
+    const ex = ok ? ys.map((y, i) => `<line x1="300" y1="${y + 6}" x2="${400 + (i % 3) * 30}" y2="${y - 18 + (i % 2) * 10}" stroke="var(--muted)" stroke-dasharray="3 3"/><circle cx="${400 + (i % 3) * 30}" cy="${y - 18 + (i % 2) * 10}" r="6" fill="#3A7BD5" data-cur="飛出的電子"/>`).join('') : '';
+    $('#peG', el).innerHTML = `<svg viewBox="0 0 520 210" class="ch" role="img" aria-label="光照在金屬上">
+<rect x="240" y="20" width="56" height="175" rx="4" fill="var(--sunk)" stroke="var(--line)"/><text class="tk sm" x="268" y="205" text-anchor="middle">金屬（鈉）</text>
+${ph}${ex}${ok ? '' : Array.from({ length: 4 }, (_, i) => `<circle cx="262" cy="${50 + i * 38}" r="5" fill="#3A7BD5" opacity=".7"/>`).join('')}
+<text class="tk ${ok ? 'hl' : 'bad'}" x="420" y="200" text-anchor="middle">${ok ? `飛出 ${st.n} 個電子` : '一個電子也沒有飛出來'}</text></svg>`;
+    $('#peN', el).innerHTML = ok ? `${st.nm < 400 ? '紫外光' : '這個顏色'}照上去，電子馬上飛出來；${st.n > 3 ? '調亮之後飛出的電子變多了。' : '調亮看看：電子會變多。'}換成紅光試試。`
+      : `${st.n > 3 ? '已經調到很亮，' : ''}還是一個電子也打不出來。${st.n > 3 ? '亮度沒有用，換一個顏色試試。' : '把亮度調高看看。'}`;
+    pressSeg(el, 'peC', String(st.nm)); pressSeg(el, 'peB', String(st.n));
+  }
+  bindSeg(el, 'peC', v => { st.nm = +v; draw(); });
+  bindSeg(el, 'peB', v => { st.n = +v; draw(); });
+  draw();
+  return { set(s2) { Object.assign(st, s2); draw(); } };
+};
 W.emspec = el => {
   let lg = Math.log10(240e-9);
   const P = [['O₂ 解離（498 kJ/mol）', 240e-9], ['300 nm 紫外光', 300e-9], ['鈉的黃光 589 nm', 589e-9], ['X 光 0.1 nm', 1e-10], ['微波爐 12 cm', 0.12], ['FM 廣播 3 m', 3]];
@@ -439,9 +446,10 @@ W.emspec = el => {
       + `<line class="mk" x1="${X(lg)}" x2="${X(lg)}" y1="${Y(0)}" y2="${Y(0.62)}"/><circle class="dot" cx="${X(lg)}" cy="${Y(0.31)}" r="7"/>`);
     const ls = l >= 1 ? `${fx(l, 2)} m` : l >= 1e-3 ? `${fx(l * 100, 1)} cm` : `${sci(l * 1e9, 3)} nm`;
     $('#emO', el).textContent = ls;
-    $('#emF', el).innerHTML = `E = hν = hc/λ = (6.626×10⁻³⁴)(2.998×10⁸) ÷ λ = <b>${sci(E, 3)} J</b>（一個光子）　× Nₐ ＝ <b>${sci(Em, 3)} kJ/mol</b>`;
-    $('#emK', el).innerHTML = card('l', '波長 λ', ls) + card('n', '頻率 ν = c/λ', `${sci(nu, 2)} Hz`) + card('e', '每莫耳光子（kJ/mol）', sci(Em, 3)) + card('r', '區域', reg[0]);
-    $('#emN', el).innerHTML = `波長和頻率成反比，能量和頻率成正比：<b>波長越短，能量越高</b>。由長到短：無線電波 &gt; 微波 &gt; 紅外光 &gt; 可見光（紅 → 紫）&gt; 紫外光 &gt; X 射線 &gt; γ 射線。常用換算：E（kJ/mol）≈ 119,600 ÷ λ（nm）。要打斷一莫耳 O=O 鍵需要 498 kJ，對應的光子最長波長約 240 nm（紫外光）。`;
+    $('#emF', el).innerHTML = `一莫耳光子：E（kJ/mol）≈ 119,600 ÷ λ（nm）≈ <b>${sci(Em, 3)} kJ/mol</b>`;
+    $('#emK', el).innerHTML = card('l', '波長 λ', ls) + card('r', '區域', reg[0]) + card('e', '一莫耳光子（kJ/mol）', sci(Em, 3));
+    const BONDS = [['Cl–Cl', 243], ['C–C', 348], ['H–H', 436], ['O=O', 498]];
+    $('#emN', el).innerHTML = `<b>和化學鍵比</b>（打斷一莫耳鍵需要的能量）：${BONDS.map(([b, e]) => `${b} ${e}：${Em >= e ? '<b class="r-ok">打得斷</b>' : '<span class="mut">打不斷</span>'}（最長 ${fx(119600 / e, 0)} nm）`).join('；')}。波長越短、能量越高；由長到短：無線電波 &gt; 微波 &gt; 紅外光 &gt; 可見光 &gt; 紫外光 &gt; X 射線 &gt; γ 射線。`;
     $('#emR', el).value = lg;
   }
   $('#emR', el).oninput = e => { lg = +e.target.value; draw(); };
