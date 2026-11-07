@@ -183,7 +183,7 @@ function stepRule(Z, cf, o) {
 }
 
 W.atom3d = el => {
-  const st = { Z: 1, q: 0, phase: 1 };
+  const st = { Z: 1, q: 0 };
   el.innerHTML = `<div class="w-row"><button class="btn sm" type="button" data-d="-1">－ 拿走一個電子</button><button class="btn sm pri" type="button" data-d="1">＋ 加一個電子</button></div>
 <div class="w-row"><label class="rng">原子序 Z<input type="range" id="a3Z" min="1" max="86" step="1"><output class="mono" id="a3O"></output></label></div>
 ${ctl('電荷', seg('a3Q', [['-2', '−2'], ['-1', '−1'], ['0', '中性'], ['1', '+1'], ['2', '+2'], ['3', '+3']], '0'))}
@@ -191,7 +191,6 @@ ${ctl('電荷', seg('a3Q', [['-2', '−2'], ['-1', '−1'], ['0', '中性'], ['1
 <p class="eq" id="a3S"></p><p class="note" id="a3N"></p>
 <div class="a3grid"><div id="a3M"></div><div id="a3B"></div></div><div id="a3X"></div>`;   // 組態與說明放在按鈕正下方：按「加一個電子」時不用捲動就看得到（2026-11-07 使用者要求）
   const sup = n => String(n).split('').map(c => SUP[c]).join(''), DEXC = Object.keys(EXC).map(Number).filter(z => ![57, 58, 64].includes(z));
-  let timer = 0;
   // 填的狀態 → 立體顏色：空＝淡灰半透明、一個電子＝淺色、兩個電子＝深色；剛變化的最清楚，其他淡一點
   const tint = (h, f) => '#' + [1, 3, 5].map(i => Math.round(parseInt(h.slice(i, i + 2), 16) * (1 - f) + 255 * f).toString(16).padStart(2, '0')).join('');
   // s 球包在其他形狀外面，一定半透明；p、d 剛變化的最清楚
@@ -210,16 +209,15 @@ ${ctl('電荷', seg('a3Q', [['-2', '−2'], ['-1', '−1'], ['0', '中性'], ['1
     $('#a3C', el).textContent = (coreName ? `中間灰色的球＝內層 [${coreName}]。` : '') + '左右拖動可以旋轉。';
   }
   function draw() {
-    clearTimeout(timer);
-    const { Z, q } = st, isExc = q === 0 && DEXC.includes(Z), cf = isExc && st.phase === 1 ? econfAuf(Z) : econf(Z, q);
-    const prev = Object.fromEntries(isExc && st.phase === 2 ? econfAuf(Z) : q > 0 ? econf(Z, q - 1) : q < 0 ? econf(Z, q + 1) : Z > 1 ? econf(Z - 1) : []);
+    const { Z, q } = st, isExc = q === 0 && DEXC.includes(Z), cf = econf(Z, q);
+    const prev = Object.fromEntries(q > 0 ? econf(Z, q - 1) : q < 0 ? econf(Z, q + 1) : Z > 1 ? econf(Z - 1) : []);
     const ne = Z - q, core = Z > 10 ? CORES.find(([n]) => n < ne && econf(n).every(([o, k]) => (cf.find(x => x[0] === o) || [0, 0])[1] === k)) : null, coreOrb = core ? econf(core[0]).map(x => x[0]) : [];
     const subs = valenceSet(Z, coreOrb), val = cf.filter(([o, k]) => !coreOrb.includes(o) && k > 0);
     model(Z, cf, prev, core && core[1], coreOrb, subs);
     $('#a3B', el).innerHTML = `<p class="lbl">軌域圖：越上面能量越高${Z >= 19 ? '；s 和 d 幾乎一樣高' : ''}</p>` + orbitalChart('m', cf, subs).svg;
     $('#a3O', el).textContent = `${Z}　${ELEM[Z - 1]}（${ENAME[Z - 1]}）`; $('#a3Z', el).value = Z;
     const nm = `${ELEM[Z - 1]}${q ? (Math.abs(q) > 1 ? sup(Math.abs(q)) : '') + (q > 0 ? '⁺' : '⁻') : ''}`;
-    $('#a3S', el).innerHTML = `${nm}：${core ? `<b>[${core[1]}]</b> ` : ''}${val.map(([o, k]) => `${o}${sup(k)}`).join(' ')}${isExc && st.phase === 1 ? '　<span class="mut small">（照順序寫的，等一下會變）</span>' : ''}`;
+    $('#a3S', el).innerHTML = `${nm}：${core ? `<b>[${core[1]}]</b> ` : ''}${val.map(([o, k]) => `${o}${sup(k)}`).join(' ')}`;
     // 例外：照順序 vs 實際，兩張軌域圖並排；原因畫在圖上（搬動的箭頭、同方向電子的連線、成對的排斥）
     if (isExc) {
       const a = econfAuf(Z), b = econf(Z), sv = subs.filter(o => o[1] === 's' || o[1] === 'd'), so = sv.find(o => o[1] === 's'), dd = sv.find(o => o[1] === 'd');
@@ -227,25 +225,24 @@ ${ctl('電荷', seg('a3Q', [['-2', '−2'], ['-1', '−1'], ['0', '中性'], ['1
       const s2a = (Object.fromEntries(a)[so] || 0) === 2, s2b = (Object.fromEntries(b)[so] || 0) === 2;
       $('#a3X', el).innerHTML = `<div class="xcmp"><div><p class="lbl">照順序：${sv.map(o => o + sup(Object.fromEntries(a)[o] || 0)).join(' ')}</p>${A.svg}<p class="small">同方向的連線 <b>${A.links}</b> 條${s2a ? '；s 擠兩個，<span class="redt">互相排斥</span>' : ''}</p></div>
 <div><p class="lbl">實際：${sv.map(o => o + sup(Object.fromEntries(b)[o] || 0)).join(' ')}</p>${B.svg}<p class="small">同方向的連線 <b>${B.links}</b> 條${s2b ? '' : '；s 沒有擠在一起'}</p></div></div>
-<p class="note">s 和 d 幾乎一樣高，電子從 s 搬到 d 幾乎不用付出能量；換來的是同方向的連線從 ${A.links} 條變 ${B.links} 條（同方向的電子可以互換位置，越多越穩定，稱為交換能）${s2a && !s2b ? '，s 也不用兩個擠在一格' : ''}。得到的比付出的多，所以實際是右邊。${st.phase === 2 ? ' <button class="btn sm" type="button" id="a3R">再看一次</button>' : ''}</p>`;
-      const r = $('#a3R', el); if (r) r.onclick = () => { st.phase = 1; draw(); };
-      if (st.phase === 1) timer = setTimeout(() => { st.phase = 2; draw(); }, 1300);
+<p class="note">搬一個電子，同方向的連線多 ${B.links - A.links} 條${s2a && !s2b ? '，s 不再擠兩個' : ''}；實際是右邊。</p>`;
     } else $('#a3X', el).innerHTML = '';
     const nw = val.filter(([o, k]) => k !== (prev[o] || 0)).map(([o]) => o), shp = { s: '球', p: '啞鈴', d: '四葉草', f: '多瓣' };
     const iso = CORES.find(([n]) => n === ne);   // 和鈍氣等電子
     $('#a3N', el).innerHTML = (q > 0 ? `${nm}：拿走能量最高的電子。${Z >= 21 && Z <= 30 ? '3d 填了電子後在 4s 下面，所以先拿 4s（變虛線）。' : ''}`
       : q < 0 ? `${nm}：多出的 ${-q} 個電子照同樣規則填。${iso && iso[1] ? `現在 ${ne} 個電子，和 ${iso[1]} 等電子，所以很常見。` : '常見的陰離子是右邊的非金屬（F⁻、O²⁻、Cl⁻、S²⁻），補幾個電子就和鈍氣一樣。'}`
-      : `${nw.length ? `第 ${Z} 個電子放進 <b>${nw.join('、')}</b>。` : ''}${isExc ? '' : stepRule(Z, cf, nw[0])}`)
+      : isExc ? `${nm}：照順序是 ${econfAuf(Z).filter(([o]) => !coreOrb.includes(o)).map(([o, k]) => o + sup(k)).join(' ')}，實際是 ${val.map(([o, k]) => o + sup(k)).join(' ')}。`
+      : `${nw.length ? `第 ${Z} 個電子放進 <b>${nw.join('、')}</b>。` : ''}${stepRule(Z, cf, nw[0])}`)
       + (core ? ` 灰球是內層 [${core[1]}]。` : '')
             + ([57, 58, 64].includes(Z) ? ' 鑭系有少數例外（La、Ce、Gd），不用記。' : '');
     pressSeg(el, 'a3Q', String(q));
   }
-  const setZ = z => { st.Z = Math.max(1, Math.min(86, z)); st.q = 0; st.phase = 1; draw(); };
+  const setZ = z => { st.Z = Math.max(1, Math.min(86, z)); st.q = 0; draw(); };
   $$('[data-d]', el).forEach(b => { b.onclick = () => setZ(st.Z + +b.dataset.d); });
   $('#a3Z', el).oninput = e => setZ(+e.target.value);
-  bindSeg(el, 'a3Q', v => { st.q = Math.min(+v, st.Z - 1); st.phase = 2; draw(); });
+  bindSeg(el, 'a3Q', v => { st.q = Math.min(+v, st.Z - 1); draw(); });
   draw();
-  return { set(s2) { Object.assign(st, s2, { phase: 1 }); draw(); } };
+  return { set(s2) { Object.assign(st, s2); draw(); } };
 };
 
 /* ===== 第 7 節：游離能的凹陷（Be／B、N／O、Mg／Al、P／S）：並排的軌域圖，標出被拿走的電子 ===== */
@@ -271,22 +268,23 @@ W.iedip = el => {
 W.excmap = el => {
   const ROWS = [[21, 30], [39, 48], [57, 57, 72, 80]].map(r => r.length === 2 ? Array.from({ length: 10 }, (_, i) => r[0] + i) : [57, ...Array.from({ length: 9 }, (_, i) => 72 + i)]);
   const KIND = { 24: 'half', 42: 'half', 29: 'full', 47: 'full', 79: 'full', 46: 'pd', 74: 'not' };
-  const TAG = { half: 'd⁵s¹ 半滿', full: 'd¹⁰s¹ 全滿', pd: 'd¹⁰，s 空', not: '不是例外' };
+  // 搬一個 s 電子到 d，同方向的連線多幾條（第 4 週期只標出最多的 Cr、Cu 和差一點的 V、Ni）
+  const GAIN = { 23: 3, 24: 4, 28: 3, 29: 4 };
   const st = { Z: 24 };
   el.innerHTML = `<p class="legend3"><span class="xk half">d⁵s¹（d 半滿）</span><span class="xk full">d¹⁰s¹（d 全滿）</span><span class="xk pd">Pd：4d¹⁰</span><span class="xk not">W：不是例外</span></p>
 <div class="xmap"><span></span>${[3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(g => `<span class="xg">${g}</span>`).join('')}
-${ROWS.map((r, i) => `<span class="xg">${i + 4}</span>` + r.map(Z => `<button type="button" class="xc ${KIND[Z] || ''}" data-z="${Z}">${ELEM[Z - 1]}</button>`).join('')).join('')}</div>
-<p class="small mut">上排是族，左邊是週期。點一格看它的組態。</p><p class="note" id="xmN"></p>`;
+${ROWS.map((r, i) => `<span class="xg">${i + 4}</span>` + r.map(Z => `<button type="button" class="xc ${KIND[Z] || ''}" data-z="${Z}">${ELEM[Z - 1]}${GAIN[Z] ? `<small> +${GAIN[Z]}</small>` : ''}</button>`).join('')).join('')}</div>
+<p class="small mut">上排是族，左邊是週期；+數字是搬一個電子後，同方向的連線多幾條。點一格看它的組態。</p><p class="note" id="xmN"></p>`;
   // 只列價層：ns 與 (n−1)d
   const val = (cf, n) => cf.filter(([o]) => o === `${n - 1}d` || o === `${n}s`).sort((x, y) => +x[0][0] - +y[0][0]).map(([o, k]) => `${o}${String(k).split('').map(c => SUP[c]).join('')}`).join(' ') || '—';
   function draw() {
     const Z = st.Z, n = Z > 54 ? 6 : Z > 36 ? 5 : 4, k = KIND[Z], a = val(econfAuf(Z), n), b = val(econf(Z), n), name = `${ELEM[Z - 1]}（${ENAME[Z - 1]}）`;
     $$('.xc', el).forEach(c => { const on = +c.dataset.z === Z; c.setAttribute('aria-pressed', on); if (on) c.dataset.cur = name; else delete c.dataset.cur; });
     $('#xmN', el).innerHTML = k === 'half' || k === 'full' || k === 'pd'
-      ? `<b>${name}</b>：照順序應該是 ${a}，實際是 <b>${b}</b>。${k === 'half' ? 'd 補成半滿（五格各一個、方向相同）比較穩定，而且這一週期 s 和 d 夠接近，搬一個電子划算。' : k === 'full' ? `d 補成全滿比較穩定。全滿的好處比半滿大${Z === 79 ? '，連第 6 週期 6s 和 5d 差距較大都還划算（W 就不划算）' : ''}。` : '第 5 週期的 4d 大、不擠，而且這時 4d 已經比 5s 低，兩個 5s 電子都搬進去：4d 全滿、5s 也不用兩個擠一格。同族的 Ni 的 3d 太擠，照順序是 3d⁸4s²。'}${Z === 24 || Z === 29 ? ` <button class="btn sm" type="button" id="xmGo">在加電子的圖看 ${ELEM[Z - 1]} 怎麼搬</button>` : ''}`
-      : k === 'not' ? `<b>${name}</b>：${b}，照順序填，<b>不是例外</b>。第 6 週期的 6s 被原子核拉得特別低，和 5d 差距變大；半滿的好處付不起搬電子的代價，所以不搬。同族的 Cr、Mo 是 d⁵s¹，到 W 就不是了，不能用「同族都一樣」去推。`
+      ? `<b>${name}</b>：照順序應該是 ${a}，實際是 <b>${b}</b>。${k === 'pd' ? '4d 已經比 5s 低，兩個 5s 電子都搬進去，4d 全滿。' : `搬一個電子把 d 補成${k === 'half' ? '半滿' : '全滿'}，同方向的連線多 4 條，好處大於代價。`}${Z === 24 || Z === 29 ? ` <button class="btn sm" type="button" id="xmGo">在加電子的圖看 ${ELEM[Z - 1]} 怎麼搬</button>` : ''}`
+      : k === 'not' ? `<b>${name}</b>：${b}，照順序填，<b>不是例外</b>。6s 被原子核拉得特別低，和 5d 差距變大，多 4 條連線也付不起。`
       : a !== b ? `<b>${name}</b>：照順序是 ${a}，實際是 ${b}。第五、六週期還有幾個這種不規則的，不用記。`
-      : Z === 28 ? `<b>${name}</b>：${b}，照順序填。3d 很小、很擠，再把 4s 的電子塞進 3d 排斥太大，所以不像同族的 Pd 那樣搬。`
+      : GAIN[Z] ? `<b>${name}</b>：${b}，照順序填。搬一個電子只多 3 條連線，付不起代價。`
       : `<b>${name}</b>：${b}，照順序填，沒有例外。`;
     // 跳到加電子的圖：對齊圖的上緣（按鈕和說明在上面），扣掉固定的頁首
     const go = $('#xmGo', el); if (go) go.onclick = () => { const it = INST.atom3d; if (!it) return; it.inst.set({ Z, q: 0 }); scrollTo({ top: it.el.getBoundingClientRect().top + scrollY - $('.top').offsetHeight - 8, behavior: 'smooth' }); };

@@ -268,6 +268,7 @@ atom|1nli7z7	下列哪一個實驗證實電子具有波的性質？
 atom|11dsta	下列哪一組量子數不可能存在？
 atom|8t056i	4d 軌域有幾個角節面（節面）？
 atom|zssgfa	Cu（Z = 29）的基態電子組態為？
+atom|4vd47g	Fe²⁺（Fe 的 Z = 26）的電子組態為？
 atom|17dkauz	第二週期中，為什麼 O 的第一游離能比 N 低？
 atom|m8gcmn	下列等電子離子半徑由大到小何者正確？
 atom|pm5tea	某元素的連續游離能為 738、1451、7733、10543 kJ/mol，它屬
