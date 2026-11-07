@@ -165,13 +165,32 @@ function orbitalChart(id, cf, subs, opts = {}) {
 }
 
 /* ===== 第 6 節：原子模型＋軌域圖 ===== */
+// 加電子這一步用到哪一條規則：說明放在軌域圖正下方，操作時看得到（2026-11-07 使用者要求）
+function stepRule(Z, cf, o) {
+  const base = '電子放進能量最低、還有空位的軌域。';
+  if (!o) return base;
+  const n = +o[0], t = o[1], k = Object.fromEntries(cf)[o], per = MORB[t];
+  if (Z === 1) return base + '能量最低的是 1s。';
+  if (Z === 2) return '<b>每個軌域最多兩個電子，而且自旋相反</b>（↑↓，包立不相容原理）：第二個電子放進 1s，淺色變深色。1s 滿了，下一個電子要往上一層。';
+  if (t === 's' && k === 1 && n >= 4) return `<b>為什麼先放 ${n}s，不放 ${n - 1}d？</b>n + ℓ 小的先填：${n}s 是 ${n} + 0 = ${n}，${n - 1}d 是 ${n - 1} + 2 = ${n + 1}，所以 ${n}s 先填（軌域圖上空的 ${n - 1}d 畫在 ${n}s 上面一點）。順序就是上面那張對角線圖。`;
+  if (t === 's' && k === 1) return base + `${n - 1 > 0 ? `第 ${n - 1} 層滿了，` : ''}往上一層放 ${n}s。`;
+  if (t === 's') return `${n}s 第二個電子，自旋和第一個相反（↑↓，包立不相容原理）。`;
+  if (t === 'p' && k === 1) return `${n}s 滿了才放 ${n}p：<b>同一層裡 s 比 p 低</b>（s 電子有一部分很靠近原子核，第 5 節的徑向分布圖上那個靠近原子核的小峰，被抓得比較緊）。`;
+  if (t === 'd' && k === 1) return `${n + 1}s 滿了才輪到 ${n}d（n + ℓ = ${n} + 2 = ${n + 2}）。注意軌域圖：<b>${n}d 一放進電子，就掉到 ${n + 1}s 下面</b>，所以變成離子時先拿走的是 ${n + 1}s。按「+2」看看。`;
+  if (t === 'f' && k === 1) return `${n + 2}s 滿了先填 ${n}f：${n}f 和 ${n + 1}d 的 n + ℓ 都是 ${n + 3}，n 小的先填。`;
+  if (k <= per) return `<b>同一組 ${per} 個 ${n}${t} 能量一樣，先各放一個、方向相同</b>（洪德定則）：分開放，電子離得比較遠、排斥比較小。這是第 ${k} 個，${k < per ? `還有 ${per - k} 個空的` : '每一個都有一個電子了'}。`;
+  if (k === per + 1) return `${per} 個 ${n}${t} 都各有一個電子了，第 ${k} 個才開始<b>成對</b>（深色，↑↓）。`;
+  return base + `${n}${t} 繼續成對${k === 2 * per ? `，${n}${t} 滿了` : ''}。`;
+}
+
 W.atom3d = el => {
   const st = { Z: 1, q: 0, phase: 1 };
   el.innerHTML = `<div class="w-row"><button class="btn sm" type="button" data-d="-1">－ 拿走一個電子</button><button class="btn sm pri" type="button" data-d="1">＋ 加一個電子</button></div>
 <div class="w-row"><label class="rng">原子序 Z<input type="range" id="a3Z" min="1" max="86" step="1"><output class="mono" id="a3O"></output></label></div>
-${ctl('電荷', seg('a3Q', [['0', '中性'], ['1', '+1'], ['2', '+2'], ['3', '+3']], '0'))}
+${ctl('電荷', seg('a3Q', [['-2', '−2'], ['-1', '−1'], ['0', '中性'], ['1', '+1'], ['2', '+2'], ['3', '+3']], '0'))}
 <p class="legend3"><span class="lg0">空的</span><span class="lg1">一個電子（半滿）</span><span class="lg2">兩個電子（全滿）</span></p>
-<div class="a3grid"><div id="a3M"></div><div id="a3B"></div></div><p class="eq" id="a3S"></p><div id="a3X"></div><p class="note" id="a3N"></p>`;
+<p class="eq" id="a3S"></p><p class="note" id="a3N"></p>
+<div class="a3grid"><div id="a3M"></div><div id="a3B"></div></div><div id="a3X"></div>`;   // 組態與說明放在按鈕正下方：按「加一個電子」時不用捲動就看得到（2026-11-07 使用者要求）
   const sup = n => String(n).split('').map(c => SUP[c]).join(''), DEXC = Object.keys(EXC).map(Number).filter(z => ![57, 58, 64].includes(z));
   let timer = 0;
   // 填的狀態 → 立體顏色：空＝淡灰半透明、一個電子＝淺色、兩個電子＝深色；剛變化的最清楚，其他淡一點
@@ -194,13 +213,13 @@ ${ctl('電荷', seg('a3Q', [['0', '中性'], ['1', '+1'], ['2', '+2'], ['3', '+3
   function draw() {
     clearTimeout(timer);
     const { Z, q } = st, isExc = q === 0 && DEXC.includes(Z), cf = isExc && st.phase === 1 ? econfAuf(Z) : econf(Z, q);
-    const prev = Object.fromEntries(isExc && st.phase === 2 ? econfAuf(Z) : q ? econf(Z, q - 1) : Z > 1 ? econf(Z - 1) : []);
+    const prev = Object.fromEntries(isExc && st.phase === 2 ? econfAuf(Z) : q > 0 ? econf(Z, q - 1) : q < 0 ? econf(Z, q + 1) : Z > 1 ? econf(Z - 1) : []);
     const ne = Z - q, core = Z > 10 ? CORES.find(([n]) => n < ne && econf(n).every(([o, k]) => (cf.find(x => x[0] === o) || [0, 0])[1] === k)) : null, coreOrb = core ? econf(core[0]).map(x => x[0]) : [];
     const subs = valenceSet(Z, coreOrb), val = cf.filter(([o, k]) => !coreOrb.includes(o) && k > 0);
     model(Z, cf, prev, core && core[1], coreOrb, subs);
     $('#a3B', el).innerHTML = `<p class="lbl">軌域圖：越上面能量越高${Z >= 19 ? '；s 和 d 幾乎一樣高' : ''}</p>` + orbitalChart('m', cf, subs).svg;
     $('#a3O', el).textContent = `${Z}　${ELEM[Z - 1]}（${ENAME[Z - 1]}）`; $('#a3Z', el).value = Z;
-    const nm = `${ELEM[Z - 1]}${q ? (q > 1 ? sup(q) : '') + '⁺' : ''}`;
+    const nm = `${ELEM[Z - 1]}${q ? (Math.abs(q) > 1 ? sup(Math.abs(q)) : '') + (q > 0 ? '⁺' : '⁻') : ''}`;
     $('#a3S', el).innerHTML = `${nm}：${core ? `<b>[${core[1]}]</b> ` : ''}${val.map(([o, k]) => `${o}${sup(k)}`).join(' ')}${isExc && st.phase === 1 ? '　<span class="mut small">（照順序寫的，等一下會變）</span>' : ''}`;
     // 例外：照順序 vs 實際，兩張軌域圖並排；原因畫在圖上（搬動的箭頭、同方向電子的連線、成對的排斥）
     if (isExc) {
@@ -214,11 +233,12 @@ ${ctl('電荷', seg('a3Q', [['0', '中性'], ['1', '+1'], ['2', '+2'], ['3', '+3
       if (st.phase === 1) timer = setTimeout(() => { st.phase = 2; draw(); }, 1300);
     } else $('#a3X', el).innerHTML = '';
     const nw = val.filter(([o, k]) => k !== (prev[o] || 0)).map(([o]) => o), shp = { s: '球', p: '啞鈴', d: '四葉草', f: '多瓣' };
-    $('#a3N', el).innerHTML = (q ? `${nm}：從中性原子拿走最上面（能量最高）的電子。${Z >= 21 && Z <= 30 ? ' 3d 填了電子之後畫在 4s 下面，所以先被拿走的是 4s（變成虛線）。' : ''}`
-      : `${nw.length ? `第 ${Z} 個電子放進 <b>${nw.join('、')}</b>（顏色最清楚的那個）。` : ''}電子放進能量最低、還有空位的軌域；同一組軌域先各放一個（淺色），再成對（深色）。`)
+    const iso = CORES.find(([n]) => n === ne);   // 和鈍氣等電子
+    $('#a3N', el).innerHTML = (q > 0 ? `${nm}：從中性原子拿走最上面（能量最高）的電子。${Z >= 21 && Z <= 30 ? ' 3d 填了電子之後畫在 4s 下面，所以先被拿走的是 4s（變成虛線）。' : ''}`
+      : q < 0 ? `${nm}：多出的 ${-q} 個電子照同樣的規則，放進能量最低、還有空位的軌域。${iso && iso[1] ? ` 現在有 ${ne} 個電子，和 ${iso[1]} 一樣（<b>等電子</b>），所以這個陰離子很常見。` : ' 陰離子多半出現在週期表右邊的非金屬（例如 F⁻、O²⁻、Cl⁻、S²⁻）：補幾個電子就和鈍氣一樣。'}`
+      : `${nw.length ? `第 ${Z} 個電子放進 <b>${nw.join('、')}</b>（顏色最清楚的那個）。` : ''}${isExc ? '' : stepRule(Z, cf, nw[0])}`)
       + (core ? ` 灰色的球是內層，和 ${core[1]} 一樣，就是寫法裡的 [${core[1]}]。` : '')
-      + (q === 0 && (Z === 19 || Z === 20) ? ' 看軌域圖：3d 是空的虛線，畫在 4s 上面一點，所以電子先放 4s。' : '')
-      + ([57, 58, 64].includes(Z) ? ' 鑭系有少數例外（La、Ce、Gd），考試不考。' : '');
+            + ([57, 58, 64].includes(Z) ? ' 鑭系有少數例外（La、Ce、Gd），考試不考。' : '');
     pressSeg(el, 'a3Q', String(q));
   }
   const setZ = z => { st.Z = Math.max(1, Math.min(86, z)); st.q = 0; st.phase = 1; draw(); };
