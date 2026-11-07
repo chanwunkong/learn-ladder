@@ -288,15 +288,14 @@ function restorePrac(id, sec) {
   refreshPrac();
 }
 function refreshPrac() {
-  const box = $('#pracSum'), items = $$('.q[data-k]', $('#article')), isDone = e => e.classList.contains('prev') || !!$('.opt.right', e);
-  // 頁首（捲動時固定在最上面）：這一頁有題目就顯示這一頁完成幾題，沒有就顯示完成幾章（2026-11-07 使用者要求）
-  if (items.length) { const d = items.filter(isDone).length; $('#progTxt').textContent = `本頁 ${d} / ${items.length} 題`; $('#progBar').style.width = `${100 * d / items.length}%`; } else updateProgress();
-  if (!box) return;
-  const last = items.map(isDone).lastIndexOf(true), skip = items.filter((e, k) => k < last && !isDone(e));
+  // 頁首（捲動時固定在最上面）：這一頁有題目就顯示完成幾題、跳過幾題（點一下跳到第一個）；沒有題目就顯示完成幾章（2026-11-07 使用者要求：只顯示在頁首）
+  const items = $$('.q[data-k]', $('#article')), isDone = e => e.classList.contains('prev') || !!$('.opt.right', e);
+  if (!items.length) return updateProgress();
+  const last = items.map(isDone).lastIndexOf(true), skip = items.filter((e, k) => k < last && !isDone(e)), n = items.filter(isDone).length;
   items.forEach(e => e.classList.toggle('skipped', skip.includes(e)));
-  const n = items.filter(isDone).length;
-  box.innerHTML = `<span class="${n === items.length ? 'ok' : ''}">已完成 ${n} / ${items.length} 題</span>${skip.length ? `<span class="skips">跳過：${skip.map(e => `<button type="button" class="linkb" data-sk="${items.indexOf(e)}">第 ${items.indexOf(e) + 1} 題</button>`).join('、')}</span>` : ''}`;
-  $$('[data-sk]', box).forEach(b => { b.onclick = () => { const e = items[+b.dataset.sk], d = e.closest('details'); if (d) d.open = true; e.scrollIntoView({ behavior: 'smooth', block: 'center' }); }; });
+  $('#progTxt').innerHTML = `${n === items.length ? '✓ ' : ''}本頁 ${n} / ${items.length} 題${skip.length ? `<button type="button" class="linkb skipb" id="pgSkip">跳過 ${skip.length} 題 ↓</button>` : ''}`;
+  $('#progBar').style.width = `${100 * n / items.length}%`;
+  const sb = $('#pgSkip'); if (sb) sb.onclick = () => { const e = skip[0], d = e.closest('details'); if (d) d.open = true; e.scrollIntoView({ behavior: 'smooth', block: 'center' }); };
 }
 function resetPrac(id, sec) {
   const box = $('#pracReset'); if (!box) return;
@@ -319,7 +318,7 @@ const qitem = ({ kind, i, q }, num) => `<div class="q" data-k="${kind}" data-q="
 function practiceHTML(items, head) {
   if (!items.length) return '';
   const first = items.slice(0, 3), more = items.slice(3);
-  return `<section class="sec practice" id="sec-prac"><h2><span class="sn">練</span>${head}</h2><p class="mut small">讀完上面的說明就做。答錯了按「一步一步來」或「在圖上看」，錯題會排進錯題複習。</p><div class="pracsum" id="pracSum"></div><div class="resetbox" id="pracReset"></div>${first.map((x, k) => qitem(x, k + 1)).join('')}${more.length ? `<details class="more"><summary>這一節還有 ${more.length} 題歷屆考題相似題</summary>${more.map((x, k) => qitem(x, k + 4)).join('')}</details>` : ''}</section>`;
+  return `<section class="sec practice" id="sec-prac"><h2><span class="sn">練</span>${head}</h2><p class="mut small">讀完上面的說明就做。答錯了按「一步一步來」或「在圖上看」，錯題會排進錯題複習。</p><div class="resetbox" id="pracReset"></div>${first.map((x, k) => qitem(x, k + 1)).join('')}${more.length ? `<details class="more"><summary>這一節還有 ${more.length} 題歷屆考題相似題</summary>${more.map((x, k) => qitem(x, k + 4)).join('')}</details>` : ''}</section>`;
 }
 // 頁首的章內導覽：回概覽、第幾節、上一節／下一節、換章
 function chbar(id, sec) {

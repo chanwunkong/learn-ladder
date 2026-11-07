@@ -239,24 +239,14 @@ function dayHead(w, d, s) {
   return `<p class="eyebrow">第 ${w.n} 週・第 ${d + 1} 天・${s === 'am' ? '早上' : '晚上'}</p>
 <nav class="pn">${prev ? `<a href="${prev}">‹ 上一段</a>` : ''}<a href="#">本週</a><a href="${next}">${s === 'pm' && d === 6 ? '本週報告' : '下一段'} ›</a></nav>`;
 }
-// 每一部分標題旁的「已完成 x / y」；在已作答的題目之前、還沒作答的題目標成「跳過」，最上方列出來
+// 頁首（捲動時固定在最上面）顯示這一頁完成幾題；在已作答的題目之前、還沒作答的標成「跳過」，頁首的按鈕跳到第一個（2026-11-07 使用者要求：只顯示在頁首）
 const itemDone = e => e.classList.contains('done') || e.classList.contains('prev') || (e.classList.contains('sentc') && !!e.querySelector('.core'));
 function refreshParts() {
-  // 頁首（捲動時固定在最上面）：這一頁有題目就顯示完成幾題（2026-11-07 使用者要求，和化學一樣）
-  const pq = $$('.q[data-h], .sentc', $('#main')).filter(e => !e.closest('.sheet'));
-  $('#pgTag').textContent = pq.length ? `本頁 ${pq.filter(itemDone).length} / ${pq.length} 題` : '';
-  const top = $('#segProg'); if (!top) return;
-  const all = [];
-  $$('[data-part]').forEach(sec => {
-    const items = $$('.q[data-h], .sentc', sec).filter(e => !e.closest('.sheet')), n = items.filter(itemDone).length;
-    const lab = $('.pcnt', sec); if (lab) { lab.textContent = items.length ? `已完成 ${n} / ${items.length}` : ''; lab.classList.toggle('fin', n === items.length); }
-    items.forEach((e, k) => all.push({ e, label: `${sec.dataset.part}第 ${k + 1} 題` }));
-  });
-  const last = all.map(x => itemDone(x.e)).lastIndexOf(true), skip = all.filter((x, k) => k < last && !itemDone(x.e));
-  all.forEach(x => x.e.classList.toggle('skipped', skip.includes(x)));
-  const n = all.filter(x => itemDone(x.e)).length;
-  top.innerHTML = `${bar(all.length ? n / all.length : 0)}<span>${n === all.length ? '✓ 這一段完成了' : `已完成 ${n} / ${all.length} 題`}</span>${skip.length ? `<span class="skips">跳過：${skip.map((x, k) => `<button type="button" class="linkb" data-sk="${k}">${x.label}</button>`).join('、')}</span>` : ''}`;
-  $$('[data-sk]', top).forEach(b => { b.onclick = () => skip[+b.dataset.sk].e.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
+  const all = $$('.q[data-h], .sentc', $('#main')).filter(e => !e.closest('.sheet'));
+  const last = all.map(itemDone).lastIndexOf(true), skip = all.filter((e, k) => k < last && !itemDone(e)), n = all.filter(itemDone).length;
+  all.forEach(e => e.classList.toggle('skipped', skip.includes(e)));
+  $('#pgTag').innerHTML = all.length ? `${n === all.length ? '✓ ' : ''}本頁 ${n} / ${all.length} 題${skip.length ? `<button type="button" class="linkb skipb" id="pgSkip">跳過 ${skip.length} 題 ↓</button>` : ''}` : '';
+  const sb = $('#pgSkip'); if (sb) sb.onclick = () => skip[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 function resetBox(c) {
   const box = $('#rsBox'); if (!box) return;
@@ -276,13 +266,13 @@ function wordCards(w, d, withUnsure) {
 }
 function renderAM(w, d) {
   const words = w.words[d], wq = words.map((x, i) => wordQ(w, d, i)), c = `${wkKey(w)}d${d + 1}am`, due = REVIEW.book(qlog()).due.length;
-  $('#main').innerHTML = `${dayHead(w, d, 'am')}<h1>早上：單字與長句</h1><p class="segprog" id="segProg"></p><div class="resetbox" id="rsBox"></div>
+  $('#main').innerHTML = `${dayHead(w, d, 'am')}<h1>早上：單字與長句</h1><div class="resetbox" id="rsBox"></div>
 <section class="part"><h2>1. 錯題複習<small>約 5–10 分鐘</small></h2>${due ? `<a class="btn pri rvgo" href="#review" data-back="#d${d + 1}am">今天到期 ${due} 題，先去錯題本複習 →</a><p class="note">做完會有按鈕回到這裡。</p>` : '<p class="note">今天沒有到期的錯題。</p>'}</section>
-<section class="part" data-part="單字"><h2>2. 新單字<small>約 10 分鐘</small><span class="pcnt"></span></h2><p class="note">先看字根拆解和例句，大聲唸一次例句。不熟的按「？還不太懂」，匯出時會列給下一週。</p>
+<section class="part" data-part="單字"><h2>2. 新單字<small>約 10 分鐘</small></h2><p class="note">先看字根拆解和例句，大聲唸一次例句。不熟的按「？還不太懂」，匯出時會列給下一週。</p>
 <div class="words">${wordCards(w, d, true)}</div>
 
 <h3>小測驗：選出意思</h3><div id="wq">${wq.map((q, i) => mcq(q, `${i + 1} / ${wq.length}`)).join('')}</div></section>
-<section class="part" data-part="長句"><h2>3. 長句拆解<small>約 10 分鐘</small><span class="pcnt"></span></h2><p class="note">先找主要動詞，再找主詞，其他部分都是修飾。每一步答對，句子上會標出來。</p>${w.sents[d].map((s, j) => sentHTML(w, d, j, s)).join('')}</section>
+<section class="part" data-part="長句"><h2>3. 長句拆解<small>約 10 分鐘</small></h2><p class="note">先找主要動詞，再找主詞，其他部分都是修飾。每一步答對，句子上會標出來。</p>${w.sents[d].map((s, j) => sentHTML(w, d, j, s)).join('')}</section>
 <div class="row endrow"><a class="btn pri" href="#d${d + 1}pm">晚上的部分 ›</a></div>`;
   const upd = () => refreshParts();
   $$('.rvgo').forEach(a => { a.onclick = () => store.set('rvBack', a.dataset.back); });
@@ -299,11 +289,11 @@ function passageHTML(w, d, P, k = 0) {
 function renderPM(w, d) {
   const G = w.gram[d], Ps = dayPass(w, d), c = `${wkKey(w)}d${d + 1}pm`, n = w.words[d].length;
   const gq = G.qs.map(q => gramQ(w, d, q)), pqs = Ps.map((P, k) => P.qs.map(q => passQ(w, d, q, P))), rq = w.words[d].map((x, i) => recallQ(w, d, i));
-  $('#main').innerHTML = `${dayHead(w, d, 'pm')}<h1>晚上：文法與文章</h1><p class="segprog" id="segProg"></p><div class="resetbox" id="rsBox"></div>
-<section class="part" data-part="文法"><h2>1. 文法重點<small>約 10 分鐘</small><span class="pcnt"></span></h2><div class="card lesson"><h3>${esc(G.title)}</h3>${G.body}<p class="lbl">這一課練的能力：${esc(SKILLS[G.id] || G.id)}</p><div class="row">${unsureBtn(`u:gram:${wkKey(w)}:${d}`, c, G.title)}</div></div>
+  $('#main').innerHTML = `${dayHead(w, d, 'pm')}<h1>晚上：文法與文章</h1><div class="resetbox" id="rsBox"></div>
+<section class="part" data-part="文法"><h2>1. 文法重點<small>約 10 分鐘</small></h2><div class="card lesson"><h3>${esc(G.title)}</h3>${G.body}<p class="lbl">這一課練的能力：${esc(SKILLS[G.id] || G.id)}</p><div class="row">${unsureBtn(`u:gram:${wkKey(w)}:${d}`, c, G.title)}</div></div>
 <div id="gq">${gq.map((q, i) => mcq(q, `${i + 1} / ${gq.length}`)).join('')}</div></section>
-${Ps.map((P, k) => `<section class="part" data-part="${P.type === 'cloze' ? '克漏字' : '閱讀'}"><h2>${k + 2}. ${P.type === 'cloze' ? '克漏字' : '閱讀測驗'}<small>約 ${Ps.length > 1 ? 15 : 12} 分鐘</small><span class="pcnt"></span></h2>${passageHTML(w, d, P, k)}<div class="row">${unsureBtn(k === 0 ? `u:pass:${wkKey(w)}:${d}` : `u:pass:${wkKey(w)}:${d}:${k}`, c, P.title)}</div></section>`).join('')}
-<section class="part" data-part="回想" id="rqPart"><h2>${Ps.length + 2}. 單字回想<small>約 5 分鐘</small><span class="pcnt"></span></h2><p class="note">早上的 ${n} 個字放回例句裡。先自己想；真的想不起來，按畫面下方的「早上的 ${n} 個字」打開卡片（會記錄，週報會把這些字列為還不熟）。</p><div id="rq">${rq.map((q, i) => mcq(q, `${i + 1} / ${rq.length}`)).join('')}</div></section>
+${Ps.map((P, k) => `<section class="part" data-part="${P.type === 'cloze' ? '克漏字' : '閱讀'}"><h2>${k + 2}. ${P.type === 'cloze' ? '克漏字' : '閱讀測驗'}<small>約 ${Ps.length > 1 ? 15 : 12} 分鐘</small></h2>${passageHTML(w, d, P, k)}<div class="row">${unsureBtn(k === 0 ? `u:pass:${wkKey(w)}:${d}` : `u:pass:${wkKey(w)}:${d}:${k}`, c, P.title)}</div></section>`).join('')}
+<section class="part" data-part="回想" id="rqPart"><h2>${Ps.length + 2}. 單字回想<small>約 5 分鐘</small></h2><p class="note">早上的 ${n} 個字放回例句裡。先自己想；真的想不起來，按畫面下方的「早上的 ${n} 個字」打開卡片（會記錄，週報會把這些字列為還不熟）。</p><div id="rq">${rq.map((q, i) => mcq(q, `${i + 1} / ${rq.length}`)).join('')}</div></section>
 <button class="btn pri peekbtn" type="button" id="peekBtn" hidden>早上的 ${n} 個字</button>
 <div class="sheet" id="peek" hidden role="dialog" aria-label="早上的 ${n} 個字"><div class="sheet-h"><b>早上的 ${n} 個字</b><button class="btn sm" type="button" id="peekX">關閉</button></div><div class="words">${wordCards(w, d, false)}</div></div>
 <div class="row endrow"><a class="btn pri" href="${d < 6 ? `#d${d + 2}am` : '#report'}">${d < 6 ? '明天早上 ›' : '本週報告 ›'}</a><a class="btn" href="#">本週</a></div>`;
