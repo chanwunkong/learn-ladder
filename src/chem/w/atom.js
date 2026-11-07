@@ -172,7 +172,7 @@ ${diag}${fill.map(({ o, c, k }) => { const { n, l } = cell(o), on = o === last;
       return `<rect x="${X(l)}" y="${Y(n)}" width="80" height="28" rx="5" class="nlc${on ? ' cur' : ''}"${on ? ` data-cur="正在填 ${o}"` : ''}/><rect x="${X(l)}" y="${Y(n)}" width="${80 * k / c}" height="28" rx="5" class="nlf"/><text class="tk${on ? ' hl' : ''}" x="${X(l) + 10}" y="${Y(n) + 19}">${o}</text><text class="tk sm" x="${X(l) + 72}" y="${Y(n) + 18}" text-anchor="end">${k}/${c}</text>`; }).join('')}</svg>`;
     $('#nlO', el).textContent = `${Z}　${ELEM[Z - 1]}`; $('#nlZ', el).value = Z;
     const m = lc.n + lc.l, same = AUF.map(([o]) => o).filter(o => cell(o).n + cell(o).l === m && o !== last);
-    $('#nlN', el).innerHTML = `第 ${Z} 個電子放進 <b>${last}</b>（這一格第 ${lastK} 個）：n + ℓ = ${lc.n} + ${lc.l} = ${m}。${same.length ? `同樣 n + ℓ = ${m} 的還有 ${same.join('、')}，這時 n 小的先填。` : ''} 沿著箭頭從右上往左下讀，就是填入順序 1s → 2s → 2p → 3s → 3p → 4s → 3d → …；這是依真實能量排出來的記憶方法，少數元素（Cr、Cu…）的實際組態不同，看上面的真實能量圖。`;
+    $('#nlN', el).innerHTML = `第 ${Z} 個電子放進 <b>${last}</b>（這一格第 ${lastK} 個）：n + ℓ = ${lc.n} + ${lc.l} = ${m}。${same.length ? `同樣 n + ℓ = ${m} 的還有 ${same.join('、')}，這時 n 小的先填。` : ''} 沿著箭頭從右上往左下讀，就是填入順序 1s → 2s → 2p → 3s → 3p → 4s → 3d → …；這是依真實能量排出來的記憶方法，少數元素（Cr、Cu…）的實際組態不同，下面加電子的圖會說明原因。`;
   }
   $('#nlZ', el).oninput = e => { st.Z = +e.target.value; draw(); };
   draw();
