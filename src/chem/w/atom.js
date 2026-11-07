@@ -37,7 +37,7 @@ ${labs.map(l => `<line x1="212" x2="222" y1="${l.y}" y2="${l.ly}" class="node"/>
         + `<text class="tk hl" x="${X(lam)}" y="${Y(1.1)}" text-anchor="${anc}">n = ${ni} → ${nf}：${fx(lam, 0)} nm（${reg(lam)}）</text>`;
     });
     $('#hsK', el).innerHTML = card('e', 'ΔE（放出的光子能量）', `${fx(dE, 2)} eV`, `${fx(dE * 96.485, 0)} kJ/mol`) + card('l', '光的波長 λ = hc ÷ ΔE', `${fx(lam, 0)} nm`, `≈ 1240 ÷ ${fx(dE, 2)}`) + card('r', '區域', reg(lam), SER[nf]) + card('ie', `游離能（從 n = 1 拿走）`, `${fx(13.6 * Z * Z, 1)} eV`, `13.6 × ${Z}²`);
-    $('#hsN', el).innerHTML = `電子從 n = ${ni} 掉到 n = ${nf}，放出能量 ΔE = 13.6 × ${Z}² × (1/${nf}² − 1/${ni}²) eV = ${fx(dE, 2)} eV 的光子，波長 ${fx(lam, 0)} nm。能階是<b>分立</b>的，所以光譜是一條一條的線，而不是連續的彩虹。同一個系列的線越往短波長越密，最後收在虛線（從 n = ∞ 掉下來，就是游離的逆過程）。掉到 n = 1（來曼系）能量大、在紫外光；掉到 n = 2（巴耳末系）落在可見光；掉到 n = 3（帕申系）在紅外光。${Z > 1 ? ` ${Z === 2 ? 'He⁺' : 'Li²⁺'} 只有一個電子，和氫原子同一套公式，只是原子核電荷 Z = ${Z}：能量乘 Z²，所以同一個系列整個移到更短的波長。` : ''}`;
+    $('#hsN', el).innerHTML = `電子從 n = ${ni} 掉到 n = ${nf}，放出能量 ΔE = 13.6 × ${Z}² × (1/${nf}² − 1/${ni}²) eV = ${fx(dE, 2)} eV 的光子，波長 ${fx(lam, 0)} nm。同一系的線越往短波長越密，最後收在虛線（從 n = ∞ 掉下來）。${Z > 1 ? ` ${Z === 2 ? 'He⁺' : 'Li²⁺'} 的能量乘 Z² = ${Z * Z}，整個系列移到更短的波長。` : ''}`;
     $('#hsI', el).value = ni; $('#hsF', el).value = nf; $('#hsZ', el).value = Z;
   }
   $('#hsI', el).onchange = e => { ni = +e.target.value; draw(); };
@@ -90,7 +90,7 @@ W.qn = el => {
     } else quads.push(...R3D.sphere(0.4, '#9B59B6', 0.6));
     if (!QV) { $('#qnV', el).innerHTML = '<canvas width="600" height="540" class="r3d" aria-label="軌域的立體模型，左右拖動旋轉"></canvas>'; QV = R3D.view($('#qnV canvas', el)); }
     QV.set({ quads, scale: 205, axes: 1.3 });
-    $('#qnCap', el).innerHTML = l === 3 ? 'f 軌域形狀複雜，考試只需要知道有 7 個。' : `${nm} 軌域，左右拖動可以旋轉。藍色、橘色是波函數的正、負號。${l ? `灰色半透明的${l === 2 && m === 0 ? '圓錐面' : '圓盤'}是<b>角節面</b>（${l} 個）：面上找不到電子，兩邊正負號相反。` : ''}${k ? `外層調成半透明，裡面反色的${l ? '小瓣' : '小球'}代表有 <b>${k} 個徑向節點</b>：在兩者交界的球面上找不到電子，越過它正負號就反過來。` : ''}${l === 2 && m === 0 ? ' d_z² 的兩個角節面是圓錐（和 z 軸夾 54.7°），不是平面。' : ''}`;
+    $('#qnCap', el).innerHTML = l === 3 ? 'f 軌域形狀複雜，只需要知道有 7 個。' : `${nm}：${l ? `<b>角節面 ${l} 個</b>（灰色${l === 2 && m === 0 ? '圓錐面，和 z 軸夾 54.7°' : '圓盤'}）` : '沒有角節面'}，${k ? `<b>徑向節點 ${k} 個</b>（裡面反色的${l ? '小瓣' : '小球'}）` : '沒有徑向節點'}。節點兩邊的正負號相反。`;
     $('#qnK', el).innerHTML = card('o', '軌域', `${n}${LN[l]}`) + card('c', '這個副層的軌域數', 2 * l + 1) + card('e', '最多電子數', 2 * (2 * l + 1)) + card('s', `n = ${n} 殼層總軌域數`, n * n) + card('nd', '節面數（角節面 ℓ + 徑向 n−ℓ−1）', `${l} + ${n - l - 1}`);
     $('#qnN', el).innerHTML = `規則：n = 1, 2, 3…；ℓ = 0 到 n − 1；mℓ = −ℓ 到 +ℓ；每個軌域再有 ms = ±½ 兩個自旋。所以第 n 層有 n² 個軌域、最多 2n² 個電子。<b>沒有 1p、2d</b>，因為 ℓ 必須小於 n。`;
   }
@@ -172,7 +172,7 @@ ${diag}${fill.map(({ o, c, k }) => { const { n, l } = cell(o), on = o === last;
       return `<rect x="${X(l)}" y="${Y(n)}" width="80" height="28" rx="5" class="nlc${on ? ' cur' : ''}"${on ? ` data-cur="正在填 ${o}"` : ''}/><rect x="${X(l)}" y="${Y(n)}" width="${80 * k / c}" height="28" rx="5" class="nlf"/><text class="tk${on ? ' hl' : ''}" x="${X(l) + 10}" y="${Y(n) + 19}">${o}</text><text class="tk sm" x="${X(l) + 72}" y="${Y(n) + 18}" text-anchor="end">${k}/${c}</text>`; }).join('')}</svg>`;
     $('#nlO', el).textContent = `${Z}　${ELEM[Z - 1]}`; $('#nlZ', el).value = Z;
     const m = lc.n + lc.l, same = AUF.map(([o]) => o).filter(o => cell(o).n + cell(o).l === m && o !== last);
-    $('#nlN', el).innerHTML = `第 ${Z} 個電子放進 <b>${last}</b>（這一格第 ${lastK} 個）：n + ℓ = ${lc.n} + ${lc.l} = ${m}。${same.length ? `同樣 n + ℓ = ${m} 的還有 ${same.join('、')}，這時 n 小的先填。` : ''} 沿著箭頭從右上往左下讀，就是填入順序 1s → 2s → 2p → 3s → 3p → 4s → 3d → …；這是依真實能量排出來的記憶方法，少數元素（Cr、Cu…）的實際組態不同，下面加電子的圖會說明原因。`;
+    $('#nlN', el).innerHTML = `第 ${Z} 個電子放進 <b>${last}</b>：n + ℓ = ${lc.n} + ${lc.l} = ${m}。${same.length ? `${same.join('、')} 也是 ${m}，n 小的 ${last} 先填。` : ''}`;
   }
   $('#nlZ', el).oninput = e => { st.Z = +e.target.value; draw(); };
   draw();
@@ -227,7 +227,7 @@ W.nuclide = el => {
     $('#nuG', el).innerHTML = `<div class="nsym" role="group" aria-label="點符號上的數字">${['A', 'Z'].map(x => '').join('')}<span class="ns-l"><button type="button" data-h="A" class="ns-n">${A}</button><button type="button" data-h="Z" class="ns-n">${Z}</button></span><span class="ns-x">${sy}</span>${q ? `<button type="button" data-h="q" class="ns-n ns-q">${qs}</button>` : ''}</div>
 <svg class="ch nusvg${hl ? ' hl-' + hl : ''}" style="max-width:260px;margin:auto" viewBox="-10 -6 250 232" role="img" aria-label="原子組成示意：原子核與電子殼層">${rings}${dots}</svg>`;
     $$('[data-h]', el).forEach(b => { b.setAttribute('aria-pressed', String(b.dataset.h === hl)); b.onclick = () => { hl = hl === b.dataset.h ? '' : b.dataset.h; draw(); }; });
-    $('#nuC', el).textContent = `電子殼層由內到外：${sh.join('、')}（共 ${e} 個）。${tot > 60 ? `原子核有 ${tot} 個粒子，圖上只畫 60 個，紅灰比例不變。` : ''}示意圖不按比例：實際的原子核只有原子大小的約十萬分之一；電子也不是在固定的圓形軌道上，真正的分布見第 5 節的軌域。`;
+    $('#nuC', el).textContent = `電子殼層由內到外：${sh.join('、')}（共 ${e} 個）。${tot > 60 ? `原子核有 ${tot} 個粒子，圖上只畫 60 個，紅灰比例不變。` : ''}示意圖不按比例：原子核只有原子的約十萬分之一大。`;
     $('#nuK', el).innerHTML = card('sym', '符號', `${supN(A)}${subN(Z)}${sy}${q ? (Math.abs(q) > 1 ? supN(Math.abs(q)) : '') + (q > 0 ? '⁺' : '⁻') : ''}`) + card('p', '質子（紅）= 原子序 Z', Z) + card('n', '中子（灰）= A − Z', `${N}`, `${A} − ${Z}`) + card('e', '電子（藍）= Z − 電荷', e, `${Z} − (${q})`);
     $('#nuN', el).innerHTML = (hl === 'A' ? `<b>左上的 ${A} 是質量數</b>：原子核裡質子＋中子的總數（亮起來的紅、灰點）。` : hl === 'Z' ? `<b>左下的 ${Z} 是原子序</b>：質子數（亮起來的紅點），決定是哪一種元素。` : hl === 'q' ? `<b>右上的 ${qs} 是電荷</b>：電子數 = ${Z} − (${q}) = ${Z - q}（亮起來的藍點）。` : '點上面符號的數字，看它對應哪些粒子。') + ` 質量數 A = 質子 + 中子；原子序 Z = 質子數，決定是哪一種元素。${q ? `帶 ${q > 0 ? '+' : '−'}${Math.abs(q)} 電荷表示${q > 0 ? '失去' : '得到'} ${Math.abs(q)} 個電子，質子與中子不變。` : '中性原子的電子數等於質子數。'} Z 相同、A 不同的原子互為<b>同位素</b>（例如 ³⁵Cl 與 ³⁷Cl），化學性質幾乎相同。`;
     $$('[data-i]', el).forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.i === cur)));
@@ -349,7 +349,7 @@ W.radial = el => {
     const last = data[data.length - 1];
     $('#rdK', el).innerHTML = card('o', '最後選的軌域', last.o) + card('r', '徑向節點（球面）', `${last.n - last.l - 1} 個`, 'n − ℓ − 1') + card('a', '角節面（平面）', `${last.l} 個`, '= ℓ');
     const has2s2p = sel.includes('2s') && sel.includes('2p'), has3 = ['3s', '3p', '3d'].filter(o => sel.includes(o)).length >= 2;
-    $('#rdN', el).innerHTML = `曲線是「在半徑 r 的薄球殼上找到電子」的機率，每條都調成面積相同，可以直接比較。曲線碰到 0 的地方（圓點）是<b>徑向節點</b>：那個半徑的整個球面上都找不到電子。`
+    $('#rdN', el).innerHTML = `曲線是在半徑 r 處找到電子的機率，每條面積相同。碰到 0 的圓點是<b>徑向節點</b>。`
       + (has2s2p ? ' <b>看 2s 和 2p</b>：兩條的主峰差不多遠，但 2s 在灰底區（靠近原子核）多了一個小峰，2p 幾乎沒有。這一小部分時間 2s 電子很靠近原子核（稱為<b>穿透</b>），被抓得比較緊，所以 2s 的能量比 2p 低，填電子時先填 2s。' : '')
       + (has3 ? ' 同一層裡 ℓ 越小，靠近原子核的小峰越多（3s > 3p > 3d），所以能量 3s < 3p < 3d。' : '')
       + (!has2s2p && !has3 ? ' 試試同時選 2s 和 2p，或 3s、3p、3d，比較靠近原子核的部分。' : '');
@@ -384,7 +384,7 @@ ${sh.map((k, j) => `<circle cx="120" cy="120" r="${R(j)}" class="nuO" style="${j
     $('#zfG', el).innerHTML = chart({ w: 600, h: 240, x: [0, 37], y: [0, 9], xt: [2, 10, 18, 36], yt: [0, 2, 4, 6, 8], xlab: '原子序 Z（每個週期的鈍氣：He 2、Ne 10、Ar 18、Kr 36）', ylab: 'Zeff', label: '有效核電荷的週期變化' }, (X, Y) =>
       pts.map(([z, v]) => `<rect x="${X(z) - 5}" y="${Y(v)}" width="10" height="${Y(0) - Y(v)}" class="bv" style="${z === Z ? 'fill:var(--accent)' : 'opacity:.55'}"/>`).join('') + `<text class="tk hl" x="${X(Z)}" y="${Y(zeffOf(Z)) - 6}" text-anchor="middle">${ESYM[Z]}</text>`);
     $('#zfO', el).textContent = `${Z}（${ESYM[Z]}）`;
-    $('#zfN', el).innerHTML = `簡化模型：假設內層電子把原子核的正電完全抵銷，同一層的電子彼此不遮蔽。<b>同週期往右</b>：質子多一個、新電子在同一層，有效核電荷一路增加（Na +1 → Cl +7），外層被拉得更緊：半徑變小、游離能與電負度變大。<b>換到下一個週期</b>：新電子進入更外面的一層，內層多了一整層遮蔽，有效核電荷掉回 +1（Ar → K），而且離原子核更遠：半徑突然變大、游離能突然變小。過渡金屬（Sc 到 Zn）新增的電子填在內層的 3d，外層 4s 感受到的有效核電荷幾乎不變，所以這一段的性質變化很小。`;
+    $('#zfN', el).innerHTML = `簡化：內層電子完全抵銷核電荷，同層不互相遮蔽。<b>往右</b>：有效核電荷一路增加（Na +1 → Cl +7）。<b>換週期</b>：多一整層遮蔽，掉回 +1（Ar → K）。過渡金屬（Sc～Zn）的新電子填在內層 3d，外層的有效核電荷幾乎不變，性質變化小。`;
     $('#zfR', el).value = Z;
   }
   $('#zfR', el).oninput = e => { Z = +e.target.value; draw(); };
@@ -404,7 +404,7 @@ W.eaff = el => {
     $('#eaG', el).innerHTML = chart({ w: 520, h: 240, x: [0, steps.length + 1], y: [lo - 40, hi + 60], xt: [], yt: [-400, -200, 0, 200, 400, 600].filter(v => v >= lo - 40 && v <= hi + 60), ylab: '能量（kJ/mol，以中性原子為 0）', label: '加入電子的能量變化' }, (X, Y) =>
       lv.map((v, i) => `<line class="lvl on" x1="${X(i + 0.5) - 40}" x2="${X(i + 0.5) + 40}" y1="${Y(v)}" y2="${Y(v)}" style="stroke:var(--ink);stroke-width:3"/><text class="tk" x="${X(i + 0.5)}" y="${Y(v) - 8}" text-anchor="middle">${i ? steps[i - 1][1] : steps[0][0]}</text>`).join('')
       + steps.map((s, i) => { const up = s[2] > 0; return `<line class="mk" x1="${X(i + 1) - 6}" x2="${X(i + 1) - 6}" y1="${Y(lv[i])}" y2="${Y(lv[i + 1])}" style="stroke:${up ? 'var(--bad)' : 'var(--good)'};stroke-dasharray:none;stroke-width:2.5"/><text class="tk" x="${X(i + 1) - 12}" y="${(Y(lv[i]) + Y(lv[i + 1])) / 2 + 4}" text-anchor="end" style="fill:${up ? 'var(--bad)' : 'var(--good)'}">${up ? '+' : ''}${s[2]}（${up ? '吸熱' : '放熱'}）</text>`; }).join(''));
-    $('#eaN', el).innerHTML = `中性的非金屬原子得到第一個電子時，新電子受到原子核吸引，能量下降（放熱，ΔH &lt; 0）。${cur === 'O' ? '但 O⁻ 已經帶負電，再塞一個電子要克服負電之間的排斥，第二電子親和力是<b>吸熱</b>的。O²⁻ 能在離子晶體中穩定存在，是因為晶格能把這些能量補回來。' : cur === 'F' || cur === 'Cl' ? 'F 的電負度比 Cl 大，但第一電子親和力卻是 Cl 放熱較多：F 太小，電子擠在 2p 互相排斥。' : '同族往下（O → S）原子變大，加入的電子較不擁擠。'}`;
+    $('#eaN', el).innerHTML = `第一個電子被原子核吸引，放熱（ΔH &lt; 0）。${cur === 'O' ? 'O⁻ 已帶負電，第二個電子要克服排斥，<b>吸熱</b>。O²⁻ 在離子晶體中靠晶格能補回這些能量。' : cur === 'F' || cur === 'Cl' ? 'F 的電負度比 Cl 大，但 Cl 放熱較多：F 太小，電子擠在 2p 互相排斥。' : '同族往下（O → S）原子變大，加入的電子較不擠。'}`;
     pressSeg(el, 'eaS', cur);
   }
   bindSeg(el, 'eaS', v => { cur = v; draw(); });
@@ -552,8 +552,8 @@ ${ok ? nodes.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4.5" fill="var(--in
 <text class="tk ${ok ? 'hl' : 'bad'}" x="${cx}" y="${cy - R - 36}" text-anchor="middle">${ok ? `剛好 ${n} 個波長：接得起來（允許，n = ${n}）` : '繞一圈接不起來：不允許'}</text>
 ${ok ? `<text class="tk sm" x="${cx + R + 30}" y="${cy + 4}">黑點：振幅 0（節點）</text>` : ''}</svg>`;
     $('#rwR', el).value = st.k; $('#rwO', el).textContent = `${fx(k, ok ? 0 : 2)} 個`;
-    $('#rwN', el).innerHTML = ok ? `一圈剛好 ${n} 個波長，波繞回起點時和自己接上，可以穩定存在：這就是第 ${n} 個軌道（n = ${n}）。黑點是振幅為 0 的節點，電子不會出現在那裡。圖上把軌道畫成一樣大，只看接不接得起來；實際上 n 越大軌道越大（第 3 小節的 r ∝ n²）。`
-      : `一圈是 ${fx(k, 2)} 個波長，不是整數：繞回起點時，波的高度（紅點）和起點（黑點）對不上，繞幾圈之後會互相抵消，不能存在。拖到整數看看。`;
+    $('#rwN', el).innerHTML = ok ? `一圈剛好 ${n} 個波長，接得起來：第 ${n} 個軌道。黑點是節點。圖上軌道畫成一樣大；實際上 n 越大軌道越大（第 3 小節）。`
+      : `一圈 ${fx(k, 2)} 個波長，不是整數：繞回來和起點對不上，會互相抵消。拖到整數看看。`;
   }
   $('#rwR', el).oninput = e => { st.k = +e.target.value; draw(); };
   draw();
@@ -681,7 +681,7 @@ W.succie = el => {
     $('#siO', el).innerHTML = `<p class="lbl">點長條：拿走第 ${sel} 個電子（I${subN(sel)}）時，被拿走的是 ${last} 的電子${sel > k ? '，已經是內層' : '，還在最外層'}</p>` + orbitalChart('si', cfq, subs, { mark: last }).svg;
     $$('#siG [data-b]', el).forEach(b => { b.onclick = () => { sel = +b.dataset.b; draw(); }; });
     $('#siK', el).innerHTML = card('j', '最大的跳躍', `I${subN(k)} → I${subN(k + 1)}`, `×${fx(r[k - 1], 1)}`) + card('v', '價電子數', k) + card('g', '族', k <= 2 ? `第 ${k} 族` : `第 ${k + 10} 族`);
-    $('#siN', el).innerHTML = `前 ${k} 個電子在最外層，拿掉之後剩下的是穩定的鈍氣組態；第 ${k + 1} 個要從<b>內層</b>拿，所以游離能突然跳很大（縱軸是對數，跳躍仍然很明顯）。看到「第 k 個之後大跳」，就知道有 k 個價電子。`;
+    $('#siN', el).innerHTML = `前 ${k} 個在最外層，拿完剩下鈍氣組態；第 ${k + 1} 個要從<b>內層</b>拿，所以大跳（縱軸是對數）。${k} 個價電子。`;
     pressSeg(el, 'siS', cur);
   }
   bindSeg(el, 'siS', v => { cur = v; sel = 0; draw(); });
@@ -701,9 +701,9 @@ W.isoavg = el => {
       d.map(([A, m, p]) => `<rect x="${X(m) - 16}" y="${Y(p)}" width="32" height="${Y(0) - Y(p)}" class="bv"/><text class="tk" x="${X(m)}" y="${Y(p) - 6}" text-anchor="middle">${supN(A)}${cur} ${p}%</text>`).join('')
       + `<line class="mk" x1="${X(avg)}" x2="${X(avg)}" y1="${Y(0)}" y2="${Y(100)}"/><circle class="dot" cx="${X(avg)}" cy="${Y(0)}" r="7"/><text class="tk hl" x="${X(avg)}" y="${Y(100) + 12}" text-anchor="middle">平均 ${fx(avg, 2)}</text>`);
     $('#iaF', el).innerHTML = `平均原子量 = ${d.map(([, m, p]) => `${m} × ${fx(p / 100, 4)}`).join(' + ')} = <b>${fx(avg, 2)}</b>`;
-    $('#iaN', el).innerHTML = `長條的高度是豐度、位置是質量；平均原子量是以豐度加權的「重心」（紅色虛線），會偏向豐度較高的同位素。質譜儀量 ${cur} 會出現 ${d.length} 個訊號，高度比約 ${d.map(x => Math.round(x[2])).join(' : ')}。`;
+    $('#iaN', el).innerHTML = `紅色虛線是平均原子量，偏向豐度高的同位素。質譜儀量 ${cur} 有 ${d.length} 個訊號，高度比約 ${d.map(x => Math.round(x[2])).join(' : ')}。`;
     $('#iaR', el).value = a1; $('#iaO', el).textContent = `${fx(a1, 1)}%`;
-    if (ab != null) $('#iaN', el).innerHTML += ` 拖動豐度時，平均值跟著往豐度較高的那一邊移動；天然的 ${cur} 原子量是 ${fx(nat.reduce((a, [, m, p]) => a + m * p / 100, 0), 2)}。`;
+    if (ab != null) $('#iaN', el).innerHTML += ` 天然的 ${cur} 原子量是 ${fx(nat.reduce((a, [, m, p]) => a + m * p / 100, 0), 2)}。`;
     pressSeg(el, 'iaS', cur);
   }
   $('#iaR', el).oninput = e => { ab = +e.target.value; draw(); };
