@@ -3,8 +3,8 @@
 /* ===== 1. 氫原子能階與光譜 ===== */
 W.hspec = el => {
   let ni = 3, nf = 2, Z = 1;
-  const SER = { 1: '萊曼系', 2: '巴耳末系', 3: '帕申系' };
-  el.innerHTML = `<div class="w-row"><label class="sel">粒子 <select id="hsZ"><option value="1">H</option><option value="2">He⁺</option><option value="3">Li²⁺</option></select></label><label class="sel">從 n = <select id="hsI">${[2, 3, 4, 5, 6, 7].map(n => `<option>${n}</option>`).join('')}</select></label><label class="sel">掉到 n = <select id="hsF">${[1, 2, 3].map(n => `<option>${n}</option>`).join('')}</select></label></div>${ctl('常見的譜線', `<div class="w-row" style="margin:0">${[[3, 2, '紅線 656 nm'], [4, 2, '藍綠線 486 nm'], [2, 1, '萊曼系第一條'], [4, 3, '帕申系第一條']].map(([a, b, t]) => `<button class="btn sm ghost" type="button" data-t="${a},${b}">${t}</button>`).join('')}</div>`)}<div class="hsgrid"><div id="hsL"></div><div id="hsS"></div></div><div class="cards" id="hsK"></div><p class="note" id="hsN"></p>`;
+  const SER = { 1: '來曼系', 2: '巴耳末系', 3: '帕申系' };
+  el.innerHTML = `<div class="w-row"><label class="sel">粒子 <select id="hsZ"><option value="1">H</option><option value="2">He⁺</option><option value="3">Li²⁺</option></select></label><label class="sel">從 n = <select id="hsI">${[2, 3, 4, 5, 6, 7].map(n => `<option>${n}</option>`).join('')}</select></label><label class="sel">掉到 n = <select id="hsF">${[1, 2, 3].map(n => `<option>${n}</option>`).join('')}</select></label></div>${ctl('常見的譜線', `<div class="w-row" style="margin:0">${[[3, 2, '紅線 656 nm'], [4, 2, '藍綠線 486 nm'], [2, 1, '來曼系第一條'], [4, 3, '帕申系第一條']].map(([a, b, t]) => `<button class="btn sm ghost" type="button" data-t="${a},${b}">${t}</button>`).join('')}</div>`)}<div class="hsgrid"><div id="hsL"></div><div id="hsS"></div></div><div class="cards" id="hsK"></div><p class="note" id="hsN"></p>`;
   const E = n => -13.6 * Z * Z / (n * n), hc = 1239.84;   // eV·nm；類氫粒子 Eₙ = −13.6 Z²/n²
   const col = l => nmRGB(l) || (l < 380 ? '#7a5cff' : '#c0504a');   // 和「一道光」同一套波長 → 顏色換算
   // 標籤避讓：依 y 排序，太近就往下推，再用細線連回能階
@@ -22,7 +22,7 @@ W.hspec = el => {
 <line x1="56" x2="210" y1="${Y(0)}" y2="${Y(0)}" class="node"/>${shown.map(n => `<line class="lvl${n === ni || n === nf ? ' on' : ''}" x1="56" x2="210" y1="${Y(E(n))}" y2="${Y(E(n))}"${n === ni || n === nf ? '' : ' style="stroke-width:1.2"'}/>`).join('')}
 ${labs.map(l => `<line x1="212" x2="222" y1="${l.y}" y2="${l.ly}" class="node"/><text class="tk${l.on ? ' hl' : ''}" x="226" y="${l.ly + 4}">${l.t}</text>`).join('')}
 <line data-cur="躍遷箭頭" x1="133" x2="133" y1="${Y(E(ni))}" y2="${Y(E(nf)) - 7}" stroke="${col(lam)}" stroke-width="3.5" marker-end="url(#hm2)"/><defs><marker id="hm2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="${col(lam)}"/></marker></defs></svg>`;
-    // 光譜：畫「掉到 n = nf」這一整個系列，範圍跟著系列走（萊曼系在紫外、帕申系在紅外）
+    // 光譜：畫「掉到 n = nf」這一整個系列，範圍跟著系列走（來曼系在紫外、帕申系在紅外）
     const ks = Array.from({ length: 12 - nf }, (_, i) => nf + 1 + i), ls = ks.map(k => hc / (E(k) - E(nf))), lim = hc / -E(nf);
     const x0 = lim * 0.94, x1 = ls[0] * 1.06, xt = nice(x0, x1), reg = l => (l < 380 ? '紫外光' : l <= 750 ? '可見光' : '紅外光');
     $('#hsS', el).innerHTML = chart({ x: [x0, x1], y: [0, 1.3], xt, yt: [], xlab: `${SER[nf]}（掉到 n = ${nf}）的譜線，波長 nm；虛線是系列極限 ${fx(lim, 0)} nm`, h: 150 }, (X, Y) => {
@@ -37,7 +37,7 @@ ${labs.map(l => `<line x1="212" x2="222" y1="${l.y}" y2="${l.ly}" class="node"/>
         + `<text class="tk hl" x="${X(lam)}" y="${Y(1.1)}" text-anchor="${anc}">n = ${ni} → ${nf}：${fx(lam, 0)} nm（${reg(lam)}）</text>`;
     });
     $('#hsK', el).innerHTML = card('e', 'ΔE（放出的光子能量）', `${fx(dE, 2)} eV`, `${fx(dE * 96.485, 0)} kJ/mol`) + card('l', '光的波長 λ = hc ÷ ΔE', `${fx(lam, 0)} nm`, `≈ 1240 ÷ ${fx(dE, 2)}`) + card('r', '區域', reg(lam), SER[nf]) + card('ie', `游離能（從 n = 1 拿走）`, `${fx(13.6 * Z * Z, 1)} eV`, `13.6 × ${Z}²`);
-    $('#hsN', el).innerHTML = `電子從 n = ${ni} 掉到 n = ${nf}，放出能量 ΔE = 13.6 × ${Z}² × (1/${nf}² − 1/${ni}²) eV = ${fx(dE, 2)} eV 的光子，波長 ${fx(lam, 0)} nm。能階是<b>分立</b>的，所以光譜是一條一條的線，而不是連續的彩虹。同一個系列的線越往短波長越密，最後收在虛線（從 n = ∞ 掉下來，就是游離的逆過程）。掉到 n = 1（萊曼系）能量大、在紫外光；掉到 n = 2（巴耳末系）落在可見光；掉到 n = 3（帕申系）在紅外光。${Z > 1 ? ` ${Z === 2 ? 'He⁺' : 'Li²⁺'} 只有一個電子，和氫原子同一套公式，只是原子核電荷 Z = ${Z}：能量乘 Z²，所以同一個系列整個移到更短的波長。` : ''}`;
+    $('#hsN', el).innerHTML = `電子從 n = ${ni} 掉到 n = ${nf}，放出能量 ΔE = 13.6 × ${Z}² × (1/${nf}² − 1/${ni}²) eV = ${fx(dE, 2)} eV 的光子，波長 ${fx(lam, 0)} nm。能階是<b>分立</b>的，所以光譜是一條一條的線，而不是連續的彩虹。同一個系列的線越往短波長越密，最後收在虛線（從 n = ∞ 掉下來，就是游離的逆過程）。掉到 n = 1（來曼系）能量大、在紫外光；掉到 n = 2（巴耳末系）落在可見光；掉到 n = 3（帕申系）在紅外光。${Z > 1 ? ` ${Z === 2 ? 'He⁺' : 'Li²⁺'} 只有一個電子，和氫原子同一套公式，只是原子核電荷 Z = ${Z}：能量乘 Z²，所以同一個系列整個移到更短的波長。` : ''}`;
     $('#hsI', el).value = ni; $('#hsF', el).value = nf; $('#hsZ', el).value = Z;
   }
   $('#hsI', el).onchange = e => { ni = +e.target.value; draw(); };
