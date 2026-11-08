@@ -11,7 +11,7 @@
 
 ## 方法
 - 加權：學年度 − 105（106 年 ×1 … 115 年 ×10）。「近三年」＝113–115 年、不加權。
-- 一題只歸一個主要考點。106–110 年有 95 題只能看圖判斷產物，未細分，標為 `O-rxn`，不計入各章比重。
+- 一題只歸一個主要考點。106–110 年有 95 題只能看圖判斷產物，原本標為 `O-rxn`、不計入各章比重；2026-11-09 用 `pages.sh` 轉成圖逐題歸到各章（烯炔 16、有機金屬與人名反應 16、芳香族 12、α-碳 12、醇醚 11、醛酮 6、周環 5、羧酸衍生物 5、自由基 4、胺 4、取代與消去 4），現在沒有未歸類的題目。
 - 主題代碼：G-atom G-bond G-mo G-imf G-stoich G-gas G-sol G-thermo G-kin G-eq G-ab G-ksp G-redox G-coord G-nuc G-desc G-anal；
   O-struct O-acid O-name O-stereo O-sn O-rad O-alkene O-conj O-arom O-alc O-carb O-acyl O-alpha O-amine O-spec O-sugar O-prot O-bio O-poly O-other O-rxn。
 

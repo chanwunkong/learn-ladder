@@ -82,7 +82,7 @@ function renderExam() {
   // 倒數：最近一場還沒考的筆試，與下一個還沒到的日期
   const mine = e => e.s === TARGET || e.st === 'goal';
   const nextExam = EXAM_DATES.find(e => e.exam && mine(e) && daysTo(e.a) >= 0), nextDate = EXAM_DATES.find(e => mine(e) && daysTo(e.b || e.a) >= 0);
-  // 化學總進度：各章已拿到的考卷比重加總。各章合計約 94%（每份約 3 題無法歸章），所以全部掌握也到不了 100%
+  // 化學總進度：各章已拿到的考卷比重加總。各章合計約 99.6%（四捨五入的誤差），全部掌握約等於 100%
   const chs = chemChapters(log), got = chs.reduce((s, c) => s + c.got, 0);
   const cnt = st => chs.filter(c => c.st === st).length;
 
