@@ -2,7 +2,8 @@
 
 /* ===== 第 1 節：位能曲線＋兩個原子之間的吸引與排斥 =====
    鍵長 pm、鍵能 kJ/mol（教科書常用值）；曲線用 E = D[(r₀/r)¹² − 2(r₀/r)⁶] 示意 */
-const BONDS2 = { 'H–H': [74, 436], 'F–F': [142, 158], 'Cl–Cl': [199, 243], 'Br–Br': [228, 193], 'I–I': [267, 151], 'O=O': [121, 498], 'N≡N': [110, 945] };
+// 雙鍵、三鍵留給第 4 節；F–F 比 Cl–Cl 弱是例外，第 1 節不放
+const BONDS2 = { 'H–H': [74, 436], 'Cl–Cl': [199, 243], 'Br–Br': [228, 193], 'I–I': [267, 151] };
 W.potcurve = el => {
   const st = { b: 'Cl–Cl', r: 300 };
   el.innerHTML = `${seg('pcS', Object.keys(BONDS2).map(k => [k, k]), st.b)}<div class="w-row"><label class="rng">核間距離 r<input type="range" id="pcR" min="60" max="450" step="2"><output class="mono" id="pcO"></output></label></div><div id="pcA"></div><div id="pcG"></div><p class="eq" id="pcF"></p><p class="note" id="pcN"></p>`;
@@ -14,17 +15,22 @@ W.potcurve = el => {
     const ar = (x, dir, L, y, c) => (L < 3 ? '' : `<line x1="${x}" y1="${y}" x2="${x + dir * L}" y2="${y}" stroke="${c}" stroke-width="5" marker-end="url(#pc${c === '#3A6FD8' ? 'b' : 'r'})"/>`);
     return `<svg viewBox="0 0 560 100" class="chart" role="img" aria-label="兩個原子之間的吸引與排斥"><defs><marker id="pcb" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10z" fill="#3A6FD8"/></marker><marker id="pcr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--bad)"/></marker></defs>
 <circle cx="${x1}" cy="50" r="${R}" fill="var(--accent)" opacity=".25"/><circle cx="${x2}" cy="50" r="${R}" fill="var(--accent)" opacity=".25"/><text class="tk" x="${x1}" y="55" text-anchor="middle">${a}</text><text class="tk" x="${x2}" y="55" text-anchor="middle">${b}</text>
-${ar(x1, 1, La, 50 - R - 8, '#3A6FD8')}${ar(x2, -1, La, 50 - R - 8, '#3A6FD8')}${ar(x1, -1, Lr, 50 + R + 8, 'var(--bad)')}${ar(x2, 1, Lr, 50 + R + 8, 'var(--bad)')}</svg>`;
+<text class="tk" x="8" y="${50 - R - 4}" fill="#3A6FD8">吸引</text><text class="tk" x="8" y="${50 + R + 13}" fill="var(--bad)">排斥</text>${ar(x1, 1, La, 50 - R - 8, '#3A6FD8')}${ar(x2, -1, La, 50 - R - 8, '#3A6FD8')}${ar(x1, -1, Lr, 50 + R + 8, 'var(--bad)')}${ar(x2, 1, Lr, 50 + R + 8, 'var(--bad)')}</svg>`;
   }
   function draw() {
     const d = BONDS2[st.b], e = E(st.r, d), xs = r0 => Array.from({ length: 200 }, (_, i) => 50 + i * 2).filter(r => r > r0 * 0.86);
     $('#pcA', el).innerHTML = atoms();
-    $('#pcG', el).innerHTML = chart({ w: 560, h: 240, x: [50, 450], y: [-1000, 400], xt: [100, 200, 300, 400], yt: [-1000, -500, 0, 400], xlab: '核間距離 r（pm）', ylab: '位能（kJ/mol）', label: '位能曲線' }, (X, Y) =>
-      Object.entries(BONDS2).map(([k, v]) => `<path class="tline${k === st.b ? '' : ' faint'}" d="${path(xs(v[0]).map(r => [X(r), Y(clamp(E(r, v), -1000, 400))]))}"/>`).join('')
+    $('#pcG', el).innerHTML = chart({ w: 560, h: 240, x: [50, 450], y: [-600, 400], xt: [100, 200, 300, 400], xtl: ['1', '2', '3', '4'], yt: [-600, -300, 0, 400], xlab: '核間距離 r（Å）', ylab: '位能（kJ/mol）', label: '位能曲線' }, (X, Y) =>
+      Object.entries(BONDS2).filter(([k]) => k !== st.b).map(([, v]) => `<path class="tline faint" d="${path(xs(v[0]).map(r => [X(r), Y(clamp(E(r, v), -600, 400))]))}"/>`).join('')
+      // 選到的鍵：排斥項（紅）、吸引項（藍）、相加（黑），顏色和上面的箭頭一致
+      + `<path d="${path(xs(d[0]).filter(r => d[1] * (d[0] / r) ** 12 <= 400).map(r => [X(r), Y(d[1] * (d[0] / r) ** 12)]))}" fill="none" stroke="var(--bad)" stroke-width="2" stroke-dasharray="5 3"/>`
+      + `<path d="${path(xs(d[0] * 0.6).filter(r => -2 * d[1] * (d[0] / r) ** 6 >= -600).map(r => [X(r), Y(-2 * d[1] * (d[0] / r) ** 6)]))}" fill="none" stroke="#3A6FD8" stroke-width="2" stroke-dasharray="5 3"/>`
+      + `<path class="tline" d="${path(xs(d[0]).map(r => [X(r), Y(clamp(E(r, d), -600, 400))]))}"/>`
+      + `<text class="tk sm" x="${X(445)}" y="${Y(0) - 6}" text-anchor="end">分開時位能 = 0</text>`
       + `<line class="mk" x1="${X(d[0])}" x2="${X(d[0])}" y1="${Y(0)}" y2="${Y(-d[1])}"/><circle class="dot" data-cur="${st.b}" cx="${X(st.r)}" cy="${Y(clamp(e, -1000, 400))}" r="7"/>`);
-    $('#pcR', el).value = st.r; $('#pcO', el).textContent = `${st.r} pm`;
-    $('#pcF', el).innerHTML = `${st.b}：谷底在 r = <b>${d[0]} pm</b>（鍵長），深度 <b>${d[1]} kJ/mol</b>（鍵能）；目前 r = ${st.r} pm，位能 ${fx(e, 0)} kJ/mol`;
-    $('#pcN', el).innerHTML = `上面兩個原子跟著滑桿移動：<span style="color:#3A6FD8">藍箭頭</span>是原子核吸引對方電子的力，<span style="color:var(--bad)">紅箭頭</span>是兩個原子核（和內層電子）的排斥。${st.r > d[0] * 1.05 ? '現在離得遠：吸引比排斥大，原子會再靠近，位能往下走。' : st.r < d[0] * 0.95 ? '現在太近：排斥急遽變大、壓過吸引，位能急遽升高。' : '現在在谷底：兩個箭頭一樣長，力互相抵消，這個距離就是鍵長。'}`;
+    $('#pcR', el).value = st.r; $('#pcO', el).textContent = `${(st.r / 100).toFixed(2)} Å`;
+    $('#pcF', el).innerHTML = `${st.b}：最低點 r = <b>${(d[0] / 100).toFixed(2)} Å</b>（鍵長），深度 <b>${d[1]} kJ/mol</b>（鍵能）；目前 r = ${(st.r / 100).toFixed(2)} Å，位能 ${fx(e, 0)} kJ/mol`;
+    $('#pcN', el).innerHTML = st.r > d[0] * 1.05 ? '吸引比排斥大：原子會再靠近，位能往下走。' : st.r < d[0] * 0.95 ? '排斥比吸引大：位能急遽升高。' : '兩個力一樣大：這個距離就是鍵長。';
     pressSeg(el, 'pcS', st.b);
   }
   $('#pcR', el).oninput = e => { st.r = +e.target.value; draw(); };

@@ -1303,6 +1303,8 @@ thermo|k9flo3	某反應在 25 °C 的 ΔH° = +92 kJ、ΔG° = +33 kJ，Δ
 thermo|2qmyxw	燃燒熱：C₂H₂ −1300、H₂ −286、C₂H₆ −1560 kJ/mol
 thermo|dl1ucu	定溫定壓下的自發過程，下列哪些一定成立？ I. ΔS(系統) + ΔS(環境) 
 thermo|j6cvme	CaSO₄(s) → Ca²⁺(aq) + SO₄²⁻(aq) 的 ΔS° 為負
+vsepr|7u1rhq	H–H、Cl–Cl、Br–Br、I–I 中，哪一個鍵最長？
+vsepr|1j4169t	位能曲線最低點的深度代表什麼？
 vsepr|g0o2ds	下列哪一個鍵的極性最大？
 vsepr|1yaa14x	NH₃ 的分子形狀為何？
 vsepr|10rw2ah	XeF₄ 的形狀為何？
