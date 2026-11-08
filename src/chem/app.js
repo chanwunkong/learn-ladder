@@ -101,12 +101,16 @@ const LOG = store.get('log', []);
 const qbank = (c, k) => (k === 'x' ? c.exam : c.quiz) || [];
 // 舊版紀錄只有題號：第一次載入時依「當時的題庫」補上識別碼與快照，之後題庫怎麼改都對得上
 (() => { let ch = 0; LOG.forEach(e => { if (e.h) return; const c = chOf(e.c), q = c && qbank(c, e.k)[e.i]; if (q) { e.h = qid(c.id, q, e.k); e.qt = strip(q.q).slice(0, 60); ch = 1; } }); if (ch) store.set('log', LOG); })();
-function logAnswer(e) { LOG.push({ t: Date.now(), ...e }); if (LOG.length > 20000) LOG.splice(0, LOG.length - 20000); store.set('log', LOG); if (typeof CLOUD !== 'undefined' && CLOUD.pushLog) CLOUD.pushLog(); setTimeout(() => { if (typeof refreshPrac === 'function') refreshPrac(); }, 0); }
+// 全部錯題的提前練習：在那一區點擊時不記錄（noLog 在捕獲階段先設好，點擊處理完就恢復）
+let NOLOG = false;
+const noLog = el => el.addEventListener('click', () => { NOLOG = true; setTimeout(() => { NOLOG = false; }); }, true);
+function logAnswer(e) { if (NOLOG) return; LOG.push({ t: Date.now(), ...e }); if (LOG.length > 20000) LOG.splice(0, LOG.length - 20000); store.set('log', LOG); if (typeof CLOUD !== 'undefined' && CLOUD.pushLog) CLOUD.pushLog(); setTimeout(() => { if (typeof refreshPrac === 'function') refreshPrac(); }, 0); }
 // 由識別碼找回目前的題目（題號可能已變）
+// 題目搬到別章（識別碼不變）、或改寫後在新題目寫 was: ['舊識別碼']，舊紀錄都還找得到（'*|' 不分章）
 let QIX = null;
 function qfind(cid, h, k, i) {
-  if (!QIX) { QIX = {}; CH.forEach(c => ['q', 'x'].forEach(kk => qbank(c, kk).forEach((q, j) => { QIX[c.id + '|' + qid(c.id, q, kk)] = { c, k: kk, i: j, q }; }))); }
-  return (h && QIX[cid + '|' + h]) || (!h && chOf(cid) && qbank(chOf(cid), k)[i] ? { c: chOf(cid), k, i, q: qbank(chOf(cid), k)[i] } : null);
+  if (!QIX) { QIX = {}; CH.forEach(c => ['q', 'x'].forEach(kk => qbank(c, kk).forEach((q, j) => { const v = { c, k: kk, i: j, q }, id = qid(c.id, q, kk); QIX[c.id + '|' + id] = v; [id, ...(q.was || [])].forEach(x => { QIX['*|' + x] = QIX['*|' + x] || v; }); }))); }
+  return (h && (QIX[cid + '|' + h] || QIX['*|' + h])) || (!h && chOf(cid) && qbank(chOf(cid), k)[i] ? { c: chOf(cid), k, i, q: qbank(chOf(cid), k)[i] } : null);
 }
 const dstr = t => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
 const tstr = t => { const d = new Date(t); return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
@@ -170,31 +174,56 @@ ${ss.length ? `<div class="cards">${card('n', '練習題次', ss.length)}${card(
 }
 
 // 錯題複習：依 REVIEW 的排程，把今天到期的錯題集中起來重考（規則見 src/shared/review.js）
+// 下面列出還沒到期的全部錯題，可以提前練習；提前練習不記錄、不影響排程（2026-11-08 使用者要求）
 function renderReview() {
-  const { open, checks, due } = REVIEW.book(LOG), now = Date.now();
+  const now = Date.now();
+  let { open, checks, due } = REVIEW.book(LOG, now);
+  // 題目已從題庫移除：記一筆作廢，離開錯題本，首頁和其他裝置的數字才會一致（2026-11-08：首頁多算 1 題、這頁卻找不到）
+  const gone = [...new Set(open.concat(checks, due).filter(s => s.h && !qfind(s.c, s.h, s.k, s.i)).map(s => s.h))];
+  // shortcut: 一次超過 10 題對不上多半是題庫沒載入完整，先不作廢；真的大量刪題時再放寬
+  if (gone.length && gone.length <= 10) { logAnswer({ c: 'review', k: 'reset', h: 'reset:gone', qt: '題目已從題庫移除', v: gone }); ({ open, checks, due } = REVIEW.book(LOG, now)); }
   const items = due.map(s => ({ s, f: qfind(s.c, s.h, s.k, s.i) })).filter(x => x.f);
   const soon = open.filter(s => s.due > now && s.due <= now + 7 * REVIEW.DAY).length;
+  const by = store.get('rvBy', 'd'), md = t => { const k = REVIEW.dayKey(t); return `${+k.slice(5, 7)}/${+k.slice(8)}`; };
+  const later = open.concat(checks).filter(s => s.due > now).map(s => ({ s, f: qfind(s.c, s.h, s.k, s.i) })).filter(x => x.f)
+    .sort((a, b) => (by === 'c' ? CH.indexOf(a.f.c) - CH.indexOf(b.f.c) : 0) || a.s.due - b.s.due);
   $('#article').innerHTML = `<p class="eyebrow">後中化學</p><h1>錯題複習</h1>
 <p class="lede">${REVIEW.RULE}</p>
 <div class="cards">${card('d', '今天到期', `${items.length} 題`)}${card('o', '錯題本共', `${open.length} 題`)}${card('s', '7 天內到期', `${soon} 題`)}${card('c', '待確認（答對過的新題）', `${checks.length} 題`)}</div>
 ${(up => up.length ? `<p class="small mut">接下來 14 天：${up.map(([d, n]) => `${+d.slice(5, 7)}/${+d.slice(8)} ${n} 題`).join('、')}</p>` : '')(REVIEW.upcoming(open.concat(checks)))}
-${items.length ? items.map(({ s, f }, n) => `<div class="q" data-r="${n}"><p class="qsrc"><a href="#${f.c.id}">${f.c.title.split('：')[0]}</a>${f.k === 'x' ? '・相似題' : '・章末題'}・${REVIEW.label(s)}</p><p class="qt">${n + 1}. ${f.q.q}</p><div class="opts">${order(f.q, f.i).map(j => `<button class="opt" type="button" data-o="${j}">${f.q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('')
-  : `<p class="note">${open.length ? '今天沒有到期的錯題，到期的題目會在這裡出現。' : '錯題本是空的。到各章練習時第一次答錯的題目，會自動排進這裡。'}</p>`}`;
-  items.forEach(({ s, f }, n) => {
-    const qe = $(`.q[data-r="${n}"]`), q = f.q, why = $('.why', qe);
-    let tries = 0;
-    const sts = (STEPS[f.c.id] || {})[f.k + ':' + s.h];
-    if (sts) guide(qe, sts);
-    $$('.opt', qe).forEach(b => { b.onclick = () => {
-      const ok = +b.dataset.o === q.a; b.classList.add(ok ? 'right' : 'wrong'); why.hidden = false; tries++;
-      logAnswer({ c: f.c.id, k: f.k, i: f.i, h: s.h, qt: strip(q.q).slice(0, 60), p: +b.dataset.o, ok: ok ? 1 : 0, n: tries });
-      if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); const gb = $('.guide', qe); if (gb) gb.hidden = true;
-        const fin = (fok, st) => { why.className = 'why ok'; why.innerHTML = `${st && !fok ? `<b>這次先當成猜對</b>：理由是「${st[1]}」，${st[4]}<br>` : REVIEW.okHead(tries)}${q.why}<br><small>${REVIEW.after(s, tries === 1 && fok !== false, fok === false)}</small>`; renderTOC('review'); };
-        if (tries === 1 && sts) { why.className = 'why fu'; FOLLOW.ask(why, sts, x => x, (fok, st) => { logAnswer({ c: f.c.id, k: 'fu', fk: f.k, i: f.i, h: s.h, qt: strip(q.q).slice(0, 60), ok: fok ? 1 : 0, n: 1 }); fin(fok, st); }); }
-        else fin(); }
-      else { b.disabled = true; why.className = 'why no'; why.innerHTML = `<b>再想想。</b>${sts ? '下面拆成幾個小步驟，一步一步推回來。' : `可以回到<a href="#${f.c.id}">${f.c.title.split('：')[0]}</a>看看。`}`; if (sts) qe.openGuide(); }
-    }; });
-  });
+<div id="rvDue">${items.length ? items.map(({ s, f }, n) => rvQ(s, f, n + 1)).join('')
+  : `<p class="note">${open.length ? '今天沒有到期的錯題，到期的題目會在這裡出現。' : '錯題本是空的。到各章練習時第一次答錯的題目，會自動排進這裡。'}</p>`}</div>
+${later.length ? `<h2 id="rvAllH">全部錯題（還沒到期 ${later.length} 題）</h2>
+<p class="small mut">點一題展開，可以提前練習。這裡作答不記錄、不影響複習排程，到期那天還是要在上面作答。</p>
+<div class="seg" id="rvBy">${[['d', '依到期日'], ['c', '依章節']].map(([k, t]) => `<button type="button" aria-pressed="${k === by}" data-b="${k}">${t}</button>`).join('')}</div>
+<div id="rvAll">${later.map(({ s, f }, n) => `<details class="more rvp" data-p="${n}"><summary>${md(s.due)}・${f.c.title.split('：')[0]}・${REVIEW.label(s)}・${esc(strip(f.q.q).slice(0, 30))}</summary></details>`).join('')}</div>` : ''}`;
+  $$('#rvDue .q').forEach((qe, n) => bindRvQ(qe, items[n].s, items[n].f, false));
+  $$('#rvBy button').forEach(b => { b.onclick = () => { store.set('rvBy', b.dataset.b); renderReview(); }; });
+  const all = $('#rvAll');
+  if (all) { noLog(all); $$('.rvp', all).forEach(d => { d.ontoggle = () => {
+    if (!d.open || d.dataset.on) return; d.dataset.on = 1;
+    const { s, f } = later[+d.dataset.p]; d.insertAdjacentHTML('beforeend', rvQ(s, f, 0)); bindRvQ(d.lastElementChild, s, f, true);
+  }; }); }
+}
+function rvQ(s, f, n) {
+  return `<div class="q"><p class="qsrc"><a href="#${f.c.id}">${f.c.title.split('：')[0]}</a>${f.k === 'x' ? '・相似題' : '・章末題'}・${REVIEW.label(s)}</p><p class="qt">${n ? n + '. ' : ''}${f.q.q}</p><div class="opts">${order(f.q, f.i).map(j => `<button class="opt" type="button" data-o="${j}">${f.q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`;
+}
+// practice：提前練習，不顯示「幾天後再考」（紀錄由 noLog 擋掉）
+function bindRvQ(qe, s, f, practice) {
+  const q = f.q, why = $('.why', qe);
+  let tries = 0;
+  const sts = (STEPS[f.c.id] || {})[f.k + ':' + qid(f.c.id, q, f.k)];
+  if (sts) guide(qe, sts);
+  // 記在紀錄原本的章與題型（s.c、s.k）：題目搬到別章後，才會接著原本的排程
+  $$('.opt', qe).forEach(b => { b.onclick = () => {
+    const ok = +b.dataset.o === q.a; b.classList.add(ok ? 'right' : 'wrong'); why.hidden = false; tries++;
+    logAnswer({ c: s.c, k: s.k, i: f.i, h: s.h, qt: strip(q.q).slice(0, 60), p: +b.dataset.o, ok: ok ? 1 : 0, n: tries });
+    if (ok) { $$('.opt', qe).forEach(x => { x.disabled = true; }); const gb = $('.guide', qe); if (gb) gb.hidden = true;
+      const fin = (fok, st) => { why.className = 'why ok'; why.innerHTML = `${st && !fok ? `<b>這次先當成猜對</b>：理由是「${st[1]}」，${st[4]}<br>` : REVIEW.okHead(tries)}${q.why}${practice ? '' : `<br><small>${REVIEW.after(s, tries === 1 && fok !== false, fok === false)}</small>`}`; if (!practice) renderTOC('review'); };
+      if (tries === 1 && sts) { why.className = 'why fu'; FOLLOW.ask(why, sts, x => x, (fok, st) => { logAnswer({ c: s.c, k: 'fu', fk: s.k, i: f.i, h: s.h, qt: strip(q.q).slice(0, 60), ok: fok ? 1 : 0, n: 1 }); fin(fok, st); }); }
+      else fin(); }
+    else { b.disabled = true; why.className = 'why no'; why.innerHTML = `<b>再想想。</b>${sts ? '下面拆成幾個小步驟，一步一步推回來。' : `可以回到<a href="#${f.c.id}">${f.c.title.split('：')[0]}</a>看看。`}`; if (sts) qe.openGuide(); }
+  }; });
 }
 
 // 每節讀完的標記：記成練習紀錄中 k = 'r' 的事件（p：1 看懂了、0 還不太懂、−1 取消），以最後一筆為準；隨練習紀錄一起同步
