@@ -26,7 +26,6 @@ function render() {
   document.title = T('學習階梯', 'Learn Ladder');
   $('#eb').textContent = T('互動圖解 · 從原理學起', 'Interactive · From first principles');
   $('#h1').textContent = T('一階一階，把難的東西學懂。', 'Learn hard things, one step at a time.');
-  $('#lede').textContent = T('每門課都從直覺和圖像開始，再講原理與應用。不用安裝軟體，手機也能學；登入後進度在不同裝置同步。', 'Every course starts from intuition and pictures, then principles and applications. Nothing to install, works on your phone, and progress syncs across devices when you sign in.');
   renderExam();
   $('#otherH').textContent = T('其他課程', 'Courses');
   $('#courses').innerHTML = COURSES.filter(c => !c.exam || !isZh()).map(c => {

@@ -83,7 +83,7 @@ function renderExam() {
   const mine = e => e.s === TARGET || e.st === 'goal';
   const nextExam = EXAM_DATES.find(e => e.exam && mine(e) && daysTo(e.a) >= 0), nextDate = EXAM_DATES.find(e => mine(e) && daysTo(e.b || e.a) >= 0);
   // 化學總進度：各章已拿到的考卷比重加總。各章合計約 94%（每份約 3 題無法歸章），所以全部掌握也到不了 100%
-  const chs = chemChapters(log), got = chs.reduce((s, c) => s + c.got, 0), W = chs.reduce((s, c) => s + c.pct, 0);
+  const chs = chemChapters(log), got = chs.reduce((s, c) => s + c.got, 0);
   const cnt = st => chs.filter(c => c.st === st).length;
 
   $('#exam').innerHTML = `
@@ -116,7 +116,6 @@ ${enterHTML(es, zs)}
       <div class="stack" aria-hidden="true"><i class="s-master" style="width:${got}%"></i></div>
       <p class="legend">${['master', 'prac', 'weak', 'none'].map(st => `<span class="k-${st}">${CH_ST[st]} ${cnt(st)} 章</span>`).join('')}</p>
       <div class="chmap">${chs.map(c => `<a class="tile t-${c.st}" href="./chem/#${c.id}" title="${c.t}：${CH_ST[c.st]}${c.seen ? `，做過 ${c.seen}/${c.n} 題，最近第一次答對 ${Math.round(100 * c.acc)}%` : ''}"><span>${c.t} <i aria-hidden="true">→</i></span><small>${c.got.toFixed(1)} / ${c.pct.toFixed(1)}%・${CH_ST[c.st]}${c.open ? `・錯題 ${c.open}` : ''}</small></a>`).join('')}</div>
-      <p class="mut small">每章佔考卷的比重依中國醫歷屆考題（每份 50 題中約幾題，例如原子結構 1.9 題＝3.8%），平分給這一章有練習題的各小節；每一節再乘上題目的複習進度：沒做 0、錯題本第 1 格 20%、每過一格 +15%、第一次就答對（等確認題）60%、確認答對或五格都過 100%。方塊顯示「已拿到 / 這一章佔」。各章合計 ${W.toFixed(0)}%，其餘是無法歸到單一章的題目。已掌握＝章末小題全部答對過、做過至少四成的題目、最近第一次答對八成以上、而且沒有待複習的錯題；待加強＝最近第一次答對不到六成，或錯題本裡有 3 題以上。</p>
     </details>
     ${engProgress(es)}
     ${zhProgress(zs)}
@@ -128,7 +127,6 @@ ${enterHTML(es, zs)}
   <h3 id="dateH">重要日期</h3>
   <ol class="dates">${EXAM_DATES.map(e => { const past = daysTo(e.b || e.a) < 0, d = daysTo(e.a);
     return `<li class="${past ? 'past' : ''}${e.exam ? ' ex' : ''}${mine(e) ? ' mine' : ' other'}"><span class="when">${md(e.a)}${e.b ? `<br><small>至 ${md(e.b)}</small>` : ''}</span><span class="what"><b>${e.s}</b> ${e.what}<span class="chip ${e.st}">${ST_LABEL[e.st]}</span></span><span class="left">${past ? '已過' : d > 0 ? `${d} 天` : '進行中'}</span></li>`; }).join('')}</ol>
-  <p class="mut small">粗體為志願校中國醫與自己的目標；義守、慈濟列出供參考。繳費依往年都在網路報名期間內完成。推估的日期照 115 學年度同一週次往後推一年；各校簡章通常在報名前約一個月公告，公告後會改成正式日期。日程以各校正式簡章為準。</p>
 </section>`;
 }
 
