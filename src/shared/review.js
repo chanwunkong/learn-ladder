@@ -81,5 +81,15 @@ const REVIEW = (() => {
     [].concat(open).filter(s => s.due > now && s.due <= now + days * DAY).forEach(s => { const k = dayKey(s.due); m.set(k, (m.get(k) || 0) + 1); });
     return [...m.entries()].sort();
   }
-  return { live, resetAsk, trials, state, book, after, okHead, label, upcoming, dayKey, dayStart, DAY, GAPS, CHECK, RULE, FINAL };
+  // 錯題本頁「之後到期」：依到期日分組 [{ key, label, list }]，days 天以後併成一組（2026-11-08 使用者要求：每天到期的分開列）
+  function byDay(list, due = x => x.due, now = Date.now(), days = 14) {
+    const lim = dayStart(now) + (days + 1) * DAY, m = new Map();
+    list.forEach(x => { const k = due(x) >= lim ? '~' : dayKey(due(x)); if (!m.has(k)) m.set(k, []); m.get(k).push(x); });
+    const md = t => { const d = new Date(t); return `${d.getMonth() + 1}/${d.getDate()}（${'日一二三四五六'[d.getDay()]}）`; };
+    return [...m.keys()].sort().map(k => {
+      const t = k === '~' ? lim : due(m.get(k)[0]);
+      return { key: k, label: k === '~' ? `${md(lim)} 及以後` : `${dayKey(t) === dayKey(dayStart(now) + DAY) ? '明天 ' : ''}${md(t)}`, list: m.get(k) };
+    });
+  }
+  return { live, resetAsk, trials, state, book, after, okHead, label, upcoming, byDay, dayKey, dayStart, DAY, GAPS, CHECK, RULE, FINAL };
 })();

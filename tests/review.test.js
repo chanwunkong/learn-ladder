@@ -35,4 +35,9 @@ eq(REVIEW.book([ev(0, false), rs(0, ['h1'])]).open.length, 0, '作廢後不在�
 eq(REVIEW.book([ev(0, false), rs(0)]).open.length, 1, '照算 → 仍在錯題本');
 eq(REVIEW.book([ev(0, false), rs(0, ['h2'])]).open.length, 1, '別的題目不受影響');
 eq(st([ev(0, false), rs(0, ['h1']), ev(1, true)]).chk, true, '作廢後重做答對 → 當成新題');
+// 之後到期依日分組：同一天一組、按日期排、14 天以後併成「及以後」、明天加標記
+{ const now = new Date(2026, 10, 8, 20).getTime(), at = d => REVIEW.dayStart(now) + d * D + 3600e3;
+  const g = REVIEW.byDay([{ due: at(2) }, { due: at(1) }, { due: at(2) }, { due: at(20) }, { due: at(30) }], undefined, now);
+  eq(g.map(x => x.list.length).join(','), '1,2,2', '分組題數'); eq(g[0].label, '明天 11/9（一）', '明天的標籤');
+  eq(g[1].label, '11/10（二）', '日期與星期'); eq(g[2].label, '11/23（一） 及以後', '14 天以後併成一組'); }
 if (fail) process.exit(1); console.log('錯題排程 OK');

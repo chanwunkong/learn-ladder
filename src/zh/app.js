@@ -168,7 +168,8 @@ ${s === 'am' ? `<section class="part"><h2>1. 錯題複習</h2>${due ? `<a class=
 }
 
 /* ---- 錯題本：今天到期的重考；下面列出全部錯題可以提前練習（不記錄、不影響排程） ---- */
-const rvHTML = (f, q, pre) => `<div class="rv-q"><p class="qsrc">第 ${f.w.n} 週第 ${f.d + 1} 天・${SLOT[f.s]}・${pre}</p>${f.b ? `<details class="ctx"><summary>文章：${esc(f.b.title || '')}</summary>${passage(f.b)}</details>` : ''}${mcq(q, '')}</div>`;
+// full：「之後到期」同一天一組時，題組文章直接整篇顯示（只在第一題前放一次，由呼叫端決定）
+const rvHTML = (f, q, pre, full) => `<div class="rv-q">${full ? `<p class="lbl">${esc(f.b.title)}</p>${passage(f.b)}` : ''}<p class="qsrc">第 ${f.w.n} 週第 ${f.d + 1} 天・${SLOT[f.s]}・${pre}</p>${f.b && full === undefined ? `<details class="ctx"><summary>文章：${esc(f.b.title || '')}</summary>${passage(f.b)}</details>` : ''}${mcq(q, '')}</div>`;
 function renderReview() {
   const now = Date.now(), ix = qindex();
   let book = REVIEW.book(qlog(), now);
@@ -177,23 +178,23 @@ function renderReview() {
   // shortcut: 一次超過 10 題對不上多半是題庫沒載入完整，先不作廢；真的大量刪題時再放寬
   if (gone.length && gone.length <= 10) { logAnswer({ c: 'review', k: 'reset', h: 'reset:gone', qt: '題目已從題庫移除', v: gone }); book = REVIEW.book(qlog(), now); }
   const items = book.due.filter(s => ix[s.h]).slice(0, 50).map(s => ({ s, f: ix[s.h], q: { ...ix[s.h].q, rv: s } }));
-  const by = store.get('rvBy', 'd'), md = t => { const k = REVIEW.dayKey(t); return `${+k.slice(5, 7)}/${+k.slice(8)}`; };
-  const later = book.open.concat(book.checks).filter(s => s.due > now && ix[s.h]).map(s => ({ s, f: ix[s.h] }))
-    .sort((a, b) => (by === 'k' ? Object.keys(SKILLS).indexOf(a.f.q.sk) - Object.keys(SKILLS).indexOf(b.f.q.sk) : 0) || a.s.due - b.s.due);
+  // 之後到期：依到期日分組，同一天照題庫順序排，同一篇文章的題目放在一起（2026-11-08 使用者要求）
+  const ord = new Map(Object.keys(ix).map((h, i) => [h, i]));
+  const days = REVIEW.byDay(book.open.concat(book.checks).filter(s => s.due > now && ix[s.h]), s => s.due, now).map(g => ({ ...g, list: g.list.sort((a, b) => ord.get(a.h) - ord.get(b.h)) }));
   const back = store.get('rvBack', '');
   $('#main').innerHTML = `<p class="eyebrow">錯題本</p><h1>今天到期的錯題</h1>
-<p class="lede">${REVIEW.RULE}</p><p>錯題本目前共 <b>${book.open.length}</b> 題，待確認（答對過的新題）<b>${book.checks.length}</b> 題；今天到期 <b>${book.due.length}</b> 題。</p>${(up => up.length ? `<p class="small mut">接下來 14 天：${up.map(([d, n]) => `${+d.slice(5, 7)}/${+d.slice(8)} ${n} 題`).join('、')}</p>` : '')(REVIEW.upcoming(book.open.concat(book.checks)))}
+<p class="lede">${REVIEW.RULE}</p><p>錯題本目前共 <b>${book.open.length}</b> 題，待確認（答對過的新題）<b>${book.checks.length}</b> 題；今天到期 <b>${book.due.length}</b> 題。</p>
 <div id="rv">${items.length ? items.map(it => rvHTML(it.f, it.q, REVIEW.label(it.s))).join('') : '<p class="note">今天沒有到期的錯題。</p>'}</div><div class="row endrow">${back ? `<a class="btn pri" href="${back}">回到早上的練習 ›</a>` : ''}<a class="btn" href="#">回到本週</a></div>
-${later.length ? `<h2>全部錯題（還沒到期 ${later.length} 題）</h2>
-<p class="small mut">點一題展開，可以提前練習。這裡作答不記錄、不影響複習排程，到期那天還是要在上面作答。</p>
-<div class="row" id="rvBy">${[['d', '依到期日'], ['k', '依題型']].map(([k, t]) => `<button type="button" class="btn sm${k === by ? ' pri' : ''}" aria-pressed="${k === by}" data-b="${k}">${t}</button>`).join('')}</div>
-<div id="rvAll">${later.map(({ s, f }, n) => `<details class="rvp" data-p="${n}"><summary>${md(s.due)}・${esc(SKILLS[f.q.sk] || '')}・${REVIEW.label(s)}・${esc(f.q.qt.slice(0, 30))}</summary></details>`).join('')}</div>` : ''}`;
+${days.length ? `<h2>之後到期</h2>
+<p class="small mut">點開某一天，可以提前練習那天到期的題目。這裡作答不記錄、不影響複習排程，到期那天還是要在上面作答。</p>
+<div id="rvAll">${days.map((g, n) => `<details class="rvday" data-p="${n}"><summary>${g.label}<b>${g.list.length} 題</b></summary></details>`).join('')}</div>` : ''}`;
   bindMcq($('#rv'), items.map(it => it.q), null, false);
-  $$('#rvBy button').forEach(b => { b.onclick = () => { store.set('rvBy', b.dataset.b); renderReview(); }; });
   const all = $('#rvAll');
-  if (all) { noLog(all); $$('.rvp', all).forEach(d => { d.ontoggle = () => {
+  if (all) { noLog(all); $$('.rvday', all).forEach(d => { d.ontoggle = () => {
     if (!d.open || d.dataset.on) return; d.dataset.on = 1;
-    const { s, f } = later[+d.dataset.p]; d.insertAdjacentHTML('beforeend', rvHTML(f, f.q, REVIEW.label(s))); bindMcq(d, [f.q], null, false);   // 不帶 rv：不顯示「幾天後再考」
+    const g = days[+d.dataset.p], shown = new Set();
+    d.insertAdjacentHTML('beforeend', g.list.map(s => { const f = ix[s.h], first = !!f.b && !shown.has(f.b); if (f.b) shown.add(f.b); return rvHTML(f, f.q, REVIEW.label(s), first); }).join(''));
+    bindMcq(d, g.list.map(s => ix[s.h].q), null, false);   // 不帶 rv：不顯示「幾天後再考」
   }; }); }
 }
 
