@@ -34,6 +34,11 @@ COURSES = {
         "desc": "學士後中醫入學考英文：每天早晚兩段，單字、長句拆解、文法、克漏字與閱讀，錯題自動複習。",
         "theme": "#1F4E79",
     },
+    "zh": {
+        "scripts": ["ui.js", "wk/*.js", "@review.js", "@followup.js", "app.js", "@cloud.js", "start.js"],
+        "desc": "學士後中醫入學考國文：每天早晚兩段，字音字形、字詞、國學常識與閱讀題組，錯題自動複習。",
+        "theme": "#8E2F2F",
+    },
 }
 PORTAL = {"scripts": ["@cloud.js", "@review.js", "chem-meta.js", "exam.js", "portal.js"], "desc": "學習階梯：用互動圖解從原理學起的線上課程。", "theme": "#2F3B99"}
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-# 後中化學：建置 → 三組測試 → commit → push → 複製 Artifact 預覽檔。用法：bash tests/chem/publish.sh "commit 訊息"
+# 學習階梯（化學、英文、國文）：建置 → 測試 → commit → push → 複製 Artifact 預覽檔。用法：bash tests/chem/publish.sh "commit 訊息"
 set -e
 cd "$(dirname "$0")/../.."
 python3 build.py >/dev/null
@@ -11,7 +11,9 @@ node tests/chem/show.test.js || exit 1
 node tests/review.test.js || exit 1
 node tests/options.test.js || exit 1
 node tests/eng/data.test.js || exit 1
+node tests/zh/data.test.js || exit 1
 eout=$(bash tests/eng/smoke.sh 2>&1) || { echo "$eout" | grep -v "^ok"; exit 1; }
+zout=$(bash tests/zh/smoke.sh 2>&1) || { echo "$zout" | grep -v "^ok"; exit 1; }
 # 已依新標準修過的章節，另外用手機寬度再測一次
 for c in $(grep -v "^#" tests/chem/strict.txt); do pout=$(ONLY=$c SMOKE_W=390 bash tests/chem/smoke.sh 2>&1) || { echo "手機寬度："; echo "$pout" | grep -v "^ok"; exit 1; }; done
 out=$(bash tests/chem/smoke.sh 2>&1) || { echo "$out" | grep -v "^ok"; exit 1; }
