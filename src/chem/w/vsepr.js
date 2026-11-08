@@ -56,8 +56,8 @@ W.bondtype = el => {
   function draw() {
     const d = Math.abs(EN[a] - EN[b]), hi = EN[a] >= EN[b] ? a : b, lo = hi === a ? b : a;
     $('#btE', el).innerHTML = cloud(d, EN[a] > EN[b]);
-    $('#btC', el).innerHTML = chart({ x: [0, 3.3], y: [0, 1], xt: [0, 0.5, 1, 1.7, 2, 3], yt: [], xlab: '電負度差 ΔEN', h: 110 }, (X, Y) => `<rect x="${X(0)}" y="${Y(1)}" width="${X(0.5) - X(0)}" height="${Y(0) - Y(1)}" fill="var(--acid)" opacity=".12"/><rect x="${X(0.5)}" y="${Y(1)}" width="${X(1.7) - X(0.5)}" height="${Y(0) - Y(1)}" fill="var(--accent)" opacity=".12"/><rect x="${X(1.7)}" y="${Y(1)}" width="${X(3.3) - X(1.7)}" height="${Y(0) - Y(1)}" fill="var(--base)" opacity=".14"/><text class="tk" x="${X(0.25)}" y="${Y(0.8)}" text-anchor="middle">非極性</text><text class="tk" x="${X(1.1)}" y="${Y(0.8)}" text-anchor="middle">極性共價</text><text class="tk" x="${X(2.5)}" y="${Y(0.8)}" text-anchor="middle">離子性為主</text><circle class="dot" cx="${X(Math.min(3.2, d))}" cy="${Y(0.35)}" r="8"/>`);
-    $('#btN', el).innerHTML = a === b ? `${a}–${b}：兩個原子相同，電子雲在正中間，<b>非極性共價鍵</b>。` : `${a}（${EN[a]}）與 ${b}（${EN[b]}），ΔEN = ${fx(d, 2)}：電子雲偏向電負度大的 <b>${hi}</b>。${d < 0.5 ? '偏得很少，視為<b>非極性共價鍵</b>（C–H 屬於這一類）。' : d < 1.7 ? `<b>極性共價鍵</b>：${hi} 端帶部分負電（δ−），${lo} 端帶部分正電（δ+）；ΔEN 越大，鍵的極性越大。` : `電子幾乎整個移到 ${hi}，${lo} 變成陽離子、${hi} 變成陰離子：<b>離子鍵</b>。`}`;
+    $('#btC', el).innerHTML = chart({ x: [0, 3.3], y: [0, 1], xt: [0, 1, 2, 3], yt: [], xlab: '電負度差 ΔEN', h: 110 }, (X, Y) => `<rect x="${X(0)}" y="${Y(1)}" width="${X(0.5) - X(0)}" height="${Y(0) - Y(1)}" fill="var(--acid)" opacity=".12"/><rect x="${X(0.5)}" y="${Y(1)}" width="${X(1.7) - X(0.5)}" height="${Y(0) - Y(1)}" fill="var(--accent)" opacity=".12"/><rect x="${X(1.7)}" y="${Y(1)}" width="${X(3.3) - X(1.7)}" height="${Y(0) - Y(1)}" fill="var(--base)" opacity=".14"/><text class="tk" x="${X(0.25)}" y="${Y(0.8)}" text-anchor="middle">非極性</text><text class="tk sm" x="${X(0.5)}" y="${Y(0.15)}" text-anchor="middle">約 0.5</text><text class="tk sm" x="${X(1.7)}" y="${Y(0.15)}" text-anchor="middle">約 1.7</text><text class="tk" x="${X(1.1)}" y="${Y(0.8)}" text-anchor="middle">極性共價</text><text class="tk" x="${X(2.5)}" y="${Y(0.8)}" text-anchor="middle">離子性為主</text><circle class="dot" cx="${X(Math.min(3.2, d))}" cy="${Y(0.35)}" r="8"/>`);
+    $('#btN', el).innerHTML = a === b ? `${a}–${b}：ΔEN = 0，<b>非極性共價鍵</b>。` : `${a}–${b}：ΔEN = ${fx(d, 2)}，${d < 0.5 ? '<b>非極性共價鍵</b>。' : d < 1.7 ? `<b>極性共價鍵</b>，${hi} 端 δ−。` : `<b>離子鍵</b>：${lo} 變成陽離子、${hi} 變成陰離子。`}`;
     $('#btA', el).value = a; $('#btB', el).value = b;
   }
   $('#btA', el).onchange = e => { a = e.target.value; draw(); };
@@ -74,7 +74,7 @@ const LAT = [['LiF', 'Li⁺', 'F⁻', 1, 1030], ['LiCl', 'Li⁺', 'Cl⁻', 1, 83
 W.lattice = el => {
   const st = { a: 'NaCl', b: 'MgO' };
   const opts = LAT.map(([f]) => `<option>${f}</option>`).join('');
-  el.innerHTML = `<div class="w-row">${ctl('左邊', `<label class="sel"><select id="ltA">${opts}</select></label>`)}${ctl('右邊', `<label class="sel"><select id="ltB">${opts}</select></label>`)}${ctl('常考的比較', [['NaF', 'NaI'], ['NaCl', 'MgO'], ['LiCl', 'KCl'], ['MgO', 'SrO']].map(([x, y]) => `<button class="btn sm ghost" type="button" data-p="${x},${y}">${x}／${y}</button>`).join(''))}</div><div id="ltG"></div><div class="cards" id="ltK"></div><p class="eq" id="ltF"></p><p class="note" id="ltN"></p>`;
+  el.innerHTML = `<div class="w-row">${ctl('左邊', `<label class="sel"><select id="ltA">${opts}</select></label>`)}${ctl('右邊', `<label class="sel"><select id="ltB">${opts}</select></label>`)}${ctl('常考的比較', [['NaF', 'NaI'], ['NaCl', 'MgO'], ['LiCl', 'KCl'], ['MgO', 'SrO']].map(([x, y]) => `<button class="btn sm ghost" type="button" data-p="${x},${y}">${x}／${y}</button>`).join(''))}</div><div id="ltG"></div><div class="cards" id="ltK"></div><p class="note" id="ltN"></p>`;
   const row = f => LAT.find(x => x[0] === f), xv = ([, c, a, q]) => 1000 * q / (IONRAD[c] + IONRAD[a]);
   function pair(f, cx) {
     const [, c, a] = row(f), k = 0.33, rc = IONRAD[c] * k, ra = IONRAD[a] * k, x0 = cx - (rc + ra), y = 82, ly = y + Math.max(rc, ra) + 12;
@@ -85,9 +85,8 @@ W.lattice = el => {
   function draw() {
     const A = row(st.a), B = row(st.b), qs = d => (d[3] === 4 ? '2 × 2' : '1 × 1');
     $('#ltG', el).innerHTML = `<svg viewBox="0 0 560 196" class="chart" role="img" aria-label="兩組離子照比例並排">${pair(st.a, 140)}${pair(st.b, 420)}</svg>`;
-    $('#ltK', el).innerHTML = card('a', `${st.a} 晶格能`, `${A[4]} kJ/mol`) + card('b', `${st.b} 晶格能`, `${B[4]} kJ/mol`) + card('r', '右 ÷ 左', `${fx(B[4] / A[4], 2)} 倍`, `電荷÷距離比 ${fx(xv(B) / xv(A), 2)} 倍`);
-    $('#ltF', el).innerHTML = `晶格能 ∝ 電荷乘積 ÷ 距離：${st.a} ${qs(A)} ÷ ${IONRAD[A[1]] + IONRAD[A[2]]} = ${fx(xv(A), 1)}　｜　${st.b} ${qs(B)} ÷ ${IONRAD[B[1]] + IONRAD[B[2]]} = ${fx(xv(B), 1)}（×10⁻³）`;
-    $('#ltN', el).innerHTML = `圓照真實大小的比例畫。正、負離子靠得越近（r 越小）、電荷越大，互相吸引越強，拆開需要的能量（<b>晶格能</b>）越大，熔點也越高。${A[3] !== B[3] ? '電荷從 1 × 1 變成 2 × 2，乘積是 4 倍，影響比距離大得多。' : '電荷相同時，只比距離：離子越小，晶格能越大。'}`;
+    $('#ltK', el).innerHTML = card('a', `${st.a} 晶格能`, `${A[4]} kJ/mol`) + card('b', `${st.b} 晶格能`, `${B[4]} kJ/mol`) + card('r', '右 ÷ 左', `${fx(B[4] / A[4], 2)} 倍`, `電荷乘積 ÷ r 是 ${fx(xv(B) / xv(A), 2)} 倍`);
+    $('#ltN', el).innerHTML = A[3] !== B[3] ? '電荷乘積差 4 倍，影響比距離大得多。' : '電荷相同，只比距離：r 越小，晶格能越大。';
     $('#ltA', el).value = st.a; $('#ltB', el).value = st.b;
   }
   $('#ltA', el).onchange = e => { st.a = e.target.value; draw(); };

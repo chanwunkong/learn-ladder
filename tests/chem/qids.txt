@@ -1331,7 +1331,7 @@ vsepr|4exqnv	下列鍵角由大到小何者正確？
 vsepr|1mbiyu7	C₂H₄、HCHO、BF₃、NH₃、H₂O₂、H₂C=C=CH₂ 中，所有原子共
 vsepr|1d3tmq7	下列離子化合物何者晶格能最大？
 vsepr|19aqf3i	下列何者的熔點最高？
-vsepr|19zihk3	下列化學鍵的極性由大到小，何者正確？
+vsepr|11qxq4r	C–F、N–F、O–F 的極性由大到小，何者正確？
 vsepr|8k24kt	下列化合物沸點由低到高，何者正確？
 vsepr|spl8tf	1-丙醇、2-丙醇、甲乙醚的沸點由高到低為？
 vsepr|1km73a2	CH₃OCH₃、CH₄、F⁻、CH₃COOH、K⁺ 中，能和水形成氫鍵的是？
