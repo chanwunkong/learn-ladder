@@ -234,7 +234,7 @@ function renderHome() {
 <p class="lede">每天分成早上與晚上兩段。早上先複習到期的錯題，再學 ${n} 個新單字和 2 個長句；晚上學一個文法重點，完成當天的${[...new Set(dayPass(w, 0).map(P => P.type === 'cloze' ? '克漏字' : '閱讀'))].join('＋')}，最後回想早上的單字。答錯的題目會自動排進之後的複習。</p>
 ${due ? `<p class="duebar"><a href="#review">錯題本有 <b>${due}</b> 題今天到期 →</a></p>` : ''}
 <ol class="days">${w.words.map((x, d) => `<li class="day${nx && nx.d === d ? ' now' : ''}"><h2>第 ${d + 1} 天<small>${esc(w.gram[d].title.split('：')[0])}</small></h2><div class="slots">${slot(d, 'am')}${slot(d, 'pm')}</div></li>`).join('')}</ol>
-<div class="row endrow"><a class="btn pri" href="#report">本週報告與匯出</a><a class="btn" href="#review">錯題本</a></div>
+<div class="row endrow"><a class="btn pri" href="#report">本週報告與匯出</a><a class="btn" href="#review">錯題本</a>${(n => n ? `<a class="btn" href="#cards">單字卡複習（${n} 個字）</a>` : '')(reviewWords().length)}</div>
 ${WEEKS.length > 1 ? `<p class="small">其他週：${WEEKS.map((x, i) => `<button class="btn sm" type="button" data-wk="${i}">第 ${x.n} 週</button>`).join(' ')}</p>` : ''}`;
   $$('[data-wk]').forEach(b => { b.onclick = () => { store.set('week', +b.dataset.wk); renderHome(); }; });
 }
@@ -264,9 +264,28 @@ function resetBox(c) {
   };
 }
 // 單字卡：早上的頁面（可標「不熟」）與晚上的面板共用
-function wordCards(w, d, withUnsure) {
+function wordCards(w, d, withUnsure) { return w.words[d].map(x => wordCard(w, d, x, withUnsure)).join(''); }
+// head：卡片最上面的小標（單字卡複習頁標出第幾週第幾天、下次複習日）
+function wordCard(w, d, x, withUnsure, head = '') {
   const c = `${wkKey(w)}d${d + 1}am`;
-  return w.words[d].map(x => `<article class="wcard"><p class="wh"><span class="enw">${esc(x[0])}</span>${sayBtn(x[0])}<span class="pos">${esc(x[1])}</span><span class="wz">${esc(x[2])}</span></p>${x[3] ? `<p class="root">${esc(x[3])}</p>` : ''}<p class="ens">${esc(x[4])} ${sayBtn(x[4], '朗讀例句')}</p><p class="zh">${esc(x[5])}</p>${withUnsure ? unsureBtn(`u:word:${wkKey(w)}:${x[0]}`, c, `${x[0]}（${x[2]}）`) : ''}</article>`).join('');
+  return `<article class="wcard">${head}<p class="wh"><span class="enw">${esc(x[0])}</span>${sayBtn(x[0])}<span class="pos">${esc(x[1])}</span><span class="wz">${esc(x[2])}</span></p>${x[3] ? `<p class="root">${esc(x[3])}</p>` : ''}<p class="ens">${esc(x[4])} ${sayBtn(x[4], '朗讀例句')}</p><p class="zh">${esc(x[5])}</p>${withUnsure ? unsureBtn(`u:word:${wkKey(w)}:${x[0]}`, c, `${x[0]}（${x[2]}）`) : ''}</article>`;
+}
+
+/* ---- 單字卡複習：錯題本裡還沒掌握的單字（字義題、回想題答錯）＋標記「還不太懂」的字；只看卡片，不考、不記錄（2026-11-09 使用者要求） ---- */
+function reviewWords() {
+  const byKey = {}, out = new Map();
+  WEEKS.forEach(w => w.words.forEach((day, d) => day.forEach(x => { byKey[`${wkKey(w)}:${x[0]}`] = { w, d, x }; })));
+  const add = (k, due) => { const e = byKey[k]; if (!e) return; const o = out.get(k); if (!o) out.set(k, { ...e, due }); else if (due < o.due) o.due = due; };
+  REVIEW.book(qlog()).open.forEach(s => { const m = /^wr?:(w\d+:.+)$/.exec(s.h || ''); if (m) add(m[1], s.due); });
+  Object.entries(unsure()).forEach(([k, e]) => { const m = /^u:word:(w\d+:.+)$/.exec(k); if (e && m) add(m[1], Infinity); });   // 只標了不熟、沒答錯的排最後
+  return [...out.values()].sort((a, b) => a.due - b.due || a.w.n - b.w.n || a.d - b.d);
+}
+function renderCards() {
+  const list = reviewWords(), md = t => { const k = REVIEW.dayKey(t); return `${+k.slice(5, 7)}/${+k.slice(8)}`; }, today = REVIEW.dayStart(Date.now());
+  $('#main').innerHTML = `<p class="eyebrow">錯題本</p><h1>單字卡複習</h1>
+<p class="lede">錯題本裡還沒掌握的單字，加上你標記「還不太懂」的字，共 <b>${list.length}</b> 個。只看卡片、唸例句，不考試，也不影響複習排程。最快要複習的排在最前面。</p>
+${list.length ? `<div class="words">${list.map(e => wordCard(e.w, e.d, e.x, false, `<p class="qsrc">第 ${e.w.n} 週第 ${e.d + 1} 天・${e.due === Infinity ? '標記不熟' : e.due <= today ? '今天要複習' : `${md(e.due)} 複習`}</p>`)).join('')}</div>` : '<p class="note">目前沒有答錯或標記不熟的單字。</p>'}
+<div class="row endrow"><a class="btn" href="#review">錯題本</a><a class="btn" href="#">回到本週</a></div>`;
 }
 function renderAM(w, d) {
   const words = w.words[d], wq = words.map((x, i) => wordQ(w, d, i)), c = `${wkKey(w)}d${d + 1}am`, due = REVIEW.book(qlog()).due.length;
@@ -372,6 +391,7 @@ function renderReview() {
   });
   $('#main').innerHTML = `<p class="eyebrow">錯題本</p><h1>今天到期的錯題</h1>
 <p class="lede">${REVIEW.RULE}</p><p>錯題本目前共 <b>${book.open.length}</b> 題，待確認（答對過的新題）<b>${book.checks.length}</b> 題；今天到期 <b>${book.due.length}</b> 題。</p>
+${(n => n ? `<p><a class="btn" href="#cards">單字卡複習（${n} 個字）：只看卡片，不考試</a></p>` : '')(reviewWords().length)}
 <div id="rv">${items.length ? reviewHTML(items) : '<p class="note">今天沒有到期的錯題。</p>'}</div><div class="row endrow">${store.get('rvBack', '') ? `<a class="btn pri" href="${store.get('rvBack', '')}">回到早上的練習 ›</a>` : ''}<a class="btn" href="#">回到本週</a></div>
 ${days.length ? `<h2>之後到期</h2>
 <p class="small mut">點開某一天，可以提前練習那天到期的題目。這裡作答不記錄、不影響複習排程，到期那天還是要在上面作答。</p>
@@ -543,6 +563,7 @@ function route() {
   const h = location.hash.slice(1), w = curWeek(), m = h.match(/^d([1-7])(am|pm)$/);
   if (m) { const d = +m[1] - 1; if (m[2] === 'am') renderAM(w, d); else renderPM(w, d); }
   else if (h === 'review') renderReview();
+  else if (h === 'cards') renderCards();
   else if (h === 'report') renderReport();
   else renderHome();
   $('#wkTag').textContent = `第 ${w.n} 週`; refreshParts();

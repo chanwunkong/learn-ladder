@@ -11,5 +11,7 @@ const COURSE = {
 if (document.querySelector('meta[name="app-site"]')) {
   document.querySelector('.brand').insertAdjacentHTML('beforebegin', '<a class="home-link" href="../">‹ 學習階梯</a>');
   if (typeof CLOUD !== 'undefined') CLOUD.start();
+  // 新版：service worker 換成新版本時重新整理一次（第一次安裝沒有舊版，不重整；2026-11-09 使用者要求：更新後不用再開兩次）
   if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('../sw.js', { scope: '../' }).catch(() => {});
+  if ('serviceWorker' in navigator) navigator.serviceWorker.controller && navigator.serviceWorker.addEventListener('controllerchange', () => location.reload(), { once: true });
 }

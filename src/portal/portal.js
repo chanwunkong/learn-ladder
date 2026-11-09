@@ -57,4 +57,6 @@ document.addEventListener('click', e => {
   if (!document.querySelector('.navwait')) document.body.insertAdjacentHTML('beforeend', '<div class="navwait" role="status">開啟中…</div>');
 });
 addEventListener('pageshow', () => { const w = document.querySelector('.navwait'); if (w) w.remove(); });
+// 新版：service worker 換成新版本時重新整理一次（第一次安裝沒有舊版，不重整；2026-11-09 使用者要求：更新後不用再開兩次）
 if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('./sw.js').catch(() => {});
+if ('serviceWorker' in navigator) navigator.serviceWorker.controller && navigator.serviceWorker.addEventListener('controllerchange', () => location.reload(), { once: true });
