@@ -246,7 +246,7 @@ function dayHead(w, d, s) {
 // 頁首（捲動時固定在最上面）顯示這一頁完成幾題；在已作答的題目之前、還沒作答的標成「跳過」，頁首的按鈕跳到第一個（2026-11-07 使用者要求：只顯示在頁首）
 const itemDone = e => e.classList.contains('done') || e.classList.contains('prev') || (e.classList.contains('sentc') && !!e.querySelector('.core'));
 function refreshParts() {
-  const all = $$('.q[data-h], .sentc', $('#main')).filter(e => !e.closest('.sheet, #rvAll'));   // 之後到期的提前練習不算本頁題數
+  const all = $$('.q[data-h], .sentc', $('#main')).filter(e => !e.closest('.sheet, .practice'));   // 提前練習的題目不算本頁題數
   const last = all.map(itemDone).lastIndexOf(true), skip = all.filter((e, k) => k < last && !itemDone(e)), n = all.filter(itemDone).length;
   all.forEach(e => e.classList.toggle('skipped', skip.includes(e)));
   $('#pgTag').innerHTML = all.length ? `${n === all.length ? '✓ ' : ''}本頁 ${n} / ${all.length} 題${skip.length ? `<button type="button" class="linkb skipb" id="pgSkip">跳過 ${skip.length} 題 ↓</button>` : ''}` : '';
@@ -370,7 +370,7 @@ function bindReview(items, root = $('#rv'), pre = 'r') {
   bindMcq(root, items.filter(it => it.q).map(it => it.q), null, false);
   items.filter(it => it.sent).forEach(it => { const f = it.sent; bindSent(root, f.w, f.d, f.j, f.w.sents[f.d][f.j], null, `${pre}${f.w.n}-${f.d}:${f.j}`, false); });
 }
-// 之後到期的錯題依到期日分組，可以提前練習；提前練習不記錄、不影響排程（2026-11-08 使用者要求）
+// 上方是日期格子（今天、明天……之後）＋單字卡，點一格列出那天的題目；今天的作答會記錄，其他天是提前練習、不記錄（2026-11-09 使用者要求：拿掉規則說明）
 function renderReview() {
   const now = Date.now(), ix = qindex();
   let book = REVIEW.book(qlog(), now);
@@ -378,9 +378,10 @@ function renderReview() {
   const gone = [...new Set(book.open.concat(book.checks, book.due).filter(s => s.h && !ix[s.h]).map(s => s.h))];
   // shortcut: 一次超過 10 題對不上多半是題庫沒載入完整，先不作廢；真的大量刪題時再放寬
   if (gone.length && gone.length <= 10) { logAnswer({ c: 'review', k: 'reset', h: 'reset:gone', qt: '題目已從題庫移除', v: gone }); book = REVIEW.book(qlog(), now); }
-  const items = reviewItems(), ord = new Map(Object.keys(ix).map((h, i) => [h, i]));
-  // 同一天照題庫順序排（週、天、單字→長句→文法→文章），同一個長句只列一次
-  const days = REVIEW.byDay(book.open.concat(book.checks).filter(s => s.due > now && ix[s.h]), s => s.due, now).map(g => {
+  const ord = new Map(Object.keys(ix).map((h, i) => [h, i]));
+  // 今天：reviewItems（之前沒做完的在前、最多 50 題）；其他天照題庫順序（週、天、單字→長句→文法→文章），同一個長句只列一次
+  const cs = REVIEW.dayCards(book.open.concat(book.checks, book.due.filter(s => s.final)).filter(s => ix[s.h]), s => s.due, now).map(g => {
+    if (g.key === 'today') return { ...g, n: g.list.length, list: reviewItems() };
     const seen = new Set(), list = [];
     g.list.sort((a, b) => ord.get(a.h) - ord.get(b.h)).forEach(s => {
       const f = ix[s.h];
@@ -389,19 +390,18 @@ function renderReview() {
     });
     return { ...g, n: g.list.length, list };
   });
-  $('#main').innerHTML = `<p class="eyebrow">錯題本</p><h1>今天到期的錯題</h1>
-<p class="lede">${REVIEW.RULE}</p><p>錯題本目前共 <b>${book.open.length}</b> 題，待確認（答對過的新題）<b>${book.checks.length}</b> 題；今天到期 <b>${book.due.length}</b> 題。</p>
-${(n => n ? `<p><a class="btn" href="#cards">單字卡複習（${n} 個字）：只看卡片，不考試</a></p>` : '')(reviewWords().length)}
-<div id="rv">${items.length ? reviewHTML(items) : '<p class="note">今天沒有到期的錯題。</p>'}</div><div class="row endrow">${store.get('rvBack', '') ? `<a class="btn pri" href="${store.get('rvBack', '')}">回到早上的練習 ›</a>` : ''}<a class="btn" href="#">回到本週</a></div>
-${days.length ? `<h2>之後到期</h2>
-<p class="small mut">點開某一天，可以提前練習那天到期的題目。這裡作答不記錄、不影響複習排程，到期那天還是要在上面作答。</p>
-<div id="rvAll">${days.map((g, n) => `<details class="rvday" data-p="${n}"><summary>${g.label}<b>${g.n} 題</b></summary></details>`).join('')}</div>` : ''}`;
-  bindReview(items);
-  const all = $('#rvAll');
-  if (all) { noLog(all); $$('.rvday', all).forEach(d => { d.ontoggle = () => {
-    if (!d.open || d.dataset.on) return; d.dataset.on = 1;
-    const g = days[+d.dataset.p]; d.insertAdjacentHTML('beforeend', reviewHTML(g.list, true, 'p')); bindReview(g.list, d, 'p');
-  }; }); }
+  const nw = reviewWords().length, back = store.get('rvBack', '');
+  $('#main').innerHTML = `<p class="eyebrow">錯題本</p><h1>錯題複習</h1><div class="dcards" id="dcards"></div><div id="dlist"></div>`;
+  const show = k => {
+    const g = cs.find(x => x.key === k), today = k === 'today';
+    $('#dcards').innerHTML = REVIEW.cardsHTML(cs, k, x => x.n) + (nw ? `<a class="dcard" href="#cards"><b>單字卡 →</b><span>${nw} 個字</span></a>` : '');
+    $$('#dcards button.dcard').forEach(b => { b.onclick = () => show(b.dataset.k); });
+    $('#dlist').innerHTML = `<div class="${today ? '' : 'practice'}">${today ? '' : `<p class="dnote">${g.label}到期的題目，可以提前練習：作答不記錄、不影響複習排程。</p>`}${g.list.length ? reviewHTML(g.list, !today, today ? 'r' : 'p') : '<p class="note">今天沒有到期的錯題。</p>'}</div>
+${today ? `<div class="row endrow">${back ? `<a class="btn pri" href="${back}">回到早上的練習 ›</a>` : ''}<a class="btn" href="#">回到本週</a></div>` : ''}`;
+    const box = $('#dlist > div'); if (!today) noLog(box);
+    bindReview(g.list, box, today ? 'r' : 'p'); refreshParts();
+  };
+  show('today');
 }
 
 /* ---- 週報：依能力分類列出本週練了什麼、哪裡弱 ---- */

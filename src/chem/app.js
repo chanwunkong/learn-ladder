@@ -182,26 +182,21 @@ function renderReview() {
   const gone = [...new Set(open.concat(checks, due).filter(s => s.h && !qfind(s.c, s.h, s.k, s.i)).map(s => s.h))];
   // shortcut: 一次超過 10 題對不上多半是題庫沒載入完整，先不作廢；真的大量刪題時再放寬
   if (gone.length && gone.length <= 10) { logAnswer({ c: 'review', k: 'reset', h: 'reset:gone', qt: '題目已從題庫移除', v: gone }); ({ open, checks, due } = REVIEW.book(LOG, now)); }
-  const items = due.map(s => ({ s, f: qfind(s.c, s.h, s.k, s.i) })).filter(x => x.f);
-  const soon = open.filter(s => s.due > now && s.due <= now + 7 * REVIEW.DAY).length;
-  // 之後到期：依到期日分組，同一天照章節、題號排（2026-11-08 使用者要求：每天到期的分開列）
-  const days = REVIEW.byDay(open.concat(checks).filter(s => s.due > now).map(s => ({ s, f: qfind(s.c, s.h, s.k, s.i) })).filter(x => x.f), x => x.s.due, now)
-    .map(g => ({ ...g, list: g.list.sort((a, b) => CH.indexOf(a.f.c) - CH.indexOf(b.f.c) || a.f.k.localeCompare(b.f.k) || a.f.i - b.f.i) }));
-  $('#article').innerHTML = `<p class="eyebrow">後中化學</p><h1>錯題複習</h1>
-<p class="lede">${REVIEW.RULE}</p>
-<div class="cards">${card('d', '今天到期', `${items.length} 題`)}${card('o', '錯題本共', `${open.length} 題`)}${card('s', '7 天內到期', `${soon} 題`)}${card('c', '待確認（答對過的新題）', `${checks.length} 題`)}</div>
-<div id="rvDue">${items.length ? items.map(({ s, f }, n) => rvQ(s, f, n + 1)).join('')
-  : `<p class="note">${open.length ? '今天沒有到期的錯題，到期的題目會在這裡出現。' : '錯題本是空的。到各章練習時第一次答錯的題目，會自動排進這裡。'}</p>`}</div>
-${days.length ? `<h2 id="rvAllH">之後到期</h2>
-<p class="small mut">點開某一天，可以提前練習那天到期的題目。這裡作答不記錄、不影響複習排程，到期那天還是要在上面作答。</p>
-<div id="rvAll">${days.map((g, n) => `<details class="more rvday" data-p="${n}"><summary>${g.label}<b>${g.list.length} 題</b></summary></details>`).join('')}</div>` : ''}`;
-  $$('#rvDue .q').forEach((qe, n) => bindRvQ(qe, items[n].s, items[n].f, false));
-  const all = $('#rvAll');
-  if (all) { noLog(all); $$('.rvday', all).forEach(d => { d.ontoggle = () => {
-    if (!d.open || d.dataset.on) return; d.dataset.on = 1;
-    const g = days[+d.dataset.p]; d.insertAdjacentHTML('beforeend', g.list.map(({ s, f }, n) => rvQ(s, f, n + 1)).join(''));
-    $$(':scope > .q', d).forEach((qe, n) => bindRvQ(qe, g.list[n].s, g.list[n].f, true));
-  }; }); }
+  // 上方是日期格子（今天、明天……之後），點一格列出那天的題目；今天的作答會記錄，其他天是提前練習、不記錄（2026-11-09 使用者要求：拿掉規則說明與統計格）
+  const ord = (a, b) => CH.indexOf(a.f.c) - CH.indexOf(b.f.c) || a.f.k.localeCompare(b.f.k) || a.f.i - b.f.i;
+  const cs = REVIEW.dayCards(open.concat(checks).concat(due.filter(s => s.final)).map(s => ({ s, f: qfind(s.c, s.h, s.k, s.i) })).filter(x => x.f), x => x.s.due, now)
+    .map(g => ({ ...g, list: g.list.sort((a, b) => (g.key === 'today' ? (a.s.due < REVIEW.dayStart(now)) - (b.s.due < REVIEW.dayStart(now)) : 0) * -1 || ord(a, b)) }));   // 今天：之前沒做完的排前面
+  $('#article').innerHTML = `<p class="eyebrow">後中化學</p><h1>錯題複習</h1><div class="dcards" id="dcards"></div><div id="dlist"></div>`;
+  const show = k => {
+    const g = cs.find(x => x.key === k), today = k === 'today';
+    $('#dcards').innerHTML = REVIEW.cardsHTML(cs, k);
+    $$('#dcards .dcard').forEach(b => { b.onclick = () => show(b.dataset.k); });
+    $('#dlist').innerHTML = `<div>${today ? '' : `<p class="dnote">${g.label}到期的題目，可以提前練習：作答不記錄、不影響複習排程。</p>`}${g.list.length ? g.list.map(({ s, f }, n) => rvQ(s, f, n + 1)).join('')
+      : `<p class="note">${open.length ? '今天沒有到期的錯題。' : '錯題本是空的。到各章練習時第一次答錯的題目，會自動排進這裡。'}</p>`}</div>`;
+    const box = $('#dlist > div'); if (!today) noLog(box);
+    $$(':scope > .q', box).forEach((qe, n) => bindRvQ(qe, g.list[n].s, g.list[n].f, !today));
+  };
+  show('today');
 }
 function rvQ(s, f, n) {
   return `<div class="q"><p class="qsrc"><a href="#${f.c.id}">${f.c.title.split('：')[0]}</a>${f.k === 'x' ? '・相似題' : '・章末題'}・${REVIEW.label(s)}</p><p class="qt">${n ? n + '. ' : ''}${f.q.q}</p><div class="opts">${order(f.q, f.i).map(j => `<button class="opt" type="button" data-o="${j}">${f.q.o[j]}</button>`).join('')}</div><div class="why" hidden></div></div>`;

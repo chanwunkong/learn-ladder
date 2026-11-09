@@ -40,4 +40,9 @@ eq(st([ev(0, false), rs(0, ['h1']), ev(1, true)]).chk, true, '作廢後重做答
   const g = REVIEW.byDay([{ due: at(2) }, { due: at(1) }, { due: at(2) }, { due: at(20) }, { due: at(30) }], undefined, now);
   eq(g.map(x => x.list.length).join(','), '1,2,2', '分組題數'); eq(g[0].label, '明天 11/9（一）', '明天的標籤');
   eq(g[1].label, '11/10（二）', '日期與星期'); eq(g[2].label, '11/23（一） 及以後', '14 天以後併成一組'); }
+// 日期格子：今天一定有（含逾期）、接下來 4 天各一格、更晚併成「之後」
+{ const now = new Date(2026, 10, 9, 20).getTime(), at = d => REVIEW.dayStart(now) + d * D;
+  const c = REVIEW.dayCards([{ due: at(-2) }, { due: at(0) }, { due: at(1) }, { due: at(4) }, { due: at(5) }, { due: at(9) }], undefined, now);
+  eq(c.map(g => g.label + g.list.length).join(','), '今天2,明天 11/10（二）1,11/13（五）1,之後2', '日期格子'); eq(c[0].late, 1, '之前沒做完的題數');
+  eq(REVIEW.dayCards([], undefined, now).length, 1, '沒有錯題也有今天'); }
 if (fail) process.exit(1); console.log('錯題排程 OK');
