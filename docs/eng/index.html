@@ -149,6 +149,11 @@ section.part { margin-top: 36px; display: grid; gap: 12px; }
 .root { font-size: 13px; color: var(--accent); }
 .wcard .ens { font-size: 15.5px; }
 .wcard .unsure { justify-self: start; margin-top: 4px; }
+/* 單字卡複習：記住了、遮住中文（點卡片顯示） */
+.wcard .known { justify-self: end; margin-top: 6px; }
+.hidezh .wcard:not(.show) { cursor: pointer; }
+.hidezh .wcard:not(.show) .wz, .hidezh .wcard:not(.show) .zh, .hidezh .wcard:not(.show) .root { color: transparent; background: var(--sunk); border-radius: 4px; user-select: none; }
+.knownl .krow { display: flex; gap: 8px; align-items: baseline; margin: 6px 0; } .knownl .krow .linkb { margin-left: auto; }
 .btn.unsure.on { background: var(--warn-soft); border-color: var(--warn); color: var(--warn); }
 .btn.ghost { background: transparent; }
 /* 選擇題 */
@@ -1682,7 +1687,7 @@ function renderHome() {
 <p class="lede">每天分成早上與晚上兩段。早上先複習到期的錯題，再學 ${n} 個新單字和 2 個長句；晚上學一個文法重點，完成當天的${[...new Set(dayPass(w, 0).map(P => P.type === 'cloze' ? '克漏字' : '閱讀'))].join('＋')}，最後回想早上的單字。答錯的題目會自動排進之後的複習。</p>
 ${due ? `<p class="duebar"><a href="#review">錯題本有 <b>${due}</b> 題今天到期 →</a></p>` : ''}
 <ol class="days">${w.words.map((x, d) => `<li class="day${nx && nx.d === d ? ' now' : ''}"><h2>第 ${d + 1} 天<small>${esc(w.gram[d].title.split('：')[0])}</small></h2><div class="slots">${slot(d, 'am')}${slot(d, 'pm')}</div></li>`).join('')}</ol>
-<div class="row endrow"><a class="btn pri" href="#report">本週報告與匯出</a><a class="btn" href="#review">錯題本</a>${(n => n ? `<a class="btn" href="#cards">單字卡複習（${n} 個字）</a>` : '')(reviewWords().length)}</div>
+<div class="row endrow"><a class="btn pri" href="#report">本週報告與匯出</a><a class="btn" href="#review">錯題本</a>${(n => n ? `<a class="btn" href="#cards">單字卡複習（${n} 個字）</a>` : '')(reviewWords().look.length)}</div>
 ${WEEKS.length > 1 ? `<p class="small">其他週：${WEEKS.map((x, i) => `<button class="btn sm" type="button" data-wk="${i}">第 ${x.n} 週</button>`).join(' ')}</p>` : ''}`;
   $$('[data-wk]').forEach(b => { b.onclick = () => { store.set('week', +b.dataset.wk); renderHome(); }; });
 }
@@ -1714,26 +1719,45 @@ function resetBox(c) {
 // 單字卡：早上的頁面（可標「不熟」）與晚上的面板共用
 function wordCards(w, d, withUnsure) { return w.words[d].map(x => wordCard(w, d, x, withUnsure)).join(''); }
 // head：卡片最上面的小標（單字卡複習頁標出第幾週第幾天、下次複習日）
-function wordCard(w, d, x, withUnsure, head = '') {
+function wordCard(w, d, x, withUnsure, head = '', foot = '') {
   const c = `${wkKey(w)}d${d + 1}am`;
-  return `<article class="wcard">${head}<p class="wh"><span class="enw">${esc(x[0])}</span>${sayBtn(x[0])}<span class="pos">${esc(x[1])}</span><span class="wz">${esc(x[2])}</span></p>${x[3] ? `<p class="root">${esc(x[3])}</p>` : ''}<p class="ens">${esc(x[4])} ${sayBtn(x[4], '朗讀例句')}</p><p class="zh">${esc(x[5])}</p>${withUnsure ? unsureBtn(`u:word:${wkKey(w)}:${x[0]}`, c, `${x[0]}（${x[2]}）`) : ''}</article>`;
+  return `<article class="wcard">${head}<p class="wh"><span class="enw">${esc(x[0])}</span>${sayBtn(x[0])}<span class="pos">${esc(x[1])}</span><span class="wz">${esc(x[2])}</span></p>${x[3] ? `<p class="root">${esc(x[3])}</p>` : ''}<p class="ens">${esc(x[4])} ${sayBtn(x[4], '朗讀例句')}</p><p class="zh">${esc(x[5])}</p>${withUnsure ? unsureBtn(`u:word:${wkKey(w)}:${x[0]}`, c, `${x[0]}（${x[2]}）`) : ''}${foot}</article>`;
 }
 
-/* ---- 單字卡複習：錯題本裡還沒掌握的單字（字義題、回想題答錯）＋標記「還不太懂」的字；只看卡片，不考、不記錄（2026-11-09 使用者要求） ---- */
+/* ---- 單字卡複習：錯題本裡還沒掌握的單字（字義題、回想題答錯）＋標記「還不太懂」的字；只看卡片，不考試（2026-11-09 使用者要求）
+   「記住了」只影響這一頁（k:'known'，p 1 記住、-1 取消，以最後一筆為準），不影響錯題排程；之後又答錯或又標不熟，就自動回到「要看」。 */
+const WHY = { w: '字義答錯', wr: '回想答錯', u: '標記不熟' };
 function reviewWords() {
-  const byKey = {}, out = new Map();
+  const byKey = {}, out = new Map(), lastBad = {}, known = {};
   WEEKS.forEach(w => w.words.forEach((day, d) => day.forEach(x => { byKey[`${wkKey(w)}:${x[0]}`] = { w, d, x }; })));
-  const add = (k, due) => { const e = byKey[k]; if (!e) return; const o = out.get(k); if (!o) out.set(k, { ...e, due }); else if (due < o.due) o.due = due; };
-  REVIEW.book(qlog()).open.forEach(s => { const m = /^wr?:(w\d+:.+)$/.exec(s.h || ''); if (m) add(m[1], s.due); });
-  Object.entries(unsure()).forEach(([k, e]) => { const m = /^u:word:(w\d+:.+)$/.exec(k); if (e && m) add(m[1], Infinity); });   // 只標了不熟、沒答錯的排最後
-  return [...out.values()].sort((a, b) => a.due - b.due || a.w.n - b.w.n || a.d - b.d);
+  const add = (k, due, why) => { const e = byKey[k]; if (!e) return; const o = out.get(k) || out.set(k, { ...e, key: k, due, why: new Set() }).get(k); o.due = Math.min(o.due, due); o.why.add(why); };
+  REVIEW.book(qlog()).open.forEach(s => { const m = /^(wr?):(w\d+:.+)$/.exec(s.h || ''); if (m) add(m[2], s.due, m[1]); });
+  Object.entries(unsure()).forEach(([k, e]) => { const m = /^u:word:(w\d+:.+)$/.exec(k); if (e && m) { add(m[1], Infinity, 'u'); lastBad[m[1]] = Math.max(lastBad[m[1]] || 0, e.t); } });   // 只標了不熟、沒答錯的排最後
+  REVIEW.trials(qlog()).forEach(t => { const m = /^wr?:(w\d+:.+)$/.exec(t.h || ''); if (m && !t.ok) lastBad[m[1]] = Math.max(lastBad[m[1]] || 0, t.t); });
+  LOG.forEach(e => { if (e.k === 'known') known[e.h.slice(6)] = e.p === 1 ? e.t : 0; });
+  Object.keys(known).forEach(k => { if (known[k] && !out.has(k)) add(k, Infinity, 'u'); });   // 只標了不熟、按記住了（不熟已取消）的字，留在「已記住」
+  const all = [...out.values()].sort((a, b) => a.due - b.due || a.w.n - b.w.n || a.d - b.d);
+  const isKnown = e => known[e.key] > (lastBad[e.key] || 0);
+  return { look: all.filter(e => !isKnown(e)), known: all.filter(isKnown) };
 }
 function renderCards() {
-  const list = reviewWords(), md = t => { const k = REVIEW.dayKey(t); return `${+k.slice(5, 7)}/${+k.slice(8)}`; }, today = REVIEW.dayStart(Date.now());
+  const { look, known } = reviewWords(), md = t => { const k = REVIEW.dayKey(t); return `${+k.slice(5, 7)}/${+k.slice(8)}`; }, today = REVIEW.dayStart(Date.now()), cover = store.get('cover', true);
+  const when = e => (e.due === Infinity ? '' : e.due <= today ? '・今天要複習' : `・${md(e.due)} 複習`);
   $('#main').innerHTML = `<p class="eyebrow">錯題本</p><h1>單字卡複習</h1>
-<p class="lede">錯題本裡還沒掌握的單字，加上你標記「還不太懂」的字，共 <b>${list.length}</b> 個。只看卡片、唸例句，不考試，也不影響複習排程。最快要複習的排在最前面。</p>
-${list.length ? `<div class="words">${list.map(e => wordCard(e.w, e.d, e.x, false, `<p class="qsrc">第 ${e.w.n} 週第 ${e.d + 1} 天・${e.due === Infinity ? '標記不熟' : e.due <= today ? '今天要複習' : `${md(e.due)} 複習`}</p>`)).join('')}</div>` : '<p class="note">目前沒有答錯或標記不熟的單字。</p>'}
+<p class="lede">要看 <b>${look.length}</b> 個字・已記住 <b>${known.length}</b> 個</p>
+<p class="row"><button class="btn sm" type="button" id="cover" aria-pressed="${cover}">${cover ? '✓ 遮住中文（點卡片看答案）' : '遮住中文'}</button></p>
+${look.length ? `<div class="words${cover ? ' hidezh' : ''}" id="cardsBox">${look.map(e => wordCard(e.w, e.d, e.x, false, `<p class="qsrc">第 ${e.w.n} 週第 ${e.d + 1} 天・${[...e.why].map(k => WHY[k]).join('、')}${when(e)}</p>`, `<button class="btn sm known" type="button" data-known="${esc(e.key)}">記住了 ✓</button>`)).join('')}</div>` : `<p class="note">${known.length ? '全部都記住了。之後又答錯的字會回到這裡。' : '目前沒有答錯或標記不熟的單字。'}</p>`}
+${known.length ? `<details class="more knownl"><summary>已記住（${known.length} 個）</summary>${known.map(e => `<p class="krow"><span class="enw">${esc(e.x[0])}</span> <span class="mut">${esc(e.x[2])}</span><button class="linkb" type="button" data-unknown="${esc(e.key)}">取消記住</button></p>`).join('')}</details>` : ''}
 <div class="row endrow"><a class="btn" href="#review">錯題本</a><a class="btn" href="#">回到本週</a></div>`;
+  $('#cover').onclick = () => { store.set('cover', !cover); renderCards(); };
+  $$('#cardsBox .wcard').forEach(c => { c.onclick = e => { if (!e.target.closest('button')) c.classList.add('show'); }; });   // 遮住中文時，點卡片顯示
+  const mark = (key, p) => { logAnswer({ c: 'cards', k: 'known', h: `known:${key}`, p, qt: key.split(':')[1] }); renderCards(); };
+  $$('[data-known]').forEach(b => { b.onclick = () => {
+    const key = b.dataset.known, u = unsure()[`u:word:${key}`];
+    if (u) logAnswer({ c: u.c, k: 'u', h: `u:word:${key}`, p: -1, qt: u.qt });   // 記住了＝取消「還不太懂」，不用回早上那頁再按
+    mark(key, 1);
+  }; });
+  $$('[data-unknown]').forEach(b => { b.onclick = () => mark(b.dataset.unknown, -1); });
 }
 function renderAM(w, d) {
   const words = w.words[d], wq = words.map((x, i) => wordQ(w, d, i)), c = `${wkKey(w)}d${d + 1}am`, due = REVIEW.book(qlog()).due.length;
@@ -1838,7 +1862,7 @@ function renderReview() {
     });
     return { ...g, n: g.list.length, list };
   });
-  const nw = reviewWords().length, back = store.get('rvBack', '');
+  const nw = reviewWords().look.length, back = store.get('rvBack', '');
   $('#main').innerHTML = `<p class="eyebrow">錯題本</p><h1>錯題複習</h1><div class="dcards" id="dcards"></div><div id="dlist"></div>`;
   const show = k => {
     const g = cs.find(x => x.key === k), today = k === 'today';

@@ -58,6 +58,11 @@ section.part { margin-top: 36px; display: grid; gap: 12px; }
 .root { font-size: 13px; color: var(--accent); }
 .wcard .ens { font-size: 15.5px; }
 .wcard .unsure { justify-self: start; margin-top: 4px; }
+/* 單字卡複習：記住了、遮住中文（點卡片顯示） */
+.wcard .known { justify-self: end; margin-top: 6px; }
+.hidezh .wcard:not(.show) { cursor: pointer; }
+.hidezh .wcard:not(.show) .wz, .hidezh .wcard:not(.show) .zh, .hidezh .wcard:not(.show) .root { color: transparent; background: var(--sunk); border-radius: 4px; user-select: none; }
+.knownl .krow { display: flex; gap: 8px; align-items: baseline; margin: 6px 0; } .knownl .krow .linkb { margin-left: auto; }
 .btn.unsure.on { background: var(--warn-soft); border-color: var(--warn); color: var(--warn); }
 .btn.ghost { background: transparent; }
 /* 選擇題 */
