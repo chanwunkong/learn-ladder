@@ -346,10 +346,11 @@ const CLOUD = (() => {
    - 考前總複習：FINAL 那天起，所有曾經答錯、已經掌握的題目再到期一次；答對就完成，答錯就重新進錯題本。
    防止「猜對」（2026-11-02 使用者要求，兩個方法一起用）：
    - 追問：第一次就答對時，接著追問這題的一個推理步驟（k: 'fu'，fk 為原題型）。追問第一次就答錯 → 這次作答當成答錯（猜對）。
-   - 確認題：第一次就答對的新題目，CHECK 天後再出一次（chk）；答對才算會，答錯就進五格複習。
+   - 確認題：第一次就答對的新題目，CHECK 天後再出一次（chk 1），答對後再隔 CHECK2 天做長期確認（chk 2）；兩次都答對才算會，任何一次答錯就進五格複習。
+     （2026-11-09 使用者要求加長期確認：3 天還在短期記憶，答對後可能一個月就忘了）
    作廢（2026-11-07 使用者要求）：「重新練習」選「之前的不算」時記一筆 k:'reset'、v 為那一段的題目識別碼；那些題目在這之前的作答全部不算（紀錄本身保留）。 */
 const REVIEW = (() => {
-  const DAY = 864e5, GAPS = [1, 3, 7, 14, 30], CHECK = 3, FINAL = new Date(2027, 2, 1).getTime();   // 2027-03-01
+  const DAY = 864e5, GAPS = [1, 3, 7, 14, 30], CHECK = 3, CHECK2 = 30, FINAL = new Date(2027, 2, 1).getTime();   // 2027-03-01
   const dayStart = t => { const d = new Date(t); d.setHours(0, 0, 0, 0); return d.getTime(); };
   const dayKey = t => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
   // 拿掉被「之前的不算」作廢的作答
@@ -382,8 +383,9 @@ const REVIEW = (() => {
       if (!s) { s = { key: tr.key, c: tr.c, k: tr.k, h: tr.h, i: tr.i, qt: tr.qt, open: false, chk: false, stage: 0, due: 0, wrongs: 0, guesses: 0, last: 0, first: tr.ok }; m.set(tr.key, s); }
       s.i = tr.i; s.qt = tr.qt || s.qt; if (tr.guess) s.guesses++;
       if (!tr.ok) { s.open = true; s.chk = false; s.stage = 0; s.wrongs++; s.due = dayStart(tr.t) + GAPS[0] * DAY; }
-      else if (fresh) { s.open = true; s.chk = true; s.due = dayStart(tr.t) + CHECK * DAY; }   // 新題目第一次就答對 → 確認題
-      else if (s.open && s.chk && tr.t >= s.due) { s.open = false; s.chk = false; }
+      else if (fresh) { s.open = true; s.chk = 1; s.due = dayStart(tr.t) + CHECK * DAY; }   // 新題目第一次就答對 → 3 天後確認
+      else if (s.open && s.chk === 1 && tr.t >= s.due) { s.chk = 2; s.due = dayStart(tr.t) + CHECK2 * DAY; }   // 確認答對 → 30 天後長期確認
+      else if (s.open && s.chk === 2 && tr.t >= s.due) { s.open = false; s.chk = false; }
       else if (s.open && tr.t >= s.due) {
         s.stage++;
         if (s.stage >= GAPS.length) s.open = false; else s.due = dayStart(tr.t) + GAPS[s.stage] * DAY;
@@ -405,13 +407,14 @@ const REVIEW = (() => {
   function after(s, firstTry, guess = false) {
     if (!firstTry) return `${guess ? '理由沒選對，算猜對' : '今天第一次沒選對'}，從第 1 格重新開始，明天再考一次。`;
     if (s.final) return '考前總複習完成。';
-    if (s.chk) return '確認完成：這題真的會了。';
+    if (s.chk === 1) return `確認答對，${CHECK2} 天後還會再確認一次（長期記憶）。`;
+    if (s.chk) return '長期確認完成：這題真的會了。';
     if (s.stage + 1 >= GAPS.length) return `五格都過了，這題已經掌握，離開錯題本（2027 年 3 月起的考前總複習還會再出現一次）。`;
     return `${GAPS[s.stage + 1]} 天後再考一次（進到第 ${s.stage + 2} / ${GAPS.length} 格）。`;
   }
   // 「重新練習」的確認：之前的作答照算（隔很久重新複習），或不算（測試、亂按、跳過）
   const resetAsk = what => `<span class="small">讓${what}全部恢復成沒做過的樣子。之前的作答要算嗎？</span><button class="btn sm pri" type="button" data-y>照算（重新複習）</button><button class="btn sm" type="button" data-v>之前的不算（測試／亂按）</button><button class="btn sm" type="button" data-n>取消</button><span class="small">「之前的不算」：${what}的題目在這之前的作答，錯題本和週報都不算。</span>`;
-  const label = s => (s.final ? '考前總複習' : s.chk ? '確認題（之前第一次就答對）' : `第 ${s.stage + 1} / ${GAPS.length} 格`);
+  const label = s => (s.final ? '考前總複習' : s.chk === 2 ? `長期確認（${CHECK2} 天後）` : s.chk ? '確認題（之前第一次就答對）' : `第 ${s.stage + 1} / ${GAPS.length} 格`);
   // 依到期日分組（dayCards 用） [{ key, label, list }]，days 天以後併成一組（2026-11-08 使用者要求：每天到期的分開列）
   function byDay(list, due = x => x.due, now = Date.now(), days = 14) {
     const lim = dayStart(now) + (days + 1) * DAY, m = new Map();
@@ -429,7 +432,7 @@ const REVIEW = (() => {
       .concat(byDay(list.filter(x => due(x) > now), due, now, days - 1).map(g => (g.key === '~' ? { ...g, label: '之後' } : g)));
   }
   const cardsHTML = (cs, sel, n = g => g.list.length) => cs.map(g => `<button type="button" class="dcard" data-k="${g.key}" aria-pressed="${g.key === sel}"><b>${g.label}</b><span>${n(g)} 題</span>${g.late ? `<small>其中 ${g.late} 題是之前沒做完的</small>` : ''}</button>`).join('');
-  return { live, resetAsk, trials, state, book, after, okHead, label, byDay, dayCards, cardsHTML, dayKey, dayStart, DAY, GAPS, CHECK, FINAL };
+  return { live, resetAsk, trials, state, book, after, okHead, label, byDay, dayCards, cardsHTML, dayKey, dayStart, DAY, GAPS, CHECK, CHECK2, FINAL };
 })();
 
 /* 由 tools/chem/meta.js 自動產生，請勿手改 */
@@ -481,8 +484,8 @@ const zhLog = () => REVIEW.live(local('zh-ladder', 'log', [])).filter(e => ['z',
 const zhSum = () => local('zh-ladder', 'sum', null);   // 2026-11 起到 2027-02 底
 const chemDone = () => local('chem-ladder', 'done', {});
 
-// 一題的進度（依錯題複習）：沒做 0；錯題本第 1 格 0.2、每過一格 +0.15；第一次就答對、等確認題 0.6；確認答對或五格都過 1
-const qScore = s => (!s ? 0 : !s.open ? 1 : s.chk ? 0.6 : 0.2 + 0.15 * s.stage);
+// 一題的進度（依錯題複習）：沒做 0；錯題本第 1 格 0.2、每過一格 +0.15；第一次就答對、等 3 天確認 0.6、等長期確認 0.8；長期確認答對或五格都過 1
+const qScore = s => (!s ? 0 : !s.open ? 1 : s.chk === 2 ? 0.8 : s.chk ? 0.6 : 0.2 + 0.15 * s.stage);   // 3 天確認答對、等長期確認 0.8
 // 各章狀態：未開始／練習中／待加強／已掌握；got＝已拿到的考卷比重（%）：每章佔 w × 2 %（中國醫每份 50 題約 w 題），平分給有題目的各小節，各節再乘上題目進度的平均
 function chemChapters(log) {
   const tr = REVIEW.trials(log), book = REVIEW.book(log), done = chemDone(), stM = REVIEW.state(log);

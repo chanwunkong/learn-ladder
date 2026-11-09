@@ -44,8 +44,8 @@ const zhLog = () => REVIEW.live(local('zh-ladder', 'log', [])).filter(e => ['z',
 const zhSum = () => local('zh-ladder', 'sum', null);   // 2026-11 起到 2027-02 底
 const chemDone = () => local('chem-ladder', 'done', {});
 
-// 一題的進度（依錯題複習）：沒做 0；錯題本第 1 格 0.2、每過一格 +0.15；第一次就答對、等確認題 0.6；確認答對或五格都過 1
-const qScore = s => (!s ? 0 : !s.open ? 1 : s.chk ? 0.6 : 0.2 + 0.15 * s.stage);
+// 一題的進度（依錯題複習）：沒做 0；錯題本第 1 格 0.2、每過一格 +0.15；第一次就答對、等 3 天確認 0.6、等長期確認 0.8；長期確認答對或五格都過 1
+const qScore = s => (!s ? 0 : !s.open ? 1 : s.chk === 2 ? 0.8 : s.chk ? 0.6 : 0.2 + 0.15 * s.stage);   // 3 天確認答對、等長期確認 0.8
 // 各章狀態：未開始／練習中／待加強／已掌握；got＝已拿到的考卷比重（%）：每章佔 w × 2 %（中國醫每份 50 題約 w 題），平分給有題目的各小節，各節再乘上題目進度的平均
 function chemChapters(log) {
   const tr = REVIEW.trials(log), book = REVIEW.book(log), done = chemDone(), stM = REVIEW.state(log);
