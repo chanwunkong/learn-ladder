@@ -1735,7 +1735,8 @@ function reviewWords() {
   Object.entries(unsure()).forEach(([k, e]) => { const m = /^u:word:(w\d+:.+)$/.exec(k); if (e && m) { add(m[1], Infinity, 'u'); lastBad[m[1]] = Math.max(lastBad[m[1]] || 0, e.t); } });   // 只標了不熟、沒答錯的排最後
   REVIEW.trials(qlog()).forEach(t => { const m = /^wr?:(w\d+:.+)$/.exec(t.h || ''); if (m && !t.ok) lastBad[m[1]] = Math.max(lastBad[m[1]] || 0, t.t); });
   LOG.forEach(e => { if (e.k === 'known') known[e.h.slice(6)] = e.p === 1 ? e.t : 0; });
-  Object.keys(known).forEach(k => { if (known[k] && !out.has(k)) add(k, Infinity, 'u'); });   // 只標了不熟、按記住了（不熟已取消）的字，留在「已記住」
+  // 只標了不熟、按記住了（不熟已取消）的字：在「已記住」留 7 天可以取消，之後消失（2026-11-09：原本會永遠留著）
+  Object.keys(known).forEach(k => { if (known[k] && !out.has(k) && Date.now() - known[k] < 7 * REVIEW.DAY) add(k, Infinity, 'u'); });
   const all = [...out.values()].sort((a, b) => a.due - b.due || a.w.n - b.w.n || a.d - b.d);
   const isKnown = e => known[e.key] > (lastBad[e.key] || 0);
   return { look: all.filter(e => !isKnown(e)), known: all.filter(isKnown) };
