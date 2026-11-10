@@ -1,6 +1,6 @@
 /* 學習階梯 service worker（全站共用）：先用手機上存的版本（立即打開），同時在背景下載新版，下次打開就是新版；
    沒有存過的才等網路。版本號由 build.py 依頁面內容產生，網站更新後新的 service worker 會預先下載全部頁面。 */
-const CACHE = 'learn-ladder-cefa010bf8';
+const CACHE = 'learn-ladder-d0869b8f75';
 const LOCAL = ["./", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./biostat/", "./chem/", "./eng/", "./zh/"];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(LOCAL)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => /^(learn|biostat)-ladder-/.test(k) && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });

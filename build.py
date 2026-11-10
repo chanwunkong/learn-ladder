@@ -35,7 +35,7 @@ COURSES = {
         "theme": "#1F4E79",
     },
     "zh": {
-        "scripts": ["ui.js", "wk/*.js", "@review.js", "@followup.js", "app.js", "@cloud.js", "start.js"],
+        "scripts": ["ui.js", "wk/*.js", "@review.js", "app.js", "@cloud.js", "start.js"],
         "desc": "學士後中醫入學考國文：每天早晚兩段，字音字形、字詞、國學常識與閱讀題組，錯題自動複習。",
         "theme": "#8E2F2F",
     },

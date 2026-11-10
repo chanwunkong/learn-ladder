@@ -49,6 +49,9 @@ function collapse(box, first, text) {
   b.innerHTML = `<b class="${first ? 'r-ok' : 'r-no'}">${first ? '✓ 第一次答對' : '✗ 第一次答錯（已進錯題本）・點開再做一次'}</b><span>${esc(text)}</span>`;
   b.onclick = () => box.classList.toggle('collapsed'); box.prepend(b);
 }
+// 國文不用「一步一步來」與答對後的追問（2026-11-10 使用者要求：國文多半靠記憶與語感，不像英文能用文法推理）
+// 每題的 ex 依序說明四個選項（ex[0] 是正解）；閱讀題的 ref 是文中根據。選錯時只顯示那個選項錯在哪，答對後列出全部。
+const exHTML = q => `${q.ref ? `<p class="exref">文中根據：${esc(q.ref)}</p>` : ''}<ul class="exl">${q.o.map((o, j) => `<li class="${j ? 'no' : 'ok'}"><b>${j ? '✗' : '✓'} ${esc(o)}</b><br>${esc(q.ex[j])}</li>`).join('')}</ul>`;
 function bindMcq(root, list, onDone, restore = true) {
   const views = {}, V = c => views[c] || (views[c] = viewOf(c));
   list.forEach(q => {
@@ -59,53 +62,21 @@ function bindMcq(root, list, onDone, restore = true) {
     else if (v && v.ok.has(q.h)) {   // 第一次就答對：收成一行，點開看答案與解析
       collapse(qe, true, plain(q.q).slice(0, 48));
       $$('.opt', qe).forEach(x => { x.disabled = true; if (x.dataset.o === '0') x.classList.add('right'); });
-      why.hidden = false; why.className = 'why ok'; why.innerHTML = `<b>已完成。</b>${q.why}`; qe.classList.add('done');
+      why.hidden = false; why.className = 'why ok'; why.innerHTML = `<b>已完成。</b>${exHTML(q)}`; qe.classList.add('done');
       if (onDone) onDone(q); return;
     }
-    if (q.st && q.st.length) guide(qe, q);
     $$('.opt', qe).forEach(b => { b.onclick = () => {
-      const ok = b.dataset.o === '0'; n++;
-      logAnswer({ c: q.c, k: q.k, h: q.h, sk: q.sk, ok, n, p: q.o[+b.dataset.o], qt: q.qt });
+      const j = +b.dataset.o, ok = j === 0; n++;
+      logAnswer({ c: q.c, k: q.k, h: q.h, sk: q.sk, ok, n, p: q.o[j], qt: q.qt });
       b.classList.add(ok ? 'right' : 'wrong'); b.disabled = true; why.hidden = false;
       if (ok) {
-        $$('.opt', qe).forEach(x => { x.disabled = true; }); const g = $('.guide', qe); if (g) g.hidden = true;
-        const fin = (fok, st) => { why.className = 'why ok'; why.innerHTML = `${st && !fok ? `<b>這次先當成猜對</b>：理由是「${esc(st[1])}」，${esc(st[4])} 已排進錯題本。<br>` : st ? '<b>理由也對，這題算會了。</b>' : REVIEW.okHead(n)}${q.why}${q.rv ? `<br><small>${REVIEW.after(q.rv, n === 1 && fok !== false, fok === false)}</small>` : ''}`; };
-        qe.classList.add('done');
-        // 第一次就答對、有拆解步驟 → 追問理由（排除猜對）
-        if (n === 1 && q.st && q.st.length) { why.className = 'why fu'; FOLLOW.ask(why, q.st, esc, (fok, st) => { logAnswer({ c: q.c, k: 'fu', fk: q.k, h: q.h, ok: fok ? 1 : 0, n: 1, qt: q.qt }); fin(fok, st); }); }
-        else fin();
+        $$('.opt', qe).forEach(x => { x.disabled = true; }); qe.classList.add('done');
+        why.className = 'why ok'; why.innerHTML = `${REVIEW.okHead(n)}${exHTML(q)}${q.rv ? `<p><small>${REVIEW.after(q.rv, n === 1)}</small></p>` : ''}`;
         if (onDone) onDone(q);
-      } else {
-        why.className = 'why no'; why.innerHTML = `這個不對，再選一次。${q.st && q.st.length ? '<button class="btn sm" type="button" data-gopen>一步一步來</button>' : ''}`;
-        const go = $('[data-gopen]', why); if (go) go.onclick = () => qe.openGuide();
-      }
+      } else { why.className = 'why no'; why.innerHTML = `<b>✗ 這個不對：</b>${esc(q.ex[j])}<br>再選一次。`; }
     }; });
   });
 }
-function guide(qe, q) {
-  const sts = q.st, box = document.createElement('div'); box.className = 'guide';
-  box.innerHTML = '<button class="btn sm ghost" type="button" data-g>一步一步來</button><div class="gbody" hidden></div>';
-  $('.opts', qe).after(box);
-  const body = $('.gbody', box), done = [];
-  const draw = k => {
-    const st = sts[k], ord = shuffled(3, q.h + k).map(j => j + 1);
-    body.innerHTML = `${done.length ? `<ol class="gdone">${done.map(x => `<li>${x}</li>`).join('')}</ol>` : ''}<p class="stepn">第 ${k + 1} 步，共 ${sts.length} 步</p><p class="gq">${esc(st[0])}</p><div class="opts">${ord.map(j => `<button class="gopt opt" type="button" data-j="${j}">${esc(st[j])}</button>`).join('')}</div><div class="gwhy" hidden></div>`;
-    let n = 0;
-    $$('.gopt', body).forEach(b => { b.onclick = () => {
-      const ok = b.dataset.j === '1', w = $('.gwhy', body); n++;
-      logAnswer({ c: q.c, k: 'x', h: `x:${q.h}:${k}`, sk: q.sk, ok, n, p: st[+b.dataset.j], qt: st[0] });
-      b.classList.add(ok ? 'right' : 'wrong'); b.disabled = true; w.hidden = false;
-      if (!ok) { w.className = 'gwhy why no'; w.textContent = '這個不對，再想想。'; return; }
-      $$('.gopt', body).forEach(x => { x.disabled = true; }); done.push(`${esc(st[0])} <b>${esc(st[1])}</b>`);
-      const last = k === sts.length - 1;
-      w.className = 'gwhy why ok'; w.innerHTML = `<b>對。</b>${esc(st[4])} <button class="btn sm" type="button" data-n>${last ? '回到原題再選一次 ↑' : '下一步'}</button>`;
-      $('[data-n]', w).onclick = () => { if (last) { body.hidden = true; $('[data-g]', box).hidden = false; done.length = 0; qe.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else draw(k + 1); };
-    }; });
-  };
-  qe.openGuide = () => { if (!body.hidden) return; $('[data-g]', box).hidden = true; body.hidden = false; done.length = 0; draw(0); };
-  $('[data-g]', box).onclick = qe.openGuide;
-}
-// 題組的標題已在段落標題（h2）或錯題本的「文章：」顯示，卡片內只放原文與出處
 const passage = b => `<div class="passage card"><p class="ptext">${esc(b.text)}</p>${b.src ? `<p class="psrc">${esc(b.src)}</p>` : ''}</div>`;
 
 /* ---- 畫面 ---- */

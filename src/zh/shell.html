@@ -108,6 +108,11 @@ section.part { margin-top: 36px; display: grid; gap: 12px; }
 .passage p { margin: 0 0 8px; }
 .ptext { font-family: var(--body); font-size: 17px; line-height: 1.9; white-space: pre-line; }
 .psrc { font-size: 13px; color: var(--muted); text-align: right; }
+/* 解析：四個選項各自說明（✓ 正解、✗ 錯的選項） */
+.exl { list-style: none; padding: 0; margin: 6px 0 0; display: grid; gap: 6px; }
+.exl li { font-size: 14px; line-height: 1.6; }
+.exl li.ok b { color: var(--good); } .exl li.no b { color: var(--bad); font-weight: 500; }
+.exref { margin: 6px 0 0; font-size: 14px; border-left: 3px solid var(--accent); padding-left: 8px; }
 .ptitle { font-family: var(--en); font-weight: 600; font-size: 19px; }
 .blank { font-family: var(--mono); font-size: 14px; color: var(--accent); background: var(--soft); border-radius: 4px; padding: 1px 6px; white-space: nowrap; }
 .blank.fill { font-family: var(--en); font-size: 16px; color: var(--good); background: var(--good-soft); }
