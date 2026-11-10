@@ -49,4 +49,8 @@ eq(st([ev(0, false), rs(0, ['h1']), ev(1, true)]).chk, 1, '作廢後重做答對
   eq(c.map(g => g.label + g.list.length).join(','), '今天2,明天 11/10（二）1,11/13（五）1,之後2', '日期格子'); eq(c[0].late, 1, '之前沒做完的題數');
   eq(REVIEW.dayCards([], undefined, now).length, 1, '沒有錯題也有今天'); }
 eq(REVIEW.units([{ h: 's:w1:0:1:0' }, { h: 's:w1:0:1:2' }, { h: 's:w1:0:2:0' }, { h: 'w:w1:clinical' }, { h: 'abc123' }]), 4, '長句的步驟只算 1 題');
+// 今天的作答分成新題目與複習
+{ const now = t0 + 5 * D + 3600e3, e = (h, d, ok) => ({ t: t0 + d * D, c: 'x', k: 'q', h, ok, n: 1 });
+  const sp = REVIEW.todaySplit([e('a', 4, false), e('a', 5, true), e('b', 5, true), e('c', 5, false)], now);
+  eq(sp.fresh.map(x => x.h).join(), 'b,c', '新題目'); eq(sp.review.map(x => x.h).join(), 'a', '以前做過的算複習'); }
 if (fail) process.exit(1); console.log('錯題排程 OK');

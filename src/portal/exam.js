@@ -66,15 +66,13 @@ const CH_ST = { master: '已掌握', prac: '練習中', weak: '待加強', none:
 
 function renderExam() {
   const log = chemLog(), tr = REVIEW.trials(log), book = REVIEW.book(log), today = REVIEW.dayKey(Date.now());
-  const tToday = tr.filter(x => REVIEW.dayKey(x.t) === today), okToday = tToday.filter(x => x.ok).length;
-  // 今天複習了幾題：今天作答、而且在今天以前就在錯題本裡的題目
-  const before = REVIEW.book(log.filter(e => REVIEW.dayKey(e.t) !== today));
-  const openKeys = new Set(before.open.map(s => s.key)), revToday = new Set(tToday.filter(x => openKeys.has(x.key)).map(x => x.key)).size;
+  // 今天的練習只算新題目，錯題與確認題的作答算在錯題複習（2026-11-10 使用者要求：兩者分開計算）
+  const cs = REVIEW.todaySplit(log), tToday = cs.fresh, okToday = tToday.filter(x => x.ok).length, revToday = REVIEW.units(cs.review);
   const dueLeft = book.due.length;
   // 連續天數與最近 4 週
   const elog = engLog(), etr = REVIEW.trials(elog), ebook = REVIEW.book(elog), es = engSum();
-  const eToday = etr.filter(x => REVIEW.dayKey(x.t) === today).length;
-  const zlog = zhLog(), ztr = REVIEW.trials(zlog), zbook = REVIEW.book(zlog), zs = zhSum(), zToday = ztr.filter(x => REVIEW.dayKey(x.t) === today).length;
+  const esp = REVIEW.todaySplit(elog), eToday = REVIEW.units(esp.fresh), eRev = REVIEW.units(esp.review);
+  const zlog = zhLog(), ztr = REVIEW.trials(zlog), zbook = REVIEW.book(zlog), zs = zhSum(), zsp = REVIEW.todaySplit(zlog), zToday = zsp.fresh.length, zRev = zsp.review.length;
   const perDay = {}; tr.concat(etr, ztr).forEach(x => { const k = REVIEW.dayKey(x.t); perDay[k] = (perDay[k] || 0) + 1; });
   let streak = 0; for (let d = REVIEW.dayStart(Date.now()) - (perDay[today] ? 0 : REVIEW.DAY); perDay[REVIEW.dayKey(d)]; d -= REVIEW.DAY) streak++;
   const days = Array.from({ length: 28 }, (_, i) => REVIEW.dayStart(Date.now()) - (27 - i) * REVIEW.DAY);
@@ -98,9 +96,9 @@ ${enterHTML(es, zs)}
     <ul class="todo">
       <li class="${dueLeft ? '' : 'ok'}"><a href="./chem/#review"><span class="ck">${dueLeft ? '' : '✓'}</span><span>化學錯題複習</span><b>${dueLeft ? `還有 ${dueLeft} 題到期` : revToday ? `完成 ${revToday} 題` : '今天沒有到期'}</b></a></li>
       <li class="${tToday.length ? 'ok' : ''}"><a href="${chemResume().href}"><span class="ck">${tToday.length ? '✓' : ''}</span><span>化學練習</span><b>${tToday.length ? `${tToday.length} 題，第一次答對 ${Math.round(100 * okToday / tToday.length)}%` : '今天還沒練習'}</b></a></li>
-      <li class="${REVIEW.units(ebook.due) ? '' : 'ok'}"><a href="./eng/#review"><span class="ck">${REVIEW.units(ebook.due) ? '' : '✓'}</span><span>英文錯題複習</span><b>${REVIEW.units(ebook.due) ? `還有 ${REVIEW.units(ebook.due)} 題到期` : '今天沒有到期'}</b></a></li>
+      <li class="${REVIEW.units(ebook.due) ? '' : 'ok'}"><a href="./eng/#review"><span class="ck">${REVIEW.units(ebook.due) ? '' : '✓'}</span><span>英文錯題複習</span><b>${REVIEW.units(ebook.due) ? `還有 ${REVIEW.units(ebook.due)} 題到期` : eRev ? `完成 ${eRev} 題` : '今天沒有到期'}</b></a></li>
       ${engToday(es, eToday)}
-      <li class="${zbook.due.length ? '' : 'ok'}"><a href="./zh/#review"><span class="ck">${zbook.due.length ? '' : '✓'}</span><span>國文錯題複習</span><b>${zbook.due.length ? `還有 ${zbook.due.length} 題到期` : '今天沒有到期'}</b></a></li>
+      <li class="${zbook.due.length ? '' : 'ok'}"><a href="./zh/#review"><span class="ck">${zbook.due.length ? '' : '✓'}</span><span>國文錯題複習</span><b>${zbook.due.length ? `還有 ${zbook.due.length} 題到期` : zRev ? `完成 ${zRev} 題` : '今天沒有到期'}</b></a></li>
       ${zhToday(zs, zToday)}
       ${SUBJECTS.filter(x => x.st !== 'live').map(x => `<li class="soon"><span class="ck"></span><span>${x.name}${x.today ? `：${x.today}` : ''}</span><b>${SUBJ_ST[x.st]}</b></li>`).join('')}
     </ul>
