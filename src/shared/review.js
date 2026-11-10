@@ -94,5 +94,7 @@ const REVIEW = (() => {
       .concat(byDay(list.filter(x => due(x) > now), due, now, days - 1).map(g => (g.key === '~' ? { ...g, label: '之後' } : g)));
   }
   const cardsHTML = (cs, sel, n = g => g.list.length) => cs.map(g => `<button type="button" class="dcard" data-k="${g.key}" aria-pressed="${g.key === sel}"><b>${g.label}</b><span>${n(g)} 題</span>${g.late ? `<small>其中 ${g.late} 題是之前沒做完的</small>` : ''}</button>`).join('');
-  return { live, resetAsk, trials, state, book, after, okHead, label, byDay, dayCards, cardsHTML, dayKey, dayStart, DAY, GAPS, CHECK, CHECK2, FINAL };
+  // 題數：英文長句的每一步各算一筆紀錄，但頁面上一個長句是一張卡，所以同一句的步驟只算 1 題（h 為 s:w週:天:句:步；2026-11-10 格子 27 題、頁面 24 題對不上）
+  const units = list => new Set(list.map(s => String(s.h).replace(/^(s:w\d+:\d+:\d+):\d+$/, '$1'))).size;
+  return { units, live, resetAsk, trials, state, book, after, okHead, label, byDay, dayCards, cardsHTML, dayKey, dayStart, DAY, GAPS, CHECK, CHECK2, FINAL };
 })();

@@ -98,13 +98,13 @@ ${enterHTML(es, zs)}
     <ul class="todo">
       <li class="${dueLeft ? '' : 'ok'}"><a href="./chem/#review"><span class="ck">${dueLeft ? '' : '✓'}</span><span>化學錯題複習</span><b>${dueLeft ? `還有 ${dueLeft} 題到期` : revToday ? `完成 ${revToday} 題` : '今天沒有到期'}</b></a></li>
       <li class="${tToday.length ? 'ok' : ''}"><a href="${chemResume().href}"><span class="ck">${tToday.length ? '✓' : ''}</span><span>化學練習</span><b>${tToday.length ? `${tToday.length} 題，第一次答對 ${Math.round(100 * okToday / tToday.length)}%` : '今天還沒練習'}</b></a></li>
-      <li class="${ebook.due.length ? '' : 'ok'}"><a href="./eng/#review"><span class="ck">${ebook.due.length ? '' : '✓'}</span><span>英文錯題複習</span><b>${ebook.due.length ? `還有 ${ebook.due.length} 題到期` : '今天沒有到期'}</b></a></li>
+      <li class="${REVIEW.units(ebook.due) ? '' : 'ok'}"><a href="./eng/#review"><span class="ck">${REVIEW.units(ebook.due) ? '' : '✓'}</span><span>英文錯題複習</span><b>${REVIEW.units(ebook.due) ? `還有 ${REVIEW.units(ebook.due)} 題到期` : '今天沒有到期'}</b></a></li>
       ${engToday(es, eToday)}
       <li class="${zbook.due.length ? '' : 'ok'}"><a href="./zh/#review"><span class="ck">${zbook.due.length ? '' : '✓'}</span><span>國文錯題複習</span><b>${zbook.due.length ? `還有 ${zbook.due.length} 題到期` : '今天沒有到期'}</b></a></li>
       ${zhToday(zs, zToday)}
       ${SUBJECTS.filter(x => x.st !== 'live').map(x => `<li class="soon"><span class="ck"></span><span>${x.name}${x.today ? `：${x.today}` : ''}</span><b>${SUBJ_ST[x.st]}</b></li>`).join('')}
     </ul>
-    <div class="streak"><span><b>${streak}</b> 天連續練習</span><span class="mut">錯題本：化學 ${book.open.length}・英文 ${ebook.open.length}・國文 ${zbook.open.length} 題</span></div>
+    <div class="streak"><span><b>${streak}</b> 天連續練習</span><span class="mut">錯題本：化學 ${book.open.length}・英文 ${REVIEW.units(ebook.open)}・國文 ${zbook.open.length} 題</span></div>
     <div class="heat" aria-label="最近 4 週每天的練習題數">${days.map(d => { const n = perDay[REVIEW.dayKey(d)] || 0; return `<i class="l${lv(n)}${REVIEW.dayKey(d) === today ? ' now' : ''}" title="${REVIEW.dayKey(d)}：${n} 題"></i>`; }).join('')}</div>
     <p class="heat-cap"><span>4 週前</span><span>每格一天，顏色越深練越多</span><span>今天</span></p>
   </section>

@@ -48,4 +48,5 @@ eq(st([ev(0, false), rs(0, ['h1']), ev(1, true)]).chk, 1, '作廢後重做答對
   const c = REVIEW.dayCards([{ due: at(-2) }, { due: at(0) }, { due: at(1) }, { due: at(4) }, { due: at(5) }, { due: at(9) }], undefined, now);
   eq(c.map(g => g.label + g.list.length).join(','), '今天2,明天 11/10（二）1,11/13（五）1,之後2', '日期格子'); eq(c[0].late, 1, '之前沒做完的題數');
   eq(REVIEW.dayCards([], undefined, now).length, 1, '沒有錯題也有今天'); }
+eq(REVIEW.units([{ h: 's:w1:0:1:0' }, { h: 's:w1:0:1:2' }, { h: 's:w1:0:2:0' }, { h: 'w:w1:clinical' }, { h: 'abc123' }]), 4, '長句的步驟只算 1 題');
 if (fail) process.exit(1); console.log('錯題排程 OK');

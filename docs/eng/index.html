@@ -1431,7 +1431,9 @@ const REVIEW = (() => {
       .concat(byDay(list.filter(x => due(x) > now), due, now, days - 1).map(g => (g.key === '~' ? { ...g, label: '之後' } : g)));
   }
   const cardsHTML = (cs, sel, n = g => g.list.length) => cs.map(g => `<button type="button" class="dcard" data-k="${g.key}" aria-pressed="${g.key === sel}"><b>${g.label}</b><span>${n(g)} 題</span>${g.late ? `<small>其中 ${g.late} 題是之前沒做完的</small>` : ''}</button>`).join('');
-  return { live, resetAsk, trials, state, book, after, okHead, label, byDay, dayCards, cardsHTML, dayKey, dayStart, DAY, GAPS, CHECK, CHECK2, FINAL };
+  // 題數：英文長句的每一步各算一筆紀錄，但頁面上一個長句是一張卡，所以同一句的步驟只算 1 題（h 為 s:w週:天:句:步；2026-11-10 格子 27 題、頁面 24 題對不上）
+  const units = list => new Set(list.map(s => String(s.h).replace(/^(s:w\d+:\d+:\d+):\d+$/, '$1'))).size;
+  return { units, live, resetAsk, trials, state, book, after, okHead, label, byDay, dayCards, cardsHTML, dayKey, dayStart, DAY, GAPS, CHECK, CHECK2, FINAL };
 })();
 
 /* ---------- 答對後追問理由（化學、英文共用；2026-11-02 使用者要求，用來排除「猜對」） ----------
@@ -1858,14 +1860,14 @@ function renderReview() {
   const ord = new Map(Object.keys(ix).map((h, i) => [h, i]));
   // 今天：reviewItems（之前沒做完的在前、最多 50 題）；其他天照題庫順序（週、天、單字→長句→文法→文章），同一個長句只列一次
   const cs = REVIEW.dayCards(book.open.concat(book.checks, book.due.filter(s => s.final)).filter(s => ix[s.h]), s => s.due, now).map(g => {
-    if (g.key === 'today') return { ...g, n: g.list.length, list: reviewItems() };
+    if (g.key === 'today') return { ...g, n: REVIEW.units(g.list), late: REVIEW.units(g.list.filter(s => s.due < REVIEW.dayStart(now))), list: reviewItems() };
     const seen = new Set(), list = [];
     g.list.sort((a, b) => ord.get(a.h) - ord.get(b.h)).forEach(s => {
       const f = ix[s.h];
       if (f.sent) { const key = `sent:${f.w.n}:${f.d}:${f.j}`; if (!seen.has(key)) { seen.add(key); list.push({ sent: f, s }); } }
       else list.push({ q: f.q, f, s });   // 不帶 rv：不顯示「幾天後再考」
     });
-    return { ...g, n: g.list.length, list };
+    return { ...g, n: REVIEW.units(g.list), list };
   });
   const nw = reviewWords().look.length, back = store.get('rvBack', '');
   $('#main').innerHTML = `<p class="eyebrow">錯題本</p><h1>錯題複習</h1><div class="dcards" id="dcards"></div><div id="dlist"></div>`;

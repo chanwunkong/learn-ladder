@@ -402,14 +402,14 @@ function renderReview() {
   const ord = new Map(Object.keys(ix).map((h, i) => [h, i]));
   // 今天：reviewItems（之前沒做完的在前、最多 50 題）；其他天照題庫順序（週、天、單字→長句→文法→文章），同一個長句只列一次
   const cs = REVIEW.dayCards(book.open.concat(book.checks, book.due.filter(s => s.final)).filter(s => ix[s.h]), s => s.due, now).map(g => {
-    if (g.key === 'today') return { ...g, n: g.list.length, list: reviewItems() };
+    if (g.key === 'today') return { ...g, n: REVIEW.units(g.list), late: REVIEW.units(g.list.filter(s => s.due < REVIEW.dayStart(now))), list: reviewItems() };
     const seen = new Set(), list = [];
     g.list.sort((a, b) => ord.get(a.h) - ord.get(b.h)).forEach(s => {
       const f = ix[s.h];
       if (f.sent) { const key = `sent:${f.w.n}:${f.d}:${f.j}`; if (!seen.has(key)) { seen.add(key); list.push({ sent: f, s }); } }
       else list.push({ q: f.q, f, s });   // 不帶 rv：不顯示「幾天後再考」
     });
-    return { ...g, n: g.list.length, list };
+    return { ...g, n: REVIEW.units(g.list), list };
   });
   const nw = reviewWords().look.length, back = store.get('rvBack', '');
   $('#main').innerHTML = `<p class="eyebrow">錯題本</p><h1>錯題複習</h1><div class="dcards" id="dcards"></div><div id="dlist"></div>`;

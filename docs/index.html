@@ -432,7 +432,9 @@ const REVIEW = (() => {
       .concat(byDay(list.filter(x => due(x) > now), due, now, days - 1).map(g => (g.key === '~' ? { ...g, label: '之後' } : g)));
   }
   const cardsHTML = (cs, sel, n = g => g.list.length) => cs.map(g => `<button type="button" class="dcard" data-k="${g.key}" aria-pressed="${g.key === sel}"><b>${g.label}</b><span>${n(g)} 題</span>${g.late ? `<small>其中 ${g.late} 題是之前沒做完的</small>` : ''}</button>`).join('');
-  return { live, resetAsk, trials, state, book, after, okHead, label, byDay, dayCards, cardsHTML, dayKey, dayStart, DAY, GAPS, CHECK, CHECK2, FINAL };
+  // 題數：英文長句的每一步各算一筆紀錄，但頁面上一個長句是一張卡，所以同一句的步驟只算 1 題（h 為 s:w週:天:句:步；2026-11-10 格子 27 題、頁面 24 題對不上）
+  const units = list => new Set(list.map(s => String(s.h).replace(/^(s:w\d+:\d+:\d+):\d+$/, '$1'))).size;
+  return { units, live, resetAsk, trials, state, book, after, okHead, label, byDay, dayCards, cardsHTML, dayKey, dayStart, DAY, GAPS, CHECK, CHECK2, FINAL };
 })();
 
 /* 由 tools/chem/meta.js 自動產生，請勿手改 */
@@ -538,13 +540,13 @@ ${enterHTML(es, zs)}
     <ul class="todo">
       <li class="${dueLeft ? '' : 'ok'}"><a href="./chem/#review"><span class="ck">${dueLeft ? '' : '✓'}</span><span>化學錯題複習</span><b>${dueLeft ? `還有 ${dueLeft} 題到期` : revToday ? `完成 ${revToday} 題` : '今天沒有到期'}</b></a></li>
       <li class="${tToday.length ? 'ok' : ''}"><a href="${chemResume().href}"><span class="ck">${tToday.length ? '✓' : ''}</span><span>化學練習</span><b>${tToday.length ? `${tToday.length} 題，第一次答對 ${Math.round(100 * okToday / tToday.length)}%` : '今天還沒練習'}</b></a></li>
-      <li class="${ebook.due.length ? '' : 'ok'}"><a href="./eng/#review"><span class="ck">${ebook.due.length ? '' : '✓'}</span><span>英文錯題複習</span><b>${ebook.due.length ? `還有 ${ebook.due.length} 題到期` : '今天沒有到期'}</b></a></li>
+      <li class="${REVIEW.units(ebook.due) ? '' : 'ok'}"><a href="./eng/#review"><span class="ck">${REVIEW.units(ebook.due) ? '' : '✓'}</span><span>英文錯題複習</span><b>${REVIEW.units(ebook.due) ? `還有 ${REVIEW.units(ebook.due)} 題到期` : '今天沒有到期'}</b></a></li>
       ${engToday(es, eToday)}
       <li class="${zbook.due.length ? '' : 'ok'}"><a href="./zh/#review"><span class="ck">${zbook.due.length ? '' : '✓'}</span><span>國文錯題複習</span><b>${zbook.due.length ? `還有 ${zbook.due.length} 題到期` : '今天沒有到期'}</b></a></li>
       ${zhToday(zs, zToday)}
       ${SUBJECTS.filter(x => x.st !== 'live').map(x => `<li class="soon"><span class="ck"></span><span>${x.name}${x.today ? `：${x.today}` : ''}</span><b>${SUBJ_ST[x.st]}</b></li>`).join('')}
     </ul>
-    <div class="streak"><span><b>${streak}</b> 天連續練習</span><span class="mut">錯題本：化學 ${book.open.length}・英文 ${ebook.open.length}・國文 ${zbook.open.length} 題</span></div>
+    <div class="streak"><span><b>${streak}</b> 天連續練習</span><span class="mut">錯題本：化學 ${book.open.length}・英文 ${REVIEW.units(ebook.open)}・國文 ${zbook.open.length} 題</span></div>
     <div class="heat" aria-label="最近 4 週每天的練習題數">${days.map(d => { const n = perDay[REVIEW.dayKey(d)] || 0; return `<i class="l${lv(n)}${REVIEW.dayKey(d) === today ? ' now' : ''}" title="${REVIEW.dayKey(d)}：${n} 題"></i>`; }).join('')}</div>
     <p class="heat-cap"><span>4 週前</span><span>每格一天，顏色越深練越多</span><span>今天</span></p>
   </section>
