@@ -1641,7 +1641,7 @@ function bindSent(root, w, d, j, s, onDone, key = `${d}:${j}`, restore = true) {
   const finish = () => {
     s.steps.forEach(st => mark(st[6]));
     body.innerHTML = `${done.length ? `<ol class="gdone">${done.join('')}</ol>` : ''}<p class="core"><span class="lbl">主幹</span>${esc(s.core)} ${sayBtn(s.core)}</p><p class="zh">${esc(s.zh)}</p><div class="row">${unsureBtn(`u:sent:${wkKey(w)}:${d}:${j}`, c, s.core)}</div>`;
-    bindUnsure(body); if (onDone) onDone();
+    card.classList.add('done'); bindUnsure(body); if (onDone) onDone(); refreshParts();
   };
   const draw = k => {
     if (k >= s.steps.length) return finish();
@@ -1653,6 +1653,7 @@ function bindSent(root, w, d, j, s, onDone, key = `${d}:${j}`, restore = true) {
       b.classList.add(ok ? 'right' : 'wrong'); b.disabled = true; why.hidden = false;
       if (!ok) { why.className = 'why no'; why.textContent = '這個不對，再想想。'; return; }
       $$('.opt', body).forEach(x => { x.disabled = true; }); mark(st[6]);
+      if (k === s.steps.length - 1) card.classList.add('done');   // 最後一步答對就算完成，不必再按「看主幹與翻譯」或「還不太懂」才不會被當成跳過（2026-11-10）
       why.className = 'why ok'; why.innerHTML = `<b>對。</b>${esc(st[4])} <button class="btn sm" type="button" data-n>${k === s.steps.length - 1 ? '看主幹與翻譯' : '下一步'}</button>`;
       $('[data-n]', why).onclick = () => { done.push(`<li>${esc(st[0])} <b>${esc(st[1])}</b></li>`); draw(k + 1); };
     }; });
