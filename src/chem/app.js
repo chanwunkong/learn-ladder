@@ -198,7 +198,8 @@ function renderReview() {
     $('#dlist').innerHTML = `<div>${today ? '' : `<p class="dnote">${g.label}到期的題目，可以提前練習：作答不記錄、不影響複習排程。</p>`}${g.list.length ? g.list.map(({ s, f }, n) => rvQ(s, f, n + 1)).join('')
       : `<p class="note">${open.length ? '今天沒有到期的錯題。' : '錯題本是空的。到各章練習時第一次答錯的題目，會自動排進這裡。'}</p>`}</div>`;
     const box = $('#dlist > div'); if (!today) noLog(box);
-    $$(':scope > .q', box).forEach((qe, n) => bindRvQ(qe, g.list[n].s, g.list[n].f, !today));
+    $$(':scope > .q', box).forEach((qe, n) => { bindRvQ(qe, g.list[n].s, g.list[n].f, !today); if (today) qe.dataset.k = 'rv'; });   // 今天的題目算進頁首「本頁 N 題」，提前練習不算（和英文、國文一致，2026-11-12）
+    refreshPrac();
   };
   show('today');
 }
