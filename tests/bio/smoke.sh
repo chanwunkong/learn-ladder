@@ -1,5 +1,5 @@
 #!/bin/bash
-# 後中生物：無頭 Chrome 打開首頁、每一卷程度測驗與錯題本，每題點一個選項（輪流選正解、錯的、不確定），回報錯誤與手機寬度溢出。
+# 後中生物：無頭 Chrome 打開首頁、每一卷程度測驗與錯題本，每句點對或錯，回報錯誤與手機寬度溢出。
 cd "$(dirname "$0")/../.." || exit 1
 dup=$(grep -ho "^\(const\|let\|function\) [A-Za-z0-9_]*" src/bio/*.js src/bio/dg/*.js | awk '{print $2}' | sort | uniq -d)
 [ -n "$dup" ] && { echo "FAIL 重複的頂層名稱：$dup"; exit 1; }
@@ -14,7 +14,9 @@ window.__errs = []; addEventListener('error', e => __errs.push(e.message)); cons
   wide();
   for (const g of document.querySelectorAll('[data-g]')) { g.click(); rep.guide++; for (let k = 0; k < 4; k++) { const b = g.parentNode.querySelector('.gbody'); for (const o of [...b.querySelectorAll('.gopt')]) if (!o.disabled) o.click(); const n = b.querySelector('[data-n]'); if (!n) break; n.click(); } }
   let k = 0;
-  for (const q of document.querySelectorAll('.q')) { rep.q++; const os = [...q.querySelectorAll(':scope > .opts .opt')]; const pick = [os.find(o => o.dataset.o === '0'), os.find(o => o.dataset.o === '1'), os.find(o => o.dataset.o === 'u')][k++ % 3]; if (pick && !pick.disabled) pick.click(); if (!q.querySelector(':scope > .opts .opt.right')) __errs.push('沒有正解：' + q.textContent.slice(0, 30)); }
+  for (const st of document.querySelectorAll('.st')) { rep.q++; const b = st.querySelector(`[data-v="${k++ % 3 ? 1 : 0}"]`); if (b && !b.disabled) b.click(); }
+  for (const st of document.querySelectorAll('.st')) if (!st.querySelector('.opt.right') || st.querySelector('.why').hidden) __errs.push('4 句判斷完沒有顯示答案：' + st.textContent.slice(0, 30));
+  if (document.querySelector('.wait')) __errs.push('做完還留著等待提示');
   if (location.hash === '#dx-c' && !document.querySelector('#dxRes .pr')) __errs.push('做完一卷沒有出現結果');
   location.hash = ''; await sleep(200); wide();
   if (/\bNaN\b|\bundefined\b/.test(document.getElementById('main').textContent)) __errs.push('畫面出現 NaN/undefined');

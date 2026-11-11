@@ -2,8 +2,8 @@
 boot();
 const COURSE = {
   tracks: [],
-  count: () => { const f = firstAns(); return DIAG.filter(q => f.has(qh(q))).length; },
-  total: () => DIAG.length,
+  count: () => { const f = firstAns(); return STS.filter(s => f.has(s.h)).length; },
+  total: () => STS.length,
   refresh: route,
   logs: { doc: 'bioLog', get: () => LOG, set: a => { LOG.length = 0; LOG.push(...a); store.set('log', LOG); } },
 };
