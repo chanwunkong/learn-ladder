@@ -34,6 +34,11 @@ COURSES = {
         "desc": "學士後中醫入學考英文：每天早晚兩段，單字、長句拆解、文法、克漏字與閱讀，錯題自動複習。",
         "theme": "#1F4E79",
     },
+    "bio": {
+        "scripts": ["ui.js", "content.js", "dg/*.js", "@review.js", "app.js", "@cloud.js", "start.js"],
+        "desc": "學士後中醫入學考生物：先做程度測驗找出弱項，再依考試比重排課，錯題自動複習。",
+        "theme": "#2E6B3A",
+    },
     "zh": {
         "scripts": ["ui.js", "wk/*.js", "@review.js", "app.js", "@cloud.js", "start.js"],
         "desc": "學士後中醫入學考國文：每天早晚兩段，字音字形、字詞、國學常識與閱讀題組，錯題自動複習。",

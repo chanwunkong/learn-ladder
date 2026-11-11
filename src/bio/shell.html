@@ -1,0 +1,134 @@
+<title>後中生物</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/*BASE*/
+/* 後中生物：版面與選擇題沿用後中國文，章節地圖照化學；主色改為葉綠 */
+:root { --accent: #2E6B3A; --soft: #E3F1E4; --verb: #C98A00; --verb-soft: #FFF1C9; --subj: #0E7C7B; --subj-soft: #DDF2F1; --mod: #8A94A3;
+  --en: "Source Serif 4", Georgia, "Times New Roman", serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --accent: #8FD19E; --accent-ink: #0F2A15; --soft: #1E3324; --verb: #F2C14E; --verb-soft: #3A2F12; --subj: #5FD0CC; --subj-soft: #133331; --mod: #7D8794; } }
+:root[data-theme="dark"] { --accent: #8FD19E; --accent-ink: #0F2A15; --soft: #1E3324; --verb: #F2C14E; --verb-soft: #3A2F12; --subj: #5FD0CC; --subj-soft: #133331; --mod: #7D8794; }
+body { margin: 0; }
+.top-in .wk { margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.home-link { font-size: 13px; color: var(--muted); text-decoration: none; }
+#main { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 80px; }
+#main h1 { font-family: var(--body); font-weight: 700; font-size: clamp(26px, 5vw, 36px); margin: 0 0 10px; }
+#main h2 { font-size: 20px; margin: 0; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+#main h2 small { font-size: 12.5px; font-weight: 400; color: var(--muted); font-family: var(--mono); }
+#main h3 { font-size: 16px; margin: 10px 0 0; }
+.lede { font-size: 16px; color: var(--muted); }
+.note { color: var(--muted); font-size: 14.5px; margin: 0; }
+section.part { margin-top: 36px; display: grid; gap: 12px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.endrow { margin-top: 32px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; min-width: 0; }
+.zh { color: var(--muted); font-size: 14.5px; margin: 4px 0 0; }
+/* 首頁：7 天 × 早晚 */
+.duebar a { display: inline-block; background: var(--warn-soft); color: var(--warn); border-radius: 8px; padding: 8px 14px; text-decoration: none; }
+.pbar { display: block; height: 6px; background: var(--sunk); border-radius: 3px; overflow: hidden; }
+.pbar i { display: block; height: 100%; background: var(--accent); }
+.pn { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 14px; }
+.pn a { border: 1px solid var(--line); border-radius: 8px; padding: 4px 12px; text-decoration: none; color: var(--ink); background: var(--surface); font-size: 13.5px; }
+/* 選擇題 */
+.q { border-top: 1px solid var(--line); padding: 14px 0; }
+.qnum, .qsrc { font-family: var(--mono); font-size: 12px; color: var(--muted); margin: 0 0 4px; }
+.qt { font-weight: 500; margin: 0 0 8px; }
+.opts { display: grid; gap: 6px; }
+.opt { text-align: left; border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 9px 14px; cursor: pointer; font-size: 14.5px; min-height: 44px; }
+.opt.en-o { font-family: var(--en); font-size: 16px; }
+.opt:hover:not(:disabled) { border-color: var(--accent); }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--good); background: var(--good-soft); color: var(--good); }
+.opt .ow { font-family: var(--en); font-size: 13px; color: var(--muted); margin-left: 6px; }
+.opt.wrong { border-color: var(--bad); background: var(--bad-soft); color: var(--bad); }
+.why { margin-top: 8px; padding: 10px 14px; border-radius: 8px; font-size: 14.5px; }
+.why.ok { background: var(--good-soft); } .why.no { background: var(--bad-soft); }
+.why.fu { background: var(--soft); border-left: 3px solid var(--accent); } .fu-h { margin: 0 0 4px; } .fu-no { color: var(--bad); font-size: 13.5px; margin: 6px 0 0; }
+.why .btn { margin-left: 8px; }
+.guide { margin-top: 8px; }
+.gbody { border-left: 3px solid var(--accent); padding: 4px 0 4px 12px; margin-top: 4px; }
+.gq { font-weight: 500; margin: 2px 0 6px; }
+.gdone { font-size: 13.5px; color: var(--muted); margin: 0 0 6px; padding-left: 20px; }
+.gdone b { color: var(--ink); }
+.stepn { font-family: var(--mono); font-size: 12px; color: var(--muted); margin: 0; }
+.rv-q, .rv-sent { margin-bottom: 8px; }
+.ctx { margin: 0 0 4px; }
+/* 解析：四個選項各自說明（✓ 正解、✗ 錯的選項） */
+.exl { list-style: none; padding: 0; margin: 6px 0 0; display: grid; gap: 6px; }
+.exl li { font-size: 14px; line-height: 1.6; }
+.exl li.ok b { color: var(--good); } .exl li.no b { color: var(--bad); font-weight: 500; }
+.exref { margin: 6px 0 0; font-size: 14px; border-left: 3px solid var(--accent); padding-left: 8px; }
+.ptitle { font-family: var(--en); font-weight: 600; font-size: 19px; }
+.blank { font-family: var(--mono); font-size: 14px; color: var(--accent); background: var(--soft); border-radius: 4px; padding: 1px 6px; white-space: nowrap; }
+.blank.fill { font-family: var(--en); font-size: 16px; color: var(--good); background: var(--good-soft); }
+.pre ol { margin: 4px 0 0; padding-left: 22px; display: grid; gap: 6px; }
+details summary { cursor: pointer; color: var(--accent); font-size: 14px; }
+.tree-note { font-size: 14.5px; margin: 0 0 10px; }
+.trees { display: grid; gap: 22px; }
+.tree h3 { font-size: 15px; margin: 6px 0 8px; }
+.tree-in { position: relative; display: flex; flex-direction: column; gap: 26px; padding: 4px 0; }
+.tree-ln { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+.tree-ln path { fill: none; stroke: color-mix(in srgb, var(--muted) 45%, transparent); stroke-width: 1.6; transition: stroke .15s, opacity .15s; }
+.trees.focus .tree-ln path { opacity: .35; }
+.trees.focus .tree-ln path.lit { stroke: var(--accent); stroke-width: 2.4; opacity: 1; }
+.trow { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; position: relative; }
+.tn { position: relative; flex: 0 1 168px; min-width: 128px; display: flex; flex-direction: column; gap: 5px; padding: 8px 10px; border-radius: 9px; background: var(--surface);
+  border: 1px solid var(--line); text-decoration: none; color: var(--ink); font-size: 13.5px; line-height: 1.35; cursor: pointer; transition: border-color .15s, opacity .15s, box-shadow .15s; }
+.tn:hover, .tn:focus-visible { border-color: var(--accent); outline: none; }
+.tn.plan { border-style: dashed; background: var(--bg); }
+.tn.done { border-color: var(--good); }
+.trees.focus .tn { opacity: .45; }
+.trees.focus .tn.lit { opacity: 1; box-shadow: 0 0 0 2px var(--accent); }
+.tn-t { font-weight: 600; }
+.tn-w { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+.tn-w b { font-family: var(--mono); font-weight: 500; white-space: nowrap; color: var(--muted); }
+.tn-bar { flex: 1; height: 6px; border-radius: 3px; background: var(--sunk); overflow: hidden; }
+.tn-bar i { display: block; height: 100%; border-radius: 3px; transition: width .25s; background: color-mix(in srgb, var(--eosin) calc(var(--heat, 0) * 100%), var(--accent)); }
+.tn-s { font-size: 11px; color: var(--warn); }
+.tn-x { font-size: 11px; color: var(--muted); }
+.tree-src { font-size: 13.5px; color: var(--muted); margin: 14px 0 4px; }
+.tree-src summary { cursor: pointer; }
+@media (max-width: 520px) { .tn { flex-basis: 140px; min-width: 0; padding: 7px 8px; font-size: 13px; } .trow { gap: 8px; } }
+.seg { display: inline-flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
+.seg button { border: 1px solid var(--line); background: var(--bg); border-radius: 6px; padding: 6px 12px; font-size: 13.5px; cursor: pointer; min-height: 36px; }
+.seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.eyebrow { color: var(--accent) !important; }
+/* 程度測驗與章節狀態 */
+.hero { font-size: clamp(26px, 5vw, 36px); }
+h2 { margin-top: 32px !important; }
+.mut { color: var(--muted); }
+.dxs, .prs { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
+.dx a, .dx.soon { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; color: var(--ink); text-decoration: none; font-size: 14px; }
+.dx a:hover { border-color: var(--accent); }
+.dx.soon { border-style: dashed; background: var(--bg); color: var(--muted); }
+.dx.fin a { border-color: var(--good); }
+.dx-h { font-weight: 700; font-size: 15px; } .dx-s { color: var(--muted); font-size: 13px; text-align: right; }
+.dx .pbar { grid-column: 1 / -1; }
+.dx-st { grid-column: 1 / -1; font-size: 13px; color: var(--accent); }
+.dx.fin .dx-st { color: var(--good); }
+.pr { display: grid; grid-template-columns: 4.5em minmax(0, 1fr) auto; gap: 10px; align-items: baseline; background: var(--surface); border: 1px solid var(--line); border-left-width: 4px; border-radius: 8px; padding: 8px 12px; font-size: 14px; }
+.pr b { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.pr-l { font-weight: 700; font-size: 13px; }
+.st-good { --st: var(--good); } .st-mid { --st: var(--warn); } .st-weak { --st: var(--bad); }
+.pr { border-left-color: var(--st, var(--line)); } .pr .pr-l { color: var(--st); }
+.tn.st-good, .tn.st-mid, .tn.st-weak { border: 2px solid var(--st); }
+.tn .tn-s { color: var(--st, var(--muted)); }
+.tn-n { font-family: var(--mono); color: var(--muted); font-weight: 400; }
+.lg { display: inline-block; border: 2px solid var(--st); border-radius: 5px; padding: 0 6px; margin: 0 4px; font-size: 12.5px; color: var(--st); }
+.opt.unsure { color: var(--muted); border-style: dashed; }
+.qch { display: block; font-family: var(--mono); font-size: 12px; color: var(--muted); margin: 2px 0 0; font-weight: 400; }
+.tn-bar i { background: var(--accent) !important; }
+@media (max-width: 560px) { .pr { grid-template-columns: 4.2em minmax(0, 1fr); } .pr b { grid-column: 2; } .dx-s { text-align: left; grid-column: 1 / -1; } .brand small { display: none; } }
+</style>
+
+<header class="top"><div class="top-in">
+  <a class="brand" href="#" style="text-decoration:none">後中生物<small>BIOLOGY · 先測再學</small></a>
+  <span class="pg" id="pgTag"></span>
+</div></header>
+<main id="main"></main>
+<script>
+/*PURE*/
+/*CONTENT*/
+/*APP*/
+</script>

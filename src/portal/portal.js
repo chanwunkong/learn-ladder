@@ -46,7 +46,7 @@ const COURSE = {
   count: () => COURSES.filter(c => !c.soon).reduce((s, c) => s + countOf(c), 0),
   total: () => COURSES.filter(c => !c.soon).reduce((s, c) => s + totalOf(c), 0),
   // 練習紀錄：首頁同步化學、英文與國文的紀錄，「今天」與「總進度」才會和其他裝置一致
-  logs: [['chemLog', 'chem-ladder'], ['engLog', 'eng-ladder'], ['zhLog', 'zh-ladder']].map(([doc, pre]) => ({ doc, get: () => local(pre, 'log', []), set: a => { try { localStorage.setItem(pre + ':log', JSON.stringify(a)); } catch (e) { /* 忽略 */ } } })),
+  logs: [['chemLog', 'chem-ladder'], ['engLog', 'eng-ladder'], ['zhLog', 'zh-ladder'], ['bioLog', 'bio-ladder']].map(([doc, pre]) => ({ doc, get: () => local(pre, 'log', []), set: a => { try { localStorage.setItem(pre + ':log', JSON.stringify(a)); } catch (e) { /* 忽略 */ } } })),
   refresh: render,
 };
 render();

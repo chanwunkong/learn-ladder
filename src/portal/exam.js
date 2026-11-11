@@ -23,7 +23,7 @@ const EXAM_DATES = [
 const SUBJECTS = [
   { id: 'chem', name: '化學', st: 'live', href: './chem/' },
   { id: 'eng', name: '英文', st: 'live', href: './eng/' },
-  { id: 'bio', name: '生物', st: 'plan', note: '含生理學。之後會先做歷屆試題主題分析，再決定章節與比重，做法和化學相同。' },
+  { id: 'bio', name: '生物', st: 'building', href: './bio/', note: '先做程度測驗找出弱項，再依考試比重排課；31 章的比重來自 106–115 三校 1500 題的分析。' },
   { id: 'zh', name: '國文', st: 'live', href: './zh/' },
 ];
 const SUBJ_ST = { live: '已上線', building: '製作中', plan: '規劃中' };
@@ -100,7 +100,7 @@ ${enterHTML(es, zs)}
       ${engToday(es, eToday)}
       <li class="${zbook.due.length ? '' : 'ok'}"><a href="./zh/#review"><span class="ck">${zbook.due.length ? '' : '✓'}</span><span>國文錯題複習</span><b>${zbook.due.length ? `還有 ${zbook.due.length} 題到期` : zRev ? `完成 ${zRev} 題` : '今天沒有到期'}</b></a></li>
       ${zhToday(zs, zToday)}
-      ${SUBJECTS.filter(x => x.st !== 'live').map(x => `<li class="soon"><span class="ck"></span><span>${x.name}${x.today ? `：${x.today}` : ''}</span><b>${SUBJ_ST[x.st]}</b></li>`).join('')}
+      ${SUBJECTS.filter(x => x.st !== 'live').map(x => (x.href ? `<li><a href="${x.href}"><span class="ck"></span><span>${x.name}：程度測驗</span><b>${SUBJ_ST[x.st]}</b></a></li>` : `<li class="soon"><span class="ck"></span><span>${x.name}${x.today ? `：${x.today}` : ''}</span><b>${SUBJ_ST[x.st]}</b></li>`)).join('')}
     </ul>
     <div class="streak"><span><b>${streak}</b> 天連續練習</span><span class="mut">錯題本：化學 ${book.open.length}・英文 ${REVIEW.units(ebook.open)}・國文 ${zbook.open.length} 題</span></div>
     <div class="heat" aria-label="最近 4 週每天的練習題數">${days.map(d => { const n = perDay[REVIEW.dayKey(d)] || 0; return `<i class="l${lv(n)}${REVIEW.dayKey(d) === today ? ' now' : ''}" title="${REVIEW.dayKey(d)}：${n} 題"></i>`; }).join('')}</div>
@@ -117,7 +117,7 @@ ${enterHTML(es, zs)}
     </details>
     ${engProgress(es)}
     ${zhProgress(zs)}
-    ${SUBJECTS.filter(x => x.st !== 'live').map(x => `<details class="subj"><summary><span class="sj">${x.name}</span><span class="big">${x.big || '—'}</span><span class="mut small">${SUBJ_ST[x.st]}</span></summary><p class="small">${x.note}</p></details>`).join('')}
+    ${SUBJECTS.filter(x => x.st !== 'live').map(x => `<details class="subj"><summary><span class="sj">${x.name}</span><span class="big">${x.big || '—'}</span><span class="mut small">${SUBJ_ST[x.st]}</span></summary><p class="small">${x.note}${x.href ? ` <a href="${x.href}">打開${x.name} →</a>` : ''}</p></details>`).join('')}
   </section>
 </div>
 

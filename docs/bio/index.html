@@ -1,0 +1,1003 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="學士後中醫入學考生物：先做程度測驗找出弱項，再依考試比重排課，錯題自動複習。">
+<meta name="app-site" content="pages">
+<meta name="theme-color" content="#2E6B3A">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" type="image/png" href="../icon-192.png">
+<link rel="apple-touch-icon" href="../icon-192.png">
+<style>
+:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; font: 14px system-ui, sans-serif; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+<title>後中生物</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* 學習階梯共用樣式：色票、字型、頁首、按鈕、同步面板（首頁與新課程共用；生統階梯 shell 內有自己的一份） */
+:root {
+  --bg: #F3F4F0; --surface: #FFFFFF; --sunk: #E9EBE5; --ink: #1A211F; --muted: #59635E; --line: #D5D9D1;
+  --accent: #2F3B99; --accent-ink: #FFFFFF; --soft: #E6E8F5; --eosin: #B5326C; --eosin-soft: #F7E4EC;
+  --good: #23704A; --good-soft: #E1F0E6; --warn: #8F5400; --warn-soft: #FAEFD9; --bad: #B0281F; --bad-soft: #FBE6E4;
+  --c1: #3A47AE; --c2: #C0386F; --c3: #1C8270; --c4: #B07418;
+  --display: "LXGW WenKai TC", "Noto Serif TC", "Songti TC", serif;
+  --body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #101412; --surface: #171C1A; --sunk: #0C0F0E; --ink: #E3E8E5; --muted: #98A39E; --line: #2A322F;
+  --accent: #A2ACF7; --accent-ink: #12163A; --soft: #20254A; --eosin: #F08AB6; --eosin-soft: #3A1B29;
+  --good: #71CB95; --good-soft: #14301F; --warn: #E8AE55; --warn-soft: #33260F; --bad: #F28B82; --bad-soft: #3A1A18;
+  --c1: #8E9BFA; --c2: #F07DB0; --c3: #5CCDB6; --c4: #E2AE5A; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #101412; --surface: #171C1A; --sunk: #0C0F0E; --ink: #E3E8E5; --muted: #98A39E; --line: #2A322F;
+  --accent: #A2ACF7; --accent-ink: #12163A; --soft: #20254A; --eosin: #F08AB6; --eosin-soft: #3A1B29;
+  --good: #71CB95; --good-soft: #14301F; --warn: #E8AE55; --warn-soft: #33260F; --bad: #F28B82; --bad-soft: #3A1A18;
+  --c1: #8E9BFA; --c2: #F07DB0; --c3: #5CCDB6; --c4: #E2AE5A; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15.5px; line-height: 1.75; }
+a { color: var(--accent); text-underline-offset: 3px; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+h1, h2, h3 { text-wrap: balance; line-height: 1.3; }
+.mono { font-family: var(--mono); }
+.small { font-size: 13px; } .mut { color: var(--muted); }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--eosin); margin: 0 0 6px; }
+.lbl { font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; color: var(--muted); margin: 0 0 8px; display: block; }
+
+/* header */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+.top-in { max-width: 1240px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 8px 20px; flex-wrap: wrap; }
+.brand { font-family: var(--display); font-size: 23px; font-weight: 700; background: none; border: 0; padding: 0; cursor: pointer; display: flex; align-items: baseline; gap: 10px; color: var(--ink); }
+.brand small { font-family: var(--mono); font-size: 11px; font-weight: 400; color: var(--muted); letter-spacing: .04em; }
+.btn { border: 1px solid var(--line); background: var(--surface); padding: 8px 16px; border-radius: 6px; cursor: pointer; display: inline-flex; gap: 8px; align-items: center; font-size: 14.5px; text-align: left; }
+.btn:hover { border-color: var(--ink); }
+.btn.pri { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 500; }
+.btn.pri:hover { filter: brightness(1.08); }
+.btn.done { background: var(--good-soft); border-color: var(--good); color: var(--good); }
+.btn.wide { width: 100%; justify-content: center; margin-top: 12px; padding: 11px; }
+.btn, .opt, .an, .tab { min-height: 44px; }
+.btn.sm { min-height: 36px; padding: 6px 12px; font-size: 13.5px; }
+.lang select { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 6px; padding: 4px 6px; font-size: 13px; }
+.cloud { position: relative; }
+.cloud-btn { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; font-size: 13px; }
+.cb-av, .cp-av { width: 20px; height: 20px; border-radius: 50%; }
+.cb-dot { width: 8px; height: 8px; border-radius: 50%; background: #2E9E5B; }
+@media (max-width: 480px) { .cloud-btn > span:last-child { display: none; } }   /* 手機：頁首只顯示頭像或雲朵，維持一行 */
+.cloud-panel { position: absolute; right: 0; top: calc(100% + 8px); width: min(320px, calc(100vw - 32px)); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 28px rgba(0,0,0,.14); padding: 14px 16px; z-index: 40; font-size: 13.5px; line-height: 1.6; }
+.cloud-panel p { margin: 0 0 10px; }
+.cp-t { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+.cp-t small { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
+.cp-av { width: 32px; height: 32px; }
+.cp-st { background: var(--sunk); border-radius: 6px; padding: 6px 10px; font-size: 12.5px; }
+.cp-st.ok { color: #1F7A45; }
+.cp-go { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-bottom: 10px; }
+.cp-go svg { background: #fff; border-radius: 3px; padding: 1px; }
+.cp-s { font-size: 12px; color: var(--muted); margin: 0 !important; }
+.cp-err { color: var(--eosin); font-size: 12px; margin-top: 8px !important; }
+.sync-hint { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 14px 0 0; padding: 10px 14px; border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px; background: var(--soft); font-size: 13.5px; }
+.sync-hint span { flex: 1 1 260px; }
+.home-link { font-size: 13px; color: var(--muted); text-decoration: none; margin-right: -8px; max-width: 40vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.home-link:hover { color: var(--accent); }
+/* 錯題本：上方的日期格子（今天、明天……之後），點一格列出那天的題目 */
+.dcards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); gap: 8px; margin: 12px 0 20px; }
+.dcard { display: grid; gap: 2px; text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; color: var(--ink); font: inherit; cursor: pointer; text-decoration: none; min-height: 44px; }
+.dcard b { font-size: 14px; font-weight: 500; color: var(--muted); }
+.dcard span { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.dcard small { font-size: 12px; color: var(--warn); }
+.dcard[aria-pressed="true"] { border: 2px solid var(--accent); background: var(--soft, var(--surface)); }
+.dcard[aria-pressed="true"] b { color: var(--accent); }
+.dnote { font-size: 13.5px; color: var(--muted); margin: 0 0 8px; }
+
+/* 後中生物：版面與選擇題沿用後中國文，章節地圖照化學；主色改為葉綠 */
+:root { --accent: #2E6B3A; --soft: #E3F1E4; --verb: #C98A00; --verb-soft: #FFF1C9; --subj: #0E7C7B; --subj-soft: #DDF2F1; --mod: #8A94A3;
+  --en: "Source Serif 4", Georgia, "Times New Roman", serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --accent: #8FD19E; --accent-ink: #0F2A15; --soft: #1E3324; --verb: #F2C14E; --verb-soft: #3A2F12; --subj: #5FD0CC; --subj-soft: #133331; --mod: #7D8794; } }
+:root[data-theme="dark"] { --accent: #8FD19E; --accent-ink: #0F2A15; --soft: #1E3324; --verb: #F2C14E; --verb-soft: #3A2F12; --subj: #5FD0CC; --subj-soft: #133331; --mod: #7D8794; }
+body { margin: 0; }
+.top-in .wk { margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.home-link { font-size: 13px; color: var(--muted); text-decoration: none; }
+#main { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 80px; }
+#main h1 { font-family: var(--body); font-weight: 700; font-size: clamp(26px, 5vw, 36px); margin: 0 0 10px; }
+#main h2 { font-size: 20px; margin: 0; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+#main h2 small { font-size: 12.5px; font-weight: 400; color: var(--muted); font-family: var(--mono); }
+#main h3 { font-size: 16px; margin: 10px 0 0; }
+.lede { font-size: 16px; color: var(--muted); }
+.note { color: var(--muted); font-size: 14.5px; margin: 0; }
+section.part { margin-top: 36px; display: grid; gap: 12px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.endrow { margin-top: 32px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; min-width: 0; }
+.zh { color: var(--muted); font-size: 14.5px; margin: 4px 0 0; }
+/* 首頁：7 天 × 早晚 */
+.duebar a { display: inline-block; background: var(--warn-soft); color: var(--warn); border-radius: 8px; padding: 8px 14px; text-decoration: none; }
+.pbar { display: block; height: 6px; background: var(--sunk); border-radius: 3px; overflow: hidden; }
+.pbar i { display: block; height: 100%; background: var(--accent); }
+.pn { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 14px; }
+.pn a { border: 1px solid var(--line); border-radius: 8px; padding: 4px 12px; text-decoration: none; color: var(--ink); background: var(--surface); font-size: 13.5px; }
+/* 選擇題 */
+.q { border-top: 1px solid var(--line); padding: 14px 0; }
+.qnum, .qsrc { font-family: var(--mono); font-size: 12px; color: var(--muted); margin: 0 0 4px; }
+.qt { font-weight: 500; margin: 0 0 8px; }
+.opts { display: grid; gap: 6px; }
+.opt { text-align: left; border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 9px 14px; cursor: pointer; font-size: 14.5px; min-height: 44px; }
+.opt.en-o { font-family: var(--en); font-size: 16px; }
+.opt:hover:not(:disabled) { border-color: var(--accent); }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--good); background: var(--good-soft); color: var(--good); }
+.opt .ow { font-family: var(--en); font-size: 13px; color: var(--muted); margin-left: 6px; }
+.opt.wrong { border-color: var(--bad); background: var(--bad-soft); color: var(--bad); }
+.why { margin-top: 8px; padding: 10px 14px; border-radius: 8px; font-size: 14.5px; }
+.why.ok { background: var(--good-soft); } .why.no { background: var(--bad-soft); }
+.why.fu { background: var(--soft); border-left: 3px solid var(--accent); } .fu-h { margin: 0 0 4px; } .fu-no { color: var(--bad); font-size: 13.5px; margin: 6px 0 0; }
+.why .btn { margin-left: 8px; }
+.guide { margin-top: 8px; }
+.gbody { border-left: 3px solid var(--accent); padding: 4px 0 4px 12px; margin-top: 4px; }
+.gq { font-weight: 500; margin: 2px 0 6px; }
+.gdone { font-size: 13.5px; color: var(--muted); margin: 0 0 6px; padding-left: 20px; }
+.gdone b { color: var(--ink); }
+.stepn { font-family: var(--mono); font-size: 12px; color: var(--muted); margin: 0; }
+.rv-q, .rv-sent { margin-bottom: 8px; }
+.ctx { margin: 0 0 4px; }
+/* 解析：四個選項各自說明（✓ 正解、✗ 錯的選項） */
+.exl { list-style: none; padding: 0; margin: 6px 0 0; display: grid; gap: 6px; }
+.exl li { font-size: 14px; line-height: 1.6; }
+.exl li.ok b { color: var(--good); } .exl li.no b { color: var(--bad); font-weight: 500; }
+.exref { margin: 6px 0 0; font-size: 14px; border-left: 3px solid var(--accent); padding-left: 8px; }
+.ptitle { font-family: var(--en); font-weight: 600; font-size: 19px; }
+.blank { font-family: var(--mono); font-size: 14px; color: var(--accent); background: var(--soft); border-radius: 4px; padding: 1px 6px; white-space: nowrap; }
+.blank.fill { font-family: var(--en); font-size: 16px; color: var(--good); background: var(--good-soft); }
+.pre ol { margin: 4px 0 0; padding-left: 22px; display: grid; gap: 6px; }
+details summary { cursor: pointer; color: var(--accent); font-size: 14px; }
+.tree-note { font-size: 14.5px; margin: 0 0 10px; }
+.trees { display: grid; gap: 22px; }
+.tree h3 { font-size: 15px; margin: 6px 0 8px; }
+.tree-in { position: relative; display: flex; flex-direction: column; gap: 26px; padding: 4px 0; }
+.tree-ln { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+.tree-ln path { fill: none; stroke: color-mix(in srgb, var(--muted) 45%, transparent); stroke-width: 1.6; transition: stroke .15s, opacity .15s; }
+.trees.focus .tree-ln path { opacity: .35; }
+.trees.focus .tree-ln path.lit { stroke: var(--accent); stroke-width: 2.4; opacity: 1; }
+.trow { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; position: relative; }
+.tn { position: relative; flex: 0 1 168px; min-width: 128px; display: flex; flex-direction: column; gap: 5px; padding: 8px 10px; border-radius: 9px; background: var(--surface);
+  border: 1px solid var(--line); text-decoration: none; color: var(--ink); font-size: 13.5px; line-height: 1.35; cursor: pointer; transition: border-color .15s, opacity .15s, box-shadow .15s; }
+.tn:hover, .tn:focus-visible { border-color: var(--accent); outline: none; }
+.tn.plan { border-style: dashed; background: var(--bg); }
+.tn.done { border-color: var(--good); }
+.trees.focus .tn { opacity: .45; }
+.trees.focus .tn.lit { opacity: 1; box-shadow: 0 0 0 2px var(--accent); }
+.tn-t { font-weight: 600; }
+.tn-w { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+.tn-w b { font-family: var(--mono); font-weight: 500; white-space: nowrap; color: var(--muted); }
+.tn-bar { flex: 1; height: 6px; border-radius: 3px; background: var(--sunk); overflow: hidden; }
+.tn-bar i { display: block; height: 100%; border-radius: 3px; transition: width .25s; background: color-mix(in srgb, var(--eosin) calc(var(--heat, 0) * 100%), var(--accent)); }
+.tn-s { font-size: 11px; color: var(--warn); }
+.tn-x { font-size: 11px; color: var(--muted); }
+.tree-src { font-size: 13.5px; color: var(--muted); margin: 14px 0 4px; }
+.tree-src summary { cursor: pointer; }
+@media (max-width: 520px) { .tn { flex-basis: 140px; min-width: 0; padding: 7px 8px; font-size: 13px; } .trow { gap: 8px; } }
+.seg { display: inline-flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
+.seg button { border: 1px solid var(--line); background: var(--bg); border-radius: 6px; padding: 6px 12px; font-size: 13.5px; cursor: pointer; min-height: 36px; }
+.seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.eyebrow { color: var(--accent) !important; }
+/* 程度測驗與章節狀態 */
+.hero { font-size: clamp(26px, 5vw, 36px); }
+h2 { margin-top: 32px !important; }
+.mut { color: var(--muted); }
+.dxs, .prs { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
+.dx a, .dx.soon { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; color: var(--ink); text-decoration: none; font-size: 14px; }
+.dx a:hover { border-color: var(--accent); }
+.dx.soon { border-style: dashed; background: var(--bg); color: var(--muted); }
+.dx.fin a { border-color: var(--good); }
+.dx-h { font-weight: 700; font-size: 15px; } .dx-s { color: var(--muted); font-size: 13px; text-align: right; }
+.dx .pbar { grid-column: 1 / -1; }
+.dx-st { grid-column: 1 / -1; font-size: 13px; color: var(--accent); }
+.dx.fin .dx-st { color: var(--good); }
+.pr { display: grid; grid-template-columns: 4.5em minmax(0, 1fr) auto; gap: 10px; align-items: baseline; background: var(--surface); border: 1px solid var(--line); border-left-width: 4px; border-radius: 8px; padding: 8px 12px; font-size: 14px; }
+.pr b { font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.pr-l { font-weight: 700; font-size: 13px; }
+.st-good { --st: var(--good); } .st-mid { --st: var(--warn); } .st-weak { --st: var(--bad); }
+.pr { border-left-color: var(--st, var(--line)); } .pr .pr-l { color: var(--st); }
+.tn.st-good, .tn.st-mid, .tn.st-weak { border: 2px solid var(--st); }
+.tn .tn-s { color: var(--st, var(--muted)); }
+.tn-n { font-family: var(--mono); color: var(--muted); font-weight: 400; }
+.lg { display: inline-block; border: 2px solid var(--st); border-radius: 5px; padding: 0 6px; margin: 0 4px; font-size: 12.5px; color: var(--st); }
+.opt.unsure { color: var(--muted); border-style: dashed; }
+.qch { display: block; font-family: var(--mono); font-size: 12px; color: var(--muted); margin: 2px 0 0; font-weight: 400; }
+.tn-bar i { background: var(--accent) !important; }
+@media (max-width: 560px) { .pr { grid-template-columns: 4.2em minmax(0, 1fr); } .pr b { grid-column: 2; } .dx-s { text-align: left; grid-column: 1 / -1; } .brand small { display: none; } }
+</style>
+</head>
+<body>
+
+
+<header class="top"><div class="top-in">
+  <a class="brand" href="#" style="text-decoration:none">後中生物<small>BIOLOGY · 先測再學</small></a>
+  <span class="pg" id="pgTag"></span>
+</div></header>
+<main id="main"></main>
+<script>
+/* ---------- 後中生物：介面小工具 ---------- */
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('bio-ladder:' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('bio-ladder:' + k, JSON.stringify(v)); } catch (e) { /* 無法儲存時忽略 */ } },
+};
+function hash(s) { let h = 2166136261; for (const ch of String(s)) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
+function shuffled(n, seed) {
+  let x = hash(seed) || 1; const a = [...Array(n).keys()];
+  for (let i = n - 1; i > 0; i--) { x = (Math.imul(x, 1103515245) + 12345) >>> 0; const j = x % (i + 1); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+
+/* ---------- 後中生物：章節、先修關係與考試比重 ----------
+   比重來自 analysis/bio（中國醫、義守、慈濟 106–115 學年度生物試題 30 份、1500 題逐題分類）。
+   w：每份 50 題約考幾題，依序為 [十年加權, 近三年, 中國醫, 義守, 慈濟]；加權＝學年度 − 105。 */
+const UNITS = [
+  { part: '細胞與生化', key: 'c', s: '細', items: [['c1', '生命的化學與巨分子'], ['c2', '細胞構造與內膜系統'], ['c3', '細胞膜與膜運輸'], ['c4', '酵素、細胞呼吸與代謝'], ['c5', '光合作用'], ['c6', '細胞訊息傳遞'], ['c7', '細胞週期、凋亡與癌']] },
+  { part: '遺傳與分子生物', key: 'g', s: '遺', items: [['g1', '孟德爾、連鎖與人類遺傳'], ['g2', 'DNA 複製、轉錄、轉譯與突變'], ['g3', '基因表現調控與表觀遺傳'], ['g4', '生物技術與實驗方法'], ['g5', '基因體與發育遺傳']] },
+  { part: '微生物', key: 'm', s: '微', items: [['m1', '病毒'], ['m2', '原核生物與病原菌']] },
+  { part: '演化與多樣性', key: 'e', s: '演', items: [['e1', '演化機制與族群遺傳'], ['e2', '系統分類與生命演化史'], ['e3', '原生生物與真菌'], ['e4', '植物多樣性'], ['e5', '動物多樣性']] },
+  { part: '植物生理', key: 'p', s: '植', items: [['p1', '植物構造、運輸與營養'], ['p2', '植物激素、反應與生殖']] },
+  { part: '動物生理', key: 'a', s: '動', items: [['a1', '循環與氣體交換'], ['a2', '消化與營養'], ['a3', '免疫'], ['a4', '滲透調節、排泄與體溫'], ['a5', '內分泌'], ['a6', '生殖與胚胎發育'], ['a7', '神經系統'], ['a8', '感覺與運動']] },
+  { part: '生態', key: 'o', s: '生', items: [['o1', '行為與族群生態'], ['o2', '群落、生態系與保育']] },
+];
+const TREE = {
+  c1: { pre: [], w: [0.9, 0.8, 0.7, 1.5, 0.6] },
+  c2: { pre: ['c1'], w: [2.0, 2.2, 1.8, 2.3, 2.0] },
+  c3: { pre: ['c2'], w: [0.8, 0.7, 0.9, 0.8, 0.7] },
+  c4: { pre: ['c3'], w: [2.8, 3.4, 3.4, 2.4, 2.7] },
+  c5: { pre: ['c4'], w: [1.3, 1.1, 1.3, 0.7, 1.8] },
+  c6: { pre: ['c3'], w: [0.9, 0.9, 0.7, 1.0, 1.1] },
+  c7: { pre: ['c6'], w: [1.4, 1.4, 1.7, 1.1, 1.5] },
+  g1: { pre: ['c7'], w: [2.0, 1.4, 3.0, 1.8, 1.1] },
+  g2: { pre: ['c1'], w: [2.4, 1.9, 1.8, 2.3, 3.3] },
+  g3: { pre: ['g2'], w: [1.6, 1.7, 1.4, 1.6, 1.9] },
+  g4: { pre: ['g3'], w: [2.0, 2.6, 1.5, 2.5, 2.0] },
+  g5: { pre: ['g1', 'g3'], w: [0.9, 0.9, 1.1, 0.7, 0.9] },
+  m1: { pre: ['g2'], w: [1.6, 0.7, 2.8, 0.9, 0.9] },
+  m2: { pre: ['g3'], w: [1.8, 2.2, 2.8, 1.4, 1.3] },
+  e1: { pre: ['g1'], w: [1.9, 1.7, 2.6, 1.3, 1.9] },
+  e2: { pre: ['e1'], w: [1.5, 1.4, 1.9, 1.1, 1.4] },
+  e3: { pre: ['e2'], w: [1.3, 1.0, 1.0, 0.7, 2.0] },
+  e4: { pre: ['e2'], w: [1.0, 1.1, 0.8, 0.4, 1.9] },
+  e5: { pre: ['e2'], w: [0.8, 0.3, 0.1, 0.7, 1.5] },
+  p1: { pre: ['e4', 'c5'], w: [2.1, 2.4, 1.9, 1.6, 2.8] },
+  p2: { pre: ['p1', 'c6'], w: [2.4, 2.3, 1.5, 2.1, 3.8] },
+  a1: { pre: ['c3'], w: [2.4, 2.6, 2.0, 4.1, 1.0] },
+  a2: { pre: ['c4'], w: [0.8, 0.8, 0.4, 1.5, 0.7] },
+  a3: { pre: ['c6'], w: [2.3, 2.8, 2.7, 3.1, 1.2] },
+  a4: { pre: ['a1'], w: [1.1, 1.1, 0.7, 1.8, 0.9] },
+  a5: { pre: ['c6'], w: [1.3, 1.3, 0.9, 1.5, 1.4] },
+  a6: { pre: ['a5', 'g5'], w: [1.3, 1.0, 0.7, 1.4, 1.6] },
+  a7: { pre: ['c3'], w: [2.5, 3.1, 1.2, 4.4, 2.0] },
+  a8: { pre: ['a7'], w: [1.3, 1.7, 0.9, 2.2, 0.9] },
+  o1: { pre: ['e1'], w: [0.9, 1.1, 1.2, 0.2, 1.4] },
+  o2: { pre: ['o1'], w: [2.6, 2.3, 4.7, 1.0, 2.1] },
+};
+// 程度測驗題：dg/*.js 各自 push。{ id, u 章, q, o: [正解, 誤, 誤, 誤], ex: [四個選項各自的說明] }；網站會打亂選項並加上第五個「不確定」
+const DIAG = [];
+
+/* ---------- 後中生物程度測驗：細胞與生化（7 章 × 6 題） ----------
+   題目全部自擬，考點取自 analysis/bio 各章歷年最常考的內容，難度照中國醫 113–115。o 的第一個是正解；ex 依序說明四個選項。 */
+DIAG.push(
+  // ===== 細1 生命的化學與巨分子 =====
+  { id: 'c1-1', u: 'c1', q: '下列何者屬於異質多醣（由兩種以上不同單糖單位組成）？',
+    o: ['玻尿酸（hyaluronic acid）', '纖維素（cellulose）', '幾丁質（chitin）', '肝醣（glycogen）'],
+    ex: ['玻尿酸由葡萄糖醛酸與 N-乙醯葡萄糖胺交替組成，是兩種單糖單位，屬於異質多醣（醣胺聚醣）。',
+      '纖維素全部由 β-葡萄糖以 β-1,4 鍵連成，只有一種單糖，是同質多醣。',
+      '幾丁質全部由 N-乙醯葡萄糖胺以 β-1,4 鍵連成，只有一種單位，是同質多醣。',
+      '肝醣全部由 α-葡萄糖組成（α-1,4 主鏈、α-1,6 分支），是同質多醣。'] },
+  { id: 'c1-2', u: 'c1', q: '比較肝醣與支鏈澱粉（amylopectin），下列敘述何者正確？',
+    o: ['兩者都以 α-1,6 鍵分支，但肝醣的分支點更密集', '肝醣的主鏈以 β-1,4 糖苷鍵連接', '支鏈澱粉的分支點以 α-1,4 鍵形成', '動物的肝醣主要儲存在脂肪組織與腦'],
+    ex: ['肝醣約每 8–12 個葡萄糖就有一個分支，支鏈澱粉約 24–30 個才一個，分支都是 α-1,6 鍵。分支多，末端多，能同時被很多酵素分解，快速釋出葡萄糖。',
+      '肝醣主鏈是 α-1,4 鍵；β-1,4 是纖維素的連接方式，人體無法分解。',
+      '主鏈才是 α-1,4，分支點是 α-1,6。',
+      '肝醣主要存在肝臟與骨骼肌；腦幾乎不儲存肝醣，脂肪組織儲存的是三酸甘油酯。'] },
+  { id: 'c1-3', u: 'c1', q: '下列哪一種物質不是由膽固醇衍生而來？',
+    o: ['甲狀腺素（thyroxine）', '膽酸（bile acid）', '維生素 D₃', '醛固酮（aldosterone）'],
+    ex: ['甲狀腺素由酪胺酸（tyrosine）加碘而成，屬於胺基酸衍生的激素，和膽固醇無關。',
+      '肝臟把膽固醇氧化成膽酸，再結合成膽鹽幫助脂肪乳化，這也是身體排除膽固醇的主要途徑。',
+      '皮膚中的 7-脫氫膽固醇經紫外線照射形成維生素 D₃，所以由膽固醇衍生。',
+      '醛固酮是腎上腺皮質分泌的類固醇激素，所有類固醇激素都由膽固醇合成。'] },
+  { id: 'c1-4', u: 'c1', q: '室溫下奶油是固體、橄欖油是液體，最主要的原因是：',
+    o: ['橄欖油含較多順式雙鍵，碳鏈彎曲，分子無法緊密堆疊', '橄欖油的脂肪酸碳鏈比奶油長', '橄欖油含較多反式雙鍵，使碳鏈彎曲', '橄欖油的脂肪酸含有較多氫原子'],
+    ex: ['順式雙鍵在碳鏈上造成約 30° 的彎折，分子之間排列鬆散、凡得瓦力弱，熔點因此較低，室溫呈液態。',
+      '碳鏈越長，分子間作用力越大、熔點越高；變成液體的原因不是碳鏈較長。',
+      '反式雙鍵讓碳鏈幾乎保持直線，性質接近飽和脂肪（所以反式脂肪在室溫下多為固體）；天然植物油的雙鍵多為順式。',
+      '含氫越多代表越飽和（雙鍵越少），熔點反而較高；橄欖油是不飽和脂肪，含氫較少。'] },
+  { id: 'c1-5', u: 'c1', q: '蛋白質的 α 螺旋與 β 摺板主要靠下列何者維持？',
+    o: ['主鏈上 C=O 與 N–H 之間的氫鍵', '側鏈 R 基之間的雙硫鍵', '不同多肽鏈之間的疏水作用', '胺基酸之間的胜肽鍵'],
+    ex: ['α 螺旋與 β 摺板是二級結構，由多肽主鏈的羰基氧與醯胺氫之間規律的氫鍵形成，和側鏈種類無關。',
+      '雙硫鍵在兩個半胱胺酸的側鏈之間形成，主要穩定三級（或四級）結構。',
+      '不同多肽鏈之間的作用屬於四級結構。',
+      '胜肽鍵把胺基酸連成一串，決定一級結構（胺基酸序列），不是螺旋與摺板的成因。'] },
+  { id: 'c1-6', u: 'c1', q: '流汗後汗水蒸發能有效降低體溫，主要是因為水具有下列哪一項性質？',
+    o: ['汽化熱很高，蒸發時必須打斷大量氫鍵而帶走熱', '比熱很低，所以溫度容易變化', '水分子是非極性分子，容易離開皮膚', '水在 4 °C 時密度最大'],
+    ex: ['水分子之間有大量氫鍵，液態水要變成水蒸氣必須吸收很多熱（汽化熱高），所以少量汗水蒸發就能帶走大量體熱。',
+      '水的比熱其實很高，吸熱後溫度變化小，這讓體溫穩定，但不是蒸發散熱的原因。',
+      '水是極性分子，正因為極性才形成氫鍵。',
+      '這是事實（所以冰浮在水上、湖水由上往下結冰），但和蒸發散熱無關。'] },
+
+  // ===== 細2 細胞構造與內膜系統 =====
+  { id: 'c2-1', u: 'c2', q: '真核細胞中，蛋白質的 N-連結醣基化（N-linked glycosylation）從哪裡開始？',
+    o: ['粗糙內質網的腔內', '細胞質中的游離核糖體', '高基氏體的反面（trans face）', '溶體內'],
+    ex: ['新合成的多肽一邊轉譯一邊進入粗糙內質網腔，就在那裡把預先組好的寡醣整塊接到天門冬醯胺（Asn）上，之後再送到高基氏體修飾。',
+      '游離核糖體做出的蛋白質留在細胞質，不會經過醣基化的路徑。',
+      '高基氏體會修剪、再加上醣基，但 N-連結醣基化的第一步在內質網；高基氏體的 trans 面是分類送出的出口。',
+      '溶體負責分解，含水解酶，不是加上醣基的地方。'] },
+  { id: 'c2-2', u: 'c2', q: '下列何者不屬於細胞的內膜系統（endomembrane system）？',
+    o: ['粒線體', '核膜', '溶體', '高基氏體'],
+    ex: ['粒線體（與葉綠體）的膜不是由內質網經囊泡而來，有自己的 DNA 與核糖體，依內共生學說源自細菌，所以不算內膜系統。',
+      '核膜和內質網相連，是內膜系統的一部分。',
+      '溶體由高基氏體產生的囊泡形成，屬於內膜系統。',
+      '高基氏體接收內質網的囊泡、再送往各處，是內膜系統的中心。'] },
+  { id: 'c2-3', u: 'c2', q: '肝細胞能把許多脂溶性藥物轉成較水溶性而排出，負責這項解毒作用、在肝細胞中特別發達的構造是：',
+    o: ['平滑內質網', '粗糙內質網', '溶體', '中心粒'],
+    ex: ['平滑內質網膜上有細胞色素 P450 等酵素，會在藥物上加上羥基，使它更水溶、容易排出；長期服用某些藥物時，肝細胞的平滑內質網會增生。',
+      '粗糙內質網附有核糖體，主要合成分泌蛋白與膜蛋白，不負責藥物解毒。',
+      '溶體分解被吞入的大分子與老舊胞器，不負責把脂溶性藥物改造成水溶性。',
+      '中心粒和細胞分裂時紡錘體的組織有關。'] },
+  { id: 'c2-4', u: 'c2', q: '某蛋白質由細胞質中的游離核糖體合成，序列上沒有任何信號胜肽或定位序列，它最後最可能在哪裡？',
+    o: ['留在細胞質', '分泌到細胞外', '進入粒線體基質', '進入內質網腔'],
+    ex: ['蛋白質要去細胞質以外的地方都需要「地址」。沒有任何定位序列，就留在它被合成的地方：細胞質。',
+      '要分泌出去，必須先有 N 端信號胜肽，讓核糖體停靠到粗糙內質網上，才會進入分泌路徑。',
+      '進入粒線體需要 N 端的粒線體定位序列，由外膜與內膜上的轉運蛋白辨識。',
+      '進入內質網需要信號胜肽與信號辨識顆粒（SRP）帶領。'] },
+  { id: 'c2-5', u: 'c2', q: '下列哪一種構造的橫切面呈現典型的「9+2」微管排列？',
+    o: ['纖毛與鞭毛的軸絲', '中心粒', '基體（basal body）', '小腸上皮細胞的微絨毛'],
+    ex: ['纖毛與鞭毛的軸絲由外圍 9 組二聯微管加中央 2 根單一微管組成，靠動力蛋白（dynein）讓微管滑動而擺動。',
+      '中心粒是 9 組三聯微管，中央沒有微管（9+0 的排列）。',
+      '基體構造和中心粒相同，是 9 組三聯微管，負責錨定纖毛或鞭毛。',
+      '微絨毛的支架是肌動蛋白微絲，不是微管。'] },
+  { id: 'c2-6', u: 'c2', q: '溶體酵素在高基氏體會被加上甘露糖-6-磷酸（M6P）作為標記。若某人無法加上這個標記，最可能的結果是：',
+    o: ['溶體酵素被分泌到細胞外，溶體內缺乏水解酶', '溶體酵素全部滯留在粗糙內質網中', '溶體酵素改送進粒線體', '溶體酵素在細胞質中被活化，把細胞分解'],
+    ex: ['M6P 受體負責把溶體酵素分到送往溶體的囊泡。沒有標記，酵素走預設路徑被分泌到細胞外，血中酵素升高、溶體內未分解的物質堆積（I-細胞病）。',
+      '酵素仍能離開內質網進入高基氏體，只是在高基氏體分類時出錯，不會卡在內質網。',
+      '進入粒線體需要粒線體定位序列，與 M6P 無關。',
+      '溶體酵素在酸性環境才有活性，細胞質接近中性，而且它們根本沒有進入細胞質。'] },
+
+  // ===== 細3 細胞膜與膜運輸 =====
+  { id: 'c3-1', u: 'c3', q: '鈉鉀幫浦（Na⁺/K⁺-ATPase）被稱為「產電幫浦」（electrogenic pump），原因是：',
+    o: ['每消耗一個 ATP 送出 3 個 Na⁺、送入 2 個 K⁺，使膜內淨少一個正電荷', '它送出與送入的離子電荷相等', '它直接產生神經的動作電位', '它把 Cl⁻ 送進細胞，使膜內變負'],
+    ex: ['3 個正電荷出去、2 個進來，每循環一次就在膜兩側造成電荷差，直接貢獻一部分靜止膜電位，所以稱為「產電」。',
+      '若電荷相等就不會產生電位差，這正好與「產電」相反。',
+      '動作電位由電壓門控 Na⁺、K⁺ 通道快速開關造成；幫浦太慢，只負責長期維持濃度梯度。',
+      '鈉鉀幫浦只運送 Na⁺ 與 K⁺，不運送 Cl⁻。'] },
+  { id: 'c3-2', u: 'c3', q: '小腸上皮細胞頂端膜上的鈉-葡萄糖共同轉運蛋白（SGLT1）吸收葡萄糖的方式是：',
+    o: ['次級主動運輸：利用 Na⁺ 順濃度梯度進入的能量，把葡萄糖逆濃度梯度送入細胞', '初級主動運輸：自己水解 ATP 來運送葡萄糖', '促進擴散：葡萄糖順濃度梯度進入細胞', '胞飲作用：把含葡萄糖的液體包成囊泡吞入'],
+    ex: ['SGLT1 不直接用 ATP，而是借用基底側鈉鉀幫浦建立的 Na⁺ 梯度，讓葡萄糖跟著 Na⁺ 一起進入，即使細胞內葡萄糖濃度已經較高。',
+      '直接水解 ATP 的是初級主動運輸（例如鈉鉀幫浦本身），SGLT1 沒有 ATP 酶活性。',
+      '這是基底側膜上 GLUT2 的方式：細胞內葡萄糖濃度高，順著濃度梯度出到血液。',
+      '葡萄糖這種小分子由專一的轉運蛋白運送，不靠胞飲作用。'] },
+  { id: 'c3-3', u: 'c3', q: '某細菌由 15 °C 移到 40 °C 培養，為了維持細胞膜適當的流動性，它最可能做出哪一種調整？',
+    o: ['提高膜磷脂中飽和脂肪酸的比例', '提高膜磷脂中不飽和脂肪酸的比例', '把脂肪酸碳鏈變短', '減少膜蛋白的數量'],
+    ex: ['溫度升高時膜會變得太流動，增加飽和脂肪酸（直鏈、排列緊密）可以讓膜變得較不流動；天冷時則相反。',
+      '不飽和脂肪酸會增加流動性，這是低溫時的調整方向。',
+      '碳鏈變短，分子間作用力變小，膜更流動，方向也錯。',
+      '膜蛋白數量不是調節流動性的主要方式，而且減少膜蛋白會影響運輸與訊息傳遞。'] },
+  { id: 'c3-4', u: 'c3', q: '有關水通道蛋白（aquaporin）的敘述，下列何者正確？',
+    o: ['水分子順著水勢差快速通過，不需要消耗 ATP', '水分子被逆著濃度差主動送入細胞', '它同時運送 Na⁺ 與水分子', '它只存在於植物細胞'],
+    ex: ['水通道讓水以促進擴散的方式大量、快速通過，方向由兩側的水勢（滲透壓）決定，本身不耗能。腎臟集尿管在 ADH 作用下插入水通道，就是這個原理。',
+      '細胞沒有直接主動運送水的幫浦；水的移動都是被動的。',
+      '水通道的孔道非常狹窄並帶有特定電荷，連 H⁺（H₃O⁺）都擋住，更不會讓 Na⁺ 通過。',
+      '動物細胞也有，例如腎小管、紅血球都有大量水通道。'] },
+  { id: 'c3-5', u: 'c3', q: '人類紅血球的細胞內液約 0.3 Osm。把紅血球放進 0.3 M 的尿素溶液中，最可能發生什麼事？',
+    o: ['紅血球脹大破裂，因為尿素能通過細胞膜進入細胞，水跟著進入', '紅血球維持原狀，因為內外滲透濃度相同', '紅血球皺縮，因為尿素把水分子吸出細胞', '紅血球先皺縮，之後一直維持皺縮'],
+    ex: ['滲透濃度相同（等滲）不等於張力相同（等張）。尿素能穿過紅血球膜，逐漸進入細胞，使細胞內溶質變多，水跟著進入，最後溶血。所以 0.3 M 尿素對紅血球是低張的。',
+      '只有溶質「不能」穿過細胞膜時，等滲才代表不會有淨水移動；尿素能穿過。',
+      '外面的尿素會往細胞內擴散，不會把水留在外面；最後是細胞內溶質增加，水往內移動。',
+      '尿素進入細胞後，細胞會吸水脹大，不會一直皺縮。'] },
+  { id: 'c3-6', u: 'c3', q: '主動運輸的轉運蛋白和促進擴散的轉運蛋白，共同的特性是：',
+    o: ['都對特定物質具專一性，運送速率都會飽和', '都需要直接消耗 ATP', '都能把物質逆著濃度梯度運送', '都不會改變自身的構形'],
+    ex: ['兩者都靠和特定物質結合才能運送，所以有專一性；轉運蛋白數量有限，物質濃度再高，速率也會達到最大值（飽和）。',
+      '促進擴散不耗能；主動運輸中，次級主動運輸也不直接用 ATP。',
+      '只有主動運輸能逆濃度梯度；促進擴散只能順著梯度。',
+      '載體型的轉運蛋白都要改變構形，才能把物質從膜的一側送到另一側。'] },
+
+  // ===== 細4 酵素、細胞呼吸與代謝 =====
+  { id: 'c4-1', u: 'c4', q: '某酵素反應沒有抑制劑，受質濃度為 Km 的 4 倍時，反應速率 v 約是最大速率 Vmax 的多少？',
+    o: ['0.8 倍', '0.5 倍', '0.25 倍', '0.2 倍'],
+    ex: ['代入 Michaelis–Menten 式 v = Vmax[S] / (Km + [S])：[S] = 4Km，v = 4Km / 5Km × Vmax = 0.8 Vmax。',
+      '0.5 倍是 [S] 剛好等於 Km 的情形，這就是 Km 的定義。',
+      '這是 Km / [S]（1/4），不是 Michaelis–Menten 式。',
+      '這是 Km / (Km + [S])，代表沒有和受質結合的酵素比例，不是反應速率。'] },
+  { id: 'c4-2', u: 'c4', q: '加入競爭性抑制劑後，酵素的動力學參數會如何改變？',
+    o: ['Km 增加，Vmax 不變', 'Km 不變，Vmax 下降', 'Km 與 Vmax 都下降', 'Km 下降，Vmax 不變'],
+    ex: ['競爭性抑制劑和受質搶同一個活性位，需要更多受質才能達到一半速率（表觀 Km 增加）；但受質夠多時能把抑制劑擠掉，最大速率不變。',
+      '這是非競爭性抑制：抑制劑結合在別處，使部分酵素失去作用，增加受質也救不回來。',
+      '這是反競爭性抑制：抑制劑只和酵素-受質複合體結合。',
+      '競爭會讓酵素看起來更難結合受質，Km 只會變大，不會變小。'] },
+  { id: 'c4-3', u: 'c4', q: '空腹時升糖素濃度上升，肝細胞內的果糖-2,6-雙磷酸會如何改變？對代謝有什麼影響？',
+    o: ['減少；糖解作用減慢、糖質新生加快', '增加；糖解作用加快、糖質新生減慢', '減少；糖解作用與糖質新生都加快', '增加；肝醣合成加快'],
+    ex: ['升糖素經 cAMP–PKA 磷酸化雙功能酵素，使果糖-2,6-雙磷酸減少。它原本會活化 PFK-1、抑制 FBPase-1，減少後糖解變慢、糖質新生變快，肝臟就能把葡萄糖送進血液。',
+      '這是飯後胰島素作用時的方向。',
+      '兩條路徑共用相同中間物、方向相反，同一個調控分子讓一邊加快時，另一邊會減慢，避免白白空轉。',
+      '升糖素使果糖-2,6-雙磷酸減少，而且會促進肝醣分解、抑制肝醣合成。'] },
+  { id: 'c4-4', u: 'c4', q: '肝臟可以把肝醣分解後的葡萄糖釋放到血液，骨骼肌卻不行。骨骼肌缺少的關鍵酵素是：',
+    o: ['葡萄糖-6-磷酸酶（glucose-6-phosphatase）', '肝醣磷解酶（glycogen phosphorylase）', '己糖激酶（hexokinase）', '丙酮酸羧化酶（pyruvate carboxylase）'],
+    ex: ['葡萄糖-6-磷酸酶位於肝細胞的內質網，能把葡萄糖-6-磷酸去磷酸變成游離葡萄糖，才能經 GLUT2 出細胞。肌肉缺這個酵素，只能把葡萄糖-6-磷酸留給自己進行糖解。',
+      '肌肉也有肝醣磷解酶，能把肝醣分解成葡萄糖-1-磷酸，再轉成葡萄糖-6-磷酸。',
+      '己糖激酶把葡萄糖磷酸化，方向剛好相反，會把葡萄糖留在細胞內。',
+      '丙酮酸羧化酶是糖質新生的第一步，和肝醣分解後能不能放出葡萄糖無關。'] },
+  { id: 'c4-5', u: 'c4', q: '二硝基苯酚（DNP）能把 H⁺ 帶過粒線體內膜，使 H⁺ 不經 ATP 合成酶流回基質。粒線體受 DNP 作用後最可能：',
+    o: ['氧氣消耗增加，但 ATP 合成減少，產熱增加', '電子傳遞停止，氧氣消耗下降', 'ATP 合成增加', '糖解作用完全停止'],
+    ex: ['DNP 是解偶聯劑：電子傳遞照常（甚至更快）、持續耗氧，但 H⁺ 梯度被漏掉，能量變成熱而不是 ATP，所以體溫上升。棕色脂肪的 UCP1 也是同樣原理。',
+      '這是氰化物或一氧化碳的作用：阻斷細胞色素氧化酶，電子無法交給氧。',
+      'H⁺ 不經過 ATP 合成酶，ATP 合成會減少，不會增加。',
+      '糖解在細胞質進行，不受 H⁺ 梯度影響；ATP 不足時糖解反而會加快。'] },
+  { id: 'c4-6', u: 'c4', q: '劇烈運動時，肌肉把丙酮酸還原成乳酸，最主要的目的是：',
+    o: ['把 NADH 氧化回 NAD⁺，讓糖解作用能持續產生 ATP', '產生比有氧呼吸更多的 ATP', '把乳酸送到肝臟分解成 CO₂ 以排除', '移除丙酮酸，避免丙酮酸累積中毒'],
+    ex: ['糖解的甘油醛-3-磷酸去氫酶需要 NAD⁺。缺氧時電子傳遞鏈無法回收 NADH，乳酸發酵把 NADH 的電子交給丙酮酸，讓 NAD⁺ 再生，糖解才能繼續。',
+      '發酵每個葡萄糖只得 2 個 ATP（來自糖解），遠少於有氧呼吸的約 30 個。',
+      '乳酸送到肝臟後主要經糖質新生變回葡萄糖（Cori 循環），不是為了分解成 CO₂。',
+      '目的在於再生 NAD⁺；丙酮酸本身不會累積到中毒。'] },
+
+  // ===== 細5 光合作用 =====
+  { id: 'c5-1', u: 'c5', q: '光反應的非循環式電子傳遞中，電子最後的接受者是：',
+    o: ['NADP⁺', 'O₂', 'H₂O', 'CO₂'],
+    ex: ['電子由光系統 II 經電子傳遞鏈到光系統 I，最後由 NADP⁺ 還原酶交給 NADP⁺，形成 NADPH，供卡爾文循環使用。',
+      'O₂ 是粒線體呼吸作用電子傳遞鏈的最終接受者；光合作用中 O₂ 是水分解的產物。',
+      'H₂O 是電子的來源（提供者），在光系統 II 被分解。',
+      'CO₂ 在卡爾文循環中被固定，用的是 NADPH 的電子，不是光反應電子傳遞的直接接受者。'] },
+  { id: 'c5-2', u: 'c5', q: '若葉綠體的類囊體膜被刺穿，類囊體腔與基質互相流通，在光照下最可能發生：',
+    o: ['電子傳遞仍可進行，但幾乎無法合成 ATP', '葉綠素無法吸收光能', 'ATP 合成正常，因為 ATP 合成酶沒有受損', '卡爾文循環完全不受影響'],
+    ex: ['ATP 合成靠類囊體腔累積的高濃度 H⁺ 經 ATP 合成酶流回基質（化學滲透）。膜破了，H⁺ 直接漏掉，梯度建立不起來，ATP 合成停止；但光仍能驅動電子傳遞。',
+      '吸收光靠膜上的色素，膜被刺穿不會讓色素失去吸光能力。',
+      'ATP 合成酶需要 H⁺ 濃度差才能轉動，酵素完好也沒有用。',
+      '卡爾文循環需要 ATP，ATP 不足時循環會變慢。'] },
+  { id: 'c5-3', u: 'c5', q: '有關 C4 植物與 CAM 植物避免光呼吸的方式，下列敘述何者正確？',
+    o: ['C4 植物把初步固定 CO₂ 與卡爾文循環分在不同細胞；CAM 植物把兩者分在夜晚與白天', 'C4 植物把兩個步驟分在夜晚與白天；CAM 植物分在不同細胞', '兩者都用 rubisco 進行 CO₂ 的初步固定', 'CAM 植物白天打開氣孔吸收 CO₂'],
+    ex: ['C4 植物在葉肉細胞用 PEP 羧化酶固定 CO₂，再把 C4 酸送到維管束鞘細胞釋出 CO₂ 給 rubisco（空間分隔）；CAM 植物夜間開氣孔固定 CO₂ 成蘋果酸存在液泡，白天關氣孔再釋出（時間分隔）。',
+      '把 C4 和 CAM 的方式對調了。',
+      '兩者初步固定 CO₂ 都用 PEP 羧化酶，它不會和 O₂ 結合；rubisco 只在後面的卡爾文循環。',
+      'CAM 植物白天關閉氣孔以減少失水，夜間才打開。'] },
+  { id: 'c5-4', u: 'c5', q: '炎熱乾燥時，C3 植物的光呼吸會明顯增加，主要原因是：',
+    o: ['氣孔關閉，葉內 O₂/CO₂ 比例升高，rubisco 改和 O₂ 結合', '高溫破壞光系統 II，使電子傳遞停止', '卡爾文循環改到夜間進行', '葉綠素在高溫下被分解'],
+    ex: ['為了減少失水，氣孔關閉，CO₂ 進不來、光反應產生的 O₂ 出不去。rubisco 也能和 O₂ 結合，O₂ 比例越高越常發生，結果消耗 ATP、釋出已固定的碳，光合效率下降。',
+      '光呼吸的關鍵在 rubisco 與 O₂ 結合，不是光系統被破壞。',
+      'C3 植物的卡爾文循環在白天、需要光反應產物時進行；把固定 CO₂ 移到夜間的是 CAM 植物。',
+      '葉綠素被分解會讓光合作用整體減弱，但不是光呼吸增加的原因。'] },
+  { id: 'c5-5', u: 'c5', q: '卡爾文循環要淨產生一分子甘油醛-3-磷酸（G3P），需要消耗：',
+    o: ['3 個 CO₂、9 個 ATP、6 個 NADPH', '1 個 CO₂、3 個 ATP、2 個 NADPH', '6 個 CO₂、18 個 ATP、12 個 NADPH', '3 個 CO₂、6 個 ATP、9 個 NADPH'],
+    ex: ['G3P 有 3 個碳，所以要固定 3 個 CO₂。還原 6 個 3-磷酸甘油酸用 6 ATP 與 6 NADPH，再生 3 個 RuBP 另用 3 ATP，共 9 ATP、6 NADPH。',
+      '這是每固定一個 CO₂ 的平均用量，但一個 CO₂ 不足以淨產生一分子三碳的 G3P。',
+      '這是產生一分子葡萄糖（兩個 G3P）的用量。',
+      'ATP 與 NADPH 的數目對調了：NADPH 只用在還原步驟（6 個），ATP 還要再生 RuBP（共 9 個）。'] },
+  { id: 'c5-6', u: 'c5', q: '三氮雜苯類除草劑會占據光系統 II 上質體醌（plastoquinone）的結合位，阻斷電子往下傳。最直接的結果是：',
+    o: ['水不再被分解、不釋放 O₂，NADPH 也無法生成', '只有循環式電子傳遞停止，非循環式不受影響', '卡爾文循環的 rubisco 被直接抑制', '葉綠素無法吸收光，葉片立刻變白'],
+    ex: ['光系統 II 的電子傳不出去，就無法再從水接受電子，水不分解、不產生 O₂；下游的光系統 I 也拿不到電子，NADPH 停止生成。',
+      '剛好相反：循環式電子傳遞只用光系統 I，不需要光系統 II；被阻斷的是非循環式。',
+      '除草劑作用在光系統 II；卡爾文循環是因為缺 NADPH 與 ATP 才間接停止。',
+      '色素仍能吸光，只是能量無法用於電子傳遞；葉片變黃變白是之後光傷害累積的結果。'] },
+
+  // ===== 細6 細胞訊息傳遞 =====
+  { id: 'c6-1', u: 'c6', q: '咖啡因會抑制磷酸二酯酶（phosphodiesterase）。常喝咖啡的人，細胞內哪一種分子的濃度最可能上升？',
+    o: ['cAMP', 'GTP', 'ATP', 'AMP'],
+    ex: ['磷酸二酯酶負責把 cAMP 分解成 AMP，關閉訊號。抑制它，cAMP 分解變慢，濃度維持偏高，效果就像訊號被延長。',
+      'GTP 由 G 蛋白水解，和磷酸二酯酶無關。',
+      'ATP 是 cAMP 的原料，磷酸二酯酶不會分解 ATP。',
+      'AMP 是磷酸二酯酶分解 cAMP 的產物；酵素被抑制，AMP 的生成反而減少。'] },
+  { id: 'c6-2', u: 'c6', q: '類固醇激素（如皮質醇）的受體位置與作用方式是：',
+    o: ['位於細胞質或細胞核，和激素結合後作為轉錄因子調控基因', '位於細胞膜，屬於 G 蛋白偶聯受體', '位於細胞膜，是受體酪胺酸激酶', '位於細胞膜，是配體門控離子通道'],
+    ex: ['類固醇是脂溶性的，能直接穿過細胞膜；受體在細胞內，結合後進入細胞核、結合 DNA 上的反應元件，改變轉錄，所以作用慢但持久。',
+      'GPCR 接收的多是水溶性訊號，例如腎上腺素、升糖素。',
+      '受體酪胺酸激酶接收胰島素、生長因子等。',
+      '配體門控離子通道接收神經傳導物質，例如乙醯膽鹼的菸鹼型受體。'] },
+  { id: 'c6-3', u: 'c6', q: '表皮生長因子（EGF）和受體酪胺酸激酶結合後，最先發生的事件是：',
+    o: ['兩個受體結合成二聚體，彼此在酪胺酸上加磷酸', '受體活化 G 蛋白，產生 cAMP', '受體直接打開鈣離子通道', '受體帶著 EGF 進入細胞核調控基因'],
+    ex: ['配體結合使兩個受體靠在一起形成二聚體，彼此的激酶區把對方的酪胺酸磷酸化；這些磷酸化的酪胺酸再吸引下游蛋白（例如活化 Ras）。',
+      '活化 G 蛋白的是 G 蛋白偶聯受體，不是受體酪胺酸激酶。',
+      '直接開關離子的是離子通道型受體。',
+      '受體酪胺酸激酶的訊號經細胞質中的激酶串聯傳到細胞核，受體本身不進入細胞核。'] },
+  { id: 'c6-4', u: 'c6', q: 'Gq 偶聯受體活化磷脂酶 C 後，下列敘述何者正確？',
+    o: ['PIP₂ 被切成 IP₃ 與 DAG；IP₃ 使內質網釋出 Ca²⁺，DAG 活化 PKC', 'PIP₂ 被切成 IP₃ 與 DAG；DAG 使內質網釋出 Ca²⁺，IP₃ 活化 PKC', '磷脂酶 C 把 ATP 轉成 cAMP，活化 PKA', 'IP₃ 留在細胞膜上，DAG 擴散到細胞質'],
+    ex: ['IP₃ 是水溶性的，擴散到內質網打開 IP₃ 受體（鈣通道）；DAG 是脂溶性的，留在膜上，和 Ca²⁺ 一起活化蛋白激酶 C。',
+      '把 IP₃ 和 DAG 的作用對調了。',
+      '把 ATP 轉成 cAMP 的是腺苷酸環化酶（Gs 路徑），不是磷脂酶 C。',
+      '剛好相反：IP₃ 帶著親水的磷酸基，會離開膜；DAG 留在膜上。'] },
+  { id: 'c6-5', u: 'c6', q: '一個腎上腺素分子能讓肝細胞釋出數百萬個葡萄糖，這種訊息放大主要靠：',
+    o: ['每一層的酵素都能活化或產生許多下一層的分子，例如產生大量 cAMP', '細胞膜上的受體數目大量增加', '腎上腺素被細胞吞入後大量複製', '訊息分子進入細胞核，使基因大量複製'],
+    ex: ['一個受體活化多個 G 蛋白，一個腺苷酸環化酶產生許多 cAMP，一個 PKA 再磷酸化許多酵素……每一層都乘上一個倍數，所以訊息層層放大。',
+      '放大發生在受體之後的串聯反應；受體數目並不會因為一次刺激就大量增加。',
+      '腎上腺素是水溶性的，不進入細胞，訊息分子也不會在細胞內複製。',
+      '肝醣分解是酵素的磷酸化，幾秒內完成，不需要改變基因；基因也不會因此複製。'] },
+  { id: 'c6-6', u: 'c6', q: '霍亂毒素使腸細胞 Gs 蛋白的 α 次單元失去水解 GTP 的能力，結果造成：',
+    o: ['Gα 一直結合 GTP，腺苷酸環化酶持續活化，cAMP 持續偏高', 'Gα 無法結合 GTP，cAMP 持續偏低', '受體無法和配體結合', '蛋白激酶 A 被分解'],
+    ex: ['Gα 水解 GTP 是訊號的「關閉開關」。關不掉，cAMP 持續升高，打開腸細胞的 CFTR 氯離子通道，Cl⁻ 與水大量流入腸腔，造成嚴重水瀉。',
+      '霍亂毒素讓 Gα 停在活化狀態（結合 GTP），不是無法結合 GTP。',
+      '毒素作用在受體下游的 G 蛋白，受體本身不受影響。',
+      'cAMP 持續偏高會使 PKA 一直活化，而不是被分解。'] },
+
+  // ===== 細7 細胞週期、凋亡與癌 =====
+  { id: 'c7-1', u: 'c7', q: '長春花鹼（vinblastine）會抑制微管聚合。用它處理癌細胞，細胞最可能：',
+    o: ['無法形成紡錘體，停在有絲分裂的中期附近', 'DNA 無法複製，停在 S 期', '核分裂正常，但無法進行胞質分裂', '立刻離開細胞週期進入 G0 期'],
+    ex: ['紡錘體由微管組成。微管無法聚合，染色體就無法排到中期板，紡錘體檢查點不放行，細胞卡在 M 期（中期附近），最後常走向凋亡。',
+      'DNA 複製靠 DNA 聚合酶，不需要微管。',
+      '動物細胞的胞質分裂靠肌動蛋白與肌凝蛋白的收縮環；細胞鬆弛素（cytochalasin）這類抑制微絲的藥才會造成這個結果。',
+      '藥物作用在已經進入分裂的細胞，不會讓它們回到 G0。'] },
+  { id: 'c7-2', u: 'c7', q: '有絲分裂由中期進入後期，必須先發生下列何者？',
+    o: ['連接姊妹染色分體的黏連蛋白（cohesin）被分離酶（separase）切斷', '核膜重新形成', 'DNA 複製完成', '週期素 B（cyclin B）大量合成'],
+    ex: ['所有染色體都接上紡錘體後，後期促進複合體（APC/C）分解 securin，釋出分離酶切斷黏連蛋白，姊妹染色分體才能被拉向兩極。',
+      '核膜在末期才重新形成。',
+      'DNA 在 S 期就已複製完成，這不是進入後期的觸發條件。',
+      '剛好相反：進入後期時 APC/C 也會分解週期素 B，使 MPF 失去活性，細胞才能完成分裂。'] },
+  { id: 'c7-3', u: 'c7', q: '有關促成熟因子（MPF）的敘述，下列何者正確？',
+    o: ['由週期素 B 與 CDK1 組成，CDK1 的量大致恆定，週期素的量隨週期升降', '由週期素 B 與 CDK1 組成，CDK1 的量隨週期升降，週期素的量恆定', '在 G1 期活性最高，推動細胞進入 S 期', '本身就是一種磷酸酶，會移除蛋白質的磷酸'],
+    ex: ['CDK 是激酶，一直存在，但要和週期素結合才有活性。週期素 B 在 G2 期累積到高點，MPF 活化推動進入 M 期，後期週期素 B 被分解，MPF 活性下降。',
+      '把兩者的變化對調了：會隨週期升降的是週期素。',
+      'MPF 在 G2 到 M 期活性最高；推動 G1 進入 S 期的是 G1/S 週期素與 CDK2、CDK4/6。',
+      'CDK 是激酶，負責把磷酸加到目標蛋白上，不是移除磷酸。'] },
+  { id: 'c7-4', u: 'c7', q: '有關細胞凋亡的內在途徑（粒線體途徑），下列敘述何者正確？',
+    o: ['粒線體外膜通透性增加，釋出細胞色素 c，進而活化 caspase-9', 'Bcl-2 會促進粒線體釋出細胞色素 c', '由死亡受體（如 Fas）與細胞外配體結合直接啟動', '細胞腫脹破裂，內容物外流引起發炎'],
+    ex: ['DNA 損傷等內部壓力使 Bax/Bak 在粒線體外膜形成孔洞，細胞色素 c 釋出後和 Apaf-1 組成凋亡體，活化起始 caspase-9，再活化執行者 caspase-3。',
+      'Bcl-2 是抗凋亡蛋白，阻止外膜通透性增加；癌細胞常過度表現它。',
+      '這是外在途徑（死亡受體途徑），由 caspase-8 起始。',
+      '這是壞死的特徵；凋亡時細胞皺縮、形成凋亡小體，被吞噬細胞清除，不引起發炎。'] },
+  { id: 'c7-5', u: 'c7', q: '某人兩個 p53 等位基因都失去功能。當他的細胞 DNA 受到損傷時，最可能發生：',
+    o: ['細胞不停下來修復，仍進入 S 期繼續分裂，突變逐漸累積', '細胞立即凋亡', '細胞永遠停在 G1 期，無法再分裂', '細胞的端粒酶活性完全消失'],
+    ex: ['p53 是腫瘤抑制蛋白：DNA 受損時它活化 p21，使細胞停在 G1 修復，損傷太嚴重時則啟動凋亡。沒有 p53，兩個保護機制都失效，帶著損傷的細胞照常分裂。',
+      '啟動凋亡正需要 p53，失去功能後細胞反而比較不會凋亡。',
+      '讓細胞停在 G1 的也是 p53（經 p21），失去它就停不下來。',
+      'p53 不直接決定端粒酶的有無；許多癌細胞反而重新活化端粒酶。'] },
+  { id: 'c7-6', u: 'c7', q: '下列何者只發生在減數分裂第一次分裂，不會發生在有絲分裂？',
+    o: ['同源染色體聯會，之後分離到兩個子細胞', '姊妹染色分體分離', '染色體排列在細胞中央的赤道板上', 'DNA 複製一次'],
+    ex: ['減數分裂 I 的前期，同源染色體配對（聯會）並可能互換，後期 I 同源染色體分開，染色體數目減半。有絲分裂中同源染色體各自行動，不會配對。',
+      '姊妹染色分體分離發生在有絲分裂後期與減數分裂 II。',
+      '有絲分裂中期、減數分裂中期 I 與中期 II 都有；差別在中期 I 排上去的是成對的同源染色體。',
+      '兩種分裂之前都只複製一次 DNA。'] },
+);
+
+/* ---------- 錯題排程（化學、英文與首頁共用） ----------
+   只從練習紀錄推算，不另外存狀態，所以紀錄同步到哪裡，排程就跟到哪裡。
+   紀錄每一筆：{ t 時間, c 章, k 題型, h 題目識別碼, ok, n 第幾次作答 }；n === 1 是「一次作答」的開頭。
+   規則（2026-11-02 使用者要求加長）：每題每天只算第一次作答。
+   - 第一次就答錯 → 進入錯題本，隔 1 天到期（第 1 格）。
+   - 到期後（之後任何一天）第一次就答對 → 進到下一格，依序再隔 3、7、14、30 天；五格都過才算掌握，離開錯題本。
+   - 在錯題本中又答錯 → 從第 1 格重新開始（隔 1 天）。
+   - 考前總複習：FINAL 那天起，所有曾經答錯、已經掌握的題目再到期一次；答對就完成，答錯就重新進錯題本。
+   防止「猜對」（2026-11-02 使用者要求，兩個方法一起用）：
+   - 追問：第一次就答對時，接著追問這題的一個推理步驟（k: 'fu'，fk 為原題型）。追問第一次就答錯 → 這次作答當成答錯（猜對）。
+   - 確認題：第一次就答對的新題目，CHECK 天後再出一次（chk 1），答對後再隔 CHECK2 天做長期確認（chk 2）；兩次都答對才算會，任何一次答錯就進五格複習。
+     （2026-11-09 使用者要求加長期確認：3 天還在短期記憶，答對後可能一個月就忘了）
+   作廢（2026-11-07 使用者要求）：「重新練習」選「之前的不算」時記一筆 k:'reset'、v 為那一段的題目識別碼；那些題目在這之前的作答全部不算（紀錄本身保留）。 */
+const REVIEW = (() => {
+  const DAY = 864e5, GAPS = [1, 3, 7, 14, 30], CHECK = 3, CHECK2 = 30, FINAL = new Date(2027, 2, 1).getTime();   // 2027-03-01
+  const dayStart = t => { const d = new Date(t); d.setHours(0, 0, 0, 0); return d.getTime(); };
+  const dayKey = t => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+  // 拿掉被「之前的不算」作廢的作答
+  function live(log) {
+    const rs = log.filter(e => e.k === 'reset' && e.v);
+    if (!rs.length) return log;
+    const cut = new Map(); rs.forEach(r => r.v.forEach(h => cut.set(h, Math.max(cut.get(h) || 0, r.t))));
+    return log.filter(e => !(e.h && e.k !== 'reset' && e.t < (cut.get(e.h) || 0)));
+  }
+  // 每題每天的第一次作答
+  function trials(log) {
+    log = live(log);
+    const seen = new Set(), out = [], guess = new Set();
+    for (const e of log) if (e.k === 'fu' && e.n === 1 && !e.ok) guess.add(`${e.c}|${e.fk}|${e.h}@${dayKey(e.t)}`);   // 追問答錯 → 那天的作答算猜對
+    for (const e of log) {
+      if (e.n !== 1 || !e.h || e.k === 'fu') continue;
+      const key = `${e.c}|${e.k}|${e.h}`, dk = dayKey(e.t);
+      if (seen.has(key + '@' + dk)) continue;
+      const g = !!e.ok && guess.has(key + '@' + dk);
+      seen.add(key + '@' + dk); out.push({ key, t: e.t, ok: !!e.ok && !g, guess: g, c: e.c, k: e.k, h: e.h, i: e.i, qt: e.qt });
+    }
+    return out;
+  }
+  // 每題目前的狀態：{ key, c, k, h, i, qt, open, stage（0 起算的格數）, due, wrongs, last, first（第一次作答是否答對） }
+  function state(log) {
+    const m = new Map();
+    for (const tr of trials(log)) {
+      let s = m.get(tr.key);
+      const fresh = !s;
+      if (!s) { s = { key: tr.key, c: tr.c, k: tr.k, h: tr.h, i: tr.i, qt: tr.qt, open: false, chk: false, stage: 0, due: 0, wrongs: 0, guesses: 0, last: 0, first: tr.ok }; m.set(tr.key, s); }
+      s.i = tr.i; s.qt = tr.qt || s.qt; if (tr.guess) s.guesses++;
+      if (!tr.ok) { s.open = true; s.chk = false; s.stage = 0; s.wrongs++; s.due = dayStart(tr.t) + GAPS[0] * DAY; }
+      else if (fresh) { s.open = true; s.chk = 1; s.due = dayStart(tr.t) + CHECK * DAY; }   // 新題目第一次就答對 → 3 天後確認
+      else if (s.open && s.chk === 1 && tr.t >= s.due) { s.chk = 2; s.due = dayStart(tr.t) + CHECK2 * DAY; }   // 確認答對 → 30 天後長期確認
+      else if (s.open && s.chk === 2 && tr.t >= s.due) { s.open = false; s.chk = false; }
+      else if (s.open && tr.t >= s.due) {
+        s.stage++;
+        if (s.stage >= GAPS.length) s.open = false; else s.due = dayStart(tr.t) + GAPS[s.stage] * DAY;
+      }
+      s.last = tr.t;
+    }
+    return m;
+  }
+  // 錯題本：還沒掌握的題目；due 為「今天以前到期」，加上考前總複習（final: true）
+  function book(log, now = Date.now()) {
+    const st = [...state(log).values()], all = st.filter(s => s.open && !s.chk), checks = st.filter(s => s.open && s.chk);
+    const fin = now >= FINAL ? st.filter(s => !s.open && s.wrongs > 0 && s.last < FINAL).map(s => ({ ...s, final: true, due: FINAL })) : [];
+    return { open: all, checks, due: all.concat(checks).filter(s => s.due <= now).concat(fin).sort((a, b) => a.due - b.due) };
+  }
+  // 答對之後的說明：下一次什麼時候回來
+  // 選對之後的開頭：第一次就選對才說「答對了」；前面選錯過就照實說（2026-11-07：選錯三次後仍顯示「答對了」很混淆）
+  const okHead = tries => (tries > 1 ? `<b>選對了</b>，但前面選錯 ${tries - 1} 次，這次不算答對。` : '<b>答對了。</b>');
+  // guess：第一次就選對、但追問理由答錯
+  function after(s, firstTry, guess = false) {
+    if (!firstTry) return `${guess ? '理由沒選對，算猜對' : '今天第一次沒選對'}，從第 1 格重新開始，明天再考一次。`;
+    if (s.final) return '考前總複習完成。';
+    if (s.chk === 1) return `確認答對，${CHECK2} 天後還會再確認一次（長期記憶）。`;
+    if (s.chk) return '長期確認完成：這題真的會了。';
+    if (s.stage + 1 >= GAPS.length) return `五格都過了，這題已經掌握，離開錯題本（2027 年 3 月起的考前總複習還會再出現一次）。`;
+    return `${GAPS[s.stage + 1]} 天後再考一次（進到第 ${s.stage + 2} / ${GAPS.length} 格）。`;
+  }
+  // 「重新練習」的確認：之前的作答照算（隔很久重新複習），或不算（測試、亂按、跳過）
+  const resetAsk = what => `<span class="small">讓${what}全部恢復成沒做過的樣子。之前的作答要算嗎？</span><button class="btn sm pri" type="button" data-y>照算（重新複習）</button><button class="btn sm" type="button" data-v>之前的不算（測試／亂按）</button><button class="btn sm" type="button" data-n>取消</button><span class="small">「之前的不算」：${what}的題目在這之前的作答，錯題本和週報都不算。</span>`;
+  const label = s => (s.final ? '考前總複習' : s.chk === 2 ? `長期確認（${CHECK2} 天後）` : s.chk ? '確認題（之前第一次就答對）' : `第 ${s.stage + 1} / ${GAPS.length} 格`);
+  // 依到期日分組（dayCards 用） [{ key, label, list }]，days 天以後併成一組（2026-11-08 使用者要求：每天到期的分開列）
+  function byDay(list, due = x => x.due, now = Date.now(), days = 14) {
+    const lim = dayStart(now) + (days + 1) * DAY, m = new Map();
+    list.forEach(x => { const k = due(x) >= lim ? '~' : dayKey(due(x)); if (!m.has(k)) m.set(k, []); m.get(k).push(x); });
+    const md = t => { const d = new Date(t); return `${d.getMonth() + 1}/${d.getDate()}（${'日一二三四五六'[d.getDay()]}）`; };
+    return [...m.keys()].sort().map(k => {
+      const t = k === '~' ? lim : due(m.get(k)[0]);
+      return { key: k, label: k === '~' ? `${md(lim)} 及以後` : `${dayKey(t) === dayKey(dayStart(now) + DAY) ? '明天 ' : ''}${md(t)}`, list: m.get(k) };
+    });
+  }
+  // 錯題本頁上方的日期格子：今天（含之前沒做完的，late 是幾題）一定有；之後 days − 1 天有題目的各一格，更晚的併成「之後」（2026-11-09 使用者要求）
+  function dayCards(list, due = x => x.due, now = Date.now(), days = 5) {
+    const today = list.filter(x => due(x) <= now);
+    return [{ key: 'today', label: '今天', list: today, late: today.filter(x => due(x) < dayStart(now)).length }]
+      .concat(byDay(list.filter(x => due(x) > now), due, now, days - 1).map(g => (g.key === '~' ? { ...g, label: '之後' } : g)));
+  }
+  const cardsHTML = (cs, sel, n = g => g.list.length) => cs.map(g => `<button type="button" class="dcard" data-k="${g.key}" aria-pressed="${g.key === sel}"><b>${g.label}</b><span>${n(g)} 題</span>${g.late ? `<small>其中 ${g.late} 題是之前沒做完的</small>` : ''}</button>`).join('');
+  // 今天的作答分成「新題目」（今天以前沒做過）與「複習」（以前做過的題目：錯題、確認題、重做），首頁「今天」分開計算（2026-11-10 使用者要求）
+  function todaySplit(log, now = Date.now()) {
+    const t0 = dayStart(now), tr = trials(log), seen = new Set(tr.filter(x => x.t < t0).map(x => x.key)), td = tr.filter(x => x.t >= t0 && x.t < t0 + DAY);
+    return { fresh: td.filter(x => !seen.has(x.key)), review: td.filter(x => seen.has(x.key)) };
+  }
+  // 題數：英文長句的每一步各算一筆紀錄，但頁面上一個長句是一張卡，所以同一句的步驟只算 1 題（h 為 s:w週:天:句:步；2026-11-10 格子 27 題、頁面 24 題對不上）
+  const units = list => new Set(list.map(s => String(s.h).replace(/^(s:w\d+:\d+:\d+):\d+$/, '$1'))).size;
+  return { units, todaySplit, live, resetAsk, trials, state, book, after, okHead, label, byDay, dayCards, cardsHTML, dayKey, dayStart, DAY, GAPS, CHECK, CHECK2, FINAL };
+})();
+
+/* ---------- 後中生物：先測再學（2026-11-11 使用者決定） ----------
+   1. 程度測驗：每章 6 題，依「部」分卷；每題四個選項外加「不確定」（算答錯，避免猜對被當成會）。
+   2. 每章依第一次作答分三級：5–6 題對＝已掌握、3–4＝要補洞、0–2＝弱項，標在章節地圖上；弱項依中國醫比重排優先順序。
+   3. 答錯或選不確定的題目進共用的錯題排程（src/shared/review.js）；答對的不排確認題（測驗題太多，只追蹤錯的）。
+   紀錄每一筆：{ t, c 章, k:'dx', h 'dx:題目 id', ok, n, p 選了什麼, qt 題目摘要 } */
+const LOG = store.get('log', []);
+function logAnswer(e) {
+  LOG.push({ t: Date.now(), ...e }); if (LOG.length > 20000) LOG.splice(0, LOG.length - 20000);
+  store.set('log', LOG); if (typeof CLOUD !== 'undefined' && CLOUD.pushLog) CLOUD.pushLog();
+}
+const plain = h => String(h).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+const qh = q => 'dx:' + q.id;
+const QIX = Object.fromEntries(DIAG.map(q => [qh(q), q]));
+const UNSURE = '不確定';
+// 錯題本只追蹤曾經答錯或選不確定的題目
+const qlog = () => { const bad = new Set(LOG.filter(e => e.k === 'dx' && !e.ok).map(e => e.h)); return REVIEW.live(LOG).filter(e => e.k === 'dx' && bad.has(e.h)); };
+const firstAns = () => { const m = new Map(); LOG.forEach(e => { if (e.k === 'dx' && e.h && !m.has(e.h)) m.set(e.h, e); }); return m; };
+
+/* ---- 章節名稱與狀態 ---- */
+const ITEMS = UNITS.flatMap(p => p.items.map(([u, t], i) => ({ u, t, p, num: `${p.s}${i + 1}` })));
+const IT = Object.fromEntries(ITEMS.map(x => [x.u, x]));
+const unitName = u => IT[u].t;
+const chQs = u => DIAG.filter(q => q.u === u);
+const partQs = p => p.items.flatMap(([u]) => chQs(u));
+const LV = { good: '已掌握', mid: '要補洞', weak: '弱項' };
+function status(u, first = firstAns()) {
+  const qs = chQs(u); if (!qs.length) return null;
+  const ans = qs.filter(q => first.has(qh(q))), ok = ans.filter(q => first.get(qh(q)).ok).length;
+  if (ans.length < qs.length) return { n: ans.length, of: qs.length, ok };
+  const r = ok / qs.length;
+  return { n: ans.length, of: qs.length, ok, lv: r >= 5 / 6 ? 'good' : r >= .5 ? 'mid' : 'weak' };
+}
+
+/* ---- 選擇題：四個選項打亂，「不確定」固定在最後；只作答一次，答完列出四個選項的說明 ---- */
+const exHTML = q => `<ul class="exl">${q.o.map((o, j) => `<li class="${j ? 'no' : 'ok'}"><b>${j ? '✗' : '✓'} ${esc(o)}</b><br>${esc(q.ex[j])}</li>`).join('')}</ul>`;
+function mcq(q, num) {
+  const ord = shuffled(q.o.length, q.id + Math.random());   // 每次打開都重新打亂，複習時不能靠記位置
+  return `<div class="q" data-h="${esc(qh(q))}">${num ? `<p class="qnum">${num}</p>` : ''}<p class="qt">${esc(q.q)}</p><div class="opts">${ord.map(j => `<button class="opt" type="button" data-o="${j}">${esc(q.o[j])}</button>`).join('')}<button class="opt unsure" type="button" data-o="u">${UNSURE}</button></div><div class="why" hidden></div></div>`;
+}
+const whyHTML = (q, e) => `<b>${e.ok ? '✓ 答對了。' : e.p === UNSURE ? '? 選了不確定，算答錯，已進錯題本。' : '✗ 答錯了，已進錯題本。'}</b><small class="qch">${IT[q.u].num} ${esc(unitName(q.u))}</small>${exHTML(q)}`;
+function showAnswer(qe, q, e) {
+  $$('.opt', qe).forEach(x => { x.disabled = true; const o = x.dataset.o; if (o === '0') x.classList.add('right'); else if ((o === 'u' ? UNSURE : q.o[+o]) === e.p && !e.ok) x.classList.add('wrong'); });
+  const why = $('.why', qe); why.hidden = false; why.className = `why ${e.ok ? 'ok' : 'no'}`; why.innerHTML = whyHTML(q, e); qe.classList.add('done');
+}
+// done(q, e)：作答後呼叫；restore：已做過的題目直接顯示結果（測驗頁）
+function bindMcq(root, list, { done, restore, rv } = {}) {
+  const first = firstAns();
+  list.forEach(q => {
+    const qe = root.querySelector(`.q[data-h="${CSS.escape(qh(q))}"]`); if (!qe) return;
+    if (restore && first.has(qh(q))) { showAnswer(qe, q, first.get(qh(q))); return; }
+    $$('.opt', qe).forEach(b => { b.onclick = () => {
+      const p = b.dataset.o === 'u' ? UNSURE : q.o[+b.dataset.o], e = { c: q.u, k: 'dx', h: qh(q), ok: b.dataset.o === '0' ? 1 : 0, n: 1, p, qt: plain(q.q).slice(0, 60) };
+      logAnswer(e); showAnswer(qe, q, e);
+      if (rv) $('.why', qe).insertAdjacentHTML('beforeend', `<p><small>${REVIEW.after(rv[qh(q)], e.ok)}</small></p>`);
+      if (done) done(q, e);
+    }; });
+  });
+}
+
+/* ---- 首頁 ---- */
+const WVIEW = ['加權平均', '近三年', '中國醫藥', '義守', '慈濟'];
+let wv = store.get('wv', 0);
+function partRow(p, first) {
+  const qs = partQs(p), n = qs.filter(q => first.has(qh(q))).length, ready = p.items.every(([u]) => chQs(u).length);
+  if (!ready) return `<li class="dx soon"><span class="dx-h">${p.part}</span><span class="dx-s">題目製作中</span></li>`;
+  return `<li class="dx${n === qs.length ? ' fin' : ''}"><a href="#dx-${p.key}"><span class="dx-h">${p.part}</span><span class="dx-s">${p.items.length} 章 × 6 題・約 ${Math.round(qs.length * 0.75)} 分鐘</span><span class="pbar"><i style="width:${Math.round(100 * n / qs.length)}%"></i></span><span class="dx-st">${n === qs.length ? '✓ 完成，看結果' : n ? `${n} / ${qs.length} 題` : '開始測驗 →'}</span></a></li>`;
+}
+function priority(first) {
+  const rows = ITEMS.map(x => ({ ...x, s: status(x.u, first) })).filter(x => x.s && x.s.lv);
+  if (!rows.length) return '';
+  const ord = { weak: 0, mid: 1, good: 2 }, list = rows.sort((a, b) => ord[a.s.lv] - ord[b.s.lv] || TREE[b.u].w[2] - TREE[a.u].w[2]);
+  const li = x => `<li class="pr st-${x.s.lv}"><span class="pr-l">${LV[x.s.lv]}</span><span>${x.num} ${esc(x.t)}</span><b>答對 ${x.s.ok}/${x.s.of}・中國醫每份約 ${TREE[x.u].w[2].toFixed(1)} 題</b></li>`;
+  const todo = list.filter(x => x.s.lv !== 'good'), ok = list.filter(x => x.s.lv === 'good');
+  return `<h2>要先補強的章節</h2><p class="mut tree-note">已測完的章節中，弱項排最前面；同一級依中國醫的考試比重由高到低。</p>
+${todo.length ? `<ol class="prs">${todo.map(li).join('')}</ol>` : '<p class="note">已測完的章節都已掌握。</p>'}
+${ok.length ? `<details class="tree-src"><summary>已掌握 ${ok.length} 章（只留在之後的混合複習）</summary><ol class="prs">${ok.map(li).join('')}</ol></details>` : ''}`;
+}
+function renderHome() {
+  const first = firstAns(), due = REVIEW.book(qlog()).due.length;
+  $('#main').innerHTML = `<div class="home"><p class="eyebrow">學士後中醫入學考 · 生物</p>
+<h1 class="hero">先測再學：<br>只把時間花在弱項。</h1>
+<p class="lede">31 章依「部」分成 7 卷程度測驗，每章 6 題，難度照中國醫 113–115。每題除了四個選項，還有「不確定」：沒把握就選它，算答錯，不要猜。測完後每章標成已掌握、要補洞或弱項，再依考試比重決定先讀哪一章。</p>
+${due ? `<p class="duebar"><a href="#review">錯題本有 <b>${due}</b> 題今天到期 →</a></p>` : ''}
+<h2>程度測驗</h2><ol class="dxs">${UNITS.map(p => partRow(p, first)).join('')}</ol>
+${priority(first)}
+<h2 id="map">章節地圖：先修關係與考試比重</h2>
+<p class="mut tree-note">由上往下是學習順序：最基礎的章節在最上面，下面的章節會用到上面的觀念。數字是三校歷屆試題中，<b>每份 50 題平均約考幾題</b>。框線顏色是程度測驗的結果：<span class="lg st-good">已掌握</span><span class="lg st-mid">要補洞</span><span class="lg st-weak">弱項</span>，虛線是還沒測。</p>
+<div class="seg" id="wview">${WVIEW.map((v, i) => `<button aria-pressed="${i === wv}" data-i="${i}">${v}</button>`).join('')}</div>
+<div class="trees">${UNITS.map(p => `<div class="tree" data-k="${p.key}"><h3>${p.part}</h3><div class="tree-in"><svg class="tree-ln" aria-hidden="true"></svg>${treeRows(p, first)}</div></div>`).join('')}</div>
+<details class="tree-src"><summary>比重怎麼算的</summary><p>中國醫藥、義守、慈濟大學 106–115 學年度學士後中醫生物試題共 30 份、1500 題，逐題依主題分類。越近的年份越重要：106 年權重 1、107 年權重 2……115 年權重 10。「近三年」只看 113–115 年，不加權。一題只歸一個主要考點。</p></details>
+<div class="row endrow"><a class="btn" href="#review">錯題本</a></div></div>`;
+  bindTree();
+}
+// 章節地圖（照化學的畫法：每列依先修深度，連線是先修關係）
+function treeRows(p, first) {
+  const ids = p.items.map(i => i[0]), d = {};
+  const depth = u => d[u] ?? (d[u] = Math.max(-1, ...TREE[u].pre.filter(x => ids.includes(x)).map(depth)) + 1);
+  const rows = []; ids.forEach(u => (rows[depth(u)] = rows[depth(u)] || []).push(u));
+  const pos = {};   // 每列依上一列父節點的平均位置排序，減少連線交叉
+  rows.forEach(r => { r.forEach((u, i) => { const ps = TREE[u].pre.filter(x => pos[x] != null); r[i] = [u, ps.length ? ps.reduce((a, x) => a + pos[x], 0) / ps.length : i / r.length]; });
+    r.sort((a, b) => a[1] - b[1]); r.forEach(([u], i) => { pos[u] = r.length > 1 ? i / (r.length - 1) : .5; r[i] = u; }); });
+  return rows.map(r => `<div class="trow">${r.map(u => treeNode(u, p, first)).join('')}</div>`).join('');
+}
+function treeNode(u, p, first) {
+  const s = status(u, first), cross = TREE[u].pre.filter(x => !x.startsWith(p.key));
+  return `<a class="tn${s && s.lv ? ` st-${s.lv}` : ' plan'}" data-u="${u}" ${s ? `href="#dx-${p.key}"` : 'tabindex="0"'}>
+<span class="tn-t"><small class="tn-n">${IT[u].num}</small> ${unitName(u)}</span>
+<span class="tn-w"><span class="tn-bar"><i></i></span><b></b></span>
+<small class="tn-s">${s && s.lv ? `${LV[s.lv]}・答對 ${s.ok}/${s.of}` : s && s.n ? `測驗中 ${s.n}/${s.of}` : s ? '還沒測' : '題目製作中'}</small>${cross.length ? `<small class="tn-x">先修：${cross.map(unitName).join('、')}</small>` : ''}</a>`;
+}
+function treeWeights() {
+  $$('.tn').forEach(n => { const w = TREE[n.dataset.u].w[wv];
+    n.querySelector('b').textContent = `≈ ${w.toFixed(1)} 題`;
+    n.querySelector('i').style.width = `${Math.min(100, w / 5 * 100)}%`;
+    n.title = `${unitName(n.dataset.u)}：每份約 ${w.toFixed(1)} 題（${WVIEW[wv]}）`; });
+}
+function treeLines() {
+  $$('.tree-in').forEach(box => { const svg = box.querySelector('svg'), B = box.getBoundingClientRect(); let h = '';
+    box.querySelectorAll('.tn').forEach(n => TREE[n.dataset.u].pre.forEach(pu => { const m = box.querySelector(`.tn[data-u="${pu}"]`); if (!m) return;
+      const a = m.getBoundingClientRect(), b = n.getBoundingClientRect();
+      const x1 = a.left + a.width / 2 - B.left, y1 = a.bottom - B.top, x2 = b.left + b.width / 2 - B.left, y2 = b.top - B.top, my = (y1 + y2) / 2;
+      h += `<path data-a="${pu}" data-b="${n.dataset.u}" d="M${x1} ${y1}C${x1} ${my} ${x2} ${my} ${x2} ${y2}"/>`; }));
+    svg.setAttribute('width', B.width); svg.setAttribute('height', B.height); svg.innerHTML = h; });
+}
+function treeFocus(u) {   // 標出這章的全部先修鏈（跨部的先修也一起亮）
+  const set = new Set(), walk = x => { if (set.has(x)) return; set.add(x); TREE[x].pre.forEach(walk); };
+  if (u) walk(u);
+  $$('.tn').forEach(n => n.classList.toggle('lit', set.has(n.dataset.u)));
+  $$('.tree-ln path').forEach(p => p.classList.toggle('lit', set.has(p.dataset.a) && set.has(p.dataset.b)));
+  $$('.trees').forEach(t => t.classList.toggle('focus', !!u));
+}
+function bindTree() {
+  treeWeights(); treeLines();
+  $$('#wview button').forEach(b => { b.onclick = () => { wv = +b.dataset.i; store.set('wv', wv);
+    $$('#wview button').forEach(x => x.setAttribute('aria-pressed', x === b)); treeWeights(); }; });
+  $$('.tn').forEach(n => { n.onmouseenter = n.onfocus = () => treeFocus(n.dataset.u); n.onmouseleave = n.onblur = () => treeFocus(null); });
+  if (!window.__treeRO) { window.__treeRO = new ResizeObserver(() => $('.trees') && treeLines()); window.__treeRO.observe($('#main')); }
+}
+
+/* ---- 程度測驗：一卷＝一部；題目順序打散（固定種子），不依章節排，避免從前後題猜出考點 ---- */
+function renderDx(p) {
+  const qs = partQs(p), ord = shuffled(qs.length, 'dx-' + p.key).map(i => qs[i]);
+  $('#main').innerHTML = `<p class="eyebrow">程度測驗・${p.part}</p><nav class="pn"><a href="#">‹ 回首頁</a></nav>
+<h1>${p.part}：${qs.length} 題</h1>
+<p class="lede">每題只作答一次。沒把握就選「不確定」，不要猜：猜對會讓弱項被當成已掌握。答完會列出四個選項各自對或錯在哪。</p>
+<div id="dq">${ord.map((q, i) => mcq(q, `${i + 1} / ${qs.length}`)).join('')}</div><div id="dxRes"></div>`;
+  const res = () => {
+    const first = firstAns(), n = qs.filter(q => first.has(qh(q))).length;
+    $('#pgTag').textContent = `本卷 ${n} / ${qs.length} 題`;
+    if (n < qs.length) { $('#dxRes').innerHTML = ''; return; }
+    $('#dxRes').innerHTML = `<section class="part"><h2>這一卷的結果</h2><ol class="prs">${p.items.map(([u]) => { const s = status(u, first);
+      return `<li class="pr st-${s.lv}"><span class="pr-l">${LV[s.lv]}</span><span>${IT[u].num} ${esc(unitName(u))}</span><b>答對 ${s.ok}/${s.of}</b></li>`; }).join('')}</ol>
+<div class="row endrow"><a class="btn pri" href="#map">回章節地圖看全部</a><a class="btn" href="#review">錯題本</a></div></section>`;
+  };
+  bindMcq($('#dq'), ord, { restore: true, done: res }); res();
+}
+
+/* ---- 錯題本：今天到期的重考（記錄、影響排程）；之後到期的只列數量 ---- */
+function renderReview() {
+  const book = REVIEW.book(qlog()), list = book.due.filter(s => QIX[s.h]).slice(0, 50), rv = Object.fromEntries(list.map(s => [s.h, s]));
+  const later = book.open.filter(s => QIX[s.h] && !list.includes(s)).length;
+  $('#main').innerHTML = `<p class="eyebrow">錯題本</p><nav class="pn"><a href="#">‹ 回首頁</a></nav><h1>錯題複習</h1>
+<p class="lede">程度測驗答錯或選「不確定」的題目，依 1、3、7、14、30 天的間隔再考，五格都答對才離開錯題本。</p>
+${list.length ? `<div id="rq">${list.map(s => `<p class="qsrc">${IT[QIX[s.h].u].num} ${esc(unitName(QIX[s.h].u))}・${REVIEW.label(s)}</p>${mcq(QIX[s.h], '')}`).join('')}</div>` : '<p class="note">今天沒有到期的錯題。</p>'}
+${later ? `<p class="note">另有 ${later} 題還沒到期。</p>` : ''}`;
+  $('#pgTag').textContent = '';
+  if (list.length) bindMcq($('#rq'), list.map(s => QIX[s.h]), { rv });
+}
+
+// 給學習階梯首頁的摘要：測了幾題、各級幾章、今天到期幾題
+function saveSummary() {
+  const first = firstAns(), c = { good: 0, mid: 0, weak: 0 };
+  ITEMS.forEach(x => { const s = status(x.u, first); if (s && s.lv) c[s.lv]++; });
+  store.set('sum', { n: DIAG.filter(q => first.has(qh(q))).length, of: DIAG.length, ...c, due: REVIEW.book(qlog()).due.length, t: Date.now() });
+}
+function route() {
+  const h = location.hash.slice(1), p = UNITS.find(x => h === 'dx-' + x.key);
+  $('#pgTag').textContent = '';
+  if (p && partQs(p).length) renderDx(p);
+  else if (h === 'review') renderReview();
+  else { renderHome(); if (h === 'map') { $('#map').scrollIntoView(); saveSummary(); return; } }
+  saveSummary(); window.scrollTo(0, 0);
+}
+function boot() { addEventListener('hashchange', route); route(); }
+
+/* ---------- 雲端同步（Firebase，各課程與首頁共用）：Google 登入後，把「已完成的章節」存到 Firestore ----------
+   只在正式網站（GitHub Pages，HEAD 帶 app-site meta）啟用；Artifact 與本機檔案不載入 SDK。
+   位置：users/{uid}/settings/<課程 doc> ＝ { done: {章節id: 1}, lang, updated }
+   使用前先定義 COURSE：
+     tracks: [{ doc, get() → 已完成表, set(表) }]   課程頁一條；首頁列出全部課程，一次同步
+     count() / total()                             面板上顯示的完成章數
+     refresh()                                     從雲端合併進新章節後重畫畫面
+     logs: { doc, get() → 紀錄陣列, set(陣列) } 或其陣列（選用） 練習紀錄：與雲端取聯集合併，任何一邊都不會刪掉另一邊的紀錄
+   介面：右上角按鈕 → 下拉面板說明「登入有什麼用」與目前同步狀態；hint() 給首頁的提示列。 */
+const CLOUD = (() => {
+  const CFG = { apiKey: 'AIzaSyD8oEe02SY2PCDe3d40NtTprrApqW_DhB8', authDomain: 'test-5dbba.firebaseapp.com', projectId: 'test-5dbba' };
+  const SDK = 'https://www.gstatic.com/firebasejs/10.12.0/firebase-';
+  let auth = null, db = null, user = null, timer = 0, ready = false, busy = false, err = '', last = 0;
+  const on = () => !!document.querySelector('meta[name="app-site"]') && /^https?:$/.test(location.protocol);
+  const load = src => new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
+  const ref = doc => db.collection('users').doc(user.uid).collection('settings').doc(doc);
+  const zh = () => (typeof isZh === 'function' ? isZh() : true), lang = () => (typeof I18N !== 'undefined' ? I18N.lang : 'zh-TW');
+  const T = (a, b) => (zh() ? a : b);
+  const nDone = () => COURSE.count();
+  const time = t => new Date(t).toLocaleTimeString(zh() ? 'zh-TW' : 'en', { hour: '2-digit', minute: '2-digit' });
+  const G = '<svg viewBox="0 0 18 18" width="16" height="16" aria-hidden="true"><path fill="#4285F4" d="M17.6 9.2c0-.6-.1-1.2-.2-1.7H9v3.3h4.8a4.1 4.1 0 0 1-1.8 2.7v2.2h2.9c1.7-1.6 2.7-3.9 2.7-6.5z"/><path fill="#34A853" d="M9 18c2.4 0 4.5-.8 5.9-2.2L12 13.6c-.8.5-1.8.9-3 .9-2.3 0-4.3-1.6-5-3.7H1v2.3A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M4 10.8a5.4 5.4 0 0 1 0-3.5V4.9H1a9 9 0 0 0 0 8.1l3-2.3z"/><path fill="#EA4335" d="M9 3.6c1.3 0 2.5.5 3.4 1.3l2.6-2.6A9 9 0 0 0 1 4.9l3 2.3c.7-2.1 2.7-3.6 5-3.6z"/></svg>';
+
+  function panelHTML() {
+    if (!ready) return `<p class="cp-t">${T('連線中…', 'Connecting…')}</p>`;
+    const n = nDone(), tot = COURSE.total(), e = err ? `<p class="cp-err">${esc(err)}</p>` : '';
+    if (!user) return `<p class="cp-t">${T('在不同裝置接著學', 'Pick up where you left off on any device')}</p>
+<p>${T('用 Google 帳號登入後，你完成的章節會存到雲端。之後在手機或其他電腦登入同一個帳號，進度會自動接上。', 'Sign in with Google and the chapters you finish are saved to the cloud. Sign in with the same account on your phone or another computer and your progress follows you.')}</p>
+<p class="cp-st">${T(`目前：進度只存在這台裝置（已完成 ${n} / ${tot} 章）`, `Now: progress is saved on this device only (${n} / ${tot} chapters done)`)}</p>
+<button class="btn pri cp-go" type="button" id="cpIn">${G}<span>${T('用 Google 登入', 'Sign in with Google')}</span></button>
+<p class="cp-s">${T('不登入也能使用全部內容。這裡只儲存「完成了哪些章節」與練習紀錄，不會讀取你的其他 Google 資料。', 'Everything works without signing in. Only the list of finished chapters is stored, nothing else from your Google account.')}</p>${e}`;
+    return `<p class="cp-t">${user.photoURL ? `<img class="cp-av" src="${esc(user.photoURL)}" alt="" referrerpolicy="no-referrer">` : ''}<span>${esc(user.displayName || T('已登入', 'Signed in'))}<small>${esc(user.email || '')}</small></span></p>
+<p class="cp-st ok">${busy ? T('同步中…', 'Syncing…') : `✓ ${T(`已同步 ${n} / ${tot} 章`, `${n} / ${tot} chapters synced`)}${last ? ` · ${time(last)}` : ''}`}</p>
+<p>${T('在其他裝置用同一個帳號登入，就會看到相同的進度；在任何一台標記完成，其他裝置也會跟著更新。', 'Sign in with the same account on another device to see the same progress. Chapters you finish anywhere show up everywhere.')}</p>
+<button class="btn" type="button" id="cpOut">${T('登出', 'Sign out')}</button>
+<p class="cp-s" style="margin-top:8px !important">${T('登出後，這台裝置上的進度仍會保留。', 'Signing out keeps your progress on this device.')}</p>${e}`;
+  }
+  function render() {
+    const b = document.getElementById('cloudBtn'), p = document.getElementById('cloudPanel');
+    if (b) {
+      b.innerHTML = user ? `${user.photoURL ? `<img class="cb-av" src="${esc(user.photoURL)}" alt="" referrerpolicy="no-referrer">` : '<span class="cb-dot"></span>'}<span>${busy ? T('同步中', 'Syncing') : T('已同步', 'Synced')}</span>` : `<span aria-hidden="true">☁</span><span>${T('同步進度', 'Sync progress')}</span>`;
+      b.title = user ? T('進度已同步到雲端，點一下看詳情', 'Progress is synced; click for details') : T('登入後可在不同裝置同步學習進度', 'Sign in to sync progress across devices');
+    }
+    if (p && !p.hidden) {
+      p.innerHTML = panelHTML();
+      const i = document.getElementById('cpIn'), o = document.getElementById('cpOut');
+      if (i) i.onclick = signIn;
+      if (o) o.onclick = () => auth.signOut();
+    }
+    const h = document.getElementById('syncHint'); if (h) h.outerHTML = hint();
+  }
+  function signIn() {
+    err = ''; if (!ready) return;
+    auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e => {
+      if (e.code !== 'auth/popup-closed-by-user' && e.code !== 'auth/cancelled-popup-request') { err = T('登入失敗：', 'Sign-in failed: ') + e.code; toggle(true); }
+    });
+  }
+  function toggle(show) {
+    const p = document.getElementById('cloudPanel'), b = document.getElementById('cloudBtn'); if (!p) return;
+    p.hidden = show === undefined ? !p.hidden : !show; b.setAttribute('aria-expanded', String(!p.hidden)); render();
+  }
+  function push() {
+    if (!user) return;
+    clearTimeout(timer); busy = true; render();
+    timer = setTimeout(() => Promise.all(COURSE.tracks.map(t => ref(t.doc).set({ done: t.get(), lang: lang(), updated: Date.now() })))
+      .then(() => { busy = false; err = ''; last = Date.now(); render(); })
+      .catch(e => { busy = false; err = T('同步失敗：', 'Sync failed: ') + e.code; render(); }), 800);
+  }
+  // 練習紀錄：只增不減。上傳最近 3000 筆（Firestore 單一文件上限 1 MB）；下載時與本機取聯集
+  const lkey = e => `${e.t}|${e.c}|${e.h || e.k + e.i}|${e.p}`;
+  let ltimer = 0;
+  const LOGS = () => [].concat(COURSE.logs || []);
+  function pushLog() {
+    if (!user || !LOGS().length) return;
+    clearTimeout(ltimer);
+    ltimer = setTimeout(() => LOGS().forEach(L => ref(L.doc).set({ log: L.get().slice(-3000), updated: Date.now() }).catch(e => console.warn('log sync', e.code))), 2000);
+  }
+  async function pullLog() {
+    let added = 0;
+    for (const L of LOGS()) {
+      try {
+        const snap = await ref(L.doc).get(), remote = (snap.exists && snap.data().log) || [], local = L.get();
+        const seen = new Set(local.map(lkey)), add = remote.filter(e => !seen.has(lkey(e)));
+        if (add.length) { L.set(local.concat(add).sort((a, b) => a.t - b.t)); added += add.length; }
+        const rs = new Set(remote.map(lkey));
+        if (local.some(e => !rs.has(lkey(e)))) pushLog();
+      } catch (e) { console.warn('log sync', e.code); }
+    }
+    return added;
+  }
+  async function pull() {
+    try {
+      busy = true; render();
+      let added = 0, ahead = false;
+      for (const t of COURSE.tracks) {
+        const snap = await ref(t.doc).get(), remote = (snap.exists && snap.data().done) || {}, local = { ...t.get() };
+        const add = Object.keys(remote).filter(k => !local[k]);
+        add.forEach(k => { local[k] = 1; });
+        if (add.length) { t.set(local); added += add.length; }
+        if (Object.keys(local).some(k => !remote[k])) ahead = true;
+      }
+      if (await pullLog()) added++;
+      if (added) COURSE.refresh();
+      busy = false; last = Date.now(); err = '';
+      if (ahead) push(); else render();
+    } catch (e) { busy = false; err = T('同步失敗：', 'Sync failed: ') + e.code; render(); }
+  }
+  // 首頁提示：有進度、還沒登入、沒按過「不用了」時才出現
+  function hint() {
+    if (!on() || user || !ready || !nDone() || store.get('syncHintOff', 0)) return '<div id="syncHint" hidden></div>';
+    return `<div id="syncHint" class="sync-hint" data-notr><span>☁ ${T(`你已完成 ${nDone()} 章，進度目前只存在這台裝置。登入 Google 帳號，換手機或電腦也能接著學。`, `You've finished ${nDone()} chapters, saved on this device only. Sign in with Google to continue on your phone or another computer.`)}</span><button class="btn sm pri" type="button" data-sync="in">${T('登入同步', 'Sign in')}</button><button class="btn sm" type="button" data-sync="off">${T('不用了', 'No thanks')}</button></div>`;
+  }
+  async function start() {
+    if (!on()) return;
+    const top = document.querySelector('.top-in');
+    if (!top) return;
+    top.insertAdjacentHTML('beforeend', '<div class="cloud" data-notr><button class="btn cloud-btn" type="button" id="cloudBtn" aria-expanded="false" aria-controls="cloudPanel"></button><div class="cloud-panel" id="cloudPanel" role="dialog" hidden></div></div>');
+    document.getElementById('cloudBtn').onclick = e => { e.stopPropagation(); toggle(); };
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.cloud')) toggle(false);
+      const s = e.target.closest('[data-sync]');
+      if (s) { if (s.dataset.sync === 'in') signIn(); else { store.set('syncHintOff', 1); render(); } }
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') toggle(false); });
+    render();
+    try {
+      await load(SDK + 'app-compat.js');
+      await Promise.all([load(SDK + 'auth-compat.js'), load(SDK + 'firestore-compat.js')]);
+    } catch (e) { document.querySelector('.cloud').remove(); return; }
+    firebase.initializeApp(CFG);
+    auth = firebase.auth(); db = firebase.firestore();
+    auth.onAuthStateChanged(u => { user = u; ready = true; err = ''; render(); if (u) pull(); });
+  }
+  return { start, push, pushLog, hint, render };
+})();
+
+
+/* ---------- 後中生物：啟動、雲端同步、PWA ---------- */
+boot();
+const COURSE = {
+  tracks: [],
+  count: () => { const f = firstAns(); return DIAG.filter(q => f.has(qh(q))).length; },
+  total: () => DIAG.length,
+  refresh: route,
+  logs: { doc: 'bioLog', get: () => LOG, set: a => { LOG.length = 0; LOG.push(...a); store.set('log', LOG); } },
+};
+if (document.querySelector('meta[name="app-site"]')) {
+  document.querySelector('.brand').insertAdjacentHTML('beforebegin', '<a class="home-link" href="../">‹ 學習階梯</a>');
+  if (typeof CLOUD !== 'undefined') CLOUD.start();
+  if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('../sw.js', { scope: '../' }).catch(() => {});
+  if ('serviceWorker' in navigator) navigator.serviceWorker.controller && navigator.serviceWorker.addEventListener('controllerchange', () => location.reload(), { once: true });
+}
+
+</script>
+
+</body>
+</html>
