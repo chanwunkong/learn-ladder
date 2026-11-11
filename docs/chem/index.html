@@ -5065,19 +5065,24 @@ CH.push({
   lede: '原子怎麼結合、分子長什麼形狀，決定了它有沒有極性、沸點高低、能不能溶於水。這一章從位能曲線看鍵是怎麼形成的，再畫路易斯結構、用 VSEPR 預測形狀，最後比較分子之間的吸引力。',
   sections: [
     { h: '兩個原子為什麼會結合成鍵？', w: 'potcurve', body: `
+<p>空氣中的氫不是一個一個的 H 原子，而是兩個兩個結合成 H₂。兩個 H 原子結合時，每莫耳放出約 436 kJ 的能量。放出能量，表示結合後比分開時更穩定。為什麼？</p>
 <p>兩個原子之間同時有兩種力：</p>
 <ul><li><b>吸引</b>：每個原子核吸引對方的電子。</li><li><b>排斥</b>：兩個原子核互相排斥。距離很近時才變大。</li></ul>
 <p>這兩種力合起來的能量稱為<b>位能</b>。兩個原子分得很開時，位能定為 0。比 0 低，就是比分開時穩定。</p>
-<p>拖動核間距離 r，看兩個原子上的箭頭和曲線上的點。</p>
+<p>原子會被推往位能降低的方向。位能曲線越陡，推的力越大。</p>
+<p>拖動核間距離 r。上方的兩個原子：藍色箭頭是吸引力，紅色箭頭是排斥力，長度代表大小。下方的曲線：紅色虛線是排斥的能量，藍色虛線是吸引的能量，黑色實線是兩者相加的位能。</p>
 [[w:potcurve]]
-<p>最低點的距離稱為<b>鍵長</b>。從最低點回到 0 所需的能量稱為<b>鍵能</b>，單位 kJ/mol，是拆開一莫耳這種鍵所需的能量（第一章第 2 節）。</p>
-<p>切換 H–H、Cl–Cl、Br–Br、I–I：原子越大，最低點越往右、越淺。鍵長約是兩個原子半徑相加（第一章第 7 節）。原子越大，外層電子離對方的原子核越遠，吸引越弱，鍵能越小。</p>
-<p>這條曲線可以用一個經驗式描述。經驗式不是推導出來的，是符合實驗曲線的近似。</p>
+<p>最低點時兩個箭頭一樣長，力互相抵消。這個核間距離稱為<b>鍵長</b>。從最低點回到 0 所需的能量稱為<b>鍵能</b>，是拆開一莫耳這種鍵所需的能量（第一章第 2 節），單位 kJ/mol。H–H 的鍵能就是開頭的 436 kJ/mol。</p>
+<p>切換 H–H、Cl–Cl、Br–Br、I–I：</p>
+<ul><li>原子越大，最低點越往右：鍵長約是兩個原子半徑相加（第一章第 7 節）。</li><li>原子越大，最低點越淺：外層電子離對方的原子核越遠，吸引越弱，鍵能越小。</li></ul>
+<p>要算出鍵長在哪裡，就要把這條曲線寫成式子。下面的式子不是推導出來的，是符合實驗曲線的近似，稱為經驗式。</p>
 <p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給；<span class="tg derive">會推</span>可以推出來；<span class="tg given">卷上會給</span>題目會提供。</p>
-<div class="eqb"><p class="eq">E = A/r¹² − B/r⁶<span class="tg given">卷上會給</span></p><p class="eqzh">位能 = 排斥項 − 吸引項</p><table class="tbl sym2"><tr><th>符號</th><th>中文</th><th>單位</th><th>數值</th></tr><tr><td>E</td><td>位能：兩個原子分開時為 0</td><td>kcal/mol 或 kJ/mol</td><td>—</td></tr><tr><td>r</td><td>核間距離</td><td>Å</td><td>—</td></tr><tr><td>A</td><td>排斥常數：把 1/r¹² 換成能量的換算係數</td><td>kcal·Å¹²/mol</td><td>由實驗曲線決定，題目會給</td></tr><tr><td>B</td><td>吸引常數：把 1/r⁶ 換成能量的換算係數</td><td>kcal·Å⁶/mol</td><td>由實驗曲線決定，題目會給</td></tr></table></div>
-<p>排斥項是 r 的 12 次方，在分母。r 變小時，它增加得比吸引項快得多，所以只在很近時才重要。圖上紅色曲線是排斥項，藍色是吸引項，黑色是兩者相加。</p>
-<p>最低點時兩個箭頭一樣長，力互相抵消。每一項的力 = 次方 × 該項 ÷ r（這是對 r 微分的結果），所以排斥力是 12A/r¹³，吸引力是 6B/r⁷。兩者相等：12A/r¹³ = 6B/r⁷，得到：</p>
-<div class="eqb"><p class="eq">r⁶ = 2A/B<span class="tg derive">會推</span></p><p class="eqzh">最低點的核間距離⁶ = 2 × 排斥常數 ÷ 吸引常數</p><table class="tbl sym2"><tr><th>符號</th><th>中文</th><th>單位</th><th>數值</th></tr><tr><td>r</td><td>最低點的核間距離，就是鍵長</td><td>Å</td><td>—</td></tr><tr><td>A</td><td>排斥常數：把 1/r¹² 換成能量的換算係數</td><td>kcal·Å¹²/mol</td><td>由實驗曲線決定，題目會給</td></tr><tr><td>B</td><td>吸引常數：把 1/r⁶ 換成能量的換算係數</td><td>kcal·Å⁶/mol</td><td>由實驗曲線決定，題目會給</td></tr></table></div>` },
+<div class="eqb"><p class="eq">E = A/r¹² − B/r⁶<span class="tg given">卷上會給</span></p><p class="eqzh">位能 = 排斥項 − 吸引項</p><table class="tbl sym2"><tr><th>符號</th><th>中文</th><th>單位</th><th>數值</th></tr><tr><td>E</td><td>位能：兩個原子分開時為 0</td><td>kJ/mol（題目也可能用 kcal/mol）</td><td>—</td></tr><tr><td>r</td><td>核間距離</td><td>Å</td><td>—</td></tr><tr><td>A</td><td>排斥常數：把 1/r¹² 換成能量的換算係數</td><td>能量單位 × Å¹²</td><td>由實驗曲線決定，題目會給</td></tr><tr><td>B</td><td>吸引常數：把 1/r⁶ 換成能量的換算係數</td><td>能量單位 × Å⁶</td><td>由實驗曲線決定，題目會給</td></tr></table></div>
+<p>排斥項 A/r¹² 的 r 是 12 次方，在分母。r 變小時，它增加得比吸引項快得多，所以只在很近時才重要。這就是圖上紅色虛線在左邊急遽升高的原因。</p>
+<p>再拖一次 r，看圖下的「吸引項 ÷ 排斥項」。停在最低點時，這個比值剛好是 2：排斥項是吸引項的一半。換成任何一種鍵都一樣。</p>
+<p>把兩項代入這個比值：(B/r⁶) ÷ (A/r¹²) = B × r⁶ ÷ A（r¹² ÷ r⁶ = r⁶）。最低點時它等於 2：B × r⁶ ÷ A = 2。把 A、B 移到另一邊（兩個量互換位置），得到：</p>
+<div class="eqb"><p class="eq">r⁶ = 2A/B<span class="tg derive">會推</span></p><p class="eqzh">鍵長⁶ = 2 × 排斥常數 ÷ 吸引常數</p><table class="tbl sym2"><tr><th>符號</th><th>中文</th><th>單位</th><th>數值</th></tr><tr><td>r</td><td>最低點的核間距離，就是鍵長</td><td>Å</td><td>—</td></tr><tr><td>A</td><td>排斥常數：把 1/r¹² 換成能量的換算係數</td><td>能量單位 × Å¹²</td><td>由實驗曲線決定，題目會給</td></tr><tr><td>B</td><td>吸引常數：把 1/r⁶ 換成能量的換算係數</td><td>能量單位 × Å⁶</td><td>由實驗曲線決定，題目會給</td></tr></table></div>
+` },
     { h: '是離子鍵還是共價鍵？', w: ['bondtype', 'lattice'], body: `
 <p>兩個原子共用一對電子，就連成<b>化學鍵</b>。電子會偏向<b>電負度</b>大的一方（第一章第 7 節）。兩個原子電負度的差寫成 <b>ΔEN</b>。</p>
 <p>選兩個原子，看中間的電子雲偏向哪一邊。</p>
@@ -5247,7 +5252,7 @@ CH.push({
     { s: 2, src: '仿 慈濟 107 第 7 題', q: 'X 為 1s²2s²2p⁴，Y 為 1s²2s²2p⁶3s²3p¹，兩者形成的化合物實驗式為？', o: ['Y₂X₃', 'YX', 'YX₃', 'Y₃X₂'], a: 0,
       why: 'X 是 O，得 2 個電子成為 O²⁻；Y 是 Al，給出 3 個成為 Al³⁺。電荷總和為 0：2 × (+3) + 3 × (−2) = 0，所以是 Al₂O₃（Y₂X₃）。' },
     { s: 1, src: '仿 慈濟 107 第 12 題', q: '兩原子間位能 E = A/r¹² − B/r⁶，A = 6.40 × 10³ kcal·Å¹²/mol、B = 2.00 × 10² kcal·Å⁶/mol，能量最低時 r 為？', o: ['2.00 Å', '1.00 Å', '3.00 Å', '4.00 Å'], a: 0,
-      why: '最低點時排斥力 = 吸引力：12A/r¹³ = 6B/r⁷，r⁶ = 2A/B = 2 × 6400 ÷ 200 = 64，r = 2.00 Å。', show: { w: 'potcurve', set: {} } },
+      why: '最低點時吸引項是排斥項的 2 倍：(B/r⁶) ÷ (A/r¹²) = B × r⁶ ÷ A = 2，所以 r⁶ = 2A/B = 2 × 6400 ÷ 200 = 64，r = 2.00 Å（2⁶ = 64）。', show: { w: 'potcurve', set: {} } },
     { s: 5, src: '仿 慈濟 107 第 33 題', q: 'SO₂ 的 O–S–O 鍵角約為？', o: ['119°', '104.5°', '109.5°', '180°'], a: 0,
       why: '3 個電子區域，1 對孤對電子使角度略小於 120°。', show: { w: 'vsepr', set: { m: 'so2' } } },
     { s: 7, src: '仿 中國醫 106 第 17 題', q: 'BF₃、SO₂、SF₆、XeF₄、PCl₅ 中偶極矩為零的有幾個？', o: ['4', '3', '2', '5'], a: 0,
@@ -10424,8 +10429,9 @@ STEPS["vsepr"] = {
     ["Y（13 個電子）呢？","失 3 個成 Y³⁺（Al³⁺）","得 5 個成 Y⁵⁻（Al⁵⁻）","失 1 個成 Y⁺（Al⁺）","電荷平衡：2 × (+3) = 3 × (−2)。"]],
   // 兩原子間位能 E = A/r¹² − B/r⁶，
   "x:k67rl7": [
-    ["能量最低時，兩種力的關係？","排斥力 = 吸引力","排斥力 = 0","吸引力 = 0","最低點時兩個箭頭一樣長。"],
-    ["12A/r¹³ = 6B/r⁷，r⁶ = ？","2A/B = 64","A/B = 32","B/(2A) = 1/64","r = 64 的六次方根 = 2.00 Å。"]],
+    ["能量最低時，吸引項 ÷ 排斥項是多少？","2","1","0","在圖上拖到最低點，比值剛好是 2：排斥項是吸引項的一半。"],
+    ["B × r⁶ ÷ A = 2，r⁶ = ？","2A/B = 64","A/B = 32","B/(2A) = 1/64","A、B 移到另一邊：r⁶ = 2 × 6400 ÷ 200 = 64。"],
+    ["r⁶ = 64，r = ？","2.00 Å","64 Å","10.7 Å","2⁶ = 64，所以 r = 2.00 Å。"]],
   // SO₂ 的 O–S–O 鍵角約為？
   "x:1w9bqq0": [
     ["S 有幾個電子區域？","3 個（2 個 O + 1 對孤對）","4 個（2 個 O + 2 對孤對）","2 個（2 個 O + 0 對孤對）","3 區 → 約 120°。"],
@@ -17280,11 +17286,11 @@ W.xtype = el => {
 const BONDS2 = { 'H–H': [74, 436], 'Cl–Cl': [199, 243], 'Br–Br': [228, 193], 'I–I': [267, 151] };
 W.potcurve = el => {
   const st = { b: 'Cl–Cl', r: 300 };
-  el.innerHTML = `${seg('pcS', Object.keys(BONDS2).map(k => [k, k]), st.b)}<div class="w-row"><label class="rng">核間距離 r<input type="range" id="pcR" min="60" max="450" step="2"><output class="mono" id="pcO"></output></label></div><div id="pcA"></div><div id="pcG"></div><p class="eq" id="pcF"></p><p class="note" id="pcN"></p>`;
+  el.innerHTML = `${seg('pcS', Object.keys(BONDS2).map(k => [k, k]), st.b)}<div class="w-row"><label class="rng">核間距離 r<input type="range" id="pcR" min="60" max="450" step="1"><output class="mono" id="pcO"></output></label></div><div id="pcA"></div><div id="pcG"></div><div class="cards" id="pcC"></div><p class="eq" id="pcF"></p><p class="note" id="pcN"></p>`;
   const E = (r, [r0, D]) => D * ((r0 / r) ** 12 - 2 * (r0 / r) ** 6);
   function atoms() {
     const [r0] = BONDS2[st.b], [a, b] = st.b.split(/[–=≡]/), half = st.r * 0.5, x1 = 280 - half, x2 = 280 + half, R = Math.min(30, Math.max(14, r0 * 0.12));
-    // 力的大小（對 r 微分）：吸引 ∝ (r₀/r)⁷、排斥 ∝ (r₀/r)¹³，在 r₀ 兩者相等；箭頭長度以 r₀ 時 = 40 px
+    // 箭頭長度＝力的大小（曲線斜率）：吸引 ∝ (r₀/r)⁷、排斥 ∝ (r₀/r)¹³，在 r₀ 兩者相等；r₀ 時 = 40 px
     const fa = (r0 / st.r) ** 7, fr = (r0 / st.r) ** 13, La = Math.min(110, 40 * fa), Lr = Math.min(110, 40 * fr);
     const ar = (x, dir, L, y, c) => (L < 3 ? '' : `<line x1="${x}" y1="${y}" x2="${x + dir * L}" y2="${y}" stroke="${c}" stroke-width="5" marker-end="url(#pc${c === '#3A6FD8' ? 'b' : 'r'})"/>`);
     return `<svg viewBox="0 0 560 100" class="chart" role="img" aria-label="兩個原子之間的吸引與排斥"><defs><marker id="pcb" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10z" fill="#3A6FD8"/></marker><marker id="pcr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--bad)"/></marker></defs>
@@ -17299,9 +17305,13 @@ W.potcurve = el => {
       // 選到的鍵：排斥項（紅）、吸引項（藍）、相加（黑），顏色和上面的箭頭一致
       + `<path d="${path(xs(d[0]).filter(r => d[1] * (d[0] / r) ** 12 <= 400).map(r => [X(r), Y(d[1] * (d[0] / r) ** 12)]))}" fill="none" stroke="var(--bad)" stroke-width="2" stroke-dasharray="5 3"/>`
       + `<path d="${path(xs(d[0] * 0.6).filter(r => -2 * d[1] * (d[0] / r) ** 6 >= -600).map(r => [X(r), Y(-2 * d[1] * (d[0] / r) ** 6)]))}" fill="none" stroke="#3A6FD8" stroke-width="2" stroke-dasharray="5 3"/>`
-      + `<path class="tline" d="${path(xs(d[0]).map(r => [X(r), Y(clamp(E(r, d), -600, 400))]))}"/>`
+      + `<path class="tline" style="stroke:var(--ink)" d="${path(xs(d[0]).map(r => [X(r), Y(clamp(E(r, d), -600, 400))]))}"/>`
       + `<text class="tk sm" x="${X(445)}" y="${Y(0) - 6}" text-anchor="end">分開時位能 = 0</text>`
       + `<line class="mk" x1="${X(d[0])}" x2="${X(d[0])}" y1="${Y(0)}" y2="${Y(-d[1])}"/><circle class="dot" data-cur="${st.b}" cx="${X(st.r)}" cy="${Y(clamp(e, -1000, 400))}" r="7"/>`);
+    // 排斥項、吸引項與比值：最低點時比值 = 2（課文由此推出 r⁶ = 2A/B，不用微分）
+    const big = v => (v >= 1e5 ? '> 100000' : v >= 100 ? fx(v, 0) : v.toPrecision(3));   // 拖到很近時排斥項極大，卡片寬度不跳
+    const rep = d[1] * (d[0] / st.r) ** 12, att = 2 * d[1] * (d[0] / st.r) ** 6;
+    $('#pcC', el).innerHTML = card('r', '排斥項（kJ/mol）', big(rep)) + card('a', '吸引項（kJ/mol）', big(att)) + card('q', '吸引項 ÷ 排斥項', att / rep < 0.01 ? '< 0.01' : (att / rep).toPrecision(3));
     $('#pcR', el).value = st.r; $('#pcO', el).textContent = `${(st.r / 100).toFixed(2)} Å`;
     $('#pcF', el).innerHTML = `${st.b}：最低點 r = <b>${(d[0] / 100).toFixed(2)} Å</b>（鍵長），深度 <b>${d[1]} kJ/mol</b>（鍵能）；目前 r = ${(st.r / 100).toFixed(2)} Å，位能 ${fx(e, 0)} kJ/mol`;
     $('#pcN', el).innerHTML = st.r > d[0] * 1.05 ? '吸引比排斥大：原子會再靠近，位能往下走。' : st.r < d[0] * 0.95 ? '排斥比吸引大：位能急遽升高。' : '兩個力一樣大：這個距離就是鍵長。';

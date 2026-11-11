@@ -6,11 +6,11 @@
 const BONDS2 = { 'H–H': [74, 436], 'Cl–Cl': [199, 243], 'Br–Br': [228, 193], 'I–I': [267, 151] };
 W.potcurve = el => {
   const st = { b: 'Cl–Cl', r: 300 };
-  el.innerHTML = `${seg('pcS', Object.keys(BONDS2).map(k => [k, k]), st.b)}<div class="w-row"><label class="rng">核間距離 r<input type="range" id="pcR" min="60" max="450" step="2"><output class="mono" id="pcO"></output></label></div><div id="pcA"></div><div id="pcG"></div><p class="eq" id="pcF"></p><p class="note" id="pcN"></p>`;
+  el.innerHTML = `${seg('pcS', Object.keys(BONDS2).map(k => [k, k]), st.b)}<div class="w-row"><label class="rng">核間距離 r<input type="range" id="pcR" min="60" max="450" step="1"><output class="mono" id="pcO"></output></label></div><div id="pcA"></div><div id="pcG"></div><div class="cards" id="pcC"></div><p class="eq" id="pcF"></p><p class="note" id="pcN"></p>`;
   const E = (r, [r0, D]) => D * ((r0 / r) ** 12 - 2 * (r0 / r) ** 6);
   function atoms() {
     const [r0] = BONDS2[st.b], [a, b] = st.b.split(/[–=≡]/), half = st.r * 0.5, x1 = 280 - half, x2 = 280 + half, R = Math.min(30, Math.max(14, r0 * 0.12));
-    // 力的大小（對 r 微分）：吸引 ∝ (r₀/r)⁷、排斥 ∝ (r₀/r)¹³，在 r₀ 兩者相等；箭頭長度以 r₀ 時 = 40 px
+    // 箭頭長度＝力的大小（曲線斜率）：吸引 ∝ (r₀/r)⁷、排斥 ∝ (r₀/r)¹³，在 r₀ 兩者相等；r₀ 時 = 40 px
     const fa = (r0 / st.r) ** 7, fr = (r0 / st.r) ** 13, La = Math.min(110, 40 * fa), Lr = Math.min(110, 40 * fr);
     const ar = (x, dir, L, y, c) => (L < 3 ? '' : `<line x1="${x}" y1="${y}" x2="${x + dir * L}" y2="${y}" stroke="${c}" stroke-width="5" marker-end="url(#pc${c === '#3A6FD8' ? 'b' : 'r'})"/>`);
     return `<svg viewBox="0 0 560 100" class="chart" role="img" aria-label="兩個原子之間的吸引與排斥"><defs><marker id="pcb" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10z" fill="#3A6FD8"/></marker><marker id="pcr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--bad)"/></marker></defs>
@@ -25,9 +25,13 @@ W.potcurve = el => {
       // 選到的鍵：排斥項（紅）、吸引項（藍）、相加（黑），顏色和上面的箭頭一致
       + `<path d="${path(xs(d[0]).filter(r => d[1] * (d[0] / r) ** 12 <= 400).map(r => [X(r), Y(d[1] * (d[0] / r) ** 12)]))}" fill="none" stroke="var(--bad)" stroke-width="2" stroke-dasharray="5 3"/>`
       + `<path d="${path(xs(d[0] * 0.6).filter(r => -2 * d[1] * (d[0] / r) ** 6 >= -600).map(r => [X(r), Y(-2 * d[1] * (d[0] / r) ** 6)]))}" fill="none" stroke="#3A6FD8" stroke-width="2" stroke-dasharray="5 3"/>`
-      + `<path class="tline" d="${path(xs(d[0]).map(r => [X(r), Y(clamp(E(r, d), -600, 400))]))}"/>`
+      + `<path class="tline" style="stroke:var(--ink)" d="${path(xs(d[0]).map(r => [X(r), Y(clamp(E(r, d), -600, 400))]))}"/>`
       + `<text class="tk sm" x="${X(445)}" y="${Y(0) - 6}" text-anchor="end">分開時位能 = 0</text>`
       + `<line class="mk" x1="${X(d[0])}" x2="${X(d[0])}" y1="${Y(0)}" y2="${Y(-d[1])}"/><circle class="dot" data-cur="${st.b}" cx="${X(st.r)}" cy="${Y(clamp(e, -1000, 400))}" r="7"/>`);
+    // 排斥項、吸引項與比值：最低點時比值 = 2（課文由此推出 r⁶ = 2A/B，不用微分）
+    const big = v => (v >= 1e5 ? '> 100000' : v >= 100 ? fx(v, 0) : v.toPrecision(3));   // 拖到很近時排斥項極大，卡片寬度不跳
+    const rep = d[1] * (d[0] / st.r) ** 12, att = 2 * d[1] * (d[0] / st.r) ** 6;
+    $('#pcC', el).innerHTML = card('r', '排斥項（kJ/mol）', big(rep)) + card('a', '吸引項（kJ/mol）', big(att)) + card('q', '吸引項 ÷ 排斥項', att / rep < 0.01 ? '< 0.01' : (att / rep).toPrecision(3));
     $('#pcR', el).value = st.r; $('#pcO', el).textContent = `${(st.r / 100).toFixed(2)} Å`;
     $('#pcF', el).innerHTML = `${st.b}：最低點 r = <b>${(d[0] / 100).toFixed(2)} Å</b>（鍵長），深度 <b>${d[1]} kJ/mol</b>（鍵能）；目前 r = ${(st.r / 100).toFixed(2)} Å，位能 ${fx(e, 0)} kJ/mol`;
     $('#pcN', el).innerHTML = st.r > d[0] * 1.05 ? '吸引比排斥大：原子會再靠近，位能往下走。' : st.r < d[0] * 0.95 ? '排斥比吸引大：位能急遽升高。' : '兩個力一樣大：這個距離就是鍵長。';
