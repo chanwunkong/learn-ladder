@@ -5,7 +5,6 @@ CH.push({
   sections: [
     { h: '酸鹼反應會往哪一邊走？', w: 'pkaeq', body: `
 <p>酸鹼反應 HA + B⁻ ⇌ A⁻ + HB，兩邊各有一個酸（HA 和 HB）。平衡永遠偏向<b>較弱的酸</b>（pKa 較大）那一側：</p>
-<p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目會提供。</p>
 <p class="eq">K = 10<sup>(pKa of HB − pKa of HA)</sup><span class="tg derive">會推</span></p>
 <dl class="sym"><div><dt>HA</dt><dd>左邊的酸（要被拿走 H⁺ 的那一個）</dd></div><div><dt>HB</dt><dd>右邊生成的酸，也就是鹼 B⁻ 接上 H⁺ 後的共軛酸</dd></div><div><dt>pKa</dt><dd>= −log Ka；越小酸越強（見酸鹼一章）</dd></div></dl>
 <p>常見的 pKa 大小順序<span class="tg must">要背</span>（數值記大約即可）：羧酸 4–5 ＜ 酚 10 ＜ 水 15.7 ≈ 醇 16–18 ＜ 酮的 α-H 19 ＜ 末端炔 25 ＜ 氨 35 ＜ 烯 44 ＜ 烷 50。</p>

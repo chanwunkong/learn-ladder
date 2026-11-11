@@ -36,11 +36,15 @@ ${(() => { const nx = CH.find(c => !state.done[c.id]) || CH[0], any = CH.some(c 
 <details class="tree-src"><summary>比重怎麼算的</summary><p>中國醫藥、義守、慈濟大學 106–115 學年度學士後中醫化學試題共 30 份、1498 題，逐題依主題分類。越近的年份越重要：106 年權重 1、107 年權重 2……115 年權重 10。「近三年」只看 113–115 年，不加權。106–110 年有 95 題只看圖判斷產物，也已逐題看圖歸到各章；因四捨五入，各章加總約 49.8 題。一題常同時牽涉兩個主題，分類以主要考點為準。</p></details>
 <h2>怎麼使用</h2>
 <ul class="how"><li><b>每章是一堂課</b>：照小節順序讀，每節都有可以動手調整的圖。先玩圖、看說明，再往下讀。</li>
+<li><b>公式旁的標籤</b>：<span class="tg must">要背</span>考試不會給；<span class="tg derive">會推</span>可以從前面推出來；<span class="tg given">卷上會給</span>題目會提供。課文裡點一下標籤也會顯示意思。</li>
 <li><b>章末小題只用來確認懂了沒</b>：答錯時按「在圖上看」，回到圖上找出哪裡想錯。</li>
 <li><b>考試範圍</b>：中國醫藥、義守、慈濟大學學士後中醫的化學考科都包含普通化學與有機化學，命題以大學教科書為準；課程單元依教科書標準章節安排。</li></ul>
 </div>`;
 }
 
+// 公式旁的標籤：點一下在標籤後面顯示意思（2026-11-12 使用者要求：各節不再放標籤說明，說明只在化學首頁「怎麼使用」）
+const TGTIP = { must: '考試不會給', derive: '可以從前面推出來', given: '題目會提供' };
+document.addEventListener('click', e => { const t = e.target.closest('.tg'); const k = t && Object.keys(TGTIP).find(c => t.classList.contains(c)); if (!k) return; t.dataset.tip = '：' + TGTIP[k]; t.toggleAttribute('data-open'); });
 const WVIEW = ['加權平均', '近三年', '中國醫藥', '義守', '慈濟'];
 state.wv = store.get('wv', 0);
 const isNew = u => !unitCh(u);

@@ -46,7 +46,6 @@ CH.push({
 <p>椅式和扭船式的平衡：室溫下 99.99% 是椅式；加熱到 800 °C 時扭船式約 30%，K = 30 ÷ 70 ≈ 0.43。</p>` },
     { h: '旋光度怎麼量？外消旋混合物怎麼分開？', w: 'ee', body: `
 <p>鏡像異構物唯一的物理差別是旋光方向。旋光計由起偏鏡、樣品管和檢偏鏡組成，量到的旋光度 α 和樣品管長度、濃度成正比，換算成<b>比旋光度</b>：</p>
-<p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目會提供。</p>
 <p class="eq">[α] = α ÷ (l × c)<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>[α]</dt><dd>比旋光度：純物質的特性數值，可以查表<span class="tg given">卷上會給</span></dd></div><div><dt>α</dt><dd>旋光計實際量到的旋轉角度（°）</dd></div><div><dt>l</dt><dd>樣品管長度，單位 dm（10 cm）</dd></div><div><dt>c</dt><dd>濃度，單位 g/mL</dd></div></dl>
 <p>比旋光度還和溫度、光的波長（常用鈉 D 線 589 nm）與溶劑有關。拉動下圖的比例，看混合物的旋光度怎麼變：<b>光學純度 = 觀測比旋光度 ÷ 純物質的比旋光度</b>，等於鏡像過量（ee）：</p>

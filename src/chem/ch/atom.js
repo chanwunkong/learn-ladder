@@ -10,7 +10,6 @@ CH.push({
 <p><b>原子核裡有什麼？</b>帶正電的粒子稱為<b>質子</b>。原子核的質量比質子加起來還大，所以還有不帶電的粒子，1932 年查兌克發現它，稱為<b>中子</b>。</p>
 <table class="tbl"><tr><th>粒子</th><th>在哪裡</th><th>電荷</th><th>質量</th></tr><tr><td>質子</td><td>原子核</td><td>+1</td><td>約 1 u</td></tr><tr><td>中子</td><td>原子核</td><td>0</td><td>約 1 u</td></tr><tr><td>電子</td><td>原子核外</td><td>−1</td><td>約 1/1836 u（幾乎可以不算）</td></tr></table>
 <p>u 是<b>原子質量單位</b>：碳-12 原子質量的 1/12，約等於一個質子或中子的質量。</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式或常數推出；<span class="tg given">卷上會給</span>題目或卷首常數表會提供。</p>
 <p><b>描述一個原子要幾個數字？</b>質子數決定是哪一種元素，稱為<b>原子序 Z</b><span class="tg must">要背</span>。質子和中子的總數稱為<b>質量數 A</b><span class="tg must">要背</span>，電子太輕，不算。所以：</p>
 <div class="eqb"><p class="eq">N = A − Z<span class="tg derive">會推</span></p><p class="eqzh">中子數 = 質量數 − 原子序</p><table class="tbl sym2"><tr><th>符號</th><th>中文</th><th>單位</th><th>數值</th></tr><tr><td>N</td><td>中子數</td><td>個</td><td>—</td></tr><tr><td>A</td><td>質量數：質子數＋中子數</td><td>個</td><td>—</td></tr><tr><td>Z</td><td>原子序：原子核裡的質子數</td><td>個</td><td>—</td></tr></table></div>
 <p>原子不帶電，電子數等於質子數。失去電子帶正電、得到電子帶負電，帶電的原子稱為<b>離子</b>：</p>

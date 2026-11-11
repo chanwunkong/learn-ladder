@@ -6,7 +6,7 @@
 const BONDS2 = { 'H–H': [74, 436], 'Cl–Cl': [199, 243], 'Br–Br': [228, 193], 'I–I': [267, 151] };
 W.potcurve = el => {
   const st = { b: 'Cl–Cl', r: 300 };
-  el.innerHTML = `${seg('pcS', Object.keys(BONDS2).map(k => [k, k]), st.b)}<div class="w-row"><label class="rng">核間距離 r<input type="range" id="pcR" min="60" max="450" step="1"><output class="mono" id="pcO"></output></label></div><div id="pcA"></div><div id="pcG"></div><div class="cards" id="pcC"></div><p class="eq" id="pcF"></p><p class="note" id="pcN"></p>`;
+  el.innerHTML = `${seg('pcS', Object.keys(BONDS2).map(k => [k, k]), st.b)}<div class="w-row"><label class="rng">核間距離 r<input type="range" id="pcR" min="60" max="450" step="1"><output class="mono" id="pcO"></output></label></div><div id="pcA"></div><div id="pcG"></div><p class="eq" id="pcF"></p><p class="note" id="pcN"></p>`;
   const E = (r, [r0, D]) => D * ((r0 / r) ** 12 - 2 * (r0 / r) ** 6);
   function atoms() {
     const [r0] = BONDS2[st.b], [a, b] = st.b.split(/[–=≡]/), half = st.r * 0.5, x1 = 280 - half, x2 = 280 + half, R = Math.min(30, Math.max(14, r0 * 0.12));
@@ -28,10 +28,6 @@ W.potcurve = el => {
       + `<path class="tline" style="stroke:var(--ink)" d="${path(xs(d[0]).map(r => [X(r), Y(clamp(E(r, d), -600, 400))]))}"/>`
       + `<text class="tk sm" x="${X(445)}" y="${Y(0) - 6}" text-anchor="end">分開時位能 = 0</text>`
       + `<line class="mk" x1="${X(d[0])}" x2="${X(d[0])}" y1="${Y(0)}" y2="${Y(-d[1])}"/><circle class="dot" data-cur="${st.b}" cx="${X(st.r)}" cy="${Y(clamp(e, -1000, 400))}" r="7"/>`);
-    // 排斥項、吸引項與比值：最低點時比值 = 2（課文由此推出 r⁶ = 2A/B，不用微分）
-    const big = v => (v >= 1e5 ? '> 100000' : v >= 100 ? fx(v, 0) : v.toPrecision(3));   // 拖到很近時排斥項極大，卡片寬度不跳
-    const rep = d[1] * (d[0] / st.r) ** 12, att = 2 * d[1] * (d[0] / st.r) ** 6;
-    $('#pcC', el).innerHTML = card('r', '排斥項（kJ/mol）', big(rep)) + card('a', '吸引項（kJ/mol）', big(att)) + card('q', '吸引項 ÷ 排斥項', att / rep < 0.01 ? '< 0.01' : (att / rep).toPrecision(3));
     $('#pcR', el).value = st.r; $('#pcO', el).textContent = `${(st.r / 100).toFixed(2)} Å`;
     $('#pcF', el).innerHTML = `${st.b}：最低點 r = <b>${(d[0] / 100).toFixed(2)} Å</b>（鍵長），深度 <b>${d[1]} kJ/mol</b>（鍵能）；目前 r = ${(st.r / 100).toFixed(2)} Å，位能 ${fx(e, 0)} kJ/mol`;
     $('#pcN', el).innerHTML = st.r > d[0] * 1.05 ? '吸引比排斥大：原子會再靠近，位能往下走。' : st.r < d[0] * 0.95 ? '排斥比吸引大：位能急遽升高。' : '兩個力一樣大：這個距離就是鍵長。';
@@ -42,6 +38,31 @@ W.potcurve = el => {
   draw();
   return { set(s) { Object.assign(st, s); draw(); } };
 };
+W.potx = el => {
+  const st = { b: 'Cl–Cl', r: 300 };
+  el.innerHTML = `${seg('pxS', Object.keys(BONDS2).map(k => [k, k]), st.b)}<div class="w-row"><label class="rng">核間距離 r<input type="range" id="pxR" min="60" max="450" step="1"><output class="mono" id="pxO"></output></label></div><div id="pxG"></div><div class="cards" id="pxC"></div><p class="note" id="pxN"></p>`;
+  const big = v => (v >= 1e5 ? '> 100000' : v >= 100 ? fx(v, 0) : v.toPrecision(3));   // 拖到很近時排斥項極大，卡片寬度不跳
+  function draw() {
+    // 每種鍵的 A、B 由鍵長 r₀（Å）與鍵能 D 決定：A = D·r₀¹²、B = 2D·r₀⁶，頂點在 x₀ = 1/r₀⁶
+    const [r0p, D] = BONDS2[st.b], r0 = r0p / 100, r = st.r / 100, x0 = 1 / r0 ** 6, x = 1 / r ** 6, A = D * r0 ** 12, B = 2 * D * r0 ** 6;
+    const xmax = 2.2 * x0, E = v => A * v * v - B * v, tick = v => Number(v.toPrecision(2)).toString();
+    $('#pxG', el).innerHTML = chart({ w: 560, h: 240, x: [0, xmax], y: [-600, 400], xt: [0, x0, 2 * x0], xtl: ['0', tick(x0), tick(2 * x0)], yt: [-600, -300, 0, 400], xlab: 'x = 1/r⁶（1/Å⁶）', ylab: '位能（kJ/mol）', label: '把橫軸換成 x = 1/r⁶ 的位能曲線' }, (X, Y) =>
+      `<path class="tline" style="stroke:var(--ink)" d="${path(Array.from({ length: 111 }, (_, i) => i * xmax / 110).map(v => [X(v), Y(clamp(E(v), -600, 400))]))}"/>`
+      + `<line class="mk" x1="${X(x0)}" x2="${X(x0)}" y1="${Y(0)}" y2="${Y(-D)}"/><text class="tk sm" x="${X(x0) + 6}" y="${Y(-D) + 16}">頂點 x = B ÷ 2A</text>`
+      + `<text class="tk sm" x="${X(xmax) - 4}" y="${Y(-600) - 8}" text-anchor="end">x 越大，r 越小 →</text>`
+      + (x <= xmax ? `<circle class="dot" data-cur="${st.b}" cx="${X(x)}" cy="${Y(clamp(E(x), -600, 400))}" r="7"/>` : ''));
+    const rep = A * x * x, att = B * x;
+    $('#pxC', el).innerHTML = card('r', '排斥項 A/r¹²（kJ/mol）', big(rep)) + card('a', '吸引項 B/r⁶（kJ/mol）', big(att)) + card('q', '吸引項 ÷ 排斥項', att / rep < 0.01 ? '< 0.01' : (att / rep).toPrecision(3));
+    $('#pxR', el).value = st.r; $('#pxO', el).textContent = `${r.toFixed(2)} Å`;
+    $('#pxN', el).innerHTML = x > xmax ? '核間距離太近，點已超出圖的右邊。' : Math.abs(x / x0 - 1) < 0.03 ? `在頂點：r = ${r0.toFixed(2)} Å 就是鍵長，吸引項是排斥項的 2 倍。` : x < x0 ? '在頂點左邊：r 比鍵長大。' : '在頂點右邊：r 比鍵長小。';
+    pressSeg(el, 'pxS', st.b);
+  }
+  $('#pxR', el).oninput = e => { st.r = +e.target.value; draw(); };
+  bindSeg(el, 'pxS', v => { st.b = v; st.r = Math.round(BONDS2[v][0] * 1.4); draw(); });
+  draw();
+  return { set(o) { Object.assign(st, o); draw(); } };
+};
+
 
 /* ===== 第 2 節：電負度差 → 電子雲偏向哪一邊 ===== */
 const EN = { H: 2.20, Li: 0.98, B: 2.04, C: 2.55, N: 3.04, O: 3.44, F: 3.98, Na: 0.93, Mg: 1.31, Si: 1.90, P: 2.19, S: 2.58, Cl: 3.16, K: 0.82, As: 2.18, Br: 2.96, I: 2.66 };

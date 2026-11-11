@@ -12,7 +12,6 @@ CH.push({
 <ol><li>親核基加成到羰基碳，形成<b>四面體中間物</b>（和醛酮相同）；</li><li>C=O 重新形成，把較好的離去基擠出去。</li></ol>
 <p>醛酮停在第 1 步，是因為 H⁻ 和 R⁻ 不會離開；羧酸衍生物則有 Cl⁻、RCOO⁻、RO⁻ 等可以離開，所以會走完第 2 步。這類「先加成、再脫去」的反應稱為<b>親核醯基取代</b>。</p>` },
     { h: '哪一種衍生物最活潑？能怎麼互換？', w: 'acylrank', body: `
-<p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他規則推出；<span class="tg given">卷上會給</span>題目會提供。</p>
 <p class="eq">醯氯 &gt; 酸酐 &gt; 酯 ≈ 羧酸 &gt; 醯胺 &gt; 羧酸根<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>醯氯</dt><dd>R–CO–Cl</dd></div><div><dt>酸酐</dt><dd>R–CO–O–CO–R：兩個羧酸脫去一分子水接在一起</dd></div><div><dt>酯</dt><dd>R–CO–OR′</dd></div><div><dt>醯胺</dt><dd>R–CO–NH₂（N 上也可接烷基）</dd></div></dl>
 <p>兩個原因指向同一個方向：</p>

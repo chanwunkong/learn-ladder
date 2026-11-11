@@ -15,7 +15,6 @@ CH.push({
 <p>把氧化與還原分在兩個杯子，電子只能經過導線流動，就能做功：</p>
 <ul><li><b>陽極</b>：發生氧化，電子從這裡流出（電池的負極）。</li><li><b>陰極</b>：發生還原，電子流入（正極）。</li><li><b>鹽橋</b>：讓離子移動，維持兩杯電中性。</li></ul>
 <p>每個半反應寫成還原式，有一個<b>標準還原電位 E°</b>：在標準狀態（1 M、1 atm、25 °C）下，和<b>標準氫電極</b>（2H⁺ + 2e⁻ → H₂，人為訂為 0 V）比較時的電壓，單位是伏特（V）。E° 越大越容易被還原（是越強的氧化劑）；E° 越小越容易被氧化（是越強的還原劑）。</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">E°電池 = E°陰極 − E°陽極　　ΔG° = −nFE°　　E° = (0.0592/n) log K（25 °C）<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>E°陰極、E°陽極</dt><dd>兩個半反應各自的標準還原電位（都用還原式的數值，不要變號）<span class="tg given">卷上會給</span></dd></div><div><dt>n</dt><dd>反應中轉移的電子數（平衡後的總數）</dd></div><div><dt>F</dt><dd>法拉第常數：1 mol 電子的電量，96485 C/mol<span class="tg given">卷上會給</span></dd></div><div><dt>0.0592</dt><dd>= 2.303RT/F 在 25 °C 的值<span class="tg derive">會推</span></dd></div><div><dt>K</dt><dd>反應的平衡常數</dd></div></dl>
 <p>半反應的係數乘 2 時，E° 不變（電壓是每個電子的能量，和反應的量無關），但 n 和 ΔG° 會跟著變。</p>

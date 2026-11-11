@@ -5,7 +5,6 @@ CH.push({
   sections: [
     { h: '「反應速率」指的是哪一個物種？', w: 'ratestoich', body: `
 <p>反應速率是單位時間內濃度的變化。方括號 [A] 表示 A 的體積莫耳濃度（M = mol/L）。同一個反應中，各物種變化的快慢和係數成正比，除以係數之後才是唯一的「反應速率」：</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">aA + bB → cC：rate = −(1/a)Δ[A]/Δt = −(1/b)Δ[B]/Δt = (1/c)Δ[C]/Δt<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>Δ[A]/Δt</dt><dd>A 的濃度在一段時間內的變化量 ÷ 時間（M/s）</dd></div><div><dt>負號</dt><dd>反應物越來越少，Δ[A] 是負的，加負號讓速率為正</dd></div><div><dt>1/a</dt><dd>除以係數：2O₃ → 3O₂ 中 O₂ 生成的速率是 O₃ 消失速率的 3/2 倍</dd></div></dl>
 <p>拖動速率、換不同的反應，看各物種的長條怎麼一起變化。</p>` },

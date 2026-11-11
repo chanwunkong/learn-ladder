@@ -7,7 +7,6 @@ CH.push({
 <p>雙箭頭 ⇌ 表示<b>可逆反應</b>：A ⇌ B 同時往兩個方向進行。正反應速率 = k<sub>f</sub>[A]，逆反應速率 = k<sub>r</sub>[B]（k<sub>f</sub>、k<sub>r</sub> 是正、逆反應的速率常數，f = forward、r = reverse，見動力學一章）。剛開始只有 A，正反應很快、逆反應是 0；隨著 A 變少、B 變多，正反應變慢、逆反應變快，直到兩者<b>一樣快</b>。</p>
 <p>這時濃度不再改變，稱為<b>化學平衡</b>。注意：反應並沒有停止，只是每秒有多少 A 變成 B，就有多少 B 變回 A。</p>
 <p>平衡時 k<sub>f</sub>[A] = k<sub>r</sub>[B]，整理得到：</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">[B] ÷ [A] = k<sub>f</sub> ÷ k<sub>r</sub> = K（平衡常數）<span class="tg derive">會推</span></p>
 <p>改從純 B 開始試試：最後到達的比例完全一樣。<b>平衡組成只由 K 決定，和從哪一邊出發無關。</b></p>` },
     { h: '平衡常數 K 怎麼寫、怎麼運算？', w: ['kalgebra', 'kpkc'], body: `

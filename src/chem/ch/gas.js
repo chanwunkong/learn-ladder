@@ -5,7 +5,6 @@ CH.push({
   sections: [
     { h: '壓力、體積、溫度、莫耳數有什麼關係？', w: 'pvt', body: `
 <p>氣體的<b>壓力</b>是分子撞擊容器壁產生的力（每單位面積）；單位常用 atm（1 atm = 760 mmHg = 760 torr = 101.3 kPa）。描述一團氣體要四個量：壓力 P、體積 V、莫耳數 n、溫度 T。固定其中兩個，另外兩個的關係就是波以耳（P ∝ 1/V）、查理（V ∝ T）、給呂薩克（P ∝ T）、亞佛加厥（V ∝ n）定律（∝ 讀作「正比於」）。切換不同定律，圖上的曲線就是它的形狀；四個合起來是理想氣體方程式：</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">PV = nRT<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>P</dt><dd>壓力（atm）</dd></div><div><dt>V</dt><dd>體積（L）</dd></div><div><dt>n</dt><dd>莫耳數（mol）</dd></div><div><dt>T</dt><dd>絕對溫度（K）= °C + 273；一定要用 K，用 °C 會得到錯誤的比例</dd></div><div><dt>R</dt><dd>氣體常數：0.0821 L·atm/(mol·K)，或 8.314 J/(mol·K)；選哪一個要看 P、V 的單位<span class="tg given">卷上會給</span></dd></div></dl>
 <p>0 °C、1 atm 時 1 mol 氣體佔 22.4 L，所以室溫常壓下 1 cm³ 空氣約有 2.5 × 10¹⁹ 個分子。呼吸時橫膈膜收縮使肺體積變大、壓力降低，空氣流入，就是波以耳定律。</p>

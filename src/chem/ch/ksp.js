@@ -5,7 +5,6 @@ CH.push({
   sections: [
     { h: '難溶的鹽到底溶了多少？', w: 'ksp', body: `
 <p>一定量的水最多能溶解多少溶質，稱為<b>溶解度</b>；溶到不能再溶、杯底還留有固體時稱為<b>飽和</b>。難溶鹽（例如 AgCl）在飽和溶液中，固體不斷溶出、離子也不斷結合回固體，兩者速率相等而達成平衡。這個平衡常數叫<b>溶度積 Ksp</b>（固體不寫入）：</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">AₓBᵧ(s) ⇌ x A + y B　　Ksp = [A]ˣ[B]ʸ<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>(s)</dt><dd>固體（solid）；(aq) 是溶於水、(l) 液體、(g) 氣體</dd></div><div><dt>[A]、[B]</dt><dd>飽和溶液中各離子的濃度（M）</dd></div><div><dt>Ksp</dt><dd>溶度積，各鹽的數值<span class="tg given">卷上會給</span></dd></div><div><dt>s</dt><dd>莫耳溶解度：每公升溶了幾莫耳的鹽（M）</dd></div></dl>
 <p>用 ICE 的方式設溶解度為 s，代入就能互相換算<span class="tg derive">會推</span>（AB 型 Ksp = s²；AB₂ 型 Ksp = 4s³；AB₃ 型 Ksp = 27s⁴）。兩個常見陷阱：</p>

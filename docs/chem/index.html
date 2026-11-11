@@ -310,7 +310,7 @@ details.more { margin-top: 10px; } details.more > summary { cursor: pointer; col
 .tg.must { color: var(--eosin); border-color: var(--eosin); background: var(--eosin-soft); }
 .tg.derive { color: var(--accent); border-color: var(--accent); background: var(--soft); }
 .tg.given { color: var(--good); border-color: var(--good); background: var(--good-soft); }
-.tglegend { font-size: 13px; color: var(--muted); }
+.tg { cursor: pointer; } .tg[data-open]::after { content: attr(data-tip); }
 .eq { font-family: var(--mono); font-size: 14.5px; background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); padding: 8px 14px; border-radius: 6px; overflow-x: auto; white-space: nowrap; }
 .tbl { border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; width: 100%; }
 .tbl th, .tbl td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; }
@@ -881,7 +881,6 @@ CH.push({
 <p>布忍斯特–羅瑞的酸給出 H⁺ 後變成它的<b>共軛鹼</b>，鹼接受 H⁺ 後變成<b>共軛酸</b>。同一個物種可以當酸也可以當鹼（H₂O、HCO₃⁻、H₂PO₄⁻），稱為兩性物質。切換不同反應，看每個物種扮演的角色，以及它符合哪幾種定義。</p>` },
       { h: '各種溶液的 pH 怎麼算？', w: 'phcalc', body: `
 <p>水溶液中 H⁺ 的濃度從 1 M 到 10⁻¹⁴ M 都有，差了十幾個 10 倍，所以改用 log（以 10 為底的對數，log 10ˣ = x）把它變成好讀的數字：</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">pH = −log[H⁺]　　Kw = [H⁺][OH⁻] = 1.0 × 10⁻¹⁴（25 °C）　　pH + pOH = 14<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>[H⁺]</dt><dd>氫離子濃度（M）；[H⁺] = 10⁻³ M 時 pH = 3。pH 每差 1，[H⁺] 差 10 倍</dd></div><div><dt>pOH</dt><dd>= −log[OH⁻]；p 開頭的都是「取 −log」</dd></div><div><dt>Kw</dt><dd>水的離子積：水本身會少量解離成 H⁺ 與 OH⁻，兩者濃度乘積固定；溫度升高 Kw 變大</dd></div></dl>
 <ul><li><b>強酸、強鹼</b>：完全解離，[H⁺] 或 [OH⁻] = 濃度（乘上可解離的數目）。濃度極低時要加上水本身的解離。</li>
@@ -1093,7 +1092,6 @@ CH.push({
 <ol><li>親核基加成到羰基碳，形成<b>四面體中間物</b>（和醛酮相同）；</li><li>C=O 重新形成，把較好的離去基擠出去。</li></ol>
 <p>醛酮停在第 1 步，是因為 H⁻ 和 R⁻ 不會離開；羧酸衍生物則有 Cl⁻、RCOO⁻、RO⁻ 等可以離開，所以會走完第 2 步。這類「先加成、再脫去」的反應稱為<b>親核醯基取代</b>。</p>` },
     { h: '哪一種衍生物最活潑？能怎麼互換？', w: 'acylrank', body: `
-<p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他規則推出；<span class="tg given">卷上會給</span>題目會提供。</p>
 <p class="eq">醯氯 &gt; 酸酐 &gt; 酯 ≈ 羧酸 &gt; 醯胺 &gt; 羧酸根<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>醯氯</dt><dd>R–CO–Cl</dd></div><div><dt>酸酐</dt><dd>R–CO–O–CO–R：兩個羧酸脫去一分子水接在一起</dd></div><div><dt>酯</dt><dd>R–CO–OR′</dd></div><div><dt>醯胺</dt><dd>R–CO–NH₂（N 上也可接烷基）</dd></div></dl>
 <p>兩個原因指向同一個方向：</p>
@@ -1281,7 +1279,6 @@ CH.push({
 <p>π 鍵的電子位於鍵軸上下，離原子核較遠，容易被<b>親電子試劑</b>（缺電子、帶正電或部分正電的物種）吸引。HBr 加成分兩步：</p>
 <ol><li>π 電子攻擊 H⁺，生成碳陽離子（慢步驟）；</li><li>Br⁻ 加到碳陽離子上（快）。</li></ol>
 <p>不對稱的烯（例如丙烯）有兩種加法。比較兩條路：H 加到 CH₂ 會得到<b>二級</b>碳陽離子，加到 CH 會得到<b>一級</b>碳陽離子。由於碳陽離子穩定度三級 > 二級 > 一級（SN1 那一節學過的超共軛），第一條路的過渡狀態低得多，幾乎所有產物都走這條路。</p>
-<p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他規則推出；<span class="tg given">卷上會給</span>題目會提供。</p>
 <p>這就是<b>馬可尼可夫規則</b><span class="tg must">要背</span>：H 加到原本 H 較多的碳上。但真正要記的是背後的原因：<b>反應會經過較穩定的碳陽離子</b>。這個說法在規則失效的地方（例如有拉電子基時）仍然正確。</p>` },
     { h: '碳陽離子什麼時候會重排？', w: 'shift', body: `
 <p>碳陽離子生成之後，如果隔壁的碳上有 H（或甲基）移過來能讓正電荷落在更穩定的位置，它就會移過來：H 帶著鍵上的兩個電子一起移動，稱為 <b>1,2-氫移位</b>（甲基移動則稱 1,2-甲基移位）。</p>
@@ -1403,7 +1400,6 @@ CH.push({
 <p>用哪一種鹼，要比較 pKa（和有機酸鹼一章相同）：</p>
 <ul><li><b>NaOH、NaOEt</b>（共軛酸 pKa 約 16）：對一般酮只生成少量烯醇離子，但已經足夠進行醛醇反應；對 1,3-二羰基化合物則幾乎完全去質子。</li>
 <li><b>LDA</b>（二異丙基胺鋰，共軛酸 pKa 約 36）：強而龐大、親核性很差，能把酮、酯<b>完全且不可逆地</b>變成烯醇離子，再加鹵烷做烷基化。</li></ul>
-<p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他規則推出；<span class="tg given">卷上會給</span>題目會提供。</p>
 <p>不對稱的酮有兩側 α-H，生成哪一種烯醇離子由條件決定<span class="tg must">要背</span>：</p>
 <ul><li><b>動力學控制</b>（LDA、−78 °C、不可逆）：拿走較不擁擠、H 較多那一側的 H，生成雙鍵取代較少的<b>動力學烯醇離子</b>。</li>
 <li><b>熱力學控制</b>（較弱的鹼、室溫、可逆）：兩種烯醇離子達平衡，以雙鍵取代較多、較穩定的<b>熱力學烯醇離子</b>為主。</li></ul>
@@ -1754,7 +1750,6 @@ CH.push({
 <p><b>原子核裡有什麼？</b>帶正電的粒子稱為<b>質子</b>。原子核的質量比質子加起來還大，所以還有不帶電的粒子，1932 年查兌克發現它，稱為<b>中子</b>。</p>
 <table class="tbl"><tr><th>粒子</th><th>在哪裡</th><th>電荷</th><th>質量</th></tr><tr><td>質子</td><td>原子核</td><td>+1</td><td>約 1 u</td></tr><tr><td>中子</td><td>原子核</td><td>0</td><td>約 1 u</td></tr><tr><td>電子</td><td>原子核外</td><td>−1</td><td>約 1/1836 u（幾乎可以不算）</td></tr></table>
 <p>u 是<b>原子質量單位</b>：碳-12 原子質量的 1/12，約等於一個質子或中子的質量。</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式或常數推出；<span class="tg given">卷上會給</span>題目或卷首常數表會提供。</p>
 <p><b>描述一個原子要幾個數字？</b>質子數決定是哪一種元素，稱為<b>原子序 Z</b><span class="tg must">要背</span>。質子和中子的總數稱為<b>質量數 A</b><span class="tg must">要背</span>，電子太輕，不算。所以：</p>
 <div class="eqb"><p class="eq">N = A − Z<span class="tg derive">會推</span></p><p class="eqzh">中子數 = 質量數 − 原子序</p><table class="tbl sym2"><tr><th>符號</th><th>中文</th><th>單位</th><th>數值</th></tr><tr><td>N</td><td>中子數</td><td>個</td><td>—</td></tr><tr><td>A</td><td>質量數：質子數＋中子數</td><td>個</td><td>—</td></tr><tr><td>Z</td><td>原子序：原子核裡的質子數</td><td>個</td><td>—</td></tr></table></div>
 <p>原子不帶電，電子數等於質子數。失去電子帶正電、得到電子帶負電，帶電的原子稱為<b>離子</b>：</p>
@@ -2240,7 +2235,6 @@ CH.push({
   sections: [
     { h: '分子中哪個原子帶電？', w: 'fc', body: `
 <p>路易斯結構裡，每個原子「名義上」擁有的電子 = 自己的孤對電子 + 每個鍵分一半。和它原本的價電子比較，就得到<b>形式電荷</b>：</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">形式電荷 = 價電子數 − 非鍵電子數 − 鍵數<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>價電子數</dt><dd>原子單獨存在時最外層的電子數：C 4、N 5、O 6、鹵素 7</dd></div><div><dt>非鍵電子數</dt><dd>它自己的孤對電子「個數」（一對 = 2 個）</dd></div><div><dt>鍵數</dt><dd>連出去的鍵數，雙鍵算 2；共用電子只算一半給它</dd></div></dl>
 <p>用下圖切換原子、鍵數與孤對電子數，記住常見組合：C 四個鍵為中性、三個鍵帶正或負電；N 四個鍵帶正電（銨）；O 三個鍵帶正電（H₃O⁺）、一個鍵帶負電（HO⁻）。</p>
@@ -2522,7 +2516,6 @@ CH.push({
 <p>一個配位基用幾個原子同時和金屬鍵結，就稱為幾牙配位基：H₂O、NH₃、Cl⁻、CN⁻、CO 是<b>單牙</b>；en（H₂NCH₂CH₂NH₂）、草酸根 C₂O₄²⁻、乙醯丙酮根 acac⁻ 是<b>雙牙</b>；EDTA⁴⁻ 用 2 個 N 和 4 個 O，是<b>六牙</b>。</p>
 <p>第一張圖切換不同的配位基，圈起來的是和金屬鍵結的原子。配位數 = 各配位基的牙數總和，例如 [Cr(C₂O₄)₂(H₂O)₂]⁻ 是 2×2 + 2×1 = 6。</p>
 <p>下圖把錯合物畫成結構：方括號框裡是金屬與配位基，框外的虛線圓是外界離子。圖下方的兩行算式對應圖上的兩層：錯離子的電荷由框外決定，再減去配位基的電荷就是金屬的<b>氧化數</b>（假設所有配位基都帶著自己的電荷離開後，金屬剩下的電荷）。再由 d 電子數得到 dⁿ：</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他規則推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">d 電子數 = 族數 − 氧化數<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>族數</dt><dd>週期表第幾族（1–18），過渡金屬的族數等於中性原子的 (n−1)d 與 ns 電子總數：Fe 8、Co 9、Ni 10、Cu 11</dd></div><div><dt>氧化數</dt><dd>金屬失去的電子數；金屬離子先失去 s 電子，剩下的都在 d 軌域</dd></div></dl>
 <p>例如 Ni²⁺、Pd²⁺、Pt²⁺ 都是 d⁸，Co³⁺ 是 d⁶，Fe³⁺ 是 d⁵。</p>
@@ -2738,7 +2731,6 @@ CH.push({
 <p>切換四種情況：靶心是真值，黑點是平均值。<b>準確度</b>看平均值離真值多遠，<b>精密度</b>看數據有多集中。系統誤差使平均值偏離真值；隨機誤差使數據分散。讀數時要估計到最小刻度的下一位：滴定管刻度到 0.1 mL，讀數記到 0.01 mL（例如 20.10 mL，4 位有效數字）。</p>` },
     { h: '怎麼用光測量濃度？', w: 'beer', body: `
 <p>分光光度計量測溶液吸收某一波長光的程度。吸收越多，吸光度越大，而且和濃度成正比（<b>比爾定律</b>）：</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">A = εbc<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>A</dt><dd>吸光度，沒有單位；A = log(入射光強度 ÷ 穿透光強度)</dd></div><div><dt>ε</dt><dd>莫耳吸光係數（M⁻¹cm⁻¹），每種物質在每個波長各不相同</dd></div><div><dt>b</dt><dd>光穿過溶液的路徑長，也就是樣品槽寬度（cm），常為 1 cm</dd></div><div><dt>c</dt><dd>濃度（M）</dd></div></dl>
 <p>實際定量時先用幾個已知濃度做出<b>檢量線</b>（A 對 c 的直線），再由樣品的 A 讀出濃度；樣品若有稀釋，最後要乘回稀釋倍數。雙光束儀器同時量測參考與樣品，可以抵消光源強度的變動；單光束儀器結構簡單、價格低。原子吸收光譜（AAS）量測金屬原子對特定波長的吸收，用來定量 Hg、Pb 等重金屬；譜線變寬的主要原因之一是原子的熱運動（都卜勒效應）。</p>` },
@@ -2821,7 +2813,6 @@ CH.push({
 <p>把氧化與還原分在兩個杯子，電子只能經過導線流動，就能做功：</p>
 <ul><li><b>陽極</b>：發生氧化，電子從這裡流出（電池的負極）。</li><li><b>陰極</b>：發生還原，電子流入（正極）。</li><li><b>鹽橋</b>：讓離子移動，維持兩杯電中性。</li></ul>
 <p>每個半反應寫成還原式，有一個<b>標準還原電位 E°</b>：在標準狀態（1 M、1 atm、25 °C）下，和<b>標準氫電極</b>（2H⁺ + 2e⁻ → H₂，人為訂為 0 V）比較時的電壓，單位是伏特（V）。E° 越大越容易被還原（是越強的氧化劑）；E° 越小越容易被氧化（是越強的還原劑）。</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">E°電池 = E°陰極 − E°陽極　　ΔG° = −nFE°　　E° = (0.0592/n) log K（25 °C）<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>E°陰極、E°陽極</dt><dd>兩個半反應各自的標準還原電位（都用還原式的數值，不要變號）<span class="tg given">卷上會給</span></dd></div><div><dt>n</dt><dd>反應中轉移的電子數（平衡後的總數）</dd></div><div><dt>F</dt><dd>法拉第常數：1 mol 電子的電量，96485 C/mol<span class="tg given">卷上會給</span></dd></div><div><dt>0.0592</dt><dd>= 2.303RT/F 在 25 °C 的值<span class="tg derive">會推</span></dd></div><div><dt>K</dt><dd>反應的平衡常數</dd></div></dl>
 <p>半反應的係數乘 2 時，E° 不變（電壓是每個電子的能量，和反應的量無關），但 n 和 ΔG° 會跟著變。</p>
@@ -2960,7 +2951,6 @@ CH.push({
 <p>雙箭頭 ⇌ 表示<b>可逆反應</b>：A ⇌ B 同時往兩個方向進行。正反應速率 = k<sub>f</sub>[A]，逆反應速率 = k<sub>r</sub>[B]（k<sub>f</sub>、k<sub>r</sub> 是正、逆反應的速率常數，f = forward、r = reverse，見動力學一章）。剛開始只有 A，正反應很快、逆反應是 0；隨著 A 變少、B 變多，正反應變慢、逆反應變快，直到兩者<b>一樣快</b>。</p>
 <p>這時濃度不再改變，稱為<b>化學平衡</b>。注意：反應並沒有停止，只是每秒有多少 A 變成 B，就有多少 B 變回 A。</p>
 <p>平衡時 k<sub>f</sub>[A] = k<sub>r</sub>[B]，整理得到：</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">[B] ÷ [A] = k<sub>f</sub> ÷ k<sub>r</sub> = K（平衡常數）<span class="tg derive">會推</span></p>
 <p>改從純 B 開始試試：最後到達的比例完全一樣。<b>平衡組成只由 K 決定，和從哪一邊出發無關。</b></p>` },
     { h: '平衡常數 K 怎麼寫、怎麼運算？', w: ['kalgebra', 'kpkc'], body: `
@@ -3081,7 +3071,6 @@ CH.push({
   sections: [
     { h: '壓力、體積、溫度、莫耳數有什麼關係？', w: 'pvt', body: `
 <p>氣體的<b>壓力</b>是分子撞擊容器壁產生的力（每單位面積）；單位常用 atm（1 atm = 760 mmHg = 760 torr = 101.3 kPa）。描述一團氣體要四個量：壓力 P、體積 V、莫耳數 n、溫度 T。固定其中兩個，另外兩個的關係就是波以耳（P ∝ 1/V）、查理（V ∝ T）、給呂薩克（P ∝ T）、亞佛加厥（V ∝ n）定律（∝ 讀作「正比於」）。切換不同定律，圖上的曲線就是它的形狀；四個合起來是理想氣體方程式：</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">PV = nRT<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>P</dt><dd>壓力（atm）</dd></div><div><dt>V</dt><dd>體積（L）</dd></div><div><dt>n</dt><dd>莫耳數（mol）</dd></div><div><dt>T</dt><dd>絕對溫度（K）= °C + 273；一定要用 K，用 °C 會得到錯誤的比例</dd></div><div><dt>R</dt><dd>氣體常數：0.0821 L·atm/(mol·K)，或 8.314 J/(mol·K)；選哪一個要看 P、V 的單位<span class="tg given">卷上會給</span></dd></div></dl>
 <p>0 °C、1 atm 時 1 mol 氣體佔 22.4 L，所以室溫常壓下 1 cm³ 空氣約有 2.5 × 10¹⁹ 個分子。呼吸時橫膈膜收縮使肺體積變大、壓力降低，空氣流入，就是波以耳定律。</p>
@@ -3193,7 +3182,6 @@ CH.push({
   sections: [
     { h: '「反應速率」指的是哪一個物種？', w: 'ratestoich', body: `
 <p>反應速率是單位時間內濃度的變化。方括號 [A] 表示 A 的體積莫耳濃度（M = mol/L）。同一個反應中，各物種變化的快慢和係數成正比，除以係數之後才是唯一的「反應速率」：</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">aA + bB → cC：rate = −(1/a)Δ[A]/Δt = −(1/b)Δ[B]/Δt = (1/c)Δ[C]/Δt<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>Δ[A]/Δt</dt><dd>A 的濃度在一段時間內的變化量 ÷ 時間（M/s）</dd></div><div><dt>負號</dt><dd>反應物越來越少，Δ[A] 是負的，加負號讓速率為正</dd></div><div><dt>1/a</dt><dd>除以係數：2O₃ → 3O₂ 中 O₂ 生成的速率是 O₃ 消失速率的 3/2 倍</dd></div></dl>
 <p>拖動速率、換不同的反應，看各物種的長條怎麼一起變化。</p>` },
@@ -3324,7 +3312,6 @@ CH.push({
   sections: [
     { h: '難溶的鹽到底溶了多少？', w: 'ksp', body: `
 <p>一定量的水最多能溶解多少溶質，稱為<b>溶解度</b>；溶到不能再溶、杯底還留有固體時稱為<b>飽和</b>。難溶鹽（例如 AgCl）在飽和溶液中，固體不斷溶出、離子也不斷結合回固體，兩者速率相等而達成平衡。這個平衡常數叫<b>溶度積 Ksp</b>（固體不寫入）：</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">AₓBᵧ(s) ⇌ x A + y B　　Ksp = [A]ˣ[B]ʸ<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>(s)</dt><dd>固體（solid）；(aq) 是溶於水、(l) 液體、(g) 氣體</dd></div><div><dt>[A]、[B]</dt><dd>飽和溶液中各離子的濃度（M）</dd></div><div><dt>Ksp</dt><dd>溶度積，各鹽的數值<span class="tg given">卷上會給</span></dd></div><div><dt>s</dt><dd>莫耳溶解度：每公升溶了幾莫耳的鹽（M）</dd></div></dl>
 <p>用 ICE 的方式設溶解度為 s，代入就能互相換算<span class="tg derive">會推</span>（AB 型 Ksp = s²；AB₂ 型 Ksp = 4s³；AB₃ 型 Ksp = 27s⁴）。兩個常見陷阱：</p>
@@ -3436,7 +3423,6 @@ CH.push({
     { h: '電子怎麼填進分子軌域？', w: 'modiagram', body: `
 <p>第二週期的雙原子分子，2s 與 2p 原子軌域合成 σ2s、σ*2s、σ2p、π2p（兩個）、π*2p（兩個）、σ*2p。電子照能量由低到高填入，遵守包立原理（每個軌域最多兩個電子、自旋相反）與洪德定則（能量相同的軌域先各放一個），和原子的電子組態一樣。</p>
 <p>能階順序有兩種<span class="tg must">要背</span>：總電子數 ≤ 14（B₂、C₂、N₂，以及和 N₂ 等電子的 CO、CN⁻、NO⁺、C₂²⁻）時 <b>π2p 在 σ2p 下方</b>；O₂、F₂ 以後 σ2p 在 π2p 下方。點選不同的分子或離子，圖下方會寫出分子軌域組態，卡片算出鍵級與磁性：</p>
-<p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給；<span class="tg derive">會推</span>可以推出來；<span class="tg given">卷上會給</span>題目會提供。</p>
 <p class="eq">鍵級 = (成鍵軌域的電子數 − 反鍵軌域的電子數) ÷ 2<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>成鍵軌域</dt><dd>σ、π（沒有 *）：電子在兩核之間，把兩個原子拉在一起</dd></div><div><dt>反鍵軌域</dt><dd>σ*、π*：兩核之間有節面，電子在外側，會削弱鍵</dd></div><div><dt>÷ 2</dt><dd>兩個電子組成一個鍵，所以除以 2，和路易斯結構的單鍵 1、雙鍵 2 對得上</dd></div></dl>
 <p>鍵級為 0 的 He₂、Be₂、Ne₂、H₂²⁻ 不能穩定存在。分子的磁性看有沒有<b>未成對電子</b>（一個軌域裡只有一個電子）：有的話會被磁鐵吸引，稱為<b>順磁性</b>；電子全部成對的則幾乎不受磁鐵影響（略被排斥），稱為<b>反磁性</b>。有未成對電子的就是順磁性，例如 O₂、B₂、NO、O₂⁻、N₂⁺；O₂ 的順磁性正是分子軌域理論最有名的成功。反過來，看到一串分子軌域組態，數總電子數就能知道是哪一個分子。</p>` },
@@ -3556,7 +3542,6 @@ CH.push({
 <p>要數一個分子有<b>幾個環</b>，看骨架上的鍵數與原子數：環數 = 鍵數 − 原子數 + 1（只算構成骨架的鍵和原子，不算 H）。降冰片烷有 7 個碳、8 個 C–C 鍵，所以是 2 個環；金剛烷 10 個碳、12 個 C–C 鍵，是 3 個環。</p>` },
     { h: '有好幾個官能基時，誰當字尾？', w: 'suffix', body: `
 <p>點選下圖的官能基，看它當字尾與當字首時的寫法。規則是：</p>
-<p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由規則推出；<span class="tg given">卷上會給</span>題目會提供。</p>
 <p>官能基優先順序<span class="tg must">要背</span>（由高到低）：羧酸 &gt; 酯 &gt; 醯胺 &gt; 腈 &gt; 醛 &gt; 酮 &gt; 醇 &gt; 胺 &gt; 烯、炔；鹵素、烷基、硝基只能當字首。</p>
 <ol><li>優先順序最高的官能基當<b>字尾</b>，主鏈必須包含它，並且給它最小的編號。</li>
 <li>其他官能基改成字首，和烷基一起排字母順序：HOCH₂CH₂CHO 是 3-hydroxypropanal。</li>
@@ -3658,7 +3643,6 @@ CH.push({
   sections: [
     { h: '酸鹼反應會往哪一邊走？', w: 'pkaeq', body: `
 <p>酸鹼反應 HA + B⁻ ⇌ A⁻ + HB，兩邊各有一個酸（HA 和 HB）。平衡永遠偏向<b>較弱的酸</b>（pKa 較大）那一側：</p>
-<p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目會提供。</p>
 <p class="eq">K = 10<sup>(pKa of HB − pKa of HA)</sup><span class="tg derive">會推</span></p>
 <dl class="sym"><div><dt>HA</dt><dd>左邊的酸（要被拿走 H⁺ 的那一個）</dd></div><div><dt>HB</dt><dd>右邊生成的酸，也就是鹼 B⁻ 接上 H⁺ 後的共軛酸</dd></div><div><dt>pKa</dt><dd>= −log Ka；越小酸越強（見酸鹼一章）</dd></div></dl>
 <p>常見的 pKa 大小順序<span class="tg must">要背</span>（數值記大約即可）：羧酸 4–5 ＜ 酚 10 ＜ 水 15.7 ≈ 醇 16–18 ＜ 酮的 α-H 19 ＜ 末端炔 25 ＜ 氨 35 ＜ 烯 44 ＜ 烷 50。</p>
@@ -3774,7 +3758,6 @@ CH.push({
   sections: [
     { h: '沸點為什麼會隨壓力改變？', w: 'ccvap', body: `
 <p>液體分子之間的吸引力越強，<b>蒸氣壓</b>（液面上方由揮發的分子產生的壓力）越低、<b>沸點</b>越高、<b>表面張力</b>（液面收縮成最小面積的傾向，水珠因此是圓的）與<b>黏度</b>（流動的阻力）越大。沸點是蒸氣壓等於外界壓力的溫度，所以高山上氣壓低，水的沸點低於 100 °C。蒸氣壓隨溫度的變化遵守<b>克勞修斯–克拉佩龍方程式</b>：</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">ln(P₂/P₁) = (ΔH蒸發 / R)(1/T₁ − 1/T₂)<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>P₁、P₂</dt><dd>溫度 T₁、T₂ 時的蒸氣壓；正常沸點時 P = 1 atm（760 mmHg）</dd></div><div><dt>ΔH蒸發</dt><dd>莫耳汽化熱：1 mol 液體變成氣體需要的熱（J/mol）</dd></div><div><dt>R</dt><dd>8.314 J/(mol·K)<span class="tg given">卷上會給</span></dd></div><div><dt>T</dt><dd>絕對溫度（K）</dd></div><div><dt>ln</dt><dd>自然對數；ln 2 ≈ 0.693、ln 10 ≈ 2.303<span class="tg given">卷上會給</span></dd></div></dl>
 <p>ln P 對 1/T 作圖是一條直線，斜率是 −ΔH蒸發/R；形式和動力學的阿瑞尼斯方程式相同。</p>` },
@@ -3902,7 +3885,6 @@ CH.push({
 <p>下圖點選每個階段，看自由基怎麼一邊被消耗、一邊再生，形成<b>連鎖反應</b>。</p>` },
     { h: '烷的鹵化會得到幾種產物？比例怎麼算？', w: 'halog', body: `
 <p>傳遞 1（拿走 H）決定鹵素接在哪個碳上。每一種「不等價」的 H 對應一種單鹵取代產物，所以要先數分子裡有幾種 H。下圖切換烷與鹵素：</p>
-<p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他規則推出；<span class="tg given">卷上會給</span>題目會提供。</p>
 <p class="eq">某產物的比例 ∝ 該種 H 的數目 × 每個 H 的相對反應性<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>該種 H 的數目</dt><dd>分子中這種位置的 H 有幾個（例如丙烷有 6 個一級 H、2 個二級 H）</dd></div><div><dt>相對反應性</dt><dd>每個 H 被拿走的難易，三級 &gt; 二級 &gt; 一級；實際數值<span class="tg given">卷上會給</span></dd></div></dl>
 <p><b>氯化</b>選擇性低（1° : 2° : 3° = 1 : 3.8 : 5），H 的數目也很重要；<b>溴化</b>選擇性高（1 : 82 : 1600），幾乎只在三級或二級位置反應。差別來自 <b>Hammond 假說</b>（過渡狀態的結構和能量比較接近的那一端相似：吸熱步驟的過渡狀態像產物，放熱步驟的像反應物）：Br· 拿 H 是吸熱步驟，過渡狀態接近自由基產物，自由基穩定度的差異充分表現出來；Cl· 拿 H 是放熱步驟，過渡狀態接近反應物，差異較小。</p>
@@ -4136,7 +4118,6 @@ CH.push({
 <ol><li>過渡狀態時，碳上另外三個基團被推到同一平面，Nu 與 X 分別在平面兩側，各自和碳部分成鍵。</li>
 <li>產物的三個基團翻到另一邊：<b>構型反轉</b>（華爾頓反轉）。(R)-2-溴丁烷經 SN2 生成 (S)-2-丁醇。</li></ol>
 <p>因為過渡狀態同時包含鹵烷和親核基，速率和兩者都成正比：</p>
-<p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他規則推出；<span class="tg given">卷上會給</span>題目會提供。</p>
 <p class="eq">rate = k [RX] [Nu⁻]　（二級反應，SN2 的「2」就是這個意思）<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>RX</dt><dd>鹵烷：R 代表任意烷基，X 代表鹵素（Cl、Br、I）</dd></div><div><dt>Nu⁻</dt><dd>親核基（nucleophile）</dd></div><div><dt>SN2</dt><dd>S = 取代（substitution）、N = 親核（nucleophilic）、2 = 速率決定步驟有兩個分子</dd></div></dl>
 <p>切換基質看看：碳上的基團越大，背面越擠，親核基越難靠近。甲基最快，一級次之，二級慢很多，<b>三級幾乎不反應</b>。極性非質子性溶劑（丙酮、DMSO、DMF）不會用氫鍵包住親核基，讓它更「赤裸」、更有攻擊力，所以有利 SN2。</p>` },
@@ -4274,7 +4255,6 @@ CH.push({
     { h: '紅外光譜怎麼找官能基？', w: ['ir', 'cofreq'], body: `
 <p>分子中的鍵會像彈簧一樣伸縮振動，吸收和振動頻率相同的紅外光。IR 的橫軸用<b>波數</b>（cm⁻¹，= 1 ÷ 波長，表示每公分有幾個波），波數越大能量越高。鍵越強、原子越輕，振動越快，吸收的波數越高<span class="tg must">要背</span>：</p>
 <ul><li>X–H 鍵（O–H、N–H、C–H）在高波數區（2800–3600 cm⁻¹）；</li><li>參鍵（C≡C、C≡N）在 2100–2260；</li><li>雙鍵（C=O、C=C）在 1600–1750；</li><li>1500 以下是「指紋區」，用來比對整個分子，不逐根判讀。</li></ul>
-<p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他規則推出；<span class="tg given">卷上會給</span>題目會提供。</p>
 <p>考試最常考的兩件事<span class="tg must">要背</span>：<b>1700 附近有沒有又強又尖的 C=O</b>，以及 <b>3300 附近有沒有寬的 O–H</b>。羧酸的 O–H 特別寬，因為它形成雙分子氫鍵。</p>
 <p>補充幾個常考的細節：</p>
 <ul><li><b>強度</b>由振動時偶極矩改變多少決定：C=O、C–O、O–H 很強；對稱的鍵（乙烷的 C–C、2-丁炔的 C≡C、反式對稱烯的 C=C）振動時偶極不變，幾乎看不到。</li>
@@ -4504,7 +4484,6 @@ CH.push({
 <p>椅式和扭船式的平衡：室溫下 99.99% 是椅式；加熱到 800 °C 時扭船式約 30%，K = 30 ÷ 70 ≈ 0.43。</p>` },
     { h: '旋光度怎麼量？外消旋混合物怎麼分開？', w: 'ee', body: `
 <p>鏡像異構物唯一的物理差別是旋光方向。旋光計由起偏鏡、樣品管和檢偏鏡組成，量到的旋光度 α 和樣品管長度、濃度成正比，換算成<b>比旋光度</b>：</p>
-<p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目會提供。</p>
 <p class="eq">[α] = α ÷ (l × c)<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>[α]</dt><dd>比旋光度：純物質的特性數值，可以查表<span class="tg given">卷上會給</span></dd></div><div><dt>α</dt><dd>旋光計實際量到的旋轉角度（°）</dd></div><div><dt>l</dt><dd>樣品管長度，單位 dm（10 cm）</dd></div><div><dt>c</dt><dd>濃度，單位 g/mL</dd></div></dl>
 <p>比旋光度還和溫度、光的波長（常用鈉 D 線 589 nm）與溶劑有關。拉動下圖的比例，看混合物的旋光度怎麼變：<b>光學純度 = 觀測比旋光度 ÷ 純物質的比旋光度</b>，等於鏡像過量（ee）：</p>
@@ -4636,7 +4615,6 @@ CH.push({
   sections: [
     { h: '計算結果要寫到第幾位？', w: 'sigfig', body: `
 <p><b>有效數字</b>是一個測量值中「確定的位數加上最後一位估計值」，例如用最小刻度 0.1 mL 的滴定管讀到 20.15 mL，有 4 位有效數字。開頭的 0 不算（0.0052 只有 2 位），夾在中間和小數點後結尾的 0 要算（1.050 有 4 位）。測量值的最後一位是估計的，計算結果不能比原始數據更精確。選一組數字，切換相加與相乘：加減法看<b>小數點後的位數</b>，乘除法看<b>有效數字的位數</b>。</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出，不用死背；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p>單位換算<span class="tg must">要背</span>：1 kg = 10³ g、1 g = 10² cg = 10³ mg = 10⁶ μg = 10⁹ ng。稀薄水溶液中 1 ppm ≈ 1 mg/L，1 ppb ≈ 1 μg/L。</p>` },
     { h: '質量、粒子數、體積怎麼互換？', w: 'molemap', body: `
 <p>原子太小，化學用「一打」的概念來數：1 <b>莫耳</b>（mol）就是 6.022 × 10²³ 個粒子，這個數稱為<b>亞佛加厥數</b> Nₐ。一莫耳物質的質量稱為<b>莫耳質量</b>（g/mol），數值等於分子量或式量（把化學式中所有原子量加起來；離子化合物沒有獨立的分子，所以叫式量）。所有換算都經過中間的莫耳數：</p>
@@ -4875,7 +4853,6 @@ CH.push({
   sections: [
     { h: '反應熱怎麼量？', w: 'calor', body: `
 <p>熱力學把正在研究的物質（例如燒杯裡的反應物）稱為<b>系統</b>，其他所有東西（燒杯、空氣）稱為<b>環境</b>。系統吸熱時環境放熱，反之亦然。</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">q = m·c·ΔT<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>q</dt><dd>熱量（J）；吸熱為正、放熱為負</dd></div><div><dt>m</dt><dd>質量（g）</dd></div><div><dt>c</dt><dd>比熱：1 g 物質升高 1 °C 需要的熱，J/(g·°C)；水 4.18<span class="tg given">卷上會給</span></dd></div><div><dt>ΔT</dt><dd>溫度變化 = 最後溫度 − 起始溫度</dd></div></dl>
 <p>兩個物體接觸到溫度相同時，一方放出的熱等於另一方吸收的熱，這就是<b>卡計</b>（測量反應熱的容器）的原理。拖動質量、換不同的金屬，看最後溫度落在哪裡。</p>
@@ -5064,7 +5041,7 @@ CH.push({
   id: 'vsepr', unit: 'g2', title: '化學鍵、分子形狀與分子間作用力',
   lede: '原子怎麼結合、分子長什麼形狀，決定了它有沒有極性、沸點高低、能不能溶於水。這一章從位能曲線看鍵是怎麼形成的，再畫路易斯結構、用 VSEPR 預測形狀，最後比較分子之間的吸引力。',
   sections: [
-    { h: '兩個原子為什麼會結合成鍵？', w: 'potcurve', body: `
+    { h: '兩個原子為什麼會結合成鍵？', w: ['potcurve', 'potx'], body: `
 <p>空氣中的氫不是一個一個的 H 原子，而是兩個兩個結合成 H₂。兩個 H 原子結合時，每莫耳放出約 436 kJ 的能量。放出能量，表示結合後比分開時更穩定。為什麼？</p>
 <p>兩個原子之間同時有兩種力：</p>
 <ul><li><b>吸引</b>：每個原子核吸引對方的電子。</li><li><b>排斥</b>：兩個原子核互相排斥。距離很近時才變大。</li></ul>
@@ -5075,13 +5052,18 @@ CH.push({
 <p>最低點時兩個箭頭一樣長，力互相抵消。這個核間距離稱為<b>鍵長</b>。從最低點回到 0 所需的能量稱為<b>鍵能</b>，是拆開一莫耳這種鍵所需的能量（第一章第 2 節），單位 kJ/mol。H–H 的鍵能就是開頭的 436 kJ/mol。</p>
 <p>切換 H–H、Cl–Cl、Br–Br、I–I：</p>
 <ul><li>原子越大，最低點越往右：鍵長約是兩個原子半徑相加（第一章第 7 節）。</li><li>原子越大，最低點越淺：外層電子離對方的原子核越遠，吸引越弱，鍵能越小。</li></ul>
-<p>要算出鍵長在哪裡，就要把這條曲線寫成式子。下面的式子不是推導出來的，是符合實驗曲線的近似，稱為經驗式。</p>
-<p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給；<span class="tg derive">會推</span>可以推出來；<span class="tg given">卷上會給</span>題目會提供。</p>
+<p>要算出鍵長在哪裡，就要把這條曲線寫成式子。下面的式子稱為 <b>Lennard-Jones 實驗式</b>：它不是推導出來的，是符合實驗曲線的近似。</p>
 <div class="eqb"><p class="eq">E = A/r¹² − B/r⁶<span class="tg given">卷上會給</span></p><p class="eqzh">位能 = 排斥項 − 吸引項</p><table class="tbl sym2"><tr><th>符號</th><th>中文</th><th>單位</th><th>數值</th></tr><tr><td>E</td><td>位能：兩個原子分開時為 0</td><td>kJ/mol（題目也可能用 kcal/mol）</td><td>—</td></tr><tr><td>r</td><td>核間距離</td><td>Å</td><td>—</td></tr><tr><td>A</td><td>排斥常數：把 1/r¹² 換成能量的換算係數</td><td>能量單位 × Å¹²</td><td>由實驗曲線決定，題目會給</td></tr><tr><td>B</td><td>吸引常數：把 1/r⁶ 換成能量的換算係數</td><td>能量單位 × Å⁶</td><td>由實驗曲線決定，題目會給</td></tr></table></div>
-<p>排斥項 A/r¹² 的 r 是 12 次方，在分母。r 變小時，它增加得比吸引項快得多，所以只在很近時才重要。這就是圖上紅色虛線在左邊急遽升高的原因。</p>
-<p>再拖一次 r，看圖下的「吸引項 ÷ 排斥項」。停在最低點時，這個比值剛好是 2：排斥項是吸引項的一半。換成任何一種鍵都一樣。</p>
-<p>把兩項代入這個比值：(B/r⁶) ÷ (A/r¹²) = B × r⁶ ÷ A（r¹² ÷ r⁶ = r⁶）。最低點時它等於 2：B × r⁶ ÷ A = 2。把 A、B 移到另一邊（兩個量互換位置），得到：</p>
+<p>A/r¹² 稱為<b>排斥項</b>，B/r⁶ 稱為<b>吸引項</b>（英文 repulsive term、attractive term 的直譯）。這兩項是<b>能量</b>，就是上圖的紅色、藍色虛線；圖上的箭頭才是<b>力</b>。</p>
+<p>排斥項的 r 是 12 次方，在分母。r 變小時，它增加得比吸引項快得多，所以只在很近時才重要。這就是紅色虛線在左邊急遽升高的原因。</p>
+<p>最低點在哪裡？把 1/r⁶ 寫成 x。因為 (1/r⁶)² = 1/r¹²，所以 1/r¹² = x²。代進實驗式：</p>
+<p class="eq">E = A·x² − B·x</p>
+<p>這是 x 的二次函數，畫出來是拋物線。A 是正的，所以開口向上，最低點就是頂點。二次函數 y = a·x² + b·x 的頂點在 x = −b ÷ 2a（高中數學）。這裡 a = A、b = −B，所以頂點在 x = B ÷ 2A。</p>
+<p>拖動核間距離 r，看點在拋物線上的位置。橫軸是 x = 1/r⁶，所以往右是 r 變小。下方數值卡顯示排斥項、吸引項和兩者的比值。</p>
+[[w:potx]]
+<p>最低點的 x = 1/r⁶ = B ÷ 2A。兩邊上下顛倒（兩個量互換位置），得到：</p>
 <div class="eqb"><p class="eq">r⁶ = 2A/B<span class="tg derive">會推</span></p><p class="eqzh">鍵長⁶ = 2 × 排斥常數 ÷ 吸引常數</p><table class="tbl sym2"><tr><th>符號</th><th>中文</th><th>單位</th><th>數值</th></tr><tr><td>r</td><td>最低點的核間距離，就是鍵長</td><td>Å</td><td>—</td></tr><tr><td>A</td><td>排斥常數：把 1/r¹² 換成能量的換算係數</td><td>能量單位 × Å¹²</td><td>由實驗曲線決定，題目會給</td></tr><tr><td>B</td><td>吸引常數：把 1/r⁶ 換成能量的換算係數</td><td>能量單位 × Å⁶</td><td>由實驗曲線決定，題目會給</td></tr></table></div>
+<p>把 x = B ÷ 2A 代回兩項：排斥項 A·x² = B² ÷ 4A，吸引項 B·x = B² ÷ 2A。所以最低點時，吸引項剛好是排斥項的 2 倍。拖到頂點，數值卡的比值就是 2.00，換成任何一種鍵都一樣。</p>
 ` },
     { h: '是離子鍵還是共價鍵？', w: ['bondtype', 'lattice'], body: `
 <p>Cl₂ 在常溫是氣體。NaCl 卻是堅硬的晶體，熔點 801 °C；MgO 的熔點更高，約 2800 °C。差這麼多，是因為原子結合的方式不同。</p>
@@ -5308,7 +5290,7 @@ CH.push({
     { s: 2, src: '仿 慈濟 107 第 7 題', q: 'X 為 1s²2s²2p⁴，Y 為 1s²2s²2p⁶3s²3p¹，兩者形成的化合物實驗式為？', o: ['Y₂X₃', 'YX', 'YX₃', 'Y₃X₂'], a: 0,
       why: 'X 是 O，得 2 個電子成為 O²⁻；Y 是 Al，給出 3 個成為 Al³⁺。電荷總和為 0：2 × (+3) + 3 × (−2) = 0，所以是 Al₂O₃（Y₂X₃）。' },
     { s: 1, src: '仿 慈濟 107 第 12 題', q: '兩原子間位能 E = A/r¹² − B/r⁶，A = 6.40 × 10³ kcal·Å¹²/mol、B = 2.00 × 10² kcal·Å⁶/mol，能量最低時 r 為？', o: ['2.00 Å', '1.00 Å', '3.00 Å', '4.00 Å'], a: 0,
-      why: '最低點時吸引項是排斥項的 2 倍：(B/r⁶) ÷ (A/r¹²) = B × r⁶ ÷ A = 2，所以 r⁶ = 2A/B = 2 × 6400 ÷ 200 = 64，r = 2.00 Å（2⁶ = 64）。', show: { w: 'potcurve', set: {} } },
+      why: '令 x = 1/r⁶，E = A·x² − B·x 是開口向上的拋物線，最低點在頂點 x = B ÷ 2A。所以 1/r⁶ = B ÷ 2A，r⁶ = 2A/B = 2 × 6400 ÷ 200 = 64，r = 2.00 Å（2⁶ = 64）。', show: { w: 'potx', set: {} } },
     { s: 5, src: '仿 慈濟 107 第 33 題', q: 'SO₂ 的 O–S–O 鍵角約為？', o: ['119°', '104.5°', '109.5°', '180°'], a: 0,
       why: '3 個電子區域，1 對孤對電子使角度略小於 120°。', show: { w: 'vsepr', set: { m: 'so2' } } },
     { s: 7, src: '仿 中國醫 106 第 17 題', q: 'BF₃、SO₂、SF₆、XeF₄、PCl₅ 中偶極矩為零的有幾個？', o: ['4', '3', '2', '5'], a: 0,
@@ -10485,8 +10467,9 @@ STEPS["vsepr"] = {
     ["Y（13 個電子）呢？","失 3 個成 Y³⁺（Al³⁺）","得 5 個成 Y⁵⁻（Al⁵⁻）","失 1 個成 Y⁺（Al⁺）","電荷平衡：2 × (+3) = 3 × (−2)。"]],
   // 兩原子間位能 E = A/r¹² − B/r⁶，
   "x:k67rl7": [
-    ["能量最低時，吸引項 ÷ 排斥項是多少？","2","1","0","在圖上拖到最低點，比值剛好是 2：排斥項是吸引項的一半。"],
-    ["B × r⁶ ÷ A = 2，r⁶ = ？","2A/B = 64","A/B = 32","B/(2A) = 1/64","A、B 移到另一邊：r⁶ = 2 × 6400 ÷ 200 = 64。"],
+    ["令 x = 1/r⁶，位能 E 寫成 x 是什麼樣子？","A·x² − B·x，開口向上的拋物線","A·x − B·x²，開口向下的拋物線","A·x − B·x，一條直線","1/r¹² = (1/r⁶)² = x²；A 是正的，開口向上。"],
+    ["拋物線 A·x² − B·x 的最低點在 x = ？","B ÷ 2A","2A ÷ B","A ÷ B","頂點公式 x = −b ÷ 2a，a = A、b = −B。"],
+    ["1/r⁶ = B ÷ 2A，r⁶ = ？","2A/B = 64","B/(2A) = 1/64","A/B = 32","兩邊上下顛倒：r⁶ = 2 × 6400 ÷ 200 = 64。"],
     ["r⁶ = 64，r = ？","2.00 Å","64 Å","10.7 Å","2⁶ = 64，所以 r = 2.00 Å。"]],
   // SO₂ 的 O–S–O 鍵角約為？
   "x:1w9bqq0": [
@@ -17342,7 +17325,7 @@ W.xtype = el => {
 const BONDS2 = { 'H–H': [74, 436], 'Cl–Cl': [199, 243], 'Br–Br': [228, 193], 'I–I': [267, 151] };
 W.potcurve = el => {
   const st = { b: 'Cl–Cl', r: 300 };
-  el.innerHTML = `${seg('pcS', Object.keys(BONDS2).map(k => [k, k]), st.b)}<div class="w-row"><label class="rng">核間距離 r<input type="range" id="pcR" min="60" max="450" step="1"><output class="mono" id="pcO"></output></label></div><div id="pcA"></div><div id="pcG"></div><div class="cards" id="pcC"></div><p class="eq" id="pcF"></p><p class="note" id="pcN"></p>`;
+  el.innerHTML = `${seg('pcS', Object.keys(BONDS2).map(k => [k, k]), st.b)}<div class="w-row"><label class="rng">核間距離 r<input type="range" id="pcR" min="60" max="450" step="1"><output class="mono" id="pcO"></output></label></div><div id="pcA"></div><div id="pcG"></div><p class="eq" id="pcF"></p><p class="note" id="pcN"></p>`;
   const E = (r, [r0, D]) => D * ((r0 / r) ** 12 - 2 * (r0 / r) ** 6);
   function atoms() {
     const [r0] = BONDS2[st.b], [a, b] = st.b.split(/[–=≡]/), half = st.r * 0.5, x1 = 280 - half, x2 = 280 + half, R = Math.min(30, Math.max(14, r0 * 0.12));
@@ -17364,10 +17347,6 @@ W.potcurve = el => {
       + `<path class="tline" style="stroke:var(--ink)" d="${path(xs(d[0]).map(r => [X(r), Y(clamp(E(r, d), -600, 400))]))}"/>`
       + `<text class="tk sm" x="${X(445)}" y="${Y(0) - 6}" text-anchor="end">分開時位能 = 0</text>`
       + `<line class="mk" x1="${X(d[0])}" x2="${X(d[0])}" y1="${Y(0)}" y2="${Y(-d[1])}"/><circle class="dot" data-cur="${st.b}" cx="${X(st.r)}" cy="${Y(clamp(e, -1000, 400))}" r="7"/>`);
-    // 排斥項、吸引項與比值：最低點時比值 = 2（課文由此推出 r⁶ = 2A/B，不用微分）
-    const big = v => (v >= 1e5 ? '> 100000' : v >= 100 ? fx(v, 0) : v.toPrecision(3));   // 拖到很近時排斥項極大，卡片寬度不跳
-    const rep = d[1] * (d[0] / st.r) ** 12, att = 2 * d[1] * (d[0] / st.r) ** 6;
-    $('#pcC', el).innerHTML = card('r', '排斥項（kJ/mol）', big(rep)) + card('a', '吸引項（kJ/mol）', big(att)) + card('q', '吸引項 ÷ 排斥項', att / rep < 0.01 ? '< 0.01' : (att / rep).toPrecision(3));
     $('#pcR', el).value = st.r; $('#pcO', el).textContent = `${(st.r / 100).toFixed(2)} Å`;
     $('#pcF', el).innerHTML = `${st.b}：最低點 r = <b>${(d[0] / 100).toFixed(2)} Å</b>（鍵長），深度 <b>${d[1]} kJ/mol</b>（鍵能）；目前 r = ${(st.r / 100).toFixed(2)} Å，位能 ${fx(e, 0)} kJ/mol`;
     $('#pcN', el).innerHTML = st.r > d[0] * 1.05 ? '吸引比排斥大：原子會再靠近，位能往下走。' : st.r < d[0] * 0.95 ? '排斥比吸引大：位能急遽升高。' : '兩個力一樣大：這個距離就是鍵長。';
@@ -17378,6 +17357,31 @@ W.potcurve = el => {
   draw();
   return { set(s) { Object.assign(st, s); draw(); } };
 };
+W.potx = el => {
+  const st = { b: 'Cl–Cl', r: 300 };
+  el.innerHTML = `${seg('pxS', Object.keys(BONDS2).map(k => [k, k]), st.b)}<div class="w-row"><label class="rng">核間距離 r<input type="range" id="pxR" min="60" max="450" step="1"><output class="mono" id="pxO"></output></label></div><div id="pxG"></div><div class="cards" id="pxC"></div><p class="note" id="pxN"></p>`;
+  const big = v => (v >= 1e5 ? '> 100000' : v >= 100 ? fx(v, 0) : v.toPrecision(3));   // 拖到很近時排斥項極大，卡片寬度不跳
+  function draw() {
+    // 每種鍵的 A、B 由鍵長 r₀（Å）與鍵能 D 決定：A = D·r₀¹²、B = 2D·r₀⁶，頂點在 x₀ = 1/r₀⁶
+    const [r0p, D] = BONDS2[st.b], r0 = r0p / 100, r = st.r / 100, x0 = 1 / r0 ** 6, x = 1 / r ** 6, A = D * r0 ** 12, B = 2 * D * r0 ** 6;
+    const xmax = 2.2 * x0, E = v => A * v * v - B * v, tick = v => Number(v.toPrecision(2)).toString();
+    $('#pxG', el).innerHTML = chart({ w: 560, h: 240, x: [0, xmax], y: [-600, 400], xt: [0, x0, 2 * x0], xtl: ['0', tick(x0), tick(2 * x0)], yt: [-600, -300, 0, 400], xlab: 'x = 1/r⁶（1/Å⁶）', ylab: '位能（kJ/mol）', label: '把橫軸換成 x = 1/r⁶ 的位能曲線' }, (X, Y) =>
+      `<path class="tline" style="stroke:var(--ink)" d="${path(Array.from({ length: 111 }, (_, i) => i * xmax / 110).map(v => [X(v), Y(clamp(E(v), -600, 400))]))}"/>`
+      + `<line class="mk" x1="${X(x0)}" x2="${X(x0)}" y1="${Y(0)}" y2="${Y(-D)}"/><text class="tk sm" x="${X(x0) + 6}" y="${Y(-D) + 16}">頂點 x = B ÷ 2A</text>`
+      + `<text class="tk sm" x="${X(xmax) - 4}" y="${Y(-600) - 8}" text-anchor="end">x 越大，r 越小 →</text>`
+      + (x <= xmax ? `<circle class="dot" data-cur="${st.b}" cx="${X(x)}" cy="${Y(clamp(E(x), -600, 400))}" r="7"/>` : ''));
+    const rep = A * x * x, att = B * x;
+    $('#pxC', el).innerHTML = card('r', '排斥項 A/r¹²（kJ/mol）', big(rep)) + card('a', '吸引項 B/r⁶（kJ/mol）', big(att)) + card('q', '吸引項 ÷ 排斥項', att / rep < 0.01 ? '< 0.01' : (att / rep).toPrecision(3));
+    $('#pxR', el).value = st.r; $('#pxO', el).textContent = `${r.toFixed(2)} Å`;
+    $('#pxN', el).innerHTML = x > xmax ? '核間距離太近，點已超出圖的右邊。' : Math.abs(x / x0 - 1) < 0.03 ? `在頂點：r = ${r0.toFixed(2)} Å 就是鍵長，吸引項是排斥項的 2 倍。` : x < x0 ? '在頂點左邊：r 比鍵長大。' : '在頂點右邊：r 比鍵長小。';
+    pressSeg(el, 'pxS', st.b);
+  }
+  $('#pxR', el).oninput = e => { st.r = +e.target.value; draw(); };
+  bindSeg(el, 'pxS', v => { st.b = v; st.r = Math.round(BONDS2[v][0] * 1.4); draw(); });
+  draw();
+  return { set(o) { Object.assign(st, o); draw(); } };
+};
+
 
 /* ===== 第 2 節：電負度差 → 電子雲偏向哪一邊 ===== */
 const EN = { H: 2.20, Li: 0.98, B: 2.04, C: 2.55, N: 3.04, O: 3.44, F: 3.98, Na: 0.93, Mg: 1.31, Si: 1.90, P: 2.19, S: 2.58, Cl: 3.16, K: 0.82, As: 2.18, Br: 2.96, I: 2.66 };
@@ -18021,11 +18025,15 @@ ${(() => { const nx = CH.find(c => !state.done[c.id]) || CH[0], any = CH.some(c 
 <details class="tree-src"><summary>比重怎麼算的</summary><p>中國醫藥、義守、慈濟大學 106–115 學年度學士後中醫化學試題共 30 份、1498 題，逐題依主題分類。越近的年份越重要：106 年權重 1、107 年權重 2……115 年權重 10。「近三年」只看 113–115 年，不加權。106–110 年有 95 題只看圖判斷產物，也已逐題看圖歸到各章；因四捨五入，各章加總約 49.8 題。一題常同時牽涉兩個主題，分類以主要考點為準。</p></details>
 <h2>怎麼使用</h2>
 <ul class="how"><li><b>每章是一堂課</b>：照小節順序讀，每節都有可以動手調整的圖。先玩圖、看說明，再往下讀。</li>
+<li><b>公式旁的標籤</b>：<span class="tg must">要背</span>考試不會給；<span class="tg derive">會推</span>可以從前面推出來；<span class="tg given">卷上會給</span>題目會提供。課文裡點一下標籤也會顯示意思。</li>
 <li><b>章末小題只用來確認懂了沒</b>：答錯時按「在圖上看」，回到圖上找出哪裡想錯。</li>
 <li><b>考試範圍</b>：中國醫藥、義守、慈濟大學學士後中醫的化學考科都包含普通化學與有機化學，命題以大學教科書為準；課程單元依教科書標準章節安排。</li></ul>
 </div>`;
 }
 
+// 公式旁的標籤：點一下在標籤後面顯示意思（2026-11-12 使用者要求：各節不再放標籤說明，說明只在化學首頁「怎麼使用」）
+const TGTIP = { must: '考試不會給', derive: '可以從前面推出來', given: '題目會提供' };
+document.addEventListener('click', e => { const t = e.target.closest('.tg'); const k = t && Object.keys(TGTIP).find(c => t.classList.contains(c)); if (!k) return; t.dataset.tip = '：' + TGTIP[k]; t.toggleAttribute('data-open'); });
 const WVIEW = ['加權平均', '近三年', '中國醫藥', '義守', '慈濟'];
 state.wv = store.get('wv', 0);
 const isNew = u => !unitCh(u);

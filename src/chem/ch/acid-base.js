@@ -8,7 +8,6 @@ CH.push({
 <p>布忍斯特–羅瑞的酸給出 H⁺ 後變成它的<b>共軛鹼</b>，鹼接受 H⁺ 後變成<b>共軛酸</b>。同一個物種可以當酸也可以當鹼（H₂O、HCO₃⁻、H₂PO₄⁻），稱為兩性物質。切換不同反應，看每個物種扮演的角色，以及它符合哪幾種定義。</p>` },
       { h: '各種溶液的 pH 怎麼算？', w: 'phcalc', body: `
 <p>水溶液中 H⁺ 的濃度從 1 M 到 10⁻¹⁴ M 都有，差了十幾個 10 倍，所以改用 log（以 10 為底的對數，log 10ˣ = x）把它變成好讀的數字：</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">pH = −log[H⁺]　　Kw = [H⁺][OH⁻] = 1.0 × 10⁻¹⁴（25 °C）　　pH + pOH = 14<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>[H⁺]</dt><dd>氫離子濃度（M）；[H⁺] = 10⁻³ M 時 pH = 3。pH 每差 1，[H⁺] 差 10 倍</dd></div><div><dt>pOH</dt><dd>= −log[OH⁻]；p 開頭的都是「取 −log」</dd></div><div><dt>Kw</dt><dd>水的離子積：水本身會少量解離成 H⁺ 與 OH⁻，兩者濃度乘積固定；溫度升高 Kw 變大</dd></div></dl>
 <ul><li><b>強酸、強鹼</b>：完全解離，[H⁺] 或 [OH⁻] = 濃度（乘上可解離的數目）。濃度極低時要加上水本身的解離。</li>

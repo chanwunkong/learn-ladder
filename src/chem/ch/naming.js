@@ -21,7 +21,6 @@ CH.push({
 <p>要數一個分子有<b>幾個環</b>，看骨架上的鍵數與原子數：環數 = 鍵數 − 原子數 + 1（只算構成骨架的鍵和原子，不算 H）。降冰片烷有 7 個碳、8 個 C–C 鍵，所以是 2 個環；金剛烷 10 個碳、12 個 C–C 鍵，是 3 個環。</p>` },
     { h: '有好幾個官能基時，誰當字尾？', w: 'suffix', body: `
 <p>點選下圖的官能基，看它當字尾與當字首時的寫法。規則是：</p>
-<p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由規則推出；<span class="tg given">卷上會給</span>題目會提供。</p>
 <p>官能基優先順序<span class="tg must">要背</span>（由高到低）：羧酸 &gt; 酯 &gt; 醯胺 &gt; 腈 &gt; 醛 &gt; 酮 &gt; 醇 &gt; 胺 &gt; 烯、炔；鹵素、烷基、硝基只能當字首。</p>
 <ol><li>優先順序最高的官能基當<b>字尾</b>，主鏈必須包含它，並且給它最小的編號。</li>
 <li>其他官能基改成字首，和烷基一起排字母順序：HOCH₂CH₂CHO 是 3-hydroxypropanal。</li>

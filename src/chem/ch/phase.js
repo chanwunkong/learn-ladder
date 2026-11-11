@@ -5,7 +5,6 @@ CH.push({
   sections: [
     { h: '沸點為什麼會隨壓力改變？', w: 'ccvap', body: `
 <p>液體分子之間的吸引力越強，<b>蒸氣壓</b>（液面上方由揮發的分子產生的壓力）越低、<b>沸點</b>越高、<b>表面張力</b>（液面收縮成最小面積的傾向，水珠因此是圓的）與<b>黏度</b>（流動的阻力）越大。沸點是蒸氣壓等於外界壓力的溫度，所以高山上氣壓低，水的沸點低於 100 °C。蒸氣壓隨溫度的變化遵守<b>克勞修斯–克拉佩龍方程式</b>：</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">ln(P₂/P₁) = (ΔH蒸發 / R)(1/T₁ − 1/T₂)<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>P₁、P₂</dt><dd>溫度 T₁、T₂ 時的蒸氣壓；正常沸點時 P = 1 atm（760 mmHg）</dd></div><div><dt>ΔH蒸發</dt><dd>莫耳汽化熱：1 mol 液體變成氣體需要的熱（J/mol）</dd></div><div><dt>R</dt><dd>8.314 J/(mol·K)<span class="tg given">卷上會給</span></dd></div><div><dt>T</dt><dd>絕對溫度（K）</dd></div><div><dt>ln</dt><dd>自然對數；ln 2 ≈ 0.693、ln 10 ≈ 2.303<span class="tg given">卷上會給</span></dd></div></dl>
 <p>ln P 對 1/T 作圖是一條直線，斜率是 −ΔH蒸發/R；形式和動力學的阿瑞尼斯方程式相同。</p>` },

@@ -15,7 +15,6 @@ CH.push({
 <ol><li>過渡狀態時，碳上另外三個基團被推到同一平面，Nu 與 X 分別在平面兩側，各自和碳部分成鍵。</li>
 <li>產物的三個基團翻到另一邊：<b>構型反轉</b>（華爾頓反轉）。(R)-2-溴丁烷經 SN2 生成 (S)-2-丁醇。</li></ol>
 <p>因為過渡狀態同時包含鹵烷和親核基，速率和兩者都成正比：</p>
-<p class="tglegend">標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他規則推出；<span class="tg given">卷上會給</span>題目會提供。</p>
 <p class="eq">rate = k [RX] [Nu⁻]　（二級反應，SN2 的「2」就是這個意思）<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>RX</dt><dd>鹵烷：R 代表任意烷基，X 代表鹵素（Cl、Br、I）</dd></div><div><dt>Nu⁻</dt><dd>親核基（nucleophile）</dd></div><div><dt>SN2</dt><dd>S = 取代（substitution）、N = 親核（nucleophilic）、2 = 速率決定步驟有兩個分子</dd></div></dl>
 <p>切換基質看看：碳上的基團越大，背面越擠，親核基越難靠近。甲基最快，一級次之，二級慢很多，<b>三級幾乎不反應</b>。極性非質子性溶劑（丙酮、DMSO、DMF）不會用氫鍵包住親核基，讓它更「赤裸」、更有攻擊力，所以有利 SN2。</p>` },

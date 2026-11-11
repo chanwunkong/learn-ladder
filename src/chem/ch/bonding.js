@@ -5,7 +5,6 @@ CH.push({
   sections: [
     { h: '分子中哪個原子帶電？', w: 'fc', body: `
 <p>路易斯結構裡，每個原子「名義上」擁有的電子 = 自己的孤對電子 + 每個鍵分一半。和它原本的價電子比較，就得到<b>形式電荷</b>：</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">形式電荷 = 價電子數 − 非鍵電子數 − 鍵數<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>價電子數</dt><dd>原子單獨存在時最外層的電子數：C 4、N 5、O 6、鹵素 7</dd></div><div><dt>非鍵電子數</dt><dd>它自己的孤對電子「個數」（一對 = 2 個）</dd></div><div><dt>鍵數</dt><dd>連出去的鍵數，雙鍵算 2；共用電子只算一半給它</dd></div></dl>
 <p>用下圖切換原子、鍵數與孤對電子數，記住常見組合：C 四個鍵為中性、三個鍵帶正或負電；N 四個鍵帶正電（銨）；O 三個鍵帶正電（H₃O⁺）、一個鍵帶負電（HO⁻）。</p>

@@ -5,7 +5,6 @@ CH.push({
   sections: [
     { h: '反應熱怎麼量？', w: 'calor', body: `
 <p>熱力學把正在研究的物質（例如燒杯裡的反應物）稱為<b>系統</b>，其他所有東西（燒杯、空氣）稱為<b>環境</b>。系統吸熱時環境放熱，反之亦然。</p>
-<p class="tglegend">公式與數字旁的標籤：<span class="tg must">要背</span>考試不會給，要記住；<span class="tg derive">會推</span>可以由其他公式推出；<span class="tg given">卷上會給</span>題目或卷首會提供。</p>
 <p class="eq">q = m·c·ΔT<span class="tg must">要背</span></p>
 <dl class="sym"><div><dt>q</dt><dd>熱量（J）；吸熱為正、放熱為負</dd></div><div><dt>m</dt><dd>質量（g）</dd></div><div><dt>c</dt><dd>比熱：1 g 物質升高 1 °C 需要的熱，J/(g·°C)；水 4.18<span class="tg given">卷上會給</span></dd></div><div><dt>ΔT</dt><dd>溫度變化 = 最後溫度 − 起始溫度</dd></div></dl>
 <p>兩個物體接觸到溫度相同時，一方放出的熱等於另一方吸收的熱，這就是<b>卡計</b>（測量反應熱的容器）的原理。拖動質量、換不同的金屬，看最後溫度落在哪裡。</p>
