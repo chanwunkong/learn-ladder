@@ -30,7 +30,7 @@ COURSES = {
         "theme": "#17705F",
     },
     "eng": {
-        "scripts": ["ui.js", "wk/*.js", "@review.js", "@followup.js", "app.js", "@cloud.js", "start.js"],
+        "scripts": ["ui.js", "wk/*.js", "@review.js", "@followup.js", "app.js", "level.js", "@cloud.js", "start.js"],
         "desc": "學士後中醫入學考英文：每天早晚兩段，單字、長句拆解、文法、克漏字與閱讀，錯題自動複習。",
         "theme": "#1F4E79",
     },

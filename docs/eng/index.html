@@ -120,6 +120,9 @@ section.part { margin-top: 36px; display: grid; gap: 12px; }
 .zh { color: var(--muted); font-size: 14.5px; margin: 4px 0 0; }
 .gap { border-bottom: 2px solid var(--accent); color: var(--accent); }
 /* 首頁：7 天 × 早晚 */
+.lvtab { border-collapse: collapse; width: 100%; font-size: 14.5px; margin: 8px 0; }
+.lvtab th, .lvtab td { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left; }
+.lvtab tr.cur td { background: var(--warn-soft); font-weight: 600; }
 .duebar a { display: inline-block; background: var(--warn-soft); color: var(--warn); border-radius: 8px; padding: 8px 14px; text-decoration: none; }
 .days { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 14px; }
 .day h2 { font-size: 16px !important; }
@@ -1698,7 +1701,7 @@ function renderHome() {
 <p class="lede">每天分成早上與晚上兩段。早上先複習到期的錯題，再學 ${n} 個新單字和 2 個長句；晚上學一個文法重點，完成當天的${[...new Set(dayPass(w, 0).map(P => P.type === 'cloze' ? '克漏字' : '閱讀'))].join('＋')}，最後回想早上的單字。答錯的題目會自動排進之後的複習。</p>
 ${due ? `<p class="duebar"><a href="#review">錯題本有 <b>${due}</b> 題今天到期 →</a></p>` : ''}
 <ol class="days">${w.words.map((x, d) => `<li class="day${nx && nx.d === d ? ' now' : ''}"><h2>第 ${d + 1} 天<small>${esc(w.gram[d].title.split('：')[0])}</small></h2><div class="slots">${slot(d, 'am')}${slot(d, 'pm')}</div></li>`).join('')}</ol>
-<div class="row endrow"><a class="btn pri" href="#report">本週報告與匯出</a><a class="btn" href="#review">錯題本</a>${(n => n ? `<a class="btn" href="#cards">單字卡複習（${n} 個字）</a>` : '')(reviewWords().look.length)}</div>
+<div class="row endrow"><a class="btn pri" href="#report">本週報告與匯出</a><a class="btn" href="#review">錯題本</a><a class="btn" href="#level">${(L => L.ans && Object.keys(L.ans).length >= LEVEL_WORDS.length ? '單字程度測驗結果' : '單字程度測驗（約 10 分鐘）')(store.get('level', {}))}</a>${(n => n ? `<a class="btn" href="#cards">單字卡複習（${n} 個字）</a>` : '')(reviewWords().look.length)}</div>
 ${WEEKS.length > 1 ? `<p class="small">其他週：${WEEKS.map((x, i) => `<button class="btn sm" type="button" data-wk="${i}">第 ${x.n} 週</button>`).join(' ')}</p>` : ''}`;
   $$('[data-wk]').forEach(b => { b.onclick = () => { store.set('week', +b.dataset.wk); renderHome(); }; });
 }
@@ -1963,7 +1966,7 @@ function exportMD(w) {
 
 ### 內容要求
 1. 每天兩段：早上（12 個新單字＋2 個長句拆解）、晚上（1 個文法重點＋3 題、1 篇克漏字＋5 題、1 篇閱讀＋5 題、單字回想自動產生）。共 7 天。
-2. **新單字 84 個**：學術與醫學常用字（詞頻約 3000–12000 名），不可與「已學過的單字」重複。每天一個主題。每個字需有 3 個不同情境、不同句型的額外例句（8–22 字，晚上回想與錯題複習會使用）。
+2. **新單字 84 個**：每天 12 個＝8 個中高階（常用字約 6000 名以後）＋4 個補強（約 3000–6000 名、學術或醫學用法和一般意思不同的字）；前 3000 名不當新字。優先選台灣後中英文考古題文章出現過的字，罕見的字彙題難字（GRE 程度）不收。不可與「已學過的單字」重複。每天一個主題。每個字需有 3 個不同情境、不同句型的額外例句（8–22 字，晚上回想與錯題複習會使用）。
 3. **弱項優先**：「需要加強」的能力，下週至少安排兩天的文法重點或長句練它；「本週沒練到」的能力至少練一次；「穩定」的能力仍要在文章中混著出現。
 4. **錯題回收**：「答錯的單字」、「不熟的單字」與「回想時需要幫忙的字」要在下週的長句或文章裡再出現（當成已學過的字使用，不是新字）。
 5. **難度逐週增加**：克漏字與閱讀的文章長度都比本週多約 20–30 字（上限：克漏字 400 字、閱讀 450 字，目標是 1 月底接近考試文章長度），句子變長、修飾更多。題目要有一個明確正解，三個誘答要合理但確定錯。
@@ -2030,7 +2033,7 @@ ${(hw => [...hw.hint.map(x => `- ${x}（看了中文提示）`), ...hw.peek.map(
 
 ### 我標記「不熟」的地方
 ${unsureL.map(e => `- ${e.qt}`).join('\n') || '- （沒有）'}
-
+${levelMD()}
 ### 已學過的單字（下週不要再當新字）
 ${allWords.join(', ')}
 `;
@@ -2049,12 +2052,92 @@ function route() {
   else if (h === 'review') renderReview();
   else if (h === 'cards') renderCards();
   else if (h === 'report') renderReport();
+  else if (h === 'level') renderLevel();
   else renderHome();
   $('#wkTag').textContent = `第 ${w.n} 週`; refreshParts();
   saveSummary();
   window.scrollTo(0, 0);
 }
 function boot() { $('#spkSlot').innerHTML = SPEECH.controls(); SPEECH.bind(); addEventListener('hashchange', route); route(); }
+
+/* ---------- 後中英文：單字程度測驗 ----------
+   60 個字取自三校 106–115 年 30 份考卷（analysis/eng/vocab.tsv），各程度至少出現在 3 份，前兩週學過的字不收。
+   選中文意思；不會就按「不知道」，不要猜。結果決定新單字從哪個程度開始，也會放進每週匯出。 */
+const LEVEL_BANDS = [['A', '常用字 2000–3000 名'], ['B', '3000–6000 名'], ['C', '6000–12000 名'], ['D', '12000 名以後']];
+const LEVEL_WORDS = [
+  ['appropriate', 'adj.', '適當的', 'A'], ['determine', 'v.', '決定、查明', 'A'], ['maintain', 'v.', '維持、保養', 'A'], ['equivalent', 'adj. / n.', '相等的；等同物', 'A'],
+  ['domestic', 'adj.', '國內的、家庭的', 'A'], ['constantly', 'adv.', '不斷地', 'A'], ['capable', 'adj.', '有能力的', 'A'], ['identify', 'v.', '辨認、找出', 'A'],
+  ['concentration', 'n.', '濃度；專注', 'B'], ['restore', 'v.', '恢復、修復', 'B'], ['precise', 'adj.', '精確的', 'B'], ['extend', 'v.', '擴大、延伸', 'B'],
+  ['suitable', 'adj.', '合適的', 'B'], ['potentially', 'adv.', '潛在地、可能', 'B'], ['component', 'n.', '成分、零件', 'B'], ['regardless', 'adv.', '不管、無論', 'B'],
+  ['harsh', 'adj.', '嚴厲的、惡劣的', 'B'], ['aspect', 'n.', '方面、層面', 'B'], ['assist', 'v.', '協助', 'B'], ['establish', 'v.', '建立、確立', 'B'],
+  ['extent', 'n.', '程度', 'B'], ['absence', 'n.', '不在、缺席', 'B'], ['parallel', 'adj. / n.', '平行的；相似之處', 'B'], ['substantial', 'adj.', '大量的、可觀的', 'B'],
+  ['excess', 'n. / adj.', '過量；多餘的', 'B'], ['intellectual', 'adj.', '智力的、知識的', 'B'], ['consistently', 'adv.', '一貫地', 'B'], ['occur', 'v.', '發生', 'B'],
+  ['comprehend', 'v.', '理解', 'C'], ['minimize', 'v.', '減到最少', 'C'], ['inevitably', 'adv.', '不可避免地', 'C'], ['facilitate', 'v.', '促進、使容易', 'C'],
+  ['breakthrough', 'n.', '突破', 'C'], ['viable', 'adj.', '可行的', 'C'], ['modify', 'v.', '修改', 'C'], ['reinforce', 'v.', '強化、加強', 'C'],
+  ['prejudice', 'n.', '偏見', 'C'], ['offset', 'v.', '抵銷', 'C'], ['complexity', 'n.', '複雜性', 'C'], ['adaptation', 'n.', '適應；改編', 'C'],
+  ['skeptical', 'adj.', '懷疑的', 'C'], ['possess', 'v.', '擁有', 'C'], ['interference', 'n.', '干擾、干涉', 'C'], ['assess', 'v.', '評估', 'C'],
+  ['dominate', 'v.', '主導、支配', 'C'], ['transparent', 'adj.', '透明的', 'C'], ['threaten', 'v.', '威脅', 'C'], ['intend', 'v.', '打算、意圖', 'C'],
+  ['overlook', 'v.', '忽略；俯瞰', 'D'], ['confine', 'v.', '限制、侷限', 'D'], ['complication', 'n.', '併發症', 'D'], ['dilute', 'v.', '稀釋', 'D'],
+  ['prolong', 'v.', '延長', 'D'], ['indispensable', 'adj.', '不可或缺的', 'D'], ['hinder', 'v.', '阻礙', 'D'], ['tentative', 'adj.', '暫定的、試探性的', 'D'],
+  ['jeopardize', 'v.', '危及', 'D'], ['deficient', 'adj.', '不足的、缺乏的', 'D'], ['infer', 'v.', '推斷', 'D'], ['discriminate', 'v.', '區別；歧視', 'D'],
+];
+const levelOrder = () => shuffled(LEVEL_WORDS.length, 'level-v1').map(i => LEVEL_WORDS[i]);
+// 誤答：其他測驗字的中文，先挑詞性相同、意思不重疊的
+function levelFoils(x) {
+  const pos = p => p.split(/[\s/]/)[0], pick = [];
+  const pool = LEVEL_WORDS.filter(y => y !== x && !zhClash(y[2], x[2])).sort((a, b) => (pos(a[1]) !== pos(x[1])) - (pos(b[1]) !== pos(x[1])) || hash(x[0] + a[0]) - hash(x[0] + b[0]));
+  for (const y of pool) if (pick.length < 3 && !pick.some(z => zhClash(z[2], y[2]))) pick.push(y);
+  return pick;
+}
+// 每個程度：答對、答錯、不知道；估計認得的比例＝(答對 − 答錯/3) ÷ 題數（扣掉猜對的機會）
+function levelStats(ans = store.get('level', {}).ans || {}) {
+  return LEVEL_BANDS.map(([b, label]) => {
+    const ws = LEVEL_WORDS.filter(x => x[3] === b), n = ws.length, c = { ok: 0, x: 0, q: 0 };
+    ws.forEach(x => { if (ans[x[0]]) c[ans[x[0]]]++; });
+    const done = c.ok + c.x + c.q, est = done ? Math.max(0, (c.ok - c.x / 3) / done) : 0;
+    return { b, label, n, done, ...c, est, miss: ws.filter(x => ans[x[0]] && ans[x[0]] !== 'ok') };
+  });
+}
+// 起點：第一個估計認得不到八成的程度
+const levelStart = st => st.find(s => s.done === s.n && s.est < 0.8);
+function renderLevel() {
+  const L = store.get('level', {}), ans = L.ans || {}, list = levelOrder(), i = list.findIndex(x => !ans[x[0]]);
+  if (i < 0) return renderLevelResult();
+  const x = list[i], fo = levelFoils(x), o = [x, ...fo], ord = shuffled(4, 'lv' + x[0]);
+  $('#main').innerHTML = `<p class="eyebrow">單字程度測驗・${i + 1} / ${list.length}</p><h1>這個字是什麼意思？</h1>
+<p class="lede">字都來自近 10 年三校的考卷。<b>不確定就按「不知道」，不要猜</b>，猜對會讓程度看起來比實際高。</p>
+<div class="q" data-noans><p class="qt"><span class="enw">${esc(x[0])}</span>${sayBtn(x[0])} <span class="pos">${esc(x[1])}</span></p>
+<div class="opts">${ord.map(j => `<button class="opt" type="button" data-lv="${j}">${esc(o[j][2])}</button>`).join('')}<button class="opt" type="button" data-lv="-1">不知道</button></div></div>
+<p class="row">${bar(i / list.length)}</p>
+<div class="row endrow"><a class="btn" href="#">之後再做（會記住進度）</a></div>`;
+  $$('[data-lv]').forEach(b => { b.onclick = () => { const j = +b.dataset.lv; ans[x[0]] = j < 0 ? 'q' : j === 0 ? 'ok' : 'x'; store.set('level', { ans, t: Date.now() }); renderLevel(); window.scrollTo(0, 0); }; });
+}
+function renderLevelResult() {
+  const st = levelStats(), start = levelStart(st), pct = v => Math.round(100 * v) + '%';
+  $('#main').innerHTML = `<p class="eyebrow">單字程度測驗</p><h1>測驗結果</h1>
+<p class="lede">${start ? `從<b>${esc(start.label)}</b>開始，認得的比例不到八成。下週起新單字從這個程度、考卷最常出現的字開始。` : '每個程度都認得八成以上，新單字會從最難的程度開始。'}</p>
+<table class="lvtab"><thead><tr><th>程度</th><th>答對</th><th>答錯</th><th>不知道</th><th>估計認得</th></tr></thead><tbody>
+${st.map(s => `<tr${s === start ? ' class="cur"' : ''}><td>${esc(s.label)}</td><td>${s.ok}</td><td>${s.x}</td><td>${s.q}</td><td>${pct(s.est)}</td></tr>`).join('')}</tbody></table>
+<p class="small mut">估計認得＝(答對 − 答錯÷3) ÷ 題數，扣掉四選一猜對的機會。</p>
+<h2>不認得的字</h2>
+${st.map(s => s.miss.length ? `<p><b>${esc(s.label)}</b>：${s.miss.map(x => `<span class="enw">${esc(x[0])}</span> <span class="mut">${esc(x[2])}</span>`).join('、')}</p>` : '').join('') || '<p class="note">全部答對。</p>'}
+<p class="note">結果會放進「本週報告與匯出」，產生下一週時會用到。</p>
+<div class="row endrow"><a class="btn pri" href="#">回到本週</a><button class="btn" type="button" id="lvAgain">重新測驗</button></div>`;
+  $('#lvAgain').onclick = () => { if (confirm('清除這次的答案，重新測驗？')) { store.set('level', {}); renderLevel(); } };
+}
+// 匯出用：程度測驗的結果
+function levelMD() {
+  const L = store.get('level', {}); if (!L.ans || !Object.keys(L.ans).length) return '';
+  const st = levelStats(L.ans), start = levelStart(st);
+  return `\n### 單字程度測驗（${new Date(L.t).toLocaleDateString('zh-TW')}，考卷字各程度抽樣）
+| 程度 | 答對 | 答錯 | 不知道 | 估計認得 |
+|---|---|---|---|---|
+${st.map(s => `| ${s.label} | ${s.ok} | ${s.x} | ${s.q} | ${Math.round(100 * s.est)}% |`).join('\n')}
+
+新單字起點：${start ? start.label : '各程度都認得八成以上'}
+不認得的字：${st.flatMap(s => s.miss.map(x => x[0])).join(', ') || '（沒有）'}
+`;
+}
 
 /* ---------- 雲端同步（Firebase，各課程與首頁共用）：Google 登入後，把「已完成的章節」存到 Firestore ----------
    只在正式網站（GitHub Pages，HEAD 帶 app-site meta）啟用；Artifact 與本機檔案不載入 SDK。

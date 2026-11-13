@@ -235,7 +235,7 @@ function renderHome() {
 <p class="lede">每天分成早上與晚上兩段。早上先複習到期的錯題，再學 ${n} 個新單字和 2 個長句；晚上學一個文法重點，完成當天的${[...new Set(dayPass(w, 0).map(P => P.type === 'cloze' ? '克漏字' : '閱讀'))].join('＋')}，最後回想早上的單字。答錯的題目會自動排進之後的複習。</p>
 ${due ? `<p class="duebar"><a href="#review">錯題本有 <b>${due}</b> 題今天到期 →</a></p>` : ''}
 <ol class="days">${w.words.map((x, d) => `<li class="day${nx && nx.d === d ? ' now' : ''}"><h2>第 ${d + 1} 天<small>${esc(w.gram[d].title.split('：')[0])}</small></h2><div class="slots">${slot(d, 'am')}${slot(d, 'pm')}</div></li>`).join('')}</ol>
-<div class="row endrow"><a class="btn pri" href="#report">本週報告與匯出</a><a class="btn" href="#review">錯題本</a>${(n => n ? `<a class="btn" href="#cards">單字卡複習（${n} 個字）</a>` : '')(reviewWords().look.length)}</div>
+<div class="row endrow"><a class="btn pri" href="#report">本週報告與匯出</a><a class="btn" href="#review">錯題本</a><a class="btn" href="#level">${(L => L.ans && Object.keys(L.ans).length >= LEVEL_WORDS.length ? '單字程度測驗結果' : '單字程度測驗（約 10 分鐘）')(store.get('level', {}))}</a>${(n => n ? `<a class="btn" href="#cards">單字卡複習（${n} 個字）</a>` : '')(reviewWords().look.length)}</div>
 ${WEEKS.length > 1 ? `<p class="small">其他週：${WEEKS.map((x, i) => `<button class="btn sm" type="button" data-wk="${i}">第 ${x.n} 週</button>`).join(' ')}</p>` : ''}`;
   $$('[data-wk]').forEach(b => { b.onclick = () => { store.set('week', +b.dataset.wk); renderHome(); }; });
 }
@@ -500,7 +500,7 @@ function exportMD(w) {
 
 ### 內容要求
 1. 每天兩段：早上（12 個新單字＋2 個長句拆解）、晚上（1 個文法重點＋3 題、1 篇克漏字＋5 題、1 篇閱讀＋5 題、單字回想自動產生）。共 7 天。
-2. **新單字 84 個**：學術與醫學常用字（詞頻約 3000–12000 名），不可與「已學過的單字」重複。每天一個主題。每個字需有 3 個不同情境、不同句型的額外例句（8–22 字，晚上回想與錯題複習會使用）。
+2. **新單字 84 個**：每天 12 個＝8 個中高階（常用字約 6000 名以後）＋4 個補強（約 3000–6000 名、學術或醫學用法和一般意思不同的字）；前 3000 名不當新字。優先選台灣後中英文考古題文章出現過的字，罕見的字彙題難字（GRE 程度）不收。不可與「已學過的單字」重複。每天一個主題。每個字需有 3 個不同情境、不同句型的額外例句（8–22 字，晚上回想與錯題複習會使用）。
 3. **弱項優先**：「需要加強」的能力，下週至少安排兩天的文法重點或長句練它；「本週沒練到」的能力至少練一次；「穩定」的能力仍要在文章中混著出現。
 4. **錯題回收**：「答錯的單字」、「不熟的單字」與「回想時需要幫忙的字」要在下週的長句或文章裡再出現（當成已學過的字使用，不是新字）。
 5. **難度逐週增加**：克漏字與閱讀的文章長度都比本週多約 20–30 字（上限：克漏字 400 字、閱讀 450 字，目標是 1 月底接近考試文章長度），句子變長、修飾更多。題目要有一個明確正解，三個誘答要合理但確定錯。
@@ -567,7 +567,7 @@ ${(hw => [...hw.hint.map(x => `- ${x}（看了中文提示）`), ...hw.peek.map(
 
 ### 我標記「不熟」的地方
 ${unsureL.map(e => `- ${e.qt}`).join('\n') || '- （沒有）'}
-
+${levelMD()}
 ### 已學過的單字（下週不要再當新字）
 ${allWords.join(', ')}
 `;
@@ -586,6 +586,7 @@ function route() {
   else if (h === 'review') renderReview();
   else if (h === 'cards') renderCards();
   else if (h === 'report') renderReport();
+  else if (h === 'level') renderLevel();
   else renderHome();
   $('#wkTag').textContent = `第 ${w.n} 週`; refreshParts();
   saveSummary();

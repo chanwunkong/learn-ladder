@@ -14,7 +14,7 @@ window.__errs = []; addEventListener('error', e => __errs.push(e.message)); cons
   wide();
   for (const g of document.querySelectorAll('[data-g]')) { g.click(); rep.guide++; for (let k = 0; k < 4; k++) { const b = g.parentNode.querySelector('.gbody'); for (const o of [...b.querySelectorAll('.gopt')]) if (!o.disabled) o.click(); const n = b.querySelector('[data-n]'); if (!n) break; n.click(); } }
   for (const s of document.querySelectorAll('.sentc')) { rep.sent++; for (let k = 0; k < 6; k++) { const body = s.querySelector('.sbody'); for (const o of [...body.querySelectorAll('.opt')]) if (!o.disabled) o.click(); const n = body.querySelector('[data-n]'); if (!n) break; n.click(); } if (!s.querySelector('.core')) __errs.push('長句沒有走到最後：' + s.textContent.slice(0, 30)); }
-  for (const q of document.querySelectorAll('.q')) { rep.q++; for (const o of [...q.querySelectorAll(':scope > .opts .opt')]) if (!o.disabled) o.click(); if (!q.querySelector(':scope > .opts .opt.right')) __errs.push('沒有正解：' + q.textContent.slice(0, 30)); }
+  for (const q of document.querySelectorAll('.q')) { rep.q++; for (const o of [...q.querySelectorAll(':scope > .opts .opt')]) if (!o.disabled) o.click(); if (!q.matches('[data-noans]') && !q.querySelector(':scope > .opts .opt.right')) __errs.push('沒有正解：' + q.textContent.slice(0, 30)); }
   for (const u of document.querySelectorAll('[data-u]')) u.click();
   const ex = document.getElementById('exGo'); if (ex) { ex.click(); const t = document.getElementById('exTxt').value; rep.export = t.length; if (!/給 AI 的指示/.test(t) || /undefined|NaN/.test(t)) __errs.push('匯出內容異常'); }
   if (/\bNaN\b|\bundefined\b/.test(document.getElementById('main').textContent)) __errs.push('畫面出現 NaN/undefined');
@@ -24,7 +24,7 @@ window.__errs = []; addEventListener('error', e => __errs.push(e.message)); cons
 JS
 sed 's#<script>#<script src="probe.js" defer></script><script>#' docs/eng/index.html > "$TMP/p.html"
 fail=0
-for r in home d1am d1pm d2am d2pm d3am d3pm d4am d4pm d5am d5pm d6am d6pm d7am d7pm review report cards; do
+for r in home d1am d1pm d2am d2pm d3am d3pm d4am d4pm d5am d5pm d6am d6pm d7am d7pm review report cards level; do
   for wd in 1000 390; do
     "$CHROME" --headless=new --disable-gpu --user-data-dir="$TMP/prof" --window-size=$wd,900 --virtual-time-budget=20000 --dump-dom "file://$TMP/p.html#$r" 2>/dev/null > "$TMP/out"
     o=$(python3 -c "import re,sys,html;s=open(sys.argv[1]).read();m=re.search(r'<pre id=\"__out\">(.*?)</pre>',s,re.S);print(html.unescape(m.group(1)) if m else 'NO OUTPUT')" "$TMP/out")
