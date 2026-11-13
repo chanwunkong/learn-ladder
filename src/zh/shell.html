@@ -183,6 +183,11 @@ details summary { cursor: pointer; color: var(--accent); font-size: 14px; }
   .brand small { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+.sktab { border-collapse: collapse; width: 100%; font-size: 14.5px; margin: 8px 0 16px; }
+.sktab th, .sktab td { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left; }
+.sktab .st-weak td:last-child { color: var(--bad); font-weight: 600; }
+.sktab .st-mid td:last-child { color: var(--warn); }
+#exTxt { width: 100%; font-family: var(--mono, monospace); font-size: 12.5px; }
 </style>
 
 <header class="top"><div class="top-in">

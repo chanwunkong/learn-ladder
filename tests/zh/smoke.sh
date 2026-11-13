@@ -21,7 +21,7 @@ window.__errs = []; addEventListener('error', e => __errs.push(e.message)); cons
 JS
 sed 's#<script>#<script src="probe.js" defer></script><script>#' docs/zh/index.html > "$TMP/p.html"
 fail=0
-for r in home d1am d1pm d2am d2pm d3am d3pm d4am d4pm d5am d5pm d6am d6pm d7am d7pm review; do
+for r in home d1am d1pm d2am d2pm d3am d3pm d4am d4pm d5am d5pm d6am d6pm d7am d7pm review report; do
   for wd in 1000 390; do
     "$CHROME" --headless=new --disable-gpu --user-data-dir="$TMP/prof" --window-size=$wd,900 --virtual-time-budget=20000 --dump-dom "file://$TMP/p.html#$r" 2>/dev/null > "$TMP/out"
     o=$(python3 -c "import re,sys,html;s=open(sys.argv[1]).read();m=re.search(r'<pre id=\"__out\">(.*?)</pre>',s,re.S);print(html.unescape(m.group(1)) if m else 'NO OUTPUT')" "$TMP/out")
