@@ -19,7 +19,7 @@ WEEKS.forEach((w, wi) => {
   for (const k of ['words', 'sents', 'gram', 'passages']) if (!Array.isArray(w[k]) || w[k].length !== 7) E(w, `${k} 不是 7 天`);
   const ids = new Set(), seenW = new Set();
   w.words.forEach((day, d) => {
-    if (day.length !== (w.n > 1 ? 12 : 10)) E(w, `第${d + 1}天單字不是 ${w.n > 1 ? 12 : 10} 個`);
+    if (w.n < 3 ? day.length !== (w.n > 1 ? 12 : 10) : day.length < 8 || day.length > 16) E(w, `第${d + 1}天單字有 ${day.length} 個`);   // 第 3 週起每天依程度 8–16 個
     day.forEach(x => {
       if (x.length !== 7) E(w, `${x[0]} 欄位數不對`);
       if (seenW.has(x[0])) E(w, `單字重複：${x[0]}`); seenW.add(x[0]);
